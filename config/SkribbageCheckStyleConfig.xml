@@ -6,6 +6,8 @@
     Checkstyle-Configuration: DSR Check Style Config
     Description: none
 
+    Update as of 2022-02-23 by DSR: removed suppressions file link
+
     Update as of 2013-02-03 by DSR: removed NoWhiteSpaceAfter rule and
     	added support for suppressing checkstyle warnings through the
     	use of specific comments.  See the "Suppression Comment Filter"
@@ -34,14 +36,8 @@
 <module name="Checker">
   <!-- <property name="basedir" value = "."/> -->
   <property name="severity" value="warning"/>
-  <!-- <module name="SuppressionFilter">
-    <property name="file" value="${checkstyle.suppressions.file}"/>
-  </module> -->
   <module name="LineLength">
     <property name="max" value="80"/>
-  </module>
-  <module name="SuppressionFilter">
-    <property name="file" value="${checkstyle.suppressions.file}"/>
   </module>
   <module name="TreeWalker">
     <module name="IndentationCheck"/>
