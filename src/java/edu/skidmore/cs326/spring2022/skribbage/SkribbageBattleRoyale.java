@@ -29,6 +29,7 @@ public class SkribbageBattleRoyale implements Runnable {
     @Override
     public void run() {
         System.out.println(getWelcomeMessage());
+        LOG.info("Run method started");
     }
 
     /**
