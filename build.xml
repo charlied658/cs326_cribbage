@@ -2,7 +2,9 @@
 	Skribbage Battle Royale Ant build script
 -->
 <project name="SkribbageBattleRoyale" default="dist"
-		xmlns:jacoco="antlib:org.jacoco.ant">
+		xmlns:jacoco="antlib:org.jacoco.ant"
+        xmlns:if="ant:if"
+        xmlns:unless="ant:unless">
 
 	<!-- specify properties in build.properties -->
 	<property file="build.properties" />
@@ -259,6 +261,74 @@
   			<fileset dir="${mainJavaSrcDir}" includes="**/*.java"/>
   			<fileset dir="${testJavaSrcDir}" includes="**/*.java"/>
   			<formatter type="plain"/>
+  			<formatter type="plain" toFile="${genCheckstyleReportsDir}/${checkstyleTextReportFile}"/>
+  			<formatter type="xml" toFile="${genCheckstyleReportsDir}/${checkstyleXmlReportFile}"/>
+				<property key="checkstyle.suppressions.file" file="${checkstyleSuppressionsConfigFile}"/>
+		</checkstyle>
+
+		<!-- print alert if one or more tests failed -->
+
+		<fail if="checks.failed">
+			Failed: ${checks.failed}
+			*****************************************************
+			*****************************************************
+			**** One or more checks failed! Check the output ****
+			*****************************************************
+			*****************************************************
+		</fail>
+	</target>
+
+    <!-- Generate a checkstyle report -->
+	<target name="checkstyle-filtered" depends="init">
+        <condition property="target.command.error">
+            <and>
+                <not>
+                    <isset property="subpackage"/>
+                </not>
+                <not>
+                    <isset property="noprod"/>
+                </not>
+                <not>
+                    <isset property="notest"/>
+                </not>
+            </and>
+        </condition>
+        <path id="path.to.check">
+            <fileset dir="${mainJavaSrcDir}" unless:set="noprod">
+                <include name="**/${subpackage}/*.java" if:set="subpackage"/>
+                <include name="**/*.java" if:blank="subpackage"/>
+            </fileset>
+            <fileset dir="${testJavaSrcDir}" unless:set="notest">
+                <include name="**/${subpackage}/*.java" if:set="subpackage"/>
+                <include name="**/*.java" if:blank="subpackage"/>
+            </fileset>
+        </path>
+
+        <fail if="target.command.error">
+ERROR: Missing parameter(s)
+
+  To use the checkstyle-filtered target you must supply
+  at least one of the following properties:
+    noprod=1
+    notest=1
+    subpackage=SUBPACKAGE_PATH
+
+  noprod: suppresses checking of the production codebase
+  notest: suppresses checking of the test codebase
+  subpackage: restricts checking to the subpackage path supplied
+
+  Examples:
+    Only check production code:
+      ant checkstyle-filtered -Dnotest=1
+    Only check test code:
+      ant checkstyle-filtered -Dnoprod=1
+    Only check gamification subpackages:
+      ant checkstyle-filtered -Dsubpackage=gamification
+        </fail>
+
+		<checkstyle unless:set="${target.command.error}" config="${checkstyleConfigFile}" failureProperty="checks.failed" maxWarnings="0" failOnViolation="false">
+            <path refid="path.to.check"/>
+            <formatter type="plain"/>
   			<formatter type="plain" toFile="${genCheckstyleReportsDir}/${checkstyleTextReportFile}"/>
   			<formatter type="xml" toFile="${genCheckstyleReportsDir}/${checkstyleXmlReportFile}"/>
 				<property key="checkstyle.suppressions.file" file="${checkstyleSuppressionsConfigFile}"/>
