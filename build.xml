@@ -329,9 +329,9 @@ ERROR: Missing parameter(s)
 		<checkstyle unless:set="${target.command.error}" config="${checkstyleConfigFile}" failureProperty="checks.failed" maxWarnings="0" failOnViolation="false">
             <path refid="path.to.check"/>
             <formatter type="plain"/>
-  			<formatter type="plain" toFile="${genCheckstyleReportsDir}/${checkstyleTextReportFile}"/>
-  			<formatter type="xml" toFile="${genCheckstyleReportsDir}/${checkstyleXmlReportFile}"/>
-				<property key="checkstyle.suppressions.file" file="${checkstyleSuppressionsConfigFile}"/>
+  			<formatter type="plain" toFile="${genCheckstyleReportsDir}/filtered-${checkstyleTextReportFile}"/>
+  			<formatter type="xml" toFile="${genCheckstyleReportsDir}/filtered-${checkstyleXmlReportFile}"/>
+			<property key="checkstyle.suppressions.file" file="${checkstyleSuppressionsConfigFile}"/>
 		</checkstyle>
 
 		<!-- print alert if one or more tests failed -->
