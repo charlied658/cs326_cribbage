@@ -1,3 +1,6 @@
+/**
+@author Michael Shriner 
+*/
 public class Game{
 
   Deck theDeck;
