@@ -280,6 +280,7 @@
 
     <!-- Generate a checkstyle report -->
 	<target name="checkstyle-filtered" depends="init">
+        <!-- Verify at least one filtering property was defined -->
         <condition property="target.command.error">
             <and>
                 <not>
@@ -293,19 +294,23 @@
                 </not>
             </and>
         </condition>
+
+        <!-- Build the path based on the filtering properties -->
         <path id="path.to.check">
             <fileset dir="${mainJavaSrcDir}" unless:set="noprod">
-                <include name="**/${subpackage}/*.java" if:set="subpackage"/>
+                <include name="**/*${subpackage}*/*.java" if:set="subpackage"/>
                 <include name="**/*.java" if:blank="subpackage"/>
             </fileset>
             <fileset dir="${testJavaSrcDir}" unless:set="notest">
-                <include name="**/${subpackage}/*.java" if:set="subpackage"/>
+                <include name="**/*${subpackage}*/*.java" if:set="subpackage"/>
                 <include name="**/*.java" if:blank="subpackage"/>
             </fileset>
         </path>
 
+        <!-- Load the usage message -->
         <loadfile property="usage.message" srcfile="${taskdocCheckstyleFiltered}"/>
 
+        <!-- print alert and usage info. if parameters not set -->
         <fail if="target.command.error" >
             ERROR: Missing parameter(s)
             ${usage.message}
@@ -320,7 +325,6 @@
 		</checkstyle>
 
 		<!-- print alert if one or more tests failed -->
-
 		<fail if="checks.failed">
 			Failed: ${checks.failed}
 			*****************************************************
