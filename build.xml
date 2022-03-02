@@ -304,26 +304,11 @@
             </fileset>
         </path>
 
-        <fail if="target.command.error">
-ERROR: Missing parameter(s)
+        <loadfile property="usage.message" srcfile="${taskdocCheckstyleFiltered}"/>
 
-  To use the checkstyle-filtered target you must supply
-  at least one of the following properties:
-    noprod=1
-    notest=1
-    subpackage=SUBPACKAGE_PATH
-
-  noprod: suppresses checking of the production codebase
-  notest: suppresses checking of the test codebase
-  subpackage: restricts checking to the subpackage path supplied
-
-  Examples:
-    Only check production code:
-      ant checkstyle-filtered -Dnotest=1
-    Only check test code:
-      ant checkstyle-filtered -Dnoprod=1
-    Only check gamification subpackages:
-      ant checkstyle-filtered -Dsubpackage=gamification
+        <fail if="target.command.error" >
+            ERROR: Missing parameter(s)
+            ${usage.message}
         </fail>
 
 		<checkstyle unless:set="${target.command.error}" config="${checkstyleConfigFile}" failureProperty="checks.failed" maxWarnings="0" failOnViolation="false">
