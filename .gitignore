@@ -4,6 +4,7 @@
 *.zip
 *.hva
 *.old
+*.class
 *~
 /.externalToolBuilders
 /bin
