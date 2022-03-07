@@ -1,3 +1,7 @@
+package edu.skidmore.cs326.spring2022.skribbage;
+
+import org.apache.log4j.Logger;
+
 /**
 * @author Declan Morris
 * Encompasses all information portrayed by a card
@@ -62,7 +66,7 @@ public class Card {
                 break;
 
       case '9': pointValue = 9;
-                nextIdentifier = '10';
+                nextIdentifier = '0';
                 break;
 
       case '0': pointValue = 10;
@@ -74,11 +78,11 @@ public class Card {
                 break;
 
       case 'Q': pointValue = 10;
-                nextIdentifier = 'K'
+                nextIdentifier = 'K';
                 break;
 
       case 'K': pointValue = 10;
-                nextIdentifier = 'N'
+                nextIdentifier = 'N';
                 break;
 
       default:  System.out.println("ERROR: invalid identifier passed to constructor");
@@ -97,12 +101,27 @@ public class Card {
   private Suit suit;
 
   /**
+  * Getter for suit
+  */
+  public Suit getSuit() {
+    return suit;
+  }
+
+  /**
+  * Setter for suit
+  * @param inSuit input suit
+  */
+  private void setSuit(Suit inSuit) {
+    suit = inSuit;
+  }
+
+  /**
   * Constructor that assigns parameterized values to all attributes
   * @param inSuit inputted suit
   * @param inIdentifier inputted identifier
   */
-  public Card(Suit inSuit, char inIdentifier) {
-    suit = inSuit;
+  public Card(char inIdentifier, Suit inSuit) {
+    setSuit(inSuit);
     setIdentifier(inIdentifier);
   }
 }
