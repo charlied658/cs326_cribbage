@@ -2,18 +2,22 @@ package edu.skidmore.cs326.spring2022.skribbage.logic.test;
 
 import edu.skidmore.cs326.spring2022.skribbage.logic.Hand;
 
-import edu.skidmore.cs326.spring2022.skribbage.test.Before;
-import edu.skidmore.cs326.spring2022.skribbage.test.Logger;
-import edu.skidmore.cs326.spring2022.skribbage.test.SkribbageBattleRoyaleTest;
-import edu.skidmore.cs326.spring2022.skribbage.test.Test;
+import static org.junit.Assert.assertTrue;
+
+import static org.junit.Assert.assertNotNull;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import org.apache.log4j.Logger;
 
 /**
  * Unit Tests for Hand Class.
- * 
+ *
  * @author Dorjee
  */
 public class HandTest {
-  
+
   /**
    * Attribute to house the test instance.
    */
@@ -44,6 +48,6 @@ public class HandTest {
     testInstance.addCardToHand(card1);
     testInstance.removeCardFromHand(card1);
     assertEquals(testInstance.size(), 1);
- 
+
   }
 }

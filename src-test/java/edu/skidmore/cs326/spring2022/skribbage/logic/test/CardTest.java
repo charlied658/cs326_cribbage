@@ -1,9 +1,16 @@
+package edu.skidmore.cs326.spring2022.skribbage.logic.test;
+
 import static org.junit.Assert.assertTrue;
 
 import static org.junit.Assert.assertNotNull;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Before;
 import org.junit.Test;
+
+import edu.skidmore.cs326.spring2022.skribbage.logic.Card;
+import edu.skidmore.cs326.spring2022.skribbage.logic.Suit;
 
 import edu.skidmore.cs326.spring2022.skribbage.SkribbageBattleRoyale;
 
@@ -31,7 +38,7 @@ public class CardTest{
   */
   @Test
   public void testSetSuit() {
-      assertEqual(Suit.HEARTS, testInstance.getSuit());
+      assertEquals(Suit.HEARTS, testInstance.getSuit());
   }
 
   /**
@@ -39,6 +46,6 @@ public class CardTest{
   */
   @Test
   public void testSetIdentifier() {
-    assertEqual('J', testInstance.getIdentifier());
+    assertEquals('J', testInstance.getIdentifier());
   }
 }
