@@ -35,54 +35,67 @@ public class Card {
     switch (inIdentifier) {
       case 'A': pointValue = 1;
                 nextIdentifier = '2';
+                identifier = inIdentifier;
                 break;
 
       case '2': pointValue = 2;
                 nextIdentifier = '3';
+                identifier = inIdentifier;
                 break;
 
       case '3': pointValue = 3;
                 nextIdentifier = '4';
+                identifier = inIdentifier;
                 break;
 
       case '4': pointValue = 4;
                 nextIdentifier = '5';
+                identifier = inIdentifier;
                 break;
 
       case '5': pointValue = 5;
                 nextIdentifier = '6';
+                identifier = inIdentifier;
                 break;
 
       case '6': pointValue = 6;
                 nextIdentifier = '7';
+                identifier = inIdentifier;
                 break;
 
       case '7': pointValue = 7;
                 nextIdentifier = '8';
+                identifier = inIdentifier;
                 break;
 
       case '8': pointValue = 8;
                 nextIdentifier = '9';
+                identifier = inIdentifier;
                 break;
 
       case '9': pointValue = 9;
                 nextIdentifier = '0';
+                identifier = inIdentifier;
                 break;
 
       case '0': pointValue = 10;
                 nextIdentifier = 'J';
+                identifier = inIdentifier;
                 break;
 
       case 'J': pointValue = 10;
                 nextIdentifier = 'Q';
+                identifier = inIdentifier;
                 break;
 
       case 'Q': pointValue = 10;
                 nextIdentifier = 'K';
+                identifier = inIdentifier;
                 break;
 
       case 'K': pointValue = 10;
                 nextIdentifier = 'N';
+                identifier = inIdentifier;
                 break;
 
       default:  System.out.println("ERROR: invalid identifier passed to constructor");
@@ -94,6 +107,13 @@ public class Card {
   * The identifier of the next valid card in a run
   */
   private char nextIdentifier;
+
+  /**
+  * Getter for nextIdentifier (automatically set when identifier is set)
+  */
+  public char getNextIdentifier() {
+    return nextIdentifier;
+  }
 
   /**
   * The card's suite (must be one of HEARTS, CLUBS, DIAMONDS, SPADES)

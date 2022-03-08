@@ -48,4 +48,12 @@ public class CardTest{
   public void testSetIdentifier() {
     assertEquals('J', testInstance.getIdentifier());
   }
+
+  /**
+  * Test that nextIdentifier is working properly
+  */
+  @Test
+  public void testGetNextIdentifier() {
+    assertEquals('Q', testInstance.getNextIdentifier());
+  }
 }
