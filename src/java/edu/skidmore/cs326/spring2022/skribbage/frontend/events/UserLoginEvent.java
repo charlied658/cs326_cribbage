@@ -2,6 +2,7 @@ package edu.skidmore.cs326.spring2022.skribbage.frontend.events;
 
 
 
+import edu.skidmore.cs326.spring2022.skribbage.common.events.AccountEvent;
 import edu.skidmore.cs326.spring2022.skribbage.common.events.CribbageEvent;
 import edu.skidmore.cs326.spring2022.skribbage.common.EventType;
 import edu.skidmore.cs326.spring2022.skribbage.common.User;
@@ -11,7 +12,7 @@ import edu.skidmore.cs326.spring2022.skribbage.common.User;
  * DTO associated with a user attempting to login.
  * @author Alex Carney
  */
-public class UserLoginEvent extends CribbageEvent {
+public class UserLoginEvent extends AccountEvent {
 
 
     private final User user;
@@ -25,7 +26,7 @@ public class UserLoginEvent extends CribbageEvent {
      * @throws IllegalArgumentException if {@code source} is {@code null}
      */
     public UserLoginEvent(Object source, User user) {
-        super(source, EventType.USER_LOGIN.toString());
+        super(source, EventType.USER_LOGIN.toString(), user);
         this.user = user;
     }
 
