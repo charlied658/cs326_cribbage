@@ -32,11 +32,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 /**
- * 
- * @author Zoe Beals
- *
- */
-
+* Class.....
+* @author Zoe Beals
+*
+*/
 public class LoginPage {
 	// Text username;
 //	Text password;
@@ -52,7 +51,7 @@ public class LoginPage {
 //	JPanel buttons;
 
 	/**
-	 * 
+	 * Lol.
 	 */
 	private JButton changePass; // Button to eventually change password
 	/**
@@ -96,7 +95,11 @@ public class LoginPage {
 //				setup();
 //			}
 //		});
+		/**
+		 * 
+		 */
 		frame = new JFrame("Skribbage Battle Royale");
+
 		buttonPanel = new JPanel();
 		textPanel = new JPanel();
 		user = new JLabel("Username: ");
