@@ -1,4 +1,4 @@
-package us.daveread.edu.graphics.test;
+package edu.skidmore.cs326.spring2022.skribbage.frontend.demo;
 
 import java.awt.Color;
 import java.awt.Dimension;
