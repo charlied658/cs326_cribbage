@@ -1,6 +1,7 @@
 package edu.skidmore.cs326.spring2022.skribbage.frontend;
 //import java.awt.Point;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 //import javax.swing.JComboBox;
@@ -42,13 +43,13 @@ public class LoginPage {
 //	JPanel buttons;
 	
 
-	JButton changePass; //Button to eventually change password
-	JFrame frame; //frame of the page
-	JPanel buttonPanel, textPanel; //panels to hold the buttons and the user inputs
-	JLabel user, pass; // uesrname and password labels
-	JTextField userField, passField; //textfields for username and password input
-	JButton login; //login button
-	boolean[] userInputs = new boolean[2]; //boolean to hold if username and password were both successfully entered and the enter key was pressed
+	private JButton changePass; //Button to eventually change password
+	private JFrame frame; //frame of the page
+	private JPanel buttonPanel, textPanel; //panels to hold the buttons and the user inputs
+	private JLabel user, pass; // uesrname and password labels
+	private JTextField userField, passField; //textfields for username and password input
+	private JButton login; //login button
+	private boolean[] userInputs = new boolean[2]; //boolean  to hold if username and password were both successfully entered and the enter key was pressed
 	
 	/**
 	 * LoginPage constructor
@@ -71,7 +72,7 @@ public class LoginPage {
 		user = new JLabel("Username: ");
 		pass = new JLabel("Password: ");
 		userField = new JTextField(10);
-		passField = new JTextField(10);
+		passField = new JPasswordField(10);
 		//adds a listener to the text field to be able to get the input the user types
 		userField.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
