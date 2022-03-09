@@ -1,4 +1,4 @@
-package edu.skidmore.cs326.spring2022.skribbage.common;
+package edu.skidmore.cs326.spring2022.skribbage.common.events;
 
 import java.beans.PropertyChangeEvent;
 

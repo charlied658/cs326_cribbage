@@ -11,5 +11,6 @@ public enum EventType {
     USER_LOGIN,
     USER_LOGIN_HASHED,
     USER_LOGIN_RESPONSE,
+    USER_CHANGE_PASSWORD,
 
 }
