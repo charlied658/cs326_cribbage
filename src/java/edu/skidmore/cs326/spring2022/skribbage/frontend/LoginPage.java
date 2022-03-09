@@ -1,6 +1,8 @@
 package edu.skidmore.cs326.spring2022.skribbage.frontend;
+
 //import java.awt.Point;
 import javax.swing.JPanel;
+
 import javax.swing.JPasswordField;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -28,8 +30,15 @@ import java.awt.FlowLayout;
 //import us.daveread.edu.graphics.shape.impl.Rectangle;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+
+/**
+ * 
+ * @author Zoe Beals
+ *
+ */
+
 public class LoginPage {
-	//Text username;
+	// Text username;
 //	Text password;
 //	JButton loginButton;
 //	JButton changePassword;
@@ -41,23 +50,44 @@ public class LoginPage {
 //	JLabel username;
 //	Text logo;
 //	JPanel buttons;
-	
 
-	private JButton changePass; //Button to eventually change password
-	private JFrame frame; //frame of the page
-	private JPanel buttonPanel, textPanel; //panels to hold the buttons and the user inputs
-	private JLabel user, pass; // uesrname and password labels
-	private JTextField userField, passField; //textfields for username and password input
-	private JButton login; //login button
-	private boolean[] userInputs = new boolean[2]; //boolean  to hold if username and password were both successfully entered and the enter key was pressed
-	
 	/**
-	 * LoginPage constructor
-	 * instantiates all of the class variables with appropriate information
-	 * checks for input other than an empty string in username and password textfields
-	 * changes state of login button based on user inputs.
-	 * adds button panel and inputs panel to frame and displays frame
-	 * @author zbeals
+	 * 
+	 */
+	private JButton changePass; // Button to eventually change password
+	/**
+	 * 
+	 */
+	private JFrame frame; // frame of the page
+	/**
+	 * 
+	 */
+	private JPanel buttonPanel, textPanel; // panels to hold the buttons and the user inputs
+	/**
+	 * 
+	 */
+	private JLabel user, pass; // uesrname and password labels
+	/**
+	 * 
+	 */
+	private JTextField userField, passField; // textfields for username and password input
+	/**
+	 * 
+	 */
+	private JButton login; // login button
+	/**
+	 * 
+	 */
+	private boolean[] userInputs = new boolean[2]; // boolean to hold if username and password were both successfully
+													// entered and the enter key was pressed
+
+	/**
+	 * LoginPage constructor instantiates all of the class variables with
+	 * appropriate information checks for input other than an empty string in
+	 * username and password textfields changes state of login button based on user
+	 * inputs. adds button panel and inputs panel to frame and displays frame
+	 * 
+	 *
 	 */
 	public LoginPage() {
 //		temp = new MainFrame(this, 900, 900, false);
@@ -73,54 +103,54 @@ public class LoginPage {
 		pass = new JLabel("Password: ");
 		userField = new JTextField(10);
 		passField = new JPasswordField(10);
-		//adds a listener to the text field to be able to get the input the user types
+		// adds a listener to the text field to be able to get the input the user types
 		userField.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
 				if (userField.getText() != "") {
-					userInputs[0] = true; //sets username input to valid
+					userInputs[0] = true; // sets username input to valid
 				}
 			}
 		});
-		//adds a listener to the text field to be able to get the input the user types
+		// adds a listener to the text field to be able to get the input the user types
 		passField.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
 				if (passField.getText() != "") {
-					userInputs[1] = true; //sets pasword input to valid
+					userInputs[1] = true; // sets pasword input to valid
 				}
 			}
 		});
 		login = new JButton("Login");
-		//adds a listener to the button to be able to change state
+		// adds a listener to the button to be able to change state
 		login.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
 				if (userInputs[0] && userInputs[1]) {
-					login.setBackground(Color.green); //set color to green to represent valid login 
+					login.setBackground(Color.green); // set color to green to represent valid login
 				} else {
-					login.setBackground(Color.red); //set color to red to represent invalid login
+					login.setBackground(Color.red); // set color to red to represent invalid login
 				}
 			}
 		});
 		changePass = new JButton("Change Password");
 		textPanel.setLayout(new BoxLayout(textPanel, BoxLayout.PAGE_AXIS));
 		buttonPanel.setLayout(new FlowLayout());
-		//adding things to each panel
+		// adding things to each panel
 		textPanel.add(user);
 		textPanel.add(userField);
 		textPanel.add(pass);
 		textPanel.add(passField);
 		buttonPanel.add(login);
 		buttonPanel.add(changePass);
-		//adding to the frame
+		// adding to the frame
 		frame.add(textPanel, BorderLayout.PAGE_START);
 		frame.add(buttonPanel, BorderLayout.PAGE_END);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.pack();
 		frame.setVisible(true);
-		
+
 	}
-	
+
 	public void setup() {
-		//username = new JLabel("hello");
+		// username = new JLabel("hello");
 //		logo = new Text("Skribbage Battle Royale", new Point(200, 100), 40, Color.black);
 //		username = new Text("Enter username: ", new Point(10, 20), 15, Color.black);
 //		password = new Text("Enter password: ", new Point(10, 40), 15, Color.black);
@@ -164,7 +194,7 @@ public class LoginPage {
 //		});
 //		add(loginButton);
 //		add(passwordField);
-		//Trying out springlayout
+		// Trying out springlayout
 //		loginButton = new JButton("Login");
 //		buttons = new JPanel();
 //		buttons.setLayout(new FlowLayout());
@@ -192,9 +222,9 @@ public class LoginPage {
 //		temp.add(buttons, BorderLayout.PAGE_END);
 //		temp.pack();
 //		temp.setVisible(true);
-		
+
 	}
-	
+
 //	public static void makeCompactGrid(Container parent, int rows, int cols, int initialX, int initialY, int xPad, int yPad) {
 //		SpringLayout layout;
 //		try {
@@ -252,7 +282,7 @@ public class LoginPage {
 //		}
 //		pCons.setConstraint(SpringLayout.SOUTH, Spring.sum(Spring.constant(pad), maxHeightSpring));
 //	}
-	
+
 	public static void main(String[] args) {
 		new LoginPage();
 	}
