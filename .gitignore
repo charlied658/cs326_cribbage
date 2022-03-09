@@ -4,6 +4,7 @@
 *.zip
 *.hva
 *.old
+*.class
 *~
 /.externalToolBuilders
 /bin
@@ -18,3 +19,4 @@
 .classpath
 .settings
 .checkstyle
+/.metadata/
