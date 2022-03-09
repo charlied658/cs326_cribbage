@@ -12,20 +12,34 @@ import org.apache.log4j.Logger;
  * event for all attached listeners to handle.
  *
  * @author Alex Carney
+ * @EditedAndReviewed: Sten leinasaar
  */
 public final class EventManager {
-
+    /**
+     * Private static final instance for eager singelton.
+     */
     private static final EventManager INSTANCE;
+    /**
+     * Private static final instance of a Logger for this class.
+     */
     private static final Logger LOG;
+    /**
+     * Static block.
+     */
     static {
     	INSTANCE = new EventManager();
     	LOG = Logger.getLogger(EventManager.class);
     }
-
-    //Handles the mapping between EventType and registered Listeners automatically
+    /**
+     * Handles the mapping between EventType and Registered listeners automatically.
+     */
     private final PropertyChangeSupport support;
 
+    /**
+     * Private constructor to implement eager singelton.
+     */
     private EventManager() {
+        LOG.info("Private Constructor of EventManager");
         support = new PropertyChangeSupport(this);
     }
 

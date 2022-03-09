@@ -5,7 +5,7 @@ package edu.skidmore.cs326.spring2022.skribbage.common;
  * written, its associated title must be included with this enum.
  *
  * @author Alex Carney
- *
+ * @Reviewed Sten Leinasaar @at March 9, 2022
  */
 public enum EventType {
     USER_LOGIN,
