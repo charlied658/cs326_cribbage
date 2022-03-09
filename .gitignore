@@ -19,3 +19,5 @@
 .classpath
 .settings
 .checkstyle
+.DS_Store
+/.metadata/
