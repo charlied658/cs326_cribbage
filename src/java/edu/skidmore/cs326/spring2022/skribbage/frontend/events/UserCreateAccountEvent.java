@@ -5,6 +5,9 @@ import edu.skidmore.cs326.spring2022.skribbage.common.User;
 import edu.skidmore.cs326.spring2022.skribbage.common.events.AccountEvent;
 
 public class UserCreateAccountEvent extends AccountEvent {
+
+    private final User user;
+
     /**
      * Constructs a new {@code PropertyChangeEvent}.
      *
@@ -14,5 +17,10 @@ public class UserCreateAccountEvent extends AccountEvent {
      */
     public UserCreateAccountEvent(Object source, User associatedUser) {
         super(source, EventType.USER_CREATE_ACCOUNT.toString(), associatedUser);
+        this.user = associatedUser;
+    }
+
+    public User getUser() {
+        return user;
     }
 }
