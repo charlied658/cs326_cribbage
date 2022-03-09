@@ -14,7 +14,7 @@ public class Hand {
 
   /**
    * Get method to return a hand.
-   * 
+   *
    * @return Hand the players hand
    */
   public ArrayList<Card> getHand() {
@@ -23,7 +23,7 @@ public class Hand {
 
   /**
    * Adding card to hand.
-   * 
+   *
    * @param card
    *          to add
    */
@@ -33,7 +33,7 @@ public class Hand {
 
   /**
    * Removing card from hand.
-   * 
+   *
    * @param card
    *          to remove
    */
