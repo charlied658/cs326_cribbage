@@ -36,10 +36,15 @@ public class DatabaseManager {
 			   String storedPassword = "";
 			   
 			 try {
-				 	Connection conn  = DriverManager.getConnection(DB_URL, USER, PASS);
-			       Statement stmt = conn.createStatement();
-			       ResultSet rs = stmt.executeQuery(tempQuery);   
-			       storedPassword = rs.getString("password");		   
+				 Connection conn  = getDB();
+			     Statement stmt = conn.createStatement();
+				 ResultSet rs = stmt.executeQuery(tempQuery); 
+			    
+			     
+			     	 rs.next();
+			    	 storedPassword = rs.getString("Password");	
+			     
+			     	   
 				 
 			 } catch(SQLException e) {
 				 System.out.println("Account not found");
@@ -47,16 +52,19 @@ public class DatabaseManager {
 				 
 			 }
 			   
-			 if(storedPassword == password) {
+		 
+			 if(storedPassword.compareTo(password) == 0){
+				 System.out.println("Password Accepted");
 				   return true;
 			   } else {
+				   System.out.println("Incorrect Password");
 				   return false;
 			   }
 			 
 			 	  	   
 		   }
 		   
-		   private Connection getDB() {
+		   private static Connection getDB() {
 			    
 			   if(dbConnection == null) {
 				   try{
@@ -89,7 +97,7 @@ public class DatabaseManager {
 		   
 		   
 		   public static void main(String[] args) {
-			      System.out.println("Connecting to a selected database...");
+			    
 			      // Open a connection
 			      //try(Connection conn = DriverManager.getConnection(DB_URL, USER, PASS); 	       
 //			         Statement stmt = conn.createStatement();
@@ -116,7 +124,7 @@ public class DatabaseManager {
 			      
 			      
 			      
-			     userAuthenticate("nchantzi","subject");
+			     userAuthenticate("nchantzi","ILoveSQL");
 			     
 			   }
 
