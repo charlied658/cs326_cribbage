@@ -35,8 +35,10 @@ public final class EventManager {
      * @param eventType From the EventType enum.
      * @param pcl A new instance of an event listener, which implements PropertyChangeListener
      */
-    public void addPropertyChangeListener(EventType eventType, PropertyChangeListener pcl) {
-        support.addPropertyChangeListener(eventType.toString(), pcl);
+    public void addPropertyChangeListener(PropertyChangeListener pcl, EventType... eventType) {
+        for(EventType event : eventType) {
+            support.addPropertyChangeListener(event.toString(), pcl);
+        }
     }
 
     /**
