@@ -1,4 +1,4 @@
-package edu.skidmore.cs326.spring2022.skribbage.frontend;
+package edu.skidmore.cs326.spring2022.skribbage.frontend.demo;
 
 import java.awt.Color;
 import java.awt.Point;
@@ -18,9 +18,10 @@ import us.daveread.edu.utilities.Utility;
 import us.daveread.edu.graphics.shape.impl.Rectangle;
 
 public class RulesPage extends DrawingSurface implements ActionListener{
-    int mainframeWidth = 650;
-    int mainframeHeight = 1500;
-    MainFrame mf;
+    private int mainframeWidth = 650;
+    private int mainframeHeight = 1500;
+    private MainFrame mf;
+    private JButton returnToMainMenu;
     
 
 /**
@@ -35,13 +36,25 @@ public class RulesPage extends DrawingSurface implements ActionListener{
         mf.setLayout(null);
         Rectangle background = new Rectangle(new Point(0,0), new Dimension(mainframeWidth, mainframeHeight),
             Color.DARK_GRAY, Color.DARK_GRAY);
-        Text header = new Text("Skribbage Battle Royale Rules", new Point(20, 60), 40, Color.WHITE);
-        JButton returnToMainMenu = new JButton("Return to Main Menu");
+        Text header = new Text("Skribbage Battle Royale Rules", new Point(20, 70), 40, Color.WHITE);
+        returnToMainMenu = new JButton("Return to Main Menu");
         returnToMainMenu.setBounds(20, 80, 140, 25);
         returnToMainMenu.setBackground(Color.LIGHT_GRAY);
         returnToMainMenu.addActionListener(this);
         
+        JTextArea rulesArea = new JTextArea("", 15, 30);
+        rulesArea.setLineWrap(true);
+        rulesArea.setWrapStyleWord(true);
+        rulesArea.setEditable(false);
         
+        JScrollPane scrollPane =
+            new JScrollPane(rulesArea, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
+              JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+        scrollPane.setBounds(40, 120, 570, 800);
+        scrollPane.getViewport().setBackground(Color.DARK_GRAY);
+        add(scrollPane);
+        
+        rulesArea.setText("The objective in Cribbage is to be the first player to get 121 points. The gameplay is divided into three distinct parts, The Deal, The Play and The Show.");
 
         /*
         JTextArea intro = new JTextArea("The objective in Cribbage is to be the first player to get 121 points. "
@@ -85,7 +98,7 @@ public class RulesPage extends DrawingSurface implements ActionListener{
         }
         */
     }
-    
+    /*
     public boolean detectsMouseClick(Rectangle rec) {
         for (int i = 0; i < rec.getDimension().width; i++) {
             for (int j = 0; j < rec.getDimension().height; j++) {
@@ -96,18 +109,19 @@ public class RulesPage extends DrawingSurface implements ActionListener{
         }
         return false;
     }
-    
-    public void closeWindow(Rectangle rec) {
-        mf.dispatchEvent(new WindowEvent(mf, WindowEvent.WINDOW_CLOSING));
-    }
-
-    public static void main(String[] args) {
-        new RulesPage();
-    }
+    */
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        mf.dispatchEvent(new WindowEvent(mf, WindowEvent.WINDOW_CLOSING));
-
+        //mf.dispatchEvent(new WindowEvent(mf, WindowEvent.WINDOW_CLOSING));
+        if (e.getSource().equals(returnToMainMenu)) {
+            mf.dispose();
+            PastGamesPage pastGames = new PastGamesPage();
+            pastGames.setVisible(true);
+        }
+    }
+    
+    public static void main(String[] args) {
+        new RulesPage();
     }
 }
