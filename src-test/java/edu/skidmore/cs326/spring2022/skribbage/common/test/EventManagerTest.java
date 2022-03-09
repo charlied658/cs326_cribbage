@@ -45,7 +45,34 @@ public class EventManagerTest {
 	 */
 	@Test
 	public void testGetInstance() {
+		LOG.info("Beginning the testGetInstance");
 		assertEquals(testInstance, EventManager.getInstance());
+		LOG.info("testGetInstance completed");
+	}
+	
+	/**
+	 * Test case to test addPropertChangeListener method. 
+	 * This test ensures that PropertyChangeListener is added to the list of propertyChangeListeners. 
+	 * It is verified by checking if notify fires an update.
+	 */
+	@Test
+	public void testAddPropertyChangeListener() {
+		LOG.info("Beginning to test addPropertyChangeListener");
+	}
+	
+	/**
+	 * Test case to test if PropertyChangeListener was removed correctly.
+	 */
+	@Test
+	public void testRemovePropertyChangeListener() {
+		LOG.info("Beginning to test removePropertyChangeListener");
+	}
+	/**
+	 * Test case to notify all the added PropertyChangeListeners.
+	 */
+	@Test
+	public void testNotify() {
+		LOG.info("Began testing notify method");
 	}
 	
 	/**
