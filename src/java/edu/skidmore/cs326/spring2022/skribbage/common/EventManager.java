@@ -4,6 +4,8 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
+import org.apache.log4j.Logger;
+
 /**
  * A singleton manager class that handles registering listeners to listen to
  * events, along with implementing the 'notify' method, which fires an
@@ -13,12 +15,17 @@ import java.beans.PropertyChangeSupport;
  */
 public final class EventManager {
 
-    private static EventManager INSTANCE;
+    private static final EventManager INSTANCE;
+    private static final Logger LOG;
+    static {
+    	INSTANCE = new EventManager();
+    	LOG = Logger.getLogger(EventManager.class);
+    }
 
     //Handles the mapping between EventType and registered Listeners automatically
     private final PropertyChangeSupport support;
 
-    public EventManager() {
+    private EventManager() {
         support = new PropertyChangeSupport(this);
     }
 
@@ -57,10 +64,6 @@ public final class EventManager {
      * @return The single instance of EventManager
      */
     public synchronized static EventManager getInstance() {
-        if(INSTANCE == null) {
-            INSTANCE = new EventManager();
-        }
-
         return INSTANCE;
     }
 
