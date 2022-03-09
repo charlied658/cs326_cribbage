@@ -8,6 +8,9 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 //import javax.swing.JComboBox;
 import javax.swing.JTextField;
+
+import org.apache.log4j.Logger;
+
 //import javax.swing.Spring;
 //import javax.swing.SpringLayout;
 import javax.swing.JFrame;
@@ -79,7 +82,11 @@ public class LoginPage {
 	 */
 	private boolean[] userInputs = new boolean[2]; // boolean to hold if username and password were both successfully
 													// entered and the enter key was pressed
-
+	private static final Logger LOG;
+	
+	static {
+	    LOG = Logger.getLogger(LoginPage.class);
+	}
 	/**
 	 * LoginPage constructor instantiates all of the class variables with
 	 * appropriate information checks for input other than an empty string in

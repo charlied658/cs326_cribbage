@@ -9,6 +9,8 @@ import java.awt.Dimension;
 import java.awt.Graphics2D;
 import javax.swing.*;
 
+import org.apache.log4j.Logger;
+
 import us.daveread.edu.graphics.shape.Drawable;
 import us.daveread.edu.graphics.shape.impl.Image;
 import us.daveread.edu.graphics.shape.impl.Text;
@@ -21,6 +23,11 @@ public class RulesPage extends DrawingSurface implements ActionListener{
     int mainframeWidth = 650;
     int mainframeHeight = 1500;
     MainFrame mf;
+    private static final Logger LOG;
+    
+    static {
+        LOG = Logger.getLogger(RulesPage.class);
+    }
     
 
 /**
@@ -28,10 +35,12 @@ public class RulesPage extends DrawingSurface implements ActionListener{
  */
     public RulesPage(){
         mf = new MainFrame(this, "Rules Page", mainframeWidth, mainframeHeight, false);
+        LOG.info("Calling setup method from the public RulesPage constructor");
         setup();
     }
     
     private void setup() {
+        LOG.debug("Beginning the setup in setup method");
         mf.setLayout(null);
         Rectangle background = new Rectangle(new Point(0,0), new Dimension(mainframeWidth, mainframeHeight),
             Color.DARK_GRAY, Color.DARK_GRAY);
@@ -70,6 +79,7 @@ public class RulesPage extends DrawingSurface implements ActionListener{
         add(header);
         add(returnToMainMenu);
         
+        
         /*
         String[] introSplit = intro.split(" ");
         int introFontSize = 18;
@@ -85,7 +95,11 @@ public class RulesPage extends DrawingSurface implements ActionListener{
         }
         */
     }
-    
+    /**
+     * 
+     * @param rec
+     * @return
+     */
     public boolean detectsMouseClick(Rectangle rec) {
         for (int i = 0; i < rec.getDimension().width; i++) {
             for (int j = 0; j < rec.getDimension().height; j++) {
@@ -96,15 +110,23 @@ public class RulesPage extends DrawingSurface implements ActionListener{
         }
         return false;
     }
-    
+    /**
+     * 
+     * @param rec
+     */
     public void closeWindow(Rectangle rec) {
         mf.dispatchEvent(new WindowEvent(mf, WindowEvent.WINDOW_CLOSING));
     }
-
+    /**
+     * 
+     * @param args
+     */
     public static void main(String[] args) {
         new RulesPage();
     }
-
+    /**
+     * 
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         mf.dispatchEvent(new WindowEvent(mf, WindowEvent.WINDOW_CLOSING));
