@@ -27,21 +27,20 @@ public class EventManagerTest {
 	private EventManager testInstance;
 
 	/**
-	 * @BEFORE 
+	 * @BEFORE
 	 * 
-	 * TO set up necessary objects and variables that will be used during testing. 
-	 * Runs before each test method is run.
+	 *         TO set up necessary objects and variables that will be used during
+	 *         testing. Runs before each test method is run.
 	 */
 	@Before
 	public void setUp() {
 		testInstance = EventManager.getInstance();
-		
-		
+
 		LOG.info("SetUp method completed");
 	}
-	
+
 	/**
-	 * Test method to test the eager singelton instance. 
+	 * Test method to test the eager singelton instance.
 	 */
 	@Test
 	public void testGetInstance() {
@@ -49,17 +48,17 @@ public class EventManagerTest {
 		assertEquals(testInstance, EventManager.getInstance());
 		LOG.info("testGetInstance completed");
 	}
-	
+
 	/**
-	 * Test case to test addPropertChangeListener method. 
-	 * This test ensures that PropertyChangeListener is added to the list of propertyChangeListeners. 
-	 * It is verified by checking if notify fires an update.
+	 * Test case to test addPropertChangeListener method. This test ensures that
+	 * PropertyChangeListener is added to the list of propertyChangeListeners. It is
+	 * verified by checking if notify fires an update.
 	 */
 	@Test
 	public void testAddPropertyChangeListener() {
 		LOG.info("Beginning to test addPropertyChangeListener");
 	}
-	
+
 	/**
 	 * Test case to test if PropertyChangeListener was removed correctly.
 	 */
@@ -67,6 +66,7 @@ public class EventManagerTest {
 	public void testRemovePropertyChangeListener() {
 		LOG.info("Beginning to test removePropertyChangeListener");
 	}
+
 	/**
 	 * Test case to notify all the added PropertyChangeListeners.
 	 */
@@ -74,16 +74,15 @@ public class EventManagerTest {
 	public void testNotify() {
 		LOG.info("Began testing notify method");
 	}
-	
+
 	/**
-	 * @AFTER method that runs after each test case. 
+	 * @AFTER method that runs after each test case.
 	 * 
-	 * Currently created just in case some tearDown is needed
+	 *        Currently created just in case some tearDown is needed
 	 */
 	@After
 	public void tearDown() {
-		
+
 	}
-	
-	
+
 }

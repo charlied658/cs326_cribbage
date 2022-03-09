@@ -1,4 +1,6 @@
 package edu.skidmore.cs326.spring2022.skribbage.frontend;
+<<<<<<< HEAD
+=======
 
 //import java.awt.Point;
 import javax.swing.JPanel;
@@ -8,14 +10,43 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 //import javax.swing.JComboBox;
 import javax.swing.JTextField;
+
+import org.apache.log4j.Logger;
+
 //import javax.swing.Spring;
 //import javax.swing.SpringLayout;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+>>>>>>> 4ea3a5dc4e405a2c0e145a5622942bfdfbc4c79d
 
-import java.awt.BorderLayout;
-//import java.awt.CardLayout;
 import java.awt.Color;
+<<<<<<< HEAD
+import java.awt.Point;
+
+import us.daveread.edu.graphics.shape.Drawable;
+import us.daveread.edu.graphics.shape.impl.Text;
+import us.daveread.edu.graphics.surface.DialogPosition;
+import us.daveread.edu.graphics.surface.DrawingSurface;
+import us.daveread.edu.graphics.surface.MainFrame;
+
+//import java.awt.Point;
+/**
+ * 
+ * @author zbeals
+ *
+ */
+public class LoginPage extends DrawingSurface {
+	
+	private MainFrame loginPage;
+	private Text login;
+	private String username, usernameToChange;
+	private String password, passwordToChange, verifyPasswordToChange;
+	private Text changePassword;
+	
+	public LoginPage() {
+		loginPage = new MainFrame(this, "Skribbage Battle Royale", 900, 900, true);
+		setup();
+=======
 //import java.awt.Component;
 //import java.awt.Container;
 //import java.awt.Graphics2D;
@@ -32,11 +63,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 /**
- * 
- * @author Zoe Beals
- *
- */
-
+* Class.....
+* @author Zoe Beals
+*
+*/
 public class LoginPage {
 	// Text username;
 //	Text password;
@@ -52,7 +82,7 @@ public class LoginPage {
 //	JPanel buttons;
 
 	/**
-	 * 
+	 * Lol.
 	 */
 	private JButton changePass; // Button to eventually change password
 	/**
@@ -80,7 +110,11 @@ public class LoginPage {
 	 */
 	private boolean[] userInputs = new boolean[2]; // boolean to hold if username and password were both successfully
 													// entered and the enter key was pressed
-
+	private static final Logger LOG;
+	
+	static {
+	    LOG = Logger.getLogger(LoginPage.class);
+	}
 	/**
 	 * LoginPage constructor instantiates all of the class variables with
 	 * appropriate information checks for input other than an empty string in
@@ -96,7 +130,11 @@ public class LoginPage {
 //				setup();
 //			}
 //		});
+		/**
+		 * 
+		 */
 		frame = new JFrame("Skribbage Battle Royale");
+
 		buttonPanel = new JPanel();
 		textPanel = new JPanel();
 		user = new JLabel("Username: ");
@@ -147,9 +185,48 @@ public class LoginPage {
 		frame.pack();
 		frame.setVisible(true);
 
+>>>>>>> 4ea3a5dc4e405a2c0e145a5622942bfdfbc4c79d
 	}
 
 	public void setup() {
+<<<<<<< HEAD
+		login = new Text("Login", new Point(50, 50), 20, Color.black, Color.blue);
+		changePassword = new Text("Change Password", new Point(login.getLocation().x + 100, 50), 20, Color.black, Color.blue);
+		add(login);
+		add(changePassword);
+	}
+	
+	public void changePasswordButtonClicked(boolean presentUser) {
+		if (presentUser) {
+			usernameToChange = getUserInput("Change Password", "Enter username", DialogPosition.CENTER_ALL);
+		}
+		passwordToChange = getUserInput("Change Password", "Enter new password", DialogPosition.CENTER_ALL, true);
+		verifyPasswordToChange = getUserInput("Change Password", "Enter password again", DialogPosition.CENTER_ALL, true);
+	}
+	
+	public void drawableMouseClick(Drawable e) {
+		if (e == login) {
+			login.setFillColor(Color.GREEN);
+			addMessage("Login button clicked");
+			username = getUserInput("Login", "Enter username", DialogPosition.CENTER_ALL);
+			password = getUserInput("Login", "Enter password for: " + username, DialogPosition.CENTER_ALL, true);
+		} else if (e == changePassword) {
+			changePassword.setFillColor(Color.GREEN);
+			changePasswordButtonClicked(true);
+			if (passwordToChange.equals(verifyPasswordToChange)) {
+				addMessage("Passwords are the same");
+				password = passwordToChange;
+				username = usernameToChange;
+			} else {
+				addMessage("Passwords are not the same");
+				while (!passwordToChange.equals(verifyPasswordToChange)) {
+					changePasswordButtonClicked(false);
+				}
+			}
+		}
+	}
+	
+=======
 		// username = new JLabel("hello");
 //		logo = new Text("Skribbage Battle Royale", new Point(200, 100), 40, Color.black);
 //		username = new Text("Enter username: ", new Point(10, 20), 15, Color.black);
@@ -283,8 +360,8 @@ public class LoginPage {
 //		pCons.setConstraint(SpringLayout.SOUTH, Spring.sum(Spring.constant(pad), maxHeightSpring));
 //	}
 
+>>>>>>> 4ea3a5dc4e405a2c0e145a5622942bfdfbc4c79d
 	public static void main(String[] args) {
 		new LoginPage();
 	}
-
 }
