@@ -1,8 +1,8 @@
-package edu.skidmore.cs326.spring2022.skribbage.frontend;
+package edu.skidmore.cs326.spring2022.skribbage.frontend.events;
 
 
 
-import edu.skidmore.cs326.spring2022.skribbage.common.CribbageEvent;
+import edu.skidmore.cs326.spring2022.skribbage.common.events.CribbageEvent;
 import edu.skidmore.cs326.spring2022.skribbage.common.EventType;
 import edu.skidmore.cs326.spring2022.skribbage.common.User;
 
