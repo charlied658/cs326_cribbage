@@ -23,7 +23,7 @@ public class EventManagerTest {
 	static {
 		LOG = Logger.getLogger(EventManagerTest.class);
 	}
-
+ 
 	private EventManager testInstance;
 
 	/**
