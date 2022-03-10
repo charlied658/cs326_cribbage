@@ -9,6 +9,8 @@ import java.awt.Dimension;
 import java.awt.Graphics2D;
 import javax.swing.*;
 
+import org.apache.log4j.Logger;
+
 import us.daveread.edu.graphics.shape.Drawable;
 import us.daveread.edu.graphics.shape.impl.Image;
 import us.daveread.edu.graphics.shape.impl.Text;
@@ -22,17 +24,24 @@ public class RulesPage extends DrawingSurface implements ActionListener{
     private int mainframeHeight = 1500;
     private MainFrame mf;
     private JButton returnToMainMenu;
+    private static final Logger LOG;
+    
+    static {
+        LOG = Logger.getLogger(RulesPage.class);
+    }
     
 
 /**
  * Sets up mainframe in which rules will be displayed.
  */
     public RulesPage(){
+        LOG.trace("Entering RulesPage Constructor");
         mf = new MainFrame(this, "Rules Page", mainframeWidth, mainframeHeight, false);
         setup();
     }
     
     private void setup() {
+        LOG.trace("Entering the setup method in RulesPage.java");
         setLayout(null);
         Rectangle background = new Rectangle(new Point(0,0), new Dimension(mainframeWidth, mainframeHeight),
             Color.DARK_GRAY, Color.DARK_GRAY);
@@ -119,6 +128,7 @@ public class RulesPage extends DrawingSurface implements ActionListener{
     //will, as the label suggests, take the user back to the main menu.
     @Override
     public void actionPerformed(ActionEvent e) {
+        LOG.trace("ActionPerfomed method in RulesPage.java");
         //mf.dispatchEvent(new WindowEvent(mf, WindowEvent.WINDOW_CLOSING));
         if (e.getSource().equals(returnToMainMenu)) {
             mf.dispose();
@@ -128,6 +138,7 @@ public class RulesPage extends DrawingSurface implements ActionListener{
     }
     
     public static void main(String[] args) {
+        LOG.trace("RulesPage main method");
         new RulesPage();
     }
 }
