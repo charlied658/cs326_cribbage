@@ -78,7 +78,11 @@ public class ActiveGame {
         else
             day = "" + DD;
         String nameOfGame = "";
-        String[] toReturn = {year+month+day, gameName, p1, p2};
+        if (gameName.equalsIgnoreCase("") == true)
+            nameOfGame = year+month+day;
+        else
+            nameOfGame = gameName;
+        String[] toReturn = {year+month+day, nameOfGame, p1, p2};
         return toReturn;
     }
     
