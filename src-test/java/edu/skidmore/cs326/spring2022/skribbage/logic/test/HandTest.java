@@ -1,22 +1,30 @@
 package edu.skidmore.cs326.spring2022.skribbage.logic.test;
 
+import static org.junit.Assert.assertEquals;
+
+import edu.skidmore.cs326.spring2022.skribbage.logic.Card;
 import edu.skidmore.cs326.spring2022.skribbage.logic.Hand;
-
-import static org.junit.Assert.assertTrue;
-
-import static org.junit.Assert.assertNotNull;
-
+import edu.skidmore.cs326.spring2022.skribbage.logic.Suit;
+import org.apache.log4j.Logger;
 import org.junit.Before;
 import org.junit.Test;
 
-import org.apache.log4j.Logger;
-
 /**
  * Unit Tests for Hand Class.
- *
+ * 
  * @author Dorjee
  */
 public class HandTest {
+  /**
+   * Logger for the class.
+   */
+  private static final Logger LOG;
+  /**
+   * Create static resources.
+   */
+  static {
+    LOG = Logger.getLogger(HandTest.class);
+  }
 
   /**
    * Attribute to house the test instance.
@@ -36,8 +44,9 @@ public class HandTest {
    */
   @Test
   public void testAddCardToHand() {
+    Card card = new Card('A', Suit.HEARTS);
     testInstance.addCardToHand(card);
-    assertEquals(testInstance[0], card);
+    assertEquals(testInstance.getHand().get(0), card);
   }
 
   /**
@@ -45,9 +54,10 @@ public class HandTest {
    */
   @Test
   public void testRemoveCardFromHand() {
+    Card card1 = new Card('3', Suit.DIAMONDS);
     testInstance.addCardToHand(card1);
     testInstance.removeCardFromHand(card1);
-    assertEquals(testInstance.size(), 1);
+    assertEquals(testInstance.getHand().size(), 1);
 
   }
 }
