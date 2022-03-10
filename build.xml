@@ -278,7 +278,7 @@
 		</fail>
 	</target>
 
-    <!-- Generate a checkstyle report -->
+    <!-- Generate a filtered checkstyle report -->
 	<target name="checkstyle-filtered" depends="init">
         <!-- Verify at least one filtering property was defined -->
         <condition property="target.command.error">
@@ -310,7 +310,7 @@
         <!-- Load the usage message -->
         <loadfile property="usage.message" srcfile="${taskdocCheckstyleFiltered}"/>
 
-        <!-- print alert and usage info. if parameters not set -->
+        <!-- print alert and usage info. if parameters are not set -->
         <fail if="target.command.error" >
             ERROR: Missing parameter(s)
             ${usage.message}

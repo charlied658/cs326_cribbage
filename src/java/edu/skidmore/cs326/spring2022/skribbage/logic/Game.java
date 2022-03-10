@@ -121,6 +121,10 @@
 //     //2) the dealer flips the top card on the remaining deck up (call it Card A)
 //     //3) the pone places the cut back on the deck
 //     //4) the dealer places Card A on top of the deck
+
+      //event lisenter
+      //get  event
+      //send response event 
 //
 //   }
 //
