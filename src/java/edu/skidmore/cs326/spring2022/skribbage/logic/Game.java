@@ -1,4 +1,6 @@
+package edu.skidmore.cs326.spring2022.skribbage.logic;
 import java.util.ArrayList;
+import org.apache.log4j.Logger;
 
 /**
 Game class has a deck and a list of players. It initializes the deck and list of players.
@@ -149,7 +151,12 @@ public class Game{
     for(int i = 0; i < theHand.size(); i++){
       Card c = theHand.get(i);
 
-      if (c.getSuit() == cardToRemove.getSuit() && Character.compare(c.getCardIdentifier(), cardToRemove.getCardIdentifier())){
+      // if (c.getSuit() == cardToRemove.getSuit() && Character.compare(c.getCardIdentifier(), cardToRemove.getCardIdentifier())){
+      //   theHand.remove(i);
+      //   return;
+      // }
+
+      if (c.getSuit() == cardToRemove.getSuit() && c.getCardIdentifier() == cardToRemove.getCardIdentifier()){
         theHand.remove(i);
         return;
       }
@@ -438,12 +445,12 @@ public class Game{
     char thirdCardId = thirdInRun.getCardIdentifier();
 
     //make sure there are no cards with the same identifiers
-    if (Character.equals(firstCardId, secondCardId) || Character.equals(firstCardId, thirdCardId)){
+    if (firstCardId == secondCardId || firstCardId == thirdCardId){
       //send information to front end that there isn't a run of 3
       return;
     }
 
-    if (Character.equals(secondCardId, thirdCardId)){
+    if (secondCardId == thirdCardId){
       //send information to front end that there isn't a run of 3
       return;
     }
@@ -461,16 +468,16 @@ public class Game{
     int numEqual = 0;
 
     //check the first next identifier
-    if (Character.equals(firstInRunNextId, secondCardId) || Character.equals(firstInRunNextId, thirdCardId)){
+    if (firstInRunNextId == secondCardId || firstInRunNextId == thirdCardId){
       numEqual++;
 
     }
 
-    if (Character.equals(secondInRunNextId, firstCardId) || Character.equals(secondInRunNextId, thirdCardId)){
+    if (secondInRunNextId == firstCardId || secondInRunNextId == thirdCardId){
       numEqual++;
     }
 
-    if (Character.equals(thirdInRunNextId, firstCardId) || Character.equals(thirdInRunNextId, secondCardId)){
+    if (thirdInRunNextId == firstCardId || thirdInRunNextId == secondCardId){
       numEqual++;
     }
 
@@ -506,17 +513,17 @@ public class Game{
     char fourthCardId = fourthInRun.getCardIdentifier();
 
     //make sure there are no cards with the same identifiers
-    if (Character.equals(firstCardId, secondCardId) || Character.equals(firstCardId, thirdCardId) || Character.equals(firstCardId, fourthCardId)){
+    if (firstCardId == secondCardId || firstCardId == thirdCardId || firstCardId == fourthCardId){
       //send information to front end that there isn't a run of 4
       return;
     }
 
-    if (Character.equals(secondCardId, thirdCardId) || Character.equals(secondCardId, fourthCardId)){
+    if (secondCardId == thirdCardId || secondCardId == fourthCardId){
       //send information to front end that there isn't a run of 4
       return;
     }
 
-    if (Character.equals(thirdCardId, fourthCardId)){
+    if (thirdCardId == fourthCardId){
       //send information to front end that there isn't a run of 4
       return;
     }
@@ -535,19 +542,19 @@ public class Game{
     int numEqual = 0;
 
     //check the first next identifier
-    if (Character.equals(firstInRunNextId, secondCardId) || Character.equals(firstInRunNextId, thirdCardId) || Character.equals(firstInRunNextId, fourthCardId)){
+    if (firstInRunNextId == secondCardId || firstInRunNextId == thirdCardId || firstInRunNextId == fourthCardId){
       numEqual++;
     }
 
-    if (Character.equals(secondInRunNextId, firstCardId) || Character.equals(secondInRunNextId, thirdCardId) || Character.equals(secondInRunNextId, fourthCardId)){
+    if (secondInRunNextId == firstCardId || secondInRunNextId == thirdCardId || secondInRunNextId == fourthCardId){
       numEqual++;
     }
 
-    if (Character.equals(thirdInRunNextId, firstCardId) || Character.equals(thirdInRunNextId, secondCardId) || Character.equals(thirdInRunNextId, fourthCardId)){
+    if (thirdInRunNextId == firstCardId || thirdInRunNextId == secondCardId || thirdInRunNextId == fourthCardId){
       numEqual++;
     }
 
-    if (Character.equals(fourthInRunNextId, firstCardId) || Character.equals(fourthInRunNextId, secondCardId) || Character.equals(fourthInRunNextId, thirdCardId)){
+    if (fourthInRunNextId == firstCardId || fourthInRunNextId == secondCardId || fourthInRunNextId == thirdCardId){
       numEqual++;
     }
 
