@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 /**
 Game class has a deck and a list of players. It initializes the deck and list of players.
 This class contains methods for the various phases of the game. However, at the moment,
@@ -90,8 +92,8 @@ public class Game{
 
     //FRONT END INTERACTION
     //assume you got the information from front end
-    Card [] toDiscardP1 ={new Card (Suit.DIAMONDS , '10'), new Card(Suit.HEARTS,'8')};
-    Card [] toDiscardP2 = {new Card(Suit.DIAMONDS, '4'), new Card(Suit.DIAMONDS , '7')};
+    Card [] toDiscardP1 ={new Card (Suit.DIAMONDS , "10"), new Card(Suit.HEARTS,"8")};
+    Card [] toDiscardP2 = {new Card(Suit.DIAMONDS, "4"), new Card(Suit.DIAMONDS , "7")};
 
     discardToCrib(toDiscardP1, toDiscardP2);
 
@@ -147,7 +149,7 @@ public class Game{
     for(int i = 0; i < theHand.size(); i++){
       Card c = theHand.get(i);
 
-      if (c.getSuit() == cardToRemove.getSuit() && Character.compare(c.getCardIdentifier(), cardToRemove.getCardIdentifier()){
+      if (c.getSuit() == cardToRemove.getSuit() && Character.compare(c.getCardIdentifier(), cardToRemove.getCardIdentifier())){
         theHand.remove(i);
         return;
       }
