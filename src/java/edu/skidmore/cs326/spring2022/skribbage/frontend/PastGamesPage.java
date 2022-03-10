@@ -8,6 +8,9 @@ import java.awt.event.WindowEvent;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import javax.swing.*;
+
+import org.apache.log4j.Logger;
+
 import java.util.*;
 
 import us.daveread.edu.graphics.shape.Drawable;
@@ -26,44 +29,92 @@ import us.daveread.edu.graphics.shape.impl.Rectangle;
  */
 
 public class PastGamesPage extends DrawingSurface implements ActionListener {
+    /**
+     * 
+     */
     private int mainframeWidth = 650;
 
+    /**
+     * 
+     */
     private int mainframeHeight = 1500;
 
+    /**
+     * 
+     */
     private MainFrame mf;
 
+    /**
+     * 
+     */
     private JButton returnToMainMenu;
 
+    /**
+     * 
+     */
     private ArrayList<ActiveGame> allGames = new ArrayList<>();
 
+    /**
+     * 
+     */
     private ArrayList<ActiveGame> completeGames = new ArrayList<>();
 
+    /**
+     * 
+     */
     private ArrayList<ActiveGame> incompleteGames = new ArrayList<>();
+    
+    private static final Logger LOG;
+    
+    static {
+        LOG = Logger.getLogger(PastGamesPage.class);
+    }
 
     // Examples of games that show proof of concept
+    /**
+     * 
+     */
     private ActiveGame one =
         new ActiveGame(11, 7, 2021, "Jonah", "Sten", "CS326", true);
 
+    /**
+     * 
+     */
     private ActiveGame two = new ActiveGame(12, 31, 2021, "Chris Cornell",
         "Ben Shepherd", "Soundgarden", true);
 
+    /**
+     * 
+     */
     private ActiveGame three =
         new ActiveGame(1, 17, 2022, "Hugh Jass", "Tess T Culls", "", false);
 
+    /**
+     * 
+     */
     public PastGamesPage() {
+        LOG.trace("Entered the constructor of a PastGamesPage class");
         mf = new MainFrame(this, "Past Games Page", mainframeWidth,
             mainframeHeight, false);
         addGamesToList();
         setup();
     }
 
+    /**
+     * 
+     */
     public void addGamesToList() {
+        LOG.trace("Entered the addPastGames to the list method");
         allGames.add(one);
         allGames.add(two);
         allGames.add(three);
     }
 
+    /**
+     * 
+     */
     public void setup() {
+        LOG.trace("Entered the setup method");
         setLayout(null);
         Rectangle background = new Rectangle(new Point(0, 0),
             new Dimension(mainframeWidth, mainframeHeight),
@@ -89,10 +140,11 @@ public class PastGamesPage extends DrawingSurface implements ActionListener {
         // sophisticated.
         for (int i = 0; i < allGames.size(); i++) {
             ActiveGame game = allGames.get(i);
-            if (game.isCompleted())
+            if (game.isCompleted()) {
                 completeGames.add(game);
-            else
+            } else {
                 incompleteGames.add(game);
+            }
         }
 
         // For now, all of the incomplete games will be red, and all
@@ -139,6 +191,7 @@ public class PastGamesPage extends DrawingSurface implements ActionListener {
     // will, as the label suggests, take the user back to the main menu.
     @Override
     public void actionPerformed(ActionEvent e) {
+        LOG.trace("ActionPerformed method reached");
         // mf.dispatchEvent(new WindowEvent(mf, WindowEvent.WINDOW_CLOSING));
         if (e.getSource().equals(returnToMainMenu)) {
             mf.dispose();
@@ -151,6 +204,7 @@ public class PastGamesPage extends DrawingSurface implements ActionListener {
      * @param args
      */
     public static void main(String[] args) {
+        LOG.trace("Entered the main method");
         new PastGamesPage();
     }
 }
