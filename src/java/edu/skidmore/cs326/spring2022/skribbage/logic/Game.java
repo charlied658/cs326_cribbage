@@ -3,10 +3,9 @@ import java.util.ArrayList;
 import org.apache.log4j.Logger;
 
 /**
-Game class has a deck and a list of players. It initializes the deck and list of players.
-This class contains methods for the various phases of the game. However, at the moment,
-it contains methods for the deal phase and a few for the pegging phase (this phase
-is not complete)
+Game has a deck, a list of players, a pegging total, a list of cards in the crib, and
+a list of cards placed during pegging play. The constructor initializes the deck, the list of players, and
+the pegging total. This class contains methods for the deal phase and the pegging phase, which are not complete.
 Assumption: there are only two players in the game.
 @author Michael Shriner
 */
@@ -27,8 +26,8 @@ public class Game{
   private ArrayList<Card> peggingCards = new ArrayList <Card>();
 
   /**
-  Constructor creates a Game, initializes the deck, and initializes the list of players
-  for this game.
+  Constructor creates a Game, initializes the deck, the list of players, and the
+  pegging total for this game.
   @param numPlayers is the number of players
   */
   public Game(int numPlayers){
@@ -37,6 +36,8 @@ public class Game{
 
     //initialize list of players, given numPlayers
     initPlayers(numPlayers);
+
+    this.peggingTotal = 0;
   }
 
   /**
@@ -71,14 +72,14 @@ public class Game{
     int amountToCutP1 = 8;
     int amountToCutP2 = 8;
 
-    if (toCutP1 < 4 || toCutP1 > 26){
+    if (amountToCutP1 < 4 || amountToCutP1 > 26){
       //invalid number of cards to cut
       //send that information to front end
       //for now, print to console
       System.out.println("The amount of cards to cut must be at least 4 and less than 26 for the first cut.");
     }
 
-    if (toCutP2 < 4 || toCutP2 > 22){
+    if (amountToCutP2 < 4 || amountToCutP2 > 22){
       //invalid number of cards to cut
       //send information to front end
       //for now, print to console
@@ -86,7 +87,7 @@ public class Game{
     }
 
 
-    determineDealer(toCutP1, toCutP2);
+    determineDealer(amountToCutP1, amountToCutP2);
 
     theDeck.shuffle();
 
@@ -94,8 +95,8 @@ public class Game{
 
     //FRONT END INTERACTION
     //assume you got the information from front end
-    Card [] toDiscardP1 ={new Card (Suit.DIAMONDS , "10"), new Card(Suit.HEARTS,"8")};
-    Card [] toDiscardP2 = {new Card(Suit.DIAMONDS, "4"), new Card(Suit.DIAMONDS , "7")};
+    Card [] toDiscardP1 ={new Card ('0', Suit.DIAMONDS), new Card('8', Suit.HEARTS)};
+    Card [] toDiscardP2 = {new Card('4', Suit.DIAMONDS ), new Card('7', Suit.DIAMONDS)};
 
     discardToCrib(toDiscardP1, toDiscardP2);
 
@@ -156,7 +157,7 @@ public class Game{
       //   return;
       // }
 
-      if (c.getSuit() == cardToRemove.getSuit() && c.getCardIdentifier() == cardToRemove.getCardIdentifier()){
+      if (c.getSuit() == cardToRemove.getSuit() && c.getIdentifier() == cardToRemove.getIdentifier()){
         theHand.remove(i);
         return;
       }
@@ -207,16 +208,38 @@ public class Game{
     //assumption: player 2 is at index 1
     //assumption: player 1 is at index 0
 
-    if (cardP1 < cardP2){
+    if (cardP1.getPointValue() < cardP2.getPointValue()){
       playerList.get(0).isDealer = true;
     }
-    else if (cardP2 < cardP1){
+    else if (cardP2.getPointValue() < cardP1.getPointValue()){
       playerList.get(1).isDealer = true;
     }
+    else if (cardP2.getPointValue() == 10){
+      //ordering is J, Q, K
+      //compare based on that ordering
+      char p1Id = cardP1.getIdentifier();
+      char p2Id = cardP2.getIdentifier();
+
+      if (p1Id == 'J'){
+        playerList.get(0).isDealer = true;
+      }
+      else if (p1Id == 'Q' && p2Id == 'K'){
+        playerList.get(0).isDealer = true;
+      }
+      else if (p2Id == 'J'){
+        playerList.get(1).isDealer = true;
+      }
+      else if (p2Id == 'Q' && p1Id == 'K'){
+        playerList.get(1).isDealer = true;
+      }
+      else{
+        determineDealer(amountToCutP1, amountToCutP2);
+      }
+    }
     else{
-      //reshuffle and cut again because the bottom cards were the same
       determineDealer(amountToCutP1, amountToCutP2);
     }
+
   }
 
   //gets the index in playerList where the dealer is
@@ -226,7 +249,7 @@ public class Game{
   */
   private int getDealerIdx(){
     for (int i = 0; i < playerList.size(); i++){
-      if (playerList.get(i).isDealer){
+      if (playerList.get(i).isDealer == true){
         return i;
       }
     }
@@ -293,20 +316,26 @@ public class Game{
 
   }
 
-  private void checkClaim (Card c, String claim, Player p){
-    //claims include:
-    //1) "15"
-    //2) "31"
-    //3) "pair"
-    //4) "3 pair"
-    //5) "4 pair"
-    //6) "run of 3"
-    //7) "run of 4"
-    //8) "run of 5"
-    //9) "run of 6"
-    //10) "run of 7"
-    //11) "go"
-    //12) "last card"
+  /**
+  Takes a claim and awards the player who made the claim the points earned for the
+  claim made if the claim is valid.
+  Claims that can be made:
+  "15"
+  "31"
+  "pair"
+  "3 pair"
+  "4 pair"
+  "run of 3"
+  "run of 4"
+  "run of 5"
+  "run of 6"
+  "run of 7"
+  "last card"
+  "go"
+  @param claim is the claim the player makes
+  @param p is the player who made the claim
+  */
+  private void checkClaim (String claim, Player p){
 
     if (claim.equalsIgnoreCase("15")){
       check15(p);
@@ -329,8 +358,24 @@ public class Game{
     else if (claim.equalsIgnoreCase("run of 4")){
       checkRunOf4(p);
     }
+    else if (claim.equalsIgnoreCase("run of 5")){
+      checkRunOf5(p);
+    }
+    else if (claim.equalsIgnoreCase("run of 6")){
+      checkRunOf6(p);
+    }
+    else if (claim.equalsIgnoreCase("run of 7")){
+      checkRunOf7(p);
+    }
   }
 
+  /**
+  If the player passed as a parameter placed a card during the pegging phase that
+  brought the pegging total to 15, the player is awarded 2 points. Otherwise, the
+  player is awarded no points.
+  @param p is the player making the claim that he or she placed a card that brought
+  the pegging total to 15
+  */
   private void check15(Player p){
 
     //assumption: Card c from checkClaim() has been added to peggingCards already
@@ -353,6 +398,13 @@ public class Game{
     }
   }
 
+  /**
+  If the player passed as a parameter placed a card during the pegging phase that
+  brought the pegging total to 31, the player is awarded 2 points. Otherwise, the
+  player is awarded no points.
+  @param p is the player making the claim that he or she placed a card that brought
+  the pegging total to 31
+  */
   private void check31(Player p){
 
     //assumption: Card c from checkClaim() has been added to peggingCards already
@@ -375,6 +427,12 @@ public class Game{
     }
   }
 
+
+  /**
+  If the player passed as a parameter placed a card that immediately followed a card with the
+  same numerical value, the player is awarded 2 points. Otherwise, the player is awarded no points.
+  @param the player who made the claim of having a pair during the pegging phase
+  */
   private void checkPair(Player p){
     //assumption: Card c from checkClaim() has been added to peggingCards already
     //assumption: check15() is called before the dealer plays a card
@@ -382,7 +440,7 @@ public class Game{
     Card precedingCard = peggingCards.get(peggingCards.size() - 2);
     Card mostRecentCard = peggingCards.get(peggingCards.size() - 1);
 
-    if (Character.compare(precedingCard.getCardIdentifier(), mostRecentCard.getCardIdentifier())){
+    if (precedingCard.getIdentifier() == mostRecentCard.getIdentifier()){
       //we have a pair
       //player p gets 2 points
     }
@@ -391,6 +449,11 @@ public class Game{
     }
   }
 
+  /**
+  If the player passed as a parameter placed a card that immediately followed two cards with the
+  same numerical values, the player is awarded 6 points. Otherwise, the player is awarded no points.
+  @param the player who made the claim of having a 3 pair during the pegging phase
+  */
   private void check3Pair(Player p){
     //assumption: Card c from checkClaim() has been added to peggingCards already
     //assumption: check15() is called before the dealer plays a card
@@ -399,8 +462,8 @@ public class Game{
     Card secondInPair = peggingCards.get(peggingCards.size() - 2);
     Card lastInPair = peggingCards.get(peggingCards.size() - 1);
 
-    if (Character.compare(firstInPair.getCardIdentifier(), secondInPair.getCardIdentifier())){
-      if (Character.compare(secondInPair.getCardIdentifier(), lastInPair.getCardIdentifier())){
+    if (firstInPair.getIdentifier() == secondInPair.getIdentifier()){
+      if (secondInPair.getIdentifier() == lastInPair.getIdentifier()){
         //player p gets 6 points
       }
     }
@@ -409,6 +472,11 @@ public class Game{
     }
   }
 
+  /**
+  If the player passed as a parameter placed a card that immediately followed two cards with the
+  same numerical values, the player is awarded 6 points. Otherwise, the player is awarded no points.
+  @param the player who made the claim of having a 3 pair during the pegging phase
+  */
   private void check4Pair(Player p){
     //assumption: Card c from checkClaim() has been added to peggingCards already
     //assumption: check15() is called before the dealer plays a card
@@ -417,8 +485,8 @@ public class Game{
     Card secondInPair = peggingCards.get(peggingCards.size() - 2);
     Card lastInPair = peggingCards.get(peggingCards.size() - 1);
 
-    if (Character.compare(firstInPair.getCardIdentifier(), secondInPair.getCardIdentifier())){
-      if (Character.compare(secondInPair.getCardIdentifier(), lastInPair.getCardIdentifier())){
+    if (firstInPair.getIdentifier() == secondInPair.getIdentifier()){
+      if (secondInPair.getIdentifier() == lastInPair.getIdentifier()){
         //player p gets 6 points
       }
     }
@@ -428,6 +496,11 @@ public class Game{
   }
 
 
+  /**
+  If the player passed as a parameter has a run of 3, the player is awarded 3 points.
+  Otherwise, the player isn't awarded any points.
+  @param p is the player who claims to have a run of 3
+  **/
   private void checkRunOf3 (Player p){
 
     if (peggingCards.size() < 3){
@@ -440,9 +513,9 @@ public class Game{
     Card secondInRun = peggingCards.get(peggingCards.size() - 2);
     Card thirdInRun = peggingCards.get(peggingCards.size() - 1);
 
-    char firstCardId = firstInRun.getCardIdentifier();
-    char secondCardId = secondInRun.getCardIdentifier();
-    char thirdCardId = thirdInRun.getCardIdentifier();
+    char firstCardId = firstInRun.getIdentifier();
+    char secondCardId = secondInRun.getIdentifier();
+    char thirdCardId = thirdInRun.getIdentifier();
 
     //make sure there are no cards with the same identifiers
     if (firstCardId == secondCardId || firstCardId == thirdCardId){
@@ -493,6 +566,11 @@ public class Game{
 
   }
 
+  /**
+  If the player passed as a parameter has a run of 4, the player is awarded 4 points.
+  Otherwise, the player isn't awarded any points.
+  @param p is the player who claims to have a run of 4
+  **/
   private void checkRunOf4 (Player p){
 
     if (peggingCards.size() < 4){
@@ -507,10 +585,10 @@ public class Game{
     Card thirdInRun = peggingCards.get(peggingCards.size() - 2);
     Card fourthInRun = peggingCards.get(peggingCards.size() - 1);
 
-    char firstCardId = firstInRun.getCardIdentifier();
-    char secondCardId = secondInRun.getCardIdentifier();
-    char thirdCardId = thirdInRun.getCardIdentifier();
-    char fourthCardId = fourthInRun.getCardIdentifier();
+    char firstCardId = firstInRun.getIdentifier();
+    char secondCardId = secondInRun.getIdentifier();
+    char thirdCardId = thirdInRun.getIdentifier();
+    char fourthCardId = fourthInRun.getIdentifier();
 
     //make sure there are no cards with the same identifiers
     if (firstCardId == secondCardId || firstCardId == thirdCardId || firstCardId == fourthCardId){
@@ -566,6 +644,362 @@ public class Game{
     else{
       //we don't have a run of 4
       //notify front end
+    }
+
+  }
+
+  /**
+  If the player passed as a parameter has a run of 5, the player is awarded 5 points.
+  Otherwise, the player isn't awarded any points.
+  @param p is the player who claims to have a run of 5
+  **/
+  private void checkRunOf5 (Player p){
+
+    if (peggingCards.size() < 5){
+      //let front end know that run of 4 isn't valid
+      return;
+    }
+
+    //note, they do not have to be played in sequential order
+
+    Card firstInRun = peggingCards.get(peggingCards.size() - 5);
+    Card secondInRun = peggingCards.get(peggingCards.size() - 4);
+    Card thirdInRun = peggingCards.get(peggingCards.size() - 3);
+    Card fourthInRun = peggingCards.get(peggingCards.size() - 2);
+    Card fifthInRun = peggingCards.get(peggingCards.size() - 1);
+
+
+    char firstCardId = firstInRun.getIdentifier();
+    char secondCardId = secondInRun.getIdentifier();
+    char thirdCardId = thirdInRun.getIdentifier();
+    char fourthCardId = fourthInRun.getIdentifier();
+    char fifthCardId = fifthInRun.getIdentifier();
+
+    //make sure there are no cards with the same identifiers
+    if (firstCardId == secondCardId || firstCardId == thirdCardId || firstCardId == fourthCardId || firstCardId == fifthCardId ){
+      //send information to front end that there isn't a run of 4
+      return;
+    }
+
+    if (secondCardId == thirdCardId || secondCardId == fourthCardId || secondCardId == fifthCardId){
+      //send information to front end that there isn't a run of 4
+      return;
+    }
+
+    if (thirdCardId == fourthCardId || thirdCardId == fifthCardId ){
+      //send information to front end that there isn't a run of 4
+      return;
+    }
+
+    if (fourthCardId == fifthCardId){
+      //send information to front end that there isn't a run of 4
+      return;
+    }
+
+
+    //once here, we know that none of the cards have the same identifier
+
+    //get the next identifier for each card
+    char firstInRunNextId = firstInRun.getNextIdentifier();
+    char secondInRunNextId = secondInRun.getNextIdentifier();
+    char thirdInRunNextId = thirdInRun.getNextIdentifier();
+    char fourthInRunNextId = fourthInRun.getNextIdentifier();
+    char fifthInRunNextId = fifthInRun.getNextIdentifier();
+
+    //4 of the 5 next identifiers must be equal to exactly one of the
+    //identifiers of the other cards
+
+    int numEqual = 0;
+
+    //check the first next identifier
+    if (firstInRunNextId == secondCardId || firstInRunNextId == thirdCardId || firstInRunNextId == fourthCardId || firstInRunNextId == fifthCardId){
+      numEqual++;
+    }
+
+    if (secondInRunNextId == firstCardId || secondInRunNextId == thirdCardId || secondInRunNextId == fourthCardId || secondInRunNextId == fifthCardId){
+      numEqual++;
+    }
+
+    if (thirdInRunNextId == firstCardId || thirdInRunNextId == secondCardId || thirdInRunNextId == fourthCardId || thirdInRunNextId == fifthCardId){
+      numEqual++;
+    }
+
+    if (fourthInRunNextId == firstCardId || fourthInRunNextId == secondCardId || fourthInRunNextId == thirdCardId || fourthInRunNextId == fifthCardId){
+      numEqual++;
+    }
+
+    if (fifthInRunNextId == firstCardId || fifthInRunNextId == secondCardId || fifthInRunNextId == thirdCardId || fifthInRunNextId == fourthCardId){
+      numEqual++;
+    }
+
+
+    if (numEqual == 4){
+      //we have a run of 5
+      //give the points to player p
+
+    }
+    else{
+      //we don't have a run of 4
+      //notify front end
+    }
+
+  }
+
+
+  /**
+  If the player passed as a parameter has a run of 6, the player is awarded 6 points.
+  Otherwise, the player isn't awarded any points.
+  @param p is the player who claims to have a run of 6
+  **/
+  private void checkRunOf6 (Player p){
+
+    if (peggingCards.size() < 6){
+      //let front end know that run of 4 isn't valid
+      return;
+    }
+
+    //note, they do not have to be played in sequential order
+
+    Card firstInRun = peggingCards.get(peggingCards.size() - 6);
+    Card secondInRun = peggingCards.get(peggingCards.size() - 5);
+    Card thirdInRun = peggingCards.get(peggingCards.size() - 4);
+    Card fourthInRun = peggingCards.get(peggingCards.size() - 3);
+    Card fifthInRun = peggingCards.get(peggingCards.size() - 2);
+    Card sixthInRun = peggingCards.get(peggingCards.size() - 1);
+
+
+    char firstCardId = firstInRun.getIdentifier();
+    char secondCardId = secondInRun.getIdentifier();
+    char thirdCardId = thirdInRun.getIdentifier();
+    char fourthCardId = fourthInRun.getIdentifier();
+    char fifthCardId = fifthInRun.getIdentifier();
+    char sixthCardId = sixthInRun.getIdentifier();
+
+    //make sure there are no cards with the same identifiers
+    if (firstCardId == secondCardId || firstCardId == thirdCardId || firstCardId == fourthCardId || firstCardId == fifthCardId ||  firstCardId == sixthCardId){
+      //send information to front end that there isn't a run of 4
+      return;
+    }
+
+    if (secondCardId == thirdCardId || secondCardId == fourthCardId || secondCardId == fifthCardId || secondCardId == sixthCardId){
+      //send information to front end that there isn't a run of 4
+      return;
+    }
+
+    if (thirdCardId == fourthCardId || thirdCardId == fifthCardId || thirdCardId == sixthCardId ){
+      //send information to front end that there isn't a run of 4
+      return;
+    }
+
+    if (fourthCardId == fifthCardId || fourthCardId == sixthCardId){
+      //send information to front end that there isn't a run of 4
+      return;
+    }
+
+    if (fifthCardId == sixthCardId){
+      //send information to front end that there isn't a run of 4
+      return;
+    }
+
+
+    //once here, we know that none of the cards have the same identifier
+
+    //get the next identifier for each card
+    char firstInRunNextId = firstInRun.getNextIdentifier();
+    char secondInRunNextId = secondInRun.getNextIdentifier();
+    char thirdInRunNextId = thirdInRun.getNextIdentifier();
+    char fourthInRunNextId = fourthInRun.getNextIdentifier();
+    char fifthInRunNextId = fifthInRun.getNextIdentifier();
+    char sixthInRunNextId = sixthInRun.getNextIdentifier();
+
+    //5 of the 6 next identifiers must be equal to exactly one of the
+    //identifiers of the other cards
+
+    int numEqual = 0;
+
+    //check the first next identifier
+    if (firstInRunNextId == secondCardId || firstInRunNextId == thirdCardId || firstInRunNextId == fourthCardId || firstInRunNextId == fifthCardId || firstInRunNextId == sixthCardId){
+      numEqual++;
+    }
+
+    if (secondInRunNextId == firstCardId || secondInRunNextId == thirdCardId || secondInRunNextId == fourthCardId || secondInRunNextId == fifthCardId || secondInRunNextId == sixthCardId){
+      numEqual++;
+    }
+
+    if (thirdInRunNextId == firstCardId || thirdInRunNextId == secondCardId || thirdInRunNextId == fourthCardId || thirdInRunNextId == fifthCardId || thirdInRunNextId == sixthCardId ){
+      numEqual++;
+    }
+
+    if (fourthInRunNextId == firstCardId || fourthInRunNextId == secondCardId || fourthInRunNextId == thirdCardId || fourthInRunNextId == fifthCardId || fourthInRunNextId == sixthCardId){
+      numEqual++;
+    }
+
+    if (fifthInRunNextId == firstCardId || fifthInRunNextId == secondCardId || fifthInRunNextId == thirdCardId || fifthInRunNextId == fourthCardId || fifthInRunNextId == sixthCardId){
+      numEqual++;
+    }
+
+    if (sixthInRunNextId == firstCardId || sixthInRunNextId == secondCardId || sixthInRunNextId == thirdCardId || sixthInRunNextId == fourthCardId || sixthInRunNextId == fifthCardId){
+      numEqual++;
+    }
+
+
+    if (numEqual == 5){
+      //we have a run of 5
+      //give the points to player p
+
+    }
+    else{
+      //we don't have a run of 4
+      //notify front end
+    }
+
+  }
+
+  /**
+  If the player passed as a parameter has a run of 7, the player is awarded 7 points.
+  Otherwise, the player isn't awarded any points.
+  @param p is the player who claims to have a run of 7
+  **/
+  private void checkRunOf7 (Player p){
+
+    if (peggingCards.size() < 7){
+      //let front end know that run of 4 isn't valid
+      return;
+    }
+
+    //note, they do not have to be played in sequential order
+
+    Card firstInRun = peggingCards.get(peggingCards.size() - 7);
+    Card secondInRun = peggingCards.get(peggingCards.size() - 6);
+    Card thirdInRun = peggingCards.get(peggingCards.size() - 5);
+    Card fourthInRun = peggingCards.get(peggingCards.size() - 4);
+    Card fifthInRun = peggingCards.get(peggingCards.size() - 3);
+    Card sixthInRun = peggingCards.get(peggingCards.size() - 2);
+    Card seventhInRun = peggingCards.get(peggingCards.size() - 1);
+
+    char firstCardId = firstInRun.getIdentifier();
+    char secondCardId = secondInRun.getIdentifier();
+    char thirdCardId = thirdInRun.getIdentifier();
+    char fourthCardId = fourthInRun.getIdentifier();
+    char fifthCardId = fifthInRun.getIdentifier();
+    char sixthCardId = sixthInRun.getIdentifier();
+    char seventhCardId = seventhInRun.getIdentifier();
+
+    //make sure there are no cards with the same identifiers
+    if (firstCardId == secondCardId || firstCardId == thirdCardId || firstCardId == fourthCardId || firstCardId == fifthCardId ||  firstCardId == sixthCardId || firstCardId == seventhCardId){
+      //send information to front end that there isn't a run of 4
+      return;
+    }
+
+    if (secondCardId == thirdCardId || secondCardId == fourthCardId || secondCardId == fifthCardId || secondCardId == sixthCardId || secondCardId == seventhCardId ){
+      //send information to front end that there isn't a run of 4
+      return;
+    }
+
+    if (thirdCardId == fourthCardId || thirdCardId == fifthCardId || thirdCardId == sixthCardId || thirdCardId == seventhCardId){
+      //send information to front end that there isn't a run of 4
+      return;
+    }
+
+    if (fourthCardId == fifthCardId || fourthCardId == sixthCardId || fourthCardId == seventhCardId){
+      //send information to front end that there isn't a run of 4
+      return;
+    }
+
+    if (fifthCardId == sixthCardId || fifthCardId == seventhCardId){
+      //send information to front end that there isn't a run of 4
+      return;
+    }
+
+    if (sixthCardId == seventhCardId){
+      //send information to front end that there isn't a run of 4
+      return;
+    }
+
+
+    //once here, we know that none of the cards have the same identifier
+
+    //get the next identifier for each card
+    char firstInRunNextId = firstInRun.getNextIdentifier();
+    char secondInRunNextId = secondInRun.getNextIdentifier();
+    char thirdInRunNextId = thirdInRun.getNextIdentifier();
+    char fourthInRunNextId = fourthInRun.getNextIdentifier();
+    char fifthInRunNextId = fifthInRun.getNextIdentifier();
+    char sixthInRunNextId = sixthInRun.getNextIdentifier();
+    char seventhInRunNextId = seventhInRun.getNextIdentifier();
+
+    //6 of the 7 next identifiers must be equal to exactly one of the
+    //identifiers of the other cards
+
+    int numEqual = 0;
+
+    //check the first next identifier
+    if (firstInRunNextId == secondCardId || firstInRunNextId == thirdCardId || firstInRunNextId == fourthCardId || firstInRunNextId == fifthCardId || firstInRunNextId == sixthCardId || firstInRunNextId == seventhCardId){
+      numEqual++;
+    }
+
+    if (secondInRunNextId == firstCardId || secondInRunNextId == thirdCardId || secondInRunNextId == fourthCardId || secondInRunNextId == fifthCardId || secondInRunNextId == sixthCardId || secondInRunNextId == seventhCardId){
+      numEqual++;
+    }
+
+    if (thirdInRunNextId == firstCardId || thirdInRunNextId == secondCardId || thirdInRunNextId == fourthCardId || thirdInRunNextId == fifthCardId || thirdInRunNextId == sixthCardId || thirdInRunNextId == seventhCardId ){
+      numEqual++;
+    }
+
+    if (fourthInRunNextId == firstCardId || fourthInRunNextId == secondCardId || fourthInRunNextId == thirdCardId || fourthInRunNextId == fifthCardId || fourthInRunNextId == sixthCardId || fourthInRunNextId == seventhCardId){
+      numEqual++;
+    }
+
+    if (fifthInRunNextId == firstCardId || fifthInRunNextId == secondCardId || fifthInRunNextId == thirdCardId || fifthInRunNextId == fourthCardId || fifthInRunNextId == sixthCardId || fifthInRunNextId == seventhCardId){
+      numEqual++;
+    }
+
+    if (sixthInRunNextId == firstCardId || sixthInRunNextId == secondCardId || sixthInRunNextId == thirdCardId || sixthInRunNextId == fourthCardId || sixthInRunNextId == fifthCardId || sixthInRunNextId == seventhCardId){
+      numEqual++;
+    }
+
+    if (seventhInRunNextId == firstCardId || seventhInRunNextId == secondCardId || seventhInRunNextId == thirdCardId || seventhInRunNextId == fourthCardId || seventhInRunNextId == fifthCardId || seventhInRunNextId == sixthCardId){
+      numEqual++;
+    }
+
+
+    if (numEqual == 6){
+      //we have a run of 7
+      //give the points to player p
+
+    }
+    else{
+      //we don't have a run of 4
+      //notify front end
+    }
+
+  }
+
+  /**
+  If the player passed as a parameter placed the final card during pegging play,
+  the player receives 1 point. Otherwise, the player receives no points for this claim.
+  @param p is the player who is claiming to have placed the last card
+  */
+  private void lastCard(Player p){
+    //all the cards are in peggingCards
+    //the last card in peggingCards was placed by p
+    //how do we know whether p placed the final card?
+    //I think we can know this implicitly because points are earned as played
+    //and claims are made as played
+    //so, when player p makes a claim that the last card was placed, player p played the most recent card
+    //if there are no more cards to be placed, the p placed the last card
+
+    boolean allCardsPlaced = false;
+
+    if (playerList.size() == 2){
+      if (peggingCards.size() == 8){
+        allCardsPlaced = true;
+        //give 1 point to p
+      }
+      else{
+        //indicate that the claim was false to front end
+        return;
+      }
     }
 
   }
