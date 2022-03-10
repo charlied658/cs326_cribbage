@@ -1,6 +1,7 @@
 package edu.skidmore.cs326.spring2022.skribbage.logic.test;
 
 import static org.junit.Assert.assertEquals;
+
 import static org.junit.Assert.assertTrue;
 
 import edu.skidmore.cs326.spring2022.skribbage.logic.Card;
@@ -28,7 +29,7 @@ public class HandTest {
   @Before
   public void setup() {
     testInstance = new Hand();
-  }
+  }    
 
   /**
    * Test the method to add a card to hand.
