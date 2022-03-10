@@ -1,6 +1,9 @@
 package edu.skidmore.cs326.spring2022.skribbage.frontend;
 import java.awt.Color;
 import java.awt.Point;
+
+import org.apache.log4j.Logger;
+
 import us.daveread.edu.graphics.shape.Drawable;
 import us.daveread.edu.graphics.shape.impl.Text;
 import us.daveread.edu.graphics.surface.DrawingSurface;
@@ -48,11 +51,18 @@ public class HomeScreen extends DrawingSurface {
 	 */
 	private PastGamesPage pastGamesPage;
 	
+	private static final Logger LOG;
+	
+	static {
+	    LOG = Logger.getLogger(HomeScreen.class);
+	}
+	
 	/**
 	 * HomeScreen constructor
 	 * Initializes the MainFrame window
 	 */
 	public HomeScreen() {
+	    LOG.trace("HomeScreen.java constructor");
 		homeScreen = new MainFrame(this, "Skribbage Battle Royale Home", 900, 900, true);
 		setup();
 	}
@@ -62,6 +72,7 @@ public class HomeScreen extends DrawingSurface {
 	 * creates the loginPageButton, rulesPageButton, and pastGamesPageButton Text buttons
 	 */
 	public void setup() {
+	    LOG.trace("Setup method in HomeScreen.java");
 		loginPageButton = new Text("Login Page", new Point(50, 50), 20, Color.black, Color.blue);
 		rulesPageButton = new Text("Rules Page", new Point(loginPageButton.getLocation().x + 150, 50), 20, Color.black, Color.blue);
 		pastGamesPageButton = new Text("Past Games Page", new Point(rulesPageButton.getLocation().x + 150, 50), 20, Color.black, Color.blue);
@@ -79,6 +90,7 @@ public class HomeScreen extends DrawingSurface {
 	 * if pastGamesPageButton, displays the past games page
 	 */
 	public void drawableMouseClick(Drawable e) {
+	    LOG.trace("DrawableMosuceClick in HomeScreen.java");
 		if (e == loginPageButton) {
 			loginPage = new LoginPage();
 		} else if (e == rulesPageButton) {
@@ -93,6 +105,7 @@ public class HomeScreen extends DrawingSurface {
 	 * @param args
 	 */
 	public static void main(String[] args) {
+	    LOG.trace("Main method in HomeScreen.java");
 		new HomeScreen();
 	}
 }
