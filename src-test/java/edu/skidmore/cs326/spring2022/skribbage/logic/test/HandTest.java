@@ -1,7 +1,6 @@
 package edu.skidmore.cs326.spring2022.skribbage.logic.test;
 
 import static org.junit.Assert.assertEquals;
-
 import static org.junit.Assert.assertTrue;
 
 import edu.skidmore.cs326.spring2022.skribbage.logic.Card;
