@@ -1,4 +1,4 @@
-package edu.skidmore.cs326.spring2022.skribbage.frontend;
+package edu.skidmore.cs326.spring2022.skribbage.frontend.demo;
 
 import java.awt.Color;
 import java.awt.Point;
@@ -42,6 +42,10 @@ public class RulesPage extends DrawingSurface implements ActionListener{
         returnToMainMenu.setBackground(Color.LIGHT_GRAY);
         returnToMainMenu.addActionListener(this);
         
+        //This adds a scrollable text area. This will allow us to add as
+        //much text as we want without worrying about formatting. We will
+        //add the actual text in a later sprint, it is not very important
+        //for right now.
         JTextArea rulesArea = new JTextArea("", 15, 30);
         rulesArea.setLineWrap(true);
         rulesArea.setWrapStyleWord(true);
@@ -111,6 +115,8 @@ public class RulesPage extends DrawingSurface implements ActionListener{
     }
     */
 
+    //This is a placeholder. In the final product, the "Main Menu" button
+    //will, as the label suggests, take the user back to the main menu.
     @Override
     public void actionPerformed(ActionEvent e) {
         //mf.dispatchEvent(new WindowEvent(mf, WindowEvent.WINDOW_CLOSING));

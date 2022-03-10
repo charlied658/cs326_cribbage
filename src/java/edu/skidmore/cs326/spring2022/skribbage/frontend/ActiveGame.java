@@ -1,4 +1,4 @@
-package edu.skidmore.cs326.spring2022.skribbage.frontend;
+package edu.skidmore.cs326.spring2022.skribbage.frontend.demo;
 
 public class ActiveGame {
     private int MM;
@@ -10,7 +10,7 @@ public class ActiveGame {
     private String p2 = "";
     private boolean completed;
     
-    public ActiveGame(int month, int day, int year, String name, String player1, String player2) {
+    public ActiveGame(int month, int day, int year, String player1, String player2, String name) {
         MM = month;
         DD = day;
         YY = year;
@@ -19,7 +19,7 @@ public class ActiveGame {
         p2 = player2;
     }
     
-    public ActiveGame(int month, int day, int year, String name, String player1, String player2, boolean completionStatus) {
+    public ActiveGame(int month, int day, int year, String player1, String player2, String name, boolean completionStatus) {
         MM = month;
         DD = day;
         YY = year;
