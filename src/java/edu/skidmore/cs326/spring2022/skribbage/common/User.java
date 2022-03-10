@@ -1,7 +1,7 @@
 package edu.skidmore.cs326.spring2022.skribbage.common;
 
 import org.apache.log4j.Logger;
-import org.mortbay.log.Log;
+//import org.mortbay.log.Log;
 
 /**
  * A simple bean representing data associated with a User
