@@ -8,6 +8,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import edu.skidmore.cs326.spring2022.skribbage.common.EventManager;
+import edu.skidmore.cs326.spring2022.skribbage.common.User;
+import edu.skidmore.cs326.spring2022.skribbage.frontend.events.accountevents.UserLoginEvent;
 
 /**
  * 
@@ -25,6 +27,10 @@ public class EventManagerTest {
 	}
  
 	private EventManager testInstance;
+	private UserLoginEvent loginEventInstance;
+	private User userInstance;
+	
+	
 
 	/**
 	 * @BEFORE
@@ -35,8 +41,11 @@ public class EventManagerTest {
 	@Before
 	public void setUp() {
 		testInstance = EventManager.getInstance();
-
-		LOG.info("SetUp method completed");
+		userInstance = new User("sleinasa@skidmore.edu", "sleinasa", "passwd", true);
+		//loginEventInstance = new UserLoginEvent(Object source, userInstance);
+		
+		//I need to set up a listener object as well.
+		LOG.info("SetUp method completed for EventManagerTest");
 	}
 
 	/**
@@ -57,6 +66,10 @@ public class EventManagerTest {
 	@Test
 	public void testAddPropertyChangeListener() {
 		LOG.info("Beginning to test addPropertyChangeListener");
+		//add the listener to the list to listen to the loginEvent.
+		//send out a change in login event
+		
+		//assert that some value change got to the listener. Maybe assert that password sent was same as I set in setup. 
 	}
 
 	/**
@@ -65,6 +78,8 @@ public class EventManagerTest {
 	@Test
 	public void testRemovePropertyChangeListener() {
 		LOG.info("Beginning to test removePropertyChangeListener");
+		//set the listener and repeat the addproperty. 
+		//Then remove the listener and assert that this time it doesn't reach them. asserNull for example
 	}
 
 	/**
@@ -73,6 +88,7 @@ public class EventManagerTest {
 	@Test
 	public void testNotify() {
 		LOG.info("Began testing notify method");
+		//test the same way as tested addPropertyListener. Exactly the same way. 
 	}
 
 	/**
