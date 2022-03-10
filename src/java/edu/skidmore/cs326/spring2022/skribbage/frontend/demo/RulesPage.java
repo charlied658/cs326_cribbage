@@ -33,12 +33,12 @@ public class RulesPage extends DrawingSurface implements ActionListener{
     }
     
     private void setup() {
-        mf.setLayout(null);
+        setLayout(null);
         Rectangle background = new Rectangle(new Point(0,0), new Dimension(mainframeWidth, mainframeHeight),
             Color.DARK_GRAY, Color.DARK_GRAY);
         Text header = new Text("Skribbage Battle Royale Rules", new Point(20, 70), 40, Color.WHITE);
-        returnToMainMenu = new JButton("Return to Main Menu");
-        returnToMainMenu.setBounds(20, 80, 140, 25);
+        returnToMainMenu = new JButton("Main Menu");
+        returnToMainMenu.setBounds(20, 80, 120, 25);
         returnToMainMenu.setBackground(Color.LIGHT_GRAY);
         returnToMainMenu.addActionListener(this);
         

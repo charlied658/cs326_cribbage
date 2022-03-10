@@ -8,6 +8,7 @@ import java.awt.event.WindowEvent;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import javax.swing.*;
+import java.util.*;
 
 import us.daveread.edu.graphics.shape.Drawable;
 import us.daveread.edu.graphics.shape.impl.Image;
@@ -22,6 +23,11 @@ public class PastGamesPage extends DrawingSurface implements ActionListener {
     private int mainframeHeight = 1500;
     private MainFrame mf;
     private JButton returnToMainMenu;
+    private ArrayList<ActiveGame> gamesList = new ArrayList<>();
+    
+    private ActiveGame one = new ActiveGame(11, 7, 2021, "Jonah", "Sten", "CS326", true);
+    private ActiveGame two = new ActiveGame(12, 31, 2021, "Chris Cornell", "Ben Shepherd", "Soundgarden", true);
+    private ActiveGame three = new ActiveGame(1, 17, 2022, "Hugh Jass", "Tess T Culls", "", false);
     
     public PastGamesPage() {
         mf = new MainFrame(this, "Past Games Page", mainframeWidth, mainframeHeight, false);
@@ -29,14 +35,28 @@ public class PastGamesPage extends DrawingSurface implements ActionListener {
     }
     
     public void setup() {
-        mf.setLayout(null);
+        setLayout(null);
         Rectangle background = new Rectangle(new Point(0,0), new Dimension(mainframeWidth, mainframeHeight),
             Color.DARK_GRAY, Color.DARK_GRAY);
         Text header = new Text("Load Previous Game", new Point(120, 70), 40, Color.WHITE);
-        returnToMainMenu = new JButton("Return to Main Menu");
-        returnToMainMenu.setBounds(20, 80, 140, 25);
+        returnToMainMenu = new JButton("Main Menu");
+        returnToMainMenu.setBounds(20, 80, 120, 25);
         returnToMainMenu.setBackground(Color.LIGHT_GRAY);
         returnToMainMenu.addActionListener(this);
+        
+        JButton gameOne = new JButton(one.getDate());
+        JButton gameTwo = new JButton(two.getDate());
+        JButton gameThree = new JButton(three.getDate());
+        
+        gameOne.setBounds(220, 150, 200, 40);
+        gameTwo.setBounds(220, 200, 200, 40);
+        gameThree.setBounds(220, 250, 200, 40);
+        
+        add(gameOne);
+        add(gameTwo);
+        add(gameThree);
+        
+        
         
         add(background);
         add(header);
