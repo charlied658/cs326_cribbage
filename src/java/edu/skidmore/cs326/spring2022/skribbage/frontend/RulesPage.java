@@ -9,8 +9,6 @@ import java.awt.Dimension;
 import java.awt.Graphics2D;
 import javax.swing.*;
 
-import org.apache.log4j.Logger;
-
 import us.daveread.edu.graphics.shape.Drawable;
 import us.daveread.edu.graphics.shape.impl.Image;
 import us.daveread.edu.graphics.shape.impl.Text;
@@ -20,14 +18,10 @@ import us.daveread.edu.utilities.Utility;
 import us.daveread.edu.graphics.shape.impl.Rectangle;
 
 public class RulesPage extends DrawingSurface implements ActionListener{
-    int mainframeWidth = 650;
-    int mainframeHeight = 1500;
-    MainFrame mf;
-    private static final Logger LOG;
-    
-    static {
-        LOG = Logger.getLogger(RulesPage.class);
-    }
+    private int mainframeWidth = 650;
+    private int mainframeHeight = 1500;
+    private MainFrame mf;
+    private JButton returnToMainMenu;
     
 
 /**
@@ -35,22 +29,32 @@ public class RulesPage extends DrawingSurface implements ActionListener{
  */
     public RulesPage(){
         mf = new MainFrame(this, "Rules Page", mainframeWidth, mainframeHeight, false);
-        LOG.info("Calling setup method from the public RulesPage constructor");
         setup();
     }
     
     private void setup() {
-        LOG.debug("Beginning the setup in setup method");
-        mf.setLayout(null);
+        setLayout(null);
         Rectangle background = new Rectangle(new Point(0,0), new Dimension(mainframeWidth, mainframeHeight),
             Color.DARK_GRAY, Color.DARK_GRAY);
-        Text header = new Text("Skribbage Battle Royale Rules", new Point(20, 60), 40, Color.WHITE);
-        JButton returnToMainMenu = new JButton("Return to Main Menu");
-        returnToMainMenu.setBounds(20, 80, 140, 25);
+        Text header = new Text("Skribbage Battle Royale Rules", new Point(20, 70), 40, Color.WHITE);
+        returnToMainMenu = new JButton("Main Menu");
+        returnToMainMenu.setBounds(20, 80, 120, 25);
         returnToMainMenu.setBackground(Color.LIGHT_GRAY);
         returnToMainMenu.addActionListener(this);
         
+        JTextArea rulesArea = new JTextArea("", 15, 30);
+        rulesArea.setLineWrap(true);
+        rulesArea.setWrapStyleWord(true);
+        rulesArea.setEditable(false);
         
+        JScrollPane scrollPane =
+            new JScrollPane(rulesArea, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
+              JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+        scrollPane.setBounds(40, 120, 570, 800);
+        scrollPane.getViewport().setBackground(Color.DARK_GRAY);
+        add(scrollPane);
+        
+        rulesArea.setText("The objective in Cribbage is to be the first player to get 121 points. The gameplay is divided into three distinct parts, The Deal, The Play and The Show.");
 
         /*
         JTextArea intro = new JTextArea("The objective in Cribbage is to be the first player to get 121 points. "
@@ -79,7 +83,6 @@ public class RulesPage extends DrawingSurface implements ActionListener{
         add(header);
         add(returnToMainMenu);
         
-        
         /*
         String[] introSplit = intro.split(" ");
         int introFontSize = 18;
@@ -95,11 +98,7 @@ public class RulesPage extends DrawingSurface implements ActionListener{
         }
         */
     }
-    /**
-     * 
-     * @param rec
-     * @return
-     */
+    /*
     public boolean detectsMouseClick(Rectangle rec) {
         for (int i = 0; i < rec.getDimension().width; i++) {
             for (int j = 0; j < rec.getDimension().height; j++) {
@@ -110,26 +109,19 @@ public class RulesPage extends DrawingSurface implements ActionListener{
         }
         return false;
     }
-    /**
-     * 
-     * @param rec
-     */
-    public void closeWindow(Rectangle rec) {
-        mf.dispatchEvent(new WindowEvent(mf, WindowEvent.WINDOW_CLOSING));
-    }
-    /**
-     * 
-     * @param args
-     */
-    public static void main(String[] args) {
-        new RulesPage();
-    }
-    /**
-     * 
-     */
+    */
+
     @Override
     public void actionPerformed(ActionEvent e) {
-        mf.dispatchEvent(new WindowEvent(mf, WindowEvent.WINDOW_CLOSING));
-
+        //mf.dispatchEvent(new WindowEvent(mf, WindowEvent.WINDOW_CLOSING));
+        if (e.getSource().equals(returnToMainMenu)) {
+            mf.dispose();
+            PastGamesPage pastGames = new PastGamesPage();
+            pastGames.setVisible(true);
+        }
+    }
+    
+    public static void main(String[] args) {
+        new RulesPage();
     }
 }
