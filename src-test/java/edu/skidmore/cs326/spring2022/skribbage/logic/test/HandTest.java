@@ -1,6 +1,7 @@
 package edu.skidmore.cs326.spring2022.skribbage.logic.test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import edu.skidmore.cs326.spring2022.skribbage.logic.Card;
 import edu.skidmore.cs326.spring2022.skribbage.logic.Hand;
@@ -15,17 +16,7 @@ import org.junit.Test;
  * @author Dorjee
  */
 public class HandTest {
-  /**
-   * Logger for the class.
-   */
-  private static final Logger LOG;
-  /**
-   * Create static resources.
-   */
-  static {
-    LOG = Logger.getLogger(HandTest.class);
-  }
-
+  
   /**
    * Attribute to house the test instance.
    */
@@ -46,7 +37,7 @@ public class HandTest {
   public void testAddCardToHand() {
     Card card = new Card('A', Suit.HEARTS);
     testInstance.addCardToHand(card);
-    assertEquals(testInstance.getHand().get(0), card);
+    assertTrue(testInstance.getHand().get(0).equals(card));
   }
 
   /**
