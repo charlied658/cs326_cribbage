@@ -36,7 +36,6 @@ public class DatabaseManager {
 		    * @param username : the username of the user to authenticate. 
 		    * 					*note that this will only work for previously created users as is
 		    *
-		    * @author Tinaye Mawocha
 		    */
 		   public static boolean userAuthenticate(String username,  String password) {
 	
@@ -74,6 +73,10 @@ public class DatabaseManager {
 			 	  	   
 		   }
 		   
+		   /*
+		    * This is a function to access the connection singleton
+		    *
+		    */
 		   private static Connection getDB() {
 			    
 			   if(dbConnection == null) {
@@ -92,6 +95,11 @@ public class DatabaseManager {
 			   
 		   }
 		   
+		   /*
+		    * This is a function to disconnect the connection passed into the "theConnection" parameter
+		    * 
+		    * @param theConnection: the connection passed in to be terminated
+		    */
 		   private void dbDisconnect(Connection theConnection) {
 			   		   
 			   try {   
@@ -105,7 +113,10 @@ public class DatabaseManager {
 		   
 		   
 		   
-		   
+		   /*
+		    * Just Kidding, you know what this does
+		    * 
+		    */
 		   public static void main(String[] args) {
 			    
 			      // Open a connection
