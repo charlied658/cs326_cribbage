@@ -78,7 +78,7 @@ public class LoginPage extends DrawingSurface {
 	 * Initializes the MainFrame window
 	 */
 	public LoginPage() {
-		loginPage = new MainFrame(this, "Skribbage Battle Royale", 900, 900, true);
+		loginPage = new MainFrame(this, "Skribbage Battle Royale Login", 900, 900, true);
 		setup();
 	}
 	
