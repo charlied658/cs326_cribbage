@@ -12,7 +12,7 @@ import java.util.Base64;
 <<<<<<< HEAD
  *
 =======
- * 
+ *
 >>>>>>> 485058935004f9f20512f4f6529c92172d8c79ce
  * @author readda
  */
@@ -40,7 +40,7 @@ public class DemoPasswordHashing {
 <<<<<<< HEAD
      *
 =======
-     * 
+     *
 >>>>>>> 485058935004f9f20512f4f6529c92172d8c79ce
      * @param length
      *            The salt's size in bytes
@@ -57,7 +57,7 @@ public class DemoPasswordHashing {
 <<<<<<< HEAD
      *
 =======
-     * 
+     *
 >>>>>>> 485058935004f9f20512f4f6529c92172d8c79ce
      * @param password
      *            The password to hash
@@ -91,7 +91,7 @@ public class DemoPasswordHashing {
 <<<<<<< HEAD
      *
 =======
-     * 
+     *
 >>>>>>> 485058935004f9f20512f4f6529c92172d8c79ce
      * @param attemptedPassword
      *            The password being checked, often a password entered by a user
@@ -119,7 +119,7 @@ public class DemoPasswordHashing {
 <<<<<<< HEAD
      *
 =======
-     * 
+     *
 >>>>>>> 485058935004f9f20512f4f6529c92172d8c79ce
      * @param data
      *            The byte array to encode
@@ -134,7 +134,7 @@ public class DemoPasswordHashing {
 <<<<<<< HEAD
      *
 =======
-     * 
+     *
 >>>>>>> 485058935004f9f20512f4f6529c92172d8c79ce
      * @param data
      *            The Base64 encoded string
@@ -209,7 +209,7 @@ public class DemoPasswordHashing {
 <<<<<<< HEAD
      *
 =======
-     * 
+     *
 >>>>>>> 485058935004f9f20512f4f6529c92172d8c79ce
      * @param args
      *            Command line arguments, not used
