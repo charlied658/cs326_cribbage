@@ -28,6 +28,16 @@ public class DatabaseManager {
 		   // function to assert that username and password belongs to an existing user and that they match
 		   
 		   
+		   
+		   /*
+		    * This is a function to Authenticate the user password
+		    * @param password : a placeholder to be replaced by hash password
+		    * 					*note that the SQL player_account table must also be updated to facilitate this change
+		    * @param username : the username of the user to authenticate. 
+		    * 					*note that this will only work for previously created users as is
+		    *
+		    * @author Tinaye Mawocha
+		    */
 		   public static boolean userAuthenticate(String username,  String password) {
 	
 			
