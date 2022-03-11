@@ -6,7 +6,6 @@ import static org.junit.Assert.assertTrue;
 import edu.skidmore.cs326.spring2022.skribbage.logic.Card;
 import edu.skidmore.cs326.spring2022.skribbage.logic.Hand;
 import edu.skidmore.cs326.spring2022.skribbage.logic.Suit;
-import org.apache.log4j.Logger;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -45,7 +44,9 @@ public class HandTest {
    */
   @Test
   public void testRemoveCardFromHand() {
+    Card card = new Card('A', Suit.HEARTS);
     Card card1 = new Card('3', Suit.DIAMONDS);
+    testInstance.addCardToHand(card);
     testInstance.addCardToHand(card1);
     testInstance.removeCardFromHand(card1);
     assertEquals(testInstance.getHand().size(), 1);
