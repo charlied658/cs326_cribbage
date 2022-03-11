@@ -59,14 +59,6 @@ public class ActiveGame {
         return p2;
     }
     
-    public String getDate() {
-        String month = months[MM - 1];
-        String day = "" + DD;
-        String year = "" + YY;
-        
-        return month + " " + day + " " + year;
-    }
-    
     public boolean isCompleted () {
         return completed;
     }
