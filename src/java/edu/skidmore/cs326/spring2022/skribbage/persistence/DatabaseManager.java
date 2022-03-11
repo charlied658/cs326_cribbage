@@ -143,8 +143,7 @@ public class DatabaseManager {
 //			    
 			      
 			      
-			      
-			      
+			     
 			     userAuthenticate("nchantzi","ILoveSQL");
 			     
 			   }
