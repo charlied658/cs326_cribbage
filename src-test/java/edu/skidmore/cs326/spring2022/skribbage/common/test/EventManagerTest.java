@@ -1,14 +1,19 @@
 package edu.skidmore.cs326.spring2022.skribbage.common.test;
 
-import static org.junit.Assert.assertEquals;
+import org.junit.Assert.assertEquals;
 
 import org.apache.log4j.Logger;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import java.beans.PropertyChangeListener;
 import edu.skidmore.cs326.spring2022.skribbage.common.EventManager;
+import edu.skidmore.cs326.spring2022.skribbage.common.EventType;
 import edu.skidmore.cs326.spring2022.skribbage.common.User;
 import edu.skidmore.cs326.spring2022.skribbage.frontend.events.accountevents.UserLoginEvent;
 
@@ -30,7 +35,11 @@ public class EventManagerTest {
     private UserLoginEvent loginEventInstance;
 
     private User userInstance;
-    private PropertyChangeListener listenerInstance;
+    
+    private LogInListenerMOCK listenerInstance;
+    
+    private EventManagerTest source;
+    
 
     /**
      * @BEFORE
@@ -43,8 +52,11 @@ public class EventManagerTest {
         testInstance = EventManager.getInstance();
         userInstance =
             new User("sleinasa@skidmore.edu", "sleinasa", "passwd", true);
-        // loginEventInstance = new UserLoginEvent(Object source, userInstance);
-        listenerInstance = new PropertyChangeListener();
+        source = new EventManagerTest();
+        loginEventInstance = new UserLoginEvent(source, userInstance);
+        
+        
+       
         // I need to set up a listener object as well.
         LOG.info("SetUp method completed for EventManagerTest");
     }
@@ -69,10 +81,16 @@ public class EventManagerTest {
     public void testAddPropertyChangeListener() {
         LOG.info("Beginning to test addPropertyChangeListener");
         // add the listener to the list to listen to the loginEvent.
+        testInstance.addPropertyChangeListener(listenerInstance, EventType.USER_LOGIN); 
         // send out a change in login event
-
+        //should send out an event.
+        loginEventInstance.notify();
         // assert that some value change got to the listener. Maybe assert that
-        // password sent was same as I set in setup.
+        assertEquals(listenerInstance, userInstance);
+        
+        // The object sent to listenerInstance should be the same as userInstance
+        assertTrue(listenerInstance.equals(userInstance));
+        
     }
 
     /**
@@ -81,9 +99,20 @@ public class EventManagerTest {
     @Test
     public void testRemovePropertyChangeListener() {
         LOG.info("Beginning to test removePropertyChangeListener");
-        // set the listener and repeat the addproperty.
-        // Then remove the listener and assert that this time it doesn't reach
-        // them. asserNull for example
+        // add the listener to the list to listen to the loginEvent.
+        testInstance.addPropertyChangeListener(listenerInstance, EventType.USER_LOGIN); 
+        // send out a change in login event
+        //should send out an event.
+        loginEventInstance.notify();
+        // assert that some value change got to the listener. Maybe assert that
+        assertEquals(listenerInstance, userInstance);
+        // The object sent to listenerInstance should be the same as userInstance
+        assertTrue(listenerInstance.equals(userInstance));
+        
+        testInstance.removePropertyChangeListener(listenerInstance);
+        
+        assertFalse(listenerInstance.equals(userInstance));
+        
     }
 
     /**
