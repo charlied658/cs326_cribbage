@@ -7,6 +7,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.beans.PropertyChangeListener;
 import edu.skidmore.cs326.spring2022.skribbage.common.EventManager;
 import edu.skidmore.cs326.spring2022.skribbage.common.User;
 import edu.skidmore.cs326.spring2022.skribbage.frontend.events.accountevents.UserLoginEvent;
@@ -29,6 +30,7 @@ public class EventManagerTest {
     private UserLoginEvent loginEventInstance;
 
     private User userInstance;
+    private PropertyChangeListener listenerInstance;
 
     /**
      * @BEFORE
@@ -42,7 +44,7 @@ public class EventManagerTest {
         userInstance =
             new User("sleinasa@skidmore.edu", "sleinasa", "passwd", true);
         // loginEventInstance = new UserLoginEvent(Object source, userInstance);
-
+        listenerInstance = new PropertyChangeListener();
         // I need to set up a listener object as well.
         LOG.info("SetUp method completed for EventManagerTest");
     }
