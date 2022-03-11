@@ -11,11 +11,11 @@ import org.junit.Test;
 
 /**
  * Unit Tests for Hand Class.
- * 
+ *
  * @author Dorjee
  */
 public class HandTest {
-  
+
   /**
    * Attribute to house the test instance.
    */
@@ -27,7 +27,7 @@ public class HandTest {
   @Before
   public void setup() {
     testInstance = new Hand();
-  }    
+  }
 
   /**
    * Test the method to add a card to hand.
