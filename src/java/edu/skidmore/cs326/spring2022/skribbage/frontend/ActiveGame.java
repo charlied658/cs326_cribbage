@@ -1,4 +1,10 @@
-package edu.skidmore.cs326.spring2022.skribbage.frontend.demo;
+package edu.skidmore.cs326.spring2022.skribbage.frontend;
+
+/***
+ * Creates an object used for displaying games on the PastGamesPage.
+ * @author Jonah Marcus
+ * Last Edit: March 11, 2022
+ */
 
 public class ActiveGame {
     private int MM;

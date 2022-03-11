@@ -1,4 +1,4 @@
-package edu.skidmore.cs326.spring2022.skribbage.frontend.demo;
+package edu.skidmore.cs326.spring2022.skribbage.frontend;
 
 import java.awt.Color;
 import java.awt.Point;
@@ -19,9 +19,9 @@ import us.daveread.edu.utilities.Utility;
 import us.daveread.edu.graphics.shape.impl.Rectangle;
 
 /***
- * This is the page that allows the player to load old games.
+ * This is the page that allows the player to view and load old games.
  * @author Jonah Marcus
- * Last Update: March 10 2022
+ * Last Update: March 11 2022
  */
 
 public class PastGamesPage extends DrawingSurface implements ActionListener {

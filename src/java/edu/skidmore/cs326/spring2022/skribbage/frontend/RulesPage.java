@@ -1,4 +1,4 @@
-package edu.skidmore.cs326.spring2022.skribbage.frontend.demo;
+package edu.skidmore.cs326.spring2022.skribbage.frontend;
 
 import java.awt.Color;
 import java.awt.Point;
@@ -24,8 +24,10 @@ public class RulesPage extends DrawingSurface implements ActionListener{
     private JButton returnToMainMenu;
     
 
-/**
- * Sets up mainframe in which rules will be displayed.
+/***
+ * Creates the page which will display the rules of the game for the user.
+ * @author Jonah Marcus
+ * Last Edit: March 11, 2022
  */
     public RulesPage(){
         mf = new MainFrame(this, "Rules Page", mainframeWidth, mainframeHeight, false);
