@@ -40,4 +40,14 @@ public class Hand {
   public void removeCardFromHand(Card card) {
     hand.remove(card);
   }
+
+  /**
+   * Get method to return a hand.
+   *
+   * @return Hand the players hand
+   */
+  public ArrayList<Card> getHand() {
+    return hand;
+  }
+
 }
