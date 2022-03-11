@@ -1,5 +1,11 @@
 package edu.skidmore.cs326.spring2022.skribbage.frontend.demo;
 
+/***
+ * Creates a game to be displayed on the PastGamesPage.
+ * @author Jonah Marcus
+ * Last Edit: March 11 2022
+ */
+
 public class ActiveGame {
     private int MM;
     private int DD;

@@ -21,7 +21,7 @@ import us.daveread.edu.graphics.shape.impl.Rectangle;
 /***
  * This is the page that allows the player to load old games.
  * @author Jonah Marcus
- * Last Update: March 10 2022
+ * Last Update: March 11 2022
  */
 
 public class PastGamesPage extends DrawingSurface implements ActionListener {
@@ -70,10 +70,12 @@ public class PastGamesPage extends DrawingSurface implements ActionListener {
         //there will be a list of all active games that is a bit more sophisticated.
         for(int i = 0; i < allGames.size(); i++) {
             ActiveGame game = allGames.get(i);
-            if (game.isCompleted())
+            if (game.isCompleted()) {
                 completeGames.add(game);
-            else
+            }
+            else {
                 incompleteGames.add(game);
+            }
         }
         
         

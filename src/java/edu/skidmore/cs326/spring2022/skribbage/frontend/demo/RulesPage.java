@@ -17,6 +17,11 @@ import us.daveread.edu.graphics.surface.MainFrame;
 import us.daveread.edu.utilities.Utility;
 import us.daveread.edu.graphics.shape.impl.Rectangle;
 
+/***
+ * Creates a page that displays the rules for the user.
+ * @author Jonah Marcus
+ * Last Edit: March 11, 2022
+ */
 public class RulesPage extends DrawingSurface implements ActionListener{
     private int mainframeWidth = 650;
     private int mainframeHeight = 1500;
