@@ -53,6 +53,18 @@ public class Game{
 
   }//end of initPlayers
 
+  /**
+  Returns the list of players.
+  @return an ArrayList of players.
+  */
+  private ArrayList <Player> getPlayerList (){
+    return playerList;
+  }
+
+  private ArrayList <Card> getCrib(){
+    return crib;
+  }
+
 
   /**
   This method executes the dealing phase of the game. A dealer is determined,
@@ -173,12 +185,12 @@ public class Game{
 
     int idxOfDealer = getDealerIdx();//the index in playerList that contains the dealer
 
-    ArrayList <Card> dealerHand = new ArrayList <Card> ();
-    ArrayList <Card> poneHand = new ArrayList <Card> ();
+    Hand dealerHand = new Hand();
+    Hand poneHand = new Hand();
 
     for (int i = 0; i < 6; i++){
-      poneHand.add(theDeck.removeTopCard());
-      dealerHand.add(theDeck.removeTopCard());
+      poneHand.addCardToHand(theDeck.removeTopCard());
+      dealerHand.addCardToHand(theDeck.removeTopCard());
     }
 
     playerList.get(idxOfDealer).setHand(dealerHand);
@@ -391,6 +403,7 @@ public class Game{
     if (sum == 15){
       //award points to player
       //player p gets 2 points
+      p.addPoints(2);
     }
     else{
       //FRONT END
@@ -420,6 +433,7 @@ public class Game{
     if (sum == 31){
       //award points to player
       //player p gets 2 points
+      p.addPoints(2);
     }
     else{
       //FRONT END
@@ -443,6 +457,7 @@ public class Game{
     if (precedingCard.getIdentifier() == mostRecentCard.getIdentifier()){
       //we have a pair
       //player p gets 2 points
+      p.addPoints(2);
     }
     else{
       //indicate to front end that the claim was not valid
@@ -465,6 +480,7 @@ public class Game{
     if (firstInPair.getIdentifier() == secondInPair.getIdentifier()){
       if (secondInPair.getIdentifier() == lastInPair.getIdentifier()){
         //player p gets 6 points
+        p.addPoints(6);
       }
     }
     else{
@@ -488,6 +504,7 @@ public class Game{
     if (firstInPair.getIdentifier() == secondInPair.getIdentifier()){
       if (secondInPair.getIdentifier() == lastInPair.getIdentifier()){
         //player p gets 6 points
+        p.addPoints(6);
       }
     }
     else{
@@ -557,6 +574,7 @@ public class Game{
     if (numEqual == 2){
       //we have a run of 3
       //give the points to player p
+      p.addPoints(3);
 
     }
     else{
@@ -639,6 +657,7 @@ public class Game{
     if (numEqual == 3){
       //we have a run of 4
       //give the points to player p
+      p.addPoints(4);
 
     }
     else{
@@ -736,6 +755,7 @@ public class Game{
     if (numEqual == 4){
       //we have a run of 5
       //give the points to player p
+      p.addPoints(5);
 
     }
     else{
@@ -844,8 +864,9 @@ public class Game{
 
 
     if (numEqual == 5){
-      //we have a run of 5
+      //we have a run of 6
       //give the points to player p
+      p.addPoints(6);
 
     }
     else{
@@ -966,6 +987,7 @@ public class Game{
     if (numEqual == 6){
       //we have a run of 7
       //give the points to player p
+      p.addPoints(7);
 
     }
     else{
@@ -989,12 +1011,10 @@ public class Game{
     //so, when player p makes a claim that the last card was placed, player p played the most recent card
     //if there are no more cards to be placed, the p placed the last card
 
-    boolean allCardsPlaced = false;
-
     if (playerList.size() == 2){
       if (peggingCards.size() == 8){
-        allCardsPlaced = true;
         //give 1 point to p
+        p.addPoints(1);
       }
       else{
         //indicate that the claim was false to front end
