@@ -4,7 +4,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 import edu.skidmore.cs326.spring2022.skribbage.common.EventManager;
-import edu.skidmore.cs326.spring2022.skribbage.frontend.events.accountevents.UserLoginEvent;
+import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserLoginEvent;
 
 public class LogInListenerMOCK implements PropertyChangeListener {
 

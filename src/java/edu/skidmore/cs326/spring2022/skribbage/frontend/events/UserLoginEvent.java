@@ -1,4 +1,4 @@
-package edu.skidmore.cs326.spring2022.skribbage.frontend.events.accountevents;
+package edu.skidmore.cs326.spring2022.skribbage.frontend.events;
 
 
 
