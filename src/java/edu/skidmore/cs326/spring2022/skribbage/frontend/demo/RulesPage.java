@@ -9,6 +9,9 @@ import java.awt.Dimension;
 import java.awt.Graphics2D;
 import javax.swing.*;
 
+import org.apache.log4j.Logger;
+
+import edu.skidmore.cs326.spring2022.skribbage.frontend.demo.PastGamesPage;
 import us.daveread.edu.graphics.shape.Drawable;
 import us.daveread.edu.graphics.shape.impl.Image;
 import us.daveread.edu.graphics.shape.impl.Text;
@@ -27,17 +30,30 @@ public class RulesPage extends DrawingSurface implements ActionListener{
     private int mainframeHeight = 1500;
     private MainFrame mf;
     private JButton returnToMainMenu;
+
+    private static final Logger LOG;
+    
+    static {
+        LOG = Logger.getLogger(RulesPage.class);
+    }
+
     
 
-/**
- * Sets up mainframe in which rules will be displayed.
+/***
+ * Creates the page which will display the rules of the game for the user.
+ * @author Jonah Marcus
+ * Last Edit: March 11, 2022
  */
     public RulesPage(){
+        LOG.trace("Entering RulesPage Constructor");
         mf = new MainFrame(this, "Rules Page", mainframeWidth, mainframeHeight, false);
         setup();
     }
     
     private void setup() {
+
+        LOG.trace("Entering the setup method in RulesPage.java");
+
         setLayout(null);
         Rectangle background = new Rectangle(new Point(0,0), new Dimension(mainframeWidth, mainframeHeight),
             Color.DARK_GRAY, Color.DARK_GRAY);
@@ -55,6 +71,7 @@ public class RulesPage extends DrawingSurface implements ActionListener{
         rulesArea.setLineWrap(true);
         rulesArea.setWrapStyleWord(true);
         rulesArea.setEditable(false);
+
         
         JScrollPane scrollPane =
             new JScrollPane(rulesArea, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
@@ -63,6 +80,11 @@ public class RulesPage extends DrawingSurface implements ActionListener{
         scrollPane.getViewport().setBackground(Color.DARK_GRAY);
         add(scrollPane);
         
+
+        
+      
+        
+
         rulesArea.setText("The objective in Cribbage is to be the first player to get 121 points. The gameplay is divided into three distinct parts, The Deal, The Play and The Show.");
 
         /*
@@ -124,6 +146,9 @@ public class RulesPage extends DrawingSurface implements ActionListener{
     //will, as the label suggests, take the user back to the main menu.
     @Override
     public void actionPerformed(ActionEvent e) {
+
+        LOG.trace("ActionPerfomed method in RulesPage.java");
+
         //mf.dispatchEvent(new WindowEvent(mf, WindowEvent.WINDOW_CLOSING));
         if (e.getSource().equals(returnToMainMenu)) {
             mf.dispose();
@@ -133,6 +158,9 @@ public class RulesPage extends DrawingSurface implements ActionListener{
     }
     
     public static void main(String[] args) {
+
+        LOG.trace("RulesPage main method");
+
         new RulesPage();
     }
 }

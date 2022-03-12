@@ -8,6 +8,9 @@ import java.awt.event.WindowEvent;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import javax.swing.*;
+
+import edu.skidmore.cs326.spring2022.skribbage.frontend.RulesPage;
+
 import java.util.*;
 
 import us.daveread.edu.graphics.shape.Drawable;
