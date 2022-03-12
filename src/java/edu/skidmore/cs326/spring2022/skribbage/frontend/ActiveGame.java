@@ -1,4 +1,4 @@
-package edu.skidmore.cs326.spring2022.skribbage.frontend.demo;
+package edu.skidmore.cs326.spring2022.skribbage.frontend;
 
 /***
  * Creates a game to be displayed on the PastGamesPage.

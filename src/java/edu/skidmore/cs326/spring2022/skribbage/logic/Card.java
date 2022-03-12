@@ -10,14 +10,14 @@ import org.apache.log4j.Logger;
 public class Card {
 
   /**
-  * The numerical value added to the center sum during play phase
-  * (4 of hearts is worth 4, any king is worth 10, etc.)
-  */
+   * The numerical value added to the center sum during play phase
+   * (4 of hearts is worth 4, any king is worth 10, etc.)
+   */
   private int pointValue;
 
   /**
-  * Getter for pointValue
-  */
+   * Getter for pointValue
+   */
   public int getPointValue() {
     return pointValue;
   }

@@ -1,4 +1,4 @@
-package edu.skidmore.cs326.spring2022.skribbage.frontend.demo;
+package edu.skidmore.cs326.spring2022.skribbage.frontend;
 
 import java.awt.Color;
 import java.awt.Point;
@@ -11,7 +11,6 @@ import javax.swing.*;
 
 import org.apache.log4j.Logger;
 
-import edu.skidmore.cs326.spring2022.skribbage.frontend.demo.PastGamesPage;
 import us.daveread.edu.graphics.shape.Drawable;
 import us.daveread.edu.graphics.shape.impl.Image;
 import us.daveread.edu.graphics.shape.impl.Text;
