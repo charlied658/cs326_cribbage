@@ -19,6 +19,7 @@ public final class EventManager {
      * Private static final instance for eager singelton.
      */
     private static final EventManager INSTANCE;
+
     /**
      * Private static final instance of a Logger for this class.
      */
@@ -27,11 +28,13 @@ public final class EventManager {
      * Static block.
      */
     static {
-    	INSTANCE = new EventManager();
-    	LOG = Logger.getLogger(EventManager.class);
+        INSTANCE = new EventManager();
+        LOG = Logger.getLogger(EventManager.class);
     }
+
     /**
-     * Handles the mapping between EventType and Registered listeners automatically.
+     * Handles the mapping between EventType and Registered listeners
+     * automatically.
      */
     private final PropertyChangeSupport support;
 
@@ -44,21 +47,28 @@ public final class EventManager {
     }
 
     /**
-     * Registers a new property change listener, mapped to a specific event type
+     * Registers a new property change listener, mapped to a specific event
+     * type.
      *
-     * @param eventType From the EventType enum.
-     * @param pcl A new instance of an event listener, which implements PropertyChangeListener
+     * @param eventType
+     *            From the EventType enum.
+     * @param pcl
+     *            A new instance of an event listener, which implements
+     *            PropertyChangeListener
      */
-    public void addPropertyChangeListener(PropertyChangeListener pcl, EventType... eventType) {
-        for(EventType event : eventType) {
+    public void addPropertyChangeListener(PropertyChangeListener pcl,
+        EventType... eventType) {
+        for (EventType event : eventType) {
             support.addPropertyChangeListener(event.toString(), pcl);
         }
     }
 
     /**
-     * Unregisters a property change listener
+     * Unregisters a property change listener.
      *
-     * @param pcl The event listener (implementing PropertyChangeListener) to unregister
+     * @param pcl
+     *            The event listener (implementing PropertyChangeListener) to
+     *            unregister
      */
     public void removePropertyChangeListener(PropertyChangeListener pcl) {
         support.removePropertyChangeListener(pcl);
@@ -67,7 +77,9 @@ public final class EventManager {
     /**
      * Fires the input event, for all registered listeners to handle.
      *
-     * @param evt Event to fire - Any subtype of CribbageEvent (or PropertyChangeEvent)
+     * @param evt
+     *            Event to fire - Any subtype of CribbageEvent (or
+     *            PropertyChangeEvent)
      */
     public void notify(PropertyChangeEvent evt) {
         support.firePropertyChange(evt);
@@ -79,7 +91,7 @@ public final class EventManager {
      *
      * @return The single instance of EventManager
      */
-    public synchronized static EventManager getInstance() {
+    public static synchronized EventManager getInstance() {
         return INSTANCE;
     }
 
