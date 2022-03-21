@@ -84,12 +84,14 @@ public interface ActiveGame {
      */
     public void setPlayer1(String player1);
     
-    public void setPlayer2(String player2) {
-        p2 = player2;
-    }
+    /**
+     * @param player2
+     */
+    public void setPlayer2(String player2);
     
-    public void setCompletionStatus (boolean isCompleted) {
-        completed = isCompleted;
-    } 
+    /**
+     * @param isCompleted
+     */
+    public void setCompletionStatus (boolean isCompleted); 
 }
 
