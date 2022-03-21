@@ -95,7 +95,6 @@ public interface ActiveGame {
     public void setCompletionStatus (boolean isCompleted); 
 }
 
-=======
 /***
  * Creates a game to be displayed on the PastGamesPage.
  * 
