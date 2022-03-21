@@ -1,19 +1,12 @@
 package edu.skidmore.cs326.spring2022.skribbage.frontend;
 
 public interface ActiveGame {
-    int month = 0;
-    int day = 0;
-    int year = 0;
-    String[] months = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
-    String gameName = ""; //Name of the game specified by user. If no name is specified, name is YYYYMMDD timestamp.
-    String player1 = ""; //Name of player 1
-    String player2 = ""; //Name of player 2
-    boolean completed = false; //Tracks whether or not game has been completed. Important for formatting PastGamesPage (incomplete games must be on top)
+    
     
     /**
      * @return month
      */
-    public String getMonth();  
+    public int getMonth();  
     
     /**
      * @return day
@@ -80,14 +73,14 @@ public interface ActiveGame {
     public void setName(String name);
     
     /**
-     * @param player1
+     * @param p1
      */
-    public void setPlayer1(String player1);
+    public void setPlayer1(String p1);
     
     /**
-     * @param player2
+     * @param p2
      */
-    public void setPlayer2(String player2);
+    public void setPlayer2(String p2);
     
     /**
      * @param isCompleted
