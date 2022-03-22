@@ -4,6 +4,7 @@ import static org.junit.Assert.assertTrue;
 
 import org.apache.log4j.Logger;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 import org.junit.Before;
@@ -11,7 +12,7 @@ import org.junit.Test;
 
 import edu.skidmore.cs326.spring2022.skribbage.gamification.ItemShopFactory;
 import edu.skidmore.cs326.spring2022.skribbage.gamification.ReBattleCard;
-import edu.skidmore.cs326.spring2022.skribbage.gamification.StoreItems;
+
 import edu.skidmore.cs326.spring2022.skribbage.gamification.ItemShopInterface;
 
 /**
