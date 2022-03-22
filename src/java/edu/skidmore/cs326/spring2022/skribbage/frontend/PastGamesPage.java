@@ -59,7 +59,9 @@ public class PastGamesPage extends DrawingSurface implements ActionListener {
      */
     private HomeScreen homeScreen;
     
-    
+    /**
+     * 
+     */
     private JButton returnToMainMenu;
 
     /**
