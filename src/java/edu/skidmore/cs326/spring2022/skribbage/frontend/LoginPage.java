@@ -1,5 +1,6 @@
 package edu.skidmore.cs326.spring2022.skribbage.frontend;
 
+
 import java.awt.*;
 
 import org.apache.log4j.Logger;
@@ -7,19 +8,17 @@ import org.apache.log4j.Logger;
 import us.daveread.edu.graphics.shape.*;
 import us.daveread.edu.graphics.surface.*;
 import us.daveread.edu.graphics.shape.impl.*;
+import us.daveread.edu.graphics.shape.impl.Image;
 
-//import us.daveread.edu.graphics.shape.Drawable;
-//import us.daveread.edu.graphics.shape.impl.Text;
-//import us.daveread.edu.graphics.shape.impl.Image;
-//import us.daveread.edu.graphics.surface.DrawingSurface;
-//import us.daveread.edu.graphics.surface.MainFrame;
 /**
  * @author Zoe Beals
- *         Completed for Sprint 1 Requirements 3/9/2022
- *         LoginPage class holds initial functionality to prompt user to Login
- *         to the Gam
+ *     updated as of 3/22/2022
  */
 public class LoginPage extends DrawingSurface {
+	/**
+	 * logo - Image to hold the temporary game logo
+	 */
+	private Image logo;
     /**
      * loginPage - MainFrame window to hold the UI attributes
      */
@@ -62,6 +61,16 @@ public class LoginPage extends DrawingSurface {
      * changePassword - Text variable that represents the change password button
      */
     private Text changePassword;
+    
+    /**
+     * homeScreen - HomeScreen window to hold the home screen
+     */
+    private HomeScreen homeScreen;
+    
+    /**
+     * homeScreenButton - Text variable that represents the button to go back to the home screen
+     */
+    private Text homeScreenButton;
 
     /**
      * LOG - logger variable to be able to display logger messages
@@ -91,14 +100,18 @@ public class LoginPage extends DrawingSurface {
      * creates the login and changePassword Text buttons
      */
     public void setup() {
+
         LOG.trace("Setup method in LOginPage.java");
         login =
-            new Text("Login", new Point(50, 50), 20, Color.black, Color.blue);
-        changePassword = new Text("Change Password",
-            new Point(login.getLocation().x + 100, 50), 20, Color.black,
+            new Text("Login", new Point(425, 400), 20, Color.black, Color.blue);
+        changePassword = new Text("Change Password", new Point(369, 440), 20, Color.black,
             Color.blue);
+        homeScreenButton = new Text("Back", new Point(10,25), 20, Color.black, Color.blue);
+        logo = new Image("logo.png", new Point(150, 0), 0.6, null);
+        add(homeScreenButton);
         add(login);
         add(changePassword);
+        add(logo);
     }
 
     /**
@@ -157,7 +170,15 @@ public class LoginPage extends DrawingSurface {
                     changePasswordButtonClicked(false);
                 }
             }
+        } else if (e == homeScreenButton) {
+        	addMessage("Go back");
+        	returnToHome();
         }
+    }
+    
+    public void returnToHome() {
+    	homeScreen = new HomeScreen();
+    	loginPage.dispose();
     }
 
     /**

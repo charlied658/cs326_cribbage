@@ -1,5 +1,6 @@
 package edu.skidmore.cs326.spring2022.skribbage.frontend;
 
+
 import java.awt.Color;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
@@ -27,6 +28,13 @@ import us.daveread.edu.graphics.shape.impl.Rectangle;
  * @author Jonah Marcus
  *         Last Update: March 11 2022
  * lOGGING added by Sten Leinasaar March 22, 2022.
+ * This is the page that allows the player to view and load old games.
+ * @author Jonah Marcus
+ * Last Update: March 11 2022
+ * This is the page that allows the player to load old games.
+ * 
+ * @author Jonah Marcus
+ *         Last Update: March 10 2022
  */
 
 @SuppressWarnings("serial")
@@ -49,6 +57,9 @@ public class PastGamesPage extends DrawingSurface implements ActionListener {
     /**
      * 
      */
+    private HomeScreen homeScreen;
+    
+    
     private JButton returnToMainMenu;
 
     /**
@@ -196,8 +207,9 @@ public class PastGamesPage extends DrawingSurface implements ActionListener {
         // mf.dispatchEvent(new WindowEvent(mf, WindowEvent.WINDOW_CLOSING));
         if (e.getSource().equals(returnToMainMenu)) {
             mf.dispose();
-            RulesPage rules = new RulesPage();
-            rules.setVisible(true);
+            //RulesPage rules = new RulesPage();
+            //rules.setVisible(true);
+            homeScreen = new HomeScreen();
         }
     }
     /**
