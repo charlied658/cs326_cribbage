@@ -3,10 +3,10 @@ import java.util.ArrayList;
 import org.apache.log4j.Logger;
 
 /**
-Game has a deck, a list of players, a pegging total, a list of cards in the crib, and
-a list of cards placed during pegging play. The constructor initializes the deck, the list of players, and
-the pegging total. This class contains methods for the deal phase and the pegging phase, which are not complete.
-Assumption: there are only two players in the game.
+ Game contains the state of the game. It has a deck, a list of players, a
+ pegging total, a list of cards in the crib, and a list of cards placed during
+ pegging play. It has methods to initialize the list of players, get each field,
+ and get the index containing the dealer in playerList.
 @author Michael Shriner
 */
 public class Game{
@@ -25,22 +25,6 @@ public class Game{
 
   private static ArrayList<Card> peggingCards = new ArrayList <Card>();
 
-  //
-  // /**
-  // Constructor creates a Game, initializes the deck, the list of players, and the
-  // pegging total for this game.
-  // @param numPlayers is the number of players
-  // */
-  // public Game(int numPlayers){
-  //   //initialize theDeck
-  //   this.theDeck = new Deck();
-  //
-  //   //initialize list of players, given numPlayers
-  //   initPlayers(numPlayers);
-  //
-  //   this.peggingTotal = 0;
-  // }
-
   /**
   Initializes the ArrayList of Player objects given the number of players for this game.
   @param numPlayers is the number of players
@@ -53,6 +37,22 @@ public class Game{
     }
 
   }//end of initPlayers
+
+  private static void setPeggingTotal(int pts){
+    peggingTotal = pts;
+  }
+
+  private static Deck getDeck(){
+    return theDeck;
+  }
+
+  private static int getPeggingTotal(){
+    return peggingTotal;
+  }
+
+  private static ArrayList<Card> getPeggingCards(){
+    return peggingCards;
+  }
 
   /**
   Returns the list of players.
