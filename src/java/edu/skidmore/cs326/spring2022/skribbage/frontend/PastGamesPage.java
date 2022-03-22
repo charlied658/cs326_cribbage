@@ -9,6 +9,8 @@ import java.awt.Dimension;
 import java.awt.Graphics2D;
 import javax.swing.*;
 
+import org.apache.log4j.Logger;
+
 import java.util.*;
 
 import us.daveread.edu.graphics.shape.Drawable;
@@ -24,8 +26,10 @@ import us.daveread.edu.graphics.shape.impl.Rectangle;
  * 
  * @author Jonah Marcus
  *         Last Update: March 11 2022
+ * lOGGING added by Sten Leinasaar March 22, 2022.
  */
 
+@SuppressWarnings("serial")
 public class PastGamesPage extends DrawingSurface implements ActionListener {
     /**
      * 
@@ -80,6 +84,14 @@ public class PastGamesPage extends DrawingSurface implements ActionListener {
      */
     private PlayableGame three =
         new PlayableGame(1, 17, 2022, "Hugh Jass", "Tess T Culls", "", false);
+    /**
+     * Logger instance for logging.
+     */
+    private static final Logger LOG;
+    
+    static {
+        LOG = Logger.getLogger(PastGamesPage.class);
+    }
 
     /**
      * 
@@ -89,6 +101,7 @@ public class PastGamesPage extends DrawingSurface implements ActionListener {
             mainframeHeight, false);
         addGamesToList();
         setup();
+        LOG.trace("Constructor reached");
     }
     /**
      * 
@@ -102,6 +115,7 @@ public class PastGamesPage extends DrawingSurface implements ActionListener {
      * 
      */
     public void setup() {
+        LOG.trace("Setup of PastGamesPage");
         setLayout(null);
         Rectangle background = new Rectangle(new Point(0, 0),
             new Dimension(mainframeWidth, mainframeHeight),
@@ -125,6 +139,7 @@ public class PastGamesPage extends DrawingSurface implements ActionListener {
         // the future,
         // there will be a list of all active games that is a bit more
         // sophisticated.
+        LOG.trace("For loop to separate completed and uncompleted games.");
         for (int i = 0; i < allGames.size(); i++) {
             PlayableGame game = allGames.get(i);
             if (game.isCompleted()) {
