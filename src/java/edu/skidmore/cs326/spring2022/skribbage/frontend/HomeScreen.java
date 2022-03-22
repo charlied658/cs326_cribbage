@@ -10,9 +10,7 @@ import us.daveread.edu.graphics.shape.impl.Image;
 import us.daveread.edu.graphics.shape.impl.Text;
 import us.daveread.edu.graphics.surface.DrawingSurface;
 import us.daveread.edu.graphics.surface.MainFrame;
-<<<<<<< HEAD
 
-=======
 import us.daveread.edu.graphics.tool.Turtle;
 /**
  * @author Zoe Beals
