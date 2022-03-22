@@ -9,7 +9,7 @@ import java.beans.PropertyChangeEvent;
  * @author Sten Leinasaar
  */
 @SuppressWarnings("serial")
-public class CreateEvent extends PropertyChangeEvent {
+public class EventFactory extends PropertyChangeEvent {
 
     
     
@@ -22,7 +22,7 @@ public class CreateEvent extends PropertyChangeEvent {
      * @param oldValue
      * @param newValue
      */
-    public CreateEvent(Object source, String propertyName, Object oldValue,
+    public EventFactory(Object source, String propertyName, Object oldValue,
         Object newValue) {
         super(source, propertyName, oldValue, newValue);
         

@@ -171,7 +171,6 @@ public class PastGamesPage extends DrawingSurface implements ActionListener {
         int buttonYPosition = 150;
         for (int i = 0; i < incompleteGames.size(); i++) {
             String[] gameInfo = incompleteGames.get(i).getGameInfo();
-
             String timestamp = gameInfo[0];
             String name = gameInfo[1];
             String player1 = gameInfo[2];
