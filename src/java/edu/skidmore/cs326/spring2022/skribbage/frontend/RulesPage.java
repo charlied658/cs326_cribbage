@@ -1,5 +1,6 @@
 package edu.skidmore.cs326.spring2022.skribbage.frontend;
 
+
 import java.awt.Color;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
@@ -31,6 +32,7 @@ public class RulesPage extends DrawingSurface implements ActionListener{
     private JButton returnToMainMenu;
 
     private static final Logger LOG;
+    private HomeScreen homeScreen;
     
     static {
         LOG = Logger.getLogger(RulesPage.class);
@@ -151,8 +153,9 @@ public class RulesPage extends DrawingSurface implements ActionListener{
         //mf.dispatchEvent(new WindowEvent(mf, WindowEvent.WINDOW_CLOSING));
         if (e.getSource().equals(returnToMainMenu)) {
             mf.dispose();
-            PastGamesPage pastGames = new PastGamesPage();
-            pastGames.setVisible(true);
+            homeScreen = new HomeScreen();
+            //PastGamesPage pastGames = new PastGamesPage();
+            //spastGames.setVisible(true);
         }
     }
     
