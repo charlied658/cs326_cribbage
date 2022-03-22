@@ -1,13 +1,16 @@
 package edu.skidmore.cs326.spring2022.skribbage.frontend;
+
 import java.awt.Color;
 import java.awt.Point;
 
 import org.apache.log4j.Logger;
 
 import us.daveread.edu.graphics.shape.Drawable;
+import us.daveread.edu.graphics.shape.impl.Image;
 import us.daveread.edu.graphics.shape.impl.Text;
 import us.daveread.edu.graphics.surface.DrawingSurface;
 import us.daveread.edu.graphics.surface.MainFrame;
+import us.daveread.edu.graphics.tool.Turtle;
 /**
  * 
  * @author Zoe Beals
@@ -16,6 +19,10 @@ import us.daveread.edu.graphics.surface.MainFrame;
  *
  */
 public class HomeScreen extends DrawingSurface {
+	/**
+	 * logo - Image to hold the temporary game logo
+	 */
+	private Image logo;
 	/**
 	 * homeScreen - MainFrame window to hold the UI attributes
 	 */
@@ -73,12 +80,15 @@ public class HomeScreen extends DrawingSurface {
 	 */
 	public void setup() {
 	    LOG.trace("Setup method in HomeScreen.java");
-		loginPageButton = new Text("Login Page", new Point(50, 50), 20, Color.black, Color.blue);
-		rulesPageButton = new Text("Rules Page", new Point(loginPageButton.getLocation().x + 150, 50), 20, Color.black, Color.blue);
-		pastGamesPageButton = new Text("Past Games Page", new Point(rulesPageButton.getLocation().x + 150, 50), 20, Color.black, Color.blue);
+	   
+	    logo = new Image("logo.png", new Point(150, 0), .6, null);
+		loginPageButton = new Text("Login Page", new Point(logo.getLocation().x + 225, logo.getLocation().y + 375), 20, Color.black, Color.blue);
+		rulesPageButton = new Text("Rules Page", new Point(loginPageButton.getLocation().x, loginPageButton.getLocation().y + 50), 20, Color.black, Color.blue);
+		pastGamesPageButton = new Text("Past Games Page", new Point(rulesPageButton.getLocation().x - 27, rulesPageButton.getLocation().y + 50), 20, Color.black, Color.blue);
 		add(loginPageButton);
 		add(rulesPageButton);
 		add(pastGamesPageButton);
+	    add(logo);
 	}
 	
 	/**
@@ -93,11 +103,18 @@ public class HomeScreen extends DrawingSurface {
 	    LOG.trace("DrawableMosuceClick in HomeScreen.java");
 		if (e == loginPageButton) {
 			loginPage = new LoginPage();
+			closeCurrentWindow();
 		} else if (e == rulesPageButton) {
 			rulesPage = new RulesPage();
+			closeCurrentWindow();
 		} else if (e == pastGamesPageButton) {
 			pastGamesPage = new PastGamesPage();
+			closeCurrentWindow();
 		}
+	}
+	
+	public void closeCurrentWindow() {
+		homeScreen.dispose();
 	}
 	
 	/**
