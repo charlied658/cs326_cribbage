@@ -84,8 +84,7 @@ public class PlayableGame implements ActiveGame {
      * @param completed
      */
     public PlayableGame(int month, int day, int year, String p1, String p2,
-        String game,
-        boolean completed) {
+        String game, boolean completed) {
         LOG.trace("Constructor of PlayableGame reached");
         setDay(day);
         setMonth(month);
@@ -157,6 +156,7 @@ public class PlayableGame implements ActiveGame {
      */
     public String[] getGameInfo() {
         String[] toReturn = new String[4];
+        
 
         return toReturn;
     }
