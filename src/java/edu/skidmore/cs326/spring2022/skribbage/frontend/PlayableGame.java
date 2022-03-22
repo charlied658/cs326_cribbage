@@ -83,7 +83,7 @@ public class PlayableGame implements ActiveGame {
      * @param game
      * @param completed
      */
-    public PlayableGame(int day, int month, int year, String p1, String p2,
+    public PlayableGame(int month, int day, int year, String p1, String p2,
         String game,
         boolean completed) {
         LOG.trace("Constructor of PlayableGame reached");
