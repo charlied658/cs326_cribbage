@@ -2,9 +2,7 @@ package edu.skidmore.cs326.spring2022.skribbage.frontend;
 
 import java.awt.Color;
 import java.awt.Point;
-
 import org.apache.log4j.Logger;
-
 import us.daveread.edu.graphics.shape.Drawable;
 import us.daveread.edu.graphics.shape.impl.Image;
 import us.daveread.edu.graphics.shape.impl.Text;
@@ -12,22 +10,12 @@ import us.daveread.edu.graphics.surface.DrawingSurface;
 import us.daveread.edu.graphics.surface.MainFrame;
 
 /**
- * @author Zoe Beals
- *         Completed for Spring 1 Requirements 3/10/2022
- *         HomeScreen class holds functionality to to allow the user to peruse
- *         between pages (have not implemented the ability to go back yet)
- *         Reviewd by Sten Leinasaar
- *         ToDo homeScreen, loginPage, rulesPage, and pastGamesPage private
- *         instances
- *         are not used.
- *         To be determined if we need to initialize them globally or under
- *         methods.
- *         JavaDoc comment sentence need to end with full stop, otherwise it is
- *         a
- *         checkstyle error.
- *         If there are fatal or warning states of code, check for them and add
- *         LOG.warn or LOG.fatal comment.
- *    Last Edited: Zoe Beals at March 22, 2022
+ * 
+ * @author Zoe Beals 
+ * updated as of 3/22/2022.
+ * HomeScreen class to act as the main menu
+ * of the game of cribbage.
+ *
  */
 public class HomeScreen extends DrawingSurface {
 
