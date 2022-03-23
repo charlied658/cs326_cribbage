@@ -1,5 +1,6 @@
 package edu.skidmore.cs326.spring2022.skribbage.frontend;
 
+
 public interface ActiveGame {
     
     
@@ -87,6 +88,9 @@ public interface ActiveGame {
      */
     public void setCompletionStatus (boolean isCompleted); 
 }
+
+
+
 
 
 

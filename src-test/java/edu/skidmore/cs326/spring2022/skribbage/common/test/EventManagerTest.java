@@ -6,8 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
-
-
+import static org.junit.Assert.assertNull;
 
 import edu.skidmore.cs326.spring2022.skribbage.common.EventManager;
 import edu.skidmore.cs326.spring2022.skribbage.common.EventType;
@@ -149,6 +148,14 @@ public class EventManagerTest {
      */
     @After
     public void tearDown() {
+        System.out.println("Running: tearDown");
+        testInstance = null;
+        userInstance = null;
+        loginEventInstance = null;
+        
+        assertNull(testInstance);
+        assertNull(userInstance);
+        assertNull(loginEventInstance);
 
     }
 

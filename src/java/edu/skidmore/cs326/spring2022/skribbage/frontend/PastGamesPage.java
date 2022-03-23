@@ -1,5 +1,6 @@
 package edu.skidmore.cs326.spring2022.skribbage.frontend;
 
+
 import java.awt.Color;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
@@ -8,6 +9,8 @@ import java.awt.event.WindowEvent;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import javax.swing.*;
+
+import org.apache.log4j.Logger;
 
 import java.util.*;
 
@@ -24,8 +27,17 @@ import us.daveread.edu.graphics.shape.impl.Rectangle;
  * 
  * @author Jonah Marcus
  *         Last Update: March 11 2022
+ * lOGGING added by Sten Leinasaar March 22, 2022.
+ * This is the page that allows the player to view and load old games.
+ * @author Jonah Marcus
+ * Last Update: March 11 2022
+ * This is the page that allows the player to load old games.
+ * 
+ * @author Jonah Marcus
+ *         Last Update: March 10 2022
  */
 
+@SuppressWarnings("serial")
 public class PastGamesPage extends DrawingSurface implements ActionListener {
     /**
      * 
@@ -42,6 +54,11 @@ public class PastGamesPage extends DrawingSurface implements ActionListener {
      */
     private MainFrame mf;
 
+    /**
+     * 
+     */
+    private HomeScreen homeScreen;
+    
     /**
      * 
      */
@@ -80,6 +97,14 @@ public class PastGamesPage extends DrawingSurface implements ActionListener {
      */
     private PlayableGame three =
         new PlayableGame(1, 17, 2022, "Hugh Jass", "Tess T Culls", "", false);
+    /**
+     * Logger instance for logging.
+     */
+    private static final Logger LOG;
+    
+    static {
+        LOG = Logger.getLogger(PastGamesPage.class);
+    }
 
     /**
      * 
@@ -89,6 +114,7 @@ public class PastGamesPage extends DrawingSurface implements ActionListener {
             mainframeHeight, false);
         addGamesToList();
         setup();
+        LOG.trace("Constructor reached");
     }
     /**
      * 
@@ -102,6 +128,7 @@ public class PastGamesPage extends DrawingSurface implements ActionListener {
      * 
      */
     public void setup() {
+        LOG.trace("Setup of PastGamesPage");
         setLayout(null);
         Rectangle background = new Rectangle(new Point(0, 0),
             new Dimension(mainframeWidth, mainframeHeight),
@@ -125,6 +152,7 @@ public class PastGamesPage extends DrawingSurface implements ActionListener {
         // the future,
         // there will be a list of all active games that is a bit more
         // sophisticated.
+        LOG.trace("For loop to separate completed and uncompleted games.");
         for (int i = 0; i < allGames.size(); i++) {
             PlayableGame game = allGames.get(i);
             if (game.isCompleted()) {
@@ -143,7 +171,6 @@ public class PastGamesPage extends DrawingSurface implements ActionListener {
         int buttonYPosition = 150;
         for (int i = 0; i < incompleteGames.size(); i++) {
             String[] gameInfo = incompleteGames.get(i).getGameInfo();
-
             String timestamp = gameInfo[0];
             String name = gameInfo[1];
             String player1 = gameInfo[2];
@@ -181,8 +208,9 @@ public class PastGamesPage extends DrawingSurface implements ActionListener {
         // mf.dispatchEvent(new WindowEvent(mf, WindowEvent.WINDOW_CLOSING));
         if (e.getSource().equals(returnToMainMenu)) {
             mf.dispose();
-            RulesPage rules = new RulesPage();
-            rules.setVisible(true);
+            //RulesPage rules = new RulesPage();
+            //rules.setVisible(true);
+            homeScreen = new HomeScreen();
         }
     }
     /**
