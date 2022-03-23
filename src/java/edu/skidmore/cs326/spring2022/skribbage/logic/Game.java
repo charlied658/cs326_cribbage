@@ -24,9 +24,13 @@ public class Game{
   static ArrayList<Card> crib = new ArrayList <Card> ();
 
   static ArrayList<Card> peggingCards = new ArrayList <Card>();
+  //break this up into peggingCards for each player
+  //assume there are only two players for now
+
 
   /**
   Initializes the ArrayList of Player objects given the number of players for this game.
+  However, there are assumptions, for now, that numPlayers == 2
   @param numPlayers is the number of players
   */
   public static void initPlayers(int numPlayers){
