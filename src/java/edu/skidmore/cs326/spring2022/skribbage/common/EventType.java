@@ -34,7 +34,12 @@ public enum EventType {
     /**
      * User delete account. 
      */
-    USER_DELETE_ACCOUNT("User Delete Account Event");
+    USER_DELETE_ACCOUNT("User Delete Account Event"),
+    /**
+     * Lobby event.
+     */
+    LOBBY_EVENT("Lobby Event");
+    
     
     /**
      * The name of the event.
