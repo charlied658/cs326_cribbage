@@ -23,9 +23,13 @@ public class Game{
   /** the crib for the game */
   static ArrayList<Card> crib = new ArrayList <Card> ();
 
-  static ArrayList<Card> peggingCards = new ArrayList <Card>();
-  //break this up into peggingCards for each player
-  //assume there are only two players for now
+  //static ArrayList<Card> peggingCards = new ArrayList <Card>();
+
+  /**the set of cards played by the pone during the pegging phase*/
+  static ArrayList <Card> ponePeggingCards = new ArrayList <Card> ();
+
+  /**the set of cards played by the dealer during the pegging phase*/
+  static ArrayList <Card> dealerPeggingCards = new ArrayList <Card>();
 
 
   /**
@@ -54,8 +58,20 @@ public class Game{
     return peggingTotal;
   }
 
-  public static ArrayList<Card> getPeggingCards(){
-    return peggingCards;
+  public static ArrayList <Card> getPonePeggingCards(){
+    return ponePeggingCards;
+  }
+
+  public static ArrayList<Card> getDealerPeggingCards(){
+    return dealerPeggingCards;
+  }
+
+  public static void addPonePeggingCard(Card c){
+    ponePeggingCards.add(c);
+  }
+
+  public static void addDealerPeggingCard(Card c){
+    dealerPeggingCards.add(c);
   }
 
   /**
@@ -68,6 +84,17 @@ public class Game{
 
   public static ArrayList <Card> getCrib(){
     return crib;
+  }
+
+  //returns true if successful and false if amountToAdd + peggingTotal > 31
+  public static boolean addToPeggingTotal (int amountToAdd){
+    if (amountToAdd + peggingTotal > 31){
+      return false;
+    }
+    else{
+      peggingTotal += amountToAdd;
+      return true;
+    }
   }
 
   //gets the index in playerList where the dealer is
