@@ -46,4 +46,23 @@ public interface ItemShopInterface {
 	 * @return special card/item description/use.
 	 */
 	public String getDescription();
+
+	/**
+	 * Setter method for card/item name.
+	 * @param name  Card/item name.
+	 */
+	public void setName(String name);
+
+	/**
+	 * Setter method for card/item price.
+	 * @param price  Card/item price
+	 */
+	public void setPrice(int price);
+
+	/**
+	 * Setter method for card/item description.
+	 * @param description  Card/item description.
+	 */
+	public void setDescription(String description);
+
 }
