@@ -10,7 +10,6 @@ import edu.skidmore.cs326.spring2022.skribbage.common.events.AccountEvent;
  * @author Alex Carney
  *         Reviewed, commented, Logging added  bv Sten Leinasaar
  */
-@SuppressWarnings("serial")
 public class UserCreateAccountEvent extends AccountEvent {
     /**
      * Private user instance of type user.
@@ -37,13 +36,14 @@ public class UserCreateAccountEvent extends AccountEvent {
      *             if {@code source} is {@code null}
      */
     public UserCreateAccountEvent(Object source, User associatedUser) {
-        super(source, EventType.USER_CREATE_ACCOUNT.toString(), associatedUser);
+        super(source, EventType.USER_CREATE_ACCOUNT, associatedUser);
         this.user = associatedUser;
         LOG.trace(" Constructor reached.");
     }
     /**
      * @return An object of type user is returned.
      */
+    @Override
     public User getUser() {
         LOG.info(" Returning the user object");
         return user;
