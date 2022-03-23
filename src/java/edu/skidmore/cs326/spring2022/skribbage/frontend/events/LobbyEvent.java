@@ -27,7 +27,7 @@ public class LobbyEvent extends CribbageEvent {
      * @param source
      *            The bean that fired the event
      * @param eventName
-     *            Name of the event.
+     *            Name of the event related to Cribbage.
      */
     public LobbyEvent(Object source, String eventName) {
         super(source, eventName);

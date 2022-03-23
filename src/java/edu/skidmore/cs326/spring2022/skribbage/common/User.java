@@ -57,7 +57,8 @@ public class User {
         this.isAuthorized = isAuthorized;
         LOG.debug("isAuthorized value was set to: " + isAuthorized);
         LOG.info(
-            "The parameters of User constructor were assigned to private variable attributes");
+            "The parameters of User constructor were assigned"
+            + " to private variable attributes");
     }
 
     /**
