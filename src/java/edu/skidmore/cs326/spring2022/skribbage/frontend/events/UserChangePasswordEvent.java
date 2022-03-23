@@ -13,7 +13,6 @@ import edu.skidmore.cs326.spring2022.skribbage.common.events.AccountEvent;
  * @author Alex Carney
  * Reviewed: Sten Leinasaar
  */
-@SuppressWarnings("serial")
 public class UserChangePasswordEvent extends AccountEvent {
 
     /**
@@ -52,7 +51,7 @@ public class UserChangePasswordEvent extends AccountEvent {
      */
     public UserChangePasswordEvent(Object source, User user,
         String newPassword) {
-        super(source, EventType.USER_CHANGE_PASSWORD.toString(), user);
+        super(source, EventType.USER_CHANGE_PASSWORD, user);
         this.user = user;
         this.newPassword = newPassword;
         LOG.trace("Constructor method reached");
@@ -62,8 +61,9 @@ public class UserChangePasswordEvent extends AccountEvent {
     /**
      * @return an object of type User.
      */
+    @Override
     public User getUser() {
-        LOG.trace("Getuser method reached");
+        LOG.trace("Get user method reached");
         return user;
     }
 
