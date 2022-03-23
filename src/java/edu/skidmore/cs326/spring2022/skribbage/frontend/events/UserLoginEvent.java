@@ -17,7 +17,6 @@ import edu.skidmore.cs326.spring2022.skribbage.common.User;
  * 
  * Reviewed and logging added by Sten Leinasaar @at March 22, 2022
  */
-@SuppressWarnings("serial")
 public class UserLoginEvent extends AccountEvent {
 
     /**
@@ -42,13 +41,14 @@ public class UserLoginEvent extends AccountEvent {
      * @throws IllegalArgumentException if {@code source} is {@code null}
      */
     public UserLoginEvent(Object source, User user) {
-        super(source, EventType.USER_LOGIN.toString(), user);
+        super(source, EventType.USER_LOGIN, user);
         this.user = user;
         LOG.trace("Constructor method reached");
     }
     /**
      * @return an object of user of type User.
      */
+    @Override
     public User getUser() {
         LOG.trace("Returning an user object.");
         return user;
