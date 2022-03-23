@@ -1,3 +1,4 @@
+package edu.skidmore.cs326.spring2022.skribbage.gamification;
 import java.util.HashMap; //Import HashMap
 import java.io.File;  // Import the File class
 import java.io.FileNotFoundException;  // Import this class to handle errors

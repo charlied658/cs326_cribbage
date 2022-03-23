@@ -1,4 +1,4 @@
-package edu.skidmore.cs326.spring2022.skribbage.gamification;
+package edu.skidmore.cs326.spring2022.skribbage.gamification.test;
 
 import static org.junit.Assert.assertTrue;
 
@@ -6,6 +6,8 @@ import org.apache.log4j.Logger;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import edu.skidmore.cs326.spring2022.skribbage.gamification.AvatarManager;
 
 /**
  * Unit tests for the AvatarManager class.
