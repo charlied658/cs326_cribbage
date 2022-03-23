@@ -23,6 +23,19 @@ public class Card {
   }
 
   /**
+  * Setter for point values
+  */
+  private void setPointValue(inPointValue) {
+    if (inPointValue > 0 && inPointValue <= 10) {
+      pointValue = inPointValue;
+    }
+    else {
+      System.out.println("ERROR: invalid point value assigned to Card");
+      pointValue = 1;
+    }
+  }
+
+  /**
   * The identifying character that would appear on the physical card
   */
   private char identifier;
