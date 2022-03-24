@@ -5,22 +5,22 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
 import org.apache.log4j.Logger;
-import org.junit.Before;
 import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 import edu.skidmore.cs326.spring2022.skribbage.common.User;
-import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserChangePasswordEvent;
+import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserCreateAccountEvent;
 
 /**
  * @author Sten Leinasaar
- *         Last Edited: By Sten, March 23, 2022
+ *         Last Edited: March 24, 2022 by Sten Leinasaar
  */
-public class UserChangePasswordEventTest {
+public class UserCreateAccountEventTest {
     /**
      * Test Instance for LobbyEvent testing.
      */
-    private UserChangePasswordEvent testInstance;
+    private UserCreateAccountEvent testInstance;
 
     /**
      * User test instance to be passed.
@@ -37,11 +37,12 @@ public class UserChangePasswordEventTest {
      */
     private static final Logger LOG;
     static {
-        LOG = Logger.getLogger(UserChangePasswordEventTest.class);
+        LOG = Logger.getLogger(UserCreateAccountEventTest.class);
     }
 
     /**
      * Sets up the default testing setting before every test method.
+     * 
      */
     @Before
     public void setUp() {
@@ -50,12 +51,8 @@ public class UserChangePasswordEventTest {
         userInstance =
             // Email, username, password, isauthorized?
             new User("sleinasa@skidmore.edu", "sleinasa", "passwd", true);
-        // Creating testInstance with the parameter of newPassword to be equal
-        // to oldpassword.
-        // Will change this value when testing.
-        testInstance =
-            new UserChangePasswordEvent(source, userInstance, "passwd");
-
+        testInstance = new UserCreateAccountEvent(source, userInstance);
+        
         LOG.info("SetUp method completed");
     }
 
@@ -64,10 +61,12 @@ public class UserChangePasswordEventTest {
      * not null.
      */
     @Test
-    public void testUserChangePasswordEvent() {
-        LOG.trace("Testing the constructor of UserChangePasswordEvent");
+    public void testUserCreateAccountEvent() {
+        LOG.trace("Testing the constructor of UserCreateAccountEvent");
+        
         assertNotNull(testInstance);
         assertEquals(testInstance.getSource(), source);
+        assertEquals(testInstance.getUser(), userInstance);
         LOG.trace("Constructor test completed");
 
     }
@@ -78,27 +77,13 @@ public class UserChangePasswordEventTest {
      */
     @Test
     public void testGetUser() {
+        
+        assertEquals(testInstance.getUser(), userInstance);
         assertEquals(testInstance.getUser().getUserName(),
             userInstance.getUserName());
-        assertEquals(testInstance.getUser().getEmail(),
-            userInstance.getEmail());
-        assertEquals(testInstance.getUser().getPassword(),
-            userInstance.getPassword());
+
     }
 
-    /**
-     * Tests if the password was changed or not.
-     */
-    @Test
-    public void testGetNewPassword() {
-        // Make sure passwords are the same to begin with.
-        assertEquals(testInstance.getUser().getPassword(),
-            userInstance.getPassword());
-        testInstance =
-            new UserChangePasswordEvent(source, userInstance, "lol");
-        //I can only check if correct value was passed.
-        assertEquals(testInstance.getNewPassword(), "lol");
-    }
 
     /**
      * Tests if the event name passed to the constructor will be returned
@@ -107,7 +92,7 @@ public class UserChangePasswordEventTest {
     @Test
     public void testGetEventName() {
         LOG.trace("Testing getEventName");
-        assertEquals(testInstance.getEventName(), "User Change Password Event");
+        assertEquals(testInstance.getEventName(), "User Create Account Event");
         LOG.trace("Completed testing the getEventName method");
     }
 
@@ -129,5 +114,4 @@ public class UserChangePasswordEventTest {
         LOG.trace("Teardown completed");
 
     }
-
 }
