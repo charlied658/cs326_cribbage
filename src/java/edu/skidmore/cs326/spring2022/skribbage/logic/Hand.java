@@ -10,7 +10,11 @@ import java.util.ArrayList;
  */
 public class Hand {
 
-  private ArrayList<Card> hand = new ArrayList<Card>();
+  private ArrayList<Card> hand;
+
+  public Hand(){
+    hand = new ArrayList<Card>();
+  }
 
   /**
    * Get method to return a hand.

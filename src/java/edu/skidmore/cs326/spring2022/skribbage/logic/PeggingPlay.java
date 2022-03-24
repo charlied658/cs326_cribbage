@@ -1,3 +1,6 @@
+package edu.skidmore.cs326.spring2022.skribbage.logic;
+import java.util.ArrayList;
+
 //@author Michael Shriner
 public class PeggingPlay {
 
