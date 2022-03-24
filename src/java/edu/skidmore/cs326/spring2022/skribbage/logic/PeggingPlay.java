@@ -7,7 +7,7 @@ public class PeggingPlay {
   public PeggingPlay(){
   }
 
-  private void peggingPhase (){
+  public void peggingPhase (){
 
     ArrayList<Card> ponePeggingCards = new ArrayList <Card>();
     ArrayList<Card> dealerPeggingCards = new ArrayList <Card>();
@@ -44,7 +44,7 @@ public class PeggingPlay {
   @param cardToAdd is the card whose point value will be added to the total if it meets the condition
   @param p is the player who is trying to play the card
   */
-  private void addCardToPeggingTotal(Card cardToAdd, Player p){
+  public void addCardToPeggingTotal(Card cardToAdd, Player p){
 
     int theCardValue = cardToAdd.getPointValue();
 
@@ -87,7 +87,7 @@ public class PeggingPlay {
   @param claim is the claim the player makes
   @param p is the player who made the claim
   */
-  private void checkClaim (String claim, Player p){
+  public void checkClaim (String claim, Player p){
 
     if (claim.equalsIgnoreCase("15")){
       check15(p);
@@ -128,7 +128,7 @@ public class PeggingPlay {
   @param p is the player making the claim that he or she placed a card that brought
   the pegging total to 15
   */
-  private void check15(Player p){
+  public void check15(Player p){
 
     //assumption: Card c from checkClaim() has been added to peggingCards already
     //assumption: check15() is called before the next player plays a card
@@ -170,7 +170,7 @@ public class PeggingPlay {
   @param p is the player making the claim that he or she placed a card that brought
   the pegging total to 31
   */
-  private void check31(Player p){
+  public void check31(Player p){
 
     //assumption: Card c from checkClaim() has been added to peggingCards already
     //assumption: check15() is called before the next player plays a card
@@ -215,7 +215,7 @@ public class PeggingPlay {
   same numerical value, the player is awarded 2 points. Otherwise, the player is awarded no points.
   @param the player who made the claim of having a pair during the pegging phase
   */
-  private void checkPair(Player p){
+  public void checkPair(Player p){
     //assumption: Card c from checkClaim() has been added to peggingCards already
     //assumption: check15() is called before the next player plays a card
 
@@ -239,7 +239,7 @@ public class PeggingPlay {
   same numerical values, the player is awarded 6 points. Otherwise, the player is awarded no points.
   @param the player who made the claim of having a 3 pair during the pegging phase
   */
-  private void check3Pair(Player p){
+  public void check3Pair(Player p){
     //assumption: Card c from checkClaim() has been added to peggingCards already
     //assumption: check15() is called before the next player plays a card
 
@@ -290,7 +290,7 @@ public class PeggingPlay {
   same numerical values, the player is awarded 12 points. Otherwise, the player is awarded no points.
   @param the player who made the claim of having a 3 pair during the pegging phase
   */
-  private void check4Pair(Player p){
+  public void check4Pair(Player p){
     //assumption: Card c from checkClaim() has been added to peggingCards already
     //assumption: check15() is called before the dealer plays a card
 

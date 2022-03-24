@@ -47,7 +47,7 @@ public class Game{
   }//end of initPlayers
 
   public static void initPeggingTotal(){
-    peggingTotal = 0; 
+    peggingTotal = 0;
   }
 
   public static void setPeggingTotal(int pts){
@@ -68,6 +68,14 @@ public class Game{
 
   public static ArrayList<Card> getDealerPeggingCards(){
     return dealerPeggingCards;
+  }
+
+  public static void setPonePeggingCards(ArrayList <Card> ponePegCards){
+    ponePeggingCards = ponePegCards;
+  }
+
+  public static void setDealerPeggingCards(ArrayList <Card> dealerPegCards){
+    dealerPeggingCards = dealerPegCards;
   }
 
   public static void addPonePeggingCard(Card c){
