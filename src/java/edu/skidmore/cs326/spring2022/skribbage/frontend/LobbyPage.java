@@ -94,6 +94,7 @@ public class LobbyPage extends DrawingSurface implements ActionListener {
      * LobbyPage constructor.
      */
     public LobbyPage() {
+        LOG.trace("Entered LobbyPage Constructor.");
         mf = new MainFrame(this, "Past Games Page", mainframeWidth,
             mainframeHeight, false);
         setup();
@@ -138,6 +139,7 @@ public class LobbyPage extends DrawingSurface implements ActionListener {
      * @param c - the Circle to set.
      */
     private void setReadyButtonColor(Circle c) {
+        LOG.trace("Entered setReadyButtonColor method.");
         if (c.getBorderColor().equals(Color.RED)) {
             c.setBorderColor(Color.GREEN);
             c.setFillColor(Color.GREEN);
@@ -149,7 +151,7 @@ public class LobbyPage extends DrawingSurface implements ActionListener {
 
     @Override
     public void drawableMouseClick(Drawable e) {
-        LOG.trace("DrawableMosuceClick in HomeScreen.java");
+        LOG.trace("DrawableMosuceClick in LobbyPage.java");
         if (e == returnToMainMenu) {
             new HomeScreen();
             mf.dispose();
@@ -165,6 +167,7 @@ public class LobbyPage extends DrawingSurface implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         // TODO Auto-generated method stub
+        LOG.trace("Entered actionPerformed method in LobbyPage.java");
 
     }
 
@@ -173,6 +176,7 @@ public class LobbyPage extends DrawingSurface implements ActionListener {
      * @param args
      */
     public static void main(String[] args) {
+        LOG.trace("LobbyPage.java main method");
         new LobbyPage();
     }
 }

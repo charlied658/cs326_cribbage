@@ -121,6 +121,7 @@ public class PastGamesPage extends DrawingSurface implements ActionListener {
      * addGamesToList method to add current games to allGames.
      */
     public void addGamesToList() {
+        LOG.trace("Entered addGamesToList method.");
         allGames.add(one);
         allGames.add(two);
         allGames.add(three);
@@ -170,6 +171,7 @@ public class PastGamesPage extends DrawingSurface implements ActionListener {
         // of the incomplete games will be above the games that
         // have been completed.
         int buttonYPosition = 150;
+        LOG.trace("For loop to check for incompleted games.");
         for (int i = 0; i < incompleteGames.size(); i++) {
             String[] gameInfo = incompleteGames.get(i).getGameInfo();
             String timestamp = gameInfo[0];
@@ -184,6 +186,7 @@ public class PastGamesPage extends DrawingSurface implements ActionListener {
             add(gameButton);
 
         }
+        LOG.trace("For loop to check for completed games");
         for (int i = 0; i < completeGames.size(); i++) {
             String[] gameInfo = completeGames.get(i).getGameInfo();
 
@@ -206,6 +209,7 @@ public class PastGamesPage extends DrawingSurface implements ActionListener {
     // will, as the label suggests, take the user back to the main menu.
     @Override
     public void actionPerformed(ActionEvent e) {
+        LOG.trace("Entered actionperformed method PastGamesPage.java");
         // mf.dispatchEvent(new WindowEvent(mf, WindowEvent.WINDOW_CLOSING));
         if (e.getSource().equals(returnToMainMenu)) {
             mf.dispose();
