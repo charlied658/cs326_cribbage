@@ -1,26 +1,33 @@
 package edu.skidmore.cs326.spring2022.skribbage.frontend.events.test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import org.apache.log4j.Logger;
-import org.junit.Before;
 import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 import edu.skidmore.cs326.spring2022.skribbage.common.User;
-import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserChangePasswordEvent;
+import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserCreateAccountEvent;
+import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserDeleteAccountEvent;
 
 /**
  * @author Sten Leinasaar
- *         Last Edited: By Sten, March 23, 2022
+ *         Last Edited 24 March, 2022, by Sten Leinasaar
  */
-public class UserChangePasswordEventTest {
+public class UserDeleteAccountEventTest {
     /**
      * Test Instance for LobbyEvent testing.
      */
-    private UserChangePasswordEvent testInstance;
+    private UserDeleteAccountEvent testInstance;
+    /**
+     * Creata Account event instance to authorize a user.
+     */
+    private UserCreateAccountEvent createAccountInstance;
 
     /**
      * User test instance to be passed.
@@ -37,7 +44,7 @@ public class UserChangePasswordEventTest {
      */
     private static final Logger LOG;
     static {
-        LOG = Logger.getLogger(UserChangePasswordEventTest.class);
+        LOG = Logger.getLogger(UserDeleteAccountEventTest.class);
     }
 
     /**
@@ -47,14 +54,11 @@ public class UserChangePasswordEventTest {
     public void setUp() {
         LOG.trace("Started the setup method");
         source = new Object();
+        // Email, username, password, isauthorized?
         userInstance =
-            // Email, username, password, isauthorized?
             new User("sleinasa@skidmore.edu", "sleinasa", "passwd", true);
-        // Creating testInstance with the parameter of newPassword to be equal
-        // to oldpassword.
-        // Will change this value when testing.
-        testInstance =
-            new UserChangePasswordEvent(source, userInstance, "passwd");
+        createAccountInstance =
+            new UserCreateAccountEvent(source, userInstance);
 
         LOG.info("SetUp method completed");
     }
@@ -64,10 +68,16 @@ public class UserChangePasswordEventTest {
      * not null.
      */
     @Test
-    public void testUserChangePasswordEvent() {
-        LOG.trace("Testing the constructor of UserChangePasswordEvent");
-        assertNotNull(testInstance);
-        assertEquals(testInstance.getSource(), source);
+    public void testUserCreateAccountEvent() {
+        LOG.trace("Testing the constructor of UserCreateAccountEvent");
+
+        assertNotNull(createAccountInstance);
+        assertTrue(userInstance.isAuthorized());
+
+        testInstance = new UserDeleteAccountEvent(source, userInstance);
+        // now the user should not be authorized anymore
+        assertFalse(userInstance.isAuthorized());
+
         LOG.trace("Constructor test completed");
 
     }
@@ -78,26 +88,11 @@ public class UserChangePasswordEventTest {
      */
     @Test
     public void testGetUser() {
+        testInstance = new UserDeleteAccountEvent(source, userInstance);
+        assertEquals(testInstance.getUser(), userInstance);
         assertEquals(testInstance.getUser().getUserName(),
             userInstance.getUserName());
-        assertEquals(testInstance.getUser().getEmail(),
-            userInstance.getEmail());
-        assertEquals(testInstance.getUser().getPassword(),
-            userInstance.getPassword());
-    }
 
-    /**
-     * Tests if the password was changed or not.
-     */
-    @Test
-    public void testGetNewPassword() {
-        // Make sure passwords are the same to begin with.
-        assertEquals(testInstance.getUser().getPassword(),
-            userInstance.getPassword());
-        testInstance =
-            new UserChangePasswordEvent(source, userInstance, "lol");
-        //I can only check if correct value was passed.
-        assertEquals(testInstance.getNewPassword(), "lol");
     }
 
     /**
@@ -107,7 +102,8 @@ public class UserChangePasswordEventTest {
     @Test
     public void testGetEventName() {
         LOG.trace("Testing getEventName");
-        assertEquals(testInstance.getEventName(), "User Change Password Event");
+        testInstance = new UserDeleteAccountEvent(source, userInstance);
+        assertEquals(testInstance.getEventName(), "User Create Account Event");
         LOG.trace("Completed testing the getEventName method");
     }
 
@@ -129,5 +125,4 @@ public class UserChangePasswordEventTest {
         LOG.trace("Teardown completed");
 
     }
-
 }
