@@ -18,7 +18,7 @@ public class Game{
   static ArrayList <Player> playerList = new ArrayList <Player> ();
 
   /**The total score among the players during the pegging phase of the game ( 0 <= peggingTotal <= 31)*/
-  static int peggingTotal = 0;
+  static int peggingTotal;
 
   /** the crib for the game */
   static ArrayList<Card> crib = new ArrayList <Card> ();
@@ -45,6 +45,10 @@ public class Game{
     }
 
   }//end of initPlayers
+
+  public static void initPeggingTotal(){
+    peggingTotal = 0; 
+  }
 
   public static void setPeggingTotal(int pts){
     peggingTotal = pts;
