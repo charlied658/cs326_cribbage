@@ -35,65 +35,66 @@ import us.daveread.edu.graphics.shape.impl.Rectangle;
  * 
  * @author Jonah Marcus
  *         Last Update: March 10 2022
+ * Code reviewed by Zoe Beals 3/24/2022
  */
 
 @SuppressWarnings("serial")
 public class PastGamesPage extends DrawingSurface implements ActionListener {
     /**
-     * 
+     * mainFrameWidth - int variable that holds mainframe width.
      */
     private int mainframeWidth = 650;
 
     /**
-     * 
+     * mainframeHeight - int variable that holds mainframe height.
      */
     private int mainframeHeight = 1500;
 
     /**
-     * 
+     * mf - MainFrame window.
      */
     private MainFrame mf;
 
     /**
-     * 
+     * homeScreen - HomeScreen.
      */
     private HomeScreen homeScreen;
     
     /**
-     * 
+     * returnToMainMenu - button to return to home.
      */
     private JButton returnToMainMenu;
 
     /**
-     * 
+     * allGames - array list of playable games.
      */
     private ArrayList<PlayableGame> allGames = new ArrayList<>();
 
     /**
-     * 
+     * completeGames - array list of completed games.
      */
     private ArrayList<PlayableGame> completeGames = new ArrayList<>();
 
     /**
-     * 
+     * incompleteGames - array list of incomplete games.
      */
     private ArrayList<PlayableGame> incompleteGames = new ArrayList<>();
 
     // Examples of games that show proof of concept
     /**
-     * 
+     * one - temporary playable game.
      */
     private PlayableGame one =
         new PlayableGame(11, 7, 2021, "Jonah", "Sten", "CS326", true);
 
     /**
-     * 
+     * two - temporary playable game.
      */
     private PlayableGame two = new PlayableGame(12, 31, 2021, "Chris Cornell",
         "Ben Shepherd", "Soundgarden", true);
 
     /**
-     * 
+     * three - temporary playable game.
      */
     private PlayableGame three =
         new PlayableGame(1, 17, 2022, "Hugh Jass", "Tess T Culls", "", false);
@@ -107,7 +108,7 @@ public class PastGamesPage extends DrawingSurface implements ActionListener {
     }
 
     /**
-     * 
+     * PastGamesPage constructor.
      */
     public PastGamesPage() {
         mf = new MainFrame(this, "Past Games Page", mainframeWidth,
@@ -117,7 +118,7 @@ public class PastGamesPage extends DrawingSurface implements ActionListener {
         LOG.trace("Constructor reached");
     }
     /**
-     * 
+     * addGamesToList method to add current games to allGames.
      */
     public void addGamesToList() {
         allGames.add(one);
@@ -125,7 +126,7 @@ public class PastGamesPage extends DrawingSurface implements ActionListener {
         allGames.add(three);
     }
     /**
-     * 
+     * setup method to setup window.
      */
     public void setup() {
         LOG.trace("Setup of PastGamesPage");
