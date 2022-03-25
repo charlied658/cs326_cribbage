@@ -4,6 +4,7 @@ import java.io.InputStream;
 import java.util.Properties;
 
 public class DatabaseProperties {
+	
 	private static final String PROPERTY_FILE_NAME = "database.properties";
 
 	private Properties properties ;

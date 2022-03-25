@@ -73,6 +73,8 @@ public class DatabaseManager {
 			 	  	   
 		   }
 		   
+		   
+		   
 		   /*
 		    * This is a function to access the connection singleton
 		    *
