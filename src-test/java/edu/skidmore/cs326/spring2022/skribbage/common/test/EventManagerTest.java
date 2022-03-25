@@ -144,7 +144,7 @@ public class EventManagerTest {
 
     /**
      * @AFTER method that runs after each test case.
-     *        Currently created just in case some tearDown is needed
+     *        
      */
     @After
     public void tearDown() {
