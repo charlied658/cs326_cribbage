@@ -83,7 +83,7 @@ public class EventFactoryTest {
         LOG.trace("Beginning test for CreateEvent method");
         assertNull(createInstance);
         createInstance = (UserCreateAccountEvent) testInstance
-            .createEvent(source, userInstance, EventType.USER_CREATE_ACCOUNT);
+            .createEvent(EventType.USER_CREATE_ACCOUNT, source, userInstance);
         assertNotNull(createInstance);
         LOG.trace("Create event test finished");
     }

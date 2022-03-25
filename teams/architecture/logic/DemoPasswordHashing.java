@@ -9,7 +9,11 @@ import java.util.Base64;
  * application.
  * Missing from these examples is a carefully designed interface, good
  * documentation, and error handling.
- * 
+<<<<<<< HEAD
+ *
+=======
+ *
+>>>>>>> 485058935004f9f20512f4f6529c92172d8c79ce
  * @author readda
  */
 public class DemoPasswordHashing {
@@ -33,7 +37,11 @@ public class DemoPasswordHashing {
 
     /**
      * Generate a salt. This is a random set of bytes.
-     * 
+<<<<<<< HEAD
+     *
+=======
+     *
+>>>>>>> 485058935004f9f20512f4f6529c92172d8c79ce
      * @param length
      *            The salt's size in bytes
      * @return The salt.
@@ -46,7 +54,11 @@ public class DemoPasswordHashing {
 
     /**
      * Create a SHA-256 hash of a password and salt.
-     * 
+<<<<<<< HEAD
+     *
+=======
+     *
+>>>>>>> 485058935004f9f20512f4f6529c92172d8c79ce
      * @param password
      *            The password to hash
      * @param salt
@@ -76,7 +88,11 @@ public class DemoPasswordHashing {
 
     /**
      * Check whether a password matches a hashed one.
-     * 
+<<<<<<< HEAD
+     *
+=======
+     *
+>>>>>>> 485058935004f9f20512f4f6529c92172d8c79ce
      * @param attemptedPassword
      *            The password being checked, often a password entered by a user
      *            to login
@@ -100,7 +116,11 @@ public class DemoPasswordHashing {
 
     /**
      * Encode a byte array to a Base64 encoded string.
-     * 
+<<<<<<< HEAD
+     *
+=======
+     *
+>>>>>>> 485058935004f9f20512f4f6529c92172d8c79ce
      * @param data
      *            The byte array to encode
      * @return The Base64 encoded string
@@ -111,7 +131,11 @@ public class DemoPasswordHashing {
 
     /**
      * Decode a Base64 encoded string to a byte array.
-     * 
+<<<<<<< HEAD
+     *
+=======
+     *
+>>>>>>> 485058935004f9f20512f4f6529c92172d8c79ce
      * @param data
      *            The Base64 encoded string
      * @return The resulting byte array
@@ -182,7 +206,11 @@ public class DemoPasswordHashing {
 
     /**
      * Run the demo.
-     * 
+<<<<<<< HEAD
+     *
+=======
+     *
+>>>>>>> 485058935004f9f20512f4f6529c92172d8c79ce
      * @param args
      *            Command line arguments, not used
      */
