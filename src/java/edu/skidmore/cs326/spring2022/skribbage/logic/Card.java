@@ -9,113 +9,127 @@ import org.apache.log4j.Logger;
  */
 public class Card {
 
-    /**
-     * The numerical value added to the center sum during play phase
-     * (4 of hearts is worth 4, any king is worth 10, etc.)
-     */
-    private int pointValue;
+  /**
+  * The numerical value added to the center sum during play phase
+  * (4 of hearts is worth 4, any king is worth 10, etc.)
+  */
+  private int pointValue;
 
-    /**
-     * Getter for pointValue.
-     * @return Point value of type int.
-     */
-    public int getPointValue() {
-        return pointValue;
+  /**
+  * Getter for pointValue
+  */
+  public int getPointValue() {
+    return pointValue;
+  }
+
+  /**
+  * Setter for point values
+  */
+  private void setPointValue(int inPointValue) {
+
+    if (inPointValue > 0 && inPointValue <= 10) {
+      pointValue = inPointValue;
     }
-
-    /**
-     * The identifying character that would appear on the physical card
-     */
-    private char identifier;
-
-    public char getIdentifier() {
-        return identifier;
+    else {
+      System.out.println("ERROR: invalid point value assigned to Card");
+      pointValue = 1;
     }
+  }
 
-    private void setIdentifier(char inIdentifier) {
-        switch (inIdentifier) {
-            case 'A':
-                pointValue = 1;
-                nextIdentifier = '2';
-                identifier = inIdentifier;
-                break;
+  /**
+  * The identifying character that would appear on the physical card
+  */
+  private char identifier;
 
-            case '2':
-                pointValue = 2;
-                nextIdentifier = '3';
-                identifier = inIdentifier;
-                break;
+  public char getIdentifier() {
+    return identifier;
+  }
 
-            case '3':
-                pointValue = 3;
-                nextIdentifier = '4';
-                identifier = inIdentifier;
-                break;
+  private void setIdentifier(char inIdentifier) {
+      switch (inIdentifier) {
+          case 'A':
+              pointValue = 1;
 
-            case '4':
-                pointValue = 4;
-                nextIdentifier = '5';
-                identifier = inIdentifier;
-                break;
+              nextIdentifier = '2';
+              identifier = inIdentifier;
+              break;
 
-            case '5':
-                pointValue = 5;
-                nextIdentifier = '6';
-                identifier = inIdentifier;
-                break;
+          case '2':
+              pointValue = 2;
+              nextIdentifier = '3';
+              identifier = inIdentifier;
+              break;
 
-            case '6':
-                pointValue = 6;
-                nextIdentifier = '7';
-                identifier = inIdentifier;
-                break;
+          case '3':
+              pointValue = 3;
+              nextIdentifier = '4';
+              identifier = inIdentifier;
+              break;
 
-            case '7':
-                pointValue = 7;
-                nextIdentifier = '8';
-                identifier = inIdentifier;
-                break;
+          case '4':
+              pointValue = 4;
+              nextIdentifier = '5';
+              identifier = inIdentifier;
+              break;
 
-            case '8':
-                pointValue = 8;
-                nextIdentifier = '9';
-                identifier = inIdentifier;
-                break;
+          case '5':
+              pointValue = 5;
+              nextIdentifier = '6';
+              identifier = inIdentifier;
+              break;
 
-            case '9':
-                pointValue = 9;
-                nextIdentifier = '0';
-                identifier = inIdentifier;
-                break;
+          case '6':
+              pointValue = 6;
+              nextIdentifier = '7';
+              identifier = inIdentifier;
+              break;
 
-            case '0':
-                pointValue = 10;
-                nextIdentifier = 'J';
-                identifier = inIdentifier;
-                break;
+          case '7':
+              pointValue = 7;
+              nextIdentifier = '8';
+              identifier = inIdentifier;
+              break;
 
-            case 'J':
-                pointValue = 10;
-                nextIdentifier = 'Q';
-                identifier = inIdentifier;
-                break;
+          case '8':
+              pointValue = 8;
+              nextIdentifier = '9';
+              identifier = inIdentifier;
+              break;
 
-            case 'Q':
-                pointValue = 10;
-                nextIdentifier = 'K';
-                identifier = inIdentifier;
-                break;
+          case '9':
+              pointValue = 9;
+              nextIdentifier = '0';
+              identifier = inIdentifier;
+              break;
 
-            case 'K':
-                pointValue = 10;
-                nextIdentifier = 'N';
-                identifier = inIdentifier;
-                break;
+          case '0':
+              pointValue = 10;
+              nextIdentifier = 'J';
+              identifier = inIdentifier;
+              break;
 
-            default:
-                System.out
-                    .println("ERROR: invalid identifier passed to constructor");
-                break;
+          case 'J':
+              pointValue = 10;
+              nextIdentifier = 'Q';
+              identifier = inIdentifier;
+              break;
+
+          case 'Q':
+              pointValue = 10;
+              nextIdentifier = 'K';
+              identifier = inIdentifier;
+              break;
+
+          case 'K':
+              pointValue = 10;
+              nextIdentifier = 'N';
+              identifier = inIdentifier;
+              break;
+
+          default:
+              System.out
+                  .println("ERROR: invalid identifier passed to constructor");
+              break;
         }
     }
 
@@ -145,7 +159,7 @@ public class Card {
 
     /**
      * Setter for suit.
-     * 
+     *
      * @param inSuit
      *            input suit
      */
@@ -155,7 +169,7 @@ public class Card {
 
     /**
      * Constructor that assigns parameterized values to all attributes
-     * 
+     *
      * @param inSuit
      *            inputted suit
      * @param inIdentifier

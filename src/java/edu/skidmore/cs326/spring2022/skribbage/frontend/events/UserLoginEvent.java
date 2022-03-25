@@ -3,7 +3,6 @@ package edu.skidmore.cs326.spring2022.skribbage.frontend.events;
 
 
 import edu.skidmore.cs326.spring2022.skribbage.common.events.AccountEvent;
-import edu.skidmore.cs326.spring2022.skribbage.common.events.CribbageEvent;
 
 import org.apache.log4j.Logger;
 
@@ -17,6 +16,7 @@ import edu.skidmore.cs326.spring2022.skribbage.common.User;
  * 
  * Reviewed and logging added by Sten Leinasaar @at March 22, 2022
  */
+@SuppressWarnings("serial")
 public class UserLoginEvent extends AccountEvent {
 
     /**
@@ -59,7 +59,7 @@ public class UserLoginEvent extends AccountEvent {
     @Override
     public String getEventName() {
         LOG.trace("Returning a name of the event.");
-        return null;
+        return EventType.USER_LOGIN.getName();
     }
 
 

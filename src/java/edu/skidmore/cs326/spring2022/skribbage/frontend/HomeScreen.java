@@ -42,11 +42,16 @@ public class HomeScreen extends DrawingSurface {
     private Text rulesPageButton;
 
     /**
-     * loginPageButton - Text variable that represents the button to go to the.
-     * login page
+     * loginPageButton - Text variable that represents the button to go to the
+     * login page.
      */
     private Text loginPageButton;
-
+    
+    /**
+     * lobbyPageButton - Text variable that represents the button to go to the
+     * lobby page.
+     */
+    private Text lobbyPageButton;
     /**
      * pastGamesPageButton - Text variable that represents the button to go to
      * the past games page.
@@ -57,6 +62,11 @@ public class HomeScreen extends DrawingSurface {
      * rulesPage - RulesPage window to be presented upon button click.
      */
     private RulesPage rulesPage;
+    
+    /**
+     * lobbyPage - LobbyPage window to be presented upon button click.
+     */
+    private LobbyPage lobbyPage;
 
     /**
      * pastGamesPage - PastGamesPage window to be presented upon button click.
@@ -102,6 +112,11 @@ public class HomeScreen extends DrawingSurface {
             new Point(rulesPageButton.getLocation().x - 27,
                 rulesPageButton.getLocation().y + 50),
             20, Color.black, Color.blue);
+        lobbyPageButton = new Text("Lobby Page", new Point(
+            pastGamesPageButton.getLocation().x + 27, 
+            pastGamesPageButton.getLocation().y + 50), 20, 
+            Color.black, Color.blue);
+        add(lobbyPageButton);
         add(loginPageButton);
         add(rulesPageButton);
         add(pastGamesPageButton);
@@ -129,6 +144,9 @@ public class HomeScreen extends DrawingSurface {
             closeCurrentWindow();
         } else if (e == pastGamesPageButton) {
             pastGamesPage = new PastGamesPage();
+            closeCurrentWindow();
+        } else if (e == lobbyPageButton) {
+            lobbyPage = new LobbyPage();
             closeCurrentWindow();
         }
     }
