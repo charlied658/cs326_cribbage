@@ -3,7 +3,6 @@ package edu.skidmore.cs326.spring2022.skribbage.frontend.events;
 
 
 import edu.skidmore.cs326.spring2022.skribbage.common.events.AccountEvent;
-import edu.skidmore.cs326.spring2022.skribbage.common.events.CribbageEvent;
 
 import org.apache.log4j.Logger;
 
@@ -42,13 +41,14 @@ public class UserLoginEvent extends AccountEvent {
      * @throws IllegalArgumentException if {@code source} is {@code null}
      */
     public UserLoginEvent(Object source, User user) {
-        super(source, EventType.USER_LOGIN.toString(), user);
+        super(source, EventType.USER_LOGIN, user);
         this.user = user;
         LOG.trace("Constructor method reached");
     }
     /**
      * @return an object of user of type User.
      */
+    @Override
     public User getUser() {
         LOG.trace("Returning an user object.");
         return user;
@@ -59,7 +59,7 @@ public class UserLoginEvent extends AccountEvent {
     @Override
     public String getEventName() {
         LOG.trace("Returning a name of the event.");
-        return null;
+        return EventType.USER_LOGIN.getName();
     }
 
 
