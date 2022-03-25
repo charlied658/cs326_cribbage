@@ -13,6 +13,7 @@ import edu.skidmore.cs326.spring2022.skribbage.common.events.AccountEvent;
  * @author Alex Carney
  * Reviewed: Sten Leinasaar
  */
+@SuppressWarnings("serial")
 public class UserChangePasswordEvent extends AccountEvent {
 
     /**
@@ -81,6 +82,6 @@ public class UserChangePasswordEvent extends AccountEvent {
     @Override
     public String getEventName() {
         LOG.trace("Get event name of a string type");
-        return null;
+        return EventType.USER_CHANGE_PASSWORD.getName();
     }
 }

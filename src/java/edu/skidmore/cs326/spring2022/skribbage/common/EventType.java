@@ -1,5 +1,7 @@
 package edu.skidmore.cs326.spring2022.skribbage.common;
 
+import java.util.ArrayList;
+
 import org.apache.log4j.Logger;
 
 /**
@@ -7,22 +9,24 @@ import org.apache.log4j.Logger;
  * written, its associated title must be included with this enum.
  *
  * @author Alex Carney
- * Reviewed Sten Leinasaar @at March 22, 2022
- * Metadata and code to access it added by Sten Leinasaar @at March 22 2022
+ *         Reviewed Sten Leinasaar @at March 22, 2022
+ *         Metadata and code to access it added by Sten Leinasaar @at March 22
+ *         2022
  */
 public enum EventType {
+
     /**
      * User Login event.
      */
-    USER_LOGIN("User Login Event"),
+    USER_LOGIN("User Login Event", User.class),
     /**
      * User Login event with hashed password.
      */
-    USER_LOGIN_HASHED("User Login Hashed Event"),
+    USER_LOGIN_HASHED("User Login Hashed Event", User.class),
     /**
      * User login event response.
      */
-    USER_LOGIN_RESPONSE("User Login Response Event"),
+    USER_LOGIN_RESPONSE("User Login Response Event", User.class),
     /**
      * User password change event.
      */
@@ -32,33 +36,47 @@ public enum EventType {
      */
     USER_CREATE_ACCOUNT("User Create Account Event"),
     /**
-     * User delete account. 
+     * User delete account.
      */
-    USER_DELETE_ACCOUNT("User Delete Account Event");
-    
+    USER_DELETE_ACCOUNT("User Delete Account Event"),
+    /**
+     * Lobby event.
+     */
+    LOBBY_EVENT("Lobby Event");
+
     /**
      * The name of the event.
      */
     private String name;
+
+    /**
+     * Argument list of the event.
+     */
+    private ArrayList<Class> args;
+
     /**
      * Logger instance for logging.
      */
     private static final Logger LOG;
-    
+
     static {
         LOG = Logger.getLogger(EventType.class);
     }
-    
-    
+
     /**
-     * 
      * @param name
-     *          The name of the event.
+     *            The name of the event.
+     * @param args
+     *            A var arg of arguments for this event to take.
      */
-    EventType(String name) {
+    EventType(String name, Class... args) {
         this.name = name;
-        
+        // Loop through if datatypes and order match.
+        for (Class arg : args) {
+            this.args.add(arg);
+        }
     }
+
     /**
      * Get the name of event.
      * 
@@ -69,7 +87,14 @@ public enum EventType {
         return name;
     }
 
+    /**
+     * Return the arguments list.
+     * 
+     * @return The argument list.
+     */
+    public ArrayList<Class> getArgumentList() {
+        LOG.trace("Returning arguments list of an event");
+        return args;
+    }
+
 }
-
-
-
