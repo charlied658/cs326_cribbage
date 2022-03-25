@@ -85,7 +85,7 @@ public class EventFactory {
                 LOG.trace(
                     "Returning a new instance of UserLoginHashed. "
                         + "Requested by:  " + source.toString());
-                // PLACEHOLDER
+                // PLACEHOLDER as NO EVENT CREATED YET
                 return null;
             case USER_LOGIN_RESPONSE:
                 LOG.trace(
