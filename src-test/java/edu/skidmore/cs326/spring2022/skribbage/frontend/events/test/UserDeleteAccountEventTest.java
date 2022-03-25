@@ -68,8 +68,8 @@ public class UserDeleteAccountEventTest {
      * not null.
      */
     @Test
-    public void testUserCreateAccountEvent() {
-        LOG.trace("Testing the constructor of UserCreateAccountEvent");
+    public void testUserDeleteAccountEvent() {
+        LOG.trace("Testing the constructor of UserDeleteAccountEvent");
 
         assertNotNull(createAccountInstance);
         assertTrue(userInstance.isAuthorized());
@@ -103,7 +103,7 @@ public class UserDeleteAccountEventTest {
     public void testGetEventName() {
         LOG.trace("Testing getEventName");
         testInstance = new UserDeleteAccountEvent(source, userInstance);
-        assertEquals(testInstance.getEventName(), "User Create Account Event");
+        assertEquals(testInstance.getEventName(), "User Delete Account Event");
         LOG.trace("Completed testing the getEventName method");
     }
 
