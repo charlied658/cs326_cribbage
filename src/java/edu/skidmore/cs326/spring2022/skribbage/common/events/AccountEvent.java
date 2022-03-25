@@ -22,7 +22,7 @@ public abstract class AccountEvent extends PropertyChangeEvent {
     private static final Logger LOG;
 
     /**
-     * Private final user instance variable
+     * Private final user instance variable.
      */
     private final User user;
 
