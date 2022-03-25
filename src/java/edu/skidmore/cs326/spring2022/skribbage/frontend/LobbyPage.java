@@ -28,6 +28,7 @@ import us.daveread.edu.graphics.shape.impl.Circle;
  * 
  * @author Jonah Marcus
  *         Last Update: March 25, 2022
+ *         Last Edited by Jonah Marcus
  * Code Reviewed March 24, 2022 - Zoe Beals
  */
 
@@ -109,7 +110,7 @@ public class LobbyPage extends DrawingSurface implements ActionListener {
      */
     public LobbyPage() {
         LOG.trace("Entered LobbyPage Constructor.");
-        mf = new MainFrame(this, "Past Games Page", mainframeWidth,
+        mf = new MainFrame(this, "Pre-Game Lobby", mainframeWidth,
             mainframeHeight, false);
         setup();
     }
@@ -163,6 +164,7 @@ public class LobbyPage extends DrawingSurface implements ActionListener {
      * an instance of the program. For now, the names are hardcoded.
      */
     private void getPlayerNames() {
+        LOG.trace("Entered getPlayerNames");
         //All three will read playerNotLoggedIn message until a new name is 
         //received.
         loggedInPlayer1 = playerNotLoggedIn;
