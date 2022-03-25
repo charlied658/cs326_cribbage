@@ -9,45 +9,38 @@ import java.util.ArrayList;
  *         Last Edited: Dorjee
  */
 public class Hand {
+    /**
+     * Arraylist to store type Card.
+     */
+    private ArrayList<Card> hand = new ArrayList<Card>();
 
-  private ArrayList<Card> hand = new ArrayList<Card>();
+    /**
+     * Get method to return a hand.
+     *
+     * @return Hand the players hand
+     */
+    public ArrayList<Card> getHand() {
+        return hand;
+    }
 
-  /**
-   * Get method to return a hand.
-   *
-   * @return Hand the players hand
-   */
-  public ArrayList<Card> getHand() {
-    return hand;
-  }
+    /**
+     * Adding card to hand.
+     *
+     * @param card
+     *            to add
+     */
+    public void addCardToHand(Card card) {
+        hand.add(card);
+    }
 
-  /**
-   * Adding card to hand.
-   *
-   * @param card
-   *          to add
-   */
-  public void addCardToHand(Card card) {
-    hand.add(card);
-  }
-
-  /**
-   * Removing card from hand.
-   *
-   * @param card
-   *          to remove
-   */
-  public void removeCardFromHand(Card card) {
-    hand.remove(card);
-  }
-
-  /**
-   * Get method to return a hand.
-   *
-   * @return Hand the players hand
-   */
-  public ArrayList<Card> getHand() {
-    return hand;
-  }
+    /**
+     * Removing card from hand.
+     *
+     * @param card
+     *            to remove
+     */
+    public void removeCardFromHand(Card card) {
+        hand.remove(card);
+    }
 
 }
