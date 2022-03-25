@@ -2,6 +2,7 @@ package edu.skidmore.cs326.spring2022.skribbage.test;
 
 import static org.junit.Assert.assertTrue;
 
+
 import java.util.ArrayList;
 
 import org.apache.log4j.Logger;
