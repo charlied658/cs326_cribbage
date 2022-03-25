@@ -41,7 +41,7 @@ public class LobbyEventTest {
     public void setUp() {
         LOG.trace("Started the setup method");
         source = new Object();
-        testInstance = new LobbyEvent(source, "Crib value calculation");
+        testInstance = new LobbyEvent(source);
         LOG.info("SetUp method completed");
     }
 
@@ -65,7 +65,7 @@ public class LobbyEventTest {
     @Test
     public void testGetEventName() {
         LOG.trace("Testing getEventName");
-        assertEquals(testInstance.getEventName(), "Crib value calculation");
+        assertEquals(testInstance.getEventName(), "Lobby Event");
         LOG.trace("Completed testing the getEventName method");
     }
     /**

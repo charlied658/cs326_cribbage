@@ -55,6 +55,6 @@ public class UserDeleteAccountEvent extends AccountEvent {
     public String getEventName() {
         LOG.trace("Returning an event name of type String");
         // TODO Auto-generated method stub
-        return null;
+        return EventType.USER_DELETE_ACCOUNT.getName();
     }
 }
