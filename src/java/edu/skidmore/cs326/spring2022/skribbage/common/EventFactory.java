@@ -1,6 +1,7 @@
 package edu.skidmore.cs326.spring2022.skribbage.common;
 
 import java.beans.PropertyChangeEvent;
+import java.util.ArrayList;
 
 import org.apache.log4j.Logger;
 
@@ -55,16 +56,25 @@ public class EventFactory {
      * Creates an event of type PropertyChangeEvent based on the
      * EventType enum value being passed.
      * 
-     * @param source
-     *            Source that fired the update.
-     * @param user
-     *            User instance related to an event.
      * @param event
      *            Type of an event as specified from the ENUM.
+     * @param source
+     *            Source that fired the update.
+     * @param args
+     *            Vararg of Object type.
      * @return An event of type that was specified.
      */
-    public PropertyChangeEvent createEvent(Object source, User user,
-        EventType event) {
+    public PropertyChangeEvent createEvent(EventType event, Object source,
+        Object... args) {
+
+        ArrayList<Class> eventArgumentList = event.getArgumentList();
+
+        int i = 0;
+        for (Object arg : args) {
+
+        }
+        //NEEEEDS TO BE CHANGED AND FIGURED OUT
+        User user = new User("", "", "", false);
         switch (event) {
             case USER_CREATE_ACCOUNT:
                 LOG.trace(
