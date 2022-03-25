@@ -9,6 +9,46 @@ import org.apache.log4j.Logger;
  */
 public class Card {
 
+<<<<<<< HEAD
+  /**
+  * The numerical value added to the center sum during play phase
+  * (4 of hearts is worth 4, any king is worth 10, etc.)
+  */
+  private int pointValue;
+
+  /**
+  * Getter for pointValue
+  */
+  public int getPointValue() {
+    return pointValue;
+  }
+
+  /**
+  * Setter for point values
+  */
+  private void setPointValue(inPointValue) {
+    if (inPointValue > 0 && inPointValue <= 10) {
+      pointValue = inPointValue;
+    }
+    else {
+      System.out.println("ERROR: invalid point value assigned to Card");
+      pointValue = 1;
+    }
+  }
+
+  /**
+  * The identifying character that would appear on the physical card
+  */
+  private char identifier;
+
+  public char getIdentifier() {
+    return identifier;
+  }
+
+  private void setIdentifier(char inIdentifier) {
+    switch (inIdentifier) {
+      case 'A': pointValue = 1;
+=======
     /**
      * The numerical value added to the center sum during play phase
      * (4 of hearts is worth 4, any king is worth 10, etc.)
@@ -36,6 +76,7 @@ public class Card {
         switch (inIdentifier) {
             case 'A':
                 pointValue = 1;
+>>>>>>> c57d0a9a03d978fd70e71a113e244457afd2d785
                 nextIdentifier = '2';
                 identifier = inIdentifier;
                 break;

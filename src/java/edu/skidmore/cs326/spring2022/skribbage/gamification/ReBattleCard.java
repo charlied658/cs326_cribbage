@@ -46,9 +46,9 @@ public class ReBattleCard implements ItemShopInterface {
 	LOG.info("Creating new Re-battle card");
 
 	/* Set card name, price, and description. */
-   specialCardName = "Re-Battle Card";
-   specialCardPrice = 25;
-   specialCardDescription = "Use this card to get another chance of battling opponent after a battle.";
+   setName("Re-Battle Card");
+   setPrice(25);
+   setDescription("Use this card to get another chance of battling opponent after a battle.");
 
    LOG.info("Name, price, and description set for Re-battle card.");
 
@@ -57,7 +57,7 @@ public class ReBattleCard implements ItemShopInterface {
    /* Loop through Hash map to check if card already exists in item shop. */
    for (HashMap.Entry<String, Integer> entry : storeItems.entrySet()) {
 
-       if(entry.getKey().equals(specialCardName)) {
+       if(entry.getKey().equals(getName())) {
 
        	/* Card already in store. */
        	isEntry = true;
@@ -66,7 +66,7 @@ public class ReBattleCard implements ItemShopInterface {
 
    /* Card is not in store, place in store with value. */
    if(!isEntry) {
-   	storeItems.put(specialCardName, specialCardPrice);
+   	storeItems.put(getName(), getPrice());
    	LOG.info("Re-battle card placed in store with value 25");
    }
 
@@ -133,6 +133,33 @@ public class ReBattleCard implements ItemShopInterface {
 	  LOG.info("Returning card description.");
 	  return specialCardDescription;
 
+ }
+
+ /**
+  * Setter method to set card/item name.
+  * @param name  card/item name.
+  */
+ @Override
+ public void setName(String name){
+   specialCardName = name;
+ }
+
+ /**
+  * Setter method for card/item price.
+  * @param price  Card/item price
+  */
+ @Override
+ public void setPrice(int price){
+   specialCardPrice = price;
+ }
+
+ /**
+  * Setter method for card/item description.
+  * @param description  Card/item description.
+  */
+ @Override
+ public void setDescription(String description){
+   specialCardDescription = description;
  }
 
 
