@@ -14,7 +14,7 @@ import org.apache.log4j.Logger;
 import java.util.*;
 
 import us.daveread.edu.graphics.shape.Drawable;
-//import us.daveread.edu.graphics.shape.impl.Image;
+import us.daveread.edu.graphics.shape.impl.Image;
 import us.daveread.edu.graphics.shape.impl.Text;
 import us.daveread.edu.graphics.surface.DrawingSurface;
 import us.daveread.edu.graphics.surface.MainFrame;
@@ -58,12 +58,12 @@ public class LobbyPage extends DrawingSurface implements ActionListener {
     /**
      * mainframeWidth - int variable to hold main frame width.
      */
-    private int mainframeWidth = 650;
+    private int mainframeWidth = 900;
     
     /**
      * mainframeHeight - int variable to hold main frame height.
      */
-    private int mainframeHeight = 1500;
+    private int mainframeHeight = 900;
     
     /**
      * mf - MainFrame variable to hold the window.
@@ -123,26 +123,30 @@ public class LobbyPage extends DrawingSurface implements ActionListener {
         Rectangle background = new Rectangle(new Point(0, 0),
             new Dimension(mainframeWidth, mainframeHeight),
             Color.DARK_GRAY, Color.DARK_GRAY);
+        
+        Image logo = new Image("ungovernable.jpg", new Point(0, 0), null);
+        logo.setScaleFactor(0.71);
 
         returnToMainMenu = new Text("Main Menu",
-            new Point(20, 40), 25, Color.WHITE, Color.CYAN);
-        startButton = new Text("Start Game", new Point(250, 250),
-            25, Color.WHITE, Color.CYAN);
+            new Point(20, 40), 25, Color.BLACK, Color.BLUE);
+        startButton = new Text("Start Game", new Point(385, 250),
+            25, Color.BLACK, Color.BLUE);
         
         getPlayerNames();
 
         Text player1LoginSection = new Text(loggedInPlayer1,
-            new Point(35, 100), 16, Color.WHITE);
+            new Point(35, 100), 16, Color.BLACK);
         Text player2LoginSection = new Text(loggedInPlayer2,
-            new Point(35, 120), 16, Color.WHITE);
+            new Point(35, 120), 16, Color.BLACK);
         Text player3LoginSection = new Text(loggedInPlayer3,
-            new Point(35, 140), 16, Color.WHITE);
+            new Point(35, 140), 16, Color.BLACK);
 
         player1Ready = new Circle(new Point(10, 87), 15, Color.RED, Color.RED);
         player2Ready = new Circle(new Point(10, 107), 15, Color.RED, Color.RED);
         player3Ready = new Circle(new Point(10, 127), 15, Color.RED, Color.RED);
 
-        add(background);
+        //add(background);
+        add(logo);
         add(returnToMainMenu);
         add(startButton);
         add(player1LoginSection);
@@ -201,7 +205,7 @@ public class LobbyPage extends DrawingSurface implements ActionListener {
             //Placeholder - not functional yet
             startButton.setBorderColor(Color.CYAN);
             Utility.pause(100);
-            startButton.setBorderColor(Color.WHITE);
+            startButton.setBorderColor(Color.BLACK);
         }
        
     }
