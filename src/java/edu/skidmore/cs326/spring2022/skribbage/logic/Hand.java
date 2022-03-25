@@ -12,19 +12,12 @@ public class Hand {
 
   private ArrayList<Card> hand;
 
+
   public Hand(){
     hand = new ArrayList<Card>();
   }
 
-  /**
-   * Get method to return a hand.
-   *
-   * @return Hand the players hand
-   */
-  public ArrayList<Card> getHand() {
-    return hand;
-  }
-
+  
   /**
    * Adding card to hand.
    *
