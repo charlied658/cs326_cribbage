@@ -1,4 +1,4 @@
-package edu.skidmore.cs326.spring2022.skribbage.frontend.demo;
+package edu.skidmore.cs326.spring2022.skribbage.frontend;
 
 import java.awt.Color;
 import java.awt.Point;
@@ -8,6 +8,7 @@ import java.awt.event.WindowEvent;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import javax.swing.*;
+
 import java.util.*;
 
 import us.daveread.edu.graphics.shape.Drawable;
@@ -29,14 +30,14 @@ public class PastGamesPage extends DrawingSurface implements ActionListener {
     private int mainframeHeight = 1500;
     private MainFrame mf;
     private JButton returnToMainMenu;
-    private ArrayList<ActiveGame> allGames = new ArrayList<>();
-    private ArrayList<ActiveGame> completeGames = new ArrayList<>();
-    private ArrayList<ActiveGame> incompleteGames = new ArrayList<>();
+    private ArrayList<PlayableGame> allGames = new ArrayList<>();
+    private ArrayList<PlayableGame> completeGames = new ArrayList<>();
+    private ArrayList<PlayableGame> incompleteGames = new ArrayList<>();
     
     //Examples of games that show proof of concept
-    private ActiveGame one = new ActiveGame(11, 7, 2021, "Jonah", "Sten", "CS326", true);
-    private ActiveGame two = new ActiveGame(12, 31, 2021, "Chris Cornell", "Ben Shepherd", "Soundgarden", true);
-    private ActiveGame three = new ActiveGame(1, 17, 2022, "Hugh Jass", "Tess T Culls", "", false);
+    private PlayableGame one = new PlayableGame(11, 7, 2021, "Jonah", "Sten", "CS326", true);
+    private PlayableGame two = new PlayableGame(12, 31, 2021, "Chris Cornell", "Ben Shepherd", "Soundgarden", true);
+    private PlayableGame three = new PlayableGame(1, 17, 2022, "Hugh Jass", "Tess T Culls", "", false);
     
     public PastGamesPage() {
         mf = new MainFrame(this, "Past Games Page", mainframeWidth, mainframeHeight, false);
@@ -64,12 +65,12 @@ public class PastGamesPage extends DrawingSurface implements ActionListener {
         add(header);
         add(returnToMainMenu);
         
-        //There is a boolean field in each ActiveGame class that shows whether or not
+        //There is a boolean field in each PlayableGame class that shows whether or not
         //a game is completed. This will place each game into the appropriate ArrayList
         //for later organization. For now, this just adds the test cases. In the future,
         //there will be a list of all active games that is a bit more sophisticated.
         for(int i = 0; i < allGames.size(); i++) {
-            ActiveGame game = allGames.get(i);
+            PlayableGame game = allGames.get(i);
             if (game.isCompleted()) {
                 completeGames.add(game);
             }
