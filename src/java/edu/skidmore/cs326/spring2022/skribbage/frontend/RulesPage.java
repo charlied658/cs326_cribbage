@@ -26,6 +26,7 @@ import us.daveread.edu.graphics.shape.impl.Rectangle;
  *         Last Edit: March 11, 2022
  *         Code Reviewed by Zoe Beals - 3/24/2022
  */
+@SuppressWarnings("serial")
 public class RulesPage extends DrawingSurface implements ActionListener {
     /**
      * mainframeWidth - int var to hold width.
