@@ -1,11 +1,10 @@
 package edu.skidmore.cs326.spring2022.skribbage.frontend.events;
 
-import edu.skidmore.cs326.spring2022.skribbage.common.events.AccountEvent;
-
 import org.apache.log4j.Logger;
 
 import edu.skidmore.cs326.spring2022.skribbage.common.EventType;
 import edu.skidmore.cs326.spring2022.skribbage.common.User;
+import edu.skidmore.cs326.spring2022.skribbage.common.events.AccountEvent;
 
 /**
  * A concrete implementation of an Event, representing the data transfer object
@@ -53,7 +52,7 @@ public class UserChangePasswordEvent extends AccountEvent {
      */
     public UserChangePasswordEvent(Object source, User user,
         String newPassword) {
-        super(source, EventType.USER_CHANGE_PASSWORD.toString(), user);
+        super(source, EventType.USER_CHANGE_PASSWORD, user);
         this.user = user;
         this.newPassword = newPassword;
         LOG.trace("Constructor method reached");
@@ -63,8 +62,9 @@ public class UserChangePasswordEvent extends AccountEvent {
     /**
      * @return an object of type User.
      */
+    @Override
     public User getUser() {
-        LOG.trace("Getuser method reached");
+        LOG.trace("Get user method reached");
         return user;
     }
 
@@ -82,6 +82,6 @@ public class UserChangePasswordEvent extends AccountEvent {
     @Override
     public String getEventName() {
         LOG.trace("Get event name of a string type");
-        return null;
+        return EventType.USER_CHANGE_PASSWORD.getName();
     }
 }

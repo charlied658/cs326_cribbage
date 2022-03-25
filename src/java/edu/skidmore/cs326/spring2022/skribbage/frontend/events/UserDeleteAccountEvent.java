@@ -10,7 +10,6 @@ import edu.skidmore.cs326.spring2022.skribbage.common.events.AccountEvent;
  * @author Alex Carney
  *         Edited, reviewed, commented, Logging added by Sten Leinasaar
  */
-@SuppressWarnings("serial")
 public class UserDeleteAccountEvent extends AccountEvent {
     /**
      * Private object variable of type User.
@@ -37,13 +36,14 @@ public class UserDeleteAccountEvent extends AccountEvent {
      *             if {@code source} is {@code null}
      */
     public UserDeleteAccountEvent(Object source, User associatedUser) {
-        super(source, EventType.USER_DELETE_ACCOUNT.toString(), associatedUser);
+        super(source, EventType.USER_DELETE_ACCOUNT, associatedUser);
         this.user = associatedUser;
         LOG.trace("Constructor method reached");
     }
     /**
      * @return an object of the User of type User.
      */
+    @Override
     public User getUser() {
         LOG.trace("Returning an user object");
         return user;
@@ -55,6 +55,6 @@ public class UserDeleteAccountEvent extends AccountEvent {
     public String getEventName() {
         LOG.trace("Returning an event name of type String");
         // TODO Auto-generated method stub
-        return null;
+        return EventType.USER_DELETE_ACCOUNT.getName();
     }
 }
