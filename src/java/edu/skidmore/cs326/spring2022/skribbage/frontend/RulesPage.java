@@ -4,20 +4,25 @@ import java.awt.Color;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
+
+import javax.swing.JButton;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+
+//import java.awt.event.WindowEvent;
 import java.awt.Dimension;
-import java.awt.Graphics2D;
-import javax.swing.*;
+//import java.awt.Graphics2D;
+//import javax.swing.*;
 
 import org.apache.log4j.Logger;
 
-import us.daveread.edu.graphics.shape.Drawable;
-import us.daveread.edu.graphics.shape.impl.Image;
+import us.daveread.edu.graphics.shape.impl.Rectangle;
+//import us.daveread.edu.graphics.shape.Drawable;
+//import us.daveread.edu.graphics.shape.impl.Image;
 import us.daveread.edu.graphics.shape.impl.Text;
 import us.daveread.edu.graphics.surface.DrawingSurface;
 import us.daveread.edu.graphics.surface.MainFrame;
-import us.daveread.edu.utilities.Utility;
-import us.daveread.edu.graphics.shape.impl.Rectangle;
+//import us.daveread.edu.graphics.shape.impl.Rectangle;
 
 /***
  * Creates a page that displays the rules for the user.
