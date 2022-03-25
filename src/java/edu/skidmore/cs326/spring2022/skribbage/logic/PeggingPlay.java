@@ -192,7 +192,7 @@ public class PeggingPlay {
     //if they don't, return false
     //if there are no cards in the list, return false
 
-    if (cards.size() == 0){
+    if (cards.size() == 0 || cards.size() == 1){
       return false;
     }
 

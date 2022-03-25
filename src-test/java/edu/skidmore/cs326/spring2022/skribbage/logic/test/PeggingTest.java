@@ -91,6 +91,9 @@ public class PeggingTest{
     pPlay.addCardToPeggingTotal(c, p);
     assertTrue(Player.getPoints() == 2);
 
+    //reset player's hand
+    h.addCardToHand(c);
+
     //reset peggingCards for dealer and pone
     Game.setPonePeggingCards(new ArrayList<Card>());
     Game.setDealerPeggingCards(new ArrayList<Card>());
@@ -101,6 +104,9 @@ public class PeggingTest{
     Game.setPeggingTotal(14);
     pPlay.addCardToPeggingTotal(c, p);
     assertTrue(Player.getPoints() == 2);
+
+    //reset player's hand
+    h.addCardToHand(c);
 
     //reset peggingCards for dealer and pone
     Game.setPonePeggingCards(new ArrayList<Card>());
@@ -113,43 +119,97 @@ public class PeggingTest{
     assertTrue(Player.getPoints() != 2);
   }
 
-  // /**
-  //  * Test the method check31.
-  //  * If the player passed as a parameter placed a card during the pegging phase that
-  //  * brought the pegging total to 31, the player is awarded 2 points. Otherwise, the
-  //  * player is awarded no points.
-  //  */
-  // @Test
-  // public void testCheck31() {
-  //   Card c = new Card('A', Suit.HEARTS);
-  //   Player p = new Player ();
-  //   Hand h = p.getHand();
-  //   h.addCardToHand(c);
-  //
-  //   //cases
-  //   //the player is a dealer and placed a card that brought the pegging total to 31
-  //   //the player is a pone and placed a card that brought the pegging total to 31
-  //   //the player did not place a card to bring the pegging total to 31
-  //
-  //   //the player is a dealer and placed a card that brought the pegging total to 31
-  //   p.isDealer = true;
-  //   Game.setPeggingTotal(30);
-  //   pPlay.addCardToPeggingTotal(c, p);
-  //   assertTrue(Player.getPoints() == 2);
-  //
-  //   //the player is a pone and placed a card that brought the pegging total to 15
-  //   //!!!!!!!!! reset player points to 0 again !!!!!!!!!
-  //   p.isDealer = false;
-  //   Game.setPeggingTotal(14);
-  //   pPlay.addCardToPeggingTotal(c, p);
-  //   assertTrue(Player.getPoints() == 2);
-  //
-  //   //the player did not place a card to bring the pegging total to 15
-  //   //!!!!!!!!! reset player points to 0 again !!!!!!!!!
-  //   Game.setPeggingTotal(0);
-  //   pPlay.addCardToPeggingTotal(c, p);
-  //   assertTrue(Player.getPoints() != 2);
-  // }
+  /**
+   * Test the method check31.
+   * If the player passed as a parameter placed a card during the pegging phase that
+   * brought the pegging total to 31, the player is awarded 2 points. Otherwise, the
+   * player is awarded no points.
+   */
+  @Test
+  public void testCheck31() {
+
+    //cases
+    //the player is a dealer and placed a card that brought the pegging total to 31
+    //the player is a pone and placed a card that brought the pegging total to 31
+    //the player did not place a card to bring the pegging total to 31
+
+    //the player is a dealer and placed a card that brought the pegging total to 31
+    p.isDealer = true;
+    Game.setPeggingTotal(30);
+    pPlay.addCardToPeggingTotal(c, p);
+    assertTrue(Player.getPoints() == 2);
+
+    //reset player's hand
+    h.addCardToHand(c);
+
+    //reset peggingCards for dealer and pone
+    Game.setPonePeggingCards(new ArrayList<Card>());
+    Game.setDealerPeggingCards(new ArrayList<Card>());
+
+
+    //the player is a pone and placed a card that brought the pegging total to 31
+    //!!!!!!!!! reset player points to 0 again !!!!!!!!!
+    p.isDealer = false;
+    Game.setPeggingTotal(30);
+    pPlay.addCardToPeggingTotal(c, p);
+    assertTrue(Player.getPoints() == 2);
+
+    //reset player's hand
+    h.addCardToHand(c);
+
+    //reset peggingCards for dealer and pone
+    Game.setPonePeggingCards(new ArrayList<Card>());
+    Game.setDealerPeggingCards(new ArrayList<Card>());
+
+    //the player did not place a card to bring the pegging total to 31
+    //!!!!!!!!! reset player points to 0 again !!!!!!!!!
+    Game.setPeggingTotal(0);
+    pPlay.addCardToPeggingTotal(c, p);
+    assertTrue(Player.getPoints() != 2);
+  }
+
+  @Test
+  public void testIsPair{
+    //cases
+    //the method returns true if the cards in the list have the same identifier
+    //the method returns false if the cards in the list don't have the same identifier
+    ArrayList <Card> cardList = new ArrayList <Card> ();
+    Card c1 = new Card ('A', Suit.HEARTS);
+    Card c2 = new Card ('A', Suit.DIAMONDS);
+    Card c3 = new Card ('A', Suit.CLUBS);
+    Card c4 = new Card ('Q', Suit.HEARTS);
+
+    //case: no cards in list
+    assertTrue(Game.isPair(cardList) == false);
+
+    //case: 1 card in list
+    cardList.add(c1);
+    assertTrue(Game.isPair(cardList) == false);
+
+    //case: 2 cards in list that have same identifier
+    cardList.add(c2);
+    assertTrue(Game.isPair(cardList));
+
+    //case: 3 cards in list that have same identifier
+    cardList.add(c3);
+    assertTrue(Game.isPair(cardList));
+
+    //case: 4 cards in list where one does not have same identifier
+    cardList.add(c4);
+    assertTrue(Game.isPair(cardList) == false);
+
+    //case: 2 cards in list where one does not have same identifier
+    cardList.removeAll();
+    cardList.add(c1);
+    cardList.add(c4);
+    assertTrue(Game.isPair(cardList) == false);
+
+  }
+
+  @Test
+  public void checkPair(){
+    
+  }
 
 
 
