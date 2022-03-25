@@ -202,8 +202,7 @@ public class LobbyPage extends DrawingSurface implements ActionListener {
             setReadyButtonColor(player2Ready);
         } else if (e == player3Ready) {
             setReadyButtonColor(player3Ready);
-        }
-        else if (e == startButton) {
+        } else if (e == startButton) {
             //Placeholder - not functional yet
             startButton.setBorderColor(Color.CYAN);
             Utility.pause(100);
