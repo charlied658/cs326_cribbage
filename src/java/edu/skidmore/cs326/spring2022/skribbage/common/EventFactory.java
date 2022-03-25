@@ -105,7 +105,7 @@ public class EventFactory {
                 LOG.trace(
                     "Returning a new instance of LobbyEvent. Reguested by: "
                         + source.toString());
-                return new LobbyEvent(source, event.getName());
+                return new LobbyEvent(source);
             default:
                 break;
         }
