@@ -34,17 +34,17 @@ import us.daveread.edu.graphics.shape.impl.Circle;
 
 public class LobbyPage extends DrawingSurface implements ActionListener {
     /**
-     * loggedInPlayer1 - Displayed player 1 name.
+     * loggedInPlayer1 - The displayed player 1 name.
      */
     private String loggedInPlayer1;
     
     /**
-     * loggedInPlayer2 - Displayed player 2 name.
+     * loggedInPlayer2 - The displayed player 2 name.
      */
     private String loggedInPlayer2;
 
     /**
-     * loggedInPlayer3 - Displayed player 3 name.
+     * loggedInPlayer3 - The displayed player 3 name.
      */
     private String loggedInPlayer3;
     
