@@ -82,6 +82,7 @@ public class InventoryPage extends DrawingSurface implements ActionListener {
      */
     private void setup() {
         LOG.trace("Entered setup (InventoryPage)");
+        setLayout(null);
         closeWindow = new Text("Close",
             new Point(20, 40), 25, Color.BLUE, Color.BLACK);
     
