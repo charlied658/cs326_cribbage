@@ -3,18 +3,18 @@ package edu.skidmore.cs326.spring2022.skribbage.logic;
 import java.util.ArrayList;
 
 /**
- * Class acts as the DealPhase containing methods to discard cards to crib, determine the dealer
- * deal cards, and removing a card from hand. 
+ * Class acts as the DealPhase containing methods to discard cards to crib,
+ * determine the dealer, deal cards, and removing a card from hand.
  * 
  * @author Dorjee
  */
 public class DealPhase {
 
-  /*
+  /**
    * This method executes the dealing phase of the game. A dealer is determined,
    * cards are dealt, and cards are discarded to the crib.
    */
-  private void dealPhase() {
+  public void dealPhase() {
 
     Game.getDeck().shuffle();
 
@@ -66,7 +66,7 @@ public class DealPhase {
     int amountToCut = 6;
 
     Game.getDeck().moveToTop(amountToCut);
-    //Card topCard = Game.getDeck();
+    // Card topCard = Game.getDeck();
 
     // FRONT END INTERACTION: give information about the card on top of the deck
 
@@ -81,7 +81,7 @@ public class DealPhase {
    * @param toDiscardP2
    *          the array of cards to discard for player 2
    */
-  private void discardToCrib(Card[] toDiscardP1, Card[] toDiscardP2) {
+  public void discardToCrib(Card[] toDiscardP1, Card[] toDiscardP2) {
 
     for (int i = 0; i < toDiscardP1.length; i++) {
       // search the player's hand for the card to discard and remove it from the
@@ -113,9 +113,9 @@ public class DealPhase {
    * @param p
    *          is the player
    */
-  private void removeCardFromHand(Card cardToRemove, Player p) {
+  public void removeCardFromHand(Card cardToRemove, Player p) {
 
-    ArrayList<Card> theHand = p.getHand(); //need player phase 
+    ArrayList<Card> theHand = p.getHand(); // need player phase
 
     for (int i = 0; i < theHand.size(); i++) {
       Card c = theHand.get(i);
@@ -140,7 +140,7 @@ public class DealPhase {
    * Deal cards to the players, assuming that there are two players. Each player
    * will be dealt 6 cards.
    */
-  private void dealCards() {
+  public void dealCards() {
 
     int idxOfDealer = Game.getDealerIdx();
 
@@ -170,7 +170,7 @@ public class DealPhase {
    * @param amountToCutP2
    *          is the amount that player 2 wants to cut
    */
-  private void determineDealer(int amountToCutP1, int amountToCutP2) {
+  public void determineDealer(int amountToCutP1, int amountToCutP2) {
 
     Game.getDeck().shuffle();
 
