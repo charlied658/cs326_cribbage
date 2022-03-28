@@ -36,14 +36,14 @@ public class UserLoginEvent extends AccountEvent {
      *
      * @param source
      *            the bean that fired the event
-     * @param user
-     *            The un-authorized user associated with the event
+     * @param args
+     *            List of arguments.
      * @throws IllegalArgumentException
      *             if {@code source} is {@code null}
      */
-    public UserLoginEvent(Object source, User user) {
-        super(source, EventType.USER_LOGIN, user);
-        this.user = user;
+    public UserLoginEvent(Object source, Object... args) {
+        super(source, EventType.USER_LOGIN, (User) args[0]);
+        this.user = (User) args[0];
         LOG.trace("Constructor method reached");
     }
 

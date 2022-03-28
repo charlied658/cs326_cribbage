@@ -31,7 +31,8 @@ public enum EventType {
     /**
      * User password change event.
      */
-    USER_CHANGE_PASSWORD("User Change Password Event"),
+    USER_CHANGE_PASSWORD("User Change Password Event", User.class,
+        String.class),
     /**
      * User Create account event.
      */
