@@ -1,4 +1,5 @@
 package edu.skidmore.cs326.spring2022.skribbage.logic;
+
 import java.util.ArrayList;
 
 //@author Michael Shriner
@@ -48,7 +49,7 @@ public class PeggingPlay {
 
     int theCardValue = cardToAdd.getPointValue();
 
-    if (addToPeggingTotal(theCardValue)){
+    if (Game.addToPeggingTotal(theCardValue)){
       //if here, the card was added to the pegging total
 
       //remove the card from the player's hand and place it in pegging cards
@@ -104,21 +105,21 @@ public class PeggingPlay {
     else if(claim.equalsIgnoreCase("4 pair")){
       check4Pair(p);
     }
-    else if(claim.equalsIgnoreCase("run of 3")){
-      checkRunOf3(p);
-    }
-    else if (claim.equalsIgnoreCase("run of 4")){
-      checkRunOf4(p);
-    }
-    else if (claim.equalsIgnoreCase("run of 5")){
-      checkRunOf5(p);
-    }
-    else if (claim.equalsIgnoreCase("run of 6")){
-      checkRunOf6(p);
-    }
-    else if (claim.equalsIgnoreCase("run of 7")){
-      checkRunOf7(p);
-    }
+    // else if(claim.equalsIgnoreCase("run of 3")){
+    //   checkRunOf3(p);
+    // }
+    // else if (claim.equalsIgnoreCase("run of 4")){
+    //   checkRunOf4(p);
+    // }
+    // else if (claim.equalsIgnoreCase("run of 5")){
+    //   checkRunOf5(p);
+    // }
+    // else if (claim.equalsIgnoreCase("run of 6")){
+    //   checkRunOf6(p);
+    // }
+    // else if (claim.equalsIgnoreCase("run of 7")){
+    //   checkRunOf7(p);
+    // }
   }
 
   /**
@@ -313,7 +314,7 @@ public class PeggingPlay {
   }
 
 
-  //============ left off here =====================
+  //============ left off here =================================================
   //
   //
   // /**
@@ -876,7 +877,4 @@ public class PeggingPlay {
   //
   //
   //
-  //
-
-
 }

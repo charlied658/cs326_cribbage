@@ -10,6 +10,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import edu.skidmore.cs326.spring2022.skribbage.common.EventFactory;
+import edu.skidmore.cs326.spring2022.skribbage.common.EventType;
 import edu.skidmore.cs326.spring2022.skribbage.common.User;
 import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserLoginEvent;
 
@@ -51,7 +53,9 @@ public class UserLoginEventTest {
         source = new Object();
         userInstance =
             new User("sleinasa@skidmore.edu", "sleinasa", "password", true);
-        testInstance = new UserLoginEvent(source, userInstance);
+        testInstance = (UserLoginEvent) EventFactory.getInstance()
+            .createEvent(EventType.USER_LOGIN, source, userInstance);
+        new UserLoginEvent(source, userInstance);
         LOG.trace("SetUp method finished");
     }
 

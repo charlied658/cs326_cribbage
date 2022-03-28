@@ -208,7 +208,35 @@ public class PeggingTest{
 
   @Test
   public void checkPair(){
-    
+    //case
+    //player has a pair and gets 2 points
+    //player does not have a pair and does not get 2 points
+    Player p2 = new Player ();
+    Card c2 = new Card('A', Suit.HEARTS);
+    Hand h2 = p2.getHand();
+    h2.addCardToHand(c2);
+    p.isDealer = true;
+    p2.isDealer = false;
+
+    Game.addCardToPeggingTotal(c, p);
+    Game.addCardToPeggingTotal(c2, p2);
+
+    Game.checkPair(p);
+    assertTrue(p.getPoints() == 2);
+
+    Game.checkPair(p2);
+    assertTrue(p2.getPoints() == 2);
+
+    Card c3 = new Card('2', Suit.DIAMONDS);
+    h2.addCardToHand(c3);
+    Game.addCardToPeggingTotal(c3, p2);
+
+    Game.checkPair(p2);
+    assertTrue(p2.getPoints() == 2);
+
+    Game.checkPair(p);
+    assertTrue(p.getPoints() == 2);
+
   }
 
 
