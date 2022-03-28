@@ -1,319 +1,319 @@
-package edu.skidmore.cs326.spring2022.skribbage.logic;
-import java.util.ArrayList;
+// package edu.skidmore.cs326.spring2022.skribbage.logic;
+// import java.util.ArrayList;
+//
+// //@author Michael Shriner
+// public class PeggingPlay {
+//
+//   public PeggingPlay(){
+//   }
+//
+//   public void peggingPhase (){
+//
+//     ArrayList<Card> ponePeggingCards = new ArrayList <Card>();
+//     ArrayList<Card> dealerPeggingCards = new ArrayList <Card>();
+//
+//     //FRONT END INTERACTION NEEDED
+//     //assume you have information from front end
+//
+//     //do the following steps while there is at least one card left in one of the player's hands
+//
+//     //1) pone places a card
+//     //2) add the card to the total value if possible
+//     //3) add the card to peggingCards if possible
+//     //4) add the card to ponePeggingCards if possible
+//     //5) if the pone makes a claim for pegging points for that card and that card could be placed,
+//     //check that claim
+//
+//     //4) dealer places a card
+//     //5) add the card to the total value if possible
+//     //6) add the card to peggingCards if possible
+//     //7) add the card to dealerPeggingCards if possible
+//     //8) add the card to the total value if possible
+//     //9) if the dealer makes a claim for pegging points for that card and that card could be placed,
+//     //check that claim
+//
+//     //if the last card was played and all points were added, the pegging phase is over
+//     //reset peggingCards and add ponePeggingCards and dealerPeggingCards back to each player's hand
+//
+//   }
+//
+//   /**
+//   Takes a card and a player and adds the card's point value to the total value during pegging play
+//   unless 31 < peggingTotal + the value of the card to add. If the card is played during
+//   pegging play, the card is temporarily removed from the player's hand who played it.
+//   @param cardToAdd is the card whose point value will be added to the total if it meets the condition
+//   @param p is the player who is trying to play the card
+//   */
+//   public void addCardToPeggingTotal(Card cardToAdd, Player p){
+//
+//     int theCardValue = cardToAdd.getPointValue();
+//
+//     if (Game.addToPeggingTotal(theCardValue)){
+//       //if here, the card was added to the pegging total
+//
+//       //remove the card from the player's hand and place it in pegging cards
+//       p.getHand().removeCardFromHand(cardToAdd);
+//
+//       if (p.isDealer){
+//         Game.addDealerPeggingCard(cardToAdd);
+//       }
+//       else{
+//         Game.addPonePeggingCard(cardToAdd);
+//       }
+//
+//     }
+//     else{
+//       //indicate to the user that the card cannot be played
+//       //FRONT END INTERACTION HERE
+//     }
+//   }
+//
+//   /**
+//   Takes a claim and awards the player who made the claim the points earned for the
+//   claim made if the claim is valid.
+//   Claims that can be made:
+//   "15"
+//   "31"
+//   "pair"
+//   "3 pair"
+//   "4 pair"
+//   "run of 3"
+//   "run of 4"
+//   "run of 5"
+//   "run of 6"
+//   "run of 7"
+//   "last card"
+//   "go"
+//   @param claim is the claim the player makes
+//   @param p is the player who made the claim
+//   */
+//   public void checkClaim (String claim, Player p){
+//
+//     if (claim.equalsIgnoreCase("15")){
+//       check15(p);
+//     }
+//     else if (claim.equalsIgnoreCase("31")){
+//       check31(p);
+//     }
+//     else if (claim.equalsIgnoreCase("pair")){
+//       checkPair(p);
+//     }
+//     else if (claim.equalsIgnoreCase("3 pair")){
+//       check3Pair(p);
+//     }
+//     else if(claim.equalsIgnoreCase("4 pair")){
+//       check4Pair(p);
+//     }
+//     else if(claim.equalsIgnoreCase("run of 3")){
+//       checkRunOf3(p);
+//     }
+//     else if (claim.equalsIgnoreCase("run of 4")){
+//       checkRunOf4(p);
+//     }
+//     else if (claim.equalsIgnoreCase("run of 5")){
+//       checkRunOf5(p);
+//     }
+//     else if (claim.equalsIgnoreCase("run of 6")){
+//       checkRunOf6(p);
+//     }
+//     else if (claim.equalsIgnoreCase("run of 7")){
+//       checkRunOf7(p);
+//     }
+//   }
+//
+//   /**
+//   If the player passed as a parameter placed a card during the pegging phase that
+//   brought the pegging total to 15, the player is awarded 2 points. Otherwise, the
+//   player is awarded no points.
+//   @param p is the player making the claim that he or she placed a card that brought
+//   the pegging total to 15
+//   */
+//   public void check15(Player p){
+//
+//     //assumption: Card c from checkClaim() has been added to peggingCards already
+//     //assumption: check15() is called before the next player plays a card
+//
+//     if (sumTotalPeggingCards() == 15){
+//       p.addPoints(2);
+//     }
+//     else{
+//       //FRONT END
+//       //indicate to the player that the claim was not valid
+//     }
+//
+//   }
+//
+//   public int sumTotalPeggingCards(){
+//
+//     int sum = 0;
+//     ArrayList<Card> dealerPeggingCards = Game.getDealerPeggingCards();
+//     ArrayList<Card> ponePeggingCards = Game.getPonePeggingCards();
+//
+//     for (int i = 0; i < dealerPeggingCards.size(); i++){
+//       Card tempCard = dealerPeggingCards.get(i);
+//       sum += tempCard.getPointValue();
+//     }
+//
+//     for (int i = 0; i < ponePeggingCards.size(); i++){
+//       Card tempCard = ponePeggingCards.get(i);
+//       sum += tempCard.getPointValue();
+//     }
+//
+//     return sum;
+//
+//   }
+//
+//   /**
+//   If the player passed as a parameter placed a card during the pegging phase that
+//   brought the pegging total to 31, the player is awarded 2 points. Otherwise, the
+//   player is awarded no points.
+//   @param p is the player making the claim that he or she placed a card that brought
+//   the pegging total to 31
+//   */
+//   public void check31(Player p){
+//
+//     //assumption: Card c from checkClaim() has been added to peggingCards already
+//     //assumption: check15() is called before the next player plays a card
+//
+//     if (sumTotalPeggingCards() == 31){
+//       p.addPoints(2);
+//     }
+//     else{
+//       //FRONT END
+//       //indicate to the player that the claim was not valid
+//     }
+//
+//   }
+//
+//   public boolean isPair(ArrayList<Card> cards){
+//
+//     //check if the cards in the list have the same identifier
+//     //if they do, return true
+//     //if they don't, return false
+//     //if there are no cards in the list, return false
+//
+//     if (cards.size() == 0 || cards.size() == 1){
+//       return false;
+//     }
+//
+//     char id = cards.get(0).getIdentifier();
+//
+//     for (int i = 1; i < cards.size(); i++){
+//       char idToCompare = cards.get(i).getIdentifier();
+//       if (id != idToCompare){
+//         return false;
+//       }
+//     }
+//
+//     return true;
+//
+//   }
+//
+//
+//   /**
+//   If the player passed as a parameter placed a card that immediately followed a card with the
+//   same numerical value, the player is awarded 2 points. Otherwise, the player is awarded no points.
+//   @param the player who made the claim of having a pair during the pegging phase
+//   */
+//   public void checkPair(Player p){
+//     //assumption: Card c from checkClaim() has been added to peggingCards already
+//     //assumption: check15() is called before the next player plays a card
+//
+//     ArrayList <Card> dealerPeggingCards = Game.getDealerPeggingCards();
+//     ArrayList <Card> ponePeggingCards = Game.getPonePeggingCards();
+//     ArrayList<Card> checkIfPair = new ArrayList <Card>();
+//
+//     checkIfPair.add(dealerPeggingCards.get(dealerPeggingCards.size()-1));
+//     checkIfPair.add(ponePeggingCards.get(ponePeggingCards.size()-1));
+//
+//     if (isPair(checkIfPair)){
+//       p.addPoints(2);
+//     }
+//     else{
+//       //indicate to front end that the claim was not valid
+//     }
+//   }
+//
+//   /**
+//   If the player passed as a parameter placed a card that immediately followed two cards with the
+//   same numerical values, the player is awarded 6 points. Otherwise, the player is awarded no points.
+//   @param the player who made the claim of having a 3 pair during the pegging phase
+//   */
+//   public void check3Pair(Player p){
+//     //assumption: Card c from checkClaim() has been added to peggingCards already
+//     //assumption: check15() is called before the next player plays a card
+//
+//     ArrayList <Card> dealerPeggingCards = Game.getDealerPeggingCards();
+//     ArrayList <Card> ponePeggingCards = Game.getPonePeggingCards();
+//     ArrayList<Card> checkIfPair = new ArrayList <Card>();
+//
+//     if (p.isDealer){
+//       //if the person making the claim is the dealer, the dealer played a card
+//       //first, then the pone, then the dealer again
+//       //so, check two cards from dealer and one from pone
+//       if (dealerPeggingCards.size() < 2){
+//         //the player does not have a pair of 3
+//         //let front end know
+//       }
+//       else{
+//         checkIfPair.add(dealerPeggingCards.get(dealerPeggingCards.size()-1));
+//         checkIfPair.add(dealerPeggingCards.get(dealerPeggingCards.size()-2));
+//         checkIfPair.add(ponePeggingCards.get(ponePeggingCards.size()-1));
+//       }
+//
+//     }
+//     else{
+//       if (ponePeggingCards.size() < 2){
+//         //the player does not have a pair of 3
+//         //let front end know
+//       }
+//       else{
+//         //check two cards from pone and one from dealer
+//         checkIfPair.add(ponePeggingCards.get(ponePeggingCards.size()-1));
+//         checkIfPair.add(ponePeggingCards.get(ponePeggingCards.size()-2));
+//         checkIfPair.add(dealerPeggingCards.get(dealerPeggingCards.size()-1));
+//       }
+//
+//     }
+//
+//     if (isPair(checkIfPair)){
+//       p.addPoints(6);
+//     }
+//     else{
+//       //indicate to front end that the claim was not valid
+//     }
+//
+//   }
+//
+//   /**
+//   If the player passed as a parameter placed a card that immediately followed 3 cards with the
+//   same numerical values, the player is awarded 12 points. Otherwise, the player is awarded no points.
+//   @param the player who made the claim of having a 3 pair during the pegging phase
+//   */
+//   public void check4Pair(Player p){
+//     //assumption: Card c from checkClaim() has been added to peggingCards already
+//     //assumption: check15() is called before the dealer plays a card
+//
+//     ArrayList <Card> dealerPeggingCards = Game.getDealerPeggingCards();
+//     ArrayList <Card> ponePeggingCards = Game.getPonePeggingCards();
+//     ArrayList<Card> checkIfPair = new ArrayList <Card>();
+//
+//     checkIfPair.add(dealerPeggingCards.get(dealerPeggingCards.size()-1));
+//     checkIfPair.add(dealerPeggingCards.get(dealerPeggingCards.size()-2));
+//     checkIfPair.add(ponePeggingCards.get(ponePeggingCards.size()-1));
+//     checkIfPair.add(ponePeggingCards.get(ponePeggingCards.size()-2));
+//
+//     if (isPair(checkIfPair)){
+//       p.addPoints(12);
+//     }
+//     else{
+//       //indicate to front end that the claim was not valid
+//     }
+//
+//   }
 
-//@author Michael Shriner
-public class PeggingPlay {
 
-  public PeggingPlay(){
-  }
-
-  public void peggingPhase (){
-
-    ArrayList<Card> ponePeggingCards = new ArrayList <Card>();
-    ArrayList<Card> dealerPeggingCards = new ArrayList <Card>();
-
-    //FRONT END INTERACTION NEEDED
-    //assume you have information from front end
-
-    //do the following steps while there is at least one card left in one of the player's hands
-
-    //1) pone places a card
-    //2) add the card to the total value if possible
-    //3) add the card to peggingCards if possible
-    //4) add the card to ponePeggingCards if possible
-    //5) if the pone makes a claim for pegging points for that card and that card could be placed,
-    //check that claim
-
-    //4) dealer places a card
-    //5) add the card to the total value if possible
-    //6) add the card to peggingCards if possible
-    //7) add the card to dealerPeggingCards if possible
-    //8) add the card to the total value if possible
-    //9) if the dealer makes a claim for pegging points for that card and that card could be placed,
-    //check that claim
-
-    //if the last card was played and all points were added, the pegging phase is over
-    //reset peggingCards and add ponePeggingCards and dealerPeggingCards back to each player's hand
-
-  }
-
-  /**
-  Takes a card and a player and adds the card's point value to the total value during pegging play
-  unless 31 < peggingTotal + the value of the card to add. If the card is played during
-  pegging play, the card is temporarily removed from the player's hand who played it.
-  @param cardToAdd is the card whose point value will be added to the total if it meets the condition
-  @param p is the player who is trying to play the card
-  */
-  public void addCardToPeggingTotal(Card cardToAdd, Player p){
-
-    int theCardValue = cardToAdd.getPointValue();
-
-    if (addToPeggingTotal(theCardValue)){
-      //if here, the card was added to the pegging total
-
-      //remove the card from the player's hand and place it in pegging cards
-      p.getHand().removeCardFromHand(cardToAdd);
-
-      if (p.isDealer){
-        Game.addDealerPeggingCard(cardToAdd);
-      }
-      else{
-        Game.addPonePeggingCard(cardToAdd);
-      }
-
-    }
-    else{
-      //indicate to the user that the card cannot be played
-      //FRONT END INTERACTION HERE
-    }
-  }
-
-  /**
-  Takes a claim and awards the player who made the claim the points earned for the
-  claim made if the claim is valid.
-  Claims that can be made:
-  "15"
-  "31"
-  "pair"
-  "3 pair"
-  "4 pair"
-  "run of 3"
-  "run of 4"
-  "run of 5"
-  "run of 6"
-  "run of 7"
-  "last card"
-  "go"
-  @param claim is the claim the player makes
-  @param p is the player who made the claim
-  */
-  public void checkClaim (String claim, Player p){
-
-    if (claim.equalsIgnoreCase("15")){
-      check15(p);
-    }
-    else if (claim.equalsIgnoreCase("31")){
-      check31(p);
-    }
-    else if (claim.equalsIgnoreCase("pair")){
-      checkPair(p);
-    }
-    else if (claim.equalsIgnoreCase("3 pair")){
-      check3Pair(p);
-    }
-    else if(claim.equalsIgnoreCase("4 pair")){
-      check4Pair(p);
-    }
-    else if(claim.equalsIgnoreCase("run of 3")){
-      checkRunOf3(p);
-    }
-    else if (claim.equalsIgnoreCase("run of 4")){
-      checkRunOf4(p);
-    }
-    else if (claim.equalsIgnoreCase("run of 5")){
-      checkRunOf5(p);
-    }
-    else if (claim.equalsIgnoreCase("run of 6")){
-      checkRunOf6(p);
-    }
-    else if (claim.equalsIgnoreCase("run of 7")){
-      checkRunOf7(p);
-    }
-  }
-
-  /**
-  If the player passed as a parameter placed a card during the pegging phase that
-  brought the pegging total to 15, the player is awarded 2 points. Otherwise, the
-  player is awarded no points.
-  @param p is the player making the claim that he or she placed a card that brought
-  the pegging total to 15
-  */
-  public void check15(Player p){
-
-    //assumption: Card c from checkClaim() has been added to peggingCards already
-    //assumption: check15() is called before the next player plays a card
-
-    if (sumTotalPeggingCards() == 15){
-      p.addPoints(2);
-    }
-    else{
-      //FRONT END
-      //indicate to the player that the claim was not valid
-    }
-
-  }
-
-  public int sumTotalPeggingCards(){
-
-    int sum = 0;
-    ArrayList<Card> dealerPeggingCards = Game.getDealerPeggingCards();
-    ArrayList<Card> ponePeggingCards = Game.getPonePeggingCards();
-
-    for (int i = 0; i < dealerPeggingCards.size(); i++){
-      Card tempCard = dealerPeggingCards.get(i);
-      sum += tempCard.getPointValue();
-    }
-
-    for (int i = 0; i < ponePeggingCards.size(); i++){
-      Card tempCard = ponePeggingCards.get(i);
-      sum += tempCard.getPointValue();
-    }
-
-    return sum;
-
-  }
-
-  /**
-  If the player passed as a parameter placed a card during the pegging phase that
-  brought the pegging total to 31, the player is awarded 2 points. Otherwise, the
-  player is awarded no points.
-  @param p is the player making the claim that he or she placed a card that brought
-  the pegging total to 31
-  */
-  public void check31(Player p){
-
-    //assumption: Card c from checkClaim() has been added to peggingCards already
-    //assumption: check15() is called before the next player plays a card
-
-    if (sumTotalPeggingCards() == 31){
-      p.addPoints(2);
-    }
-    else{
-      //FRONT END
-      //indicate to the player that the claim was not valid
-    }
-
-  }
-
-  public boolean isPair(ArrayList<Card> cards){
-
-    //check if the cards in the list have the same identifier
-    //if they do, return true
-    //if they don't, return false
-    //if there are no cards in the list, return false
-
-    if (cards.size() == 0 || cards.size() == 1){
-      return false;
-    }
-
-    char id = cards.get(0).getIdentifier();
-
-    for (int i = 1; i < cards.size(); i++){
-      char idToCompare = cards.get(i).getIdentifier();
-      if (id != idToCompare){
-        return false;
-      }
-    }
-
-    return true;
-
-  }
-
-
-  /**
-  If the player passed as a parameter placed a card that immediately followed a card with the
-  same numerical value, the player is awarded 2 points. Otherwise, the player is awarded no points.
-  @param the player who made the claim of having a pair during the pegging phase
-  */
-  public void checkPair(Player p){
-    //assumption: Card c from checkClaim() has been added to peggingCards already
-    //assumption: check15() is called before the next player plays a card
-
-    ArrayList <Card> dealerPeggingCards = Game.getDealerPeggingCards();
-    ArrayList <Card> ponePeggingCards = Game.getPonePeggingCards();
-    ArrayList<Card> checkIfPair = new ArrayList <Card>();
-
-    checkIfPair.add(dealerPeggingCards.get(dealerPeggingCards.size()-1));
-    checkIfPair.add(ponePeggingCards.get(ponePeggingCards.size()-1));
-
-    if (isPair(checkIfPair)){
-      p.addPoints(2);
-    }
-    else{
-      //indicate to front end that the claim was not valid
-    }
-  }
-
-  /**
-  If the player passed as a parameter placed a card that immediately followed two cards with the
-  same numerical values, the player is awarded 6 points. Otherwise, the player is awarded no points.
-  @param the player who made the claim of having a 3 pair during the pegging phase
-  */
-  public void check3Pair(Player p){
-    //assumption: Card c from checkClaim() has been added to peggingCards already
-    //assumption: check15() is called before the next player plays a card
-
-    ArrayList <Card> dealerPeggingCards = Game.getDealerPeggingCards();
-    ArrayList <Card> ponePeggingCards = Game.getPonePeggingCards();
-    ArrayList<Card> checkIfPair = new ArrayList <Card>();
-
-    if (p.isDealer){
-      //if the person making the claim is the dealer, the dealer played a card
-      //first, then the pone, then the dealer again
-      //so, check two cards from dealer and one from pone
-      if (dealerPeggingCards.size() < 2){
-        //the player does not have a pair of 3
-        //let front end know
-      }
-      else{
-        checkIfPair.add(dealerPeggingCards.get(dealerPeggingCards.size()-1));
-        checkIfPair.add(dealerPeggingCards.get(dealerPeggingCards.size()-2));
-        checkIfPair.add(ponePeggingCards.get(ponePeggingCards.size()-1));
-      }
-
-    }
-    else{
-      if (ponePeggingCards.size() < 2){
-        //the player does not have a pair of 3
-        //let front end know
-      }
-      else{
-        //check two cards from pone and one from dealer
-        checkIfPair.add(ponePeggingCards.get(ponePeggingCards.size()-1));
-        checkIfPair.add(ponePeggingCards.get(ponePeggingCards.size()-2));
-        checkIfPair.add(dealerPeggingCards.get(dealerPeggingCards.size()-1));
-      }
-
-    }
-
-    if (isPair(checkIfPair)){
-      p.addPoints(6);
-    }
-    else{
-      //indicate to front end that the claim was not valid
-    }
-
-  }
-
-  /**
-  If the player passed as a parameter placed a card that immediately followed 3 cards with the
-  same numerical values, the player is awarded 12 points. Otherwise, the player is awarded no points.
-  @param the player who made the claim of having a 3 pair during the pegging phase
-  */
-  public void check4Pair(Player p){
-    //assumption: Card c from checkClaim() has been added to peggingCards already
-    //assumption: check15() is called before the dealer plays a card
-
-    ArrayList <Card> dealerPeggingCards = Game.getDealerPeggingCards();
-    ArrayList <Card> ponePeggingCards = Game.getPonePeggingCards();
-    ArrayList<Card> checkIfPair = new ArrayList <Card>();
-
-    checkIfPair.add(dealerPeggingCards.get(dealerPeggingCards.size()-1));
-    checkIfPair.add(dealerPeggingCards.get(dealerPeggingCards.size()-2));
-    checkIfPair.add(ponePeggingCards.get(ponePeggingCards.size()-1));
-    checkIfPair.add(ponePeggingCards.get(ponePeggingCards.size()-2));
-
-    if (isPair(checkIfPair)){
-      p.addPoints(12);
-    }
-    else{
-      //indicate to front end that the claim was not valid
-    }
-
-  }
-
-
-  //============ left off here =====================
+  //============ left off here =================================================
   //
   //
   // /**
