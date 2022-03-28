@@ -5,38 +5,20 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+/*
+ * Please note that this file will not function without first opening the keyhole to the connection within your terminal.
+ * To achieve this type ssh cs326mysql@bits.monead.com
+ * 
+ * Good Luck, Tinaye
+ * 
+ */
 public class DatabaseManager {
 
 		   static final String DB_URL = "jdbc:mysql://bits.monead.com:3306/skribbage";
 		   static final String USER = "skribbage_adm";
 		   static final String PASS = "cFT8Ef^MmRHP";
 		   static final String QUERY = "SELECT * FROM prototype_table";
-		   	
-		   
-		   private static Connection dbConnection;
-		   
-		   
-		   //Query Function
-		   // static final Stry{
-//		   Connection conn  = DriverManager.getConnection(DB_URL, USER, PASS);
-//		   return conn;
-//	   } catch (SQLException e) {
-//		   System.out.println("Failed to establish connection with database");
-//		   e.printStackTrace();	   
-//	   }
-//	   tring QUERY = "SELECT * FROM prototype_table";
-		   // function to assert that username and password belongs to an existing user and that they match
-		   
-		   
-		   
-		   /*
-		    * This is a function to Authenticate the user password
-		    * @param password : a placeholder to be replaced by hash password
-		    * 					*note that the SQL player_account table must also be updated to facilitate this change
-		    * @param username : the username of the user to authenticate. 
-		    * 					*note that this will only work for previously created users as is
-		    *
-		    */
+		   	    
 		   public static boolean userAuthenticate(String username,  String password) {
 	
 			
@@ -73,6 +55,38 @@ public class DatabaseManager {
 			 	  	   
 		   }
 		   
+		   
+		   
+		   
+		   
+		   
+		   public String inventoryQuery(int playerID) {
+
+			   String tokenQuery = "SELECT * FROM player_inventory WHERE player_id='" + playerID + "'";
+			 //  Connection conn = dbConnect(); 
+			   int netWorth = 0;
+			   
+			 try {
+				 Connection conn  = getDB();
+			     Statement stmt = conn.createStatement();
+				 ResultSet rs = stmt.executeQuery(tokenQuery); 
+			    
+			     
+			     	 rs.next();
+			    	 netWorth = rs.getInt("token_value");	
+			     
+			     	    
+				 
+			 } catch(SQLException e) {
+				 System.out.println("Account not found");
+				 e.printStackTrace();	
+				 
+			 }
+			   
+		 
+			return "player coin value: " + netWorth;
+ 
+		   }
 		   
 		   
 		   /*
