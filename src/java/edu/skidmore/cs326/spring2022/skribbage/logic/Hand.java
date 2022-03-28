@@ -10,36 +10,38 @@ import java.util.ArrayList;
  */
 public class Hand {
 
-  private ArrayList<Card> hand = new ArrayList<Card>();
+    /**
+     * hand array list.
+     */
+    private ArrayList<Card> hand = new ArrayList<Card>();
 
-  /**
-   * Adding card to hand.
-   *
-   * @param card
-   *          to add
-   */
-  public void addCardToHand(Card card) {
-    hand.add(card);
-  }
+    /**
+     * Adding card to hand.
+     *
+     * @param card
+     *            to add
+     */
+    public void addCardToHand(Card card) {
+        hand.add(card);
+    }
 
-  /**
-   * Removing card from hand.
-   *
-   * @param card
-   *          to remove
-   */
-  public void removeCardFromHand(Card card) {
-    hand.remove(card);
-  }
+    /**
+     * Removing card from hand.
+     *
+     * @param card
+     *            to remove
+     */
+    public void removeCardFromHand(Card card) {
+        hand.remove(card);
+    }
 
-  /**
-   * Get method to return a hand.
-   *
-   * @return Hand the players hand
-   */
-  public ArrayList<Card> getHand() {
-    return hand;
-  }
-
+    /**
+     * Get method to return a hand.
+     *
+     * @return Hand the players hand
+     */
+    public ArrayList<Card> getHand() {
+        return hand;
+    }
 
 }

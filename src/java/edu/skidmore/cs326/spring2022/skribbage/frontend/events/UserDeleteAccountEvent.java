@@ -40,6 +40,7 @@ public class UserDeleteAccountEvent extends AccountEvent {
         this.user = associatedUser;
         LOG.trace("Constructor method reached");
     }
+
     /**
      * @return an object of the User of type User.
      */
@@ -48,6 +49,7 @@ public class UserDeleteAccountEvent extends AccountEvent {
         LOG.trace("Returning an user object");
         return user;
     }
+
     /**
      * @return Event name of type string.
      */

@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 /**
  * Avatar Manager class.
+ * 
  * @author Charlie Davidson
  */
 public class AvatarManager {
@@ -48,7 +49,8 @@ public class AvatarManager {
         avatarMap = new HashMap<Player, Avatar>();
     }
 
-    /**Avatar
+    /**
+     * Avatar
      * Initializes the avatar mapping.
      */
     public void initializeAvatarMap() {
@@ -58,8 +60,11 @@ public class AvatarManager {
 
     /**
      * Assigns an avatar to a player then adds it to the mapping.
-     * @param username Username of player
-     * @param imageUrl ImageUrl of avatar
+     * 
+     * @param username
+     *            Username of player
+     * @param imageUrl
+     *            ImageUrl of avatar
      */
     public void assignPlayerAvatar(String username, String imageUrl) {
         Player player = getPlayer(username);
@@ -83,7 +88,9 @@ public class AvatarManager {
 
     /**
      * Removes a player-avatar mapping.
-     * @param username Username of player
+     * 
+     * @param username
+     *            Username of player
      */
     public void removePlayerAvatar(String username) {
         Player player = getPlayer(username);
@@ -98,7 +105,9 @@ public class AvatarManager {
 
     /**
      * Create a new player.
-     * @param username   Player username
+     * 
+     * @param username
+     *            Player username
      */
     public void createPlayer(String username) {
         Player player = new Player(username);
@@ -107,7 +116,9 @@ public class AvatarManager {
 
     /**
      * Create a new avatar.
-     * @param imageUrl  Avatar image url
+     * 
+     * @param imageUrl
+     *            Avatar image url
      */
     public void createAvatar(String imageUrl) {
         Avatar avatar = new Avatar(imageUrl);
@@ -116,8 +127,10 @@ public class AvatarManager {
 
     /**
      * Get player with specified username.
-     * @param  username Username of player
-     * @return       Player
+     * 
+     * @param username
+     *            Username of player
+     * @return Player
      */
     private Player getPlayer(String username) {
         for (int i = 0; i < players.size(); i++) {
@@ -130,8 +143,10 @@ public class AvatarManager {
 
     /**
      * Get avatar with specified imageUrl.
-     * @param  imageUrl ImageUrl of avatar
-     * @return       Avatar
+     * 
+     * @param imageUrl
+     *            ImageUrl of avatar
+     * @return Avatar
      */
     private Avatar getAvatar(String imageUrl) {
         for (int i = 0; i < players.size(); i++) {
@@ -144,8 +159,10 @@ public class AvatarManager {
 
     /**
      * Get avatar associated with given player.
-     * @param  username   Username of player
-     * @return        Image url of avatar
+     * 
+     * @param username
+     *            Username of player
+     * @return Image url of avatar
      */
     public String getAvatarFromMap(String username) {
 
@@ -159,8 +176,10 @@ public class AvatarManager {
 
     /**
      * Check if player with given username exists.
-     * @param  username Username of player
-     * @return          boolean
+     * 
+     * @param username
+     *            Username of player
+     * @return boolean
      */
     public boolean playerExists(String username) {
         return getPlayer(username) != null;
@@ -168,8 +187,10 @@ public class AvatarManager {
 
     /**
      * Check if plaer with given imageUrl exists.
-     * @param  imageUrl ImageUrl of avatar
-     * @return          boolean
+     * 
+     * @param imageUrl
+     *            ImageUrl of avatar
+     * @return boolean
      */
     public boolean avatarExists(String imageUrl) {
         return getAvatar(imageUrl) != null;
@@ -177,6 +198,7 @@ public class AvatarManager {
 
     /**
      * Checks if the map is empty.
+     * 
      * @return boolean
      */
     public boolean isMapEmpty() {
