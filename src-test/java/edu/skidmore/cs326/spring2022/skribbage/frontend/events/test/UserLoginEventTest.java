@@ -31,7 +31,7 @@ public class UserLoginEventTest {
     private UserLoginEvent testInstance;
 
     /**
-     * Test Instance 2
+     * Test Instance 2.
      */
     private UserLoginEvent testInstance2;
 
@@ -67,19 +67,27 @@ public class UserLoginEventTest {
     /**
      * Testing the constructor of UserLoginEvent.
      */
-    //@TODO ILLEGAL ARUGMETN EXCEPTIOON TO THROW>
-    @Test(expected = ClassCastException.class)
+    @Test
     public void testUserLoginEvent() {
         LOG.trace("Testing the constructor");
         assertNotNull(testInstance);
         assertTrue(testInstance.getUser().isAuthorized());
         assertEquals(testInstance.getUser(), userInstance);
-        testInstance2 = (UserLoginEvent) EventFactory.getInstance()
-            .createEvent(EventType.USER_LOGIN, source, "lmao");
-
         LOG.trace("Constructor testing completed");
     }
 
+    /**
+     * 
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public void testErrorThrowing() {
+        LOG.trace("Checking for IllegalArgumentException");
+        testInstance2 = (UserLoginEvent) EventFactory.getInstance()
+            .createEvent(EventType.USER_LOGIN, source, String.class);
+        LOG.trace("Error test for checking args completed");
+    }
+    
+  
     /**
      * Tests that the user assigned to the event is the one passed to the
      * constructor.
