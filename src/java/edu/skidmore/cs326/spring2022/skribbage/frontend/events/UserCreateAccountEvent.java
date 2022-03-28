@@ -30,15 +30,15 @@ public class UserCreateAccountEvent extends AccountEvent {
      *
      * @param source
      *            the bean that fired the event
-     * @param associatedUser
-     *            The email, username, and password supplied with the new
-     *            account request
+     * @param args
+     *            list of arguments based on enum.
      * @throws IllegalArgumentException
      *             if {@code source} is {@code null}
+     *             source, User associatedUser
      */
-    public UserCreateAccountEvent(Object source, User associatedUser) {
-        super(source, EventType.USER_CREATE_ACCOUNT, associatedUser);
-        this.user = associatedUser;
+    public UserCreateAccountEvent(Object source, Object... args) {
+        super(source, EventType.USER_CREATE_ACCOUNT, (User) args[0]);
+        this.user = (User) args[0];
         LOG.trace(" Constructor reached.");
     }
 
