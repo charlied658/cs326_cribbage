@@ -7,32 +7,19 @@ import java.util.ArrayList;
  */
 public class Player {
     /**
-     * java doc.
+     * initializes the player's points
      */
-    boolean isDealer = false;
-
+    int points;
     /**
-     * java doc.
-     */
-    int points = 0;
-
-    /**
-     * java doc.
-     */
-    private ArrayList<Card> cards = new ArrayList<Card>();
-
-    /**
-     * java doc.
+     * Creates hand object
      */
     private Hand hand = new Hand();
-
     /**
-     * java doc.
+     * string to keep the player name
      */
-    private Deck thedeck = new Deck();
-
+    private String playername; 
     /**
-     * java doc.
+     * 
      */
     public Player() {
         // initializes the player
@@ -55,8 +42,8 @@ public class Player {
     /**
      * Set the name of the player.
      */
-    public void setName() {
-
+    public String setName() {
+    	return playername;
     }
 
     /**
@@ -74,16 +61,22 @@ public class Player {
      * 
      * @return hand
      */
-    public ArrayList<Card> getHand() {
+    public Hand getHand() {
         return hand;
     }
 
+   /**
+    * initializes points to 0 
+    * @return
+    */
+    public int setPoints() {
+    	points = 0; 
+    }
     /**
      * Get the player points.
      * 
      * @return points
      */
-
     public int getPoints() {
         return points;
     }
