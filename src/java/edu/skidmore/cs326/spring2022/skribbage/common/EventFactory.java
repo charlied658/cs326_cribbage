@@ -73,7 +73,7 @@ public class EventFactory {
         for (Object arg : args) {
 
         }
-        //NEEEEDS TO BE CHANGED AND FIGURED OUT
+        // NEEEEDS TO BE CHANGED AND FIGURED OUT
         User user = new User("", "", "", false);
         switch (event) {
             case USER_CREATE_ACCOUNT:

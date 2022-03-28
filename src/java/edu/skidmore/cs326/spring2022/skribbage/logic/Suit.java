@@ -1,11 +1,13 @@
 package edu.skidmore.cs326.spring2022.skribbage.logic;
 
 /**
- * @author Declan Morris
+ * enum for suit.
+ * @author insert
+ *
  */
 public enum Suit {
     /**
-     * 
+     *
      */
     HEARTS,
     /**
@@ -20,4 +22,5 @@ public enum Suit {
      *
      */
     SPADES;
+
 }

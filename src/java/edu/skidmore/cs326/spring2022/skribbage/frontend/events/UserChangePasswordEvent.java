@@ -11,7 +11,7 @@ import edu.skidmore.cs326.spring2022.skribbage.common.events.AccountEvent;
  * DTO associated with a user attempting to change their password.
  * 
  * @author Alex Carney
- * Reviewed: Sten Leinasaar
+ *         Reviewed: Sten Leinasaar
  */
 @SuppressWarnings("serial")
 public class UserChangePasswordEvent extends AccountEvent {
