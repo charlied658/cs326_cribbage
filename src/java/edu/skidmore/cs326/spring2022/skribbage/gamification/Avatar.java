@@ -2,6 +2,7 @@ package edu.skidmore.cs326.spring2022.skribbage.gamification;
 
 /**
  * Generic Avatar class.
+ * 
  * @author Charlie Davidson
  */
 public class Avatar {
@@ -13,7 +14,9 @@ public class Avatar {
 
     /**
      * Avatar which can be attached to a specific player.
-     * @param imageUrl URL of the image used
+     * 
+     * @param imageUrl
+     *            URL of the image used
      */
     public Avatar(String imageUrl) {
         this.imageUrl = imageUrl;
@@ -21,6 +24,7 @@ public class Avatar {
 
     /**
      * Get Image URL.
+     * 
      * @return image URL
      */
     public String getImageUrl() {
@@ -29,7 +33,9 @@ public class Avatar {
 
     /**
      * Set Image URL.
-     * @param imageUrl image URL
+     * 
+     * @param imageUrl
+     *            image URL
      */
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
@@ -37,7 +43,9 @@ public class Avatar {
 
     /**
      * Check if avatars are equal.
-     * @param  avatar  Other avatar
+     * 
+     * @param avatar
+     *            Other avatar
      * @return boolean
      */
     public boolean equals(Avatar avatar) {
