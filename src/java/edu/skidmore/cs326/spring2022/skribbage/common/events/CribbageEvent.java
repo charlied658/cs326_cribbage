@@ -17,7 +17,8 @@ public abstract class CribbageEvent extends PropertyChangeEvent {
      *
      * @param source
      *            the bean that fired the event
-     * @param eventName the string type of the event.
+     * @param eventName
+     *            the string type of the event.
      * @throws IllegalArgumentException
      *             if {@code source} is {@code null}
      */
