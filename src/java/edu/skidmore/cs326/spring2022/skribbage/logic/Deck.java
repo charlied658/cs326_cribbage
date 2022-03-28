@@ -4,7 +4,7 @@ package edu.skidmore.cs326.spring2022.skribbage.logic;
 import java.util.ArrayList;
 import java.util.Random;
 /**
- * 
+ *
  * @author INSERT HERE.
  *
  */
@@ -26,7 +26,7 @@ public class Deck {
     /**
      * theSuits info.
      */
-    Suit[] theSuits = { HEARTS, DIAMONDS, CLUBS, SPADES };
+    Suit[] theSuits = Suit.values();
 
     /**
      * insert javadoc.
@@ -38,20 +38,19 @@ public class Deck {
         theDeck = new ArrayList<Card>();
 
         // Card adding loops
-        for (int suit = 0; suit <= 3; suit++) 
-                                               // card
+        for (int suit = 0; suit <= 3; suit++){
 
-            theDeck.add(new Card(theSuits[suit], 'A')); // adds an Ace
+            theDeck.add(new Card('A', theSuits[suit])); // adds an Ace
 
             for (int card = 2; card <= 10; card++) {// adds cards 2-10
-
+              theDeck.add(new Card(card, theSuits[suit]));
             } // end numbered card loop
 
-            theDeck.add(new Card(theSuits[suit], 'J')); // adds an Jack
+            theDeck.add(new Card('J', theSuits[suit])); // adds an Jack
 
-            theDeck.add(new Card(theSuits[suit], 'Q')); // adds an Queen
+            theDeck.add(new Card('Q', theSuits[suit])); // adds an Queen
 
-            theDeck.add(new Card(theSuits[suit], 'K')); // adds an King
+            theDeck.add(new Card('K', theSuits[suit])); // adds an King
 
         } // end suit loop
 
