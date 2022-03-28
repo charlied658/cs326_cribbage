@@ -24,15 +24,28 @@ public class DealPhaseTest {
    * 
    */
   private DealPhase testInstance;
+  
+  Suit[] theSuits = Suit.values();
+
 
   /**
    * Creating testInstance of DealPhase.
    */
   @Before
   public void setUp() {
-
     testInstance = new DealPhase();
 
+  }
+  
+
+  
+  /**
+   * Test DealPhase method. 
+   */
+  @Test
+  public void dealPhase() {
+    
+    
   }
 
   /**
@@ -40,8 +53,8 @@ public class DealPhaseTest {
    */
   @Test
   public void testDiscardtoCrib() {
-    Card cardP1 = new Card('A', Suit.HEARTS);
-    Card cardP2 = new Card('K', Suit.DIAMONDS);
+    Card cardP1 = new Card('A', theSuits[1]);
+    Card cardP2 = new Card('K', theSuits[2]);
     Card[] toDiscardP1 = { cardP1 };
     Card[] toDiscardP2 = { cardP2 };
     testInstance.discardToCrib(toDiscardP1, toDiscardP2);
