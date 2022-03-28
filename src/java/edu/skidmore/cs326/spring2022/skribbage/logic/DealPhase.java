@@ -3,7 +3,8 @@
 //import java.util.ArrayList;
 //
 ///**
-// * 
+// * Class acts as the DealPhase containing methods to discard cards to crib, determine the dealer
+// * deal cards, and removing a card from hand. 
 // * 
 // * @author Dorjee
 // */
@@ -113,10 +114,10 @@
 //   */
 //  private void removeCardFromHand(Card cardToRemove, Player p) {
 //
-//    Hand theHand = p.getHand(); //need player phase 
+//    ArrayList<Card> theHand = p.getHand(); //need player phase 
 //
-//    for (int i = 0; i < theHand.getHand().size(); i++) {
-//      Card c = theHand.getHand().get(i);
+//    for (int i = 0; i < theHand.size(); i++) {
+//      Card c = theHand.get(i);
 //
 //      // if (c.getSuit() == cardToRemove.getSuit() &&
 //      // Character.compare(c.getCardIdentifier(),
@@ -127,7 +128,7 @@
 //
 //      if (c.getSuit() == cardToRemove.getSuit()
 //          && c.getIdentifier() == cardToRemove.getIdentifier()) {
-//        theHand.getHand().remove(i);
+//        theHand.remove(i);
 //        return;
 //      }
 //
