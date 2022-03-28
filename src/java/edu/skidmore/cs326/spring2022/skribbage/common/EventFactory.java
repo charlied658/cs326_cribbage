@@ -67,30 +67,32 @@ public class EventFactory {
     public PropertyChangeEvent createEvent(EventType event, Object source,
         Object... args) {
 
-        ArrayList<Class> eventArgumentList = event.getArgumentList();
+        Object[] eventArgumentList = event.getArgumentList();
 
-        int i = 0;
-        for (Object arg : args) {
-
+        for (int i = 0; i < eventArgumentList.length; i++) {
+            if (args[i].getClass() != eventArgumentList[i].getClass()) {
+                LOG.error(
+                    "Illegal argument: Argument data types do not match enum");
+                throw new IllegalArgumentException(
+                    "Argument data types do not match enum");
+            }
         }
-        //NEEEEDS TO BE CHANGED AND FIGURED OUT
-        User user = new User("", "", "", false);
         switch (event) {
             case USER_CREATE_ACCOUNT:
                 LOG.trace(
                     "Returning a new instance of UserCreateAccount. "
                         + "Requested by:  " + source.toString());
-                return new UserCreateAccountEvent(source, user);
+                return new UserCreateAccountEvent(source, args);
             case USER_DELETE_ACCOUNT:
                 LOG.trace(
                     "Returning a new instance of UserDeleteAccount. "
                         + "Requested by:  " + source.toString());
-                return new UserDeleteAccountEvent(source, user);
+                return new UserDeleteAccountEvent(source, args);
             case USER_LOGIN:
                 LOG.trace(
                     "Returning a new instance of UserLogin. "
                         + "Requested by:  " + source.toString());
-                return new UserLoginEvent(source, user);
+                return new UserLoginEvent(source, args);
             case USER_LOGIN_HASHED:
                 LOG.trace(
                     "Returning a new instance of UserLoginHashed. "
@@ -110,7 +112,7 @@ public class EventFactory {
                 /**
                  * @TODO Come back and figure out how to pass a new password.
                  */
-                return new UserChangePasswordEvent(source, user, "");
+                return new UserChangePasswordEvent(source, args);
             case LOBBY_EVENT:
                 LOG.trace(
                     "Returning a new instance of LobbyEvent. Reguested by: "

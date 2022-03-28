@@ -1,10 +1,11 @@
 package edu.skidmore.cs326.spring2022.skribbage.common;
 
 import java.beans.PropertyChangeEvent;
+
 /**
  * Interface for fireing events.
+ * 
  * @author Alex Carney
- *
  */
 public interface EventDispatcher {
 

@@ -6,35 +6,35 @@
 // * @author Declan Morris
 // */
 // public class LoginAuthenticator extends PasswordHasher {
-//   /*
-//   * TODO: create listener to get login request info from frontend
-//   * and send events to persistence to check validity
-//   */
+// /*
+// * TODO: create listener to get login request info from frontend
+// * and send events to persistence to check validity
+// */
 //
-//   /**
-//   * The only instance of this class that should ever exist
-//   */
-//   private static LoginAuthenticator instance;
+// /**
+// * The only instance of this class that should ever exist
+// */
+// private static LoginAuthenticator instance;
 //
-//   /**
-//   * Only constructor should be private and only accessed when the
-//   * instance object is first created
-//   */
-//   private LoginAuthenticator() {
+// /**
+// * Only constructor should be private and only accessed when the
+// * instance object is first created
+// */
+// private LoginAuthenticator() {
 //
-//   }
+// }
 //
-//   /**
-//   * Get method for the singleton instance. Populates instance variable
-//   * if it has not been populated already (should only happen once)
-//   *
-//   * @return returns the instance
-//   */
-//   public static LoginAuthenticator getInstance() {
-//     if (instance == null) {
-//       instance = new LoginAuthenticator();
-//     }
-//     return instance;
-//   }
+// /**
+// * Get method for the singleton instance. Populates instance variable
+// * if it has not been populated already (should only happen once)
+// *
+// * @return returns the instance
+// */
+// public static LoginAuthenticator getInstance() {
+// if (instance == null) {
+// instance = new LoginAuthenticator();
+// }
+// return instance;
+// }
 //
 // }

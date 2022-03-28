@@ -1,5 +1,7 @@
 package edu.skidmore.cs326.spring2022.skribbage.frontend;
 
+import java.awt.Color;
+
 //import static org.springframework.test.web.servlet.result.
 //MockMvcResultMatchers.forwardedUrl;
 
@@ -9,16 +11,20 @@ import java.io.File;
 
 import org.apache.log4j.Logger;
 
+import us.daveread.edu.graphics.shape.Drawable;
 import us.daveread.edu.graphics.shape.impl.Image;
 import us.daveread.edu.graphics.surface.DrawingSurface;
 import us.daveread.edu.graphics.surface.MainFrame;
+import us.daveread.edu.utilities.Utility;
+import us.daveread.edu.graphics.shape.impl.Text;
+
 
 /**
  * This class tests the functionality of importing, storing, and displaying
  * playing cards needed for the game.
  * 
  * @author Jonah Marcus
- *         Last Update: March 27, 2022
+ *         Last Update: March 28, 2022
  *         Last Edited by Jonah Marcus
  *         Code review - Zoe Beals 3/28/2022
  */
@@ -43,6 +49,11 @@ public class TestPlayingCardsDisplay extends DrawingSurface {
      * mainframeHeight - int variable to hold main frame height.
      */
     private int mainframeHeight = 900;
+    
+    /**
+     * refreshButton - refreshes the page and loads a new card.
+     */
+    private Text refreshButton;
 
     /**
      * Logger instance for logging.
@@ -80,6 +91,9 @@ public class TestPlayingCardsDisplay extends DrawingSurface {
     private void setup() {
         LOG.trace("Entered TestPlayingCardsDisplay() setup");
         setLayout(null);
+        
+        refreshButton = new Text("Refresh", new Point(375, 450), 40, 
+            Color.PINK, Color.BLACK);
         /*
          * for (int i = 0; i < 5; i++) {
          * Image card = cards[(int) Math.random() * (cards.length - 1)];
@@ -91,7 +105,14 @@ public class TestPlayingCardsDisplay extends DrawingSurface {
          */
         // add(new Image("Playing Cards/ace_of_spades.png",
         // new Point(0, 0), 0.75, null));
-        add(cards[50]);
+        for (int i = 0; i < cards.length; i++) {
+            add(cards[i]);
+            Utility.pause(500);
+        }
+        add(new Text("Those are all the cards!", new Point(265, 500), 30, 
+            Color.BLACK));
+        
+        // add(refreshButton);
         // System.out.println("\n" + cards[39].toString());
         // add(new Image("ungovernable.jpg", new Point(0, 0), 0.75, null));
 
@@ -107,6 +128,16 @@ public class TestPlayingCardsDisplay extends DrawingSurface {
         for (Image card : cards) {
             System.out.println(card.toString());
         }
+    }
+    
+    @Override
+    public void drawableMouseClick(Drawable e) {
+        LOG.trace("DrawableMosuceClick in TestPlayingCardsDisplay.java");
+        if (e == refreshButton) {
+            mf.dispose();
+            new TestPlayingCardsDisplay();
+        }
+       
     }
 
     /**

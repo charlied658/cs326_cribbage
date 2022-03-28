@@ -1,6 +1,7 @@
 package edu.skidmore.cs326.spring2022.skribbage.common;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 
@@ -30,7 +31,8 @@ public enum EventType {
     /**
      * User password change event.
      */
-    USER_CHANGE_PASSWORD("User Change Password Event"),
+    USER_CHANGE_PASSWORD("User Change Password Event", User.class,
+        String.class),
     /**
      * User Create account event.
      */
@@ -52,7 +54,7 @@ public enum EventType {
     /**
      * Argument list of the event.
      */
-    private ArrayList<Class> args;
+    private Object[] args;
 
     /**
      * Logger instance for logging.
@@ -69,12 +71,9 @@ public enum EventType {
      * @param args
      *            A var arg of arguments for this event to take.
      */
-    EventType(String name, Class... args) {
+    EventType(String name, Object... args) {
         this.name = name;
-        // Loop through if datatypes and order match.
-        for (Class arg : args) {
-            this.args.add(arg);
-        }
+        this.args = args;
     }
 
     /**
@@ -92,7 +91,7 @@ public enum EventType {
      * 
      * @return The argument list.
      */
-    public ArrayList<Class> getArgumentList() {
+    public Object[] getArgumentList() {
         LOG.trace("Returning arguments list of an event");
         return args;
     }
