@@ -34,9 +34,9 @@ public class HandTest {
    */
   @Test
   public void testAddCardToHand() {
-    // // Card card = new Card('A', Suit.HEARTS);
-    // testInstance.addCardToHand(card);
-    // assertTrue(testInstance.getHand().get(0).equals(card));
+    Card card = new Card('A', Suit.HEARTS);
+    testInstance.addCardToHand(card);
+    assertTrue(testInstance.getHand().get(0).equals(card));
   }
 
   /**
@@ -44,12 +44,12 @@ public class HandTest {
    */
   @Test
   public void testRemoveCardFromHand() {
-    // Card card = new Card('A', Suit.HEARTS);
-    // Card card1 = new Card('3', Suit.DIAMONDS);
-    // testInstance.addCardToHand(card);
-    // testInstance.addCardToHand(card1);
-    // testInstance.removeCardFromHand(card1);
-    // assertEquals(testInstance.getHand().size(), 1);
+    Card card = new Card('A', Suit.HEARTS);
+    Card card1 = new Card('3', Suit.DIAMONDS);
+    testInstance.addCardToHand(card);
+    testInstance.addCardToHand(card1);
+    testInstance.removeCardFromHand(card1);
+    assertEquals(testInstance.getHand().size(), 1);
 
   }
 }
