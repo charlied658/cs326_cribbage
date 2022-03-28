@@ -24,7 +24,7 @@ import us.daveread.edu.graphics.shape.impl.Text;
  * playing cards needed for the game.
  * 
  * @author Jonah Marcus
- *         Last Update: March 27, 2022
+ *         Last Update: March 28, 2022
  *         Last Edited by Jonah Marcus
  *         Code review - Zoe Beals 3/28/2022
  */
