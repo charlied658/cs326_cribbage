@@ -2,6 +2,7 @@ package edu.skidmore.cs326.spring2022.skribbage.gamification;
 
 /**
  * Generic Player class.
+ * 
  * @author Charlie Davidson
  */
 public class Player {
@@ -23,7 +24,9 @@ public class Player {
 
     /**
      * Generic Player object.
-     * @param username  Name of player
+     * 
+     * @param username
+     *            Name of player
      */
     public Player(String username) {
         this.username = username;
@@ -33,6 +36,7 @@ public class Player {
 
     /**
      * Get player username.
+     * 
      * @return username
      */
     public String getUsername() {
@@ -41,6 +45,7 @@ public class Player {
 
     /**
      * Get player name.
+     * 
      * @return name
      */
     public String getName() {
@@ -49,6 +54,7 @@ public class Player {
 
     /**
      * Get player avatar.
+     * 
      * @return avatar
      */
     public Avatar getAvatar() {
@@ -57,7 +63,9 @@ public class Player {
 
     /**
      * Set player name.
-     * @param name Player name
+     * 
+     * @param name
+     *            Player name
      */
     public void setString(String name) {
         this.name = name;
@@ -65,7 +73,9 @@ public class Player {
 
     /**
      * Set player avatar.
-     * @param avatar Player name
+     * 
+     * @param avatar
+     *            Player name
      */
     public void setAvatar(Avatar avatar) {
         this.avatar = avatar;
