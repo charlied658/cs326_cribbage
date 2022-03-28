@@ -2,7 +2,6 @@ package edu.skidmore.cs326.spring2022.skribbage.common;
 
 import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
-import java.util.List;
 
 import org.apache.log4j.Logger;
 
@@ -68,13 +67,13 @@ public class EventFactory {
     public PropertyChangeEvent createEvent(EventType event, Object source,
         Object... args) {
 
-        List<Class> eventArgumentList = event.getArgumentList();
+        Object[] eventArgumentList = event.getArgumentList();
 
         int i = 0;
         for (Object arg : args) {
-            System.out.println(arg.toString());
+
         }
-        // NEEEEDS TO BE CHANGED AND FIGURED OUT
+        //NEEEEDS TO BE CHANGED AND FIGURED OUT
         User user = new User("", "", "", false);
         switch (event) {
             case USER_CREATE_ACCOUNT:
