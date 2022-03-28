@@ -27,24 +27,24 @@ import us.daveread.edu.graphics.shape.impl.Circle;
  * new game.
  * 
  * @author Jonah Marcus
- *         Last Update: March 25, 2022
+ *         Last Update: March 27, 2022
  *         Last Edited by Jonah Marcus
  * Code Reviewed March 27, 2022 - Zoe Beals
  */
 
 public class LobbyPage extends DrawingSurface implements ActionListener {
     /**
-     * loggedInPlayer1 - Displayed player 1 name.
+     * loggedInPlayer1 - The displayed player 1 name.
      */
     private String loggedInPlayer1;
     
     /**
-     * loggedInPlayer2 - Displayed player 2 name.
+     * loggedInPlayer2 - The displayed player 2 name.
      */
     private String loggedInPlayer2;
 
     /**
-     * loggedInPlayer3 - Displayed player 3 name.
+     * loggedInPlayer3 - The displayed player 3 name.
      */
     private String loggedInPlayer3;
     
@@ -77,7 +77,7 @@ public class LobbyPage extends DrawingSurface implements ActionListener {
     private Text returnToMainMenu;
     
     /**
-     * startButton - Text variable to act as a button to start the game once 
+     * startButton - Text object to act as a button to start the game once 
      * all players have readied up.
      */
     private Text startButton;
@@ -96,6 +96,11 @@ public class LobbyPage extends DrawingSurface implements ActionListener {
      * player3Ready - Player 3 ready-up button.
      */
     private Circle player3Ready;
+    
+    /**
+     * inventoryPage - Text object to be button to open the InventoryPage.
+     */
+    private Text inventoryPage;
 
     /**
      * Logger instance for logging.
@@ -121,9 +126,11 @@ public class LobbyPage extends DrawingSurface implements ActionListener {
     public void setup() {
         LOG.trace("LobbyPage setup");
         setLayout(null);
-        //Rectangle background = new Rectangle(new Point(0, 0),
-           // new Dimension(mainframeWidth, mainframeHeight),
-            //Color.DARK_GRAY, Color.DARK_GRAY);
+
+        Rectangle background = new Rectangle(new Point(0, 0),
+            new Dimension(mainframeWidth, mainframeHeight),
+            Color.DARK_GRAY, Color.DARK_GRAY);
+    
         
         Image logo = new Image("logo.png", new Point(300, 0), 0.6, null);
 
@@ -131,6 +138,8 @@ public class LobbyPage extends DrawingSurface implements ActionListener {
             new Point(20, 40), 25, Color.BLACK, Color.BLUE);
         startButton = new Text("Start Game", new Point(20, 250),
             25, Color.BLACK, Color.BLUE);
+        //inventoryPage = new Text("Inventory", new Point(760, 40), 25, 
+            //Color.BLACK, Color.BLUE);
         
         getPlayerNames();
 
@@ -149,6 +158,7 @@ public class LobbyPage extends DrawingSurface implements ActionListener {
         add(logo);
         add(returnToMainMenu);
         add(startButton);
+        //add(inventoryPage);
         add(player1LoginSection);
         add(player2LoginSection);
         add(player3LoginSection);
@@ -193,6 +203,9 @@ public class LobbyPage extends DrawingSurface implements ActionListener {
     public void drawableMouseClick(Drawable e) {
         LOG.trace("DrawableMosuceClick in LobbyPage.java");
         if (e == returnToMainMenu) {
+            returnToMainMenu.setBorderColor(Color.CYAN);
+            Utility.pause(100);
+            returnToMainMenu.setBorderColor(Color.BLACK);
             new HomeScreen();
             mf.dispose();
         } else if (e == player1Ready) {
@@ -206,6 +219,11 @@ public class LobbyPage extends DrawingSurface implements ActionListener {
             startButton.setBorderColor(Color.CYAN);
             Utility.pause(100);
             startButton.setBorderColor(Color.BLACK);
+        } else if (e == inventoryPage) {
+            inventoryPage.setBorderColor(Color.CYAN);
+            Utility.pause(100);
+            inventoryPage.setBorderColor(Color.BLACK);
+            new InventoryPage();
         }
        
     }
