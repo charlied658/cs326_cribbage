@@ -28,4 +28,36 @@ public class AccountResponseEvent {
      * TODO: javadoc
      */
     private EventType eventType;
+
+    /**
+    * Getter for rejected
+    */
+    public boolean isRejected() {
+      return rejected;
+    }
+
+    /**
+    * Getter for responseMessage
+    */
+    public String getResponseMessage() {
+      return responseMessage;
+    }
+
+    /**
+    * Getter for user
+    */
+    public User getUser() {
+      return user;
+    }
+
+    /**
+    * Default Constructor
+    * @PARAM all attributes for the class in addition to the source to be responded to.
+    */
+    public AccountResponseEvent(Object source, EventType eventType, User user, boolean rejectionStatus, String responseMessage) {
+      this.eventType = eventType;
+      this.user = user;
+      this.rejected = rejectionStatus;
+      this.responseMessage = responseMessage;
+    }
 }
