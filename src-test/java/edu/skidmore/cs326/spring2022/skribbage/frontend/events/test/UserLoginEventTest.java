@@ -31,6 +31,11 @@ public class UserLoginEventTest {
     private UserLoginEvent testInstance;
 
     /**
+     * Test Instance 2
+     */
+    private UserLoginEvent testInstance2;
+
+    /**
      * Source instance to be passed with methods.
      */
     private Object source;
@@ -68,6 +73,9 @@ public class UserLoginEventTest {
         assertNotNull(testInstance);
         assertTrue(testInstance.getUser().isAuthorized());
         assertEquals(testInstance.getUser(), userInstance);
+        testInstance2 = (UserLoginEvent) EventFactory.getInstance()
+            .createEvent(EventType.USER_LOGIN, source, "lmao");
+        
         LOG.trace("Constructor testing completed");
     }
 

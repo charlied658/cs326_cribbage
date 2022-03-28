@@ -70,7 +70,11 @@ public class EventFactory {
         Object[] eventArgumentList = event.getArgumentList();
 
         for (int i = 0; i < eventArgumentList.length; i++) {
-            if (args[i].getClass() != eventArgumentList[i].getClass()) {
+            System.out.println(
+                "Class of is: " + eventArgumentList[i].getClass().toString());
+            System.out.println(args[i].getClass().toString());
+            if (args[i].toString()
+                .equalsIgnoreCase(eventArgumentList[i].toString())) {
                 LOG.error(
                     "Illegal argument: Argument data types do not match enum");
                 throw new IllegalArgumentException(
