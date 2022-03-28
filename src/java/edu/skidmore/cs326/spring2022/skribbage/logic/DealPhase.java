@@ -65,7 +65,8 @@ public class DealPhase {
 
     int amountToCut = 6;
 
-    Card topCard = Game.getDeck().moveToTop(amountToCut);
+    Game.getDeck().moveToTop(amountToCut);
+    //Card topCard = Game.getDeck();
 
     // FRONT END INTERACTION: give information about the card on top of the deck
 

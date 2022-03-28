@@ -67,7 +67,7 @@ public class EventFactory {
     public PropertyChangeEvent createEvent(EventType event, Object source,
         Object... args) {
 
-        ArrayList<Class> eventArgumentList = event.getArgumentList();
+        Object[] eventArgumentList = event.getArgumentList();
 
         int i = 0;
         for (Object arg : args) {
