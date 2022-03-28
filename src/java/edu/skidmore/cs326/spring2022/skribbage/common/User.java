@@ -4,7 +4,7 @@ import org.apache.log4j.Logger;
 //import org.mortbay.log.Log;
 
 /**
- * A simple bean representing data associated with a User
+ * A simple bean representing data associated with a User.
  *
  * @author Alex Carney
  */
@@ -62,7 +62,7 @@ public class User {
     }
 
     /**
-     * @return
+     * @return the user email.
      */
     public String getEmail() {
         LOG.debug("Returning email of a user");
@@ -70,7 +70,7 @@ public class User {
     }
 
     /**
-     * @return
+     * @return the user's name
      */
     public String getUserName() {
         LOG.debug("Returning the userName of a user");
@@ -78,7 +78,7 @@ public class User {
     }
 
     /**
-     * @return
+     * @return the user password.
      */
     public String getPassword() {
         LOG.debug("Returning the password of a user");
@@ -86,7 +86,7 @@ public class User {
     }
 
     /**
-     * @return
+     * @return if the user has been authorized.
      */
     public boolean isAuthorized() {
         LOG.debug("Returning the boolean value of isAuthorized");
