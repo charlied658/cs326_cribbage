@@ -12,11 +12,6 @@ import edu.skidmore.cs326.spring2022.skribbage.common.events.AccountEvent;
  */
 public class UserDeleteAccountEvent extends AccountEvent {
     /**
-     * Private object variable of type User.
-     */
-    private final User user;
-
-    /**
      * Private static final instance of a logger.
      */
     private static final Logger LOG;
@@ -37,17 +32,7 @@ public class UserDeleteAccountEvent extends AccountEvent {
      */
     public UserDeleteAccountEvent(Object source, Object... args) {
         super(source, EventType.USER_DELETE_ACCOUNT, (User) args[0]);
-        this.user = (User) args[0];
         LOG.trace("Constructor method reached");
-    }
-
-    /**
-     * @return an object of the User of type User.
-     */
-    @Override
-    public User getUser() {
-        LOG.trace("Returning an user object");
-        return user;
     }
 
     /**

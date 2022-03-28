@@ -16,12 +16,6 @@ import edu.skidmore.cs326.spring2022.skribbage.common.User;
  */
 @SuppressWarnings("serial")
 public class UserLoginEvent extends AccountEvent {
-
-    /**
-     * Private instance of a user object of type User.
-     */
-    private final User user;
-
     /**
      * Private static final Logger instance.
      */
@@ -43,17 +37,7 @@ public class UserLoginEvent extends AccountEvent {
      */
     public UserLoginEvent(Object source, Object... args) {
         super(source, EventType.USER_LOGIN, (User) args[0]);
-        this.user = (User) args[0];
         LOG.trace("Constructor method reached");
-    }
-
-    /**
-     * @return an object of user of type User.
-     */
-    @Override
-    public User getUser() {
-        LOG.trace("Returning an user object.");
-        return user;
     }
 
     /**

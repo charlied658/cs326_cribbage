@@ -17,11 +17,6 @@ import edu.skidmore.cs326.spring2022.skribbage.common.events.AccountEvent;
 public class UserChangePasswordEvent extends AccountEvent {
 
     /**
-     * Attribute of User of type User.
-     */
-    private final User user;
-
-    /**
      * Private static final variable of Logger for UserChangePasswordEvent
      * class.
      */
@@ -52,19 +47,9 @@ public class UserChangePasswordEvent extends AccountEvent {
      */
     public UserChangePasswordEvent(Object source, Object... args) {
         super(source, EventType.USER_CHANGE_PASSWORD, (User) args[0]);
-        this.user = (User) args[0];
         this.newPassword = (String) args[1];
         LOG.trace("Constructor method reached");
 
-    }
-
-    /**
-     * @return an object of type User.
-     */
-    @Override
-    public User getUser() {
-        LOG.trace("Get user method reached");
-        return user;
     }
 
     /**
