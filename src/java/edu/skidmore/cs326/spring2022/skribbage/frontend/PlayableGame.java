@@ -1,5 +1,7 @@
 package edu.skidmore.cs326.spring2022.skribbage.frontend;
 
+import java.util.Arrays;
+
 import org.apache.log4j.Logger;
 
 /**
@@ -65,11 +67,12 @@ public class PlayableGame implements ActiveGame {
                                        // completed.
     // Important for formatting PastGamesPage
     // (incomplete games must be on top)
+
     /**
      * Logger instance for logging.
      */
     private static final Logger LOG;
-    
+
     static {
         LOG = Logger.getLogger(PlayableGame.class);
     }
@@ -163,9 +166,7 @@ public class PlayableGame implements ActiveGame {
      */
     public String[] getGameInfo() {
         String[] toReturn = new String[4];
-        String monthString = month + "";
-        String dayString = day + "";
-        String yearString = year + "";
+        
 
         return toReturn;
     }
@@ -181,7 +182,7 @@ public class PlayableGame implements ActiveGame {
             LOG.warn("Month value is illegal, throwing an error");
             throw new IllegalArgumentException(
                 "Month cannot be less than 1 or greater than 12.");
-                
+
         } else {
             month = mm;
         }
@@ -235,6 +236,16 @@ public class PlayableGame implements ActiveGame {
      */
     public void setCompletionStatus(boolean isCompleted) {
         completed = isCompleted;
+    }
+
+    /**
+     * toString method.
+     * 
+     * @return string rep.
+     */
+    public String convertToString() {
+        return player1 + " vs " + player2 + " on " + day + "\\" + month
+            + "\\ " + year;
     }
 
 }
