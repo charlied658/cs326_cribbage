@@ -21,7 +21,7 @@ public class Player {
     /**
      * 
      */
-    private boolean isDealer;
+    public boolean isDealer;
     /**
      * boolean to help determine the dealer of the game 
      */
