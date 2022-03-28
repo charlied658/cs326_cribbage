@@ -26,13 +26,13 @@ import us.daveread.edu.graphics.shape.impl.Circle;
  * The page that shows the player's inventory. Players can 
  * send and receive tokens and items to and from other players.
  * @author Jonah Marcus
- *         Last Update: March 25, 2022
+ *         Last Update: March 27, 2022
  *         Last Edited by Jonah Marcus
  */
 public class InventoryPage extends DrawingSurface implements ActionListener {
     
     /**
-     * mf - Holds reference to the window
+     * mf - Holds reference to the window.
      */
     private MainFrame mf;
     
@@ -41,7 +41,7 @@ public class InventoryPage extends DrawingSurface implements ActionListener {
      * given stack of items can be.
      * Ex: In Minecraft, a stack of cannot exceed 64 items.
      */
-    private static int stackSize;
+    private int stackSize;
     
     /**
      * mainframeHeight - int variable to hold main frame height.
@@ -54,6 +54,11 @@ public class InventoryPage extends DrawingSurface implements ActionListener {
     private int mainframeWidth = 750;
     
     /**
+     * closeWindow - Text object that closes the window when clicked.
+     */
+    private Text closeWindow;
+    
+    /**
      * Logger instance for logging.
      */
     private static final Logger LOG;
@@ -63,7 +68,7 @@ public class InventoryPage extends DrawingSurface implements ActionListener {
     }
     
     /**
-     * InventoryPage constructor
+     * InventoryPage constructor.
      */
     public InventoryPage() {
         LOG.trace("Entered InventoryPage Constructor.");
@@ -77,18 +82,32 @@ public class InventoryPage extends DrawingSurface implements ActionListener {
      */
     private void setup() {
         LOG.trace("Entered setup (InventoryPage)");
-        Text closeWindow = new Text("Close",
+        setLayout(null);
+        closeWindow = new Text("Close",
             new Point(20, 40), 25, Color.BLUE, Color.BLACK);
     
-    add(closeWindow);
+        add(closeWindow);
     }
     
     /**
-     * Main method
+     * Main method.
      * @param args
      */
-    public static void main(String args[]) {
+    public static void main(String[] args) {
+        LOG.trace("Entered main method");
         new InventoryPage();
+    }
+    
+    @Override
+    public void drawableMouseClick(Drawable e) {
+        LOG.trace("DrawableMosuceClick in InventoryPage.java");
+        if (e == closeWindow) {
+            closeWindow.setBorderColor(Color.CYAN);
+            Utility.pause(100);
+            closeWindow.setBorderColor(Color.BLACK);
+            mf.dispose();
+        }
+       
     }
 
     @Override
