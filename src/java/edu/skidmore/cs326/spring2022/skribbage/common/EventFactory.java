@@ -71,8 +71,10 @@ public class EventFactory {
 
         for (int i = 0; i < eventArgumentList.length; i++) {
             if (args[i].getClass() != eventArgumentList[i].getClass()) {
-                LOG.error("Illegal argument: Argument data types do not match enum");
-                throw new IllegalArgumentException("Argument data types do not match enum");
+                LOG.error(
+                    "Illegal argument: Argument data types do not match enum");
+                throw new IllegalArgumentException(
+                    "Argument data types do not match enum");
             }
         }
         switch (event) {
