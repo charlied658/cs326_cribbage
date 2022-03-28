@@ -30,14 +30,14 @@ public class UserDeleteAccountEvent extends AccountEvent {
      *
      * @param source
      *            the bean that fired the event
-     * @param associatedUser
-     *            The logged in user attempting to delete their account
+     * @param args
+     *            List of arguments. 
      * @throws IllegalArgumentException
      *             if {@code source} is {@code null}
      */
-    public UserDeleteAccountEvent(Object source, User associatedUser) {
-        super(source, EventType.USER_DELETE_ACCOUNT, associatedUser);
-        this.user = associatedUser;
+    public UserDeleteAccountEvent(Object source, Object... args) {
+        super(source, EventType.USER_DELETE_ACCOUNT, (User) args[0]);
+        this.user = (User) args[0];
         LOG.trace("Constructor method reached");
     }
 

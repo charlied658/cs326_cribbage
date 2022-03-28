@@ -69,28 +69,39 @@ public class EventFactory {
 
         Object[] eventArgumentList = event.getArgumentList();
 
-        int i = 0;
-        for (Object arg : args) {
+        // int i = 0;
+        // for (Object arg : args) {
+        // // args[0] has to User.class
+        // if (arg instanceof eventArgumentList[i]) {
+        // continue;
+        // }
+        //
+        // //
+        // }
 
+        for (int i = 0; i < eventArgumentList.length; i++) {
+            if (args[i].getClass() != eventArgumentList[i].getClass()) {
+                continue;
+            }
         }
-        //NEEEEDS TO BE CHANGED AND FIGURED OUT
+        // NEEEEDS TO BE CHANGED AND FIGURED OUT
         User user = new User("", "", "", false);
         switch (event) {
             case USER_CREATE_ACCOUNT:
                 LOG.trace(
                     "Returning a new instance of UserCreateAccount. "
                         + "Requested by:  " + source.toString());
-                return new UserCreateAccountEvent(source, user);
+                return new UserCreateAccountEvent(source, args);
             case USER_DELETE_ACCOUNT:
                 LOG.trace(
                     "Returning a new instance of UserDeleteAccount. "
                         + "Requested by:  " + source.toString());
-                return new UserDeleteAccountEvent(source, user);
+                return new UserDeleteAccountEvent(source, args);
             case USER_LOGIN:
                 LOG.trace(
                     "Returning a new instance of UserLogin. "
                         + "Requested by:  " + source.toString());
-                return new UserLoginEvent(source, user);
+                return new UserLoginEvent(source, args);
             case USER_LOGIN_HASHED:
                 LOG.trace(
                     "Returning a new instance of UserLoginHashed. "
@@ -110,7 +121,7 @@ public class EventFactory {
                 /**
                  * @TODO Come back and figure out how to pass a new password.
                  */
-                return new UserChangePasswordEvent(source, user, "");
+                return new UserChangePasswordEvent(source, args);
             case LOBBY_EVENT:
                 LOG.trace(
                     "Returning a new instance of LobbyEvent. Reguested by: "
