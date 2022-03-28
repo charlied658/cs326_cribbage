@@ -67,7 +67,8 @@ public class UserLoginEventTest {
     /**
      * Testing the constructor of UserLoginEvent.
      */
-    @Test
+    //@TODO ILLEGAL ARUGMETN EXCEPTIOON TO THROW>
+    @Test(expected = ClassCastException.class)
     public void testUserLoginEvent() {
         LOG.trace("Testing the constructor");
         assertNotNull(testInstance);
@@ -75,7 +76,7 @@ public class UserLoginEventTest {
         assertEquals(testInstance.getUser(), userInstance);
         testInstance2 = (UserLoginEvent) EventFactory.getInstance()
             .createEvent(EventType.USER_LOGIN, source, "lmao");
-        
+
         LOG.trace("Constructor testing completed");
     }
 
