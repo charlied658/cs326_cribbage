@@ -21,6 +21,10 @@ public class Player {
     /**
      * 
      */
+    private boolean isDealer;
+    /**
+     * boolean to help determine the dealer of the game 
+     */
     public Player() {
         // initializes the player
 
@@ -51,9 +55,7 @@ public class Player {
      */
     public void setHand(Hand playerHand) {
 
-        // thedeck.removeTopCard();
         hand = playerHand;
-
     }
 
     /**
