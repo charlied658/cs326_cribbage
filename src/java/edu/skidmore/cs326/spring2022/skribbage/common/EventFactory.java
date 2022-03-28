@@ -69,23 +69,12 @@ public class EventFactory {
 
         Object[] eventArgumentList = event.getArgumentList();
 
-        // int i = 0;
-        // for (Object arg : args) {
-        // // args[0] has to User.class
-        // if (arg instanceof eventArgumentList[i]) {
-        // continue;
-        // }
-        //
-        // //
-        // }
-
         for (int i = 0; i < eventArgumentList.length; i++) {
             if (args[i].getClass() != eventArgumentList[i].getClass()) {
-                continue;
+                LOG.error("Illegal argument: Argument data types do not match enum");
+                throw new IllegalArgumentException("Argument data types do not match enum");
             }
         }
-        // NEEEEDS TO BE CHANGED AND FIGURED OUT
-        User user = new User("", "", "", false);
         switch (event) {
             case USER_CREATE_ACCOUNT:
                 LOG.trace(

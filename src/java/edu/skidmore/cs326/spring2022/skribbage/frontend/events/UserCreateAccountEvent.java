@@ -12,11 +12,6 @@ import edu.skidmore.cs326.spring2022.skribbage.common.events.AccountEvent;
  */
 public class UserCreateAccountEvent extends AccountEvent {
     /**
-     * Private user instance of type user.
-     */
-    private final User user;
-
-    /**
      * Private static final Logger variable.
      */
     private static final Logger LOG;
@@ -38,17 +33,7 @@ public class UserCreateAccountEvent extends AccountEvent {
      */
     public UserCreateAccountEvent(Object source, Object... args) {
         super(source, EventType.USER_CREATE_ACCOUNT, (User) args[0]);
-        this.user = (User) args[0];
         LOG.trace(" Constructor reached.");
-    }
-
-    /**
-     * @return An object of type user is returned.
-     */
-    @Override
-    public User getUser() {
-        LOG.info(" Returning the user object");
-        return user;
     }
 
     @Override
