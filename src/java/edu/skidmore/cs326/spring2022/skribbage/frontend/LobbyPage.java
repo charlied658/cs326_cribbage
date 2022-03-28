@@ -29,7 +29,7 @@ import us.daveread.edu.graphics.shape.impl.Circle;
  * @author Jonah Marcus
  *         Last Update: March 25, 2022
  *         Last Edited by Jonah Marcus
- * Code Reviewed March 24, 2022 - Zoe Beals
+ * Code Reviewed March 27, 2022 - Zoe Beals
  */
 
 public class LobbyPage extends DrawingSurface implements ActionListener {
@@ -121,16 +121,15 @@ public class LobbyPage extends DrawingSurface implements ActionListener {
     public void setup() {
         LOG.trace("LobbyPage setup");
         setLayout(null);
-        Rectangle background = new Rectangle(new Point(0, 0),
-            new Dimension(mainframeWidth, mainframeHeight),
-            Color.DARK_GRAY, Color.DARK_GRAY);
+        //Rectangle background = new Rectangle(new Point(0, 0),
+           // new Dimension(mainframeWidth, mainframeHeight),
+            //Color.DARK_GRAY, Color.DARK_GRAY);
         
-        Image logo = new Image("ungovernable.jpg", new Point(0, 0), null);
-        logo.setScaleFactor(0.71);
+        Image logo = new Image("logo.png", new Point(300, 0), 0.6, null);
 
         returnToMainMenu = new Text("Main Menu",
             new Point(20, 40), 25, Color.BLACK, Color.BLUE);
-        startButton = new Text("Start Game", new Point(385, 250),
+        startButton = new Text("Start Game", new Point(20, 250),
             25, Color.BLACK, Color.BLUE);
         
         getPlayerNames();
