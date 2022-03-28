@@ -1,4 +1,5 @@
 package edu.skidmore.cs326.spring2022.skribbage.logic;
+
 /**
  * enum for suit.
  * @author insert
@@ -6,19 +7,20 @@ package edu.skidmore.cs326.spring2022.skribbage.logic;
  */
 public enum Suit {
     /**
-     * java doc.
+     * 
      */
-  HEARTS,
-  /**
-   * java doc.
-   */
-  CLUBS,
-  /**
-   * java doc.
-   */
-  DIAMONDS,
-  /**
-   * java doc.
-   */
-  SPADES;
+    HEARTS,
+    /**
+     * 
+     */
+    CLUBS,
+    /**
+     * 
+     */
+    DIAMONDS,
+    /**
+     * 
+     */
+    SPADES;
+
 }
