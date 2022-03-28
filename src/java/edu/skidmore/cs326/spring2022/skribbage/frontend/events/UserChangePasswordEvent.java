@@ -43,18 +43,17 @@ public class UserChangePasswordEvent extends AccountEvent {
      *
      * @param source
      *            the bean that fired the event
-     * @param user
-     *            The un-authorized user associated with the event
-     * @param newPassword
-     *            The proposed new password for the user
+     * @param args
+     *            List of arguments.
+     *
+     *  
      * @throws IllegalArgumentException
      *             if {@code source} is {@code null}
      */
-    public UserChangePasswordEvent(Object source, User user,
-        String newPassword) {
-        super(source, EventType.USER_CHANGE_PASSWORD, user);
-        this.user = user;
-        this.newPassword = newPassword;
+    public UserChangePasswordEvent(Object source, Object... args) {
+        super(source, EventType.USER_CHANGE_PASSWORD, (User) args[0]);
+        this.user = (User) args[0];
+        this.newPassword = (String) args[1];
         LOG.trace("Constructor method reached");
 
     }
