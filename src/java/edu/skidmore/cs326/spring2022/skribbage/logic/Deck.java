@@ -27,7 +27,7 @@ public class Deck {
      * theSuits info.
      */
     Suit[] theSuits = Suit.values();
-
+    char[] myChars = {'2', '3', '4', '5', '6', '7', '8', '9', '0'};
     /**
      * insert javadoc.
      */
@@ -42,8 +42,8 @@ public class Deck {
 
             theDeck.add(new Card('A', theSuits[suit])); // adds an Ace
 
-            for (int card = 2; card <= 10; card++) {// adds cards 2-10
-              theDeck.add(new Card(card, theSuits[suit]));
+            for (int charIndex = 0;  charIndex <= 8; charIndex++) {// adds cards 2-10
+              theDeck.add(new Card(myChars[charIndex], theSuits[suit]));
             } // end numbered card loop
 
             theDeck.add(new Card('J', theSuits[suit])); // adds an Jack
@@ -62,7 +62,7 @@ public class Deck {
 
         for (int i = 0; i <= 52; i++) {
             int randomInt = randNumGen.nextInt(theDeck.size());
-            tempDeck.add(theDeck[randomInt]);
+            tempDeck.add(theDeck.get(randomInt));
             theDeck.remove(randomInt);
         } // end for loop
 
@@ -71,21 +71,21 @@ public class Deck {
     }// end shuffle
 
     public Card cut(int whereToCut) {
-        return theDeck[whereToCut];
+        return theDeck.get(whereToCut);
     }// end Cut
 
-    public Deck getDeck() {
+    public ArrayList<Card> getDeck() {
         return theDeck;
     }// end getDeck
 
     public Card removeTopCard() {
-        Card tempCard = theDeck[0];
+        Card tempCard = theDeck.get(0);
         theDeck.remove(0);
         return tempCard;
     }// end removeTopCard
 
     public void moveToTop(int whatCardToMove) {
-        Card tempCard = theDeck[whatCardToMove + 1];
+        Card tempCard = theDeck.get(whatCardToMove + 1);
         theDeck.remove(whatCardToMove);
         theDeck.add(0, tempCard);
     }
