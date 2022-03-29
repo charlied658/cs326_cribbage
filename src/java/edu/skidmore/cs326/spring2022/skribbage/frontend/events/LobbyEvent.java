@@ -26,13 +26,12 @@ public class LobbyEvent extends CribbageEvent {
      * 
      * @param source
      *            The bean that fired the event
-     * @param eventName
-     *            Name of the event related to Cribbage.
+     *            
      */
     public LobbyEvent(Object source) {
         super(source, EventType.LOBBY_EVENT.getName());
         LOG.trace("Constructor reached in LobbEvent.java");
-        // TODO Auto-generated constructor stub
+        
     }
 
     /**
