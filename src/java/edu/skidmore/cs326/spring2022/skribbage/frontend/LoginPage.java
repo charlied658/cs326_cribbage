@@ -98,6 +98,7 @@ public class LoginPage extends DrawingSurface {
      */
     private Text homeScreenButton;
 
+    
     /**
      * LOG - logger variable to be able to display logger messages.
      */
@@ -182,7 +183,34 @@ public class LoginPage extends DrawingSurface {
             default:
                 break;
         }
-
+    }
+    
+    /**
+     * getUsername method.
+     * @return the username
+     */
+    public String getUsername() {
+        return username;
+    }
+    
+    /**
+     * getpassword method.
+     * @return the password
+     */
+    public String getPassword() {
+        return password;
+    }
+    
+    /**
+     * loggedIn method.
+     * @return if the user is logged in
+     */
+    public boolean loggedIn() {
+        if (!getUsername().isEmpty() && !getPassword().isEmpty()) {
+            return true;
+        } else {
+            return false;
+        }
     }
     
     
