@@ -243,30 +243,30 @@ public class PeggingTest{
 
   }
 
-  @Test
-  public void check3Pair(){
-
-    //cases
-    //1) person making the claim is the dealer
-    //3 pair and 6 points or not 3 pair
-    //2) person making the claim is not the dealer
-    //3 pair and 6 points or not 3 pair
-
-    Player p2 = new Player ();
-    Card c2 = new Card('A', Suit.HEARTS);
-    Hand h2 = p2.getHand();
-    h2.addCardToHand(c2);
-
-    Card c3 = new Card ('A', Suit.DIAMONDS);
-    h.addCardToHand(c3);
-    p.isDealer = true;
-
-    //1) person making the claim is the dealer
-    //3 pair and 6 points or not 3 pair
-
-    pPlay.check
-
-  }
+  // @Test
+  // public void check3Pair(){
+  //
+  //   //cases
+  //   //1) person making the claim is the dealer
+  //   //3 pair and 6 points or not 3 pair
+  //   //2) person making the claim is not the dealer
+  //   //3 pair and 6 points or not 3 pair
+  //
+  //   Player p2 = new Player ();
+  //   Card c2 = new Card('A', Suit.HEARTS);
+  //   Hand h2 = p2.getHand();
+  //   h2.addCardToHand(c2);
+  //
+  //   Card c3 = new Card ('A', Suit.DIAMONDS);
+  //   h.addCardToHand(c3);
+  //   p.isDealer = true;
+  //
+  //   //1) person making the claim is the dealer
+  //   //3 pair and 6 points or not 3 pair
+  //
+  //   pPlay.check
+  //
+  // }
 
 
 
