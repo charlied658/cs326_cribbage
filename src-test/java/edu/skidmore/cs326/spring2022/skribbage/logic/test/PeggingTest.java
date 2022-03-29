@@ -100,6 +100,7 @@ public class PeggingTest{
 
     //the player is a pone and placed a card that brought the pegging total to 15
     //!!!!!!!!! reset player points to 0 again !!!!!!!!!
+    p.setPoints();
     p.isDealer = false;
     Game.setPeggingTotal(14);
     pPlay.addCardToPeggingTotal(c, p);
@@ -114,6 +115,7 @@ public class PeggingTest{
 
     //the player did not place a card to bring the pegging total to 15
     //!!!!!!!!! reset player points to 0 again !!!!!!!!!
+    p.setPoints();
     Game.setPeggingTotal(0);
     pPlay.addCardToPeggingTotal(c, p);
     assertTrue(Player.getPoints() != 2);
@@ -149,6 +151,7 @@ public class PeggingTest{
 
     //the player is a pone and placed a card that brought the pegging total to 31
     //!!!!!!!!! reset player points to 0 again !!!!!!!!!
+    p.setPoints();
     p.isDealer = false;
     Game.setPeggingTotal(30);
     pPlay.addCardToPeggingTotal(c, p);
@@ -163,6 +166,7 @@ public class PeggingTest{
 
     //the player did not place a card to bring the pegging total to 31
     //!!!!!!!!! reset player points to 0 again !!!!!!!!!
+    p.setPoints();
     Game.setPeggingTotal(0);
     pPlay.addCardToPeggingTotal(c, p);
     assertTrue(Player.getPoints() != 2);
@@ -180,29 +184,29 @@ public class PeggingTest{
     Card c4 = new Card ('Q', Suit.HEARTS);
 
     //case: no cards in list
-    assertTrue(Game.isPair(cardList) == false);
+    assertTrue(pPlay.isPair(cardList) == false);
 
     //case: 1 card in list
     cardList.add(c1);
-    assertTrue(Game.isPair(cardList) == false);
+    assertTrue(pPlay.isPair(cardList) == false);
 
     //case: 2 cards in list that have same identifier
     cardList.add(c2);
-    assertTrue(Game.isPair(cardList));
+    assertTrue(pPlay.isPair(cardList));
 
     //case: 3 cards in list that have same identifier
     cardList.add(c3);
-    assertTrue(Game.isPair(cardList));
+    assertTrue(pPlay.isPair(cardList));
 
     //case: 4 cards in list where one does not have same identifier
     cardList.add(c4);
-    assertTrue(Game.isPair(cardList) == false);
+    assertTrue(pPlay.isPair(cardList) == false);
 
     //case: 2 cards in list where one does not have same identifier
     cardList.removeAll();
     cardList.add(c1);
     cardList.add(c4);
-    assertTrue(Game.isPair(cardList) == false);
+    assertTrue(pPlay.isPair(cardList) == false);
 
   }
 
@@ -218,24 +222,49 @@ public class PeggingTest{
     p.isDealer = true;
     p2.isDealer = false;
 
-    Game.addCardToPeggingTotal(c, p);
-    Game.addCardToPeggingTotal(c2, p2);
+    pPlay.addCardToPeggingTotal(c, p);
+    pPlay.addCardToPeggingTotal(c2, p2);
 
-    Game.checkPair(p);
+    pPlay.checkPair(p);
     assertTrue(p.getPoints() == 2);
 
-    Game.checkPair(p2);
+    pPlay.checkPair(p2);
     assertTrue(p2.getPoints() == 2);
 
     Card c3 = new Card('2', Suit.DIAMONDS);
     h2.addCardToHand(c3);
-    Game.addCardToPeggingTotal(c3, p2);
+    pPlay.addCardToPeggingTotal(c3, p2);
 
-    Game.checkPair(p2);
+    pPlay.checkPair(p2);
     assertTrue(p2.getPoints() == 2);
 
-    Game.checkPair(p);
+    pPlay.checkPair(p);
     assertTrue(p.getPoints() == 2);
+
+  }
+
+  @Test
+  public void check3Pair(){
+
+    //cases
+    //1) person making the claim is the dealer
+    //3 pair and 6 points or not 3 pair
+    //2) person making the claim is not the dealer
+    //3 pair and 6 points or not 3 pair
+
+    Player p2 = new Player ();
+    Card c2 = new Card('A', Suit.HEARTS);
+    Hand h2 = p2.getHand();
+    h2.addCardToHand(c2);
+
+    Card c3 = new Card ('A', Suit.DIAMONDS);
+    h.addCardToHand(c3);
+    p.isDealer = true;
+
+    //1) person making the claim is the dealer
+    //3 pair and 6 points or not 3 pair
+
+    pPlay.check
 
   }
 
