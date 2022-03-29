@@ -8,23 +8,39 @@
 //
 // import java.util.ArrayList;
 //
-// public class Prototype{
+// public class Prototype {
 //
-// //Game
-// Game myGame = new Game(2);
+// Game myGame = new Game(2); // Begins a new game with 2 new players
+// ArrayList<Player> tempPlayerList = myGame.getPlayerList();
 //
 // myGame.getDeck().shuffle();
-// int howManyCards = myGame.getDeck().size();
 //
-// ArrayList <Player> tempPlayerList = myGame.getPlayerList();
+// //Each player cuts a card
+// //Player 1 (John) cuts the deck first by 15
+// Card firstDealerDeterminedCard = theDeck.cut(15);
+// //Player 2 (Billy) cuts the deck by 23
+// Card secondDealerDeterminedCard = theDeck.cut(23);
+// //Compare cards, the lower card is dealer
+// if (firstDealerDeterminedCard < secondDealerDeterminedCard){
+//   //John is dealer
+//   int dealerIndex = 0;
+// }
+// else{
+//   //Billy is dealer
+//   int dealer Index = 1;
+// }
 //
-// //wait until you get player code to see how stuff works
+// //Deal x number of cards
+// //Deal to non dealer first
+// for (int i = 0; i <= 7; i++){
+//   tempPlayerList.get(dealerIndex).getHand().addCardToHand(myGame.getDeck().removeTopCard());
+// }//end for statement
 //
-// Hand tempHand = tempPlayerList.get(1).getHand;
-//
-// tempHand.addCardToHand(myGame.getDeck(1));
-// tempHand.addCardToHand(myGame.getDeck(2));
-// tempHand.addCardToHand(myGame.getDeck(3));
+// //Each player gives 2 cards to the crib
+// //Get starter card
+// //Play cards until 31
 //
 //
-// }//end class Prototype
+//
+//
+// } //end class Prototype
