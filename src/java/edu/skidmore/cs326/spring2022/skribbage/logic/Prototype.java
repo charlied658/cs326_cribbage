@@ -10,12 +10,13 @@
 //
 // public class Prototype{
 //
+// //Game
 // Game myGame = new Game(2);
 //
 // myGame.getDeck().shuffle();
 // int howManyCards = myGame.getDeck().size();
 //
-// ArrayList <Player> tempPlayerList = myGame.getPlayerList;
+// ArrayList <Player> tempPlayerList = myGame.getPlayerList();
 //
 // //wait until you get player code to see how stuff works
 //
