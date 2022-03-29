@@ -10,15 +10,18 @@ import us.daveread.edu.graphics.surface.DrawingSurface;
 import us.daveread.edu.graphics.surface.MainFrame;
 
 /**
- * 
- * @author Zoe Beals 
- * updated as of 3/22/2022.
- * HomeScreen class to act as the main menu
- * of the game of cribbage.
- *
+ * @author Zoe Beals
+ *         updated as of 3/22/2022.
+ *         HomeScreen class to act as the main menu
+ *         of the game of cribbage.
  */
 public class HomeScreen extends DrawingSurface {
 
+    /**
+     * startGamePage - Start game window.
+     */
+    private StartGamePage startGamePage;
+    
     /**
      * logo - Image to hold the temporary game logo.
      */
@@ -46,12 +49,13 @@ public class HomeScreen extends DrawingSurface {
      * login page.
      */
     private Text loginPageButton;
-    
+
     /**
      * lobbyPageButton - Text variable that represents the button to go to the
      * lobby page.
      */
     private Text lobbyPageButton;
+
     /**
      * pastGamesPageButton - Text variable that represents the button to go to
      * the past games page.
@@ -62,7 +66,7 @@ public class HomeScreen extends DrawingSurface {
      * rulesPage - RulesPage window to be presented upon button click.
      */
     private RulesPage rulesPage;
-    
+
     /**
      * lobbyPage - LobbyPage window to be presented upon button click.
      */
@@ -72,6 +76,11 @@ public class HomeScreen extends DrawingSurface {
      * pastGamesPage - PastGamesPage window to be presented upon button click.
      */
     private PastGamesPage pastGamesPage;
+
+    /**
+     * startGameButton - Text var to represent starting a game.
+     */
+    private Text startGameButton;
     /**
      * Logger instance for logging.
      */
@@ -99,7 +108,6 @@ public class HomeScreen extends DrawingSurface {
      */
     public void setup() {
         LOG.trace("Setup method in HomeScreen.java");
-
         logo = new Image("logo.png", new Point(150, 0), .6, null);
         loginPageButton = new Text("Login Page",
             new Point(logo.getLocation().x + 225, logo.getLocation().y + 375),
@@ -113,13 +121,18 @@ public class HomeScreen extends DrawingSurface {
                 rulesPageButton.getLocation().y + 50),
             20, Color.black, Color.blue);
         lobbyPageButton = new Text("Lobby Page", new Point(
-            pastGamesPageButton.getLocation().x + 27, 
-            pastGamesPageButton.getLocation().y + 50), 20, 
+            pastGamesPageButton.getLocation().x + 27,
+            pastGamesPageButton.getLocation().y + 50), 20,
             Color.black, Color.blue);
-        add(lobbyPageButton);
-        add(loginPageButton);
+        startGameButton = new Text("Start Game", new 
+            Point(pastGamesPageButton.getLocation().x + 27, 
+                pastGamesPageButton.getLocation().y + 50), 20, Color.black, 
+            Color.blue);
+        //add(lobbyPageButton);
+        //add(loginPageButton);
         add(rulesPageButton);
         add(pastGamesPageButton);
+        add(startGameButton);
         add(logo);
     }
 
@@ -148,8 +161,17 @@ public class HomeScreen extends DrawingSurface {
         } else if (e == lobbyPageButton) {
             lobbyPage = new LobbyPage();
             closeCurrentWindow();
+        } else if (e == startGameButton) {
+            if (loginPage.loggedIn()) {
+                lobbyPage = new LobbyPage();
+            } else {
+                loginPage = new LoginPage();
+            }
+//            startGamePage = new StartGamePage();
+            closeCurrentWindow();
         }
     }
+
     /**
      * 
      */

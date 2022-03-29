@@ -112,6 +112,9 @@ public class StartGamePage extends DrawingSurface {
     public void drawableMouseClick(Drawable e) {
         if (e == beginGame) {
             //start game
+        } else if (e == returnHome) {
+            homeScreen = new HomeScreen();
+            startGamePage.dispose();
         }
     }
     
