@@ -64,7 +64,7 @@ public class EventManagerTest {
             new User("sleinasa@skidmore.edu", "sleinasa", "passwd", true);
         source = new EventManagerTest();
         loginEventInstance = new UserLoginEvent(source, userInstance);
-
+        
         // I need to set up a listener object as well.
         LOG.info("SetUp method completed for EventManagerTest");
     }

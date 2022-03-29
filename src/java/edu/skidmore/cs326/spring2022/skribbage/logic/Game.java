@@ -10,7 +10,7 @@ import org.apache.log4j.Logger;
  * pegging play. It has methods to initialize the list of players, get each
  * field,
  * and get the index containing the dealer in playerList.
- * 
+ *
  * @author Michael Shriner
  */
 public class Game {
@@ -46,7 +46,7 @@ public class Game {
    * for
    * this game.
    * However, there are assumptions, for now, that numPlayers == 2
-   * 
+   *
    * @param numPlayers
    *          is the number of players
    */
@@ -75,7 +75,7 @@ public class Game {
 
   /**
    * insert java doc.
-   * 
+   *
    * @return the deck
    */
   public static Deck getDeck() {
@@ -84,7 +84,7 @@ public class Game {
 
   /**
    * insert java doc.
-   * 
+   *
    * @return pegging total
    */
   public static int getPeggingTotal() {
@@ -93,7 +93,7 @@ public class Game {
 
   /**
    * insert java doc.
-   * 
+   *
    * @return pone pegging cards
    */
   public static ArrayList<Card> getPonePeggingCards() {
@@ -102,7 +102,7 @@ public class Game {
 
   /**
    * insert java doc.
-   * 
+   *
    * @return dealer pegging cards
    */
   public static ArrayList<Card> getDealerPeggingCards() {
@@ -139,7 +139,7 @@ public class Game {
 
   /**
    * Returns the list of players.
-   * 
+   *
    * @return an ArrayList of players.
    */
   public static ArrayList<Player> getPlayerList() {
@@ -148,7 +148,7 @@ public class Game {
 
   /**
    * insert java doc.
-   * 
+   *
    * @retunr crib.
    */
   public static ArrayList<Card> getCrib() {
@@ -157,7 +157,7 @@ public class Game {
 
   /**
    * Method to take in the amount to add, and add it to the pegging total.
-   * 
+   *
    * @param amountToAdd
    *          points to add from card
    * @return boolean if over 31
@@ -174,7 +174,7 @@ public class Game {
   // gets the index in playerList where the dealer is
   /**
    * Returns the index in playerList where the dealer is or -1.
-   * 
+   *
    * @return the index in playerList where the dealer is or -1 if there is no
    *         dealer.
    */
