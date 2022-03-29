@@ -28,7 +28,8 @@ import us.daveread.edu.graphics.shape.impl.Text;
  *         Last Edited by Jonah Marcus
  *         Code review - Zoe Beals 3/28/2022
  */
-public class TestPlayingCardsDisplay extends DrawingSurface {
+@SuppressWarnings("serial")
+public class PlayingCardsDisplayDEMO extends DrawingSurface {
 
     /**
      * mf - Holds reference to the window.
@@ -61,13 +62,13 @@ public class TestPlayingCardsDisplay extends DrawingSurface {
     private static final Logger LOG;
 
     static {
-        LOG = Logger.getLogger(TestPlayingCardsDisplay.class);
+        LOG = Logger.getLogger(PlayingCardsDisplayDEMO.class);
     }
 
     /**
      * TestPlayingCardsDisplay constructor.
      */
-    public TestPlayingCardsDisplay() {
+    public PlayingCardsDisplayDEMO() {
         LOG.trace("Entered TestPlayingCardDisplay constructor");
         mf = new MainFrame(this, "Testing Card Display", mainframeWidth,
             mainframeHeight, false);
@@ -135,7 +136,7 @@ public class TestPlayingCardsDisplay extends DrawingSurface {
         LOG.trace("DrawableMosuceClick in TestPlayingCardsDisplay.java");
         if (e == refreshButton) {
             mf.dispose();
-            new TestPlayingCardsDisplay();
+            new PlayingCardsDisplayDEMO();
         }
        
     }
@@ -147,7 +148,7 @@ public class TestPlayingCardsDisplay extends DrawingSurface {
      */
     public static void main(String[] args) {
         LOG.trace("Entered main method");
-        new TestPlayingCardsDisplay();
+        new PlayingCardsDisplayDEMO();
     }
 
 }

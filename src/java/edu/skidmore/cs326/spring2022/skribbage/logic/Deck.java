@@ -78,6 +78,12 @@ public class Deck {
         return theDeck;
     }// end getDeck
 
+    public Card removeFromDeck(int whatCardToRemove) {
+      Card tempCard = theDeck.get(whatCardToRemove);
+      theDeck.remove(whatCardToRemove);
+      return tempCard;
+    }//end removeFromDeck
+
     public Card removeTopCard() {
         Card tempCard = theDeck.get(0);
         theDeck.remove(0);
