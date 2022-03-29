@@ -26,7 +26,9 @@ public class DealPhaseTest {
   private DealPhase testInstance;
   
   Suit[] theSuits = Suit.values();
-
+  
+  
+  
 
   /**
    * Creating testInstance of DealPhase.
@@ -34,7 +36,7 @@ public class DealPhaseTest {
   @Before
   public void setUp() {
     testInstance = new DealPhase();
-
+    Game.initPlayers(2);
   }
   
 
@@ -43,8 +45,8 @@ public class DealPhaseTest {
    * Test DealPhase method. 
    */
   @Test
-  public void dealPhase() {
-    
+  public void testDealPhase() {
+    testInstance.dealPhase();
     
   }
 
@@ -67,11 +69,12 @@ public class DealPhaseTest {
    */
   @Test
   public void testRemoveCardFromHand() {
+    testInstance.determineDealer(12, 15);
     testInstance.dealCards();
     Player player1 = Game.getPlayerList().get(0);
-    int beforeHandSize = player1.getHand().size();
-    testInstance.removeCardFromHand(player1.getHand().get(0), player1);
-    assertNotEquals(player1.getHand().size(), beforeHandSize);
+    int beforeHandSize = player1.getHand().getHand().size();
+    testInstance.removeCardFromHand(player1.getHand().getHand().get(0), player1);
+    assertNotEquals(player1.getHand().getHand().size(), beforeHandSize);
 
   }
 
@@ -80,9 +83,10 @@ public class DealPhaseTest {
    */
   @Test
   public void testDealCards() {
+    testInstance.determineDealer(12, 15);
     testInstance.dealCards();
     for (int i = 0; i < Game.getPlayerList().size(); i++) {
-      assertEquals(Game.getPlayerList().get(i).getHand().size(), 6);
+      assertEquals(Game.getPlayerList().get(i).getHand().getHand().size(), 6);
     }
 
   }

@@ -115,10 +115,10 @@ public class DealPhase {
    */
   public void removeCardFromHand(Card cardToRemove, Player p) {
 
-    ArrayList<Card> theHand = p.getHand(); // need player phase
+    Hand theHand = p.getHand(); // need player phase
 
-    for (int i = 0; i < theHand.size(); i++) {
-      Card c = theHand.get(i);
+    for (int i = 0; i < theHand.getHand().size(); i++) {
+      Card c = theHand.getHand().get(i);
 
       // if (c.getSuit() == cardToRemove.getSuit() &&
       // Character.compare(c.getCardIdentifier(),
@@ -129,7 +129,7 @@ public class DealPhase {
 
       if (c.getSuit() == cardToRemove.getSuit()
           && c.getIdentifier() == cardToRemove.getIdentifier()) {
-        theHand.remove(i);
+        theHand.getHand().remove(i);
         return;
       }
 
@@ -141,9 +141,13 @@ public class DealPhase {
    * will be dealt 6 cards.
    */
   public void dealCards() {
-
+   
     int idxOfDealer = Game.getDealerIdx();
-
+    
+    if (idxOfDealer == -1) {
+      return;
+    }
+    
     Hand dealerHand = new Hand();
     Hand poneHand = new Hand();
 
@@ -151,7 +155,7 @@ public class DealPhase {
       poneHand.addCardToHand(Game.getDeck().removeTopCard());
       dealerHand.addCardToHand(Game.getDeck().removeTopCard());
     }
-
+   
     Game.getPlayerList().get(idxOfDealer).setHand(dealerHand);
 
     if (idxOfDealer == 1) {
