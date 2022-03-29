@@ -15,7 +15,7 @@ public class PasswordHasher {
     /**
      * The only instance of this class that should ever exist.
      */
-    private static PasswordHasher instance;
+    private static PasswordHasher instance = null;
 
     /**
      * Only constructor should be private and only accessed when the instance
