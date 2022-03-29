@@ -24,6 +24,7 @@ public class UserDeleteAccountEventTest {
      * Test Instance for LobbyEvent testing.
      */
     private UserDeleteAccountEvent testInstance;
+
     /**
      * Creata Account event instance to authorize a user.
      */
@@ -66,6 +67,9 @@ public class UserDeleteAccountEventTest {
     /**
      * Test that the instance is created by asserting that the testInstance is
      * not null.
+     * 
+     * @TODO Fails because DeleteAccount event isn't yet actually deleting an
+     *       event.
      */
     @Test
     public void testUserDeleteAccountEvent() {
@@ -88,10 +92,10 @@ public class UserDeleteAccountEventTest {
      */
     @Test
     public void testGetUser() {
+        LOG.trace("Testing getUser method.");
         testInstance = new UserDeleteAccountEvent(source, userInstance);
         assertEquals(testInstance.getUser(), userInstance);
-        assertEquals(testInstance.getUser().getUserName(),
-            userInstance.getUserName());
+        LOG.trace("Testing getUser finished.");
 
     }
 

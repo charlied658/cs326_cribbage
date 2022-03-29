@@ -3,7 +3,7 @@ package edu.skidmore.cs326.spring2022.skribbage.frontend.events.test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+
 
 import org.apache.log4j.Logger;
 import org.junit.After;
@@ -17,7 +17,7 @@ import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserLoginEvent;
 
 /**
  * @author Sten Leinasaar
- *         Last Edited March 24, 2022 by Sten Leinasaar
+ *         Last Edited March 29, 2022 by Sten Leinasaar
  */
 public class UserLoginEventTest {
     /**
@@ -71,8 +71,6 @@ public class UserLoginEventTest {
     public void testUserLoginEvent() {
         LOG.trace("Testing the constructor");
         assertNotNull(testInstance);
-        assertTrue(testInstance.getUser().isAuthorized());
-        assertEquals(testInstance.getUser(), userInstance);
         LOG.trace("Constructor testing completed");
     }
 
@@ -84,10 +82,11 @@ public class UserLoginEventTest {
         LOG.trace("Checking for IllegalArgumentException");
         testInstance2 = (UserLoginEvent) EventFactory.getInstance()
             .createEvent(EventType.USER_LOGIN, source, String.class);
+        LOG.debug("IllegalArgument Exception caught from creating: "
+            + testInstance2.getEventName());
         LOG.trace("Error test for checking args completed");
     }
-    
-  
+
     /**
      * Tests that the user assigned to the event is the one passed to the
      * constructor.
@@ -96,10 +95,6 @@ public class UserLoginEventTest {
     public void testGetUser() {
         LOG.trace("Testing getUser method");
         assertEquals(testInstance.getUser(), userInstance);
-        assertEquals(testInstance.getUser().getUserName(),
-            userInstance.getUserName());
-        assertTrue(userInstance.isAuthorized());
-        assertTrue(testInstance.getUser().isAuthorized());
         LOG.trace("Getuser method testing finished");
 
     }
