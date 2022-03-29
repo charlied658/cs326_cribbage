@@ -14,6 +14,7 @@ import us.daveread.edu.graphics.surface.MainFrame;
  *         updated as of 3/22/2022.
  *         HomeScreen class to act as the main menu
  *         of the game of cribbage.
+ *         Code reviewed by Jonah Marcus on 3/29/2022
  */
 public class HomeScreen extends DrawingSurface {
 
@@ -39,8 +40,7 @@ public class HomeScreen extends DrawingSurface {
 
     /**
      * rulesPageButton - Text variable that represents the button to go to
-     * rules.
-     * page
+     * rules page.
      */
     private Text rulesPageButton;
 
@@ -141,7 +141,7 @@ public class HomeScreen extends DrawingSurface {
      * 
      * @param e
      *            - Drawable object
-     *            checks for a mousclick on the DrawingSurface, then determines
+     *            checks for a mouseclick on the DrawingSurface, then determines
      *            if the clickable surface was any of the buttons created.
      *            if loginPageButton, displays the login page
      *            if rulesPageButton, displays the rules page
@@ -173,7 +173,7 @@ public class HomeScreen extends DrawingSurface {
     }
 
     /**
-     * 
+     * Closes current window.
      */
     public void closeCurrentWindow() {
         homeScreen.dispose();
