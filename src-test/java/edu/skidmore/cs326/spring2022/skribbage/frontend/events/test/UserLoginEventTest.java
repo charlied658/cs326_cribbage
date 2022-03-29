@@ -31,6 +31,11 @@ public class UserLoginEventTest {
     private UserLoginEvent testInstance;
 
     /**
+     * Test Instance 2.
+     */
+    private UserLoginEvent testInstance2;
+
+    /**
      * Source instance to be passed with methods.
      */
     private Object source;
@@ -71,6 +76,18 @@ public class UserLoginEventTest {
         LOG.trace("Constructor testing completed");
     }
 
+    /**
+     * 
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public void testErrorThrowing() {
+        LOG.trace("Checking for IllegalArgumentException");
+        testInstance2 = (UserLoginEvent) EventFactory.getInstance()
+            .createEvent(EventType.USER_LOGIN, source, String.class);
+        LOG.trace("Error test for checking args completed");
+    }
+    
+  
     /**
      * Tests that the user assigned to the event is the one passed to the
      * constructor.
