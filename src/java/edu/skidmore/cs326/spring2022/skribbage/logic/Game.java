@@ -12,7 +12,7 @@ import org.apache.log4j.Logger;
  * and get the index containing the dealer in playerList.
  *
  * @author Michael Shriner
- */
+ */     
 public class Game {
 
   /**
