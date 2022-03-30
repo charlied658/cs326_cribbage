@@ -14,6 +14,8 @@ import edu.skidmore.cs326.spring2022.skribbage.common.User;
 import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserLoginEvent;
 
 /**
+ * 
+ * 
  * @author Sten Leinasaar
  *  
  *  Needs to be implemented more clearly and specifically after UML is
