@@ -3,91 +3,108 @@ package edu.skidmore.cs326.spring2022.skribbage.logic;
 
 import java.util.ArrayList;
 import java.util.Random;
+
 /**
  *
- * @author INSERT HERE.
+ * @author kpolite
  *
  */
+
 public class Deck {
-    /**
-     * @author kpolite
-     *         Attributes:
-     *         Card Object
-     *         ArrayList of Cards
-     *         Methods:
-     *         constructor
-     *         Void Shuffle()
-     *         Card Cut()
-     *         Deck getDeck()
-     *         Card RemoveTopCard()
-     */
-    ArrayList<Card> theDeck;
+  /**
+   * @author kpolite
+   *         Attributes:
+   *         Card Object
+   *         ArrayList of Cards
+   *         Methods:
+   *         constructor
+   *         Void Shuffle()
+   *         Card Cut()
+   *         Deck getDeck()
+   *         Card RemoveTopCard()
+   */
+  ArrayList<Card> theDeck;
 
-    /**
-     * theSuits info.
-     */
-    Suit[] theSuits = Suit.values();
-    char[] myChars = {'2', '3', '4', '5', '6', '7', '8', '9', '0'};
-    /**
-     * insert javadoc.
-     */
-    public Deck() {
-        // Initializes the deck
+  /**
+   * theSuits info.
+   */
+  Suit[] theSuits = Suit.values();
+  char[] myChars = { '2', '3', '4', '5', '6', '7', '8', '9', '0' };
 
-        // Attributes
-        theDeck = new ArrayList<Card>();
+  /**
+   * insert javadoc.
+   */
+  public Deck() {
+    // Initializes the deck
 
-        // Card adding loops
-        for (int suit = 0; suit <= 3; suit++){
+    // Attributes
+    theDeck = new ArrayList<Card>();
 
-            theDeck.add(new Card('A', theSuits[suit])); // adds an Ace
+    // Card adding loops
+    for (int suit = 0; suit <= 3; suit++) {
 
-            for (int charIndex = 0;  charIndex <= 8; charIndex++) {// adds cards 2-10
-              theDeck.add(new Card(myChars[charIndex], theSuits[suit]));
-            } // end numbered card loop
+      theDeck.add(new Card('A', theSuits[suit])); // adds an Ace
 
-            theDeck.add(new Card('J', theSuits[suit])); // adds an Jack
+      for (int charIndex = 0; charIndex <= 8; charIndex++) { // adds cards 2-10
+        theDeck.add(new Card(myChars[charIndex], theSuits[suit]));
+      } // end numbered card loop
 
-            theDeck.add(new Card('Q', theSuits[suit])); // adds an Queen
+      theDeck.add(new Card('J', theSuits[suit])); // adds an Jack
 
-            theDeck.add(new Card('K', theSuits[suit])); // adds an King
+      theDeck.add(new Card('Q', theSuits[suit])); // adds an Queen
 
-        } // end suit loop
+      theDeck.add(new Card('K', theSuits[suit])); // adds an King
 
-    }// end public Deck
+    } // end suit loop
 
-    public void shuffle() {
-        ArrayList<Card> tempDeck = new ArrayList<Card>();
-        Random randNumGen = new Random();
+  } // end public Deck
 
-        for (int i = 0; i <= 52; i++) {
-            int randomInt = randNumGen.nextInt(theDeck.size());
-            tempDeck.add(theDeck.get(randomInt));
-            theDeck.remove(randomInt);
-        } // end for loop
+  /**
+   * Method to shuffle the deck.
+   */
+  public void shuffle() {
+    ArrayList<Card> tempDeck = new ArrayList<Card>();
+    Random randNumGen = new Random();
 
-        theDeck = tempDeck;
+    for (int i = 0; i < 52; i++) {
+      int randomInt = randNumGen.nextInt(theDeck.size());
+      tempDeck.add(theDeck.get(randomInt));
+      theDeck.remove(randomInt);
+    } // end for loop
 
-    }// end shuffle
+    theDeck = tempDeck;
 
-    public Card cut(int whereToCut) {
-        return theDeck.get(whereToCut);
-    }// end Cut
+  } // end shuffle
 
-    public ArrayList<Card> getDeck() {
-        return theDeck;
-    }// end getDeck
+  public Card cut(int whereToCut) {
+    return theDeck.get(whereToCut);
+  } // end Cut
 
-    public Card removeTopCard() {
-        Card tempCard = theDeck.get(0);
-        theDeck.remove(0);
-        return tempCard;
-    }// end removeTopCard
+  public ArrayList<Card> getDeck() {
+    return theDeck;
+  } // end getDeck
 
-    public void moveToTop(int whatCardToMove) {
-        Card tempCard = theDeck.get(whatCardToMove + 1);
-        theDeck.remove(whatCardToMove);
-        theDeck.add(0, tempCard);
-    }
+  /**
+   * Method removes the top card from the deck and returns it.
+   * 
+   * @return a Card that is removed to the top.
+   */
+  public Card removeTopCard() {
+    Card tempCard = theDeck.get(0);
+    theDeck.remove(0);
+    return tempCard;
+  } // end removeTopCard
 
-}// end Deck Class
+  /**
+   * Moves a card to the top.
+   * 
+   * @param whatCardToMove
+   *          index of which card to move to the top.
+   */
+  public void moveToTop(int whatCardToMove) {
+    Card tempCard = theDeck.get(whatCardToMove + 1);
+    theDeck.remove(whatCardToMove);
+    theDeck.add(0, tempCard);
+  }
+
+} // end Deck Class

@@ -10,6 +10,7 @@ import edu.skidmore.cs326.spring2022.skribbage.common.events.AccountEvent;
  * @author Alex Carney
  *         Reviewed, commented, Logging added bv Sten Leinasaar
  */
+@SuppressWarnings("serial")
 public class UserCreateAccountEvent extends AccountEvent {
     /**
      * Private static final Logger variable.
