@@ -5,7 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-public class DataBaseManager {
+public class DatabaseManagerTest {
 
 	@Before
 	public void setUp() throws Exception {
