@@ -35,21 +35,26 @@ public class FrontEndFactoryTemplate extends FactoryTemplate {
         Object... args) {
 
         switch (event) {
-            case USER_LOGIN:
+            case USER_LOGIN -> {
                 LOG.trace("Returning: " + event.getName());
                 return new UserLoginEvent(source, args);
-            case USER_DELETE_ACCOUNT:
+            }
+            case USER_DELETE_ACCOUNT -> {
                 LOG.trace("Returning: " + event.getName());
                 return new UserDeleteAccountEvent(source, args);
-            case USER_CREATE_ACCOUNT:
+            }
+            case USER_CREATE_ACCOUNT -> {
                 LOG.trace("Returning: " + event.getName());
                 return new UserCreateAccountEvent(source, args);
-            case USER_CHANGE_PASSWORD:
+            }
+            case USER_CHANGE_PASSWORD -> {
                 LOG.trace("Returning: " + event.getName());
                 return new UserChangePasswordEvent(source, args);
-            default:
+            }
+            default -> {
                 LOG.warn("Event passed was not one of Front End events");
                 return null;
+            }
         }
 
     }
