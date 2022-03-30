@@ -125,11 +125,6 @@ public class EventFactory {
                         + "Requested by:  " + source.toString());
                 
                 return new UserChangePasswordEvent(source, args);
-            case LOBBY_EVENT:
-                LOG.trace(
-                    "Returning a new instance of LobbyEvent. Reguested by: "
-                        + source.toString());
-                return new LobbyEvent(source);
             default:
                 break;
         }
