@@ -6,9 +6,10 @@ import java.util.Random;
 
 /**
  *
- * @author INSERT HERE.
+ * @author kpolite
  *
  */
+
 public class Deck {
   /**
    * @author kpolite
@@ -44,7 +45,7 @@ public class Deck {
 
       theDeck.add(new Card('A', theSuits[suit])); // adds an Ace
 
-      for (int charIndex = 0; charIndex <= 8; charIndex++) {// adds cards 2-10
+      for (int charIndex = 0; charIndex <= 8; charIndex++) { // adds cards 2-10
         theDeck.add(new Card(myChars[charIndex], theSuits[suit]));
       } // end numbered card loop
 
@@ -56,13 +57,16 @@ public class Deck {
 
     } // end suit loop
 
-  }// end public Deck
+  } // end public Deck
 
+  /**
+   * Method to shuffle the deck.
+   */
   public void shuffle() {
     ArrayList<Card> tempDeck = new ArrayList<Card>();
     Random randNumGen = new Random();
 
-    for (int i = 0; i <= 52; i++) {
+    for (int i = 0; i < 52; i++) {
       int randomInt = randNumGen.nextInt(theDeck.size());
       tempDeck.add(theDeck.get(randomInt));
       theDeck.remove(randomInt);
@@ -70,26 +74,37 @@ public class Deck {
 
     theDeck = tempDeck;
 
-  }// end shuffle
+  } // end shuffle
 
   public Card cut(int whereToCut) {
     return theDeck.get(whereToCut);
-  }// end Cut
+  } // end Cut
 
   public ArrayList<Card> getDeck() {
     return theDeck;
-  }// end getDeck
+  } // end getDeck
 
+  /**
+   * Method removes the top card from the deck and returns it.
+   * 
+   * @return a Card that is removed to the top.
+   */
   public Card removeTopCard() {
     Card tempCard = theDeck.get(0);
     theDeck.remove(0);
     return tempCard;
-  }// end removeTopCard
+  } // end removeTopCard
 
+  /**
+   * Moves a card to the top.
+   * 
+   * @param whatCardToMove
+   *          index of which card to move to the top.
+   */
   public void moveToTop(int whatCardToMove) {
     Card tempCard = theDeck.get(whatCardToMove + 1);
     theDeck.remove(whatCardToMove);
     theDeck.add(0, tempCard);
   }
 
-}// end Deck Class
+} // end Deck Class

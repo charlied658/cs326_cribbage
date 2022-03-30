@@ -9,7 +9,7 @@ import java.util.ArrayList;
  * @author Dorjee
  */
 public class DealPhase {
-
+  
   /**
    * This method executes the dealing phase of the game. A dealer is determined,
    * cards are dealt, and cards are discarded to the crib.
@@ -66,7 +66,7 @@ public class DealPhase {
     int amountToCut = 6;
 
     Game.getDeck().moveToTop(amountToCut);
-    // Card topCard = Game.getDeck();
+    Card topCard = Game.getDeck().getDeck().get(0);
 
     // FRONT END INTERACTION: give information about the card on top of the deck
 
