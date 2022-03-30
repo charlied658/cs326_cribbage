@@ -16,11 +16,11 @@ import edu.skidmore.cs326.spring2022.skribbage.persistence.events.PersistanceFac
 /**
  * This class creates an event of type PropertyChangeEvent
  * from the metadata given in EventType enum.
- * 
+ *
  * @author Sten Leinasaar
- *         Last Edit: March 23, 2022
+ * Last Edit: March 23, 2022
  */
-public class EventFactory {
+public class EventFactory implements EventDispatcher {
 
     /**
      * Singleton instance of a EventFactory.
@@ -38,6 +38,11 @@ public class EventFactory {
      */
     private static final Logger LOG;
 
+    /**
+     * Event manager instance for dispatching events
+     */
+    private final EventManager eventManager;
+
     static {
         LOG = Logger.getLogger(EventFactory.class);
         INSTANCE = new EventFactory();
@@ -47,6 +52,7 @@ public class EventFactory {
      * EventFactory private constructor.
      */
     private EventFactory() {
+        this.eventManager = EventManager.getInstance();
         List<? extends FactoryTemplate> templates = Arrays.asList(
             new LogicFactoryTemplate(), new GamificationFactoryTemplate(),
             new FrontEndFactoryTemplate(), new PersistanceFactoryTemplate());
@@ -55,7 +61,7 @@ public class EventFactory {
 
     /**
      * Synchronized getInstance of a EventFactory method.
-     * 
+     *
      * @return Singleton instance of the factory.
      */
     public static synchronized EventFactory getInstance() {
@@ -65,16 +71,12 @@ public class EventFactory {
     /**
      * Creates an event of type PropertyChangeEvent based on the
      * EventType enum value being passed.
-     * 
-     * @param event
-     *            Type of an event as specified from the ENUM.
-     * @param source
-     *            Source that fired the update.
-     * @param args
-     *            Vararg of Object type.
+     *
+     * @param event  Type of an event as specified from the ENUM.
+     * @param source Source that fired the update.
+     * @param args   Vararg of Object type.
      * @return An event of type that was specified.
-     * @throws Exception
-     *             Event Not Found when EventType cannot be created.
+     * @throws Exception Event Not Found when EventType cannot be created.
      */
     public PropertyChangeEvent createEvent(EventType event, Object source,
         Object... args) throws Exception {
@@ -82,19 +84,17 @@ public class EventFactory {
         Object[] eventArgumentList = event.getArgumentList();
 
         for (int i = 0; i < eventArgumentList.length; i++) {
-
-            if (args[i].getClass() == eventArgumentList[i]) {
-                continue;
-
-            } else {
+            Class<?> clazz = args[i].getClass();
+            if (clazz != eventArgumentList[i]) {
                 LOG.error(
                     "Illegal argument: Argument data types do not match enum");
                 throw new IllegalArgumentException(
                     "Argument data types do not match enum");
             }
+            if (!Arrays.asList(clazz.getInterfaces()).contains(Payload.class)) {
+                LOG.error("Warning: Using non payload, argument type " + clazz);
+            }
         }
-
-
 
         PropertyChangeEvent temp;
         LOG.trace(
@@ -116,4 +116,21 @@ public class EventFactory {
 
     }
 
+    /**
+     * Any class that will fire events implements EventDispatcher. The fireEvent
+     * implementation should always include notifying the event manager that the
+     * event is fired.
+     * It is not recommended to instantiate the event inside the fireEvent
+     * class.
+     * Instead, create an instance of the event somewhere outside, then use
+     * fireEvent(event)
+     *
+     * @param event The event to be fired. Can be any subclass of
+     *              PropertyChangeEvent,
+     *              using Upcasting
+     */
+    @Override
+    public void fireEvent(PropertyChangeEvent event) {
+        eventManager.notify(event);
+    }
 }
