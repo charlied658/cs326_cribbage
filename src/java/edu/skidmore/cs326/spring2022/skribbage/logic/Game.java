@@ -1,4 +1,5 @@
 package edu.skidmore.cs326.spring2022.skribbage.logic;
+
 import java.util.ArrayList;
 import org.apache.log4j.Logger;
 
@@ -6,30 +7,44 @@ import org.apache.log4j.Logger;
  * Game contains the state of the game. It has a deck, a list of players, a
  * pegging total, a list of cards in the crib, and lists of cards played during
  * pegging play by the pone and dealer. It also contains methods that are useful
- * to the various phases of the game. Currently, a key assumption for this
- * class is that there are only two players.
+ * to the various phases of the game. Currently, a key assumption for this class
+ * is that there are only two players.
  *
  * @author Michael Shriner
  */
 public class Game {
 
-  /** The deck of cards used to play Cribbage. */
-	static Deck theDeck = new Deck();
+	/** The deck of cards used to play Cribbage. */
+	Deck theDeck = new Deck();
 
 	/** The list of players who are playing this game of Cribbage. */
-	static ArrayList<Player> playerList = new ArrayList<Player>();
+	ArrayList<Player> playerList = new ArrayList<Player>();
 
-  /** The total score among the players during the pegging phase of the game ( 0 <= peggingTotal <= 31).*/
-	static int peggingTotal;
+	/**
+	 * The total score among the players during the pegging phase of the game ( 0 <=
+	 * peggingTotal <= 31).
+	 */
+	int peggingTotal;
 
 	/** The crib for the game. */
-	static ArrayList<Card> crib = new ArrayList<Card>();
+	ArrayList<Card> crib = new ArrayList<Card>();
 
 	/** The set of cards played by the pone during the pegging phase. */
-	static ArrayList<Card> ponePeggingCards = new ArrayList<Card>();
+	ArrayList<Card> ponePeggingCards = new ArrayList<Card>();
 
 	/** The set of cards played by the dealer during the pegging phase. */
-	static ArrayList<Card> dealerPeggingCards = new ArrayList<Card>();
+	ArrayList<Card> dealerPeggingCards = new ArrayList<Card>();
+
+	/**
+	 * Game constructor. It initializes the list of players and the pegging total.
+	 * It assumes that there are two players.
+	 *
+	 * @param numPlayers is the number of players for this game.
+	 */
+	public Game(int numPlayers) {
+		initPlayers(numPlayers);
+		initPeggingTotal();
+	}
 
 	/**
 	 * Initializes the ArrayList of Player objects given the number of players for
@@ -38,7 +53,7 @@ public class Game {
 	 *
 	 * @param numPlayers is the number of players
 	 */
-	public static void initPlayers(int numPlayers) {
+	public void initPlayers(int numPlayers) {
 
 		for (int i = 0; i < numPlayers; i++) {
 			Player p = new Player();
@@ -50,42 +65,43 @@ public class Game {
 	/**
 	 * Initializes the pegging total to 0.
 	 */
-	public static void initPeggingTotal() {
+	public void initPeggingTotal() {
 		peggingTotal = 0;
 	}
 
 	/**
 	 * Set the pegging total to the parameter amount of points.
-	 * @param pts is the points to set the pegging total to 
+	 *
+	 * @param pts is the points to set the pegging total to.
 	 */
-	public static void setPeggingTotal(int pts) {
+	public void setPeggingTotal(int pts) {
 		peggingTotal = pts;
 	}
 
 	/**
-	 * insert java doc.
+	 * Returns the deck for this game.
 	 *
-	 * @return the deck
+	 * @return the deck.
 	 */
-	public static Deck getDeck() {
+	public Deck getDeck() {
 		return theDeck;
 	}
 
 	/**
-	 * insert java doc.
+	 * Returns the pegging total for this game.
 	 *
-	 * @return pegging total
+	 * @return the pegging total.
 	 */
-	public static int getPeggingTotal() {
+	public int getPeggingTotal() {
 		return peggingTotal;
 	}
 
 	/**
-	 * insert java doc.
+	 * Returns the pone's pegging cards as an ArrayList of Card objects.
 	 *
-	 * @return pone pegging cards
+	 * @return the pone's pegging cards.
 	 */
-	public static ArrayList<Card> getPonePeggingCards() {
+	public ArrayList<Card> getPonePeggingCards() {
 		return ponePeggingCards;
 	}
 
@@ -94,35 +110,43 @@ public class Game {
 	 *
 	 * @return dealer pegging cards
 	 */
-	public static ArrayList<Card> getDealerPeggingCards() {
+	public ArrayList<Card> getDealerPeggingCards() {
 		return dealerPeggingCards;
 	}
 
 	/**
-	 * insert java doc.
+	 * Sets the pone's pegging cards to the parameter.
+	 *
+	 * @param ponePegCards is an ArrayList of Card objects.
 	 */
-	public static void setPonePeggingCards(ArrayList<Card> ponePegCards) {
+	public void setPonePeggingCards(ArrayList<Card> ponePegCards) {
 		ponePeggingCards = ponePegCards;
 	}
 
 	/**
-	 * insert java doc.
+	 * Sets the dealer's pegging cards to the parameter.
+	 *
+	 * @param dealerPegCards is an ArrayList of Card objects.
 	 */
-	public static void setDealerPeggingCards(ArrayList<Card> dealerPegCards) {
+	public void setDealerPeggingCards(ArrayList<Card> dealerPegCards) {
 		dealerPeggingCards = dealerPegCards;
 	}
 
 	/**
-	 * insert java doc.
+	 * Add the parameter Card to the pone's pegging cards.
+	 *
+	 * @param c is the Card to add to the list of the pone's pegging cards.
 	 */
-	public static void addPonePeggingCard(Card c) {
+	public void addPonePeggingCard(Card c) {
 		ponePeggingCards.add(c);
 	}
 
 	/**
-	 * insert java doc.
+	 * Add the parameter Card to the dealer's pegging cards.
+	 *
+	 * @param c is the Card to add to the list of the dealer's pegging cards.
 	 */
-	public static void addDealerPeggingCard(Card c) {
+	public void addDealerPeggingCard(Card c) {
 		dealerPeggingCards.add(c);
 	}
 
@@ -131,26 +155,28 @@ public class Game {
 	 *
 	 * @return an ArrayList of players.
 	 */
-	public static ArrayList<Player> getPlayerList() {
+	public ArrayList<Player> getPlayerList() {
 		return playerList;
 	}
 
 	/**
-	 * insert java doc.
+	 * Returns the crib.
 	 *
-	 * @retunr crib.
+	 * @retunr the crib as an ArrayList of Card objects.
 	 */
-	public static ArrayList<Card> getCrib() {
+	public ArrayList<Card> getCrib() {
 		return crib;
 	}
 
 	/**
-	 * Method to take in the amount to add, and add it to the pegging total.
+	 * Takes in the amount to add to the pegging total and adds it to the pegging
+	 * total if the amount to add plus the current pegging total does not exceed 31.
+	 * If it exceeds 31, this method returns false. Otherwise, it returns true.
 	 *
-	 * @param amountToAdd points to add from card
-	 * @return boolean if over 31
+	 * @param amountToAdd is the amount of points to add to the pegging total.
+	 * @return true iff amountToAdd + the pegging total <= 31.
 	 */
-	public static boolean addToPeggingTotal(int amountToAdd) {
+	public boolean addToPeggingTotal(int amountToAdd) {
 		if (amountToAdd + peggingTotal > 31) {
 			return false;
 		} else {
@@ -159,14 +185,14 @@ public class Game {
 		}
 	}
 
-	// gets the index in playerList where the dealer is
 	/**
-	 * Returns the index in playerList where the dealer is or -1.
+	 * Returns the index in playerList where the dealer is or -1 if there is no
+	 * dealer.
 	 *
 	 * @return the index in playerList where the dealer is or -1 if there is no
 	 *         dealer.
 	 */
-	public static int getDealerIdx() {
+	public int getDealerIdx() {
 		for (int i = 0; i < playerList.size(); i++) {
 			if (playerList.get(i).isDealer) {
 				return i;

@@ -5,7 +5,10 @@ import java.util.ArrayList;
 //@author Michael Shriner
 public class PeggingPlay {
 
-  public PeggingPlay(){
+  Game game;
+
+  public PeggingPlay(Game g){
+    this.game = g;
   }
 
   public void peggingPhase (){
@@ -49,17 +52,17 @@ public class PeggingPlay {
 
     int theCardValue = cardToAdd.getPointValue();
 
-    if (Game.addToPeggingTotal(theCardValue)){
+    if (game.addToPeggingTotal(theCardValue)){
       //if here, the card was added to the pegging total
 
       //remove the card from the player's hand and place it in pegging cards
       p.getHand().removeCardFromHand(cardToAdd);
 
       if (p.isDealer){
-        Game.addDealerPeggingCard(cardToAdd);
+        game.addDealerPeggingCard(cardToAdd);
       }
       else{
-        Game.addPonePeggingCard(cardToAdd);
+        game.addPonePeggingCard(cardToAdd);
       }
 
     }
@@ -147,8 +150,8 @@ public class PeggingPlay {
   public int sumTotalPeggingCards(){
 
     int sum = 0;
-    ArrayList<Card> dealerPeggingCards = Game.getDealerPeggingCards();
-    ArrayList<Card> ponePeggingCards = Game.getPonePeggingCards();
+    ArrayList<Card> dealerPeggingCards = game.getDealerPeggingCards();
+    ArrayList<Card> ponePeggingCards = game.getPonePeggingCards();
 
     for (int i = 0; i < dealerPeggingCards.size(); i++){
       Card tempCard = dealerPeggingCards.get(i);
@@ -220,8 +223,8 @@ public class PeggingPlay {
     //assumption: Card c from checkClaim() has been added to peggingCards already
     //assumption: check15() is called before the next player plays a card
 
-    ArrayList <Card> dealerPeggingCards = Game.getDealerPeggingCards();
-    ArrayList <Card> ponePeggingCards = Game.getPonePeggingCards();
+    ArrayList <Card> dealerPeggingCards = game.getDealerPeggingCards();
+    ArrayList <Card> ponePeggingCards = game.getPonePeggingCards();
     ArrayList<Card> checkIfPair = new ArrayList <Card>();
 
     checkIfPair.add(dealerPeggingCards.get(dealerPeggingCards.size()-1));
@@ -244,8 +247,8 @@ public class PeggingPlay {
     //assumption: Card c from checkClaim() has been added to peggingCards already
     //assumption: check15() is called before the next player plays a card
 
-    ArrayList <Card> dealerPeggingCards = Game.getDealerPeggingCards();
-    ArrayList <Card> ponePeggingCards = Game.getPonePeggingCards();
+    ArrayList <Card> dealerPeggingCards = game.getDealerPeggingCards();
+    ArrayList <Card> ponePeggingCards = game.getPonePeggingCards();
     ArrayList<Card> checkIfPair = new ArrayList <Card>();
 
     if (p.isDealer){
@@ -295,8 +298,8 @@ public class PeggingPlay {
     //assumption: Card c from checkClaim() has been added to peggingCards already
     //assumption: check15() is called before the dealer plays a card
 
-    ArrayList <Card> dealerPeggingCards = Game.getDealerPeggingCards();
-    ArrayList <Card> ponePeggingCards = Game.getPonePeggingCards();
+    ArrayList <Card> dealerPeggingCards = game.getDealerPeggingCards();
+    ArrayList <Card> ponePeggingCards = game.getPonePeggingCards();
     ArrayList<Card> checkIfPair = new ArrayList <Card>();
 
     checkIfPair.add(dealerPeggingCards.get(dealerPeggingCards.size()-1));
