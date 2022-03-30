@@ -1,6 +1,9 @@
 package edu.skidmore.cs326.spring2022.skribbage.frontend;
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> d599e4ec72d372caffa74468e69fe3928d68eb9f
 import java.awt.Color;
 import java.awt.Point;
 import org.apache.log4j.Logger;
@@ -82,7 +85,11 @@ public class LoginPage extends DrawingSurface {
     private String verifyPasswordToChange;
 
     /**
+<<<<<<< HEAD
      * changePassword - Text variable that represents the change password 
+=======
+     * changePassword - Text variable that represents the change password
+>>>>>>> d599e4ec72d372caffa74468e69fe3928d68eb9f
      * button.
      */
     private Text changePassword;
@@ -93,12 +100,19 @@ public class LoginPage extends DrawingSurface {
     private HomeScreen homeScreen;
 
     /**
+<<<<<<< HEAD
      * homeScreenButton - Text variable that represents the button to go 
+=======
+     * homeScreenButton - Text variable that represents the button to go
+>>>>>>> d599e4ec72d372caffa74468e69fe3928d68eb9f
      * back to the home screen.
      */
     private Text homeScreenButton;
 
+<<<<<<< HEAD
     
+=======
+>>>>>>> d599e4ec72d372caffa74468e69fe3928d68eb9f
     /**
      * LOG - logger variable to be able to display logger messages.
      */
@@ -145,6 +159,7 @@ public class LoginPage extends DrawingSurface {
         add(createAccount);
     }
 
+<<<<<<< HEAD
   /**
    * method to handle different button clicks.
    * @param popupType - integer variable that is used to determine
@@ -154,6 +169,21 @@ public class LoginPage extends DrawingSurface {
    * @param popupMessage - String variable that will be used to set
    * the message of the popup window.
    */
+=======
+    /**
+     * method to handle different button clicks.
+     * 
+     * @param popupType
+     *            - integer variable that is used to determine
+     *            the type of popup to display.
+     * @param popupTitle
+     *            - String variable that will be used to set
+     *            the title of the popup window.
+     * @param popupMessage
+     *            - String variable that will be used to set
+     *            the message of the popup window.
+     */
+>>>>>>> d599e4ec72d372caffa74468e69fe3928d68eb9f
     public void buttonClicked(int popupType, String popupTitle,
         String popupMessage) {
         LOG.trace("ChangePassword method in LoginPage.java");
@@ -184,25 +214,46 @@ public class LoginPage extends DrawingSurface {
                 break;
         }
     }
+<<<<<<< HEAD
     
     /**
      * getUsername method.
+=======
+
+    /**
+     * getUsername method.
+     * 
+>>>>>>> d599e4ec72d372caffa74468e69fe3928d68eb9f
      * @return the username
      */
     public String getUsername() {
         return username;
     }
+<<<<<<< HEAD
     
     /**
      * getpassword method.
+=======
+
+    /**
+     * getpassword method.
+     * 
+>>>>>>> d599e4ec72d372caffa74468e69fe3928d68eb9f
      * @return the password
      */
     public String getPassword() {
         return password;
     }
+<<<<<<< HEAD
     
     /**
      * loggedIn method.
+=======
+
+    /**
+     * loggedIn method.
+     * 
+>>>>>>> d599e4ec72d372caffa74468e69fe3928d68eb9f
      * @return if the user is logged in
      */
     public boolean loggedIn() {
@@ -212,8 +263,12 @@ public class LoginPage extends DrawingSurface {
             return false;
         }
     }
+<<<<<<< HEAD
     
     
+=======
+
+>>>>>>> d599e4ec72d372caffa74468e69fe3928d68eb9f
     @Override
     public void drawableMouseClick(Drawable e) {
         LOG.trace("Drawable mouseclick method in LoginPage.java");
