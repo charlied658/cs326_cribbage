@@ -6,22 +6,24 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
+import java.beans.PropertyChangeListener;
+
+import edu.skidmore.cs326.spring2022.skribbage.common.EventFactory;
 import edu.skidmore.cs326.spring2022.skribbage.common.EventManager;
 import edu.skidmore.cs326.spring2022.skribbage.common.EventType;
 import edu.skidmore.cs326.spring2022.skribbage.common.User;
 import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserLoginEvent;
 
 /**
- * 
+ * Testing for Event manager API testing.
  * 
  * @author Sten Leinasaar
- *  
- *  Needs to be implemented more clearly and specifically after UML is
- *       created
- *       I am currently not entirely sure how to test it to the fullest.
- * Need to create more comprehensive mock listener class.
+ *         Last edited: March 30, 2022
+ *         Last edited by: Sten Leinasaar
  */
 public class EventManagerTest {
     /**
@@ -32,22 +34,27 @@ public class EventManagerTest {
     static {
         LOG = Logger.getLogger(EventManagerTest.class);
     }
+
     /**
      * EventManager testInstance.
      */
     private EventManager testInstance;
+
     /**
      * UserLoginEvent testInstance.
      */
     private UserLoginEvent loginEventInstance;
+
     /**
      * User testInstance.
      */
     private User userInstance;
+
     /**
      * LogInListener Mock class instance.
      */
     private LogInListenerMOCK listenerInstance;
+
     /**
      * Instance of this test class to send out an change in state.
      */
@@ -65,14 +72,18 @@ public class EventManagerTest {
         userInstance =
             new User("sleinasa@skidmore.edu", "sleinasa", "passwd", true);
         source = new EventManagerTest();
-        loginEventInstance = new UserLoginEvent(source, userInstance);
-        
+        loginEventInstance = (UserLoginEvent) EventFactory.getInstance()
+            .createEvent(EventType.USER_LOGIN, source, userInstance);
+
         // I need to set up a listener object as well.
+        listenerInstance = new LogInListenerMOCK();
+
         LOG.info("SetUp method completed for EventManagerTest");
     }
 
     /**
-     * Test method to test the eager singelton instance.
+     * This method tests getInstance method from EventManager class.
+     * The test ensures the correct implementation of a singleton pattern.
      */
     @Test
     public void testGetInstance() {
@@ -82,28 +93,20 @@ public class EventManagerTest {
     }
 
     /**
-     * Test case to test addPropertChangeListener method. This test ensures that
-     * PropertyChangeListener is added to the list of propertyChangeListeners.
-     * It is verified by checking if notify fires an update.
-     * 
-     * @TODO I need to get a better understanding to write more comprehensive
-     *       testing.
+     * Test case to test addPropertChangeListener method from EventManager.
+     * This test ensures that PropertyChangeListener
+     * is added to the list of propertyChangeListeners.
+     * It is verified by checking if an update is received by the listener.
      */
     @Test
     public void testAddPropertyChangeListener() {
         LOG.info("Beginning to test addPropertyChangeListener");
-        // add the listener to the list to listen to the loginEvent.
         testInstance.addPropertyChangeListener(listenerInstance,
             EventType.USER_LOGIN);
-        // send out a change in login event
-        // should send out an event.
-        loginEventInstance.notify();
-        // assert that some value change got to the listener. Maybe assert that
-        // assertEquals(listenerInstance, userInstance);
-
-        // The object sent to listenerInstance should be the same as
-        // userInstance
-        // assertTrue(listenerInstance.equals(userInstance));
+        assertNull(listenerInstance.getUserLoginEvent());
+        testInstance.notify(loginEventInstance);
+        assertNotNull(listenerInstance.getUserLoginEvent());
+        LOG.info("AddPropertyChangeListener test finished.");
 
     }
 
@@ -119,16 +122,22 @@ public class EventManagerTest {
         // add the listener to the list to listen to the loginEvent.
         testInstance.addPropertyChangeListener(listenerInstance,
             EventType.USER_LOGIN);
-        // send out a change in login event
-        // should send out an event.
-        loginEventInstance.notify();
+        testInstance.notify(loginEventInstance);
+        // now change the userInstance and the logInEvent instance.
+        userInstance =
+            new User("sleinasa@skidmore.edu", "username", "password", true);
+        loginEventInstance = (UserLoginEvent) EventFactory.getInstance()
+            .createEvent(EventType.USER_LOGIN, source, userInstance);
+
+        testInstance.removePropertyChangeListener(listenerInstance);
+        testInstance.notify(loginEventInstance);
+        assertNotEquals(listenerInstance.getUserLoginEvent(),
+            listenerInstance.getUserLoginEvent());
         // assert that some value change got to the listener. Maybe assert that
         // assertEquals(listenerInstance, userInstance);
         // The object sent to listenerInstance should be the same as
         // userInstance
         // assertTrue(listenerInstance.equals(userInstance));
-
-        testInstance.removePropertyChangeListener(listenerInstance);
 
         // assertFalse(listenerInstance.equals(userInstance));
 
@@ -146,7 +155,6 @@ public class EventManagerTest {
 
     /**
      * @AFTER method that runs after each test case.
-     *        
      */
     @After
     public void tearDown() {
@@ -154,7 +162,7 @@ public class EventManagerTest {
         testInstance = null;
         userInstance = null;
         loginEventInstance = null;
-        
+
         assertNull(testInstance);
         assertNull(userInstance);
         assertNull(loginEventInstance);

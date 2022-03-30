@@ -44,7 +44,7 @@ public final class EventManager {
      * Private constructor to implement eager singelton.
      */
     private EventManager() {
-        LOG.info("Private Constructor of EventManager");
+        LOG.info("Private Constructor of EventManager reached.");
         support = new PropertyChangeSupport(this);
     }
     

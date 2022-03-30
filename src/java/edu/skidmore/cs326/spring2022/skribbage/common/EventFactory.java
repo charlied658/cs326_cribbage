@@ -87,6 +87,10 @@ public class EventFactory {
             }
 
         }
+        
+        //Template pattern to be implemented.
+        //This would call hook methods.
+        //So they can have their own stuff, but it would go through here.
         switch (event) {
             case USER_CREATE_ACCOUNT:
                 LOG.trace(
@@ -114,14 +118,12 @@ public class EventFactory {
                     "Returning a new instance of UserLoginResponse. "
                         + "Requested by:  " + source.toString());
                 return null; // PLACEHOLDER... will be --> return new
-                             // UserLoginResponseEvent(source, user);
+                             // UserLoginResponseEvent(source, args);
             case USER_CHANGE_PASSWORD:
                 LOG.trace(
                     "Returning a new instance of UserChangePassword. "
                         + "Requested by:  " + source.toString());
-                /**
-                 * @TODO Come back and figure out how to pass a new password.
-                 */
+                
                 return new UserChangePasswordEvent(source, args);
             case LOBBY_EVENT:
                 LOG.trace(
