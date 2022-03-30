@@ -22,7 +22,11 @@ public class HomeScreen extends DrawingSurface {
      * startGamePage - Start game window.
      */
     private StartGamePage startGamePage;
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> d599e4ec72d372caffa74468e69fe3928d68eb9f
     /**
      * logo - Image to hold the temporary game logo.
      */
@@ -81,6 +85,10 @@ public class HomeScreen extends DrawingSurface {
      * startGameButton - Text var to represent starting a game.
      */
     private Text startGameButton;
+<<<<<<< HEAD
+=======
+
+>>>>>>> d599e4ec72d372caffa74468e69fe3928d68eb9f
     /**
      * Logger instance for logging.
      */
@@ -124,12 +132,22 @@ public class HomeScreen extends DrawingSurface {
             pastGamesPageButton.getLocation().x + 27,
             pastGamesPageButton.getLocation().y + 50), 20,
             Color.black, Color.blue);
+<<<<<<< HEAD
         startGameButton = new Text("Start Game", new 
             Point(pastGamesPageButton.getLocation().x + 27, 
                 pastGamesPageButton.getLocation().y + 50), 20, Color.black, 
             Color.blue);
         //add(lobbyPageButton);
         //add(loginPageButton);
+=======
+        startGameButton = new Text("Start Game",
+            new Point(lobbyPageButton.getLocation().x,
+                lobbyPageButton.getLocation().y + 50),
+            20, Color.black,
+            Color.blue);
+        add(lobbyPageButton);
+        add(loginPageButton);
+>>>>>>> d599e4ec72d372caffa74468e69fe3928d68eb9f
         add(rulesPageButton);
         add(pastGamesPageButton);
         add(startGameButton);
@@ -162,12 +180,21 @@ public class HomeScreen extends DrawingSurface {
             lobbyPage = new LobbyPage();
             closeCurrentWindow();
         } else if (e == startGameButton) {
+<<<<<<< HEAD
             if (loginPage.loggedIn()) {
                 lobbyPage = new LobbyPage();
             } else {
                 loginPage = new LoginPage();
             }
 //            startGamePage = new StartGamePage();
+=======
+            // if (loginPage.loggedIn()) {
+            // lobbyPage = new LobbyPage();
+            // } else {
+            // loginPage = new LoginPage();
+            // }
+            startGamePage = new StartGamePage();
+>>>>>>> d599e4ec72d372caffa74468e69fe3928d68eb9f
             closeCurrentWindow();
         }
     }
