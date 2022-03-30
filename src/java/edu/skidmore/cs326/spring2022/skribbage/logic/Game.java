@@ -1,4 +1,3 @@
-
 package edu.skidmore.cs326.spring2022.skribbage.logic;
 
 import java.util.ArrayList;
@@ -18,8 +17,7 @@ public class Game {
   /**
    * the deck of cards used to play Cribbage.
    */
-  static Deck theDeck = new Deck();
-
+c
   /** The list of players who are playing this game of Cribbage. */
   static ArrayList<Player> playerList = new ArrayList<Player>();
 
