@@ -94,8 +94,10 @@ public class DatabaseManager {
 				System.out.println("Failed to establish connection with database");
 				e.printStackTrace();
 			}
+			System.out.println("Connected");
 			return dbConnection;
 		} else {
+			System.out.println("Already Connected");
 			return dbConnection;
 		}
 
@@ -119,21 +121,15 @@ public class DatabaseManager {
 	}
 
 	/*
-	 * R
-	 * 
-	 * @param
-	 */
-	private void dbUpdate(String sqlCode, String[] info) {
-
-	}
-
-	/*
 	 * Just Kidding, you know what this does
 	 * 
 	 */
 	public static void main(String[] args) {
 
+	
 		// Open a connection
+		System.out.println("Testing");
+		//getDB();
 		try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
 				Statement stmt = conn.createStatement();
 				ResultSet rs = stmt.executeQuery(QUERY);
@@ -151,7 +147,7 @@ public class DatabaseManager {
 			e.printStackTrace();
 		}
 
-		userAuthenticate("nchantzi", "ILoveSQL");
+		//userAuthenticate("nchantzi", "ILoveSQL");
 
 	}
 
