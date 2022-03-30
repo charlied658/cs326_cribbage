@@ -26,7 +26,6 @@ public class Player {
 	 * boolean to help determine the dealer of the game 
 	 */
 
-	private Player player = new Player ();
 	public Player() {
 		/**
 		 *initialize points to 0  
@@ -94,5 +93,4 @@ public class Player {
 		points += pointsToAdd;
 
 	}
-
 }

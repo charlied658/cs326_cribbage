@@ -78,12 +78,10 @@ public class UserChangePasswordEventTest {
      */
     @Test
     public void testGetUser() {
-        assertEquals(testInstance.getUser().getUserName(),
-            userInstance.getUserName());
-        assertEquals(testInstance.getUser().getEmail(),
-            userInstance.getEmail());
-        assertEquals(testInstance.getUser().getPassword(),
-            userInstance.getPassword());
+        LOG.trace("Testing getUser method.");
+        assertEquals(testInstance.getUser(), userInstance);
+        LOG.trace("GetUser test finished.");
+        
     }
 
     /**
@@ -91,6 +89,7 @@ public class UserChangePasswordEventTest {
      */
     @Test
     public void testGetNewPassword() {
+        LOG.trace("Testing new password being created");
         // Make sure passwords are the same to begin with.
         assertEquals(testInstance.getUser().getPassword(),
             userInstance.getPassword());
@@ -98,6 +97,7 @@ public class UserChangePasswordEventTest {
             new UserChangePasswordEvent(source, userInstance, "lol");
         //I can only check if correct value was passed.
         assertEquals(testInstance.getNewPassword(), "lol");
+        LOG.trace("Test for new password finished.");
     }
 
     /**
