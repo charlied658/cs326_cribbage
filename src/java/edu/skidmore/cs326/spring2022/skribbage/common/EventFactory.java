@@ -1,15 +1,17 @@
 package edu.skidmore.cs326.spring2022.skribbage.common;
 
 import java.beans.PropertyChangeEvent;
-import java.util.ArrayList;
+
+import java.util.Arrays;
+
+import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import edu.skidmore.cs326.spring2022.skribbage.frontend.events.LobbyEvent;
-import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserChangePasswordEvent;
-import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserCreateAccountEvent;
-import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserDeleteAccountEvent;
-import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserLoginEvent;
+import edu.skidmore.cs326.spring2022.skribbage.frontend.events.FrontEndFactoryTemplate;
+import edu.skidmore.cs326.spring2022.skribbage.gamification.events.GamificationFactoryTemplate;
+import edu.skidmore.cs326.spring2022.skribbage.logic.events.LogicFactoryTemplate;
+import edu.skidmore.cs326.spring2022.skribbage.persistence.events.PersistanceFactoryTemplate;
 
 /**
  * This class creates an event of type PropertyChangeEvent
@@ -27,6 +29,11 @@ public class EventFactory {
     private static final EventFactory INSTANCE;
 
     /**
+     * List of subclasses for FactoryTemplate class.
+     */
+    private List<FactoryTemplate> templates;
+
+    /**
      * Logger instance for logging.
      */
     private static final Logger LOG;
@@ -40,6 +47,9 @@ public class EventFactory {
      * EventFactory private constructor.
      */
     private EventFactory() {
+        List<? extends FactoryTemplate> templates = Arrays.asList(
+            new LogicFactoryTemplate(), new GamificationFactoryTemplate(),
+            new FrontEndFactoryTemplate(), new PersistanceFactoryTemplate());
 
     }
 
@@ -63,76 +73,46 @@ public class EventFactory {
      * @param args
      *            Vararg of Object type.
      * @return An event of type that was specified.
+     * @throws Exception
+     *             Event Not Found when EventType cannot be created.
      */
     public PropertyChangeEvent createEvent(EventType event, Object source,
-        Object... args) {
+        Object... args) throws Exception {
 
         Object[] eventArgumentList = event.getArgumentList();
 
         for (int i = 0; i < eventArgumentList.length; i++) {
-//            System.out.println("Length is: " + eventArgumentList.length);
-//            System.out.println("Position to check is: " + i);
-//            System.out.println("Args list: " + args[i].getClass());
-//
-//            System.out.println("Enum args list: " + eventArgumentList[i]);
 
             if (args[i].getClass() == eventArgumentList[i]) {
                 continue;
-              
+
             } else {
                 LOG.error(
                     "Illegal argument: Argument data types do not match enum");
                 throw new IllegalArgumentException(
                     "Argument data types do not match enum");
             }
-
-        }
-        switch (event) {
-            case USER_CREATE_ACCOUNT:
-                LOG.trace(
-                    "Returning a new instance of UserCreateAccount. "
-                        + "Requested by:  " + source.toString());
-                return new UserCreateAccountEvent(source, args);
-            case USER_DELETE_ACCOUNT:
-                LOG.trace(
-                    "Returning a new instance of UserDeleteAccount. "
-                        + "Requested by:  " + source.toString());
-                return new UserDeleteAccountEvent(source, args);
-            case USER_LOGIN:
-                LOG.trace(
-                    "Returning a new instance of UserLogin. "
-                        + "Requested by:  " + source.toString());
-                return new UserLoginEvent(source, args);
-            case USER_LOGIN_HASHED:
-                LOG.trace(
-                    "Returning a new instance of UserLoginHashed. "
-                        + "Requested by:  " + source.toString());
-                // PLACEHOLDER as NO EVENT CREATED YET
-                return null;
-            case USER_LOGIN_RESPONSE:
-                LOG.trace(
-                    "Returning a new instance of UserLoginResponse. "
-                        + "Requested by:  " + source.toString());
-                return null; // PLACEHOLDER... will be --> return new
-                             // UserLoginResponseEvent(source, user);
-            case USER_CHANGE_PASSWORD:
-                LOG.trace(
-                    "Returning a new instance of UserChangePassword. "
-                        + "Requested by:  " + source.toString());
-                /**
-                 * @TODO Come back and figure out how to pass a new password.
-                 */
-                return new UserChangePasswordEvent(source, args);
-            case LOBBY_EVENT:
-                LOG.trace(
-                    "Returning a new instance of LobbyEvent. Reguested by: "
-                        + source.toString());
-                return new LobbyEvent(source);
-            default:
-                break;
         }
 
-        return null;
+
+
+        PropertyChangeEvent temp;
+        LOG.trace(
+            "Calling createEvent from each subclass "
+                + "with their overWritten hook method.");
+        for (FactoryTemplate subclass : templates) {
+            temp = subclass.createEvent(event, source, args);
+            if (temp != null) {
+                LOG.trace(
+                    "Event was returned by a subclass. Returning the event: "
+                        + temp.toString());
+                return temp;
+            }
+
+        }
+
+        LOG.error("Event not found");
+        throw new Exception("Event Not Found");
 
     }
 

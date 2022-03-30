@@ -22,7 +22,7 @@ public class HomeScreen extends DrawingSurface {
      * startGamePage - Start game window.
      */
     private StartGamePage startGamePage;
-    
+
     /**
      * logo - Image to hold the temporary game logo.
      */
@@ -81,6 +81,7 @@ public class HomeScreen extends DrawingSurface {
      * startGameButton - Text var to represent starting a game.
      */
     private Text startGameButton;
+
     /**
      * Logger instance for logging.
      */
@@ -124,12 +125,14 @@ public class HomeScreen extends DrawingSurface {
             pastGamesPageButton.getLocation().x + 27,
             pastGamesPageButton.getLocation().y + 50), 20,
             Color.black, Color.blue);
-        startGameButton = new Text("Start Game", new 
-            Point(pastGamesPageButton.getLocation().x + 27, 
-                pastGamesPageButton.getLocation().y + 50), 20, Color.black, 
+
+        startGameButton = new Text("Start Game",
+            new Point(lobbyPageButton.getLocation().x,
+                lobbyPageButton.getLocation().y + 50),
+            20, Color.black,
             Color.blue);
-        //add(lobbyPageButton);
-        //add(loginPageButton);
+        add(lobbyPageButton);
+        add(loginPageButton);
         add(rulesPageButton);
         add(pastGamesPageButton);
         add(startGameButton);
@@ -162,12 +165,16 @@ public class HomeScreen extends DrawingSurface {
             lobbyPage = new LobbyPage();
             closeCurrentWindow();
         } else if (e == startGameButton) {
+
             if (loginPage.loggedIn()) {
                 lobbyPage = new LobbyPage();
             } else {
                 loginPage = new LoginPage();
             }
-//            startGamePage = new StartGamePage();
+
+            
+            startGamePage = new StartGamePage();
+
             closeCurrentWindow();
         }
     }
