@@ -61,13 +61,14 @@ public class EventManagerTest {
     private EventManagerTest source;
 
     /**
+     * @throws Exception 
      * @BEFORE
      *         TO set up necessary objects and variables that will be used
      *         during
      *         testing. Runs before each test method is run.
      */
     @Before
-    public void setUp() {
+    public void setUp() throws Exception {
         testInstance = EventManager.getInstance();
         userInstance =
             new User("sleinasa@skidmore.edu", "sleinasa", "passwd", true);
@@ -112,12 +113,13 @@ public class EventManagerTest {
 
     /**
      * Test case to test if PropertyChangeListener was removed correctly.
+     * @throws Exception 
      * 
      * @ToDo Make an UML to understand exactly how EventManager is connected
      *       and then write more comprehensive testing.
      */
     @Test
-    public void testRemovePropertyChangeListener() {
+    public void testRemovePropertyChangeListener() throws Exception {
         LOG.info("Beginning to test removePropertyChangeListener");
         // add the listener to the list to listen to the loginEvent.
         testInstance.addPropertyChangeListener(listenerInstance,

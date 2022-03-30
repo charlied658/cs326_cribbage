@@ -47,8 +47,6 @@ public class EventFactory {
      * EventFactory private constructor.
      */
     private EventFactory() {
-        // ADD TO THE LIST HERE.
-
         List<? extends FactoryTemplate> templates = Arrays.asList(
             new LogicFactoryTemplate(), new GamificationFactoryTemplate(),
             new FrontEndFactoryTemplate(), new PersistanceFactoryTemplate());
