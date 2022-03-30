@@ -173,7 +173,7 @@ public class PeggingTest{
   }
 
   @Test
-  public void testIsPair{
+  public void testIsPair (){
     //cases
     //the method returns true if the cards in the list have the same identifier
     //the method returns false if the cards in the list don't have the same identifier
