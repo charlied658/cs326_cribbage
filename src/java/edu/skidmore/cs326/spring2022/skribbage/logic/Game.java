@@ -1,13 +1,13 @@
 package edu.skidmore.cs326.spring2022.skribbage.logic;
-
 import java.util.ArrayList;
 import org.apache.log4j.Logger;
 
 /**
  * Game contains the state of the game. It has a deck, a list of players, a
- * pegging total, a list of cards in the crib, and a list of cards placed during
- * pegging play. It has methods to initialize the list of players, get each
- * field, and get the index containing the dealer in playerList.
+ * pegging total, a list of cards in the crib, and lists of cards played during
+ * pegging play by the pone and dealer. It also contains methods that are useful
+ * to the various phases of the game. Currently, a key assumption for this
+ * class is that there are only two players.
  *
  * @author Michael Shriner
  */
@@ -33,7 +33,8 @@ public class Game {
 
 	/**
 	 * Initializes the ArrayList of Player objects given the number of players for
-	 * this game. However, there are assumptions, for now, that numPlayers == 2
+	 * this game. However, there is the assumption, for now, that the number of
+	 * players is 2.
 	 *
 	 * @param numPlayers is the number of players
 	 */
@@ -47,14 +48,15 @@ public class Game {
 	}
 
 	/**
-	 * insert java doc.
+	 * Initializes the pegging total to 0.
 	 */
 	public static void initPeggingTotal() {
 		peggingTotal = 0;
 	}
 
 	/**
-	 * insert java doc.
+	 * Set the pegging total to the parameter amount of points.
+	 * @param pts is the points to set the pegging total to 
 	 */
 	public static void setPeggingTotal(int pts) {
 		peggingTotal = pts;
