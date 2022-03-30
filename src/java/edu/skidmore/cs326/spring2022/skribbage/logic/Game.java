@@ -1,7 +1,7 @@
 package edu.skidmore.cs326.spring2022.skribbage.logic;
 
 import java.util.ArrayList;
-import org.apache.log4j.Logger;
+import  .log4j.Logger;
 
 /**
  * Game contains the state of the game. It has a deck, a list of players, a
