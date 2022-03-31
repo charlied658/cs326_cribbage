@@ -93,18 +93,25 @@ public class DatabaseManager {
 	 */ 
     public String inventoryQuery(int playerID) {
 
-        String tokenQuery =
-            "SELECT * FROM player_inventory WHERE player_id='" + playerID + "'";
-        // Connection conn = dbConnect();
+        String tokenQuery = "SELECT * FROM player_account WHERE PersonID = ? ";
+     
+        
+        PreparedStatement ps = null;	
+        Connection conn = null;
         int netWorth = 0;
+      
 
         try {
-            Connection conn = getDB();
-            Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery(tokenQuery);
+        	
+        	conn = getDB();
+        	ps = dbConnection.prepareStatement(tokenQuery);
+            ps.setInt(1, playerID);
+                   
+            System.out.println(ps);
+            ResultSet rs = ps.executeQuery();
 
             rs.next();
-            netWorth = rs.getInt("token_value");
+            netWorth = rs.getInt("Wallet");
 
         }
         catch (SQLException e) {
@@ -188,33 +195,7 @@ public class DatabaseManager {
         }
     }
 
-    /*
-     * This is a function to access the connection singleton
-     *
-     *  @author Tinaye Mawocha
-     *
-     *
-     */
-    private Connection getDB() {
-
-        if (dbConnection == null) {
-            try {
-                dbConnection = DriverManager.getConnection(DB_URL, USER, PASS);
-
-            }
-            catch (SQLException e) {
-                System.out
-                    .println("Failed to establish connection with database");
-                e.printStackTrace();
-            }
-            System.out.println("Connected");
-            return dbConnection;
-        } else {
-            System.out.println("Already Connected");
-            return dbConnection;
-        }
-
-    }
+   
 
     /*
      * This is a function to access the connection singleton
@@ -289,7 +270,7 @@ public class DatabaseManager {
         //		}
         //
         DatabaseManager instance = new DatabaseManager();
-        instance.update("Password", "0000f", 325);
+        System.out.println((instance.inventoryQuery(325)));
 
         //userAuthenticate("nchantzi", "ILoveSQL");
 
