@@ -63,6 +63,6 @@ public abstract class AccountEvent extends PropertyChangeEvent {
      * 
      * @return String type of the event name.
      */
-    public abstract String getEventName();
+    public abstract EventType getEventType();
 
 }

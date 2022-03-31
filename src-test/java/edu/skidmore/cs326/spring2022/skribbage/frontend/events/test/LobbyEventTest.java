@@ -66,7 +66,7 @@ public class LobbyEventTest {
     @Test
     public void testGetEventName() {
         LOG.trace("Testing getEventName");
-        assertEquals(testInstance.getEventName(), "Lobby Event");
+        assertEquals(testInstance.getEventType(), "Lobby Event");
         LOG.trace("Completed testing the getEventName method");
     }
     /**

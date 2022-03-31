@@ -38,8 +38,8 @@ public class UserCreateAccountEvent extends AccountEvent {
     }
 
     @Override
-    public String getEventName() {
+    public EventType getEventType() {
         LOG.trace("Returning an event name");
-        return EventType.USER_CREATE_ACCOUNT.getName();
+        return EventType.USER_CREATE_ACCOUNT;
     }
 }

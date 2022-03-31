@@ -40,9 +40,8 @@ public class UserDeleteAccountEvent extends AccountEvent {
      * @return Event name of type string.
      */
     @Override
-    public String getEventName() {
+    public EventType getEventType() {
         LOG.trace("Returning an event name of type String");
-        // TODO Auto-generated method stub
-        return EventType.USER_DELETE_ACCOUNT.getName();
+        return EventType.USER_DELETE_ACCOUNT;
     }
 }
