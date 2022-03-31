@@ -3,45 +3,55 @@ package edu.skidmore.cs326.spring2022.skribbage.logic;
 import java.util.ArrayList;
 
 /**
- * The current hand for a player.
+ * Hand Class representing the methods.
  *
  * @author Dorjee
  *         Last Edited: Dorjee
  */
 public class Hand {
+  
+  /**
+   * Creating variable hand to hold a players cards.
+   */
+  private ArrayList<Card> hand; 
+  
+  /**
+   * Constructor for Hand that initializes an ArrayList of Cards. 
+   */
+  public Hand() {
+    
+    hand = new ArrayList<Card>();
+    
+  }
+  
 
-    /**
-     * hand array list.
-     */
-    private ArrayList<Card> hand = new ArrayList<Card>();
+  /**
+   * Adding a card to hand. Validity of card is already checked by card class. 
+   *
+   * @param card
+   *          to add
+   */
+  public void addCardToHand(Card card) {
+    hand.add(card);
+  }
 
-    /**
-     * Adding card to hand.
-     *
-     * @param card
-     *            to add
-     */
-    public void addCardToHand(Card card) {
-        hand.add(card);
-    }
+  /**
+   * Call to remove a card from a players hand.
+   *
+   * @param card
+   *          the card to be removed from hand. 
+   */
+  public void removeCardFromHand(Card card) {
+    hand.remove(card);
+  }
 
-    /**
-     * Removing card from hand.
-     *
-     * @param card
-     *            to remove
-     */
-    public void removeCardFromHand(Card card) {
-        hand.remove(card);
-    }
-
-    /**
-     * Get method to return a hand.
-     *
-     * @return Hand the players hand
-     */
-    public ArrayList<Card> getHand() {
-        return hand;
-    }
+  /**
+   * Get method to return an arrayList of a players current cards.
+   *
+   * @return Hand the players current hand
+   */
+  public ArrayList<Card> getHand() {
+    return hand;
+  }
 
 }
