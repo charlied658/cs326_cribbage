@@ -89,7 +89,7 @@ public class UserCreateAccountEventTest {
     @Test
     public void testGetEventName() {
         LOG.trace("Testing getEventName");
-        assertEquals(testInstance.getEventName(), "User Create Account Event");
+        assertEquals(testInstance.getEventType(), "User Create Account Event");
         LOG.trace("Completed testing the getEventName method");
     }
 
