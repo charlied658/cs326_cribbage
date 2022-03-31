@@ -20,7 +20,7 @@ import edu.skidmore.cs326.spring2022.skribbage.persistence.events.PersistanceFac
  * @author Sten Leinasaar
  * Last Edit: March 23, 2022
  */
-public class EventFactory implements EventDispatcher {
+public final class EventFactory implements EventDispatcher {
 
     /**
      * Singleton instance of a EventFactory.
@@ -31,7 +31,7 @@ public class EventFactory implements EventDispatcher {
     /**
      * List of subclasses for FactoryTemplate class.
      */
-    private List<FactoryTemplate> templates;
+    private final List<FactoryTemplate> templates;
 
     /**
      * Logger instance for logging.
@@ -39,7 +39,7 @@ public class EventFactory implements EventDispatcher {
     private static final Logger LOG;
 
     /**
-     * Event manager instance for dispatching events
+     * Event manager instance for dispatching events.
      */
     private final EventManager eventManager;
 
@@ -53,7 +53,7 @@ public class EventFactory implements EventDispatcher {
      */
     private EventFactory() {
         this.eventManager = EventManager.getInstance();
-        List<? extends FactoryTemplate> templates = Arrays.asList(
+        this.templates = Arrays.asList(
             new LogicFactoryTemplate(), new GamificationFactoryTemplate(),
             new FrontEndFactoryTemplate(), new PersistanceFactoryTemplate());
 
@@ -100,7 +100,7 @@ public class EventFactory implements EventDispatcher {
         LOG.trace(
             "Calling createEvent from each subclass "
                 + "with their overWritten hook method.");
-        for (FactoryTemplate subclass : templates) {
+        for (FactoryTemplate subclass : this.templates) {
             temp = subclass.createEvent(event, source, args);
             if (temp != null) {
                 LOG.trace(
@@ -131,6 +131,6 @@ public class EventFactory implements EventDispatcher {
      */
     @Override
     public void fireEvent(PropertyChangeEvent event) {
-        eventManager.notify(event);
+        this.eventManager.notify(event);
     }
 }
