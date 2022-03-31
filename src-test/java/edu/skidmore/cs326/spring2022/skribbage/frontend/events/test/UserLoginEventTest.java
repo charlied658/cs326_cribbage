@@ -50,9 +50,10 @@ public class UserLoginEventTest {
 
     /**
      * Setup Method to initialize testing conditions.
+     * @throws Exception when event can not be found.
      */
     @Before
-    public void setUp() {
+    public void setUp() throws Exception {
         LOG.trace("SetUp method started");
         source = new Object();
         userInstance =
@@ -74,17 +75,20 @@ public class UserLoginEventTest {
     }
 
     /**
+     * @throws Exception 
      * 
      */
     @Test(expected = IllegalArgumentException.class)
-    public void testErrorThrowing() {
+    public void testErrorThrowing() throws Exception {
         LOG.trace("Checking for IllegalArgumentException");
         testInstance2 = (UserLoginEvent) EventFactory.getInstance()
             .createEvent(EventType.USER_LOGIN, source, String.class);
         LOG.debug("IllegalArgument Exception caught from creating: "
-            + testInstance2.getEventName());
+            + testInstance2.getEventType());
         LOG.trace("Error test for checking args completed");
     }
+    
+    
 
     /**
      * Tests that the user assigned to the event is the one passed to the
@@ -105,7 +109,7 @@ public class UserLoginEventTest {
     @Test
     public void testGetEventName() {
         LOG.trace("Testing getEventName");
-        assertEquals(testInstance.getEventName(), "User Login Event");
+        assertEquals(testInstance.getEventType(), "User Login Event");
         LOG.trace("Completed testing the getEventName method");
     }
 

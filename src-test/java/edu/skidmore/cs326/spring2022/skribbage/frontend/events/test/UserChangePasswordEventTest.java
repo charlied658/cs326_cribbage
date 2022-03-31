@@ -107,7 +107,7 @@ public class UserChangePasswordEventTest {
     @Test
     public void testGetEventName() {
         LOG.trace("Testing getEventName");
-        assertEquals(testInstance.getEventName(), "User Change Password Event");
+        assertEquals(testInstance.getEventType(), "User Change Password Event");
         LOG.trace("Completed testing the getEventName method");
     }
 
