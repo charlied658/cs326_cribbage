@@ -1,4 +1,5 @@
 package edu.skidmore.cs326.spring2022.skribbage.logic;
+
 import java.util.ArrayList;
 //import org.apache.log4j.Logger;
 
@@ -221,5 +222,6 @@ public class Game {
         }
         return -1;
     }
+
 
 }
