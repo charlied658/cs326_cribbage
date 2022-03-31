@@ -2,6 +2,7 @@ package edu.skidmore.cs326.spring2022.skribbage.persistence;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -22,7 +23,7 @@ public class DatabaseManager {
 
 	private static Connection dbConnection;
 
-	public static boolean userAuthenticate(String username, String password) {
+	public boolean userAuthenticate(String username, String password) {
 
 		String tempQuery = "SELECT * FROM player_account WHERE username='" + username + "'";
 		// Connection conn = dbConnect();
@@ -80,11 +81,66 @@ public class DatabaseManager {
 
 	}
 
+	
+	
+	
+	///example code
+	
+	
+	
+public void update(String toChange, String changeTo, int user_id)  {
+	
+	Connection conn = null;
+	
+	PreparedStatement ps = null;
+	
+	ResultSet rs = null;
+	
+ 	try {
+//	 System.out.println("Run a prepared database query");
+//	 Class.forName("com.mysql.jdbc.Driver");
+ 		conn = getDB();
+	
+ 		ps = conn.prepareStatement("UPDATE player_account SET ? = ?  WHERE PersonID = ?");
+ 				
+ 		ps.setString(1, toChange);
+ 		ps.setString(2, changeTo);
+ 		ps.setInt(3, user_id);
+ 		
+ 		System.out.println(ps);	
+ 		System.out.println(ps.executeUpdate());	
+		 
+		  
+ 		} catch (SQLException sqle) {
+	
+			sqle.printStackTrace();
+			//LOGGER.error("Database Interaction Failure", sqle);
+			
+ 		} finally {
+		 if (rs != null) { try { rs.close(); }		 catch (SQLException sqle) {
+			// 	LOGGER.error("Failed to close result set", sqle);
+		 
+		 }
+		 
+		 }
+		 
+		 if (ps != null) { try { ps.close(); }
+		 		catch (SQLException sqle) {
+		 	//	LOGGER.error("Failed to close prepared statement", sqle);
+		 	}
+		 }
+		 if (conn != null) { try { conn.close(); }
+		 		catch (SQLException sqle) {
+		 	//		LOGGER.error("Failed to close connection", sqle);
+		 		}
+		 	}
+		}
+ 	 }
 	/*
 	 * This is a function to access the connection singleton
 	 *
 	 */
-	private static Connection getDB() {
+	private Connection getDB() {
 
 		if (dbConnection == null) {
 			try {
@@ -127,25 +183,28 @@ public class DatabaseManager {
 	public static void main(String[] args) {
 
 	
-		// Open a connection
-		System.out.println("Testing");
-		//getDB();
-		try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
-				Statement stmt = conn.createStatement();
-				ResultSet rs = stmt.executeQuery(QUERY);
-
-		) {
-			while (rs.next()) {
-				// Display values
-				System.out.print(" ID: " + rs.getInt("person_id"));
-				System.out.print(", Name: " + rs.getString("person_name"));
-
-			}
-			conn.close();
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+//		// Open a connection
+//		System.out.println("Testing");
+//		//getDB();
+//		try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+//				Statement stmt = conn.createStatement();
+//				ResultSet rs = stmt.executeQuery(QUERY);
+//
+//		) {
+//			while (rs.next()) {
+//				// Display values
+//				System.out.print(" ID: " + rs.getInt("person_id"));
+//				System.out.print(", Name: " + rs.getString("person_name"));
+//
+//			}
+//			conn.close();
+//
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
+//		
+		DatabaseManager instance = new DatabaseManager();
+		instance.update("Password","new password",325);
 
 		//userAuthenticate("nchantzi", "ILoveSQL");
 
