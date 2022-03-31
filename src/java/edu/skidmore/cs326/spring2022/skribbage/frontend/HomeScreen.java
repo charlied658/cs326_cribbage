@@ -97,45 +97,72 @@ public class HomeScreen extends DrawingSurface {
      */
     public HomeScreen() {
         LOG.trace("HomeScreen.java constructor");
+        LOG.trace("Creating a mainframe in HomeScreen.java constructor.");
         homeScreen =
             new MainFrame(this, "Skribbage Battle Royale Home", 900, 900, true);
+        LOG.trace("Calling a setup method in HomeScreen.java constructor.");
         setup();
     }
 
     /**
-     * Setup method.
-     * creates the loginPageButton, rulesPageButton, and pastGamesPageButton
-     * Text buttons
+     * Setup method creates the buttons being shown on the home screen.
      */
     public void setup() {
-        LOG.trace("Setup method in HomeScreen.java");
+        LOG.trace("Setup method in HomeScreen.java started.");
+        LOG.trace("Creating a Logo in HomeScreen.java in setup method.");
         logo = new Image("logo.png", new Point(150, 0), .6, null);
+        LOG.trace(
+            "Creating a loginPageButtong in HomeScreen.java in setup method.");
         loginPageButton = new Text("Login Page",
             new Point(logo.getLocation().x + 225, logo.getLocation().y + 375),
             20, Color.black, Color.blue);
+        LOG.trace(
+            "Creating a RulesPageButton in HomeScreen.java in setup method.");
         rulesPageButton = new Text("Rules Page",
             new Point(loginPageButton.getLocation().x,
                 loginPageButton.getLocation().y + 50),
             20, Color.black, Color.blue);
+        LOG.trace(
+            "Creating a pastGamesPageButton in homeScreen.java setup method.");
         pastGamesPageButton = new Text("Past Games Page",
             new Point(rulesPageButton.getLocation().x - 27,
                 rulesPageButton.getLocation().y + 50),
             20, Color.black, Color.blue);
+        LOG.trace(
+            "Creating a lobbyPageButton in HomeScreen.java setup method. ");
         lobbyPageButton = new Text("Lobby Page", new Point(
             pastGamesPageButton.getLocation().x + 27,
             pastGamesPageButton.getLocation().y + 50), 20,
             Color.black, Color.blue);
-
+        LOG.trace(
+            "Creating a startGameButtong in HomeScreen.java setup method.");
         startGameButton = new Text("Start Game",
             new Point(lobbyPageButton.getLocation().x,
                 lobbyPageButton.getLocation().y + 50),
             20, Color.black,
             Color.blue);
+        LOG.trace(
+            "Going to add a lobby Page Button "
+                + "to the mainFrame in HomeScreen.java.");
         add(lobbyPageButton);
+        LOG.trace(
+            "Going to add a login page button "
+                + "to the main frame in HomeScreen.java.");
         add(loginPageButton);
+        LOG.trace(
+            "Going to add a rules page button "
+                + "to the main frame in HomeScreen.java class.");
         add(rulesPageButton);
+        LOG.trace(
+            " Going to add past games page button "
+                + "to the main frame in HomeScreen.java class.");
         add(pastGamesPageButton);
+        LOG.trace(
+            " Going to add start game button"
+                + " to the main frame in HomeScreen.java.");
         add(startGameButton);
+        LOG.trace(
+            " Going add the logo to the main frame in HomeScreen.java class.");
         add(logo);
     }
 
@@ -172,7 +199,6 @@ public class HomeScreen extends DrawingSurface {
                 loginPage = new LoginPage();
             }
 
-            
             startGamePage = new StartGamePage();
 
             closeCurrentWindow();
