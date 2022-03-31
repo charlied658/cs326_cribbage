@@ -33,6 +33,7 @@ public class User {
      * Private static final Logger attribute for logging.
      */
     private static final Logger LOG;
+
     /**
      * Initializing the instance of Logger.
      */
@@ -41,10 +42,10 @@ public class User {
     }
 
     /**
-     * @param email
-     * @param userName
-     * @param password
-     * @param isAuthorized
+     * @param email        User's email
+     * @param userName     userName of user
+     * @param password     Password submitted
+     * @param isAuthorized Determines whether or not the user is logged in.
      */
     public User(String email, String userName, String password,
         boolean isAuthorized) {
@@ -53,12 +54,12 @@ public class User {
         this.userName = userName;
         LOG.debug("userName value set to: " + userName);
         this.password = password;
-        LOG.debug("passwprd value set to: " + password);
+        LOG.debug("password value set to: " + password);
         this.isAuthorized = isAuthorized;
         LOG.debug("isAuthorized value was set to: " + isAuthorized);
         LOG.info(
             "The parameters of User constructor were assigned"
-            + " to private variable attributes");
+                + " to private variable attributes");
     }
 
     /**
@@ -66,7 +67,7 @@ public class User {
      */
     public String getEmail() {
         LOG.debug("Returning email of a user");
-        return email;
+        return this.email;
     }
 
     /**
@@ -74,7 +75,7 @@ public class User {
      */
     public String getUserName() {
         LOG.debug("Returning the userName of a user");
-        return userName;
+        return this.userName;
     }
 
     /**
@@ -82,7 +83,7 @@ public class User {
      */
     public String getPassword() {
         LOG.debug("Returning the password of a user");
-        return password;
+        return this.password;
     }
 
     /**
@@ -90,6 +91,6 @@ public class User {
      */
     public boolean isAuthorized() {
         LOG.debug("Returning the boolean value of isAuthorized");
-        return isAuthorized;
+        return this.isAuthorized;
     }
 }
