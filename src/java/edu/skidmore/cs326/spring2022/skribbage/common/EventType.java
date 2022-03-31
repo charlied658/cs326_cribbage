@@ -16,34 +16,35 @@ import org.apache.log4j.Logger;
 public enum EventType {
 
     /**
-     * User Login event.
+     * Fired when a user attempts to create an account via login page.
      */
     USER_LOGIN("User Login Event", User.class),
     /**
-     * User Login event with hashed password.
+     * Fired when.
      */
     USER_LOGIN_HASHED("User Login Hashed Event", User.class),
     /**
-     * User login event response.
+     * Fired from logic tier when user's login request has been handled.
      */
     USER_LOGIN_RESPONSE("User Login Response Event", User.class),
     /**
-     * User password change event.
+     * Fired when a user attempts to change their password via login page.
      */
     USER_CHANGE_PASSWORD("User Change Password Event", User.class,
         String.class),
     /**
-     * User Create account event.
+     * Fired when a user attempts to create an account via login page.
      */
     USER_CREATE_ACCOUNT("User Create Account Event"),
     /**
-     * User delete account.
+     * Fired when a user attempts to delete their account.
      */
     USER_DELETE_ACCOUNT("User Delete Account Event"),
     /**
-     * Lobby event.
+     * Fired when the host of a lobby clicks 'start game', and all players
+     * are added to a new game.
      */
-    LOBBY_EVENT("Lobby Event");
+    LOBBY_START_GAME("Lobby Start Game Event");
 
     /**
      * The name of the event.

@@ -84,7 +84,7 @@ public class UserLoginEventTest {
         testInstance2 = (UserLoginEvent) EventFactory.getInstance()
             .createEvent(EventType.USER_LOGIN, source, String.class);
         LOG.debug("IllegalArgument Exception caught from creating: "
-            + testInstance2.getEventName());
+            + testInstance2.getEventType());
         LOG.trace("Error test for checking args completed");
     }
     
@@ -109,7 +109,7 @@ public class UserLoginEventTest {
     @Test
     public void testGetEventName() {
         LOG.trace("Testing getEventName");
-        assertEquals(testInstance.getEventName(), "User Login Event");
+        assertEquals(testInstance.getEventType(), "User Login Event");
         LOG.trace("Completed testing the getEventName method");
     }
 
