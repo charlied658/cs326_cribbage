@@ -77,9 +77,10 @@ public class EventFactoryTest {
 
     /**
      * Method to test factory create Event method.
+     * @throws Exception 
      */
     @Test
-    public void testCreateEvent() {
+    public void testCreateEvent() throws Exception {
         LOG.trace("Beginning test for CreateEvent method");
         assertNull(createInstance);
         createInstance = (UserCreateAccountEvent) testInstance

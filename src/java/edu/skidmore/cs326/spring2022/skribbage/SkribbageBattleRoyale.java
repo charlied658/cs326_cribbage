@@ -2,6 +2,8 @@ package edu.skidmore.cs326.spring2022.skribbage;
 
 import org.apache.log4j.Logger;
 
+import edu.skidmore.cs326.spring2022.skribbage.frontend.HomeScreen;
+
 /**
  * The game of Cribbage, with a few twists and turns.
  */
@@ -11,6 +13,10 @@ public class SkribbageBattleRoyale implements Runnable {
      * Logger for the class.
      */
     private static final Logger LOG;
+    /**
+     * HomeScreen instance to start the home page from driver class.
+     */
+    private HomeScreen homePage;
 
     /**
      * Create static resources.
@@ -30,6 +36,8 @@ public class SkribbageBattleRoyale implements Runnable {
     public void run() {
         System.out.println(getWelcomeMessage());
         LOG.info("Run method started");
+        LOG.info("homePage started by intilizing it.");
+        homePage = new HomeScreen();
     }
 
     /**
