@@ -79,7 +79,7 @@ public final class EventFactory implements EventDispatcher {
      * @throws Exception Event Not Found when EventType cannot be created.
      */
     public PropertyChangeEvent createEvent(EventType event, Object source,
-        Object... args) throws Exception {
+        Object... args) /**throws Exception*/ {
 
         Object[] eventArgumentList = event.getArgumentList();
 
@@ -112,7 +112,8 @@ public final class EventFactory implements EventDispatcher {
         }
 
         LOG.error("Event not found");
-        throw new Exception("Event Not Found");
+//        throw new Exception("Event Not Found");
+        return null;
 
     }
 
