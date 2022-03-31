@@ -48,12 +48,12 @@ public enum EventType {
     /**
      * The name of the event.
      */
-    private String name;
+    private final String name;
 
     /**
      * Argument list of the event.
      */
-    private Object[] args;
+    private final Object[] args;
 
     /**
      * Logger instance for logging.
@@ -82,7 +82,7 @@ public enum EventType {
      */
     public String getName() {
         LOG.trace("Returning a name of an event");
-        return name;
+        return this.name;
     }
 
     /**
@@ -92,7 +92,7 @@ public enum EventType {
      */
     public Object[] getArgumentList() {
         LOG.trace("Returning arguments list of an event");
-        return args;
+        return this.args;
     }
 
 }

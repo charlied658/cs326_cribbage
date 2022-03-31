@@ -45,7 +45,7 @@ public final class EventManager {
      */
     private EventManager() {
         LOG.info("Private Constructor of EventManager reached.");
-        support = new PropertyChangeSupport(this);
+        this.support = new PropertyChangeSupport(this);
     }
     
   
@@ -62,7 +62,7 @@ public final class EventManager {
     public void addPropertyChangeListener(PropertyChangeListener pcl,
         EventType... eventType) {
         for (EventType event : eventType) {
-            support.addPropertyChangeListener(event.toString(), pcl);
+            this.support.addPropertyChangeListener(event.toString(), pcl);
         }
     }
 
@@ -74,7 +74,7 @@ public final class EventManager {
      *            unregister
      */
     public void removePropertyChangeListener(PropertyChangeListener pcl) {
-        support.removePropertyChangeListener(pcl);
+        this.support.removePropertyChangeListener(pcl);
     }
 
     /**
@@ -85,7 +85,7 @@ public final class EventManager {
      *            PropertyChangeEvent)
      */
     public void notify(PropertyChangeEvent evt) {
-        support.firePropertyChange(evt);
+        this.support.firePropertyChange(evt);
     }
     
     /**
