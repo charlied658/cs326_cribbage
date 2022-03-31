@@ -3,11 +3,16 @@ package edu.skidmore.cs326.spring2022.skribbage.logic.events;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
+import org.apache.log4j.Logger;
 
+import edu.skidmore.cs326.spring2022.skribbage.common.EventFactory;
+import edu.skidmore.cs326.spring2022.skribbage.common.EventType;
 import edu.skidmore.cs326.spring2022.skribbage.common.User;
 import edu.skidmore.cs326.spring2022.skribbage.common.events.AccountEvent;
+import edu.skidmore.cs326.spring2022.skribbage.frontend.PlayableGame;
 import edu.skidmore.cs326.spring2022.skribbage.logic.LoginAuthenticator;
 import edu.skidmore.cs326.spring2022.skribbage.logic.PasswordHasher;
+import edu.skidmore.cs326.spring2022.skribbage.persistence.DatabaseManager;
 
 /**
  * Use events and listeners to facilitate login processes.
@@ -15,6 +20,25 @@ import edu.skidmore.cs326.spring2022.skribbage.logic.PasswordHasher;
  * @author Declan Morris & Alex Carney
  */
 public class AccountController implements PropertyChangeListener {
+
+    /**
+     * Logger instance for logging.
+     */
+    private static final Logger LOG;
+
+    static {
+        LOG = Logger.getLogger(PlayableGame.class);
+    }
+
+    /**
+     * Temporary instance of database manager used as tracer bullet.
+     */
+    private DatabaseManager dbManager = new DatabaseManager();
+
+    /**
+     * Factor instance for this class.
+     */
+    private EventFactory eventFactory = EventFactory.getInstance();
 
     /**
      * Determine whether a user is validated from database.
@@ -25,19 +49,9 @@ public class AccountController implements PropertyChangeListener {
      *         Whether or not the user is validated.
      */
     public boolean validateUser(User userToValidate) {
-
-        
+        return dbManager.userAuthenticate(userToValidate.getUserName(),
+            userToValidate.getPassword());
     }
-
-//    /**
-//     * Call the PasswordHasher instance to hash a user's password.
-//     * Should only run when
-//     * @param
-//     *      Password entered to be hashed
-//     */
-//    private String hashNewPassword(String enteredPassword) {
-//        return LoginAuthenticator.getInstance().hashNewPassword(enteredPassword);
-//    }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
@@ -65,21 +79,32 @@ public class AccountController implements PropertyChangeListener {
          */
         User associatedUser = ((AccountEvent) evt).getUser();
 
+        /**
+         * variable to assure validateUser is only run once.
+         */
         boolean userIsValid = validateUser(associatedUser);
 
         /*
          * Step 2: Handle each type of account event accordingly. There is
          * likely
-         * a better way to implement this, rather than stacks of instanceof
-         * statements. I'm open to recommendations. Here's a good place to start
-         * https://stackoverflow.com/questions/2790144/avoiding-instanceof-in-
-         * java
-         * The conclusion I came to from looking through various sources is that
-         * a chain of 'instanceof' statements is likely fine, especially for our
-         * project. However, I'm totally open to alternative solutions (We
-         * should
-         * agree on a single standard, however)
          */
-        
+        AccountEvent accountEvent = (AccountEvent) evt;
+
+        switch (accountEvent.getEventType()) {
+            case USER_CREATE_ACCOUNT:
+                LOG.debug("caught a create account event");
+                break;
+            case USER_LOGIN:
+                LOG.debug("caught a login event");
+                if (validateUser(associatedUser)) {
+                    UserLoginResponseEvent responseEvent =
+                        (UserLoginResponseEvent) eventFactory
+                            .createEvent(EventType.USER_LOGIN_RESPONSE, this);
+                }
+                break;
+            default:
+                LOG.warn("caught unhandled event");
+        }
+
     }
 }
