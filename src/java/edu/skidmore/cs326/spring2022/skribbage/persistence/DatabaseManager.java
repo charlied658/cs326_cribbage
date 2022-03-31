@@ -55,6 +55,8 @@ public class DatabaseManager {
 
 	/*
 	 * This is a function to access the connection singleton
+	 * 
+	 *  * @author Tinaye Mawocha
 	 *
 	 */
 	public String inventoryQuery(int playerID) {
@@ -87,7 +89,12 @@ public class DatabaseManager {
 	///example code
 	
 	
-	
+	/*
+	 * 
+	 * 
+	 *  * @author Tinaye Mawocha
+	 *
+	 */
 public void update(String toChange, String changeTo, int user_id)  {
 	
 	Connection conn = null;
@@ -101,11 +108,12 @@ public void update(String toChange, String changeTo, int user_id)  {
 //	 Class.forName("com.mysql.jdbc.Driver");
  		conn = getDB();
 	
- 		ps = conn.prepareStatement("UPDATE player_account SET ? = ?  WHERE PersonID = ?");
+ 		String script = "UPDATE player_account SET " + toChange + "= ?  WHERE PersonID = ?";
+ 		ps = conn.prepareStatement(script);
  				
- 		ps.setString(1, toChange);
- 		ps.setString(2, changeTo);
- 		ps.setInt(3, user_id);
+ 
+ 		ps.setString(1, changeTo);
+ 		ps.setInt(2, user_id);
  		
  		System.out.println(ps);	
  		System.out.println(ps.executeUpdate());	
@@ -136,8 +144,12 @@ public void update(String toChange, String changeTo, int user_id)  {
 		 	}
 		}
  	 }
+
 	/*
 	 * This is a function to access the connection singleton
+	 * 
+	 *  @author Tinaye Mawocha
+	 *  
 	 *
 	 */
 	private Connection getDB() {
@@ -161,6 +173,8 @@ public void update(String toChange, String changeTo, int user_id)  {
 	
 	/*
 	 * This is a function to access the connection singleton
+	 * 
+	 *  @author Tinaye Mawocha
 	 *
 	 */
 	private static Connection getDB() {
@@ -187,6 +201,7 @@ public void update(String toChange, String changeTo, int user_id)  {
 	 * "theConnection" parameter
 	 * 
 	 * @param theConnection: the connection passed in to be terminated
+	 * @author Tinaye Mawocha
 	 */
 	private void dbDisconnect(Connection theConnection) {
 
@@ -227,7 +242,7 @@ public void update(String toChange, String changeTo, int user_id)  {
 //		}
 //		
 		DatabaseManager instance = new DatabaseManager();
-		instance.update("Password","new password",325);
+		instance.update("Password","0000f",325);
 
 		//userAuthenticate("nchantzi", "ILoveSQL");
 
