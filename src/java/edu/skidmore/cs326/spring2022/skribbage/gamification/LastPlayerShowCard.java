@@ -1,8 +1,6 @@
 package edu.skidmore.cs326.spring2022.skribbage.gamification;
 
 import java.util.HashMap;
-
-
 import org.apache.log4j.Logger;
 
 /**
@@ -11,7 +9,7 @@ import org.apache.log4j.Logger;
  * @author Muaded Almheiri
  *
  */
-public class ReBattleCard implements ItemShopInterface {
+public class LastPlayerShowCard implements ItemShopInterface {
 
   /**
    * Logger for the class.
@@ -22,7 +20,7 @@ public class ReBattleCard implements ItemShopInterface {
    * Create static resources.
    */
     static {
-        LOG = Logger.getLogger(ReBattleCard.class);
+        LOG = Logger.getLogger(LastPlayerShowCard.class);
     }
 
   /**
@@ -46,18 +44,20 @@ public class ReBattleCard implements ItemShopInterface {
     private HashMap<String, Integer> cart = new HashMap<String, Integer>();
 
    /**
-    * ReBattleCard constructor.
+    * LastPlayerShowCard constructor.
     */
-    public ReBattleCard() {
-        LOG.info("Creating new Re-battle card");
+    public LastPlayerShowCard() {
+        LOG.info("Creating new Last-Player-Show Card");
 
         /* Set card name, price, and description. */
-        setName("Re-Battle Card");
+        setName("Last-Player-Show Card");
         setPrice(25);
-        setDescription("Use this card to get another chance of "
-            + "battling opponent after a battle.");
+        setDescription("Use this card to affect the order of the show."
+            + " Choose an opponent whose show will be moved to following"
+            + "the last show player. May only be used once during a show "
+            + "phase");
 
-        LOG.info("Name, price, and description set for Re-battle card.");
+        LOG.info("Name, price, and description set for Last-Player-Show Card.");
 
         boolean isEntry = false;
 
@@ -74,27 +74,27 @@ public class ReBattleCard implements ItemShopInterface {
     /* Card is not in store, place in store with value. */
         if (!isEntry) {
             STORE_ITEMS.put(specialCardName, specialCardPrice);
-            LOG.info("Re-battle card placed in store with value 25");
+            LOG.info("Last-Player-Show Card placed in store with value 25");
         }
 
     }
 
   /**
    * Buy's card at given price based on amount of tokens held by player.
-   * TODO If item bought, update player inventory and tokens.
+   * TODO If item bought, update player inventory(done) and tokens.
    */
     @Override
     public void buyItem(int playerTokens) {
-        
+
         if (getPrice() <= playerTokens) {
-            LOG.info("Re-battle card bought for 25 tokens");
+            LOG.info("Last-Player-Show Card bought for 25 tokens");
             playerTokens -= getPrice();
             LOG.info("25 Tokens subtracted from player's tokens.");
             System.out.println(getName() + " bought at price " + getPrice()
                 + ". Player now holds " + playerTokens);
-            addItemToInventory(cart);
+            updateInventory(cart);
         } else {
-            LOG.info("Not enough tokens to buy a Re-battle card.");
+            LOG.info("Not enough tokens to buy a Last-Player-Show Card.");
             System.out.println("Not enough tokens to buy " + getName());
         }
     }
@@ -138,30 +138,36 @@ public class ReBattleCard implements ItemShopInterface {
   
   /**
    * Setter method for card/item name.
+   * 
    * @param name card/item name.
    */
     public void setName(String name) {
-      
+        
+        LOG.info("Setting card name.");
         specialCardName = name;
       
     }
   
   /**
    * Setter method for card/item price.
-   * @param price card/item price
+   * 
+   * @param price card/item price.
    */
     public void setPrice(int price) {
       
+        LOG.info("Setting card price.");
         specialCardPrice = price;
       
     }
   
   /**
    * Setter method for card/item description.
+   * 
    * @param description card/item description.
    */
     public void setDescription(String description) {
-      
+        
+        LOG.info("Setting card description.");
         specialCardDescription = description;
       
     }
@@ -170,13 +176,12 @@ public class ReBattleCard implements ItemShopInterface {
      * Method to update player inventory with item bought.
      * @param cart HashMap holding items bought.
      */
-    public void addItemToInventory(HashMap<String, Integer> cart) {
+    private void updateInventory(HashMap<String, Integer> cart) {
       
       InventoryPrototype inventoryObj = new InventoryPrototype();
       cart.put(getName(), getPrice());
       inventoryObj.addItem(cart, getName());
     
     }
-    
 
 }
