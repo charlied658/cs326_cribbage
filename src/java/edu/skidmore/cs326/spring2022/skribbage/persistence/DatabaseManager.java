@@ -102,6 +102,29 @@ public class DatabaseManager {
 		}
 
 	}
+	
+	/*
+	 * This is a function to access the connection singleton
+	 *
+	 */
+	private static Connection getDB() {
+
+		if (dbConnection == null) {
+			try {
+				dbConnection = DriverManager.getConnection(DB_URL, USER, PASS);
+
+			} catch (SQLException e) {
+				System.out.println("Failed to establish connection with database");
+				e.printStackTrace();
+			}
+			System.out.println("Connected");
+			return dbConnection;
+		} else {
+			System.out.println("Already Connected");
+			return dbConnection;
+		}
+
+	}
 
 	/*
 	 * This is a function to disconnect the connection passed into the
