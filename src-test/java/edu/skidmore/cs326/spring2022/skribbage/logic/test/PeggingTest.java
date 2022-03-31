@@ -43,22 +43,21 @@ public class PeggingTest {
     public void setup() {
         // initialize the game
         game = new Game(2);
+
+        //note, when the game is initialized, the players and
+        //pegging total are initialized
+
         // initialize the pegging play
         pPlay = new PeggingPlay(game);
+
         // get the players for this game
         ArrayList<Player> listOfPlayers = game.getPlayerList();
-        // set the pone
+        // set a player to be the pone
         pone = listOfPlayers.get(0);
         pone.isDealer = false;
-        // set the dealer
+        // set a player to be the dealer
         dealer = listOfPlayers.get(1);
         dealer.isDealer = true;
-
-        // c = new Card('A', Suit.HEARTS);
-        // Hand h = p.getHand();
-        // h.addCardToHand(c);
-        // game.setPonePeggingCards(new ArrayList<Card>());
-        // game.setDealerPeggingCards(new ArrayList<Card>());
     }
 
     /**
@@ -68,13 +67,11 @@ public class PeggingTest {
     public void testAddCardToPeggingTotalCase1() {
 
         // cases to check
-        // the player is the pone and the card can be added
-        // the player is the dealer and the card can be added
-        // the card cannot be added
-        // the card is added and removed from the player's hand
-        // the card is not added and not removed from the player's hand
-
-        // assertEquals(0, game.getPeggingTotal());
+        // 1) the player is the pone and the card can be added
+        // 2) the player is the dealer and the card can be added
+        // 3) the card cannot be added
+        // 4) the card is added and removed from the player's hand
+        // 5) the card is not added and not removed from the player's hand
 
         // the player is the pone and the card can be added
         Card poneCard = new Card('A', Suit.HEARTS);
@@ -111,6 +108,7 @@ public class PeggingTest {
         // assertTrue((c.getPointValue() + 31) != game.getPeggingTotal());
 
     }
+
     //
     // /**
     // * Test the method check15.
