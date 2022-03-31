@@ -12,7 +12,8 @@ import java.sql.Statement;
  * Please note that this file will not function without first opening the keyhole to the connection within your terminal.
  * To achieve this type ssh cs326mysql@bits.monead.com
  *
- *
+ * Please also note that queries are placeholders and will be injected into code when finally completed 
+ *  
  */
 public class DatabaseManager {
 
@@ -29,6 +30,22 @@ public class DatabaseManager {
 
     private static Connection dbConnection;
 
+    
+    /* 
+
+	 * This is a function to check the database for a specific user and check whether the password functions 
+
+	 *  
+
+	 *  @author Tinaye Mawocha 
+
+	 *  @param username : the username of the desired user 
+
+	 *	@param password : the inputted password 
+
+	 */ 
+
+	 
     public boolean userAuthenticate(String username, String password) {
 
         String tempQuery =
@@ -61,12 +78,19 @@ public class DatabaseManager {
 
     }
 
-    /*
-     * This is a function to access the connection singleton
-     *
-     *  * @author Tinaye Mawocha
-     *
-     */
+    /* 
+
+	 * This is a function to query the token value held by a player  
+
+	 *  
+
+	 *  @author Tinaye Mawocha 
+
+	 *  @param playerID: the id of the player to check the value 
+
+	 * 
+
+	 */ 
     public String inventoryQuery(int playerID) {
 
         String tokenQuery =
@@ -93,13 +117,15 @@ public class DatabaseManager {
 
     }
 
-    ///example code
+  
 
     /*
+     * This is a method to change a value on the player_account table
      *
-     *
-     *  * @author Tinaye Mawocha
-     *
+     *  @author Tinaye Mawocha
+     *  @param toChange : the name of the column you wish to change 
+     *  @param changeTo : the new value you wish to input into the aforementioned table
+     *  @param user_id : the account id of the account you wish to change
      */
     public void update(String toChange, String changeTo, int user_id) {
 
