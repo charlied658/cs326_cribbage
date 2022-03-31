@@ -10,13 +10,14 @@ import java.util.ArrayList;
  */
 public class DealPhase {
   
+  private Game gameIns;
   /**
    * This method executes the dealing phase of the game. A dealer is determined,
    * cards are dealt, and cards are discarded to the crib.
    */
   public void dealPhase() {
 
-    Game.getDeck().shuffle();
+    gameIns.getDeck().shuffle();
 
     // select the dealer
 
@@ -46,7 +47,7 @@ public class DealPhase {
 
     determineDealer(amountToCutP1, amountToCutP2);
 
-    Game.getDeck().shuffle();
+    gameIns.getDeck().shuffle();
 
     dealCards();
 
@@ -65,8 +66,8 @@ public class DealPhase {
 
     int amountToCut = 6;
 
-    Game.getDeck().moveToTop(amountToCut);
-    Card topCard = Game.getDeck().getDeck().get(0);
+    gameIns.getDeck().moveToTop(amountToCut);
+    Card topCard = gameIns.getDeck().getDeck().get(0);
 
     // FRONT END INTERACTION: give information about the card on top of the deck
 
@@ -87,19 +88,19 @@ public class DealPhase {
       // search the player's hand for the card to discard and remove it from the
       // hand
       removeCardFromHand(toDiscardP1[i],
-          Game.getPlayerList().get(0));
+          gameIns.getPlayerList().get(0));
 
       // add the card to the crib
-      Game.getCrib().add(toDiscardP1[i]);
+      gameIns.getCrib().add(toDiscardP1[i]);
     }
 
     for (int j = 0; j < toDiscardP2.length; j++) {
       // search the player's hand for the card and remove it
       removeCardFromHand(toDiscardP2[j],
-          Game.getPlayerList().get(1));
+          gameIns.getPlayerList().get(1));
 
       // add the card to the crib
-      Game.getCrib().add(toDiscardP2[j]);
+      gameIns.getCrib().add(toDiscardP2[j]);
 
     }
 
@@ -142,7 +143,7 @@ public class DealPhase {
    */
   public void dealCards() {
    
-    int idxOfDealer = Game.getDealerIdx();
+    int idxOfDealer = gameIns.getDealerIdx();
     
     if (idxOfDealer == -1) {
       return;
@@ -152,16 +153,16 @@ public class DealPhase {
     Hand poneHand = new Hand();
 
     for (int i = 0; i < 6; i++) {
-      poneHand.addCardToHand(Game.getDeck().removeTopCard());
-      dealerHand.addCardToHand(Game.getDeck().removeTopCard());
+      poneHand.addCardToHand(gameIns.getDeck().removeTopCard());
+      dealerHand.addCardToHand(gameIns.getDeck().removeTopCard());
     }
    
-    Game.getPlayerList().get(idxOfDealer).setHand(dealerHand);
+    gameIns.getPlayerList().get(idxOfDealer).setHand(dealerHand);
 
     if (idxOfDealer == 1) {
-      Game.getPlayerList().get(0).setHand(poneHand);
+        gameIns.getPlayerList().get(0).setHand(poneHand);
     } else {
-      Game.getPlayerList().get(1).setHand(poneHand);
+        gameIns.getPlayerList().get(1).setHand(poneHand);
     }
 
   }
@@ -176,18 +177,18 @@ public class DealPhase {
    */
   public void determineDealer(int amountToCutP1, int amountToCutP2) {
 
-    Game.getDeck().shuffle();
+      gameIns.getDeck().shuffle();
 
-    Card cardP1 = Game.getDeck().cut(amountToCutP1);
-    Card cardP2 = Game.getDeck().cut(amountToCutP2);
+    Card cardP1 = gameIns.getDeck().cut(amountToCutP1);
+    Card cardP2 = gameIns.getDeck().cut(amountToCutP2);
 
     // assumption: player 2 is at index 1
     // assumption: player 1 is at index 0
 
     if (cardP1.getPointValue() < cardP2.getPointValue()) {
-      Game.getPlayerList().get(0).isDealer = true;
+        gameIns.getPlayerList().get(0).isDealer = true;
     } else if (cardP2.getPointValue() < cardP1.getPointValue()) {
-      Game.getPlayerList().get(1).isDealer = true;
+        gameIns.getPlayerList().get(1).isDealer = true;
     } else if (cardP2.getPointValue() == 10) {
       // ordering is J, Q, K
       // compare based on that ordering
@@ -195,13 +196,13 @@ public class DealPhase {
       char p2Id = cardP2.getIdentifier();
 
       if (p1Id == 'J') {
-        Game.getPlayerList().get(0).isDealer = true;
+          gameIns.getPlayerList().get(0).isDealer = true;
       } else if (p1Id == 'Q' && p2Id == 'K') {
-        Game.getPlayerList().get(0).isDealer = true;
+          gameIns.getPlayerList().get(0).isDealer = true;
       } else if (p2Id == 'J') {
-        Game.getPlayerList().get(1).isDealer = true;
+          gameIns.getPlayerList().get(1).isDealer = true;
       } else if (p2Id == 'Q' && p1Id == 'K') {
-        Game.getPlayerList().get(1).isDealer = true;
+          gameIns.getPlayerList().get(1).isDealer = true;
       } else {
         determineDealer(amountToCutP1, amountToCutP2);
       }
