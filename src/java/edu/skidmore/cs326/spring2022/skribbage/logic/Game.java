@@ -47,6 +47,14 @@ public class Game {
         initPeggingTotal();
     }
 
+    /**
+     * Game constructor. It initializes the pegging total.
+     * This was created for testing Game.
+     */
+    public Game() {
+        peggingTotal = 0;
+    }
+
 	  /**
 	   * Initializes the ArrayList of Player objects given the
 	   * number of players for this game. However, there is
@@ -58,10 +66,17 @@ public class Game {
     public void initPlayers(int numPlayers) {
 
         for (int i = 0; i < numPlayers; i++) {
-            Player p = new Player();
-            playerList.add(p);
+            addPlayer(new Player());
         }
+    }
 
+    /**
+     * Add a player to the player list.
+     *
+     * @param p is the player to add to the player list.
+     */
+    public void addPlayer(Player p) {
+       playerList.add(p);
     }
 
 	/**
