@@ -44,9 +44,9 @@ public class UserLoginEvent extends AccountEvent {
      * @return Event name of type string.
      */
     @Override
-    public String getEventName() {
+    public EventType getEventType() {
         LOG.trace("Returning a name of the event.");
-        return EventType.USER_LOGIN.getName();
+        return EventType.USER_LOGIN;
     }
 
 }

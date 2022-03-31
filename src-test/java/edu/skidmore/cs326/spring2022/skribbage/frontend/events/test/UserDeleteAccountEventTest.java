@@ -107,7 +107,7 @@ public class UserDeleteAccountEventTest {
     public void testGetEventName() {
         LOG.trace("Testing getEventName");
         testInstance = new UserDeleteAccountEvent(source, userInstance);
-        assertEquals(testInstance.getEventName(), "User Delete Account Event");
+        assertEquals(testInstance.getEventType(), "User Delete Account Event");
         LOG.trace("Completed testing the getEventName method");
     }
 
