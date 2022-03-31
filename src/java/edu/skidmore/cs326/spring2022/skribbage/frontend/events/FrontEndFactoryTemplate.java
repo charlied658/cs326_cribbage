@@ -33,7 +33,7 @@ public class FrontEndFactoryTemplate extends FactoryTemplate {
     @Override
     public PropertyChangeEvent eventCreation(EventType event, Object source,
         Object... args) {
-
+        
         switch (event) {
             case USER_LOGIN:
                 LOG.trace("Returning: " + event.getName());
