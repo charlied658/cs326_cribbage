@@ -43,7 +43,7 @@ public abstract class AccountEvent extends PropertyChangeEvent {
      * @throws IllegalArgumentException
      *             if {@code source} is {@code null}
      */
-    public AccountEvent(Object source, EventType eventType, User user) {
+    protected AccountEvent(Object source, EventType eventType, User user) {
         super(source, eventType.toString(), null, null);
         this.user = user;
         LOG.trace("Constructor method reached and super class called");

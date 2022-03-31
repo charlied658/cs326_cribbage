@@ -1,5 +1,8 @@
-package edu.skidmore.cs326.spring2022.skribbage.logic;
+package edu.skidmore.cs326.spring2022.skribbage.logic.test;
 import org.junit.Test;
+
+import edu.skidmore.cs326.spring2022.skribbage.logic.Game;
+
 import org.junit.Ignore;
 
 public class TestGameCreation{
