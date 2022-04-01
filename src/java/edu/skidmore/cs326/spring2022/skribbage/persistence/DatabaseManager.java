@@ -162,7 +162,6 @@ public class DatabaseManager {
 
         }
         catch (SQLException sqle) {
-
             sqle.printStackTrace();
             //LOGGER.error("Database Interaction Failure", sqle);
 
@@ -273,7 +272,9 @@ public class DatabaseManager {
         //		}
         //
         DatabaseManager instance = new DatabaseManager();
-        System.out.println((instance.inventoryQuery(325)));
+        //System.out.println((instance.inventoryQuery(325)));
+        getDB();
+        //instance.update("username", "justblaz", 325);
 
         //userAuthenticate("nchantzi", "ILoveSQL");
 
