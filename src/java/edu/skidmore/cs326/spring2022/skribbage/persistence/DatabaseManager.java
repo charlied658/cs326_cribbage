@@ -271,7 +271,7 @@ public class DatabaseManager {
         //			e.printStackTrace();
         //		}
         //
-        DatabaseManager instance = new DatabaseManager();
+        //DatabaseManager instance = new DatabaseManager();
         //System.out.println((instance.inventoryQuery(325)));
         getDB();
         //instance.update("username", "justblaz", 325);
