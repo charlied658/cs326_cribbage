@@ -18,8 +18,7 @@ public class PasswordHasher {
     private static PasswordHasher instance = null;
 
     /**
-     * Only constructor should be private and only accessed when the instance
-     * object
+     * Constructor should only be accessed when the instance
      * is first created.
      */
     private PasswordHasher() {
@@ -153,7 +152,7 @@ public class PasswordHasher {
      * @return The Base64 encoded salt and salted password hash separated by a
      *         character to allow them to be split apart
      */
-    protected String demoHashingNewPassword(String newPassword) {
+    protected String hashNewPassword(String newPassword) {
         // Generate new salt
         byte[] newSalt = generateSalt(SALT_LENGTH);
 

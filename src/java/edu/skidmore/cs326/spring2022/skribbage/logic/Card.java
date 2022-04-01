@@ -5,9 +5,9 @@ import org.apache.log4j.Logger;
 import edu.skidmore.cs326.spring2022.skribbage.common.events.AccountEvent;
 
 /**
+ * Encompasses all information portrayed by a card
+ * Card also knows which card type should come after it in a run.
  * @author Declan Morris
- *         Encompasses all information portrayed by a card
- *         Card also knows which card type should come after it in a run
  */
 public class Card {
 
