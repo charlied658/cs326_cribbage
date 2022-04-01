@@ -6,36 +6,35 @@ import java.beans.PropertyChangeEvent;
 
 import org.apache.log4j.Logger;
 
-import edu.skidmore.cs326.spring2022.skribbage.common.FactoryTemplate;
-
 public class PersistenceFacade {
 
-<<<<<<< HEAD
+//<<<<<<< HEAD
 	private static final Logger LOG;
-	private static final DatabaseManager DB_Instance;
+	//private static final DatabaseManager DB_Instance;
+	
 
 	static {
 		LOG = Logger.getLogger(FrontEndFactoryTemplate.class);
 	}
 
-	public String EventDBManager(EventType eventToHandle, Object[] metaData) {
-		Boolean isSuccess = true;
+//	public String EventDBManager(EventType eventToHandle, Object[] metaData) {
+//		Boolean isSuccess = true;
+//
+//		return isSuccess ? "success" : "fail";
+//
+//	}
 
-		return isSuccess ? "success" : "fail";
-
-	}
-
-	 public static void main(String[] args) {
-
-	}
-=======
-    private static final Logger LOG;
-
-    private static DatabaseManager DB_Instance;
-
-    static {
-        LOG = Logger.getLogger(FrontEndFactoryTemplate.class);
-    }
+//	 public static void main(String[] args) {
+//
+//	}
+//=======
+//    private static final Logger LOG;
+//
+//    private static DatabaseManager DB_Instance;
+//
+//    static {
+//        LOG = Logger.getLogger(FrontEndFactoryTemplate.class);
+//    }
 
     public String EventDBManager(EventType eventToHandle, Object[] metaData) {
         Boolean isSuccess = true;
@@ -55,8 +54,8 @@ public class PersistenceFacade {
 
     }
 
-    public static void main(String[] args) {
-
-    }
->>>>>>> 01d6bd53f021b02c7735798961a7c627dd271523
+//    public static void main(String[] args) {
+//
+//    }
+//>>>>>>> 01d6bd53f021b02c7735798961a7c627dd271523
 }
