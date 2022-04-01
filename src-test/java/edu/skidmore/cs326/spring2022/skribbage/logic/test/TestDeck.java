@@ -51,7 +51,8 @@ public class TestDeck {
     public void testTwo() {
         // test 2 shuffle
         // see if cards are in random order
-        assertNotEquals(testInstance.shuffle(), testInstanceOrdered);
+        testInstance.shuffle();
+        assertNotEquals(testInstance, testInstanceOrdered);
 
     } // end testTwo
 
@@ -93,7 +94,8 @@ public class TestDeck {
     public void testSix() {
         // test 6 move to top
         // make sure the chosen card is in the correct place
-        assertEquals(testInstance.moveToTop(20), testInstance.getDeck().get(0));
+        testInstance.moveToTop(20);
+        assertEquals(testInstance, testInstance.getDeck().get(0));
 
     } // end testSix
 
