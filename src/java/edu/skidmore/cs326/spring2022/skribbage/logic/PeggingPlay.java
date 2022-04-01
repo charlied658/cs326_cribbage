@@ -44,7 +44,7 @@ public class PeggingPlay {
             // cards
             p.getHand().removeCardFromHand(cardToAdd);
 
-            if (p.isDealer) {
+            if (p.isDealer()) {
                 game.addDealerPeggingCard(cardToAdd);
             } else {
                 game.addPonePeggingCard(cardToAdd);
@@ -242,7 +242,7 @@ public class PeggingPlay {
         ArrayList<Card> ponePeggingCards = game.getPonePeggingCards();
         ArrayList<Card> checkIfPair = new ArrayList<Card>();
 
-        if (p.isDealer) {
+        if (p.isDealer()) {
             // if the person making the claim is the dealer, the dealer
             //played a
             // card

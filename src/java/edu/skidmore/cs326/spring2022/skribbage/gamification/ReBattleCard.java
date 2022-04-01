@@ -2,7 +2,6 @@ package edu.skidmore.cs326.spring2022.skribbage.gamification;
 
 import org.apache.log4j.Logger;
 
-import java.io.*;
 import java.util.HashMap;
 
 /**
@@ -59,7 +58,7 @@ public class ReBattleCard implements ItemShopInterface {
         /*
          * Loop through Hash map to check if card already exists in item shop.
          */
-        for (HashMap.Entry<String, Integer> entry : storeItems.entrySet()) {
+        for (HashMap.Entry<String, Integer> entry : STORE_ITEMS.entrySet()) {
 
             if (entry.getKey().equals(getName())) {
 
@@ -70,7 +69,7 @@ public class ReBattleCard implements ItemShopInterface {
 
         /* Card is not in store, place in store with value. */
         if (!isEntry) {
-            storeItems.put(getName(), getPrice());
+            STORE_ITEMS.put(getName(), getPrice());
             LOG.info("Re-battle card placed in store with value 25");
         }
 
