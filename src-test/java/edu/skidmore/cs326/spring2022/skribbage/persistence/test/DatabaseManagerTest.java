@@ -9,7 +9,7 @@ import edu.skidmore.cs326.spring2022.skribbage.persistence.DatabaseManager;
 
 /**
  * 
- * @author Ricardo
+ * @author Ricardo Rosario
  *		   Last Edited: By Ricardo, March 31, 2022
  */
 public class DatabaseManagerTest {
@@ -46,9 +46,22 @@ public class DatabaseManagerTest {
 		assertEquals(true, verification);
 	}
 	
+	/**
+	 * Testing when asking the inventoryQuery for coin count is successful
+	 */
 	@Test
-	public void inventoryQuery() {
-		String cointtest = databaseinstance.inventoryQuery(325);
+	public void inventoryQuerysuccess() {
+		String cointest = databaseinstance.inventoryQuery(325);
+		assertEquals(cointest, "player coin value: 100000");
+	}
+	
+	/**
+	 * Testing when asking the inventoryQuery for coin count fails 
+	 */
+	@Test
+	public void inventoryQueryfails() {
+		String cointest = databaseinstance.inventoryQuery(420);
+		assertEquals(cointest, "Account not found");
 	}
 
 }
