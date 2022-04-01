@@ -7,8 +7,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-/*
- *
+/**
+ * Contains the methods that connect to the database. Creates, edits, and deletes profiles.
  * Please note that this file will not function without first opening the keyhole to the connection within your terminal.
  * To achieve this type ssh cs326mysql@bits.monead.com
  *
@@ -31,7 +31,7 @@ public class DatabaseManager {
     private static Connection dbConnection;
 
     
-    /* 
+    /** 
 
 	 * This is a function to check the database for a specific user and check whether the password functions 
 
@@ -78,7 +78,7 @@ public class DatabaseManager {
 
     }
 
-    /* 
+    /** 
 
 	 * This is a function to query the token value held by a player  
 
@@ -107,7 +107,7 @@ public class DatabaseManager {
         	ps = dbConnection.prepareStatement(tokenQuery);
             ps.setInt(1, playerID);
                    
-            System.out.println(ps);
+            //System.out.println(ps);
             ResultSet rs = ps.executeQuery();
 
             rs.next();
@@ -115,18 +115,21 @@ public class DatabaseManager {
 
         }
         catch (SQLException e) {
-            System.out.println("Account not found");
+            //System.out.println("Account not found");
             e.printStackTrace();
+            dbDisconnect(conn);
+            return "Account not found";
 
         }
-
+        
+        dbDisconnect(conn);
         return "player coin value: " + netWorth;
 
     }
 
   
 
-    /*
+    /**
      * This is a method to change a value on the player_account table
      *
      *  @author Tinaye Mawocha
@@ -197,7 +200,7 @@ public class DatabaseManager {
 
    
 
-    /*
+    /**
      * This is a function to access the connection singleton
      *
      *  @author Tinaye Mawocha
@@ -211,27 +214,26 @@ public class DatabaseManager {
 
             }
             catch (SQLException e) {
-                System.out
-                    .println("Failed to establish connection with database");
+                //System.out.println("Failed to establish connection with database");
                 e.printStackTrace();
             }
             System.out.println("Connected");
             return dbConnection;
         } else {
-            System.out.println("Already Connected");
+            //System.out.println("Already Connected");
             return dbConnection;
         }
 
     }
 
-    /*
+    /**
      * This is a function to disconnect the connection passed into the
      * "theConnection" parameter
      *
      * @param theConnection: the connection passed in to be terminated
      * @author Tinaye Mawocha
      */
-    private void dbDisconnect(Connection theConnection) {
+    public void dbDisconnect(Connection theConnection) {
 
         try {
             theConnection.close();
@@ -243,8 +245,9 @@ public class DatabaseManager {
 
     }
 
-    /*
-     * Just Kidding, you know what this does
+    /**
+     * Creates a DatabaseManager instances
+     * 
      *
      */
     public static void main(String[] args) {

@@ -1,21 +1,24 @@
 package edu.skidmore.cs326.spring2022.skribbage.persistence;
 
-import edu.skidmore.cs326.spring2022.skribbage.frontend.events.*;
+//import edu.skidmore.cs326.spring2022.skribbage.frontend.events.*;
 import edu.skidmore.cs326.spring2022.skribbage.common.EventType;
-import java.beans.PropertyChangeEvent;
+//import java.beans.PropertyChangeEvent;
 
-import org.apache.log4j.Logger;
+//import org.apache.log4j.Logger;
 
+/**
+ * Will contain the methods for an event listener and call the methods in the DatabaseManager
+ */
 public class PersistenceFacade {
 
 //<<<<<<< HEAD
-	private static final Logger LOG;
+	//private static final Logger LOG;
 	//private static final DatabaseManager DB_Instance;
 	
 
-	static {
-		LOG = Logger.getLogger(FrontEndFactoryTemplate.class);
-	}
+//	static {
+//		LOG = Logger.getLogger(FrontEndFactoryTemplate.class);
+//	}
 
 //	public String EventDBManager(EventType eventToHandle, Object[] metaData) {
 //		Boolean isSuccess = true;
@@ -36,6 +39,13 @@ public class PersistenceFacade {
 //        LOG = Logger.getLogger(FrontEndFactoryTemplate.class);
 //    }
 
+	/**
+	 * Will listen for the events and manage what method is being called
+	 * @param eventToHandle the event that is being passed
+	 * @param metaData the information that we are going to store
+	 * @return if the event was successful or not
+	 * 
+	 */
     public String EventDBManager(EventType eventToHandle, Object[] metaData) {
         Boolean isSuccess = true;
         switch (eventToHandle) {
