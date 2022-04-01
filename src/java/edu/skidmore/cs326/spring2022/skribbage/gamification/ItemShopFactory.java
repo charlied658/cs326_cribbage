@@ -2,8 +2,6 @@ package edu.skidmore.cs326.spring2022.skribbage.gamification;
 
 import org.apache.log4j.Logger;
 
-import java.io.*;
-
 /**
  * Factory class to create objects based on item/card name.
  * TODO revisit after approving cards/items and building logic of each item.
