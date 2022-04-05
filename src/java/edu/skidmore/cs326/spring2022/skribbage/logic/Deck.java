@@ -6,6 +6,9 @@ import java.util.Random;
 
 /**
  *
+ * TODO (DSR): Deck functionality needs to move to the common package
+ * TODO (DSR): Lets talk through the design of Card, Hand, Deck...
+
  * @author kpolite
  *
  */
