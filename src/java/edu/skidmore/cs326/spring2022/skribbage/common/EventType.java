@@ -1,5 +1,7 @@
 package edu.skidmore.cs326.spring2022.skribbage.common;
 
+
+
 import org.apache.log4j.Logger;
 
 /**
@@ -7,58 +9,73 @@ import org.apache.log4j.Logger;
  * written, its associated title must be included with this enum.
  *
  * @author Alex Carney
- * Reviewed Sten Leinasaar @at March 22, 2022
- * Metadata and code to access it added by Sten Leinasaar @at March 22 2022
+ *         Reviewed Sten Leinasaar @at March 22, 2022
+ *         Metadata and code to access it added by Sten Leinasaar @at March 22
+ *         2022
  */
 public enum EventType {
+
     /**
-     * User Login event.
+     * Fired when a user attempts to create an account via login page.
      */
-    USER_LOGIN("User Login Event"),
+    USER_LOGIN("User Login Event", User.class),
     /**
-     * User Login event with hashed password.
+     * Fired when.
      */
-    USER_LOGIN_HASHED("User Login Hashed Event"),
+    USER_LOGIN_HASHED("User Login Hashed Event", User.class),
     /**
-     * User login event response.
+     * Fired from logic tier when user's login request has been handled.
      */
-    USER_LOGIN_RESPONSE("User Login Response Event"),
+    USER_LOGIN_RESPONSE("User Login Response Event", User.class),
     /**
-     * User password change event.
+     * Fired when a user attempts to change their password via login page.
      */
-    USER_CHANGE_PASSWORD("User Change Password Event"),
+    USER_CHANGE_PASSWORD("User Change Password Event", User.class,
+        String.class),
     /**
-     * User Create account event.
+     * Fired when a user attempts to create an account via login page.
      */
     USER_CREATE_ACCOUNT("User Create Account Event"),
     /**
-     * User delete account. 
+     * Fired when a user attempts to delete their account.
      */
-    USER_DELETE_ACCOUNT("User Delete Account Event");
-    
+    USER_DELETE_ACCOUNT("User Delete Account Event"),
+    /**
+     * Fired when the host of a lobby clicks 'start game', and all players
+     * are added to a new game.
+     */
+    LOBBY_START_GAME("Lobby Start Game Event");
+
     /**
      * The name of the event.
      */
-    private String name;
+    private final String name;
+
+    /**
+     * Argument list of the event.
+     */
+    private final Object[] args;
+
     /**
      * Logger instance for logging.
      */
     private static final Logger LOG;
-    
+
     static {
         LOG = Logger.getLogger(EventType.class);
     }
-    
-    
+
     /**
-     * 
      * @param name
-     *          The name of the event.
+     *            The name of the event.
+     * @param args
+     *            A var arg of arguments for this event to take.
      */
-    EventType(String name) {
+    EventType(String name, Object... args) {
         this.name = name;
-        
+        this.args = args;
     }
+
     /**
      * Get the name of event.
      * 
@@ -66,10 +83,17 @@ public enum EventType {
      */
     public String getName() {
         LOG.trace("Returning a name of an event");
-        return name;
+        return this.name;
+    }
+
+    /**
+     * Return the arguments list.
+     * 
+     * @return The argument list.
+     */
+    public Object[] getArgumentList() {
+        LOG.trace("Returning arguments list of an event");
+        return this.args;
     }
 
 }
-
-
-

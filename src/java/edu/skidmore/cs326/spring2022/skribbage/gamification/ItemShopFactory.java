@@ -3,11 +3,11 @@ package edu.skidmore.cs326.spring2022.skribbage.gamification;
 import org.apache.log4j.Logger;
 
 /**
-* Factory class to create objects based on item/card name.
-* TODO revisit after approving cards/items and building logic of each item.
-* @author Muaded Almheiri
-*
-*/
+ * Factory class to create objects based on item/card name.
+ * TODO revisit after approving cards/items and building logic of each item.
+ * 
+ * @author Muaded Almheiri
+ */
 public class ItemShopFactory {
 
 
@@ -21,7 +21,7 @@ public class ItemShopFactory {
   */
  static {
     LOG = Logger.getLogger(ItemShopFactory.class);
- }
+   }
 
  /**
   * Factory method to instantiate item.
@@ -46,5 +46,6 @@ public class ItemShopFactory {
     return null;
   
  }
- 
+
+    
 }

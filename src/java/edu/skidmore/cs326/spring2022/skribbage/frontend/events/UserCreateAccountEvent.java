@@ -8,19 +8,15 @@ import edu.skidmore.cs326.spring2022.skribbage.common.events.AccountEvent;
 
 /**
  * @author Alex Carney
- *         Reviewed, commented, Logging added  bv Sten Leinasaar
+ *         Reviewed, commented, Logging added bv Sten Leinasaar
  */
 @SuppressWarnings("serial")
 public class UserCreateAccountEvent extends AccountEvent {
     /**
-     * Private user instance of type user.
+     * Private static final Logger variable.
      */
-    private final User user;
-    /**
-     * Private static final Logger variable. 
-     */
-    private static final Logger LOG; 
-    
+    private static final Logger LOG;
+
     static {
         LOG = Logger.getLogger(UserCreateAccountEvent.class);
     }
@@ -30,28 +26,20 @@ public class UserCreateAccountEvent extends AccountEvent {
      *
      * @param source
      *            the bean that fired the event
-     * @param associatedUser
-     *            The email, username, and password supplied with the new
-     *            account request
+     * @param args
+     *            list of arguments based on enum.
      * @throws IllegalArgumentException
      *             if {@code source} is {@code null}
+     *             source, User associatedUser
      */
-    public UserCreateAccountEvent(Object source, User associatedUser) {
-        super(source, EventType.USER_CREATE_ACCOUNT.toString(), associatedUser);
-        this.user = associatedUser;
+    public UserCreateAccountEvent(Object source, Object... args) {
+        super(source, EventType.USER_CREATE_ACCOUNT, (User) args[0]);
         LOG.trace(" Constructor reached.");
-    }
-    /**
-     * @return An object of type user is returned.
-     */
-    public User getUser() {
-        LOG.info(" Returning the user object");
-        return user;
     }
 
     @Override
-    public String getEventName() {
+    public EventType getEventType() {
         LOG.trace("Returning an event name");
-        return null;
+        return EventType.USER_CREATE_ACCOUNT;
     }
 }

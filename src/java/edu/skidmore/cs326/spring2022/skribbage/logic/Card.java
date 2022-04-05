@@ -2,6 +2,8 @@ package edu.skidmore.cs326.spring2022.skribbage.logic;
 
 import org.apache.log4j.Logger;
 
+import edu.skidmore.cs326.spring2022.skribbage.common.events.AccountEvent;
+
 /**
  * @author Declan Morris
  *         Encompasses all information portrayed by a card
@@ -10,32 +12,56 @@ import org.apache.log4j.Logger;
 public class Card {
 
     /**
+     * Instance of a Logger for Card.
+     */
+    private static final Logger LOG;
+
+    /**
+     * Static block to initialize logger.
+     */
+    static {
+        LOG = Logger.getLogger(AccountEvent.class);
+    }
+
+    /**
      * The numerical value added to the center sum during play phase
-     * (4 of hearts is worth 4, any king is worth 10, etc.)
+     * (4 of hearts is worth 4, any king is worth 10, etc.).
      */
     private int pointValue;
 
     /**
      * Getter for pointValue.
-     * @return Point value of type int.
+     * 
+     * @return the point value
      */
     public int getPointValue() {
         return pointValue;
     }
 
     /**
-     * The identifying character that would appear on the physical card
+     * The identifying character that would appear on the physical card.
      */
     private char identifier;
 
+    /**
+     * insert java doc.
+     * 
+     * @return insert java doc.
+     */
     public char getIdentifier() {
         return identifier;
     }
 
+    /**
+     * insert javadoc.
+     * 
+     * @param inIdentifier
+     */
     private void setIdentifier(char inIdentifier) {
         switch (inIdentifier) {
             case 'A':
                 pointValue = 1;
+
                 nextIdentifier = '2';
                 identifier = inIdentifier;
                 break;
@@ -126,6 +152,8 @@ public class Card {
 
     /**
      * Getter for nextIdentifier (automatically set when identifier is set).
+     * 
+     * @return java doc.
      */
     public char getNextIdentifier() {
         return nextIdentifier;
@@ -138,6 +166,8 @@ public class Card {
 
     /**
      * Getter for suit.
+     * 
+     * @return javadoc.
      */
     public Suit getSuit() {
         return suit;
@@ -145,7 +175,7 @@ public class Card {
 
     /**
      * Setter for suit.
-     * 
+     *
      * @param inSuit
      *            input suit
      */
@@ -154,14 +184,16 @@ public class Card {
     }
 
     /**
-     * Constructor that assigns parameterized values to all attributes
-     * 
+     * Constructor that assigns parameterized values to all attributes.
+     *
      * @param inSuit
      *            inputted suit
      * @param inIdentifier
      *            inputted identifier
      */
     public Card(char inIdentifier, Suit inSuit) {
+        LOG.trace("Constructor called to create " + inIdentifier 
+            + " of " + inSuit);
         setSuit(inSuit);
         setIdentifier(inIdentifier);
     }

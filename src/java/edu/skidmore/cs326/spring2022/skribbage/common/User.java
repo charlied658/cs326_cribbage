@@ -4,7 +4,7 @@ import org.apache.log4j.Logger;
 //import org.mortbay.log.Log;
 
 /**
- * A simple bean representing data associated with a User
+ * A simple bean representing data associated with a User.
  *
  * @author Alex Carney
  */
@@ -33,6 +33,7 @@ public class User {
      * Private static final Logger attribute for logging.
      */
     private static final Logger LOG;
+
     /**
      * Initializing the instance of Logger.
      */
@@ -41,10 +42,10 @@ public class User {
     }
 
     /**
-     * @param email
-     * @param userName
-     * @param password
-     * @param isAuthorized
+     * @param email        User's email
+     * @param userName     userName of user
+     * @param password     Password submitted
+     * @param isAuthorized Determines whether or not the user is logged in.
      */
     public User(String email, String userName, String password,
         boolean isAuthorized) {
@@ -53,42 +54,43 @@ public class User {
         this.userName = userName;
         LOG.debug("userName value set to: " + userName);
         this.password = password;
-        LOG.debug("passwprd value set to: " + password);
+        LOG.debug("password value set to: " + password);
         this.isAuthorized = isAuthorized;
         LOG.debug("isAuthorized value was set to: " + isAuthorized);
         LOG.info(
-            "The parameters of User constructor were assigned to private variable attributes");
+            "The parameters of User constructor were assigned"
+                + " to private variable attributes");
     }
 
     /**
-     * @return
+     * @return the user email.
      */
     public String getEmail() {
         LOG.debug("Returning email of a user");
-        return email;
+        return this.email;
     }
 
     /**
-     * @return
+     * @return the user's name
      */
     public String getUserName() {
         LOG.debug("Returning the userName of a user");
-        return userName;
+        return this.userName;
     }
 
     /**
-     * @return
+     * @return the user password.
      */
     public String getPassword() {
         LOG.debug("Returning the password of a user");
-        return password;
+        return this.password;
     }
 
     /**
-     * @return
+     * @return if the user has been authorized.
      */
     public boolean isAuthorized() {
         LOG.debug("Returning the boolean value of isAuthorized");
-        return isAuthorized;
+        return this.isAuthorized;
     }
 }
