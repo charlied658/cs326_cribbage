@@ -1,5 +1,7 @@
 package edu.skidmore.cs326.spring2022.skribbage.frontend;
 
+import java.util.Arrays;
+
 import org.apache.log4j.Logger;
 
 /**
@@ -65,11 +67,12 @@ public class PlayableGame implements ActiveGame {
                                        // completed.
     // Important for formatting PastGamesPage
     // (incomplete games must be on top)
+
     /**
      * Logger instance for logging.
      */
     private static final Logger LOG;
-    
+
     static {
         LOG = Logger.getLogger(PlayableGame.class);
     }
@@ -107,6 +110,7 @@ public class PlayableGame implements ActiveGame {
      * @return day
      */
     public int getDay() {
+        LOG.trace("Returning the integer value of day");
         return day;
     }
 
@@ -114,6 +118,7 @@ public class PlayableGame implements ActiveGame {
      * @return year
      */
     public int getYear() {
+        LOG.trace("Returning the integer value of year");
         return year;
     }
 
@@ -121,6 +126,7 @@ public class PlayableGame implements ActiveGame {
      * @return gameName
      */
     public String getName() {
+        LOG.trace("Returning the given name of the game as a String");
         return gameName;
     }
 
@@ -128,6 +134,7 @@ public class PlayableGame implements ActiveGame {
      * @return player1
      */
     public String getPlayer1() {
+        LOG.trace("Returning the name of player 1 as a String");
         return player1;
     }
 
@@ -135,6 +142,7 @@ public class PlayableGame implements ActiveGame {
      * @return player2
      */
     public String getPlayer2() {
+        LOG.trace("Returning the name of player 2 as a String");
         return player2;
     }
 
@@ -142,6 +150,8 @@ public class PlayableGame implements ActiveGame {
      * @return completed
      */
     public boolean isCompleted() {
+        LOG.trace("Returning the boolean value indicating whether or "
+            + "not a game is completed");
         return completed;
     }
 
@@ -172,7 +182,7 @@ public class PlayableGame implements ActiveGame {
             LOG.warn("Month value is illegal, throwing an error");
             throw new IllegalArgumentException(
                 "Month cannot be less than 1 or greater than 12.");
-                
+
         } else {
             month = mm;
         }
@@ -211,14 +221,14 @@ public class PlayableGame implements ActiveGame {
      * @param p1
      */
     public void setPlayer1(String p1) {
-        p1 = player1;
+        player1 = p1;
     }
 
     /**
      * @param p2
      */
     public void setPlayer2(String p2) {
-        p2 = player2;
+        player2 = p2;
     }
 
     /**
@@ -226,6 +236,16 @@ public class PlayableGame implements ActiveGame {
      */
     public void setCompletionStatus(boolean isCompleted) {
         completed = isCompleted;
+    }
+
+    /**
+     * toString method.
+     * 
+     * @return string rep.
+     */
+    public String convertToString() {
+        return player1 + " vs " + player2 + " on " + day + "\\" + month
+            + "\\ " + year;
     }
 
 }

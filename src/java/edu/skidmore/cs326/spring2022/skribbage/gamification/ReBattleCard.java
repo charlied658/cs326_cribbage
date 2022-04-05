@@ -13,41 +13,41 @@ import org.apache.log4j.Logger;
  */
 public class ReBattleCard implements ItemShopInterface {
 
-  /**
-   * Logger for the class.
-   */
+    /**
+     * Logger for the class.
+     */
     private static final Logger LOG;
 
-  /**
-   * Create static resources.
-   */
+    /**
+     * Create static resources.
+     */
     static {
         LOG = Logger.getLogger(ReBattleCard.class);
     }
-
-  /**
-   * String variable to hold card/item name.
-   */
-    private String specialCardName;
-
-   /**
-    * Integer variable to hold card/item token price.
-    */
-    private int specialCardPrice;
-
-   /**
-    * String variable to hold card/item description.
-    */
-    private String specialCardDescription;
     
    /**
     * Hash map to hold items bought before being updated to inventory.
     */
     private HashMap<String, Integer> cart = new HashMap<String, Integer>();
 
-   /**
-    * ReBattleCard constructor.
-    */
+    /**
+     * String variable to hold card/item name.
+     */
+    private String specialCardName;
+
+    /**
+     * Integer variable to hold card/item token price.
+     */
+    private int specialCardPrice;
+
+    /**
+     * String variable to hold card/item description.
+     */
+    private String specialCardDescription;
+
+    /**
+     * ReBattleCard constructor.
+     */
     public ReBattleCard() {
         LOG.info("Creating new Re-battle card");
 
@@ -56,36 +56,41 @@ public class ReBattleCard implements ItemShopInterface {
         setPrice(25);
         setDescription("Use this card to get another chance of "
             + "battling opponent after a battle.");
+        setDescription(
+            "Use this card to get another chance of battling "
+            + "opponent after a battle.");
 
         LOG.info("Name, price, and description set for Re-battle card.");
 
         boolean isEntry = false;
-
-        /* Loop through Hash map to check if card already exists in item shop.*/
+   
+        /*
+         * Loop through Hash map to check if card already exists in item shop.
+         */
         for (HashMap.Entry<String, Integer> entry : STORE_ITEMS.entrySet()) {
 
-            if (entry.getKey().equals(specialCardName)) {
+            if (entry.getKey().equals(getName())) {
 
                 /* Card already in store. */
                 isEntry = true;
             }
         }
-
-    /* Card is not in store, place in store with value. */
+        /* Card is not in store, place in store with value. */
         if (!isEntry) {
-            STORE_ITEMS.put(specialCardName, specialCardPrice);
+            STORE_ITEMS.put(getName(), getPrice());
             LOG.info("Re-battle card placed in store with value 25");
         }
 
     }
 
-  /**
-   * Buy's card at given price based on amount of tokens held by player.
-   * TODO If item bought, update player inventory and tokens.
-   */
+
+    /**
+     * Buy's card at given price based on amount of tokens held by player.
+     * TODO If item bought, update player inventory and tokens.
+     */
     @Override
     public void buyItem(int playerTokens) {
-        
+
         if (getPrice() <= playerTokens) {
             LOG.info("Re-battle card bought for 25 tokens");
             playerTokens -= getPrice();
@@ -99,11 +104,11 @@ public class ReBattleCard implements ItemShopInterface {
         }
     }
 
-  /**
-   * Getter method for special card/item name.
-   * 
-   * @return special card/item name
-   */
+    /**
+     * Getter method for special card/item name.
+     * 
+     * @return special card/item name
+     */
     @Override
     public String getName() {
 
@@ -111,11 +116,11 @@ public class ReBattleCard implements ItemShopInterface {
         return specialCardName;
     }
 
-  /**
-   * Getter method for special card/item token price.
-   * 
-   * @return item token price
-   */
+    /**
+     * Getter method for special card/item token price.
+     * 
+     * @return item token price
+     */
     @Override
     public int getPrice() {
 
@@ -123,11 +128,11 @@ public class ReBattleCard implements ItemShopInterface {
         return specialCardPrice;
     }
 
-  /**
-   * Getter method for special card/item description.
-   * 
-   * @return special card/item description/use.
-   */
+    /**
+     * Getter method for special card/item description.
+     * 
+     * @return special card/item description/use.
+     */
     @Override
     public String getDescription() {
 

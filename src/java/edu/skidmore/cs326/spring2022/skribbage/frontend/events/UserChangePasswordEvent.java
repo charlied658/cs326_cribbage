@@ -9,7 +9,7 @@ import edu.skidmore.cs326.spring2022.skribbage.common.events.AccountEvent;
 /**
  * A concrete implementation of an Event, representing the data transfer object
  * DTO associated with a user attempting to change their password.
- * 
+ *
  * @author Alex Carney
  * Reviewed: Sten Leinasaar
  */
@@ -17,15 +17,11 @@ import edu.skidmore.cs326.spring2022.skribbage.common.events.AccountEvent;
 public class UserChangePasswordEvent extends AccountEvent {
 
     /**
-     * Attribute of User of type User.
-     */
-    private final User user;
-
-    /**
      * Private static final variable of Logger for UserChangePasswordEvent
      * class.
      */
     private static final Logger LOG;
+
     /**
      * Static block to initialize static final variables.
      */
@@ -41,30 +37,15 @@ public class UserChangePasswordEvent extends AccountEvent {
     /**
      * Constructs a new {@code PropertyChangeEvent}.
      *
-     * @param source
-     *            the bean that fired the event
-     * @param user
-     *            The un-authorized user associated with the event
-     * @param newPassword
-     *            The proposed new password for the user
-     * @throws IllegalArgumentException
-     *             if {@code source} is {@code null}
+     * @param source the bean that fired the event
+     * @param args   List of arguments.
+     * @throws IllegalArgumentException if {@code source} is {@code null}
      */
-    public UserChangePasswordEvent(Object source, User user,
-        String newPassword) {
-        super(source, EventType.USER_CHANGE_PASSWORD.toString(), user);
-        this.user = user;
-        this.newPassword = newPassword;
+    public UserChangePasswordEvent(Object source, Object... args) {
+        super(source, EventType.USER_CHANGE_PASSWORD, (User) args[0]);
+        this.newPassword = (String) args[1];
         LOG.trace("Constructor method reached");
 
-    }
-
-    /**
-     * @return an object of type User.
-     */
-    public User getUser() {
-        LOG.trace("Getuser method reached");
-        return user;
     }
 
     /**
@@ -72,15 +53,15 @@ public class UserChangePasswordEvent extends AccountEvent {
      */
     public String getNewPassword() {
         LOG.trace("Get newPassword method reached");
-        return newPassword;
+        return this.newPassword;
     }
 
     /**
      * @return String type of a event name.
      */
     @Override
-    public String getEventName() {
+    public EventType getEventType() {
         LOG.trace("Get event name of a string type");
-        return null;
+        return EventType.USER_CHANGE_PASSWORD;
     }
 }

@@ -4,6 +4,7 @@ import java.util.HashMap;
 //import org.apache.log4j.Logger;
 
 /**
+ * 
 *  Item Shop Interface
 *  TODO Add update methods to update player tokens after purchase and 
 *  update player inventory.
@@ -41,5 +42,5 @@ public interface ItemShopInterface {
 	 * @return special card/item description/use.
 	 */
     public String getDescription();
-    
+ 
 }
