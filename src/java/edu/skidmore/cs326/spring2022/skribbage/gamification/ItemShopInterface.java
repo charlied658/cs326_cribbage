@@ -14,7 +14,7 @@ public interface ItemShopInterface {
     /**
      * Hash map with store items being sold with their token price.
      */
-    HashMap<String, Integer> storeItems = 
+    HashMap<String, Integer> STORE_ITEMS = 
         new HashMap<String, Integer>();
 
     /**

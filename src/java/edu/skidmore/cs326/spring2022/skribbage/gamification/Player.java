@@ -2,6 +2,7 @@ package edu.skidmore.cs326.spring2022.skribbage.gamification;
 
 /**
  * Generic Player class.
+ * This is a placeholder class until we can use logic's Player class.
  * 
  * @author Charlie Davidson
  */
@@ -67,7 +68,7 @@ public class Player {
      * @param name
      *            Player name
      */
-    public void setString(String name) {
+    public void setName(String name) {
         this.name = name;
     }
 

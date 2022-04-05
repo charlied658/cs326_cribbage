@@ -77,7 +77,7 @@ public class Game {
      * @param p is the player to add to the player list.
      */
     public void addPlayer(Player p) {
-       playerList.add(p);
+        playerList.add(p);
     }
 
 	/**
@@ -216,7 +216,7 @@ public class Game {
 	 */
     public int getDealerIdx() {
         for (int i = 0; i < playerList.size(); i++) {
-            if (playerList.get(i).isDealer) {
+            if (playerList.get(i).isDealer()) {
                 return i;
             }
         }
