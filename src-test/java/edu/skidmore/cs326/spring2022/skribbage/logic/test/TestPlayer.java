@@ -1,77 +1,74 @@
-<<<<<<< HEAD
-//import org.junit.Test;
-//import static org.junit.Assert.assertEquals;
-//import org.apache.log4j.Logger;
-//import org.junit.Before;
-//
-//public class TestPlayer {
-//	/**
-//	 * Tests for the player class instance for the
-//	 */
-//	private Player testInstance;
-//	/**
-//	 * 	Logger for the class
-//	 */
-//	private static final Logger LOG;
-//	/**
-//	 * Create static resources.
-//	 */
-//	static {
-//		LOG = Logger.getLogger(HandTest.class);
-//	}
-//	/**
-//	 * 
-//	 */
-//	@Before
-//	public void setup(){
-//		testInstance = new Player();
-//	}
-//
-//	@Test
-//	public void testAddPoints() {
-//		int points = 2;
-//		int pointstoadd = 5;
-//		points += pointstoadd;
-//	}
-//}
-=======
+
 package edu.skidmore.cs326.spring2022.skribbage.logic.test;
 import org.junit.Test;
-
 import edu.skidmore.cs326.spring2022.skribbage.logic.Player;
-
 import static org.junit.Assert.assertEquals;
 import org.apache.log4j.Logger;
 import org.junit.Before;
+import edu.skidmore.cs326.spring2022.skribbage.logic.Card;
+import edu.skidmore.cs326.spring2022.skribbage.logic.Hand;
+
 
 public class TestPlayer {
 	/**
 	 * Tests for the player class instance for the
 	 */
-	private Player testInstance;
+	private Player testInstance ;
 	/**
-	 * 	Logger for the class
+	 * Card instance to refer to methods in the card class
 	 */
-	private static final Logger LOG;
+	public Card c;
 	/**
-	 * Create static resources.
+	 * Hand instance to refer to methods in the hand class
 	 */
-	static {
-		LOG = Logger.getLogger(HandTest.class);
-	}
+	public Hand h;
+	
 	/**
-	 * 
+	 * Setup for the Player testing
 	 */
 	@Before
 	public void setup(){
 		testInstance = new Player();
+		testInstance.setName("abby");
+		c = new Card('J', Suit.HEARTS);
+		h.addCardToHand(c);
+		testInstance.setHand(h);
+		testInstance.initializePoints(0);
+		testInstance.addPoints(2);
+		testInstance.getPoints(2);
+	}
+	
+	/**
+	 * Test getName method
+	 */
+	@Test
+	public void testGetName() {
+		assertEquals("abby",testInstance.getName());
+	}
+	/**
+	 * Test setHand method
+	 */
+	@Test
+	public void testSetHand() {
+		assertEquals(h, testInstance.setHand());
+	}
+	/**
+	 * Test addPoints method
+	 */
+	public void testAddPoints() {
+		assertEquals(2, testInstance.addPoints());
+	}
+	/**
+	 * Test getPoints method 
+	 */
+	public void testGetPoints() {
+		assertEquals(2, testInstance.getPoints());
+	}
+	/**
+	 * test intitalizePoints method 
+	 */
+	public void initializePoints() {
+		assertEquals(0, testInstance.initializePoints());
 	}
 
-	@Test
-	public void testAddPoints() {
-		int points = 2;
-		int pointstoadd = 5;
-		points += pointstoadd;
-	}
 }
->>>>>>> 608b576f77429629e03f3a1c7a9fbd4befb93f6c
