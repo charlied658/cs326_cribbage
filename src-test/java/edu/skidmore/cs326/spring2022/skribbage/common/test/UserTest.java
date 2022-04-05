@@ -95,6 +95,7 @@ public class UserTest {
 
     /**
      * Tearing down the test environment.
+     * TODO (DSR): Teardown is only needed to release managed resources
      */
     @After
     public void tearDown() {

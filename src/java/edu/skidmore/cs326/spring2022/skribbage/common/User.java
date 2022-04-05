@@ -1,11 +1,15 @@
 package edu.skidmore.cs326.spring2022.skribbage.common;
 
 import org.apache.log4j.Logger;
-//import org.mortbay.log.Log;
+
 
 /**
  * A simple bean representing data associated with a User.
  *
+ * TODO (DSR): should isAuthorized be mutable to handle before/after login?
+ * TODO (DSR): levels of users (different privileges)?
+ * TODO (DSR): manage password separately (not part of general interactions)
+ * 
  * @author Alex Carney
  */
 public class User {
@@ -54,6 +58,7 @@ public class User {
         this.userName = userName;
         LOG.debug("userName value set to: " + userName);
         this.password = password;
+        // TODO (DSR): NEVER LOG PASSWORDS!
         LOG.debug("password value set to: " + password);
         this.isAuthorized = isAuthorized;
         LOG.debug("isAuthorized value was set to: " + isAuthorized);
@@ -64,6 +69,7 @@ public class User {
 
     /**
      * @return the user email.
+     * TODO (DSR): Avoid unnecessary use of "this"
      */
     public String getEmail() {
         LOG.debug("Returning email of a user");
