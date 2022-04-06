@@ -10,6 +10,7 @@ import edu.skidmore.cs326.spring2022.skribbage.common.events.AccountEvent;
  * @author Alex Carney
  *         Edited, reviewed, commented, Logging added by Sten Leinasaar
  */
+@SuppressWarnings("serial")
 public class UserDeleteAccountEvent extends AccountEvent {
     /**
      * Private static final instance of a logger.
@@ -39,9 +40,8 @@ public class UserDeleteAccountEvent extends AccountEvent {
      * @return Event name of type string.
      */
     @Override
-    public String getEventName() {
+    public EventType getEventType() {
         LOG.trace("Returning an event name of type String");
-        // TODO Auto-generated method stub
-        return EventType.USER_DELETE_ACCOUNT.getName();
+        return EventType.USER_DELETE_ACCOUNT;
     }
 }

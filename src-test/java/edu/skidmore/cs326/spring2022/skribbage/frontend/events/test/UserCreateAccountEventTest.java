@@ -63,9 +63,7 @@ public class UserCreateAccountEventTest {
     @Test
     public void testUserCreateAccountEvent() {
         LOG.trace("Testing the constructor of UserCreateAccountEvent");
-        
         assertNotNull(testInstance);
-        assertEquals(testInstance.getSource(), source);
         assertEquals(testInstance.getUser(), userInstance);
         LOG.trace("Constructor test completed");
 
@@ -77,10 +75,9 @@ public class UserCreateAccountEventTest {
      */
     @Test
     public void testGetUser() {
-        
+        LOG.trace("Testing getUser method of UserCreateAccountEvent.");
         assertEquals(testInstance.getUser(), userInstance);
-        assertEquals(testInstance.getUser().getUserName(),
-            userInstance.getUserName());
+        LOG.trace("Testing getUser finished.");
 
     }
 
@@ -92,7 +89,7 @@ public class UserCreateAccountEventTest {
     @Test
     public void testGetEventName() {
         LOG.trace("Testing getEventName");
-        assertEquals(testInstance.getEventName(), "User Create Account Event");
+        assertEquals(testInstance.getEventType(), "User Create Account Event");
         LOG.trace("Completed testing the getEventName method");
     }
 

@@ -1,13 +1,31 @@
-package edu.skidmore.cs326.spring2022.skribbage.logic;
+package edu.skidmore.cs326.spring2022.skribbage.common;
 
 import org.apache.log4j.Logger;
 
+import edu.skidmore.cs326.spring2022.skribbage.common.events.AccountEvent;
+
 /**
+ * Encompasses all information portrayed by a card
+ * Card also knows which card type should come after it in a run.
+ * 
+ * TODO (DSR): Card functionality needs to move to the common package
+ * TODO (DSR): Lets talk through the design of Card, Hand, Deck...
+ * 
  * @author Declan Morris
- *         Encompasses all information portrayed by a card
- *         Card also knows which card type should come after it in a run
  */
 public class Card {
+
+    /**
+     * Instance of a Logger for Card.
+     */
+    private static final Logger LOG;
+
+    /**
+     * Static block to initialize logger.
+     */
+    static {
+        LOG = Logger.getLogger(AccountEvent.class);
+    }
 
     /**
      * The numerical value added to the center sum during play phase
@@ -17,6 +35,7 @@ public class Card {
 
     /**
      * Getter for pointValue.
+     * 
      * @return the point value
      */
     public int getPointValue() {
@@ -24,25 +43,13 @@ public class Card {
     }
 
     /**
-     * Setter for point values.
-     */
-    private void setPointValue(int inPointValue) {
-
-        if (inPointValue > 0 && inPointValue <= 10) {
-            pointValue = inPointValue;
-        } else {
-            System.out.println("ERROR: invalid point value assigned to Card");
-            pointValue = 1;
-        }
-    }
-
-    /**
      * The identifying character that would appear on the physical card.
      */
     private char identifier;
-    
+
     /**
      * insert java doc.
+     * 
      * @return insert java doc.
      */
     public char getIdentifier() {
@@ -51,6 +58,7 @@ public class Card {
 
     /**
      * insert javadoc.
+     * 
      * @param inIdentifier
      */
     private void setIdentifier(char inIdentifier) {
@@ -148,6 +156,7 @@ public class Card {
 
     /**
      * Getter for nextIdentifier (automatically set when identifier is set).
+     * 
      * @return java doc.
      */
     public char getNextIdentifier() {
@@ -161,6 +170,7 @@ public class Card {
 
     /**
      * Getter for suit.
+     * 
      * @return javadoc.
      */
     public Suit getSuit() {
@@ -178,7 +188,7 @@ public class Card {
     }
 
     /**
-     * Constructor that assigns parameterized values to all attributes
+     * Constructor that assigns parameterized values to all attributes.
      *
      * @param inSuit
      *            inputted suit
@@ -186,6 +196,8 @@ public class Card {
      *            inputted identifier
      */
     public Card(char inIdentifier, Suit inSuit) {
+        LOG.trace("Constructor called to create " + inIdentifier 
+            + " of " + inSuit);
         setSuit(inSuit);
         setIdentifier(inIdentifier);
     }
