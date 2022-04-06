@@ -1,4 +1,4 @@
-package edu.skidmore.cs326.spring2022.skribbage.logic;
+package edu.skidmore.cs326.spring2022.skribbage.common;
 
 import org.apache.log4j.Logger;
 
