@@ -11,6 +11,18 @@ public interface Peg {
     Spot spot;
     Player owner;
     
-
+    /**
+     * @return role
+     */
     PegType getRole();
+    
+    /**
+     * @return spot
+     */
+    Spot getSpot();
+    
+    
+    Player getOwner();
+    
+    void movePeg(int numSpaces);
 }
