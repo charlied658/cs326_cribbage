@@ -12,8 +12,10 @@ import org.apache.log4j.Logger;
  * modules. Extends the built in PropertyChangeEvent, hiding some of its unused
  * functionality
  *
- * @author Alex Carney Reviewed by Sten Leinasaar
+ * @author Alex Carney 
+ * Reviewed by Sten Leinasaar
  */
+@SuppressWarnings("serial")
 public abstract class AccountEvent extends PropertyChangeEvent {
 
     /**
@@ -34,6 +36,7 @@ public abstract class AccountEvent extends PropertyChangeEvent {
     }
 
     /**
+     * Constructor method of the class.
      * @param source
      *            the bean that fired the event.
      * @param eventType

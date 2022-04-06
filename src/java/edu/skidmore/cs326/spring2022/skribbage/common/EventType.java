@@ -1,7 +1,5 @@
 package edu.skidmore.cs326.spring2022.skribbage.common;
 
-
-
 import org.apache.log4j.Logger;
 
 /**
@@ -72,8 +70,10 @@ public enum EventType {
      *            A var arg of arguments for this event to take.
      */
     EventType(String name, Object... args) {
+
         this.name = name;
         this.args = args;
+
     }
 
     /**
@@ -83,7 +83,7 @@ public enum EventType {
      */
     public String getName() {
         LOG.trace("Returning a name of an event");
-        return this.name;
+        return name;
     }
 
     /**
@@ -93,7 +93,7 @@ public enum EventType {
      */
     public Object[] getArgumentList() {
         LOG.trace("Returning arguments list of an event");
-        return this.args;
+        return args;
     }
 
 }

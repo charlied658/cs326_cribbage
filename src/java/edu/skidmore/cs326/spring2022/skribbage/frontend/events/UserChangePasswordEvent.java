@@ -37,7 +37,7 @@ public class UserChangePasswordEvent extends AccountEvent {
     /**
      * Constructs a new {@code PropertyChangeEvent}.
      *
-     * @param source the bean that fired the event
+     * @param source The bean that fired the event.
      * @param args   List of arguments.
      * @throws IllegalArgumentException if {@code source} is {@code null}
      */
@@ -52,8 +52,8 @@ public class UserChangePasswordEvent extends AccountEvent {
      * @return string type of a user's new password.
      */
     public String getNewPassword() {
-        LOG.trace("Get newPassword method reached");
-        return this.newPassword;
+        LOG.trace("Get newPassword method reached. New password returned.");
+        return newPassword;
     }
 
     /**

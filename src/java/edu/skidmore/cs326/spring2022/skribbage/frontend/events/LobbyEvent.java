@@ -47,7 +47,7 @@ public abstract class LobbyEvent extends PropertyChangeEvent {
     public abstract EventType getEventType();
 
 //    public Lobby getLobby() {
-//        return this.lobby;
+//        return lobby;
 //    }
 
 }
