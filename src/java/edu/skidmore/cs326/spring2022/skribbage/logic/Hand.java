@@ -4,6 +4,10 @@ import java.util.ArrayList;
 
 /**
  * Hand Class representing the methods.
+ * 
+ * TODO (DSR): Hand functionality needs to move to the common package
+ * TODO (DSR): Lets talk through the design of Card, Hand, Deck...
+
  *
  * @author Dorjee
  *         Last Edited: Dorjee
