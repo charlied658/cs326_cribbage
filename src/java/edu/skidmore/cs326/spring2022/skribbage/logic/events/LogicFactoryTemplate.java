@@ -9,6 +9,8 @@ import org.apache.log4j.Logger;
 /**
  * Subclass of FactoryTemplate that overwrites the eventCreation method to
  * handle logic specific events.
+ * 
+ * @author Declan Morris
  *
  * @author Alex Carney
  */

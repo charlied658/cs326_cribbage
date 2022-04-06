@@ -7,45 +7,57 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-/*
- *
- * Please note that this file will not function without first opening the keyhole to the connection within your terminal.
+/**
+ * Contains the methods that connect to the database. Creates, edits, and
+ * deletes profiles.
+ * Please note that this file will not function without first opening the
+ * keyhole to the connection within your terminal.
  * To achieve this type ssh cs326mysql@bits.monead.com
- *
- * Please also note that queries are placeholders and will be injected into code when finally completed 
- *  
+ * Please also note that queries are placeholders and will be injected into code
+ * when finally completed
  */
 public class DatabaseManager {
 
+    /**
+     * Database URL.
+     */
     static final String DB_URL =
         DatabaseProperties.getInstance().getValue("DBUrl");
 
+    /**
+     * UserID.
+     */
     static final String USER =
         DatabaseProperties.getInstance().getValue("UserID");
 
+    /**
+     * App Password.
+     */
     static final String PASS =
         DatabaseProperties.getInstance().getValue("AppPassword");
-
+    
+    /**
+     * Query String.
+     */
     static final String QUERY = "SELECT * FROM prototype_table";
 
+    /**
+     * Database Connection.
+     */
     private static Connection dbConnection;
 
-    
-    /* 
+    /**
+     * This is a function to check the database for a specific user and check
+     * whether the password functions.
+     * 
+     * @author Tinaye Mawocha
+     * @param username
+     *            : the username of the desired user
+     * @param password
+     *            : the inputted password
+     * @return Whether password was accepted
+     */
 
-	 * This is a function to check the database for a specific user and check whether the password functions 
-
-	 *  
-
-	 *  @author Tinaye Mawocha 
-
-	 *  @param username : the username of the desired user 
-
-	 *	@param password : the inputted password 
-
-	 */ 
-
-	 
     public boolean userAuthenticate(String username, String password) {
 
         String tempQuery =
@@ -78,36 +90,29 @@ public class DatabaseManager {
 
     }
 
-    /* 
-
-	 * This is a function to query the token value held by a player  
-
-	 *  
-
-	 *  @author Tinaye Mawocha 
-
-	 *  @param playerID: the id of the player to check the value 
-
-	 * 
-
-	 */ 
+    /**
+     * This is a function to query the token value held by a player.
+     * 
+     * @author Tinaye Mawocha
+     * @param playerID :
+     *            the id of the player to check the value
+     * @return Query result
+     */
     public String inventoryQuery(int playerID) {
 
         String tokenQuery = "SELECT * FROM player_account WHERE PersonID = ? ";
-     
-        
-        PreparedStatement ps = null;	
+
+        PreparedStatement ps = null;
         Connection conn = null;
         int netWorth = 0;
-      
 
         try {
-        	
-        	conn = getDB();
-        	ps = dbConnection.prepareStatement(tokenQuery);
+
+            conn = getDB();
+            ps = dbConnection.prepareStatement(tokenQuery);
             ps.setInt(1, playerID);
-                   
-            System.out.println(ps);
+
+            // System.out.println(ps);
             ResultSet rs = ps.executeQuery();
 
             rs.next();
@@ -115,26 +120,31 @@ public class DatabaseManager {
 
         }
         catch (SQLException e) {
-            System.out.println("Account not found");
+            // System.out.println("Account not found");
             e.printStackTrace();
+            dbDisconnect(conn);
+            return "Account not found";
 
         }
 
+        dbDisconnect(conn);
         return "player coin value: " + netWorth;
 
     }
 
-  
-
-    /*
-     * This is a method to change a value on the player_account table
+    /**
+     * This is a method to change a value on the player_account table.
      *
-     *  @author Tinaye Mawocha
-     *  @param toChange : the name of the column you wish to change 
-     *  @param changeTo : the new value you wish to input into the aforementioned table
-     *  @param user_id : the account id of the account you wish to change
+     * @author Tinaye Mawocha
+     * @param toChange
+     *            : the name of the column you wish to change
+     * @param changeTo
+     *            : the new value you wish to input into the aforementioned
+     *            table
+     * @param userId
+     *            : the account id of the account you wish to change
      */
-    public void update(String toChange, String changeTo, int user_id) {
+    public void update(String toChange, String changeTo, int userId) {
 
         Connection conn = null;
 
@@ -143,25 +153,25 @@ public class DatabaseManager {
         ResultSet rs = null;
 
         try {
-            //	 System.out.println("Run a prepared database query");
-            //	 Class.forName("com.mysql.jdbc.Driver");
+            // System.out.println("Run a prepared database query");
+            // Class.forName("com.mysql.jdbc.Driver");
             conn = getDB();
 
             String script =
-                "UPDATE player_account SET " + toChange + "= ?  WHERE PersonID = ?";
+                "UPDATE player_account SET " + toChange
+                    + "= ?  WHERE PersonID = ?";
             ps = conn.prepareStatement(script);
 
             ps.setString(1, changeTo);
-            ps.setInt(2, user_id);
+            ps.setInt(2, userId);
 
             System.out.println(ps);
             System.out.println(ps.executeUpdate());
 
         }
         catch (SQLException sqle) {
-
             sqle.printStackTrace();
-            //LOGGER.error("Database Interaction Failure", sqle);
+            // LOGGER.error("Database Interaction Failure", sqle);
 
         }
         finally {
@@ -170,7 +180,7 @@ public class DatabaseManager {
                     rs.close();
                 }
                 catch (SQLException sqle) {
-                    // 	LOGGER.error("Failed to close result set", sqle);
+                    // LOGGER.error("Failed to close result set", sqle);
 
                 }
 
@@ -181,7 +191,7 @@ public class DatabaseManager {
                     ps.close();
                 }
                 catch (SQLException sqle) {
-                    //	LOGGER.error("Failed to close prepared statement", sqle);
+                    // LOGGER.error("Failed to close prepared statement", sqle);
                 }
             }
             if (conn != null) {
@@ -189,19 +199,17 @@ public class DatabaseManager {
                     conn.close();
                 }
                 catch (SQLException sqle) {
-                    //		LOGGER.error("Failed to close connection", sqle);
+                    // LOGGER.error("Failed to close connection", sqle);
                 }
             }
         }
     }
 
-   
-
-    /*
-     * This is a function to access the connection singleton
+    /**
+     * This is a function to access the connection singleton.
      *
-     *  @author Tinaye Mawocha
-     *
+     * @return Connection
+     * @author Tinaye Mawocha
      */
     private static Connection getDB() {
 
@@ -211,27 +219,28 @@ public class DatabaseManager {
 
             }
             catch (SQLException e) {
-                System.out
-                    .println("Failed to establish connection with database");
+                // System.out.println("Failed to establish connection with
+                // database");
                 e.printStackTrace();
             }
             System.out.println("Connected");
             return dbConnection;
         } else {
-            System.out.println("Already Connected");
+            // System.out.println("Already Connected");
             return dbConnection;
         }
 
     }
 
-    /*
+    /**
      * This is a function to disconnect the connection passed into the
-     * "theConnection" parameter
+     * "theConnection" parameter.
      *
-     * @param theConnection: the connection passed in to be terminated
+     * @param theConnection
+     *            the connection passed in to be terminated
      * @author Tinaye Mawocha
      */
-    private void dbDisconnect(Connection theConnection) {
+    public void dbDisconnect(Connection theConnection) {
 
         try {
             theConnection.close();
@@ -240,39 +249,6 @@ public class DatabaseManager {
             System.out.println("Failed to close connection to database");
             e.printStackTrace();
         }
-
-    }
-
-    /*
-     * Just Kidding, you know what this does
-     *
-     */
-    public static void main(String[] args) {
-
-        //		// Open a connection
-        //		System.out.println("Testing");
-        //		//getDB();
-        //		try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
-        //				Statement stmt = conn.createStatement();
-        //				ResultSet rs = stmt.executeQuery(QUERY);
-        //
-        //		) {
-        //			while (rs.next()) {
-        //				// Display values
-        //				System.out.print(" ID: " + rs.getInt("person_id"));
-        //				System.out.print(", Name: " + rs.getString("person_name"));
-        //
-        //			}
-        //			conn.close();
-        //
-        //		} catch (SQLException e) {
-        //			e.printStackTrace();
-        //		}
-        //
-        DatabaseManager instance = new DatabaseManager();
-        System.out.println((instance.inventoryQuery(325)));
-
-        //userAuthenticate("nchantzi", "ILoveSQL");
 
     }
 
