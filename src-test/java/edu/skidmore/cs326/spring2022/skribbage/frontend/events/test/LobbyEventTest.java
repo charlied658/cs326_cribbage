@@ -41,7 +41,8 @@ public class LobbyEventTest {
     public void setUp() {
         LOG.trace("Started the setup method");
         source = new Object();
-        testInstance = new LobbyEvent(source);
+        //TODO: CHange this to a concrete impl
+//        testInstance = new LobbyEvent(source);
         LOG.info("SetUp method completed");
     }
 
@@ -55,7 +56,7 @@ public class LobbyEventTest {
         assertNotNull(testInstance);
         assertEquals(testInstance.getSource(), source);
         LOG.trace("LobbyEvent constructor test completed");
-        
+
     }
 
     /**
@@ -65,7 +66,7 @@ public class LobbyEventTest {
     @Test
     public void testGetEventName() {
         LOG.trace("Testing getEventName");
-        assertEquals(testInstance.getEventName(), "Lobby Event");
+        assertEquals(testInstance.getEventType(), "Lobby Event");
         LOG.trace("Completed testing the getEventName method");
     }
     /**
@@ -76,13 +77,13 @@ public class LobbyEventTest {
         LOG.trace("Starting the teardown");
         testInstance = null;
         source = null;
-       
+
         LOG.trace("Assert that teardown was succesful");
         assertNull(testInstance);
         assertNull(source);
-        
+
         LOG.trace("Teardown completed");
-   
+
     }
 
 }

@@ -28,8 +28,10 @@ public final class EventManager {
      * Static block.
      */
     static {
-        INSTANCE = new EventManager();
+        
         LOG = Logger.getLogger(EventManager.class);
+        INSTANCE = new EventManager();
+        
     }
 
     /**
@@ -42,10 +44,11 @@ public final class EventManager {
      * Private constructor to implement eager singelton.
      */
     private EventManager() {
-        LOG.info("Private Constructor of EventManager");
-        support = new PropertyChangeSupport(this);
+        LOG.info("Private Constructor of EventManager reached.");
+        this.support = new PropertyChangeSupport(this);
     }
-
+    
+  
     /**
      * Registers a new property change listener, mapped to a specific event
      * type.
@@ -84,7 +87,7 @@ public final class EventManager {
     public void notify(PropertyChangeEvent evt) {
         support.firePropertyChange(evt);
     }
-
+    
     /**
      * Following from the Singleton design pattern, ensures that only
      * a single instance of EventManager exists.
@@ -94,5 +97,8 @@ public final class EventManager {
     public static synchronized EventManager getInstance() {
         return INSTANCE;
     }
+
+
+ 
 
 }

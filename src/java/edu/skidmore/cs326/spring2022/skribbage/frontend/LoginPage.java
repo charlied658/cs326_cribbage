@@ -1,6 +1,5 @@
 package edu.skidmore.cs326.spring2022.skribbage.frontend;
 
-
 import java.awt.Color;
 import java.awt.Point;
 import org.apache.log4j.Logger;
@@ -82,7 +81,7 @@ public class LoginPage extends DrawingSurface {
     private String verifyPasswordToChange;
 
     /**
-     * changePassword - Text variable that represents the change password 
+     * changePassword - Text variable that represents the change password
      * button.
      */
     private Text changePassword;
@@ -93,12 +92,11 @@ public class LoginPage extends DrawingSurface {
     private HomeScreen homeScreen;
 
     /**
-     * homeScreenButton - Text variable that represents the button to go 
+     * homeScreenButton - Text variable that represents the button to go
      * back to the home screen.
      */
     private Text homeScreenButton;
 
-    
     /**
      * LOG - logger variable to be able to display logger messages.
      */
@@ -145,15 +143,19 @@ public class LoginPage extends DrawingSurface {
         add(createAccount);
     }
 
-  /**
-   * method to handle different button clicks.
-   * @param popupType - integer variable that is used to determine
-   * the type of popup to display.
-   * @param popupTitle - String variable that will be used to set
-   * the title of the popup window.
-   * @param popupMessage - String variable that will be used to set
-   * the message of the popup window.
-   */
+    /**
+     * method to handle different button clicks.
+     * 
+     * @param popupType
+     *            - integer variable that is used to determine
+     *            the type of popup to display.
+     * @param popupTitle
+     *            - String variable that will be used to set
+     *            the title of the popup window.
+     * @param popupMessage
+     *            - String variable that will be used to set
+     *            the message of the popup window.
+     */
     public void buttonClicked(int popupType, String popupTitle,
         String popupMessage) {
         LOG.trace("ChangePassword method in LoginPage.java");
@@ -184,25 +186,28 @@ public class LoginPage extends DrawingSurface {
                 break;
         }
     }
-    
+
     /**
      * getUsername method.
+     * 
      * @return the username
      */
     public String getUsername() {
         return username;
     }
-    
+
     /**
      * getpassword method.
+     * 
      * @return the password
      */
     public String getPassword() {
         return password;
     }
-    
+
     /**
      * loggedIn method.
+     * 
      * @return if the user is logged in
      */
     public boolean loggedIn() {
@@ -212,8 +217,10 @@ public class LoginPage extends DrawingSurface {
             return false;
         }
     }
-    
-    
+
+    /**
+     * 
+     */
     @Override
     public void drawableMouseClick(Drawable e) {
         LOG.trace("Drawable mouseclick method in LoginPage.java");

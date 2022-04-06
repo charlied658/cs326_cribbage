@@ -19,8 +19,5 @@
 .classpath
 .settings
 .checkstyle
-<<<<<<< HEAD
 .DS_Store
-=======
->>>>>>> frontend-architecture
-/.metadata/
+.metadata

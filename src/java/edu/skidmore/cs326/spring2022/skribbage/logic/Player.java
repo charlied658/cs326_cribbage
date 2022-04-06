@@ -1,57 +1,65 @@
 package edu.skidmore.cs326.spring2022.skribbage.logic;
 
-import java.util.ArrayList;
-
 /**
+ * TODO (DSR): Player functionality needs to move to the common package
+ * TODO (DSR): Lets talk through the design of Player (compared to User)
+
  * @author lappiaha
  */
 public class Player {
     /**
-     * initializes the player's points
+     * initializes the player's points.
      */
-    int points;
+    private int points;
+
     /**
-     * Creates hand object
+     * Creates hand object.
      */
     private Hand hand = new Hand();
+
     /**
-     * string to keep the player name
+     * String to keep the player name.
      */
-    private String playername; 
+    private String playername;
+    
     /**
-     * 
+     * boolean to help determine the dealer of the game.
      */
-    public boolean isDealer;
+    private boolean isDealer;
+
     /**
-     * boolean to help determine the dealer of the game 
+     * Player constructor.
      */
     public Player() {
-        // initializes the player
-
-        // initializes the deck
-        // this.thedeck = new Deck();
-
+        /**
+         * initialize points to 0
+         */
+        intializePoints();
     }
 
     /**
      * Get the name of the player.
+     * @return Player's name
      */
-    public void getName() {
+    public String getName() {
         // need info from frontEnd
         // player1 = name1.getName();
         // player2 = name2.getName();
         // claims the player name
+        return playername;
     }
 
     /**
      * Set the name of the player.
+     * @param name
      */
-    public String setName() {
-    	return playername;
+    public void setName(String name) {
+        playername = name;
     }
 
     /**
-     * Method sets the PlayerHand.
+     * Sets the PlayerHand.
+     * @param playerHand Player's hand
      */
     public void setHand(Hand playerHand) {
 
@@ -67,13 +75,13 @@ public class Player {
         return hand;
     }
 
-   /**
-    * initializes points to 0 
-    * @return
-    */
-    public int setPoints() {
-    	points = 0; 
+    /**
+     * Initialize points to 0.
+     */
+    public void intializePoints() {
+        points = 0;
     }
+
     /**
      * Get the player points.
      * 
@@ -92,5 +100,21 @@ public class Player {
         points += pointsToAdd;
 
     }
-
+    
+    /**
+     * Returns true if the player is the dealer.
+     * @return boolean
+     */
+    public boolean isDealer() {
+        return isDealer;
+    }
+    
+    /**
+     * Sets the player to be dealer or not dealer.
+     * @param dealer
+     */
+    public void setDealer(boolean dealer) {
+        isDealer = dealer;
+    }
+    
 }
