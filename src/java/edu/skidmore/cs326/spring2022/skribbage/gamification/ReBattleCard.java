@@ -1,10 +1,7 @@
 package edu.skidmore.cs326.spring2022.skribbage.gamification;
 
-<<<<<<< HEAD
-=======
-import org.apache.log4j.Logger;
+//import org.apache.log4j.Logger;
 
->>>>>>> d958264d8ed289e71237f09ac44320b11d99edf8
 import java.util.HashMap;
 
 
