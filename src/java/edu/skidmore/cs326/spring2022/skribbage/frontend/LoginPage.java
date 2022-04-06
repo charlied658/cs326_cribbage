@@ -211,7 +211,7 @@ public class LoginPage extends DrawingSurface {
      * @return if the user is logged in
      */
     public boolean loggedIn() {
-        if (!getUsername().isEmpty() && !getPassword().isEmpty()) {
+        if (!username.isEmpty() && !password.isEmpty()) {
             return true;
         } else {
             return false;
@@ -231,6 +231,14 @@ public class LoginPage extends DrawingSurface {
                 DialogPosition.CENTER_ALL);
             password = getUserInput("Login", "Enter password for: " + username,
                 DialogPosition.CENTER_ALL, true);
+            if (loggedIn()) {
+                showErrorMessage("User: " + username,
+                    "Successful Log In", DialogPosition.CENTER_ALL);
+                goToNextPage();
+            } else {
+                showErrorMessage("User Not Found",
+                    "Unsuccessful Log In", DialogPosition.CENTER_ALL);
+            }
         } else if (e == changePassword) {
             changePassword.setFillColor(Color.GREEN);
             buttonClicked(0, "Change Password", "Enter new password");
@@ -255,6 +263,14 @@ public class LoginPage extends DrawingSurface {
                 buttonClicked(1, "Passwords did not match", "Enter password");
             }
         }
+    }
+    
+    /**
+     * goToNextPage method - once a user is logged in, 
+     * shows the navigation page.
+     */
+    public void goToNextPage() {
+        new NavigationPage();
     }
 
     /**

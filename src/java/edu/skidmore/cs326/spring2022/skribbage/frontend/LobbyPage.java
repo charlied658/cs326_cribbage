@@ -111,6 +111,11 @@ public class LobbyPage extends DrawingSurface implements ActionListener {
      * inventoryPage - Text object to be button to open the InventoryPage.
      */
     private Text inventoryPage;
+    
+    /**
+     * navPage - NavigationPage window.
+     */
+    private NavigationPage navPage;
 
     /**
      * Logger instance for logging.
@@ -233,7 +238,7 @@ public class LobbyPage extends DrawingSurface implements ActionListener {
             returnToMainMenu.setBorderColor(Color.CYAN);
             Utility.pause(100);
             returnToMainMenu.setBorderColor(Color.BLACK);
-            new HomeScreen();
+            navPage = new NavigationPage();
             mf.dispose();
         } else if (e == player1Ready) {
             setReadyButtonColor(player1Ready);
