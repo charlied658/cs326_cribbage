@@ -2,6 +2,8 @@ package edu.skidmore.cs326.spring2022.skribbage.logic;
 
 import java.util.ArrayList;
 
+import edu.skidmore.cs326.spring2022.skribbage.common.Card;
+
 /**
  * Hand Class representing the methods.
  * 
