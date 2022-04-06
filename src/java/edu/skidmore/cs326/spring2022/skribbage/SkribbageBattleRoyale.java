@@ -50,15 +50,14 @@ public class SkribbageBattleRoyale implements Runnable {
     public void run() {
         System.out.println(getWelcomeMessage());
         LOG.info("Run method started");
-        LOG.info("homePage started by intilizing it.");
+        LOG.info("homePage started by initializing it.");
         // Instantiate required class instances
-        this.homePage = new HomeScreen();
-        this.eventFactory = EventFactory.getInstance();
-        this.eventManager = EventManager.getInstance();
+        homePage = new HomeScreen();
+        eventFactory = EventFactory.getInstance();
+        eventManager = EventManager.getInstance();
 
-        this.eventManager
+        eventManager
             .addPropertyChangeListener(new AccountResponseController());
-
 
 
     }
