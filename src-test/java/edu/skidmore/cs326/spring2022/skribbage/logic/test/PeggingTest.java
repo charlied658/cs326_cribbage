@@ -54,10 +54,10 @@ public class PeggingTest {
         ArrayList<Player> listOfPlayers = game.getPlayerList();
         // set a player to be the pone
         pone = listOfPlayers.get(0);
-        pone.isDealer = false;
+        pone.setDealer(false);
         // set a player to be the dealer
         dealer = listOfPlayers.get(1);
-        dealer.isDealer = true;
+        dealer.setDealer(true);
     }
 
     /**
