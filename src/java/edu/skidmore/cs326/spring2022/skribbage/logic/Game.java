@@ -3,8 +3,6 @@ package edu.skidmore.cs326.spring2022.skribbage.logic;
 import java.util.ArrayList;
 //import org.apache.log4j.Logger;
 
-import edu.skidmore.cs326.spring2022.skribbage.common.Card;
-
 /**
  * Game contains the state of the game. It has a deck, a list of players, a
  * pegging total, a list of cards in the crib, and lists of cards played during
