@@ -3,15 +3,12 @@ package edu.skidmore.cs326.spring2022.skribbage.frontend;
 import java.awt.Color;
 import java.awt.Point;
 import org.apache.log4j.Logger;
-
 import us.daveread.edu.graphics.shape.Drawable;
 import us.daveread.edu.graphics.shape.impl.Image;
 import us.daveread.edu.graphics.shape.impl.Text;
 import us.daveread.edu.graphics.surface.DialogPosition;
 import us.daveread.edu.graphics.surface.DrawingSurface;
 import us.daveread.edu.graphics.surface.MainFrame;
-import us.daveread.edu.graphics.surface.DialogType;
-
 
 /**
  * @author Zoe Beals updated as of 3/22/2022
