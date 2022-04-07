@@ -47,9 +47,9 @@ public class UserChangePasswordEventTest {
     public void setUp() {
         LOG.trace("Started the setup method");
         source = new Object();
-        userInstance =
-            // Email, username, password, isauthorized?
-            new User("sleinasa@skidmore.edu", "sleinasa", "passwd", true);
+//        userInstance =
+//            // Email, username, password, isauthorized?
+//            new User("sleinasa@skidmore.edu", "sleinasa", "passwd", true);
         // Creating testInstance with the parameter of newPassword to be equal
         // to oldpassword.
         // Will change this value when testing.
