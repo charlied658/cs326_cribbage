@@ -4,7 +4,6 @@ package edu.skidmore.cs326.spring2022.skribbage.logic;
 import java.util.ArrayList;
 import java.util.Random;
 
-import edu.skidmore.cs326.spring2022.skribbage.common.Card;
 import edu.skidmore.cs326.spring2022.skribbage.common.Suit;
 
 /**

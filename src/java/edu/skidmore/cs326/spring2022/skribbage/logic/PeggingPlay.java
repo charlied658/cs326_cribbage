@@ -1,8 +1,6 @@
 package edu.skidmore.cs326.spring2022.skribbage.logic;
 import java.util.ArrayList;
 
-import edu.skidmore.cs326.spring2022.skribbage.common.Card;
-
 /**
 * PeggingPlay contains methods to run the pegging play phase of the game.
 * This class is incomplete. It contains methods to check some player claims
