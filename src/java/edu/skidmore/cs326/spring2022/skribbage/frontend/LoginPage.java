@@ -7,6 +7,7 @@ import us.daveread.edu.graphics.shape.Drawable;
 import us.daveread.edu.graphics.shape.impl.Image;
 import us.daveread.edu.graphics.shape.impl.Text;
 import us.daveread.edu.graphics.surface.DialogPosition;
+import us.daveread.edu.graphics.surface.DialogType;
 import us.daveread.edu.graphics.surface.DrawingSurface;
 import us.daveread.edu.graphics.surface.MainFrame;
 
@@ -232,12 +233,11 @@ public class LoginPage extends DrawingSurface {
             password = getUserInput("Login", "Enter password for: " + username,
                 DialogPosition.CENTER_ALL, true);
             if (loggedIn()) {
-                showErrorMessage("User: " + username,
-                    "Successful Log In", DialogPosition.CENTER_ALL);
-                goToNextPage();
+                showMessage("User: " + username, "Successful Log In",
+                    DialogType.INFORMATION);
             } else {
-                showErrorMessage("User Not Found",
-                    "Unsuccessful Log In", DialogPosition.CENTER_ALL);
+                showMessage("User not found", "Unsuccessful Log In",
+                    DialogType.ERROR);
             }
         } else if (e == changePassword) {
             changePassword.setFillColor(Color.GREEN);
@@ -264,9 +264,9 @@ public class LoginPage extends DrawingSurface {
             }
         }
     }
-    
+
     /**
-     * goToNextPage method - once a user is logged in, 
+     * goToNextPage method - once a user is logged in,
      * shows the navigation page.
      */
     public void goToNextPage() {
