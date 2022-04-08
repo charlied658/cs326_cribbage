@@ -5,8 +5,8 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 
+import edu.skidmore.cs326.spring2022.skribbage.common.Suit;
 import edu.skidmore.cs326.spring2022.skribbage.logic.Card;
-import edu.skidmore.cs326.spring2022.skribbage.logic.Suit;
 
 /**
  * Unit tests for the Card class.

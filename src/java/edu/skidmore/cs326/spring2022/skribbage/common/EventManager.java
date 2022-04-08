@@ -62,7 +62,7 @@ public final class EventManager {
     public void addPropertyChangeListener(PropertyChangeListener pcl,
         EventType... eventType) {
         for (EventType event : eventType) {
-            this.support.addPropertyChangeListener(event.toString(), pcl);
+            support.addPropertyChangeListener(event.toString(), pcl);
         }
     }
 
@@ -74,7 +74,7 @@ public final class EventManager {
      *            unregister
      */
     public void removePropertyChangeListener(PropertyChangeListener pcl) {
-        this.support.removePropertyChangeListener(pcl);
+        support.removePropertyChangeListener(pcl);
     }
 
     /**
@@ -85,7 +85,7 @@ public final class EventManager {
      *            PropertyChangeEvent)
      */
     public void notify(PropertyChangeEvent evt) {
-        this.support.firePropertyChange(evt);
+        support.firePropertyChange(evt);
     }
     
     /**
