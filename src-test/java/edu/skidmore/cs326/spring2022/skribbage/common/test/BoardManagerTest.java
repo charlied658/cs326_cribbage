@@ -3,6 +3,7 @@ package edu.skidmore.cs326.spring2022.skribbage.common.test;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import org.apache.log4j.Logger;
 import org.junit.Test;
 
 import edu.skidmore.cs326.spring2022.skribbage.common.Board;
@@ -15,10 +16,24 @@ import edu.skidmore.cs326.spring2022.skribbage.common.BoardManager;
  */
 public class BoardManagerTest {
     /**
+     * Logger instance for logging.
+     */
+    private static final Logger LOG;
+
+    /**
+     * Create the Logger.
+     */
+    static {
+        LOG = Logger.getLogger(BoardManager.class);
+    }
+
+    /**
      * Verify instance is created and returned.
      */
     @Test
     public void testGetInstanceNotNull() {
+        LOG.debug("Running test");
+
         BoardManager mgr = BoardManager.getInstance();
         assertNotNull("BoardManager is null", mgr);
     }
@@ -29,6 +44,8 @@ public class BoardManagerTest {
      */
     @Test
     public void testGetInstanceIsSingleton() {
+        LOG.debug("Running test");
+
         BoardManager mgr = BoardManager.getInstance();
         BoardManager mgr2 = BoardManager.getInstance();
         assertTrue("BoardManager Instances differ, not a Singleton",
@@ -40,6 +57,8 @@ public class BoardManagerTest {
      */
     @Test
     public void testGetBoardNotNull() {
+        LOG.debug("Running test");
+
         Board b = BoardManager.getInstance().getBoard();
         assertNotNull("Board from BoardManager is null", b);
     }
@@ -50,11 +69,12 @@ public class BoardManagerTest {
      */
     @Test
     public void testGetBoardSameInstance() {
+        LOG.debug("Running test");
+
         Board b = BoardManager.getInstance().getBoard();
         Board b2 = BoardManager.getInstance().getBoard();
 
         assertTrue("Board instances differ, not retuirning the same board",
             b == b2);
-
     }
 }
