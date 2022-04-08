@@ -74,7 +74,7 @@ public class BoardManagerTest {
         Board b = BoardManager.getInstance().getBoard();
         Board b2 = BoardManager.getInstance().getBoard();
 
-        assertTrue("Board instances differ, not retuirning the same board",
+        assertTrue("Board instances differ, not returning the same board",
             b == b2);
     }
 }
