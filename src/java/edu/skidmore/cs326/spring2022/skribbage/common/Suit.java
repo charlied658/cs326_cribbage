@@ -3,7 +3,6 @@ package edu.skidmore.cs326.spring2022.skribbage.common;
 /**
  * enum for suit.
  * 
- * TODO (DSR): Suit functionality needs to move to the common package
  * TODO (DSR): Lets talk through the design of Card, Hand, Deck...
 
  * 
@@ -13,18 +12,38 @@ public enum Suit {
     /**
      * Hearts suit.
      */
-    HEARTS,
+    HEARTS("Hearts"),
     /**
      * Clubs suit.
      */
-    CLUBS,
+    CLUBS("Clubs"),
     /**
      * Diamonds suit.
      */
-    DIAMONDS,
+    DIAMONDS("Diamonds"),
     /**
      * Spades suit.
      */
-    SPADES;
-
+    SPADES("Spades");
+    
+    /**
+     * The name of the suit in string form.
+     */
+    private String name;
+    
+    /**
+     * Constructor that provides each suit with a String value of its name.
+     * @param name
+     */
+    Suit(String name) {
+        this.name = name;
+    }
+    
+    /**
+     * Allows other classes access to name attribute.
+     * @return name
+     */
+    public String getName() {
+        return name;
+    }
 }
