@@ -1,5 +1,7 @@
 package edu.skidmore.cs326.spring2022.skribbage.common;
 
+import java.awt.Point;
+
 import org.apache.log4j.Logger;
 
 import us.daveread.edu.graphics.shape.impl.Image;
@@ -8,6 +10,10 @@ import us.daveread.edu.graphics.shape.impl.Image;
  * @author Sten Leinasaar
  */
 public class Board {
+    /**
+     * Singleton instance of a board.
+     */
+    private static final Board INSTANCE;
 
     /**
      * Logger instance for logging.
@@ -28,13 +34,27 @@ public class Board {
 
     static {
         LOG = Logger.getLogger(Board.class);
+        INSTANCE = new Board();
     }
 
     /**
-     * Constructor.
+     * Private Constructor to ensure Singleton patter.
      */
-    public Board() {
+    private Board() {
         LOG.info("Constructor of a Board class reached.");
+        board = new Image("board.png", new Point(0, 0), null);
+
+    }
+
+    /**
+     * This method returns a singleton instance of a Board.
+     * Enables different layers to edit and work with the same board.
+     * 
+     * @return Instance of type Board.
+     */
+    public static synchronized Board getInstance() {
+        LOG.trace("Returning an instance of Board.");
+        return INSTANCE;
     }
 
     /**
