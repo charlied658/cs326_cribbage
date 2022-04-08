@@ -31,11 +31,11 @@ import us.daveread.edu.graphics.shape.impl.Circle;
  * @author Jonah Marcus
  *         Last Update: March 27, 2022
  *         Last Edited by Jonah Marcus
-<<<<<<< HEAD
- * Code Reviewed March 27, 2022 - Zoe Beals
-=======
+ *         <<<<<<< HEAD
  *         Code Reviewed March 27, 2022 - Zoe Beals
->>>>>>> d599e4ec72d372caffa74468e69fe3928d68eb9f
+ *         =======
+ *         Code Reviewed March 27, 2022 - Zoe Beals
+ *         >>>>>>> d599e4ec72d372caffa74468e69fe3928d68eb9f
  */
 
 public class LobbyPage extends DrawingSurface implements ActionListener {
@@ -87,14 +87,12 @@ public class LobbyPage extends DrawingSurface implements ActionListener {
      */
     private Text returnToMainMenu;
 
-    
-    /**
-     * startButton - Text object to act as a button to start the game once 
-=======
-
     /**
      * startButton - Text object to act as a button to start the game once
->>>>>>> d599e4ec72d372caffa74468e69fe3928d68eb9f
+     * =======
+     * /**
+     * startButton - Text object to act as a button to start the game once
+     * >>>>>>> d599e4ec72d372caffa74468e69fe3928d68eb9f
      * all players have readied up.
      */
     private Text startButton;
@@ -118,6 +116,11 @@ public class LobbyPage extends DrawingSurface implements ActionListener {
      * inventoryPage - Text object to be button to open the InventoryPage.
      */
     private Text inventoryPage;
+
+    /**
+     * navPage - NavigationPage window.
+     */
+    private NavigationPage navPage;
 
     /**
      * Logger instance for logging.
@@ -158,9 +161,6 @@ public class LobbyPage extends DrawingSurface implements ActionListener {
             new Dimension(mainframeWidth, mainframeHeight),
             Color.DARK_GRAY, Color.DARK_GRAY);
 
-    
-        
-
         Image logo = new Image("logo.png", new Point(300, 0), 0.6, null);
 
         returnToMainMenu = new Text("Main Menu",
@@ -168,11 +168,8 @@ public class LobbyPage extends DrawingSurface implements ActionListener {
         startButton = new Text("Start Game", new Point(20, 250),
             25, Color.BLACK, Color.BLUE);
 
-        //inventoryPage = new Text("Inventory", new Point(760, 40), 25, 
-            //Color.BLACK, Color.BLUE);
-        
-
-
+        // inventoryPage = new Text("Inventory", new Point(760, 40), 25,
+        // Color.BLACK, Color.BLUE);
 
         getPlayerNames();
 
@@ -186,9 +183,6 @@ public class LobbyPage extends DrawingSurface implements ActionListener {
         player1Ready = new Circle(new Point(10, 87), 15, Color.RED, Color.RED);
         player2Ready = new Circle(new Point(10, 107), 15, Color.RED, Color.RED);
         player3Ready = new Circle(new Point(10, 127), 15, Color.RED, Color.RED);
-
-
-
 
         // add(background);
         add(logo);
@@ -204,8 +198,6 @@ public class LobbyPage extends DrawingSurface implements ActionListener {
         add(player3Ready);
     }
 
-    
-
     /**
      * getPlayerNames method - placeholder. Will eventually work with the
      * event listeners to receive the names of the players logged into
@@ -214,16 +206,15 @@ public class LobbyPage extends DrawingSurface implements ActionListener {
     private void getPlayerNames() {
         LOG.trace("Entered getPlayerNames");
 
-        //All three will read playerNotLoggedIn message until a new name is 
-        //received.
+        // All three will read playerNotLoggedIn message until a new name is
+        // received.
         loggedInPlayer1 = playerNotLoggedIn;
         loggedInPlayer2 = playerNotLoggedIn;
         loggedInPlayer3 = playerNotLoggedIn;
-        
+
         loggedInPlayer1 = "[Redacted] \"Crypto\" [Redacted]";
         loggedInPlayer2 = "Caleb \"Revenant\" Cross";
     }
-  
 
     /**
      * setReadyButtonColor method - sets the color of the ready button.
@@ -249,7 +240,7 @@ public class LobbyPage extends DrawingSurface implements ActionListener {
             returnToMainMenu.setBorderColor(Color.CYAN);
             Utility.pause(100);
             returnToMainMenu.setBorderColor(Color.BLACK);
-            new HomeScreen();
+            navPage = new NavigationPage();
             mf.dispose();
         } else if (e == player1Ready) {
             setReadyButtonColor(player1Ready);
@@ -259,7 +250,7 @@ public class LobbyPage extends DrawingSurface implements ActionListener {
             setReadyButtonColor(player3Ready);
         } else if (e == startButton) {
 
-            //Placeholder - not functional yet
+            // Placeholder - not functional yet
             startButton.setBorderColor(Color.CYAN);
             Utility.pause(100);
             startButton.setBorderColor(Color.BLACK);
@@ -278,8 +269,6 @@ public class LobbyPage extends DrawingSurface implements ActionListener {
             new InventoryPage();
         }
 
-       
-
     }
 
     @Override
@@ -291,6 +280,7 @@ public class LobbyPage extends DrawingSurface implements ActionListener {
 
     /**
      * main method.
+     * 
      * @param args
      */
     public static void main(String[] args) {

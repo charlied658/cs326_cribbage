@@ -68,8 +68,8 @@ public class EventManagerTest {
     @Before
     public void setUp() throws Exception {
         testInstance = EventManager.getInstance();
-        userInstance =
-            new User("sleinasa@skidmore.edu", "sleinasa", "passwd", true);
+//        userInstance =
+//            new User("sleinasa@skidmore.edu", "sleinasa", "passwd", true);
         source = new EventManagerTest();
         loginEventInstance = (UserLoginEvent) EventFactory.getInstance()
             .createEvent(EventType.USER_LOGIN, source, userInstance);
@@ -124,8 +124,8 @@ public class EventManagerTest {
             EventType.USER_LOGIN);
         testInstance.notify(loginEventInstance);
         // now change the userInstance and the logInEvent instance.
-        userInstance =
-            new User("sleinasa@skidmore.edu", "username", "password", true);
+//        userInstance =
+//            new User("sleinasa@skidmore.edu", "username", "password", true);
         loginEventInstance = (UserLoginEvent) EventFactory.getInstance()
             .createEvent(EventType.USER_LOGIN, source, userInstance);
 
