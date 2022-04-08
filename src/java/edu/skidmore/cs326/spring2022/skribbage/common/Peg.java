@@ -33,7 +33,7 @@ public class Peg {
     private static final Logger LOG;
 
     static {
-        LOG = Logger.getLogger(HomeScreen.class);
+        LOG = Logger.getLogger(Peg.class);
     }
     
     /**
