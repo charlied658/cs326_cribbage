@@ -28,8 +28,11 @@ public class Board {
     /**
      * Array of pegs.
      */
-    // private Peg[] pegs;
+    private Peg[] pegs;
 
+    /**
+     * An Array of spots that form a grid.
+     */
     private Spot[] grid;
 
     static {
@@ -66,9 +69,12 @@ public class Board {
 
     }
 
-    // public Peg[] getPegs() {
-    //
-    // }
+    /**
+     * @return An array of pegs.
+     */
+    public Peg[] getPegs() {
+        return pegs;
+    }
 
     /**
      * This method checks the game grid and returns the positions with pegs.
@@ -81,9 +87,16 @@ public class Board {
         //
     }
 
-    // public Peg getSpot(Peg p) {
-    //
-    // }
+    /**
+     * Method to find a spot of a specified peg.
+     * 
+     * @param p
+     *            specified peg.
+     * @return a spot of that specified peg.
+     */
+    public Spot getSpot(Peg p) {
+        return p.getSpot();
+    }
 
     /**
      * This method assigns a random spot to be a prize spot and returns the grid
