@@ -11,14 +11,14 @@ import static org.junit.Assert.assertNotNull;
 import org.junit.Before;
 import org.junit.Test;
 
-import edu.skidmore.cs326.spring2022.skribbage.gamification.ReBattleCard;
+import edu.skidmore.cs326.spring2022.skribbage.gamification.LastPlayerShowCard;
 
 /**
- * Unit tests for the ReBattleCard class.
+ * Unit tests for the LastPlayerShowCard class.
  * 
  * @author Muaded Almheiri
  */
-public class ReBattleCardTest {
+public class LastPlayerShowCardTest {
 
   /**
    * Logger for the class.
@@ -29,13 +29,13 @@ public class ReBattleCardTest {
    * Create static resources.
    */
   static {
-    LOG = Logger.getLogger(ReBattleCardTest.class);
+    LOG = Logger.getLogger(LastPlayerShowCardTest.class);
   }
 
   /**
    * Attribute to house the test instance.
    */
-  private ReBattleCard testInstance;
+  private LastPlayerShowCard testInstance;
 
   /**
    * Create RebattleCard instance.
@@ -43,7 +43,7 @@ public class ReBattleCardTest {
   @Before
   public void setup() {
     LOG.info("Setup for test");
-    testInstance = new ReBattleCard();
+    testInstance = new LastPlayerShowCard();
   }
 
   /**
@@ -54,15 +54,15 @@ public class ReBattleCardTest {
   @Test
   public void testBuyItem() {
 
-    int playerTokensTest = 50;
+    int playerTokensTest = 100;
 
     testInstance.buyItem(playerTokensTest);
-    assertEquals(50 - testInstance.getPrice(), playerTokensTest);
+    assertEquals(100 - testInstance.getPrice(), playerTokensTest);
 
-    playerTokensTest = 24;
+    playerTokensTest = 20;
 
     testInstance.buyItem(playerTokensTest);
-    assertEquals(24, playerTokensTest);
+    assertEquals(20, playerTokensTest);
 
   }
 
@@ -74,7 +74,7 @@ public class ReBattleCardTest {
 
     assertNotNull("Item name is null",
         testInstance.getName());
-    assertEquals("Re-Battle Card",
+    assertEquals("Last-Player-Show Card",
         testInstance.getName());
   }
 
@@ -96,7 +96,10 @@ public class ReBattleCardTest {
     assertNotNull("Item description is null",
         testInstance.getDescription());
     assertEquals(
-        "Use this card to get another chance of battling opponent after a battle.",
+        "Use this card to affect the order of the show."
+            + " Choose an opponent whose show will be moved to following"
+            + "the last show player. May only be used once during a show "
+            + "phase",
         testInstance.getDescription());
   }
 
@@ -106,7 +109,7 @@ public class ReBattleCardTest {
   @Test
   public void testSetName() {
 
-    String testString = "Re-Battle Card";
+    String testString = "Last-Player-Show Card";
     testInstance.setName(testString);
     assertEquals(testInstance.getName(), testString);
 
@@ -130,8 +133,10 @@ public class ReBattleCardTest {
   @Test
   public void testSetDescription() {
 
-    String description = "Use this card to get another chance of "
-        + "battling opponent after a battle.";
+    String description = "Use this card to affect the order of the show."
+        + " Choose an opponent whose show will be moved to following"
+        + "the last show player. May only be used once during a show "
+        + "phase";
     testInstance.setDescription(description);
     assertEquals(testInstance.getDescription(), description);
 

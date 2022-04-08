@@ -1,10 +1,10 @@
 package edu.skidmore.cs326.spring2022.skribbage.common;
 
 import org.apache.log4j.Logger;
-//import org.mortbay.log.Log;
 
 /**
  * A simple bean representing data associated with a User.
+ * TODO (DSR): manage password separately (not part of general interactions)
  *
  * @author Alex Carney
  */
@@ -25,9 +25,9 @@ public class User {
     private final String password;
 
     /**
-     * Private boolean attribute to store if user is authorized.
+     * Private boolean attribute to store if user is authorized. Mutable.
      */
-    private final boolean isAuthorized;
+    private UserRole userRole;
 
     /**
      * Private static final Logger attribute for logging.
@@ -45,18 +45,18 @@ public class User {
      * @param email        User's email
      * @param userName     userName of user
      * @param password     Password submitted
-     * @param isAuthorized Determines whether or not the user is logged in.
+     * @param userRole Determines whether or not the user is logged in.
+     * @see UserRole
      */
     public User(String email, String userName, String password,
-        boolean isAuthorized) {
+        UserRole userRole) {
         this.email = email;
         LOG.debug("Email value set to:" + email);
         this.userName = userName;
         LOG.debug("userName value set to: " + userName);
         this.password = password;
-        LOG.debug("password value set to: " + password);
-        this.isAuthorized = isAuthorized;
-        LOG.debug("isAuthorized value was set to: " + isAuthorized);
+        this.userRole = userRole;
+        LOG.debug("isAuthorized value was set to: " + userRole);
         LOG.info(
             "The parameters of User constructor were assigned"
                 + " to private variable attributes");
@@ -67,7 +67,7 @@ public class User {
      */
     public String getEmail() {
         LOG.debug("Returning email of a user");
-        return this.email;
+        return email;
     }
 
     /**
@@ -75,7 +75,7 @@ public class User {
      */
     public String getUserName() {
         LOG.debug("Returning the userName of a user");
-        return this.userName;
+        return userName;
     }
 
     /**
@@ -83,14 +83,23 @@ public class User {
      */
     public String getPassword() {
         LOG.debug("Returning the password of a user");
-        return this.password;
+        return password;
     }
 
     /**
-     * @return if the user has been authorized.
+     * @return The authorization status of this user.
      */
-    public boolean isAuthorized() {
+    public UserRole getUserRole() {
         LOG.debug("Returning the boolean value of isAuthorized");
-        return this.isAuthorized;
+        return userRole;
+    }
+
+    /**
+     * Functionality to update user's permission level.
+     * @param userRole new role.
+     */
+    public void setUserRole(
+        UserRole userRole) {
+        this.userRole = userRole;
     }
 }

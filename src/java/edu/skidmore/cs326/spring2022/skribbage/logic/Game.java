@@ -9,6 +9,10 @@ import java.util.ArrayList;
  * pegging play by the pone and dealer. It also contains methods that are
  * useful to the various phases of the game. Currently, a key assumption for
  * this class is that there are only two players.
+ * 
+ * TODO (DSR): Game functionality needs to move to the common package
+ * TODO (DSR): Lets talk through the design of Game...
+
  *
  * @author Michael Shriner
  */
@@ -27,13 +31,13 @@ public class Game {
     private int peggingTotal;
 
 	  /** The crib for the game. */
-    private ArrayList<Card> crib = new ArrayList<Card>();
+    private ArrayList<Card> crib;
 
 	  /** The set of cards played by the pone during the pegging phase. */
-    private ArrayList<Card> ponePeggingCards = new ArrayList<Card>();
+    private ArrayList<Card> ponePeggingCards;
 
 	  /** The set of cards played by the dealer during the pegging phase. */
-    private ArrayList<Card> dealerPeggingCards = new ArrayList<Card>();
+    private ArrayList<Card> dealerPeggingCards;
 
 	  /**
 	   * Game constructor. It initializes the list of players
@@ -44,6 +48,11 @@ public class Game {
 	   * game.
 	   */
     public Game(int numPlayers) {
+
+        ponePeggingCards = new ArrayList<Card>();
+        dealerPeggingCards = new ArrayList<Card>();
+        crib = new ArrayList<Card>();
+
         initPlayers(numPlayers);
         initPeggingTotal();
     }
@@ -53,6 +62,9 @@ public class Game {
      * This was created for testing Game.
      */
     public Game() {
+        ponePeggingCards = new ArrayList<Card>();
+        dealerPeggingCards = new ArrayList<Card>();
+        crib = new ArrayList<Card>();
         peggingTotal = 0;
     }
 
