@@ -11,6 +11,8 @@ import javax.swing.*;
 
 import org.apache.log4j.Logger;
 
+import edu.skidmore.cs326.spring2022.skribbage.common.User;
+
 import java.util.*;
 
 import us.daveread.edu.graphics.shape.Drawable;
@@ -52,6 +54,11 @@ public class LobbyPage extends DrawingSurface implements ActionListener {
      */
     private String loggedInPlayer3;
 
+    /**
+     * players - Holds instances of players in lobby.
+     */
+    private ArrayList<User> players;
+    
     /**
      * playerNotLoggedIn - Up to three players can be logged into a single
      * instance of the program at once. This is the message that is displayed
@@ -133,11 +140,20 @@ public class LobbyPage extends DrawingSurface implements ActionListener {
             mainframeHeight, false);
         setup();
     }
+    
+    /**
+     * Takes new player to display on lobby page.
+     * @param player
+     */
+    public void getPlayer(User player) {
+        LOG.trace("Entered LobbyPage's getPlayer");
+        players.add(player);
+    }
 
     /**
      * setup method - sets up the window.
      */
-    public void setup() {
+    private void setup() {
         LOG.trace("LobbyPage setup");
         setLayout(null);
 
