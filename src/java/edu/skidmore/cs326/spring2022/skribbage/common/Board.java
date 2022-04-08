@@ -11,11 +11,6 @@ import us.daveread.edu.graphics.shape.impl.Image;
  */
 public class Board {
     /**
-     * Singleton instance of a board.
-     */
-    private static final Board INSTANCE;
-
-    /**
      * Logger instance for logging.
      */
     private static final Logger LOG;
@@ -37,27 +32,16 @@ public class Board {
 
     static {
         LOG = Logger.getLogger(Board.class);
-        INSTANCE = new Board();
     }
 
     /**
-     * Private Constructor to ensure Singleton patter.
+     * Package-level constructor. BoardManager should manage creation of
+     * instances.
      */
-    private Board() {
+    Board() {
         LOG.info("Constructor of a Board class reached.");
         board = new Image("board.png", new Point(0, 0), null);
 
-    }
-
-    /**
-     * This method returns a singleton instance of a Board.
-     * Enables different layers to edit and work with the same board.
-     * 
-     * @return Instance of type Board.
-     */
-    public static synchronized Board getInstance() {
-        LOG.trace("Returning an instance of Board.");
-        return INSTANCE;
     }
 
     /**
