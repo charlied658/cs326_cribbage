@@ -2,6 +2,8 @@ package edu.skidmore.cs326.spring2022.skribbage.common;
 
 import org.apache.log4j.Logger;
 
+import java.util.Objects;
+
 /**
  * A simple bean representing data associated with a User.
  * TODO (DSR): manage password separately (not part of general interactions)
@@ -102,5 +104,39 @@ public class User implements Payload {
     public void setUserRole(
         UserRole userRole) {
         this.userRole = userRole;
+    }
+
+    /**
+     * Compare two users for equality. Does not compare authorization level
+     * or passwords.
+     * @param o Object to compare to this user.
+     * @return True if the users are equal, false otherwise.
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        User user = (User) o;
+        return email.equals(user.email) && userName.equals(user.userName);
+    }
+
+    /**
+     * Generate hash code for this object.
+     * @return int hashcode
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hash(email, userName);
+    }
+
+    @Override public String toString() {
+        return "User{" + "email='" + email + '\''
+            + ", userName='" + userName + '\''
+            + ", userRole=" + userRole
+            + '}';
     }
 }

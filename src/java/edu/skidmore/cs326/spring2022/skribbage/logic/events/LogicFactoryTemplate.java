@@ -31,7 +31,7 @@ public class LogicFactoryTemplate extends FactoryTemplate {
         switch (event) {
             case USER_LOGIN_RESPONSE:
                 LOG.trace("Returning: " + event.getName());
-                return null;
+                return new UserLoginResponseEvent(source, args);
             default:
                 LOG.warn("Event passed was not one of logic events");
                 return null;

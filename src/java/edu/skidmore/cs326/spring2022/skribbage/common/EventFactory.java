@@ -41,7 +41,7 @@ public final class EventFactory implements EventDispatcher {
     /**
      * Event manager instance for dispatching events.
      */
-    private final EventManager eventManager;
+    private final EventManager eventManager = EventManager.getInstance();
 
     static {
         LOG = Logger.getLogger(EventFactory.class);
@@ -52,7 +52,7 @@ public final class EventFactory implements EventDispatcher {
      * EventFactory private constructor.
      */
     private EventFactory() {
-        eventManager = EventManager.getInstance();
+//        eventManager = EventManager.getInstance();
         templates = Arrays.asList(
             new LogicFactoryTemplate(), new GamificationFactoryTemplate(),
             new FrontEndFactoryTemplate(), new PersistanceFactoryTemplate());
@@ -131,6 +131,12 @@ public final class EventFactory implements EventDispatcher {
      */
     @Override
     public void fireEvent(PropertyChangeEvent event) {
-        eventManager.notify(event);
+        System.out.println("Firing event = " + event);
+        if (event != null) {
+            eventManager.notify(event);
+        } else {
+            LOG.error("A null event was attempted to be fired");
+        }
+
     }
 }

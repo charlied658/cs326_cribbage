@@ -24,7 +24,7 @@ public abstract class AccountResponseEvent extends PropertyChangeEvent {
     /**
      * Rejection status of event.
      */
-    protected final boolean rejected;
+    protected final Boolean rejected;
 
     /**
      * The user associated with the event.
@@ -45,11 +45,12 @@ public abstract class AccountResponseEvent extends PropertyChangeEvent {
      * @param responseMessage
      *            The message passed to front end
      */
-    public AccountResponseEvent(Object source, EventType eventType, User user,
+    protected AccountResponseEvent(Object source, EventType eventType,
+        User user,
         boolean rejectionStatus, String responseMessage) {
         super(source, eventType.toString(), null, null);
         this.user = user;
-        this.rejected = rejectionStatus;
+        rejected = rejectionStatus;
         this.responseMessage = responseMessage;
     }
 
