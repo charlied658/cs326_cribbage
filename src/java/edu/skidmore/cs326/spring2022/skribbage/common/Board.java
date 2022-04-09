@@ -4,6 +4,7 @@ import java.awt.Point;
 
 import org.apache.log4j.Logger;
 
+import edu.skidmore.cs326.spring2022.skribbage.logic.Game;
 import us.daveread.edu.graphics.shape.impl.Image;
 
 /**
@@ -28,10 +29,22 @@ public class Board {
     /**
      * An Array of spots that form a grid.
      */
-    private Spot[] grid;
+    private Spot[][] grid;
+
+    /**
+     * Constant number of rows.
+     */
+    public static final Integer NUMROWS;
+
+    /**
+     * PLACEHOLDER VALUE.
+     */
+    public static final Integer NUMCOL;
 
     static {
         LOG = Logger.getLogger(Board.class);
+        NUMROWS = 100;
+        NUMCOL = 5;
     }
 
     /**
@@ -41,13 +54,21 @@ public class Board {
     Board() {
         LOG.debug("Instance created");
         board = new Image("board.png", new Point(0, 0), null);
+        /**
+         * @TODO If game calls board and passes itself, the column number could
+         *       be easily retrieved. as Shows.
+         */
+        // NUMCOL = p.getPlayerList().size();
+        grid = new Spot[NUMROWS][NUMCOL];
+        // each player has two pegs.
+        pegs = new Peg[NUMCOL * 2];
 
     }
 
     /**
      * @return grid consisting of spots.
      */
-    public Spot[] getGrid() {
+    public Spot[][] getGrid() {
         LOG.debug("Grid-array of spot-returned");
         return grid;
 
@@ -67,6 +88,7 @@ public class Board {
      */
     public Spot[] getOccupiedSpots() {
         LOG.trace("Returning occupied spots as an array of spots.");
+
         return null;
         //
     }
