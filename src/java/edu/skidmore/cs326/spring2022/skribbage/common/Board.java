@@ -4,17 +4,13 @@ import java.awt.Point;
 
 import org.apache.log4j.Logger;
 
+import edu.skidmore.cs326.spring2022.skribbage.logic.Game;
 import us.daveread.edu.graphics.shape.impl.Image;
 
 /**
  * @author Sten Leinasaar
  */
 public class Board {
-    /**
-     * Singleton instance of a board.
-     */
-    private static final Board INSTANCE;
-
     /**
      * Logger instance for logging.
      */
@@ -33,38 +29,47 @@ public class Board {
     /**
      * An Array of spots that form a grid.
      */
-    private Spot[] grid;
+    private Spot[][] grid;
+
+    /**
+     * Constant number of rows.
+     */
+    public static final Integer NUMROWS;
+
+    /**
+     * PLACEHOLDER VALUE.
+     */
+    public static final Integer NUMCOL;
 
     static {
         LOG = Logger.getLogger(Board.class);
-        INSTANCE = new Board();
+        NUMROWS = 100;
+        NUMCOL = 5;
     }
 
     /**
-     * Private Constructor to ensure Singleton patter.
+     * Package-level constructor. BoardManager should manage creation of
+     * instances.
      */
-    private Board() {
-        LOG.info("Constructor of a Board class reached.");
+    Board() {
+        LOG.debug("Instance created");
         board = new Image("board.png", new Point(0, 0), null);
+        /**
+         * @TODO If game calls board and passes itself, the column number could
+         *       be easily retrieved. as Shows.
+         */
+        // NUMCOL = p.getPlayerList().size();
+        grid = new Spot[NUMROWS][NUMCOL];
+        // each player has two pegs.
+        pegs = new Peg[NUMCOL * 2];
 
-    }
-
-    /**
-     * This method returns a singleton instance of a Board.
-     * Enables different layers to edit and work with the same board.
-     * 
-     * @return Instance of type Board.
-     */
-    public static synchronized Board getInstance() {
-        LOG.trace("Returning an instance of Board.");
-        return INSTANCE;
     }
 
     /**
      * @return grid consisting of spots.
      */
-    public Spot[] getGrid() {
-        LOG.trace("Returning a grid as an array of spots.");
+    public Spot[][] getGrid() {
+        LOG.debug("Grid-array of spot-returned");
         return grid;
 
     }
@@ -83,6 +88,7 @@ public class Board {
      */
     public Spot[] getOccupiedSpots() {
         LOG.trace("Returning occupied spots as an array of spots.");
+
         return null;
         //
     }

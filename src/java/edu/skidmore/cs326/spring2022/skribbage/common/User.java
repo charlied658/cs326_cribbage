@@ -8,7 +8,7 @@ import org.apache.log4j.Logger;
  *
  * @author Alex Carney
  */
-public class User {
+public class User implements Payload {
     /**
      * Private string attribute to store the email of a user.
      */
@@ -21,6 +21,7 @@ public class User {
 
     /**
      * Private string attribute to store a password of a user.
+     * //TODO: DEPRECATED; Should be a Password object type soon
      */
     private final String password;
 
