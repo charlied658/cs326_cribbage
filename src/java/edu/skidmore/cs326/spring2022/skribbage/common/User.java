@@ -21,6 +21,7 @@ public class User implements Payload {
 
     /**
      * Private string attribute to store a password of a user.
+     * //TODO: DEPRECATED; Should be a Password object type soon
      */
     private final String password;
 
