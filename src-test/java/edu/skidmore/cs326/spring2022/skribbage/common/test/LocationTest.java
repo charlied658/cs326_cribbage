@@ -19,6 +19,16 @@ public class LocationTest {
     private Location testInstance;
 
     /**
+     * Test instance two.
+     */
+    private Location testInstanceTwo;
+
+    /**
+     * Test instance three.
+     */
+    private Location testInstanceThree;
+
+    /**
      * Row testing value.
      */
     private static final Integer ROW_TEST_VALUE = 5;
@@ -43,6 +53,8 @@ public class LocationTest {
     @Before
     public void setup() {
         testInstance = new Location(ROW_TEST_VALUE, COL_TEST_VALUE);
+        testInstanceTwo = new Location(ROW_TEST_VALUE, COL_TEST_VALUE);
+        testInstanceThree = new Location(ROW_TEST_VALUE * 2, COL_TEST_VALUE * 2);
     }
 
     /**
@@ -67,7 +79,6 @@ public class LocationTest {
      */
     @Test
     public void testEquality() {
-        Location testInstanceTwo = new Location(ROW_TEST_VALUE, COL_TEST_VALUE);
         assertEquals(testInstance, testInstanceTwo);
     }
 
@@ -76,8 +87,6 @@ public class LocationTest {
      */
     @Test
     public void testInequality() {
-        Location testInstanceThree =
-            new Location(ROW_TEST_VALUE * 2, COL_TEST_VALUE * 2);
         assertNotEquals(testInstance, testInstanceThree);
     }
 }
