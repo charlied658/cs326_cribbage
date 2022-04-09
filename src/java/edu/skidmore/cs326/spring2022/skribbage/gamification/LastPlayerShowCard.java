@@ -7,61 +7,59 @@ import org.apache.log4j.Logger;
  * Prototype for each special card and item in the shop.
  * 
  * @author Muaded Almheiri
- *
  */
 public class LastPlayerShowCard implements ItemShopInterface {
 
-  /**
-   * Logger for the class.
-   */
+    /**
+     * Logger for the class.
+     */
     private static final Logger LOG;
 
-  /**
-   * Create static resources.
-   */
+    /**
+     * Create static resources.
+     */
     static {
         LOG = Logger.getLogger(LastPlayerShowCard.class);
     }
 
-  /**
-   * String variable to hold card/item name.
-   */
+    /**
+     * String variable to hold card/item name.
+     */
     private String specialCardName;
 
-   /**
-    * Integer variable to hold card/item token price.
-    */
+    /**
+     * Integer variable to hold card/item token price.
+     */
     private int specialCardPrice;
 
-   /**
-    * String variable to hold card/item description.
-    */
+    /**
+     * String variable to hold card/item description.
+     */
     private String specialCardDescription;
-    
-   /**
-    * Hash map to hold items bought before being updated to inventory.
-    */
+
+    /**
+     * Hash map to hold items bought before being updated to inventory.
+     */
     private HashMap<String, Integer> cart = new HashMap<String, Integer>();
 
-   /**
-    * LastPlayerShowCard constructor.
-    */
+    /**
+     * LastPlayerShowCard constructor.
+     */
     public LastPlayerShowCard() {
         LOG.info("Creating new Last-Player-Show Card");
 
         /* Set card name, price, and description. */
-        setName("Last-Player-Show Card");
-        setPrice(25);
-        setDescription("Use this card to affect the order of the show."
-            + " Choose an opponent whose show will be moved to following"
-            + "the last show player. May only be used once during a show "
-            + "phase");
+        setName(SpecialCard.LASTPLAYERSHOWCARD.getType());
+        setPrice(SpecialCard.LASTPLAYERSHOWCARD.getPrice());
+        setDescription(SpecialCard.LASTPLAYERSHOWCARD.getDescription());
 
         LOG.info("Name, price, and description set for Last-Player-Show Card.");
 
         boolean isEntry = false;
 
-        /* Loop through Hash map to check if card already exists in item shop.*/
+        /*
+         * Loop through Hash map to check if card already exists in item shop.
+         */
         for (HashMap.Entry<String, Integer> entry : STORE_ITEMS.entrySet()) {
 
             if (entry.getKey().equals(specialCardName)) {
@@ -71,7 +69,7 @@ public class LastPlayerShowCard implements ItemShopInterface {
             }
         }
 
-    /* Card is not in store, place in store with value. */
+        /* Card is not in store, place in store with value. */
         if (!isEntry) {
             STORE_ITEMS.put(specialCardName, specialCardPrice);
             LOG.info("Last-Player-Show Card placed in store with value 25");
@@ -79,10 +77,10 @@ public class LastPlayerShowCard implements ItemShopInterface {
 
     }
 
-  /**
-   * Buy's card at given price based on amount of tokens held by player.
-   * TODO If item bought, update player inventory(done) and tokens.
-   */
+    /**
+     * Buy's card at given price based on amount of tokens held by player.
+     * TODO If item bought, update player inventory(done) and tokens.
+     */
     @Override
     public void buyItem(int playerTokens) {
 
@@ -92,18 +90,18 @@ public class LastPlayerShowCard implements ItemShopInterface {
             LOG.info("25 Tokens subtracted from player's tokens.");
             System.out.println(getName() + " bought at price " + getPrice()
                 + ". Player now holds " + playerTokens);
-            updateInventory(cart);
+            addSpecialCard(cart);
         } else {
             LOG.info("Not enough tokens to buy a Last-Player-Show Card.");
             System.out.println("Not enough tokens to buy " + getName());
         }
     }
 
-  /**
-   * Getter method for special card/item name.
-   * 
-   * @return special card/item name
-   */
+    /**
+     * Getter method for special card/item name.
+     * 
+     * @return special card/item name
+     */
     @Override
     public String getName() {
 
@@ -111,11 +109,11 @@ public class LastPlayerShowCard implements ItemShopInterface {
         return specialCardName;
     }
 
-  /**
-   * Getter method for special card/item token price.
-   * 
-   * @return item token price
-   */
+    /**
+     * Getter method for special card/item token price.
+     * 
+     * @return item token price
+     */
     @Override
     public int getPrice() {
 
@@ -123,11 +121,11 @@ public class LastPlayerShowCard implements ItemShopInterface {
         return specialCardPrice;
     }
 
-  /**
-   * Getter method for special card/item description.
-   * 
-   * @return special card/item description/use.
-   */
+    /**
+     * Getter method for special card/item description.
+     * 
+     * @return special card/item description/use.
+     */
     @Override
     public String getDescription() {
 
@@ -135,53 +133,58 @@ public class LastPlayerShowCard implements ItemShopInterface {
         return specialCardDescription;
 
     }
-  
-  /**
-   * Setter method for card/item name.
-   * 
-   * @param name card/item name.
-   */
+
+    /**
+     * Setter method for card/item name.
+     * 
+     * @param name
+     *            card/item name.
+     */
     public void setName(String name) {
-        
+
         LOG.info("Setting card name.");
         specialCardName = name;
-      
+
     }
-  
-  /**
-   * Setter method for card/item price.
-   * 
-   * @param price card/item price.
-   */
+
+    /**
+     * Setter method for card/item price.
+     * 
+     * @param price
+     *            card/item price.
+     */
     public void setPrice(int price) {
-      
+
         LOG.info("Setting card price.");
         specialCardPrice = price;
-      
+
     }
-  
-  /**
-   * Setter method for card/item description.
-   * 
-   * @param description card/item description.
-   */
+
+    /**
+     * Setter method for card/item description.
+     * 
+     * @param description
+     *            card/item description.
+     */
     public void setDescription(String description) {
-        
+
         LOG.info("Setting card description.");
         specialCardDescription = description;
-      
+
     }
-    
+
     /**
      * Method to update player inventory with item bought.
-     * @param cart HashMap holding items bought.
+     * 
+     * @param cart
+     *            HashMap holding items bought.
      */
-    private void updateInventory(HashMap<String, Integer> cart) {
-      
-      InventoryPrototype inventoryObj = new InventoryPrototype();
-      cart.put(getName(), getPrice());
-      inventoryObj.addItem(cart, getName());
-    
+    public void addSpecialCard(HashMap<String, Integer> cart) {
+
+        InventoryPrototype inventoryObj = new InventoryPrototype();
+        cart.put(getName(), getPrice());
+        inventoryObj.addItem(cart, getName());
+
     }
 
 }
