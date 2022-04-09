@@ -24,7 +24,8 @@ public enum EventType {
     /**
      * Fired from logic tier when user's login request has been handled.
      */
-    USER_LOGIN_RESPONSE("User Login Response Event", User.class),
+    USER_LOGIN_RESPONSE("User Login Response Event",
+        User.class, Boolean.class, String.class),
     /**
      * Fired when a user attempts to change their password via login page.
      */
