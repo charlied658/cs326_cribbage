@@ -52,8 +52,8 @@ public final class EventFactory implements EventDispatcher {
      * EventFactory private constructor.
      */
     private EventFactory() {
-        this.eventManager = EventManager.getInstance();
-        this.templates = Arrays.asList(
+        eventManager = EventManager.getInstance();
+        templates = Arrays.asList(
             new LogicFactoryTemplate(), new GamificationFactoryTemplate(),
             new FrontEndFactoryTemplate(), new PersistanceFactoryTemplate());
 
@@ -80,7 +80,6 @@ public final class EventFactory implements EventDispatcher {
      */
     public PropertyChangeEvent createEvent(EventType event, Object source,
         Object... args) /**throws Exception*/ {
-
         Object[] eventArgumentList = event.getArgumentList();
 
         for (int i = 0; i < eventArgumentList.length; i++) {
@@ -100,7 +99,7 @@ public final class EventFactory implements EventDispatcher {
         LOG.trace(
             "Calling createEvent from each subclass "
                 + "with their overWritten hook method.");
-        for (FactoryTemplate subclass : this.templates) {
+        for (FactoryTemplate subclass : templates) {
             temp = subclass.createEvent(event, source, args);
             if (temp != null) {
                 LOG.trace(
@@ -112,7 +111,7 @@ public final class EventFactory implements EventDispatcher {
         }
 
         LOG.error("Event not found");
-//        throw new Exception("Event Not Found");
+        //        throw new Exception("Event Not Found");
         return null;
 
     }
@@ -132,6 +131,6 @@ public final class EventFactory implements EventDispatcher {
      */
     @Override
     public void fireEvent(PropertyChangeEvent event) {
-        this.eventManager.notify(event);
+        eventManager.notify(event);
     }
 }
