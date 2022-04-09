@@ -60,6 +60,8 @@ public class InventoryPrototype {
      *            HashMap used as our inventory
      * @param key
      *            name of the item
+     * @return val
+     *            number of specified item in an inventory
      */
     public int searchForItem(HashMap<String, Integer> map, String key) {
         int val = map.get(key);
