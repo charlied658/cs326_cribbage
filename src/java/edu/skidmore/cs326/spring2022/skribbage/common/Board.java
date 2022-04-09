@@ -39,7 +39,7 @@ public class Board {
      * instances.
      */
     Board() {
-        LOG.info("Constructor of a Board class reached.");
+        LOG.debug("Instance created");
         board = new Image("board.png", new Point(0, 0), null);
 
     }
@@ -48,7 +48,7 @@ public class Board {
      * @return grid consisting of spots.
      */
     public Spot[] getGrid() {
-        LOG.trace("Returning a grid as an array of spots.");
+        LOG.debug("Grid-array of spot-returned");
         return grid;
 
     }
