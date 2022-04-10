@@ -8,7 +8,7 @@ import edu.skidmore.cs326.spring2022.skribbage.common.EventType;
 /**
  * Will contain the methods for an event listener and call the methods in the DatabaseManager
  */
-public class PersistenceFacade {
+public class PersistenceFacade implements UserManagement, GameManagement{
 	
 	
 	/**
