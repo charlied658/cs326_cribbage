@@ -45,7 +45,7 @@ public final class EventManager {
      */
     private EventManager() {
         LOG.info("Private Constructor of EventManager reached.");
-        this.support = new PropertyChangeSupport(this);
+        support = new PropertyChangeSupport(this);
     }
     
   
@@ -86,6 +86,7 @@ public final class EventManager {
      */
     public void notify(PropertyChangeEvent evt) {
         System.out.println("EVENT: " + evt);
+        System.out.println("evt = " + evt);
         support.firePropertyChange(evt);
     }
     

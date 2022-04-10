@@ -16,40 +16,45 @@ public class Spot {
     /**
      * location - holds the location of the spot.
      */
-    // private Location location;\
-    
+    private Location location;
+
     /**
      * Logger.
      */
     private static final Logger LOG;
-    
+
     static {
         LOG = Logger.getLogger(Spot.class);
     }
 
     /**
      * Spot constructor.
+     * 
+     * @param loc Location in the grid.
      */
-    public Spot() {
+    public Spot(Location loc) {
         LOG.trace("Entered Spot Constructor");
+        this.location = loc;
     }
-    
+
     /**
      * getType method return the type of the spot.
+     * 
      * @return the spot type
      */
     public SpotType getType() {
         LOG.trace("getType method in Spot class");
         return spotType;
     }
-    
+
     /**
      * getLocation method returns the location of the spot.
+     * 
      * @return the location.
      */
-//    public Location getLocation() {
-//        LOG.trace("getLocation method in Spot class");
-//        return location;
-//    }
+    public Location getLocation() {
+        LOG.trace("getLocation method in Spot class");
+        return location;
+    }
 
 }

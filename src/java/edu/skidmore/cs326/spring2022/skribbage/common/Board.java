@@ -1,14 +1,16 @@
 package edu.skidmore.cs326.spring2022.skribbage.common;
 
+import java.awt.Point;
+
 import org.apache.log4j.Logger;
 
+import edu.skidmore.cs326.spring2022.skribbage.logic.Game;
 import us.daveread.edu.graphics.shape.impl.Image;
 
 /**
  * @author Sten Leinasaar
  */
 public class Board {
-
     /**
      * Logger instance for logging.
      */
@@ -22,33 +24,62 @@ public class Board {
     /**
      * Array of pegs.
      */
-    // private Peg[] pegs;
+    private Peg[] pegs;
 
-    private Spot[] grid;
+    /**
+     * An Array of spots that form a grid.
+     */
+    private Spot[][] grid;
+
+    /**
+     * Constant number of rows.
+     */
+    public static final Integer NUMROWS;
+
+    /**
+     * PLACEHOLDER VALUE.
+     */
+    public static final Integer NUMCOL;
 
     static {
         LOG = Logger.getLogger(Board.class);
+        NUMROWS = 100;
+        NUMCOL = 5;
     }
 
     /**
-     * Constructor.
+     * Package-level constructor. BoardManager should manage creation of
+     * instances.
      */
-    public Board() {
-        LOG.info("Constructor of a Board class reached.");
+    Board() {
+        LOG.debug("Instance created");
+        board = new Image("board.png", new Point(0, 0), null);
+        /**
+         * @TODO If game calls board and passes itself, the column number could
+         *       be easily retrieved. as Shows.
+         */
+        // NUMCOL = p.getPlayerList().size();
+        grid = new Spot[NUMROWS][NUMCOL];
+        // each player has two pegs.
+        pegs = new Peg[NUMCOL * 2];
+
     }
 
     /**
      * @return grid consisting of spots.
      */
-    public Spot[] getGrid() {
-        LOG.trace("Returning a grid as an array of spots.");
+    public Spot[][] getGrid() {
+        LOG.debug("Grid-array of spot-returned");
         return grid;
 
     }
 
-    // public Peg[] getPegs() {
-    //
-    // }
+    /**
+     * @return An array of pegs.
+     */
+    public Peg[] getPegs() {
+        return pegs;
+    }
 
     /**
      * This method checks the game grid and returns the positions with pegs.
@@ -57,13 +88,21 @@ public class Board {
      */
     public Spot[] getOccupiedSpots() {
         LOG.trace("Returning occupied spots as an array of spots.");
+
         return null;
         //
     }
 
-    // public Peg getSpot(Peg p) {
-    //
-    // }
+    /**
+     * Method to find a spot of a specified peg.
+     * 
+     * @param p
+     *            specified peg.
+     * @return a spot of that specified peg.
+     */
+    public Spot getSpot(Peg p) {
+        return p.getSpot();
+    }
 
     /**
      * This method assigns a random spot to be a prize spot and returns the grid
