@@ -3,6 +3,11 @@ package edu.skidmore.cs326.spring2022.skribbage.frontend;
 import java.awt.Color;
 import java.awt.Point;
 import org.apache.log4j.Logger;
+
+import edu.skidmore.cs326.spring2022.skribbage.common.EventFactory;
+import edu.skidmore.cs326.spring2022.skribbage.common.EventType;
+import edu.skidmore.cs326.spring2022.skribbage.common.User;
+import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserLoginEvent;
 import us.daveread.edu.graphics.shape.Drawable;
 import us.daveread.edu.graphics.shape.impl.Image;
 import us.daveread.edu.graphics.shape.impl.Text;
@@ -19,6 +24,21 @@ public class LoginPage extends DrawingSurface {
      * createAccount - Text variable that represents the create account button.
      */
     private Text createAccount;
+    
+    /**
+     * ule - UserLoginEvent object.
+     */
+    private UserLoginEvent ule;
+    
+    /**
+     * evtFactory - EventFactory object.
+     */
+    private EventFactory evtFactory = EventFactory.getInstance();
+    
+    /**
+     * currentUser - User object.
+     */
+    private User currentUser;
 
     /**
      * createdUsername - String variable that holds the new username.
@@ -226,6 +246,8 @@ public class LoginPage extends DrawingSurface {
     public void drawableMouseClick(Drawable e) {
         LOG.trace("Drawable mouseclick method in LoginPage.java");
         if (e == login) {
+            //separate the username and password functionality.
+            //outside listener tells me when to run the password method.
             login.setFillColor(Color.GREEN);
             addMessage("Login button clicked");
             username = getUserInput("Login", "Enter username",
@@ -233,6 +255,10 @@ public class LoginPage extends DrawingSurface {
             password = getUserInput("Login", "Enter password for: " + username,
                 DialogPosition.CENTER_ALL, true);
             if (loggedIn()) {
+//                currentUser = new User(null, username, password, null);
+//                ule = (UserLoginEvent) evtFactory.createEvent(
+//                        EventType.USER_LOGIN, this, currentUser); 
+//                evtFactory.fireEvent(ule);
                 showMessage("User: " + username, "Successful Log In",
                     DialogType.INFORMATION);
             } else {
