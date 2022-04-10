@@ -26,6 +26,11 @@ public class LoginPage extends DrawingSurface {
     private Text createAccount;
     
     /**
+     * navPage - NavigationPage window.
+     */
+    private NavigationPage navPage;
+    
+    /**
      * ule - UserLoginEvent object.
      */
     private UserLoginEvent ule;
@@ -261,6 +266,7 @@ public class LoginPage extends DrawingSurface {
 //                evtFactory.fireEvent(ule);
                 showMessage("User: " + username, "Successful Log In",
                     DialogType.INFORMATION);
+                navPage = new NavigationPage();
             } else {
                 showMessage("User not found", "Unsuccessful Log In",
                     DialogType.ERROR);
