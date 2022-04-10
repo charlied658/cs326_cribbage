@@ -7,11 +7,11 @@ import org.apache.log4j.Logger;
 
 import edu.skidmore.cs326.spring2022.skribbage.common.EventFactory;
 import edu.skidmore.cs326.spring2022.skribbage.common.EventType;
+import edu.skidmore.cs326.spring2022.skribbage.common.LoginAuthenticator;
+import edu.skidmore.cs326.spring2022.skribbage.common.PasswordHasher;
 import edu.skidmore.cs326.spring2022.skribbage.common.User;
 import edu.skidmore.cs326.spring2022.skribbage.common.events.AccountEvent;
 import edu.skidmore.cs326.spring2022.skribbage.frontend.PlayableGame;
-import edu.skidmore.cs326.spring2022.skribbage.logic.LoginAuthenticator;
-import edu.skidmore.cs326.spring2022.skribbage.logic.PasswordHasher;
 import edu.skidmore.cs326.spring2022.skribbage.persistence.DatabaseManager;
 
 /**

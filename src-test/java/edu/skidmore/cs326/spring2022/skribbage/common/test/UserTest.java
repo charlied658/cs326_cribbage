@@ -2,8 +2,8 @@ package edu.skidmore.cs326.spring2022.skribbage.common.test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 
+import edu.skidmore.cs326.spring2022.skribbage.common.UserRole;
 import org.apache.log4j.Logger;
 import org.junit.Before;
 import org.junit.Test;
@@ -35,8 +35,9 @@ public class UserTest {
     @Before
     public void setup() {
         LOG.trace("Setup method in test class reached.");
-//        testInstance =
-//            new User("sleinasa@skidmore.edu", "sleinasa", "password", true);
+        testInstance =
+            new User("sleinasa@skidmore.edu", "sleinasa",
+                "password", UserRole.AUTHORIZED);
         LOG.trace("Setup finished");
     }
 
