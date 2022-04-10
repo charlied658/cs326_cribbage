@@ -85,6 +85,7 @@ public final class EventManager {
      *            PropertyChangeEvent)
      */
     public void notify(PropertyChangeEvent evt) {
+        System.out.println("EVENT: " + evt);
         support.firePropertyChange(evt);
     }
     

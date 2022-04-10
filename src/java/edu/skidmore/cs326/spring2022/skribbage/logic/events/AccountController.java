@@ -77,6 +77,7 @@ public class AccountController implements PropertyChangeListener {
          * (hashing
          * and validating)
          */
+        System.out.println("AccountController Event: " + (AccountEvent) evt);
         User associatedUser = ((AccountEvent) evt).getUser();
 
         /**
