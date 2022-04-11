@@ -1,10 +1,10 @@
 package edu.skidmore.cs326.spring2022.skribbage.logic.test;
 
 import edu.skidmore.cs326.spring2022.skribbage.logic.PeggingPlay;
-import edu.skidmore.cs326.spring2022.skribbage.logic.Card;
 import edu.skidmore.cs326.spring2022.skribbage.logic.Player;
 import edu.skidmore.cs326.spring2022.skribbage.logic.Hand;
-import edu.skidmore.cs326.spring2022.skribbage.logic.Suit;
+import edu.skidmore.cs326.spring2022.skribbage.common.Suit;
+import edu.skidmore.cs326.spring2022.skribbage.logic.Card;
 import edu.skidmore.cs326.spring2022.skribbage.logic.Game;
 //import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;

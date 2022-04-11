@@ -56,8 +56,8 @@ public class UserLoginEventTest {
     public void setUp() throws Exception {
         LOG.trace("SetUp method started");
         source = new Object();
-        userInstance =
-            new User("sleinasa@skidmore.edu", "sleinasa", "password", true);
+//        userInstance =
+//            new User("sleinasa@skidmore.edu", "sleinasa", "password", true);
         testInstance = (UserLoginEvent) EventFactory.getInstance()
             .createEvent(EventType.USER_LOGIN, source, userInstance);
         new UserLoginEvent(source, userInstance);

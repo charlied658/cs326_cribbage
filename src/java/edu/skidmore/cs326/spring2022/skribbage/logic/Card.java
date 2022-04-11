@@ -2,11 +2,16 @@ package edu.skidmore.cs326.spring2022.skribbage.logic;
 
 import org.apache.log4j.Logger;
 
+import edu.skidmore.cs326.spring2022.skribbage.common.Suit;
 import edu.skidmore.cs326.spring2022.skribbage.common.events.AccountEvent;
 
 /**
  * Encompasses all information portrayed by a card
  * Card also knows which card type should come after it in a run.
+ * 
+ * TODO (DSR): Card functionality needs to move to the common package
+ * TODO (DSR): Lets talk through the design of Card, Hand, Deck...
+ * 
  * @author Declan Morris
  */
 public class Card {

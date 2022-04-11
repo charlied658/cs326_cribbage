@@ -17,6 +17,7 @@ import edu.skidmore.cs326.spring2022.skribbage.common.FactoryTemplate;
  *      By: Sten Leinasaar
  */
 public class FrontEndFactoryTemplate extends FactoryTemplate {
+    
     /**
      * Logger instance for logging.
      */

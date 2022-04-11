@@ -2,10 +2,12 @@ package edu.skidmore.cs326.spring2022.skribbage;
 
 import edu.skidmore.cs326.spring2022.skribbage.common.EventFactory;
 import edu.skidmore.cs326.spring2022.skribbage.common.EventManager;
+import edu.skidmore.cs326.spring2022.skribbage.common.EventType;
 import edu.skidmore.cs326.spring2022.skribbage.frontend.AccountResponseController;
 import org.apache.log4j.Logger;
 
 import edu.skidmore.cs326.spring2022.skribbage.frontend.HomeScreen;
+import edu.skidmore.cs326.spring2022.skribbage.logic.events.AccountController;
 
 /**
  * The game of Cribbage, with a few twists and turns.
@@ -50,17 +52,18 @@ public class SkribbageBattleRoyale implements Runnable {
     public void run() {
         System.out.println(getWelcomeMessage());
         LOG.info("Run method started");
-        LOG.info("homePage started by intilizing it.");
+        LOG.info("homePage started by initializing it.");
         // Instantiate required class instances
-        this.homePage = new HomeScreen();
-        this.eventFactory = EventFactory.getInstance();
-        this.eventManager = EventManager.getInstance();
+        homePage = new HomeScreen();
+        eventFactory = EventFactory.getInstance();
+        eventManager = EventManager.getInstance();
 
-        this.eventManager
+        eventManager
             .addPropertyChangeListener(new AccountResponseController());
 
-
-
+        eventManager
+            .addPropertyChangeListener(new AccountController(),
+                EventType.USER_LOGIN);
     }
 
     /**
@@ -75,7 +78,8 @@ public class SkribbageBattleRoyale implements Runnable {
     /**
      * The starting point of the Cribbage application.
      *
-     * @param args Command line argument - not currently used
+     * @param args
+     *            Command line argument - not currently used
      */
     public static void main(String[] args) {
         new Thread(new SkribbageBattleRoyale()).start();
