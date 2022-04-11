@@ -25,6 +25,8 @@ public class UsernameProxy {
 	
 	private static final UsernameProxy INSTANCE;
 	
+	private static final int AMOUNT_OF_BANNED_WORDS = 451;
+	
 	static {
 		INSTANCE = new UsernameProxy();
 	}
@@ -120,7 +122,7 @@ public class UsernameProxy {
 	            prop.load(file);
 	            //get the property value and print it out
 	          
-	            for (int i = 1; i < 452; i++) {
+	            for (int i = 1; i <= AMOUNT_OF_BANNED_WORDS; i++) {
 	            	String altProp = "$" + i;   
 	            	
 	            	String tempban = prop.getProperty(altProp);
