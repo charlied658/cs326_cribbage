@@ -32,9 +32,14 @@ public class LoginPage extends DrawingSurface {
     private NavigationPage navPage;
 
     /**
-     * ule - UserLoginEvent object.
+     * ule - UserCreateAccountEvent object.
      */
     private UserCreateAccountEvent ule;
+
+    /**
+     * lEvt - UserLoginEvent object.
+     */
+    private UserLoginEvent lEvt;
 
     /**
      * evtFactory - EventFactory object.
@@ -208,7 +213,6 @@ public class LoginPage extends DrawingSurface {
                 ule = (UserCreateAccountEvent) evtFactory.createEvent(
                     EventType.USER_CREATE_ACCOUNT, this, currentUser);
                 evtFactory.fireEvent(ule);
-                
                 verifyNewUserCallback();
                 break;
             default:
@@ -226,7 +230,6 @@ public class LoginPage extends DrawingSurface {
             "Enter password again", DialogPosition.CENTER_ALL, true);
         if (createdPassword.equals(verifyCreatedPassword)) {
             userCreatedCallback();
-
         }
     }
 
@@ -236,7 +239,10 @@ public class LoginPage extends DrawingSurface {
     public void userCreatedCallback() {
         showMessage("User: " + createdUsername + " created.",
             "New account created.", DialogType.INFORMATION);
-       
+        currentUser = new User(null, createdUsername, createdPassword, null);
+        ule = (UserCreateAccountEvent) evtFactory
+            .createEvent(EventType.USER_CREATE_ACCOUNT, this, currentUser);
+        evtFactory.fireEvent(ule);
     }
 
     /**
@@ -280,18 +286,13 @@ public class LoginPage extends DrawingSurface {
             // separate the username and password functionality.
             // outside listener tells me when to run the password method.
             login.setFillColor(Color.GREEN);
-            addMessage("Login button clicked");
             username = getUserInput("Login", "Enter username",
                 DialogPosition.CENTER_ALL);
-            //
-
+            verifyUsernameExists();
             password = getUserInput("Login", "Enter password for: " + username,
                 DialogPosition.CENTER_ALL, true);
+            verifyUserExists();
             if (loggedIn()) {
-                // currentUser = new User(null, username, password, null);
-                // ule = (UserLoginEvent) evtFactory.createEvent(
-                // EventType.USER_LOGIN, this, currentUser);
-                // evtFactory.fireEvent(ule);
                 showMessage("User: " + username, "Successful Log In",
                     DialogType.INFORMATION);
                 navPage = new NavigationPage();
@@ -304,18 +305,15 @@ public class LoginPage extends DrawingSurface {
             // change password = 0
             buttonClicked(0, "Change Password", "Enter new password");
             if (passwordToChange.equals(verifyPasswordToChange)) {
-                addMessage("Passwords are the same");
                 password = passwordToChange;
                 username = usernameToChange;
             } else {
-                addMessage("Passwords are not the same");
                 while (!passwordToChange.equals(verifyPasswordToChange)) {
                     buttonClicked(1, "Passwords did not match",
                         "Enter new password");
                 }
             }
         } else if (e == homeScreenButton) {
-            addMessage("Go back");
             returnToHome();
         } else if (e == createAccount) {
             // create account = 2
@@ -325,6 +323,25 @@ public class LoginPage extends DrawingSurface {
                 buttonClicked(1, "Passwords did not match", "Enter password");
             }
         }
+    }
+
+    /**
+     * verifyUsernameExists - checks if a user that's logging in exists.
+     */
+    public void verifyUsernameExists() {
+        currentUser = new User(null, username, null, null);
+        lEvt = (UserLoginEvent) evtFactory
+            .createEvent(EventType.USER_LOGIN, this, currentUser);
+        evtFactory.fireEvent(lEvt);
+    }
+
+    /**
+     * verifyUserExists - checks if a user object exists.
+     */
+    public void verifyUserExists() {
+        currentUser = new User(null, username, password, null);
+        lEvt = (UserLoginEvent) evtFactory.createEvent(EventType.USER_LOGIN,
+            this, currentUser);
     }
 
     /**
