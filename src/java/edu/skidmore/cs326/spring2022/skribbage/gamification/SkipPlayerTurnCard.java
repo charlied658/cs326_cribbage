@@ -5,11 +5,11 @@ import java.util.HashMap;
 import org.apache.log4j.Logger;
 
 /**
- * Re-Battle Card item shop class.
+ * Skip-Player-Turn Card item shop class.
  * 
  * @author Muaded Almheiri
  */
-public class ReBattleCard implements ItemShopInterface {
+public class SkipPlayerTurnCard implements ItemShopInterface {
 
     /**
      * Logger for the class.
@@ -20,7 +20,7 @@ public class ReBattleCard implements ItemShopInterface {
      * Create static resources.
      */
     static {
-        LOG = Logger.getLogger(ReBattleCard.class);
+        LOG = Logger.getLogger(SkipPlayerTurnCard.class);
     }
 
     /**
@@ -46,15 +46,15 @@ public class ReBattleCard implements ItemShopInterface {
     /**
      * ReBattleCard constructor.
      */
-    public ReBattleCard() {
+    public SkipPlayerTurnCard() {
         LOG.info("Creating new Re-battle card");
 
         /* Set card type, price, and description. */
-        setName(SpecialCard.REBATTLECARD.getType());
-        setPrice(SpecialCard.REBATTLECARD.getPrice());
-        setDescription(SpecialCard.REBATTLECARD.getDescription());
+        setName(SpecialCard.SKIPPLAYERTURNCARD.getType());
+        setPrice(SpecialCard.SKIPPLAYERTURNCARD.getPrice());
+        setDescription(SpecialCard.SKIPPLAYERTURNCARD.getDescription());
 
-        LOG.info("Name, price, and description set for Re-battle card.");
+        LOG.info("Name, price, and description set for Skip-Player-Turn- Card.");
 
         boolean isEntry = false;
 
@@ -72,7 +72,7 @@ public class ReBattleCard implements ItemShopInterface {
         /* Card is not in store, place in store with value. */
         if (!isEntry) {
             STORE_ITEMS.put(getName(), getPrice());
-            LOG.info("Re-battle card placed in store with value 25");
+            LOG.info("Skip-Player-Turn Card placed in store with value 100");
         }
 
     }
@@ -85,14 +85,14 @@ public class ReBattleCard implements ItemShopInterface {
     public void buyItem(int playerTokens) {
 
         if (getPrice() <= playerTokens) {
-            LOG.info("Re-battle card bought for 25 tokens");
+            LOG.info("Skip-Player-Turn Card bought for 100 tokens");
             playerTokens -= getPrice();
-            LOG.info("25 Tokens subtracted from player's tokens.");
+            LOG.info("100 Tokens subtracted from player's tokens.");
             System.out.println(getName() + " bought at price " + getPrice()
                 + ". Player now holds " + playerTokens);
             addSpecialCard(cart);
         } else {
-            LOG.info("Not enough tokens to buy a Re-battle card.");
+            LOG.info("Not enough tokens to buy a Skip-Player-Turn Card.");
             System.out.println("Not enough tokens to buy " + getName());
         }
     }
