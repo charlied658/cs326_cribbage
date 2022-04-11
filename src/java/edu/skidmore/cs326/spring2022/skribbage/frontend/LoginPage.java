@@ -8,6 +8,7 @@ import edu.skidmore.cs326.spring2022.skribbage.common.EventFactory;
 import edu.skidmore.cs326.spring2022.skribbage.common.EventType;
 import edu.skidmore.cs326.spring2022.skribbage.common.User;
 import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserCreateAccountEvent;
+import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserLoginEvent;
 //import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserLoginEvent;
 import us.daveread.edu.graphics.shape.Drawable;
 import us.daveread.edu.graphics.shape.impl.Image;
