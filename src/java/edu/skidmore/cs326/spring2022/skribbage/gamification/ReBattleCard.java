@@ -1,9 +1,8 @@
 package edu.skidmore.cs326.spring2022.skribbage.gamification;
 
-import org.apache.log4j.Logger;
-
-import java.io.*;
 import java.util.HashMap;
+
+import org.apache.log4j.Logger;
 
 /**
  * Prototype for each special card and item in the shop.
@@ -25,9 +24,14 @@ public class ReBattleCard implements ItemShopInterface {
     }
 
     /**
-     * String variable to hold card/item name.
+     * Hash map to hold items bought before being updated to inventory.
      */
-    private String specialCardName;
+    private HashMap<String, Integer> cart = new HashMap<String, Integer>();
+
+    /**
+     * SpecialCardType variable to hold card/item name.
+     */
+    private String specialCardType;
 
     /**
      * Integer variable to hold card/item token price.
@@ -45,12 +49,10 @@ public class ReBattleCard implements ItemShopInterface {
     public ReBattleCard() {
         LOG.info("Creating new Re-battle card");
 
-        /* Set card name, price, and description. */
-        setName("Re-Battle Card");
-        setPrice(25);
-        setDescription(
-            "Use this card to get another chance of battling "
-            + "opponent after a battle.");
+        /* Set card type, price, and description. */
+        setName(SpecialCard.REBATTLECARD.getType());
+        setPrice(SpecialCard.REBATTLECARD.getPrice());
+        setDescription(SpecialCard.REBATTLECARD.getDescription());
 
         LOG.info("Name, price, and description set for Re-battle card.");
 
@@ -59,7 +61,7 @@ public class ReBattleCard implements ItemShopInterface {
         /*
          * Loop through Hash map to check if card already exists in item shop.
          */
-        for (HashMap.Entry<String, Integer> entry : storeItems.entrySet()) {
+        for (HashMap.Entry<String, Integer> entry : STORE_ITEMS.entrySet()) {
 
             if (entry.getKey().equals(getName())) {
 
@@ -67,24 +69,11 @@ public class ReBattleCard implements ItemShopInterface {
                 isEntry = true;
             }
         }
-
         /* Card is not in store, place in store with value. */
         if (!isEntry) {
-            storeItems.put(getName(), getPrice());
+            STORE_ITEMS.put(getName(), getPrice());
             LOG.info("Re-battle card placed in store with value 25");
         }
-
-    }
-
-    /**
-     * Print Item name, price, and description.
-     */
-    @Override
-    public void getItemInfo() {
-
-        LOG.info("Printing Card name, price, and description.");
-        System.out.println("Card/Item: " + getName() + "\nPrice: " + getPrice()
-            + "\nDescription: " + getDescription());
 
     }
 
@@ -101,6 +90,7 @@ public class ReBattleCard implements ItemShopInterface {
             LOG.info("25 Tokens subtracted from player's tokens.");
             System.out.println(getName() + " bought at price " + getPrice()
                 + ". Player now holds " + playerTokens);
+            addSpecialCard(cart);
         } else {
             LOG.info("Not enough tokens to buy a Re-battle card.");
             System.out.println("Not enough tokens to buy " + getName());
@@ -116,7 +106,7 @@ public class ReBattleCard implements ItemShopInterface {
     public String getName() {
 
         LOG.info("Returning card name.");
-        return specialCardName;
+        return specialCardType;
     }
 
     /**
@@ -145,36 +135,53 @@ public class ReBattleCard implements ItemShopInterface {
     }
 
     /**
-     * Setter method to set card/item name.
+     * Setter method for card/item name.
      * 
      * @param name
      *            card/item name.
      */
-    @Override
     public void setName(String name) {
-        specialCardName = name;
+
+        specialCardType = name;
+
     }
 
     /**
      * Setter method for card/item price.
      * 
      * @param price
-     *            Card/item price
+     *            card/item price
      */
-    @Override
     public void setPrice(int price) {
+
         specialCardPrice = price;
+
     }
 
     /**
      * Setter method for card/item description.
      * 
      * @param description
-     *            Card/item description.
+     *            card/item description.
      */
-    @Override
     public void setDescription(String description) {
+
         specialCardDescription = description;
+
+    }
+
+    /**
+     * Method to update player inventory with item bought.
+     * 
+     * @param cart
+     *            HashMap holding items bought.
+     */
+    public void addSpecialCard(HashMap<String, Integer> cart) {
+
+        InventoryPrototype inventoryObj = new InventoryPrototype();
+        cart.put(getName(), getPrice());
+        inventoryObj.addItem(cart, getName());
+
     }
 
 }

@@ -1,0 +1,40 @@
+Data definition language for tables:
+
+//clean house: 
+DROP TABLE player_account
+
+//create the table for storing player information:
+ CREATE TABLE player_account (
+    PersonID int NOT NULL,
+    LastName varchar(255),
+    FirstName varchar(255),
+    Username varchar(255), 
+    Password varchar(255),
+    Email varchar(255),
+    AvatarUrl varchar(255),
+    PRIMARY KEY(PersonID)
+); 
+
+//Nikoleta's basic information for populating the player_account table:
+
+INSERT INTO player_account 
+VALUES (
+	1, 
+	"chantzi", 
+	"nikoleta", 
+	"nchantzi", 
+	"ILoveSQL", 
+	"nchantzi@skidmore.edu", 
+	"placeholder_url"
+);
+
+//item table:
+CREATE TABLE item_table ( 
+	item_id int, 
+	item_type varchar(255), 
+	item_cost int, 
+	PRIMARY KEY(item_id) 
+);
+//some basic info for populating item_table
+INSERT INTO item_table (1, "mirror", 100);
+INSERT INTO item_table (2, "skip", 150);

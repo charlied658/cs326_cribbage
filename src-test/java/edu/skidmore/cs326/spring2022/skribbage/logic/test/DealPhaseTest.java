@@ -24,16 +24,19 @@
 //   * 
 //   */
 //  private DealPhase testInstance;
-//
-//  Suit[] theSuits = Suit.values();
+//  
+//  /**
+//   * Create an instance of Game with 2 players to test DealPhase methods.
+//   * 
+//   */
+//  private Game game = new Game(2);
 //
 //  /**
 //   * Creating testInstance of DealPhase.
 //   */
 //  @Before
 //  public void setUp() {
-//    testInstance = new DealPhase();
-//    //Game.initPlayers(2);
+//    testInstance = new DealPhase(game);
 //  }
 //
 //  /**
@@ -50,12 +53,12 @@
 //   */
 //  @Test
 //  public void testDiscardtoCrib() {
-//    Card cardP1 = new Card('A', theSuits[1]);
-//    Card cardP2 = new Card('K', theSuits[2]);
+//    Card cardP1 = new Card('A', Suit.DIAMONDS);
+//    Card cardP2 = new Card('K', Suit.HEARTS);
 //    Card[] toDiscardP1 = { cardP1 };
 //    Card[] toDiscardP2 = { cardP2 };
 //    testInstance.discardToCrib(toDiscardP1, toDiscardP2);
-//    assertEquals(Game.getCrib().size(), 2);
+//    assertEquals(game.getCrib().size(), 2);
 //
 //  }
 //
@@ -66,7 +69,7 @@
 //  public void testRemoveCardFromHand() {
 //    testInstance.determineDealer(12, 15);
 //    testInstance.dealCards();
-//    Player player1 = Game.getPlayerList().get(0);
+//    Player player1 = game.getPlayerList().get(0);
 //    int beforeHandSize = player1.getHand().getHand().size();
 //    testInstance.removeCardFromHand(player1.getHand().getHand().get(0),
 //        player1);
@@ -80,8 +83,8 @@
 //  @Test
 //  public void testDealCards() {
 //    testInstance.dealCards();
-//    for (int i = 0; i < Game.getPlayerList().size(); i++) {
-//      assertEquals(Game.getPlayerList().get(i).getHand().getHand().size(), 6);
+//    for (int i = 0; i < game.getPlayerList().size(); i++) {
+//      assertEquals(game.getPlayerList().get(i).getHand().getHand().size(), 6);
 //    }
 //
 //  }
@@ -92,8 +95,8 @@
 //  @Test
 //  public void testDetermineDealer() {
 //    testInstance.determineDealer(12, 15);
-//    int idxOfDealer = Game.getDealerIdx();
-//    assertNotNull(Game.getPlayerList().get(idxOfDealer));
+//    int idxOfDealer = game.getDealerIdx();
+//    assertNotNull(game.getPlayerList().get(idxOfDealer));
 //  }
 //
 //}

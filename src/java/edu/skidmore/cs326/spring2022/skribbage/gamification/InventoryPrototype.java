@@ -60,10 +60,12 @@ public class InventoryPrototype {
      *            HashMap used as our inventory
      * @param key
      *            name of the item
+     * @return val
+     *            number of specified item in an inventory
      */
-    public void searchForItem(HashMap<String, Integer> map, String key) {
+    public int searchForItem(HashMap<String, Integer> map, String key) {
         int val = map.get(key);
-        System.out.println("You currently have " + val + " " + key + "'s");
+        return val;
     }
 
     /**

@@ -1,4 +1,5 @@
 package edu.skidmore.cs326.spring2022.skribbage.logic;
+
 import java.util.ArrayList;
 
 /**
@@ -7,6 +8,10 @@ import java.util.ArrayList;
  * pegging play by the pone and dealer. It also contains methods that are
  * useful to the various phases of the game. Currently, a key assumption for
  * this class is that there are only two players.
+ * 
+ * TODO (DSR): Game functionality needs to move to the common package
+ * TODO (DSR): Lets talk through the design of Game...
+
  *
  * @author Michael Shriner
  */     
@@ -25,13 +30,13 @@ public class Game {
     private int peggingTotal;
 
 	  /** The crib for the game. */
-    private ArrayList<Card> crib = new ArrayList<Card>();
+    private ArrayList<Card> crib;
 
 	  /** The set of cards played by the pone during the pegging phase. */
-    private ArrayList<Card> ponePeggingCards = new ArrayList<Card>();
+    private ArrayList<Card> ponePeggingCards;
 
 	  /** The set of cards played by the dealer during the pegging phase. */
-    private ArrayList<Card> dealerPeggingCards = new ArrayList<Card>();
+    private ArrayList<Card> dealerPeggingCards;
 
 	  /**
 	   * Game constructor. It initializes the list of players
@@ -42,8 +47,24 @@ public class Game {
 	   * game.
 	   */
     public Game(int numPlayers) {
+
+        ponePeggingCards = new ArrayList<Card>();
+        dealerPeggingCards = new ArrayList<Card>();
+        crib = new ArrayList<Card>();
+
         initPlayers(numPlayers);
         initPeggingTotal();
+    }
+
+    /**
+     * Game constructor. It initializes the pegging total.
+     * This was created for testing Game.
+     */
+    public Game() {
+        ponePeggingCards = new ArrayList<Card>();
+        dealerPeggingCards = new ArrayList<Card>();
+        crib = new ArrayList<Card>();
+        peggingTotal = 0;
     }
 
 	  /**
@@ -57,10 +78,17 @@ public class Game {
     public void initPlayers(int numPlayers) {
 
         for (int i = 0; i < numPlayers; i++) {
-            Player p = new Player();
-            playerList.add(p);
+            addPlayer(new Player());
         }
+    }
 
+    /**
+     * Add a player to the player list.
+     *
+     * @param p is the player to add to the player list.
+     */
+    public void addPlayer(Player p) {
+        playerList.add(p);
     }
 
 	/**
@@ -199,11 +227,12 @@ public class Game {
 	 */
     public int getDealerIdx() {
         for (int i = 0; i < playerList.size(); i++) {
-            if (playerList.get(i).isDealer) {
+            if (playerList.get(i).isDealer()) {
                 return i;
             }
         }
         return -1;
     }
+
 
 }

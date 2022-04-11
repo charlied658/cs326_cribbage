@@ -7,6 +7,9 @@ import edu.skidmore.cs326.spring2022.skribbage.common.User;
 import edu.skidmore.cs326.spring2022.skribbage.common.events.AccountEvent;
 
 /**
+ * The UserCreateAccountEvent implements an event class that extends
+ * AccountEvent abstract class.
+ * @
  * @author Alex Carney
  *         Reviewed, commented, Logging added bv Sten Leinasaar
  */
@@ -38,8 +41,8 @@ public class UserCreateAccountEvent extends AccountEvent {
     }
 
     @Override
-    public String getEventName() {
+    public EventType getEventType() {
         LOG.trace("Returning an event name");
-        return EventType.USER_CREATE_ACCOUNT.getName();
+        return EventType.USER_CREATE_ACCOUNT;
     }
 }

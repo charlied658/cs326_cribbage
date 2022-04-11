@@ -1,96 +1,120 @@
 package edu.skidmore.cs326.spring2022.skribbage.logic;
 
-import java.util.ArrayList;
-
 /**
+ * TODO (DSR): Player functionality needs to move to the common package
+ * TODO (DSR): Lets talk through the design of Player (compared to User)
+
  * @author lappiaha
  */
 public class Player {
-	/**
-	 * initializes the player's points
-	 */
-	int points;
-	/**
-	 * Creates hand object
-	 */
-	private Hand hand = new Hand();
-	/**
-	 * string to keep the player name
-	 */
-	private String playername; 
-	/**
-	 * 
-	 */
-	public boolean isDealer;
-	/**
-	 * boolean to help determine the dealer of the game 
-	 */
+    /**
+     * initializes the player's points.
+     */
+    private int points;
 
-	public Player() {
-		/**
-		 *initialize points to 0  
-		 */
-		intializePoints();
-	}
+    /**
+     * Creates hand object.
+     */
+    private Hand hand = new Hand();
 
-	/**
-	 * Get the name of the player.
-	 */
-	public void getName() {
-		// need info from frontEnd
-		// player1 = name1.getName();
-		// player2 = name2.getName();
-		// claims the player name
-	}
+    /**
+     * String to keep the player name.
+     */
+    private String playername;
+    
+    /**
+     * boolean to help determine the dealer of the game.
+     */
+    private boolean isDealer;
 
-	/**
-	 * Set the name of the player.
-	 */
-	public String setName() {
-		return playername;
-	}
+    /**
+     * Player constructor.
+     */
+    public Player() {
+        /**
+         * initialize points to 0
+         */
+        intializePoints();
+    }
 
-	/**
-	 * Sets the PlayerHand.
-	 */
-	public void setHand(Hand playerHand) {
+    /**
+     * Get the name of the player.
+     * @return Player's name
+     */
+    public String getName() {
+        // need info from frontEnd
+        // player1 = name1.getName();
+        // player2 = name2.getName();
+        // claims the player name
+        return playername;
+    }
 
-		hand = playerHand;
-	}
+    /**
+     * Set the name of the player.
+     * @param name
+     */
+    public void setName(String name) {
+        playername = name;
+    }
 
-	/**
-	 * Get the hand.
-	 * 
-	 * @return hand
-	 */
-	public Hand getHand() {
-		return hand;
-	}
+    /**
+     * Sets the PlayerHand.
+     * @param playerHand Player's hand
+     */
+    public void setHand(Hand playerHand) {
 
-	/**
-	 * 
-	 * @return void
-	 */
-	public int intializePoints() {
-		points = 0; 
-		return (Integer) null;
-	}
-	/**
-	 * Get the player points.
-	 * 
-	 * @return points
-	 */
-	public int getPoints() {
-		return points;
-	}
+        hand = playerHand;
+    }
 
-	/**
-	 * Add the player points.
-	 * 
-	 * @param pointsToAdd
-	 */
-	public void addPoints(int pointsToAdd) {
-		points += pointsToAdd;
+    /**
+     * Get the hand.
+     * 
+     * @return hand
+     */
+    public Hand getHand() {
+        return hand;
+    }
 
-	}
+    /**
+     * Initialize points to 0.
+     */
+    public void intializePoints() {
+        points = 0;
+    }
+
+    /**
+     * Get the player points.
+     * 
+     * @return points
+     */
+    public int getPoints() {
+        return points;
+    }
+
+    /**
+     * Add the player points.
+     * 
+     * @param pointsToAdd
+     */
+    public void addPoints(int pointsToAdd) {
+        points += pointsToAdd;
+
+    }
+    
+    /**
+     * Returns true if the player is the dealer.
+     * @return boolean
+     */
+    public boolean isDealer() {
+        return isDealer;
+    }
+    
+    /**
+     * Sets the player to be dealer or not dealer.
+     * @param dealer
+     */
+    public void setDealer(boolean dealer) {
+        isDealer = dealer;
+    }
+    
 }

@@ -1,6 +1,13 @@
 package edu.skidmore.cs326.spring2022.skribbage;
 
+import edu.skidmore.cs326.spring2022.skribbage.common.EventFactory;
+import edu.skidmore.cs326.spring2022.skribbage.common.EventManager;
+import edu.skidmore.cs326.spring2022.skribbage.common.EventType;
+import edu.skidmore.cs326.spring2022.skribbage.frontend.AccountResponseController;
 import org.apache.log4j.Logger;
+
+import edu.skidmore.cs326.spring2022.skribbage.frontend.HomeScreen;
+import edu.skidmore.cs326.spring2022.skribbage.logic.events.AccountController;
 
 /**
  * The game of Cribbage, with a few twists and turns.
@@ -11,6 +18,21 @@ public class SkribbageBattleRoyale implements Runnable {
      * Logger for the class.
      */
     private static final Logger LOG;
+
+    /**
+     * HomeScreen instance to start the home page from driver class.
+     */
+    private HomeScreen homePage;
+
+    /**
+     * Singleton eventManager instance.
+     */
+    private EventManager eventManager;
+
+    /**
+     * Singleton eventFactory instance.
+     */
+    private EventFactory eventFactory;
 
     /**
      * Create static resources.
@@ -30,6 +52,18 @@ public class SkribbageBattleRoyale implements Runnable {
     public void run() {
         System.out.println(getWelcomeMessage());
         LOG.info("Run method started");
+        LOG.info("homePage started by initializing it.");
+        // Instantiate required class instances
+        homePage = new HomeScreen();
+        eventFactory = EventFactory.getInstance();
+        eventManager = EventManager.getInstance();
+
+        eventManager
+            .addPropertyChangeListener(new AccountResponseController());
+
+        eventManager
+            .addPropertyChangeListener(new AccountController(),
+                EventType.USER_LOGIN);
     }
 
     /**
