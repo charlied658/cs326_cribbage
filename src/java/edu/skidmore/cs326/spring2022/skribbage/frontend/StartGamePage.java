@@ -3,7 +3,11 @@ package edu.skidmore.cs326.spring2022.skribbage.frontend;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Point;
+import java.util.Arrays;
 
+import edu.skidmore.cs326.spring2022.skribbage.common.Board;
+import edu.skidmore.cs326.spring2022.skribbage.common.BoardManager;
+import edu.skidmore.cs326.spring2022.skribbage.common.Spot;
 import edu.skidmore.cs326.spring2022.skribbage.common.User;
 import us.daveread.edu.graphics.shape.Drawable;
 import us.daveread.edu.graphics.shape.impl.Image;
@@ -14,13 +18,8 @@ import us.daveread.edu.graphics.surface.MainFrame;
 
 /**
  * Class to represent the start game state.
-<<<<<<< HEAD
- * @author zbeals
- *
-=======
  * 
- * @author zbeals
->>>>>>> d599e4ec72d372caffa74468e69fe3928d68eb9f
+ * @author Zoe Beals
  */
 public class StartGamePage extends DrawingSurface {
 
@@ -28,6 +27,12 @@ public class StartGamePage extends DrawingSurface {
      * navPage - NavigationPage window.
      */
     private NavigationPage navPage;
+    
+    /**
+     * spots - Array of spots.
+     */
+    private Spot[][] spots;
+    
     /**
      * startGamePage - Mainframe window.
      */
@@ -36,8 +41,8 @@ public class StartGamePage extends DrawingSurface {
     /**
      * gameBoard - Image to hold the game board.
      */
-    private Image gameBoard;
-
+    private Image boardImage;
+    
     /**
      * beginGame - Text variable to hold the start game button.
      */
@@ -95,7 +100,7 @@ public class StartGamePage extends DrawingSurface {
      * setup method.
      */
     public void setup() {
-        gameBoard = new Image("board.png", new Point(40, 45), 0.8, null);
+        boardImage = new Image("board.png", new Point(40, 45), 0.8, null);
         gameArea = new Rectangle(new Point(25, 40),
             new Dimension(850, 800), Color.black, Color.green);
 
@@ -106,10 +111,7 @@ public class StartGamePage extends DrawingSurface {
             Color.black);
         player2Score = new Text("temp player 2: ", new Point(35, 810), 20,
             Color.black);
-        returnHome = new Text("Return to home", new Point(10, 25), 20, 
-
-        
-
+        returnHome = new Text("Return to home", new Point(10, 25), 20,
             Color.black, Color.blue);
         add(gameArea);
         add(beginGame);
@@ -117,32 +119,43 @@ public class StartGamePage extends DrawingSurface {
         add(player2Score);
         add(player1Score);
         add(returnHome);
-        add(gameBoard);
+        add(boardImage);
+        createGrid();
     }
 
-    
+    /**
+     * createGrid method creates the board grid.
+     */
+    public void createGrid() {
+        assignSpots();
+        spots = BoardManager.getInstance().getBoard().getGrid();
+//        for (int i = 0; i < spots.length; i++) {
+//            System.out.println(Arrays.toString(spots[i]));
+//        }
+    }
 
+    /**
+     * assignSpots method assigns all the special spots.
+     */
+    public void assignSpots() {
+        BoardManager.getInstance().getBoard().assignBattleSpot();
+        BoardManager.getInstance().getBoard().assignJumpSpot();
+        BoardManager.getInstance().getBoard().assignPrizeSpot();
+    }
 
     @Override
     public void drawableMouseClick(Drawable e) {
         if (e == beginGame) {
             // start game
-
         } else if (e == returnHome) {
             navPage = new NavigationPage();
             startGamePage.dispose();
         }
     }
 
-    
+  
     /**
      * main method.
-=======
-
-    /**
-     * main method.
-     * 
->>>>>>> d599e4ec72d372caffa74468e69fe3928d68eb9f
      * @param args
      */
     public static void main(String[] args) {

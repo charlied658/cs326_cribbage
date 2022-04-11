@@ -54,7 +54,12 @@ public class Spot {
      */
     public Location getLocation() {
         LOG.trace("getLocation method in Spot class");
-        return location;
+       return location;
+    }
+    
+    @Override
+    public String toString() {
+        return "Spot: " + this.spotType + ", " + this.location;
     }
 
 }
