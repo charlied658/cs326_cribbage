@@ -1,44 +1,109 @@
 package edu.skidmore.cs326.spring2022.skribbage.persistence;
 
-//import edu.skidmore.cs326.spring2022.skribbage.frontend.events.*;
-import edu.skidmore.cs326.spring2022.skribbage.common.EventType;
-//import java.beans.PropertyChangeEvent;
+import org.apache.log4j.Logger;
 
-//import org.apache.log4j.Logger;
+import edu.skidmore.cs326.spring2022.skribbage.common.EventType;
+import edu.skidmore.cs326.spring2022.skribbage.common.User;
+
+
+
 
 /**
  * Will contain the methods for an event listener and call the methods in the DatabaseManager
+ *
+ * @author Ricardo Rosario
+ * Last Edit: April 10, 2022
  */
-public class PersistenceFacade {
-
-//<<<<<<< HEAD
-	//private static final Logger LOG;
-	//private static final DatabaseManager DB_Instance;
+public final class PersistenceFacade implements UserManagement, GameManagement{
 	
-
-//	static {
-//		LOG = Logger.getLogger(FrontEndFactoryTemplate.class);
-//	}
-
-//	public String EventDBManager(EventType eventToHandle, Object[] metaData) {
-//		Boolean isSuccess = true;
-//
-//		return isSuccess ? "success" : "fail";
-//
-//	}
-
-//	 public static void main(String[] args) {
-//
-//	}
-//=======
-//    private static final Logger LOG;
-//
-//    private static DatabaseManager DB_Instance;
-//
-//    static {
-//        LOG = Logger.getLogger(FrontEndFactoryTemplate.class);
-//    }
-
+	/**
+	 * Singleton instance of PersistenceFacade
+	 * Instance can be accessed through PersistenceFacade.getInstatnce()
+	 */
+	private static final PersistenceFacade INSTANCE;
+	
+	/**
+	 * Logger for the class
+	 */
+	private static final Logger LOG;
+	
+	/**
+	 * Initializing Logger and the instance of PersistenceFacade
+	 */
+	static {
+		LOG = Logger.getLogger(PersistenceFacade.class);
+		INSTANCE = new PersistenceFacade();
+	}
+	
+	/**
+	 * This will take in a user and a password and create a new user
+	 * @param userToCreate The user that is to be created
+	 * @param password The password that is connected to the user being created
+	 * 
+	 * @return boolean True or False depending if the method worked or failed
+	 */
+	@Override
+	public boolean userCreate(User userToCreate, Password password) {
+		
+	}
+	
+	/**
+	 * This will take in a user and delete it
+	 * @param userToDelete The user that is going to be deleted
+	 * 
+	 * 
+	 * @return boolean Returns true or false 
+	 * 		   depending on whether the method worked
+	 */
+	@Override
+	public boolean userDelete(User userToDelete) {
+		
+		return true;
+	}
+	
+	/**
+	 * This will take in a current user, current password and the new password
+	 * in order to change passwords
+	 * @param userToUpdate This is the user that want to change their password
+	 * @param currentPassword This is the current password that they have in their account
+	 * @param newPassword This is the new password that they want to change
+	 * 
+	 * @return boolean true or false depending if the method worked or failed.
+	 */
+	@Override
+	public boolean passwordChange(User userToUpdate, Password currentPassword, Password newPassword) {
+		
+		return true;
+	}
+	
+	
+	/**
+	 * This will return the saved game of the user that retrieved it
+	 * @param userName The name of the user that wants the game
+	 * @param whichGame The saved game that is being retrieved
+	 * 
+	 * @return Game The saved game
+	 */
+	@Override
+	public Game retrieveGame(User userName, Game whichGame) {
+		
+	}
+	
+	/**
+	 * This will saved the users current game that they are playing
+	 * @param userName The name of the user that we are saving the game
+	 * @param currentGame The current game that we are saving
+	 * 
+	 * @return boolean True or false depending if the method worked
+	 */
+	public boolean saveGame(User userName, Game currentGame) {
+		
+	}
+	
+	
+	
+	
+	
 	/**
 	 * Will listen for the events and manage what method is being called
 	 * @param eventToHandle the event that is being passed
@@ -63,9 +128,4 @@ public class PersistenceFacade {
         }
 
     }
-
-//    public static void main(String[] args) {
-//
-//    }
-//>>>>>>> 01d6bd53f021b02c7735798961a7c627dd271523
 }
