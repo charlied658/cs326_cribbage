@@ -8,7 +8,7 @@ public interface UserManagement {
 	
 	public boolean userDelete(User userToDelete);
 	
-	public boolean passwordChange(User userToUpdate, Password newPassword);
+	public boolean passwordChange(User userToUpdate, Password currentPassword, Password newPassword);
 	
 	public boolean userChange(User userToChange, Object... args);
 	
