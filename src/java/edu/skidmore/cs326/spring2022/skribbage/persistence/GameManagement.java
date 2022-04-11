@@ -1,11 +1,12 @@
 package edu.skidmore.cs326.spring2022.skribbage.persistence;
 
+import edu.skidmore.cs326.spring2022.skribbage.common.User;
 
 public interface GameManagement {
 
-	public Game retrieveGame(Game whichGame);
+	public Game retrieveGame(User userName, Game whichGame);
 	
 	
-	public boolean saveGame(Game currentGame);
+	public boolean saveGame(User userName, Game currentGame);
 	
 }
