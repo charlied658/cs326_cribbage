@@ -98,7 +98,7 @@ public class DatabaseManager {
      *            the id of the player to check the value
      * @return Query result
      */
-    public String inventoryQuery(int playerID) {
+    public String walletQuery(int playerID) {
 
         String tokenQuery = "SELECT * FROM player_account WHERE PersonID = ? ";
 
@@ -120,7 +120,7 @@ public class DatabaseManager {
 
         }
         catch (SQLException e) {
-            // System.out.println("Account not found");
+            // System.out.println("AccountinventoryQuery not found");
             e.printStackTrace();
             dbDisconnect(conn);
             return "Account not found";
@@ -177,7 +177,7 @@ public class DatabaseManager {
         finally {
             if (rs != null) {
                 try {
-                    rs.close();
+                    rs.close();	
                 }
                 catch (SQLException sqle) {
                     // LOGGER.error("Failed to close result set", sqle);
