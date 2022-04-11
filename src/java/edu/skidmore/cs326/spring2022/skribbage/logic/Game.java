@@ -9,6 +9,10 @@ import java.util.ArrayList;
  * pegging play by the pone and dealer. It also contains methods that are
  * useful to the various phases of the game. Currently, a key assumption for
  * this class is that there are only two players.
+ * 
+ * TODO (DSR): Game functionality needs to move to the common package
+ * TODO (DSR): Lets talk through the design of Game...
+
  *
  * @author Michael Shriner
  */

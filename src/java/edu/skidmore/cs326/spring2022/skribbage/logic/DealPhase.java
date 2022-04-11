@@ -1,5 +1,7 @@
 package edu.skidmore.cs326.spring2022.skribbage.logic;
 
+import edu.skidmore.cs326.spring2022.skribbage.common.Suit;
+
 /**
  * Class acts as the DealPhase containing methods to discard cards to
  * crib,*determine the dealer,deal cards,and removing a card from hand.
