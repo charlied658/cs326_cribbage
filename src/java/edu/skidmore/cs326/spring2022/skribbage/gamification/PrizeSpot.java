@@ -20,7 +20,7 @@ public class PrizeSpot {
      * Create static resources.
      */
     static {
-        LOG = Logger.getLogger(BattleSpot.class);
+        LOG = Logger.getLogger(PrizeSpot.class);
     }
     
     private Die die;

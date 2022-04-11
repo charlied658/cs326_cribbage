@@ -25,7 +25,7 @@ public class Die {
      * Create static resources.
      */
     static {
-        LOG = Logger.getLogger(BattleSpot.class);
+        LOG = Logger.getLogger(Die.class);
     }
     
     /**
