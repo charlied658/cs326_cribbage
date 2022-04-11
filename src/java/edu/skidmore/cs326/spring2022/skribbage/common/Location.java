@@ -8,6 +8,8 @@ import java.util.Objects;
  *
  * Currently immutable. This can change in the future
  * @author Alex Carney
+ * 
+ *      Code reviewed by Jonah Marcus on April 11, 2022.
  */
 public class Location {
     /**
