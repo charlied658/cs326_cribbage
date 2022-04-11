@@ -78,12 +78,28 @@ public final class PersistenceFacade implements UserManagement, GameManagement{
 	
 	
 	/**
+	 * This will return the saved game of the user that retrieved it
+	 * @param userName The name of the user that wants the game
+	 * @param whichGame The saved game that is being retrieved
 	 * 
-	 * @param whichGame
-	 * 
-	 * @return
+	 * @return Game The saved game
 	 */
-	public Game retrieveGame(Game whichGame);
+	@Override
+	public Game retrieveGame(User userName, Game whichGame) {
+		
+	}
+	
+	/**
+	 * This will saved the users current game that they are playing
+	 * @param userName The name of the user that we are saving the game
+	 * @param currentGame The current game that we are saving
+	 * 
+	 * @return boolean True or false depending if the method worked
+	 */
+	public boolean saveGame(User userName, Game currentGame) {
+		
+	}
+	
 	
 	
 	
