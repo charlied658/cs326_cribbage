@@ -4,7 +4,7 @@ import java.util.HashMap;
 import org.apache.log4j.Logger;
 
 /**
- * Prototype for each special card and item in the shop.
+ * Last-Player-Show Card item shop class.
  * 
  * @author Muaded Almheiri
  */

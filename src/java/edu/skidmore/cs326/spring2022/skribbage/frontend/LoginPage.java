@@ -8,7 +8,7 @@ import edu.skidmore.cs326.spring2022.skribbage.common.EventFactory;
 import edu.skidmore.cs326.spring2022.skribbage.common.EventType;
 import edu.skidmore.cs326.spring2022.skribbage.common.User;
 import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserCreateAccountEvent;
-import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserLoginEvent;
+//import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserLoginEvent;
 import us.daveread.edu.graphics.shape.Drawable;
 import us.daveread.edu.graphics.shape.impl.Image;
 import us.daveread.edu.graphics.shape.impl.Text;
@@ -19,6 +19,13 @@ import us.daveread.edu.graphics.surface.MainFrame;
 
 /**
  * @author Zoe Beals updated as of 3/22/2022
+ * 
+ *      Code reviewed by Jonah Marcus on April 11, 2022.
+ *      Comment by Jonah:
+ *      "Commented out an import that was creating a warning. Also, the
+ *      ButtonClicked method could benefit from a few additional comments
+ *      explaining what each case is. I THINK I was able to figure it out
+ *      on my own, but it would still be nice to have."
  */
 public class LoginPage extends DrawingSurface {
     /**

@@ -4,11 +4,15 @@ import java.awt.Point;
 
 import org.apache.log4j.Logger;
 
-import edu.skidmore.cs326.spring2022.skribbage.logic.Game;
+//import edu.skidmore.cs326.spring2022.skribbage.logic.Game;
 import us.daveread.edu.graphics.shape.impl.Image;
 
 /**
  * @author Sten Leinasaar
+ * 
+ *      Code reviewed by Jonah Marcus on April 11, 2022.
+ *      Comment by Jonah:
+ *      "Commented out an import that was causing an error for some reason."
  */
 public class Board {
     /**
