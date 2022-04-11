@@ -1,5 +1,6 @@
 package edu.skidmore.cs326.spring2022.skribbage.persistence;
 
+import edu.skidmore.cs326.spring2022.skribbage.common.Password;
 import edu.skidmore.cs326.spring2022.skribbage.common.User;
 
 public interface UserManagement {

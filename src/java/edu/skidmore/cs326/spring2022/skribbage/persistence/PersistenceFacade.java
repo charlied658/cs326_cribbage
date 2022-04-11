@@ -3,7 +3,9 @@ package edu.skidmore.cs326.spring2022.skribbage.persistence;
 import org.apache.log4j.Logger;
 
 import edu.skidmore.cs326.spring2022.skribbage.common.EventType;
+import edu.skidmore.cs326.spring2022.skribbage.common.Password;
 import edu.skidmore.cs326.spring2022.skribbage.common.User;
+import edu.skidmore.cs326.spring2022.skribbage.logic.Game;
 
 
 
@@ -101,6 +103,7 @@ public final class PersistenceFacade implements UserManagement, GameManagement{
 	public Game retrieveGame(User userName, Game whichGame) {
 		
 		
+		return whichGame;
 	}
 	
 	/**
