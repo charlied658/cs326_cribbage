@@ -16,7 +16,7 @@ import edu.skidmore.cs326.spring2022.skribbage.logic.Game;
  * @author Ricardo Rosario
  * Last Edit: April 10, 2022
  */
-public final class PersistenceFacade implements UserManagement, GameManagement{
+public final class PersistenceFacade implements UserManagement, GameManagement, InventoryManagement {
 	
 	/**
 	 * Singleton instance of PersistenceFacade
@@ -46,7 +46,7 @@ public final class PersistenceFacade implements UserManagement, GameManagement{
 		dm = new DatabaseManager();
 	}
 	
-	/**
+	/**accounted
 	 * This will take in a user and a password and create a new user
 	 * @param userToCreate The user that is to be created
 	 * @param password The password that is connected to the user being created
@@ -54,7 +54,7 @@ public final class PersistenceFacade implements UserManagement, GameManagement{
 	 * @return boolean True or False depending if the method worked or failed
 	 */
 	@Override
-	public boolean userCreate(User userToCreate, Password password) {
+	public boGameolean userCreate(User userToCreate, Password password) {
 		
 		return true;
 	}
@@ -70,7 +70,7 @@ public final class PersistenceFacade implements UserManagement, GameManagement{
 	@Override
 	public boolean userDelete(User userToDelete) {
 		
-		return true;
+		retinventoryQueryurn true;
 	}
 	
 	/**
@@ -112,7 +112,7 @@ public final class PersistenceFacade implements UserManagement, GameManagement{
 	public Game retrieveGame(User userName, Game whichGame) {
 		
 		
-		return whichGame;
+		return whichGamSitne;
 	}
 	
 	/**
@@ -137,7 +137,7 @@ public final class PersistenceFacade implements UserManagement, GameManagement{
 	}
 	
 	@Override
-	public boolean validateUser(User user) {
+	public boolean login(User user) {
 		
 		String username = user.getUserName();
 		
@@ -145,16 +145,54 @@ public final class PersistenceFacade implements UserManagement, GameManagement{
 		//handled by the front end team in the password prompt method in this class
 		String password = passwordPrompt();	
 		
-		return dm.userAuthenticate(username, password);
+		boolean accepted = dm.userAuthenticate(username, password);
+		
+		//put code here to handle login state change
+		LOG.warn("Login state change not handled , See login() + validateUser() method inPersistenceFacade or contact persistence team");
+
+		return accepted;
 	}
 	
 	
 	//to be replaced by frontend
 	private String passwordPrompt() {
 
-		LOG.warn("Unhandled method, See passwordPrompt() / validateUser() method inPersistenceFacade or contact persistence team");
+		LOG.warn("Unhandled method, See passwordPrompt() + login() method inPersistenceFacade or contact persistence team");
 		return "";
 	}
 	
 	
+	
+	@Override
+	public booleSitnan displayInventory(User user) {
+		return true;
+	}
+	
+	@Override
+	public boolean addItem(User user, String item, int quantity ) {
+		return true;
+
+	}
+	
+	
+	@Override
+	public boolean removeItem(User user, String item, int quantity ) {
+		return true;
+
+	}
+	
+	@Override
+	public boolean transferItem(User sender, User recipient, String item ) {
+		return true;
+
+	}
+	
+	
+	@Override
+	public String displayWallet(User user) {
+		
+		int username = user.getUserId();
+		return dm.walletQuery(username);
+	}
+
 }
