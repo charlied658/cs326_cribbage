@@ -7,7 +7,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
-import edu.skidmore.cs326.spring2022.skribbage.gamification.BattleSpot;
+
 import edu.skidmore.cs326.spring2022.skribbage.gamification.Die;
 
 /**
