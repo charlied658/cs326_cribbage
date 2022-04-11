@@ -25,6 +25,10 @@ import us.daveread.edu.graphics.surface.MainFrame;
 public class StartGamePage extends DrawingSurface {
 
     /**
+     * navPage - NavigationPage window.
+     */
+    private NavigationPage navPage;
+    /**
      * startGamePage - Mainframe window.
      */
     private MainFrame startGamePage;
@@ -125,7 +129,7 @@ public class StartGamePage extends DrawingSurface {
             // start game
 
         } else if (e == returnHome) {
-            homeScreen = new HomeScreen();
+            navPage = new NavigationPage();
             startGamePage.dispose();
         }
     }

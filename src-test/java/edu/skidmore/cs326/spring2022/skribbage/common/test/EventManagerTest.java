@@ -10,12 +10,11 @@ import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
-import java.beans.PropertyChangeListener;
-
-import edu.skidmore.cs326.spring2022.skribbage.common.EventFactory;
 import edu.skidmore.cs326.spring2022.skribbage.common.EventManager;
 import edu.skidmore.cs326.spring2022.skribbage.common.EventType;
 import edu.skidmore.cs326.spring2022.skribbage.common.User;
+import edu.skidmore.cs326.spring2022.skribbage.common.UserRole;
+import edu.skidmore.cs326.spring2022.skribbage.common.EventFactory;
 import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserLoginEvent;
 
 /**
@@ -61,7 +60,7 @@ public class EventManagerTest {
     private EventManagerTest source;
 
     /**
-     * @throws Exception 
+     * @throws Exception
      * @BEFORE
      *         TO set up necessary objects and variables that will be used
      *         during
@@ -71,7 +70,8 @@ public class EventManagerTest {
     public void setUp() throws Exception {
         testInstance = EventManager.getInstance();
         userInstance =
-            new User("sleinasa@skidmore.edu", "sleinasa", "passwd", true);
+            new User("sleinasa@skidmore.edu", "sleinasa", "passwd",
+                UserRole.UNAUTHORIZED);
         source = new EventManagerTest();
         loginEventInstance = (UserLoginEvent) EventFactory.getInstance()
             .createEvent(EventType.USER_LOGIN, source, userInstance);
@@ -113,8 +113,8 @@ public class EventManagerTest {
 
     /**
      * Test case to test if PropertyChangeListener was removed correctly.
-     * @throws Exception 
      * 
+     * @throws Exception
      * @ToDo Make an UML to understand exactly how EventManager is connected
      *       and then write more comprehensive testing.
      */
@@ -127,7 +127,8 @@ public class EventManagerTest {
         testInstance.notify(loginEventInstance);
         // now change the userInstance and the logInEvent instance.
         userInstance =
-            new User("sleinasa@skidmore.edu", "username", "password", true);
+            new User("sleinasa@skidmore.edu", "username", "password",
+                UserRole.AUTHORIZED);
         loginEventInstance = (UserLoginEvent) EventFactory.getInstance()
             .createEvent(EventType.USER_LOGIN, source, userInstance);
 

@@ -57,8 +57,8 @@ public class EventFactoryTest {
         LOG.trace("Started the setup method");
         source = new Object();
         // Email, username, password, isauthorized?
-        userInstance =
-            new User("sleinasa@skidmore.edu", "sleinasa", "passwd", true);
+//        userInstance =
+//            new User("sleinasa@skidmore.edu", "sleinasa", "passwd", true);
         testInstance = EventFactory.getInstance();
         LOG.info("SetUp method completed");
     }

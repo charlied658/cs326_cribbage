@@ -48,9 +48,9 @@ public class UserCreateAccountEventTest {
     public void setUp() {
         LOG.trace("Started the setup method");
         source = new Object();
-        userInstance =
-            // Email, username, password, isauthorized?
-            new User("sleinasa@skidmore.edu", "sleinasa", "passwd", true);
+//        userInstance =
+//            // Email, username, password, isauthorized?
+//            new User("sleinasa@skidmore.edu", "sleinasa", "passwd", true);
         testInstance = new UserCreateAccountEvent(source, userInstance);
         
         LOG.info("SetUp method completed");
@@ -89,7 +89,7 @@ public class UserCreateAccountEventTest {
     @Test
     public void testGetEventName() {
         LOG.trace("Testing getEventName");
-        assertEquals(testInstance.getEventName(), "User Create Account Event");
+        assertEquals(testInstance.getEventType(), "User Create Account Event");
         LOG.trace("Completed testing the getEventName method");
     }
 

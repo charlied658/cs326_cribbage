@@ -12,8 +12,10 @@ import org.apache.log4j.Logger;
  * modules. Extends the built in PropertyChangeEvent, hiding some of its unused
  * functionality
  *
- * @author Alex Carney Reviewed by Sten Leinasaar
+ * @author Alex Carney 
+ * Reviewed by Sten Leinasaar
  */
+@SuppressWarnings("serial")
 public abstract class AccountEvent extends PropertyChangeEvent {
 
     /**
@@ -34,6 +36,7 @@ public abstract class AccountEvent extends PropertyChangeEvent {
     }
 
     /**
+     * Constructor method of the class.
      * @param source
      *            the bean that fired the event.
      * @param eventType
@@ -43,7 +46,7 @@ public abstract class AccountEvent extends PropertyChangeEvent {
      * @throws IllegalArgumentException
      *             if {@code source} is {@code null}
      */
-    public AccountEvent(Object source, EventType eventType, User user) {
+    protected AccountEvent(Object source, EventType eventType, User user) {
         super(source, eventType.toString(), null, null);
         this.user = user;
         LOG.trace("Constructor method reached and super class called");
@@ -63,6 +66,6 @@ public abstract class AccountEvent extends PropertyChangeEvent {
      * 
      * @return String type of the event name.
      */
-    public abstract String getEventName();
+    public abstract EventType getEventType();
 
 }

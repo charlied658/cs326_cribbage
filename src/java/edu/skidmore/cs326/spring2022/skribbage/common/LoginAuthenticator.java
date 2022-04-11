@@ -1,4 +1,4 @@
-package edu.skidmore.cs326.spring2022.skribbage.logic;
+package edu.skidmore.cs326.spring2022.skribbage.common;
 
 /**
  * Singleton class used to
@@ -8,10 +8,6 @@ package edu.skidmore.cs326.spring2022.skribbage.logic;
  * @author Declan Morris
  */
 public class LoginAuthenticator {
-    /*
-     * TO DO: create listener to get login request info from frontend
-     * and send events to persistence to check validity
-     */
 
     /**
      * The only instance of this class that should ever exist.
@@ -23,7 +19,7 @@ public class LoginAuthenticator {
      * instance object is first created.
      */
     private LoginAuthenticator() {
-        
+
     }
 
     /**
@@ -37,6 +33,28 @@ public class LoginAuthenticator {
             instance = new LoginAuthenticator();
         }
         return instance;
+    }
+
+    /**
+     * Hashes a new password when a new account is created.
+     * 
+     * @param newPassword
+     *            The requested password to be set to the user.
+     * @return
+     *         The hashed password.
+     */
+    public String hashNewPassword(String newPassword) {
+        return PasswordHasher.getInstance().hashNewPassword(newPassword);
+    }
+    
+    /**
+     * 
+     * @param user
+     * @param attemptedPassword
+     * @return
+     */
+    public boolean checkPassword(User user, String attemptedPassword) {
+        return true;
     }
 
 }

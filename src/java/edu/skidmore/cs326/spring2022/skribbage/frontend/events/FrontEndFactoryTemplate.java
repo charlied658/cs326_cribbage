@@ -17,6 +17,7 @@ import edu.skidmore.cs326.spring2022.skribbage.common.FactoryTemplate;
  *      By: Sten Leinasaar
  */
 public class FrontEndFactoryTemplate extends FactoryTemplate {
+    
     /**
      * Logger instance for logging.
      */
@@ -33,7 +34,7 @@ public class FrontEndFactoryTemplate extends FactoryTemplate {
     @Override
     public PropertyChangeEvent eventCreation(EventType event, Object source,
         Object... args) {
-
+        
         switch (event) {
             case USER_LOGIN:
                 LOG.trace("Returning: " + event.getName());
