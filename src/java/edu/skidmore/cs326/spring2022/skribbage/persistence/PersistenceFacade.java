@@ -29,12 +29,21 @@ public final class PersistenceFacade implements UserManagement, GameManagement{
 	 */
 	private static final Logger LOG;
 	
+	
+	
+	private static final UsernameProxy proxy;
+	
+	private static final DatabaseManager dm;
+	
 	/**
 	 * Initializing Logger and the instance of PersistenceFacade
+	 *
 	 */
 	static {
 		LOG = Logger.getLogger(PersistenceFacade.class);
 		INSTANCE = new PersistenceFacade();
+		proxy = new UsernameProxy();
+		dm = new DatabaseManager();
 	}
 	
 	/**
@@ -110,7 +119,7 @@ public final class PersistenceFacade implements UserManagement, GameManagement{
 	 * This will saved the users current game that they are playing
 	 * @param userName The name of the user that we are saving the game
 	 * @param currentGame The current game that we are saving
-	 * 
+	 * 	
 	 * @return boolean True or false depending if the method worked
 	 */
 	@Override
@@ -121,6 +130,31 @@ public final class PersistenceFacade implements UserManagement, GameManagement{
 	
 	
 	
+	@Override
+	public boolean validateUsername(User user) {
+		String username = user.getUserName();
+		return proxy.usernameCheck(username);
+	}
+	
+	@Override
+	public boolean validateUser(User user) {
+		
+		String username = user.getUserName();
+		
+		//note password is currently deprecated and retrieving password from user will have to be 
+		//handled by the front end team in the password prompt method in this class
+		String password = passwordPrompt();	
+		
+		return dm.userAuthenticate(username, password);
+	}
+	
+	
+	//to be replaced by frontend
+	private String passwordPrompt() {
+
+		LOG.warn("Unhandled method, See passwordPrompt() / validateUser() method inPersistenceFacade or contact persistence team");
+		return "";
+	}
 	
 	
 }
