@@ -20,13 +20,12 @@ import us.daveread.edu.graphics.surface.MainFrame;
 
 /**
  * @author Zoe Beals updated as of 3/22/2022
- * 
- *      Code reviewed by Jonah Marcus on April 11, 2022.
- *      Comment by Jonah:
- *      "Commented out an import that was creating a warning. Also, the
- *      ButtonClicked method could benefit from a few additional comments
- *      explaining what each case is. I THINK I was able to figure it out
- *      on my own, but it would still be nice to have."
+ *         Code reviewed by Jonah Marcus on April 11, 2022.
+ *         Comment by Jonah:
+ *         "Commented out an import that was creating a warning. Also, the
+ *         ButtonClicked method could benefit from a few additional comments
+ *         explaining what each case is. I THINK I was able to figure it out
+ *         on my own, but it would still be nice to have."
  */
 public class LoginPage extends DrawingSurface {
     /**
@@ -165,8 +164,7 @@ public class LoginPage extends DrawingSurface {
      * homeScreenButton buttons as well as the logo object.
      */
     public void setup() {
-
-        LOG.trace("Setup method in LOginPage.java");
+        LOG.trace("Setup method in LoginPage.java");
         createAccount = new Text("Create Account", new Point(375, 360), 20,
             Color.black, Color.blue);
         login =
@@ -232,6 +230,7 @@ public class LoginPage extends DrawingSurface {
      * verifyNewUserCallback - method to verify a new user is available.
      */
     public void verifyNewUserCallback() {
+        LOG.trace("verifyNewUserCallback method in LoginPage.java");
         createdPassword = getUserInput("New User", "Enter password",
             DialogPosition.CENTER_ALL, true);
         verifyCreatedPassword = getUserInput("New User",
@@ -245,6 +244,7 @@ public class LoginPage extends DrawingSurface {
      * userCreatedCallback - method to verify a new user is created.
      */
     public void userCreatedCallback() {
+        LOG.trace("userCreatedCallback method in Loginpage.java");
         showMessage("User: " + createdUsername + " created.",
             "New account created.", DialogType.INFORMATION);
         currentUser = new User(null, createdUsername, createdPassword, null);
@@ -259,6 +259,7 @@ public class LoginPage extends DrawingSurface {
      * @return the username
      */
     public String getUsername() {
+        LOG.trace("getUsername method in LoginPage.java");
         return username;
     }
 
@@ -268,6 +269,7 @@ public class LoginPage extends DrawingSurface {
      * @return the password
      */
     public String getPassword() {
+        LOG.trace("getPasswrod method in LoginPage.java");
         return password;
     }
 
@@ -277,6 +279,7 @@ public class LoginPage extends DrawingSurface {
      * @return if the user is logged in
      */
     public boolean loggedIn() {
+        LOG.trace("loggedIn method in LoginPage.java");
         if (!username.isEmpty() && !password.isEmpty()) {
             return true;
         } else {
@@ -337,6 +340,7 @@ public class LoginPage extends DrawingSurface {
      * verifyUsernameExists - checks if a user that's logging in exists.
      */
     public void verifyUsernameExists() {
+        LOG.trace("verifyUsernameExists method in LoginPage.java");
         currentUser = new User(null, username, null, null);
         lEvt = (UserLoginEvent) evtFactory
             .createEvent(EventType.USER_LOGIN, this, currentUser);
@@ -347,6 +351,7 @@ public class LoginPage extends DrawingSurface {
      * verifyUserExists - checks if a user object exists.
      */
     public void verifyUserExists() {
+        LOG.trace("verifyUserExists method in LoginPage.java");
         currentUser = new User(null, username, password, null);
         lEvt = (UserLoginEvent) evtFactory.createEvent(EventType.USER_LOGIN,
             this, currentUser);
@@ -357,6 +362,7 @@ public class LoginPage extends DrawingSurface {
      * shows the navigation page.
      */
     public void goToNextPage() {
+        LOG.trace("goToNextPage method in LoginPage.java");
         new NavigationPage();
     }
 
@@ -365,6 +371,7 @@ public class LoginPage extends DrawingSurface {
      * to return to the main menu.
      */
     public void returnToHome() {
+        LOG.trace("returnToHome method in LoginPage.java");
         homeScreen = new HomeScreen();
         loginPage.dispose();
     }

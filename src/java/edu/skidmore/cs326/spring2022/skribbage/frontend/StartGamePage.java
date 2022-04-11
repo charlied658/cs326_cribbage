@@ -5,6 +5,8 @@ import java.awt.Dimension;
 import java.awt.Point;
 import java.util.Arrays;
 
+import org.apache.log4j.Logger;
+
 import edu.skidmore.cs326.spring2022.skribbage.common.Board;
 import edu.skidmore.cs326.spring2022.skribbage.common.BoardManager;
 import edu.skidmore.cs326.spring2022.skribbage.common.Spot;
@@ -87,11 +89,21 @@ public class StartGamePage extends DrawingSurface {
      * homeScreen - HomeScreen window.
      */
     private HomeScreen homeScreen;
+    
+    /**
+     * Log.
+     */
+    private static final Logger LOG;
+    
 
+    static {
+        LOG = Logger.getLogger(StartGamePage.class);
+    }
     /**
      * StartGamePage constructor.
      */
     public StartGamePage() {
+        LOG.trace("StartGamePage constructor");
         startGamePage = new MainFrame(this, "Start Game Page", 900, 900, false);
         setup();
     }
@@ -100,6 +112,7 @@ public class StartGamePage extends DrawingSurface {
      * setup method.
      */
     public void setup() {
+        LOG.trace("setup method in StartGamePage.java");
         boardImage = new Image("board.png", new Point(40, 45), 0.8, null);
         gameArea = new Rectangle(new Point(25, 40),
             new Dimension(850, 800), Color.black, Color.green);
@@ -127,6 +140,7 @@ public class StartGamePage extends DrawingSurface {
      * createGrid method creates the board grid.
      */
     public void createGrid() {
+        LOG.trace("createGrid method in StartGamePage.java");
         assignSpots();
         spots = BoardManager.getInstance().getBoard().getGrid();
 //        for (int i = 0; i < spots.length; i++) {
@@ -138,6 +152,7 @@ public class StartGamePage extends DrawingSurface {
      * assignSpots method assigns all the special spots.
      */
     public void assignSpots() {
+        LOG.trace("assignSpots method in StartGamePage,java");
         BoardManager.getInstance().getBoard().assignBattleSpot();
         BoardManager.getInstance().getBoard().assignJumpSpot();
         BoardManager.getInstance().getBoard().assignPrizeSpot();
@@ -145,6 +160,7 @@ public class StartGamePage extends DrawingSurface {
 
     @Override
     public void drawableMouseClick(Drawable e) {
+        LOG.trace("drawableMouseClick method in StartGamepage.java");
         if (e == beginGame) {
             // start game
         } else if (e == returnHome) {
@@ -159,6 +175,7 @@ public class StartGamePage extends DrawingSurface {
      * @param args
      */
     public static void main(String[] args) {
+        LOG.trace("Main method in StartGamePage.java");
         new StartGamePage();
     }
 
