@@ -24,22 +24,22 @@ public class LoginPage extends DrawingSurface {
      * createAccount - Text variable that represents the create account button.
      */
     private Text createAccount;
-    
+
     /**
      * navPage - NavigationPage window.
      */
     private NavigationPage navPage;
-    
+
     /**
      * ule - UserLoginEvent object.
      */
     private UserLoginEvent ule;
-    
+
     /**
      * evtFactory - EventFactory object.
      */
     private EventFactory evtFactory = EventFactory.getInstance();
-    
+
     /**
      * currentUser - User object.
      */
@@ -203,16 +203,36 @@ public class LoginPage extends DrawingSurface {
             case 2:
                 createdUsername = getUserInput(popupTitle, popupMessage,
                     DialogPosition.CENTER_ALL);
-                createdPassword = getUserInput(popupTitle, "Enter password",
-                    DialogPosition.CENTER_ALL, true);
-                verifyCreatedPassword = getUserInput(popupTitle,
-                    "Enter password again", DialogPosition.CENTER_ALL, true);
+                
+                verifyNewUserCallback();
                 break;
             default:
                 break;
         }
     }
-
+    
+    /**
+     * verifyNewUserCallback - method to verify a new user is available.
+     */
+    public void verifyNewUserCallback() {
+        createdPassword = getUserInput("New User", "Enter password",
+            DialogPosition.CENTER_ALL, true);
+        verifyCreatedPassword = getUserInput("New User",
+            "Enter password again", DialogPosition.CENTER_ALL, true);
+        if (createdPassword.equals(verifyCreatedPassword)) {
+            userCreatedCallback();
+            
+        }
+    }
+    
+    /**
+     * userCreatedCallback - method to verify a new user is created.
+     */
+    public void userCreatedCallback() {
+        showMessage("User: " + createdUsername + " created.", 
+            "New account created.", DialogType.INFORMATION);
+    }
+    
     /**
      * getUsername method.
      * 
@@ -251,19 +271,22 @@ public class LoginPage extends DrawingSurface {
     public void drawableMouseClick(Drawable e) {
         LOG.trace("Drawable mouseclick method in LoginPage.java");
         if (e == login) {
-            //separate the username and password functionality.
-            //outside listener tells me when to run the password method.
+            // separate the username and password functionality.
+            // outside listener tells me when to run the password method.
             login.setFillColor(Color.GREEN);
             addMessage("Login button clicked");
             username = getUserInput("Login", "Enter username",
                 DialogPosition.CENTER_ALL);
+            //
+            
+            
             password = getUserInput("Login", "Enter password for: " + username,
                 DialogPosition.CENTER_ALL, true);
             if (loggedIn()) {
-//                currentUser = new User(null, username, password, null);
-//                ule = (UserLoginEvent) evtFactory.createEvent(
-//                        EventType.USER_LOGIN, this, currentUser); 
-//                evtFactory.fireEvent(ule);
+                // currentUser = new User(null, username, password, null);
+                // ule = (UserLoginEvent) evtFactory.createEvent(
+                // EventType.USER_LOGIN, this, currentUser);
+                // evtFactory.fireEvent(ule);
                 showMessage("User: " + username, "Successful Log In",
                     DialogType.INFORMATION);
                 navPage = new NavigationPage();
@@ -273,6 +296,7 @@ public class LoginPage extends DrawingSurface {
             }
         } else if (e == changePassword) {
             changePassword.setFillColor(Color.GREEN);
+            //change password = 0
             buttonClicked(0, "Change Password", "Enter new password");
             if (passwordToChange.equals(verifyPasswordToChange)) {
                 addMessage("Passwords are the same");
@@ -289,6 +313,7 @@ public class LoginPage extends DrawingSurface {
             addMessage("Go back");
             returnToHome();
         } else if (e == createAccount) {
+            //create account = 2
             createAccount.setFillColor(Color.GREEN);
             buttonClicked(2, "New User", "Enter username");
             if (!createdPassword.equals(verifyCreatedPassword)) {
