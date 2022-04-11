@@ -78,6 +78,7 @@ public class Board {
      * @return An array of pegs.
      */
     public Peg[] getPegs() {
+        LOG.debug("Returning an array of pegs.");
         return pegs;
     }
 
