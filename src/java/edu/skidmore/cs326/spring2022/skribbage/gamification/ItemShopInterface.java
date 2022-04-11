@@ -1,7 +1,6 @@
 package edu.skidmore.cs326.spring2022.skribbage.gamification;
 
 import java.util.HashMap;
-//import org.apache.log4j.Logger;
 
 /**
  * Item Shop Interface
