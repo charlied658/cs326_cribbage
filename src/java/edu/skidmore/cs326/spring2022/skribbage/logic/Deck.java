@@ -4,8 +4,13 @@ package edu.skidmore.cs326.spring2022.skribbage.logic;
 import java.util.ArrayList;
 import java.util.Random;
 
+import edu.skidmore.cs326.spring2022.skribbage.common.Suit;
+
 /**
  *
+ * TODO (DSR): Deck functionality needs to move to the common package
+ * TODO (DSR): Lets talk through the design of Card, Hand, Deck...
+
  * @author kpolite
  *
  */

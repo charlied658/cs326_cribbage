@@ -54,6 +54,10 @@ public class RulesPage extends DrawingSurface implements ActionListener {
     private JButton returnToMainMenu;
 
     /**
+     * navPage - NavigationPage window.
+     */
+    private NavigationPage navPage;
+    /**
      * LOG - logger.
      */
     private static final Logger LOG;
@@ -185,7 +189,7 @@ public class RulesPage extends DrawingSurface implements ActionListener {
         // mf.dispatchEvent(new WindowEvent(mf, WindowEvent.WINDOW_CLOSING));
         if (e.getSource().equals(returnToMainMenu)) {
             mf.dispose();
-            homeScreen = new HomeScreen();
+            navPage = new NavigationPage();
             // PastGamesPage pastGames = new PastGamesPage();
             // spastGames.setVisible(true);
         }

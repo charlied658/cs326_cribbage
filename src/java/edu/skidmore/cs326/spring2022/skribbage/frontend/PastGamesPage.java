@@ -98,6 +98,12 @@ public class PastGamesPage extends DrawingSurface implements ActionListener {
      */
     private PlayableGame three =
         new PlayableGame(1, 17, 2022, "Hugh Jass", "Tess T Culls", "", false);
+    
+    /**
+     * navPage - NavigationPage window.
+     */
+    private NavigationPage navPage;
+    
     /**
      * Logger instance for logging.
      */
@@ -215,7 +221,7 @@ public class PastGamesPage extends DrawingSurface implements ActionListener {
             mf.dispose();
             //RulesPage rules = new RulesPage();
             //rules.setVisible(true);
-            homeScreen = new HomeScreen();
+            navPage = new NavigationPage();
         }
     }
     /**

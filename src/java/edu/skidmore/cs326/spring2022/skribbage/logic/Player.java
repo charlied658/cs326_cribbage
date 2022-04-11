@@ -1,6 +1,9 @@
 package edu.skidmore.cs326.spring2022.skribbage.logic;
 
 /**
+ * TODO (DSR): Player functionality needs to move to the common package
+ * TODO (DSR): Lets talk through the design of Player (compared to User)
+
  * @author lappiaha
  */
 public class Player {
