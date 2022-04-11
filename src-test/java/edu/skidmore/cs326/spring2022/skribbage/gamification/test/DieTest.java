@@ -26,14 +26,17 @@ public class DieTest {
      * Create static resources.
      */
     static {
-        LOG = Logger.getLogger(BattleSpotTest.class);
+        LOG = Logger.getLogger(DieTest.class);
     }
 
     /**
      * Attribute to house the test instance.
      */
     private Die testInstance;
-
+    
+    /**
+     * Sets up test instance for Die. 
+     */
     @Before
     public void setup() {
         testInstance = new Die();
@@ -78,14 +81,12 @@ public class DieTest {
 
         while (numTests < 100) {
             int dieRoll = testInstance.rollDie(6, 1, false);
-            System.out.println(dieRoll);
             assertTrue(dieRoll >= 1 && dieRoll <= 6);
             cases[dieRoll + 3] = true;
             numTests++;
         }
         numTests = 0;
         for (int i = 4; i <= 9; i++) {
-            System.out.println(i);
             assertTrue(cases[i]);
             cases[i] = false;
         }
