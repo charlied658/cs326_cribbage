@@ -17,6 +17,8 @@ import us.daveread.edu.graphics.surface.MainFrame;
  * between Rules, Past Games, and New Game pages.
  * 
  * @author Zoe Beals
+ * 
+ *      Code reviewed by Jonah Marcus on April 11, 2022.
  */
 public class NavigationPage extends DrawingSurface {
     
