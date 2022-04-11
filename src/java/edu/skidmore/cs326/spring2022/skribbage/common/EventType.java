@@ -34,7 +34,7 @@ public enum EventType {
     /**
      * Fired when a user attempts to create an account via login page.
      */
-    USER_CREATE_ACCOUNT("User Create Account Event"),
+    USER_CREATE_ACCOUNT("User Create Account Event", User.class),
     /**
      * Fired when a user attempts to delete their account.
      */

@@ -51,7 +51,7 @@ public class Board {
      * Package-level constructor. BoardManager should manage creation of
      * instances.
      */
-    Board() {
+    public Board() {
         LOG.debug("Instance created");
         board = new Image("board.png", new Point(0, 0), null);
         /**
@@ -78,6 +78,7 @@ public class Board {
      * @return An array of pegs.
      */
     public Peg[] getPegs() {
+        LOG.debug("Returning an array of pegs.");
         return pegs;
     }
 

@@ -22,7 +22,7 @@ public class JumpSpot {
      * Create static resources.
      */
     static {
-        LOG = Logger.getLogger(BattleSpot.class);
+        LOG = Logger.getLogger(JumpSpot.class);
     }
     /**
      * Die to determine jump spot outcome.
