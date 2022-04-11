@@ -43,17 +43,17 @@ public class LobbyPage extends DrawingSurface implements ActionListener {
     /**
      * loggedInPlayer1 - The displayed player 1 name.
      */
-    private String loggedInPlayer1;
+    //private String loggedInPlayer1;
 
     /**
      * loggedInPlayer2 - The displayed player 2 name.
      */
-    private String loggedInPlayer2;
+    //private String loggedInPlayer2;
 
     /**
      * loggedInPlayer3 - The displayed player 3 name.
      */
-    private String loggedInPlayer3;
+    //private String loggedInPlayer3;
     
     /**
      * MAX_PLAYERS - Maximum player count in a given lobby.
