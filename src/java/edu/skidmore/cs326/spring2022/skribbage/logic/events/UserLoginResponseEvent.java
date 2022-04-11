@@ -33,7 +33,8 @@ public class UserLoginResponseEvent extends AccountResponseEvent {
      *            responseMessage in that order.
      */
     public UserLoginResponseEvent(Object source, Object... args) {
-        super(source, EVENTTYPE, (User) args[0], (Boolean) args[1],
+        super(source, EventType.USER_LOGIN_RESPONSE, (User) args[0],
+            (Boolean) args[1],
             (String) args[2]);
     }
 }

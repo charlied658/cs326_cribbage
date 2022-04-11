@@ -2,13 +2,12 @@ package edu.skidmore.cs326.spring2022.skribbage.common;
 
 import org.apache.log4j.Logger;
 
-import edu.skidmore.cs326.spring2022.skribbage.frontend.HomeScreen;
 import edu.skidmore.cs326.spring2022.skribbage.gamification.Player;
 
 /**
  * An object that represents an individual peg on the Skribbage board.
  * @author Jonah Marcus
- *         Last Updated April 8 2022
+ *         Last Updated April 11 2022
  *
  */
 public class Peg {
@@ -73,7 +72,9 @@ public class Peg {
      */
     public void movePeg(int numSpaces) {
         LOG.trace("Peg.java movePeg()");
-        
+        Location current = this.spot.getLocation();
+        this.spot = new Spot(new Location(current.getRow() + numSpaces, 
+            current.getColumn()));
     }
 
 }
