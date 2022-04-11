@@ -45,6 +45,7 @@ public final class PersistenceFacade implements UserManagement, GameManagement{
 	@Override
 	public boolean userCreate(User userToCreate, Password password) {
 		
+		return true;
 	}
 	
 	/**
@@ -76,6 +77,18 @@ public final class PersistenceFacade implements UserManagement, GameManagement{
 		return true;
 	}
 	
+	/**
+	 * This will take in a user and the arg of what needs to be change and change it
+	 * @param userToChange The user that wants to change something
+	 * @param args The thing that they want to change
+	 * 
+	 * @return boolean depending on whether the method worked or not
+	 */
+	public boolean userChange(User userToChange, Object... args) {
+		
+		return true;
+	}
+	
 	
 	/**
 	 * This will return the saved game of the user that retrieved it
@@ -87,6 +100,7 @@ public final class PersistenceFacade implements UserManagement, GameManagement{
 	@Override
 	public Game retrieveGame(User userName, Game whichGame) {
 		
+		
 	}
 	
 	/**
@@ -96,8 +110,10 @@ public final class PersistenceFacade implements UserManagement, GameManagement{
 	 * 
 	 * @return boolean True or false depending if the method worked
 	 */
+	@Override
 	public boolean saveGame(User userName, Game currentGame) {
 		
+		return true;
 	}
 	
 	
