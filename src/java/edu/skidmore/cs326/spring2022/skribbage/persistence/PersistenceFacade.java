@@ -164,7 +164,7 @@ public final class PersistenceFacade implements UserManagement, GameManagement, 
 	
 	
 	@Override
-	public booleSitnan displayInventory(User user) {
+	public boolean displayInventory(User user) {
 		return true;
 	}
 	
