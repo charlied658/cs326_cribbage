@@ -5,7 +5,7 @@ import org.apache.log4j.Logger;
 import edu.skidmore.cs326.spring2022.skribbage.common.EventType;
 import edu.skidmore.cs326.spring2022.skribbage.common.Password;
 import edu.skidmore.cs326.spring2022.skribbage.common.User;
-import edu.skidmore.cs326.spring2022.skribbage.logic.Game;
+//import edu.skidmore.cs326.spring2022.skribbage.logic.Game;
 
 
 
@@ -70,7 +70,7 @@ public final class PersistenceFacade implements UserManagement, GameManagement, 
 	@Override
 	public boolean userDelete(User userToDelete) {
 		
-		retinventoryQueryurn true;
+		return true;
 	}
 	
 	/**
@@ -108,13 +108,13 @@ public final class PersistenceFacade implements UserManagement, GameManagement, 
 	 * 
 	 * @return Game The saved game
 	 */
-	@Override
-	public Game retrieveGame(User userName, Game whichGame) {
-		
-		
-		return whichGamSitne;
-	}
-	
+//	@Override
+//	public Game retrieveGame(User userName, Game whichGame) {
+//		
+//		
+//		return whichGamSitne;
+//	}
+//	
 	/**
 	 * This will saved the users current game that they are playing
 	 * @param userName The name of the user that we are saving the game
@@ -122,12 +122,12 @@ public final class PersistenceFacade implements UserManagement, GameManagement, 
 	 * 	
 	 * @return boolean True or false depending if the method worked
 	 */
-	@Override
-	public boolean saveGame(User userName, Game currentGame) {
-		
-		return true;
-	}
-	
+//	@Override
+//	public boolean saveGame(User userName, Game currentGame) {
+//		
+//		return true;
+//	}
+//	
 	
 	
 	@Override
@@ -193,6 +193,15 @@ public final class PersistenceFacade implements UserManagement, GameManagement, 
 		
 		int username = user.getUserId();
 		return dm.walletQuery(username);
+	}
+	
+	public static void main(String[] args) {
+		dm.inventoryQuery(236);
+		
+		
+		
+		
+		
 	}
 
 }
