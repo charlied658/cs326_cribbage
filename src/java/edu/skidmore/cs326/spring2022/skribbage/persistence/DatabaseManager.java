@@ -6,6 +6,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.HashMap;
+
+import org.apache.log4j.Logger;
 
 /**
  * Contains the methods that connect to the database. Creates, edits, and
@@ -41,6 +44,13 @@ public class DatabaseManager {
      */
     static final String QUERY = "SELECT * FROM prototype_table";
 
+    
+	/**
+	 * Logger for the class
+	 */
+	private static final Logger LOG;
+	
+	
     /**
      * Database Connection.
      */
@@ -89,6 +99,68 @@ public class DatabaseManager {
         }
 
     }
+    
+    
+    /**
+     * This is a function to query the inventory items held by a player.
+     * 
+     * @author Tinaye Mawocha
+     * @param playerID :
+     *            the id of the player to check the value
+     * @return Query result
+     */
+    public HashMap<String,Item> inventoryQuery(int playerID) {
+
+    	System.out.println("we here");
+        String tokenQuery = "SELECT * FROM inventory WHERE PersonID = ? ";
+
+        PreparedStatement ps = null;
+        Connection conn = null;
+        int netWorth = 0;
+        HashMap<String,Item> playerInventory = new HashMap();
+        
+        try {
+
+            conn = getDB();
+            ps = dbConnection.prepareStatement(tokenQuery);
+            ps.setInt(1, playerID);
+
+            // System.out.println(ps);
+            ResultSet rs = ps.executeQuery();
+           
+            
+            
+            while(rs.next()) {
+            	
+            	Item tempItem = null;
+            	String tempType = rs.getString("item_type");
+            	dbDisconnect(conn);  tempItem.setItemType(ItemTypes.valueOf(tempType));
+                tempItem.setQuantityHeld(rs.getInt("quantity"));
+                
+                playerInventory.put(tempType,tempItem);
+                
+            }
+            
+            dbDisconnect(conn);
+            return playerInventory;
+
+        }
+        catch (SQLException e) {
+            // System.out.println("AccountinventoryQuery not found");
+            e.printStackTrace();
+            dbDisconnect(conn);
+            LOG.error("Account not found");
+            return playerInventory;
+        }
+
+       
+      
+
+    }
+
+    
+    
+    
 
     /**
      * This is a function to query the token value held by a player.
