@@ -38,8 +38,9 @@ public class Peg {
     /**
      * Peg constructor.
      */
-    public Peg() {
+    public Peg(Spot sp) {
         LOG.trace("Peg.java constructor");
+        this.spot = sp;
         
     }
     /**
