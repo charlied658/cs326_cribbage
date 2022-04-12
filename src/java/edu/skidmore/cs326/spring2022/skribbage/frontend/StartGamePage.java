@@ -113,13 +113,12 @@ public class StartGamePage extends DrawingSurface {
      */
     public void setup() {
         LOG.trace("setup method in StartGamePage.java");
-        boardImage = new Image("board.png", new Point(40, 45), 0.8, null);
+        boardImage = new Image("newboard.png", new Point(40, 65), 1.5, null);
         gameArea = new Rectangle(new Point(25, 40),
             new Dimension(850, 800), Color.black, Color.green);
-
-        beginGame = new Text("Start", new Point(275, 400), 20, Color.black, 
+        beginGame = new Text("Start", new Point(375, 400), 20, Color.black, 
             Color.blue);
-        cardDeck = new Image("card.jpg", new Point(375, 315), .6, null);
+        cardDeck = new Image("card.jpg", new Point(500, 315), .6, null);
         player1Score = new Text("temp player 1:", new Point(35, 790), 20, 
             Color.black);
         player2Score = new Text("temp player 2: ", new Point(35, 810), 20,
@@ -143,9 +142,9 @@ public class StartGamePage extends DrawingSurface {
         LOG.trace("createGrid method in StartGamePage.java");
         assignSpots();
         spots = BoardManager.getInstance().getBoard().getGrid();
-//        for (int i = 0; i < spots.length; i++) {
-//            System.out.println(Arrays.toString(spots[i]));
-//        }
+        for (int i = 0; i < spots.length; i++) {
+            System.out.println(Arrays.toString(spots[i]));
+        }
     }
 
     /**
