@@ -152,19 +152,9 @@ public class LoginPage extends DrawingSurface {
      * LoginPage constructor Initializes the MainFrame window.
      */
     public LoginPage() {
-        LOG.trace("Entered constructor of a LoginPage.java");
+        LOG.debug("Instance created");
         loginPage = new MainFrame(this, "Skribbage Battle Royale Login", 900,
             900, true);
-        setup();
-    }
-
-    /**
-     * setup method.
-     * creates the createAccount, login, changePassword, and
-     * homeScreenButton buttons as well as the logo object.
-     */
-    public void setup() {
-        LOG.trace("Setup method in LoginPage.java");
         createAccount = new Text("Create Account", new Point(375, 360), 20,
             Color.black, Color.blue);
         login =
@@ -183,7 +173,7 @@ public class LoginPage extends DrawingSurface {
 
     /**
      * method to handle different button clicks.
-     * 
+     *
      * @param popupType
      *            - integer variable that is used to determine
      *            the type of popup to display.
@@ -215,11 +205,11 @@ public class LoginPage extends DrawingSurface {
             case 2:
                 createdUsername = getUserInput(popupTitle, popupMessage,
                     DialogPosition.CENTER_ALL);
-//                currentUser = new User(null, createdUsername, null, null);
-//                ule = (UserCreateAccountEvent) evtFactory.createEvent(
-//                    EventType.USER_CREATE_ACCOUNT, this, currentUser);
-//                evtFactory.fireEvent(ule);
-//                verifyNewUserCallback();
+                // currentUser = new User(null, createdUsername, null, null);
+                // ule = (UserCreateAccountEvent) evtFactory.createEvent(
+                // EventType.USER_CREATE_ACCOUNT, this, currentUser);
+                // evtFactory.fireEvent(ule);
+                // verifyNewUserCallback();
                 break;
             default:
                 break;
@@ -236,7 +226,7 @@ public class LoginPage extends DrawingSurface {
         verifyCreatedPassword = getUserInput("New User",
             "Enter password again", DialogPosition.CENTER_ALL, true);
         if (createdPassword.equals(verifyCreatedPassword)) {
-           // userCreatedCallback();
+            // userCreatedCallback();
         }
     }
 
@@ -247,15 +237,15 @@ public class LoginPage extends DrawingSurface {
         LOG.trace("userCreatedCallback method in Loginpage.java");
         showMessage("User: " + createdUsername + " created.",
             "New account created.", DialogType.INFORMATION);
-//        currentUser = new User(null, createdUsername, createdPassword, null);
-//        ule = (UserCreateAccountEvent) evtFactory
-//            .createEvent(EventType.USER_CREATE_ACCOUNT, this, currentUser);
-//        evtFactory.fireEvent(ule);
+        // currentUser = new User(null, createdUsername, createdPassword, null);
+        // ule = (UserCreateAccountEvent) evtFactory
+        // .createEvent(EventType.USER_CREATE_ACCOUNT, this, currentUser);
+        // evtFactory.fireEvent(ule);
     }
 
     /**
      * getUsername method.
-     * 
+     *
      * @return the username
      */
     public String getUsername() {
@@ -265,7 +255,7 @@ public class LoginPage extends DrawingSurface {
 
     /**
      * getpassword method.
-     * 
+     *
      * @return the password
      */
     public String getPassword() {
@@ -275,7 +265,7 @@ public class LoginPage extends DrawingSurface {
 
     /**
      * loggedIn method.
-     * 
+     *
      * @return if the user is logged in
      */
     public boolean loggedIn() {
@@ -288,8 +278,8 @@ public class LoginPage extends DrawingSurface {
     }
 
     /**
-     * 
-     */
+    *
+    */
     @Override
     public void drawableMouseClick(Drawable e) {
         LOG.trace("Drawable mouseclick method in LoginPage.java");
@@ -376,13 +366,13 @@ public class LoginPage extends DrawingSurface {
         loginPage.dispose();
     }
 
-    /**
-     * main method to initialize a new LoginPage object.
-     * 
-     * @param args
-     */
-    public static void main(String[] args) {
-        LOG.trace("Main method in loginPage.java");
-        new LoginPage();
-    }
+    // /**
+    // * main method to initialize a new LoginPage object.
+    // *
+    // * @param args
+    // */
+    // public static void main(String[] args) {
+    // LOG.trace("Main method in loginPage.java");
+    // new LoginPage();
+    // }
 }
