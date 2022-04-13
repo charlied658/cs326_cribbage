@@ -206,10 +206,10 @@ public class LoginPage extends DrawingSurface {
             case 2:
                 createdUsername = getUserInput(popupTitle, popupMessage,
                     DialogPosition.CENTER_ALL);
-                // currentUser = new User(null, createdUsername, null, null);
-                // ule = (UserCreateAccountEvent) evtFactory.createEvent(
-                // EventType.USER_CREATE_ACCOUNT, this, currentUser);
-                // evtFactory.fireEvent(ule);
+                 currentUser = new User(null, createdUsername, null, null);
+                 ule = (UserCreateAccountEvent) evtFactory.createEvent(
+                 EventType.USER_CREATE_ACCOUNT, this, currentUser);
+                 evtFactory.fireEvent(ule);
                 verifyNewUserCallback();
                 break;
             default:
