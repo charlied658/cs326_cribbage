@@ -66,7 +66,6 @@ public class LoginPageManager {
      * @return the login page.
      */
     public LoginPage getLoginPage() {
-        System.out.println(loginPage);
         return loginPage.get(LOGINKEY);
     }
 }
