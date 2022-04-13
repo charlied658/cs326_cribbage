@@ -18,11 +18,38 @@ public class User implements Payload {
 
     /**
      * Private string attribute to store a username of a user.
+     * 
+     * @reviewed Tinaye Mawocha removed keyword final as username may need to
+     *           change
      */
     private String userName;
 
     /**
+     * Private string attribute to store a userId of a user.
      * 
+     * @reviewed Tinaye Mawocha removed keyword final as username may need to
+     *           change
+     */
+    private int userId;
+
+    /**
+     * @return the user's ID
+     */
+    public int getUserId() {
+        return userId;
+    }
+
+    /**
+     * Functionality to update user's ID.
+     * 
+     * @param userID
+     *            new role.
+     */
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    /**
      * Private string attribute to store a password of a user.
      * TODO: DEPRECATED; Should be a Password object type soon
      */
@@ -101,10 +128,12 @@ public class User implements Payload {
         LOG.debug("Returning a user role");
         return userRole;
     }
-    
+
     /**
      * setUserName method.
-     * @param username to set.
+     * 
+     * @param username
+     *            to set.
      */
     public void setUserName(String username) {
         this.userName = username;
