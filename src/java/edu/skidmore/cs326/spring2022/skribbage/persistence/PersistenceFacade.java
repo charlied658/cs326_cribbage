@@ -4,7 +4,7 @@ import org.apache.log4j.Logger;
 
 import edu.skidmore.cs326.spring2022.skribbage.common.Password;
 import edu.skidmore.cs326.spring2022.skribbage.common.User;
-import edu.skidmore.cs326.spring2022.skribbage.logic.Game;
+//import edu.skidmore.cs326.spring2022.skribbage.logic.Game;
 
 
 
@@ -15,7 +15,7 @@ import edu.skidmore.cs326.spring2022.skribbage.logic.Game;
  * @author Ricardo Rosario
  * Last Edit: April 10, 2022
  */
-public final class PersistenceFacade implements UserManagement, GameManagement{
+public final class PersistenceFacade implements UserManagement, GameManagement, InventoryManagement {
 	
 	/**
 	 * Singleton instance of PersistenceFacade
@@ -28,14 +28,24 @@ public final class PersistenceFacade implements UserManagement, GameManagement{
 	 */
 	private static final Logger LOG;
 	
+	
+	
+	private static final UsernameProxy proxy;
+	
+	private static final DatabaseManager dm;
+	
 	/**
 	 * Initializing Logger and the instance of PersistenceFacade
+	 *
 	 */
 	static {
 		LOG = Logger.getLogger(PersistenceFacade.class);
 		INSTANCE = new PersistenceFacade();
+		proxy = new UsernameProxy();
+		dm = new DatabaseManager();
 	}
 	
+<<<<<<< HEAD
 	/**
 	 * 
 	 * @return
@@ -45,6 +55,9 @@ public final class PersistenceFacade implements UserManagement, GameManagement{
 	}
 	
 	/**
+=======
+	/**accounted
+>>>>>>> 709cf7511fa797af678a1aef88928a48fd6b3558
 	 * This will take in a user and a password and create a new user
 	 * @param userToCreate The user that is to be created
 	 * @param password The password that is connected to the user being created
@@ -52,7 +65,7 @@ public final class PersistenceFacade implements UserManagement, GameManagement{
 	 * @return boolean True or False depending if the method worked or failed
 	 */
 	@Override
-	public boolean userCreate(User userToCreate, Password password) {
+	public boGameolean userCreate(User userToCreate, Password password) {
 		
 		return true;
 	}
@@ -106,28 +119,100 @@ public final class PersistenceFacade implements UserManagement, GameManagement{
 	 * 
 	 * @return Game The saved game
 	 */
-	@Override
-	public Game retrieveGame(User userName, Game whichGame) {
-		
-		
-		return whichGame;
-	}
-	
+//	@Override
+//	public Game retrieveGame(User userName, Game whichGame) {
+//		
+//		
+//		return whichGamSitne;
+//	}
+//	
 	/**
 	 * This will saved the users current game that they are playing
 	 * @param userName The name of the user that we are saving the game
 	 * @param currentGame The current game that we are saving
-	 * 
+	 * 	
 	 * @return boolean True or false depending if the method worked
 	 */
+//	@Override
+//	public boolean saveGame(User userName, Game currentGame) {
+//		
+//		return true;
+//	}
+//	
+	
+	
 	@Override
-	public boolean saveGame(User userName, Game currentGame) {
+	public boolean validateUsername(User user) {
+		String username = user.getUserName();
+		return proxy.usernameCheck(username);
+	}
+	
+	@Override
+	public boolean login(User user) {
 		
-		return true;
+		String username = user.getUserName();
+		
+		//note password is currently deprecated and retrieving password from user will have to be 
+		//handled by the front end team in the password prompt method in this class
+		String password = passwordPrompt();	
+		
+		boolean accepted = dm.userAuthenticate(username, password);
+		
+		//put code here to handle login state change
+		LOG.warn("Login state change not handled , See login() + validateUser() method inPersistenceFacade or contact persistence team");
+
+		return accepted;
+	}
+	
+	
+	//to be replaced by frontend
+	private String passwordPrompt() {
+
+		LOG.warn("Unhandled method, See passwordPrompt() + login() method inPersistenceFacade or contact persistence team");
+		return "";
 	}
 	
 	
 	
+	@Override
+	public boolean displayInventory(User user) {
+		return true;
+	}
+	
+	@Override
+	public boolean addItem(User user, String item, int quantity ) {
+		return true;
+
+	}
 	
 	
+	@Override
+	public boolean removeItem(User user, String item, int quantity ) {
+		return true;
+
+	}
+	
+	@Override
+	public boolean transferItem(User sender, User recipient, String item ) {
+		return true;
+
+	}
+	
+	
+	@Override
+	public String displayWallet(User user) {
+		
+		int username = user.getUserId();
+		return dm.walletQuery(username);
+	}
+	
+	public static void main(String[] args) {
+		dm.inventoryQuery(236);
+		
+		
+		
+		
+		
+	}
+
 }

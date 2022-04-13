@@ -13,5 +13,9 @@ public interface UserManagement {
 	
 	public boolean userChange(User userToChange, Object... args);
 	
+	public boolean login(User user);
+	
+	public boolean validateUsername(User user);
+	
 	
 }
