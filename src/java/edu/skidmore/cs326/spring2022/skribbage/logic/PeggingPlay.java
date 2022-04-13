@@ -9,10 +9,13 @@ import java.util.ArrayList;
 * It assumes there are only two players.
 * @author Michael Shriner
 */
-public class PeggingPlay {
+public class PeggingPlay implements PeggingPlayInterface {
 
     /** a Game object to access the state of the game. */
     private Game game;
+
+    /** Object used to manipulate the Game data. */
+    private GameManager gameManager;
 
     /**
      * Constructor that sets the class Game object to the parameter
@@ -20,7 +23,10 @@ public class PeggingPlay {
      * @param g is a Game object.
      */
     public PeggingPlay(Game g) {
-        this.game = g;
+        //initialize the game manager
+        gameManager = new GameManager(g);
+        //initialize game
+        game = gameManager.getGame();
     }
 
      /**
@@ -37,7 +43,7 @@ public class PeggingPlay {
 
         int theCardValue = cardToAdd.getPointValue();
 
-        if (game.addToPeggingTotal(theCardValue)) {
+        if (gameManager.addToPeggingTotal(theCardValue)) {
             // if here, the card was added to the pegging total
 
             // remove the card from the player's hand and place it in pegging
@@ -45,9 +51,9 @@ public class PeggingPlay {
             p.getHand().removeCardFromHand(cardToAdd);
 
             if (p.isDealer()) {
-                game.addDealerPeggingCard(cardToAdd);
+                gameManager.addDealerPeggingCard(cardToAdd);
             } else {
-                game.addPonePeggingCard(cardToAdd);
+                gameManager.addPonePeggingCard(cardToAdd);
             }
 
         }
@@ -66,19 +72,22 @@ public class PeggingPlay {
      *
      * @param claim is the claim the player makes.
      * @param p is the player who made the claim.
+     * @return true iff the claim made was valid
      */
-    public void checkClaim(String claim, Player p) {
+    public boolean checkClaim(String claim, Player p) {
 
         if (claim.equalsIgnoreCase("15")) {
-            check15(p);
+            return check15(p);
         } else if (claim.equalsIgnoreCase("31")) {
-            check31(p);
+            return check31(p);
         } else if (claim.equalsIgnoreCase("pair")) {
-            checkPair(p);
+            return checkPair(p);
         } else if (claim.equalsIgnoreCase("3 pair")) {
-            check3Pair(p);
+            return check3Pair(p);
         } else if (claim.equalsIgnoreCase("4 pair")) {
-            check4Pair(p);
+            return check4Pair(p);
+        } else {
+            return false;
         }
         // else if(claim.equalsIgnoreCase("run of 3")){
         // checkRunOf3(p);
@@ -105,8 +114,9 @@ public class PeggingPlay {
      *
      * @param p is the player making the claim that he or she
      * placed a card that brought the pegging total to 15.
+     * @return true iff the player has 15
      */
-    public void check15(Player p) {
+    public boolean check15(Player p) {
 
         // assumption: Card c from checkClaim() has been added to peggingCards
         // already
@@ -114,6 +124,9 @@ public class PeggingPlay {
 
         if (game.getPeggingTotal() == 15) {
             p.addPoints(2);
+            return true;
+        } else {
+            return false;
         }
 
         // if (sumTotalPeggingCards() == 15) {
@@ -152,8 +165,9 @@ public class PeggingPlay {
      *
      * @param p is the player making the claim that he or she placed a card
      * that brought the pegging total to 31.
+     * @return true iff the player has 31
      */
-    public void check31(Player p) {
+    public boolean check31(Player p) {
 
         // assumption: Card c from checkClaim() has been added to peggingCards
         // already
@@ -161,6 +175,9 @@ public class PeggingPlay {
 
         if (game.getPeggingTotal() == 31) {
             p.addPoints(2);
+            return true;
+        } else {
+            return false;
         }
 
         //
@@ -207,8 +224,9 @@ public class PeggingPlay {
      *
      * @param p is the player who made the claim of having a pair
      * during the pegging phase.
+     * @return true iff the player has a pair
      */
-    public void checkPair(Player p) {
+    public boolean checkPair(Player p) {
         // assumption: Card c from checkClaim() has been added to peggingCards
         // already
         // assumption: check15() is called before the next player plays a card
@@ -222,6 +240,9 @@ public class PeggingPlay {
 
         if (isPair(checkIfPair)) {
             p.addPoints(2);
+            return true;
+        } else {
+            return false;
         }
     }
 
@@ -232,8 +253,9 @@ public class PeggingPlay {
      *
      * @param p is the player who made the claim of having a 3 pair
      * during the pegging phase.
+     * @return true iff the player has a 3 pair
      */
-    public void check3Pair(Player p) {
+    public boolean check3Pair(Player p) {
         // assumption: Card c from checkClaim() has been added to peggingCards
         // already
         // assumption: check15() is called before the next player plays a card
@@ -269,20 +291,23 @@ public class PeggingPlay {
 
         if (isPair(checkIfPair)) {
             p.addPoints(6);
+            return true;
+        } else{
+          return false;
         }
 
     }
 
-  /**
-  * If the player passed as a parameter placed a card that immediately
-  * followed 3 cards with the same numerical values, the player is
-  * awarded 12 points. Otherwise, the player is awarded no points.
-  *
-  * @param p is the player who made the claim of having a 3 pair
-  * during the pegging phase.
-  *
-  */
-    public void check4Pair(Player p) {
+    /**
+    * If the player passed as a parameter placed a card that immediately
+    * followed 3 cards with the same numerical values, the player is
+    * awarded 12 points. Otherwise, the player is awarded no points.
+    *
+    * @param p is the player who made the claim of having a 3 pair
+    * during the pegging phase.
+    * @return true iff the player has a 4 pair
+    */
+    public boolean check4Pair(Player p) {
     //assumption: Card c from checkClaim() has been added to peggingCards
     //already
     //assumption: check15() is called before the dealer plays a card
@@ -298,6 +323,9 @@ public class PeggingPlay {
 
         if (isPair(checkIfPair)) {
             p.addPoints(12);
+            return true;
+        } else {
+            return false;
         }
 
     }
