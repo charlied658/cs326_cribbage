@@ -57,7 +57,7 @@ public class LoginPage extends DrawingSurface {
     /**
      * currentUser - User object.
      */
-    private User currentUser;
+    private static User currentUser;
 
     /**
      * createdUsername - String variable that holds the new username.
@@ -227,9 +227,11 @@ public class LoginPage extends DrawingSurface {
         verifyCreatedPassword = getUserInput("New User",
             "Enter password again", DialogPosition.CENTER_ALL, true);
         if (createdPassword.equals(verifyCreatedPassword)) {
+            System.out.println("HDJDOSJFIEJR");
             currentUser =
                 new User(null, createdUsername, createdPassword, null);
         }
+        System.out.println("HELLO: " + currentUser.getUserName());
     }
 
     /**
@@ -252,7 +254,11 @@ public class LoginPage extends DrawingSurface {
      */
     public String getUsername() {
         LOG.trace("getUsername method in LoginPage.java");
-        return currentUser.getUserName();
+        if (currentUser == null) {
+            return this.username;
+        } else {
+            return currentUser.getUserName();
+        }
     }
 
     /**
@@ -272,15 +278,9 @@ public class LoginPage extends DrawingSurface {
      */
     public boolean loggedIn() {
         LOG.trace("loggedIn method in LoginPage.java");
-        System.out.println(
-            "username: " + username + " currentUser: " + createdUsername);
         if (currentUser != null) {
             if (username.equals(currentUser.getUserName())
                 && password.equals(currentUser.getPassword())) {
-                System.out.println("SUCCESS");
-                System.out.println(
-                    "username: " + createdUsername + " password: "
-                        + createdPassword);
                 return true;
             } else {
                 return false;
@@ -300,7 +300,7 @@ public class LoginPage extends DrawingSurface {
     public void drawableMouseClick(Drawable e) {
         LOG.trace("Drawable mouseclick method in LoginPage.java");
         if (e == login) {
-            
+
             // separate the username and password functionality.
             // outside listener tells me when to run the password method.
             login.setFillColor(Color.GREEN);
@@ -311,6 +311,7 @@ public class LoginPage extends DrawingSurface {
                 DialogPosition.CENTER_ALL, true);
             // verifyUserExists();
             if (loggedIn()) {
+                currentUser.setUserName(username);
                 showMessage("User: " + username, "Successful Log In",
                     DialogType.INFORMATION);
                 navPage = NavigationPageManager.getInstance().getNavPage();
