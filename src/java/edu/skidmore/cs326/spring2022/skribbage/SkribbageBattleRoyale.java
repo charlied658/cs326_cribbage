@@ -63,7 +63,7 @@ public class SkribbageBattleRoyale implements Runnable {
 
         eventManager
             .addPropertyChangeListener(new AccountController(),
-                EventType.USER_LOGIN);
+                EventType.USER_LOGIN, EventType.USER_CREATE_ACCOUNT);
     }
 
     /**
