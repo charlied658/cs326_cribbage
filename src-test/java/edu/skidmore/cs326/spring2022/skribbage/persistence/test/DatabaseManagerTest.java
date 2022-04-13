@@ -54,7 +54,7 @@ public class DatabaseManagerTest {
      */
     @Test
     public void inventoryQuerysuccess() {
-        String cointest = databaseinstance.inventoryQuery(325);
+        String cointest = databaseinstance.walletQuery(325);
         assertEquals(cointest, "player coin value: 100000");
     }
 
@@ -63,7 +63,7 @@ public class DatabaseManagerTest {
      */
     @Test
     public void inventoryQueryfails() {
-        String cointest = databaseinstance.inventoryQuery(420);
+        String cointest = databaseinstance.walletQuery(420);
         assertEquals(cointest, "Account not found");
     }
 
