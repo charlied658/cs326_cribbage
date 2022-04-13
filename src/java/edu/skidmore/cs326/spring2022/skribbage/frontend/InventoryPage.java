@@ -30,7 +30,7 @@ import us.daveread.edu.graphics.shape.impl.Circle;
  * The page that shows the player's inventory. Players can 
  * send and receive tokens and items to and from other players.
  * @author Jonah Marcus
- *         Last Update: March 27, 2022
+ *         Last Update: April 11, 2022
  *         Last Edited by Jonah Marcus
  */
 public class InventoryPage extends DrawingSurface implements ActionListener {
@@ -86,7 +86,7 @@ public class InventoryPage extends DrawingSurface implements ActionListener {
         LOG.trace("Entered setup (InventoryPage)");
         setLayout(null);
         
-        Image logo = new Image("logo.png", new Point(360, 0), 0.4, null);
+        Image logo = new Image("logo.png", new Point(320, 0), 0.45, null);
         
         closeWindow = new Text("Close",
             new Point(20, 40), 25, Color.BLUE, Color.BLACK);
