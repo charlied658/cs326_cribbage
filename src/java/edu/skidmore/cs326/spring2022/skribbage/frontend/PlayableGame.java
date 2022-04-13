@@ -1,5 +1,6 @@
 package edu.skidmore.cs326.spring2022.skribbage.frontend;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import org.apache.log4j.Logger;
@@ -59,6 +60,11 @@ public class PlayableGame implements ActiveGame {
      * 
      */
     private String player2 = ""; // Name of player 2
+    
+    /**
+     * players - Arraylist of players.
+     */
+    private ArrayList<String> players = new ArrayList<String>();
 
     /**
      * 
@@ -78,22 +84,20 @@ public class PlayableGame implements ActiveGame {
     }
 
     /**
-     * @param day
      * @param month
+     * @param day
      * @param year
-     * @param p1
-     * @param p2
+     * @param users
      * @param game
      * @param completed
      */
-    public PlayableGame(int month, int day, int year, String p1, String p2,
+    public PlayableGame(int month, int day, int year, ArrayList<String> users,
         String game, boolean completed) {
         LOG.trace("Constructor of PlayableGame reached");
         setDay(day);
         setMonth(month);
         setYear(year);
-        setPlayer1(p1);
-        setPlayer2(p2);
+        setPlayers(users);
         setName(game);
         setCompletionStatus(completed);
     }
@@ -131,19 +135,10 @@ public class PlayableGame implements ActiveGame {
     }
 
     /**
-     * @return player1
+     * @return players
      */
-    public String getPlayer1() {
-        LOG.trace("Returning the name of player 1 as a String");
-        return player1;
-    }
-
-    /**
-     * @return player2
-     */
-    public String getPlayer2() {
-        LOG.trace("Returning the name of player 2 as a String");
-        return player2;
+    public ArrayList<String> getPlayers() {
+        return players;
     }
 
     /**
@@ -218,17 +213,10 @@ public class PlayableGame implements ActiveGame {
     }
 
     /**
-     * @param p1
+     * @param users
      */
-    public void setPlayer1(String p1) {
-        player1 = p1;
-    }
-
-    /**
-     * @param p2
-     */
-    public void setPlayer2(String p2) {
-        player2 = p2;
+    public void setPlayers(ArrayList<String> users) {
+        players = users;
     }
 
     /**

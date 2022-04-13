@@ -43,12 +43,12 @@ public class PastGamesPage extends DrawingSurface implements ActionListener {
     /**
      * mainFrameWidth - int variable that holds mainframe width.
      */
-    private int mainframeWidth = 650;
+    private int mainframeWidth = 900;
 
     /**
      * mainframeHeight - int variable that holds mainframe height.
      */
-    private int mainframeHeight = 1500;
+    private int mainframeHeight = 900;
 
     /**
      * mf - MainFrame window.
@@ -61,9 +61,9 @@ public class PastGamesPage extends DrawingSurface implements ActionListener {
     private HomeScreen homeScreen;
     
     /**
-     * returnToMainMenu - button to return to home.
+     * returnToMainMenu - button to return to homepage.
      */
-    private JButton returnToMainMenu;
+    private Text returnToMainMenu;
 
     /**
      * allGames - array list of playable games.
@@ -142,15 +142,16 @@ public class PastGamesPage extends DrawingSurface implements ActionListener {
             new Dimension(mainframeWidth, mainframeHeight),
             Color.DARK_GRAY, Color.DARK_GRAY);
         Text header =
-            new Text("Load Previous Game", new Point(120, 70), 40, Color.WHITE);
-        returnToMainMenu = new JButton("Main Menu");
-        returnToMainMenu.setBounds(20, 80, 120, 25);
-        returnToMainMenu.setBackground(Color.LIGHT_GRAY);
-        returnToMainMenu.addActionListener(this);
+            new Text("Load Previous Game", new Point(50, 60), 36, Color.BLACK);
+        returnToMainMenu = new Text("Main Menu", new Point(160, 115), 25, 
+            Color.BLACK, Color.BLUE);
 
-        add(background);
+        //add(background);
         add(header);
         add(returnToMainMenu);
+        
+        Image logo = new Image("logo.png", new Point(435, 0), 0.48, null);
+        add(logo);
 
         // There is a boolean field in each PlayableGame class that shows
         // whether or not
@@ -186,7 +187,7 @@ public class PastGamesPage extends DrawingSurface implements ActionListener {
             String player2 = gameInfo[3];
             JButton gameButton = new JButton(
                 name + "   " + timestamp + "   " + player1 + "   " + player2);
-            gameButton.setBounds(50, buttonYPosition, 550, 40);
+            gameButton.setBounds(25, buttonYPosition, 400, 40);
             buttonYPosition += 50;
             gameButton.setBackground(Color.RED);
             add(gameButton);
@@ -202,13 +203,25 @@ public class PastGamesPage extends DrawingSurface implements ActionListener {
             String player2 = gameInfo[3];
             JButton gameButton = new JButton(
                 name + "   " + timestamp + "   " + player1 + "   " + player2);
-            gameButton.setBounds(50, buttonYPosition, 550, 40);
+            gameButton.setBounds(25, buttonYPosition, 400, 40);
             buttonYPosition += 50;
             gameButton.setBackground(Color.GREEN);
             add(gameButton);
 
         }
 
+    }
+    
+    @Override
+    public void drawableMouseClick(Drawable e) {
+        LOG.trace("DrawableMouseClick in PastGamesPage.java");
+        if (e == returnToMainMenu) {
+            returnToMainMenu.setBorderColor(Color.CYAN);
+            Utility.pause(100);
+            returnToMainMenu.setBorderColor(Color.BLACK);
+            mf.dispose();
+            navPage = new NavigationPage();
+        }
     }
 
     // This is a placeholder. In the final product, the "Main Menu" button
@@ -217,12 +230,7 @@ public class PastGamesPage extends DrawingSurface implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         LOG.trace("Entered actionperformed method PastGamesPage.java");
         // mf.dispatchEvent(new WindowEvent(mf, WindowEvent.WINDOW_CLOSING));
-        if (e.getSource().equals(returnToMainMenu)) {
-            mf.dispose();
-            //RulesPage rules = new RulesPage();
-            //rules.setVisible(true);
-            navPage = new NavigationPage();
-        }
+        
     }
     /**
      * 
