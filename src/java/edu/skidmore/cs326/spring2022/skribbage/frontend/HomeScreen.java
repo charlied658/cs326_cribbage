@@ -212,9 +212,7 @@ public class HomeScreen extends DrawingSurface {
             } else {
                 loginPage = LoginPageManager.getInstance().getLoginPage();
             }
-
             startGamePage = new StartGamePage();
-
             closeCurrentWindow();
         }
     }
