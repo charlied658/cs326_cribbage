@@ -29,8 +29,6 @@ public final class PersistenceFacade implements UserManagement, GameManagement, 
 	 */
 	private static final Logger LOG;
 	
-	
-	
 	private static final UsernameProxy proxy;
 	
 	private static final DatabaseManager dm;
@@ -55,25 +53,26 @@ public final class PersistenceFacade implements UserManagement, GameManagement, 
 	}
 	
 	/**
-=======
-	/**accounted
->>>>>>> 709cf7511fa797af678a1aef88928a48fd6b3558
 	 * This will take in a user and a password and create a new user
 	 * @param userToCreate The user that is to be created
 	 * @param password The password that is connected to the user being created
 	 * 
 	 * @return boolean True or False depending if the method worked or failed
 	 */
-//	@Override
-//	public boGameolean userCreate(User userToCreate, Password password) {
-//		
-//		return true;
-//	}
+	@Override
+	public boolean userCreate(User userToCreate, Password password) {
+		// TODO Auto-generated method stub
+		
+		String usernamge = userToCreate.getUserName();
+		String passwordtemp = password.getPasswordValue();
+		
+		dm.createUser(usernamge, passwordtemp);
+		return false;
+	}
 	
 	/**
 	 * This will take in a user and delete it
 	 * @param userToDelete The user that is going to be deleted
-	 * 
 	 * 
 	 * @return boolean Returns true or false 
 	 * 		   depending on whether the method worked
@@ -171,50 +170,12 @@ public final class PersistenceFacade implements UserManagement, GameManagement, 
 		LOG.warn("Unhandled method, See passwordPrompt() + login() method inPersistenceFacade or contact persistence team");
 		return "";
 	}
-	
-	
-	
-//	@Override
-//	public boolean displayInventory(User user) {
-//		return true;
-//	}
-//	
-//	@Override
-//	public boolean addItem(User user, String item, int quantity ) {
-//		return true;
-//
-//	}
-//	
-//	
-//	@Override
-//	public boolean removeItem(User user, String item, int quantity ) {
-//		return true;
-//
-//	}
-//	
-//	@Override
-//	public boolean transferItem(User sender, User recipient, String item ) {
-//		return true;
-//
-//	}
-//	
-//	
-//	@Override
-//	public String displayWallet(User user) {
-//		
-//		int username = user.getUserId();
-//		return dm.walletQuery(username);
-//	}
+
 	
 	public static void main(String[] args) {
 		//dm.inventoryQuery(236);
 		
-		
-		
-		
-		
-		
-		
+				
 	}
 
 	@Override
@@ -247,27 +208,6 @@ public final class PersistenceFacade implements UserManagement, GameManagement, 
 		return null;
 	}
 
-//	@Override
-//	public Game retrieveGame(User userName, Game whichGame) {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
-//
-//	@Override
-//	public boolean saveGame(User userName, Game currentGame) {
-//		// TODO Auto-generated method stub
-//		return false;
-//	}
-
-	@Override
-	public boolean userCreate(User userToCreate, Password password) {
-		// TODO Auto-generated method stub
-		
-		String usernamge = userToCreate.getUserName();
-		String passwordtemp = password.getPasswordValue();
-		
-		dm.createUser(usernamge, passwordtemp);
-		return false;
-	}
+	
 
 }
