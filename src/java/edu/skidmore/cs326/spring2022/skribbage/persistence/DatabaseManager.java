@@ -6,6 +6,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.HashMap;
+
+import org.apache.log4j.Logger;
 
 /**
  * Contains the methods that connect to the database. Creates, edits, and
@@ -41,6 +44,20 @@ public class DatabaseManager {
      */
     static final String QUERY = "SELECT * FROM prototype_table";
 
+    
+	/**
+	 * Logger for the class
+	 */
+	private static final Logger LOG;
+	
+	/**
+	 * Initializing Logger
+	 *
+	 */
+	static {
+		LOG = Logger.getLogger(DatabaseManager.class);
+	}
+	
     /**
      * Database Connection.
      */
@@ -66,8 +83,8 @@ public class DatabaseManager {
 
     public boolean userAuthenticate(String username, String password) {
 
-        String tempQuery =
-            "SELECT username, password FROM player_account WHERE username='" + username + "'";
+        String tempQuery = 
+        		"SELECT * FROM player_account WHERE username='" + username + "'";
         //Connection conn = dbConnect();
         String storedPassword = "";
 
@@ -95,6 +112,68 @@ public class DatabaseManager {
         }
 
     }
+    
+    
+    /**
+     * This is a function to query the inventory items held by a player.
+     * 
+     * @author Tinaye Mawocha
+     * @param playerID :
+     *            the id of the player to check the value
+     * @return Query result
+     */
+    public HashMap<String,Item> inventoryQuery(int playerID) {
+
+    	System.out.println("we here");
+        String tokenQuery = "SELECT * FROM inventory WHERE PersonID = ? ";
+
+        PreparedStatement ps = null;
+        Connection conn = null;
+        int netWorth = 0;
+        HashMap<String,Item> playerInventory = new HashMap();
+        
+        try {
+
+            conn = getDB();
+            ps = dbConnection.prepareStatement(tokenQuery);
+            ps.setInt(1, playerID);
+
+            // System.out.println(ps);
+            ResultSet rs = ps.executeQuery();
+           
+            
+            
+            while(rs.next()) {
+            	
+            	Item tempItem = null;
+            	String tempType = rs.getString("item_type");
+            	dbDisconnect(conn);  tempItem.setItemType(ItemTypes.valueOf(tempType));
+                tempItem.setQuantityHeld(rs.getInt("quantity"));
+                
+                playerInventory.put(tempType,tempItem);
+                
+            }
+            
+            dbDisconnect(conn);
+            return playerInventory;
+
+        }
+        catch (SQLException e) {
+            // System.out.println("AccountinventoryQuery not found");
+            e.printStackTrace();
+            dbDisconnect(conn);
+            LOG.error("Account not found");
+            return playerInventory;
+        }
+
+       
+      
+
+    }
+
+    
+    
+    
 
     /**
      * This is a function to query the token value held by a player.
@@ -104,7 +183,7 @@ public class DatabaseManager {
      *            the id of the player to check the value
      * @return Query result
      */
-    public String inventoryQuery(int playerID) {
+    public String walletQuery(int playerID) {
 
         String tokenQuery = "SELECT * FROM player_account WHERE PersonID = ? ";
 
@@ -126,7 +205,7 @@ public class DatabaseManager {
 
         }
         catch (SQLException e) {
-            // System.out.println("Account not found");
+            // System.out.println("AccountinventoryQuery not found");
             e.printStackTrace();
             dbDisconnect(conn);
             return "Account not found";
@@ -183,7 +262,7 @@ public class DatabaseManager {
         finally {
             if (rs != null) {
                 try {
-                    rs.close();
+                    rs.close();	
                 }
                 catch (SQLException sqle) {
                     // LOGGER.error("Failed to close result set", sqle);
@@ -331,5 +410,26 @@ public class DatabaseManager {
         }
 
     }
+    
+    public boolean createUser(String userName, String password) {
+    	
+    	//INSERT INTO player_account (personID, LastName, FirstName, UserName, Password, AvatarURL, Email)
+    	//VALUES (/* comma separated values in the exact order of the above columns*/ ); 
+    	
+    	return true;
+    }
+    
+    public static void main(String[] args) {
+		//dm.inventoryQuery(236);
+		
+    	DatabaseManager test = new DatabaseManager();
+    	
+    	//test.userAuthenticate("tmawocha", "0000f");
+		
+		
+		
+		
+		
+	}
 
 }
