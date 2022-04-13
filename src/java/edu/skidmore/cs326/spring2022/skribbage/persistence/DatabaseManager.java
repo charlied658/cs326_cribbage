@@ -330,5 +330,23 @@ public class DatabaseManager {
         }
 
     }
+    
+    public boolean createUser(String userName, String password) {
+    	
+    	return true;
+    }
+    
+    public static void main(String[] args) {
+		//dm.inventoryQuery(236);
+		
+    	DatabaseManager test = new DatabaseManager();
+    	
+    	test.userAuthenticate("tmawocha", "0000f");
+		
+		
+		
+		
+		
+	}
 
 }
