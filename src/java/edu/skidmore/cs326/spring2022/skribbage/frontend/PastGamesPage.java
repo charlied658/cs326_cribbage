@@ -84,20 +84,20 @@ public class PastGamesPage extends DrawingSurface implements ActionListener {
     /**
      * one - temporary playable game.
      */
-    private PlayableGame one =
-        new PlayableGame(11, 7, 2021, "Jonah", "Sten", "CS326", true);
-
-    /**
-     * two - temporary playable game.
-     */
-    private PlayableGame two = new PlayableGame(12, 31, 2021, "Chris Cornell",
-        "Ben Shepherd", "Soundgarden", true);
-
-    /**
-     * three - temporary playable game.
-     */
-    private PlayableGame three =
-        new PlayableGame(1, 17, 2022, "Hugh Jass", "Tess T Culls", "", false);
+//    private PlayableGame one =
+//        new PlayableGame(11, 7, 2021, "Jonah", "Sten", "CS326", true);
+//
+//    /**
+//     * two - temporary playable game.
+//     */
+//    private PlayableGame two = new PlayableGame(12, 31, 2021, "Chris Cornell",
+//        "Ben Shepherd", "Soundgarden", true);
+//
+//    /**
+//     * three - temporary playable game.
+//     */
+//    private PlayableGame three =
+//        new PlayableGame(1, 17, 2022, "Hugh Jass", "Tess T Culls", "", false);
     
     /**
      * navPage - NavigationPage window.
@@ -128,9 +128,9 @@ public class PastGamesPage extends DrawingSurface implements ActionListener {
      */
     public void addGamesToList() {
         LOG.trace("Entered addGamesToList method.");
-        allGames.add(one);
-        allGames.add(two);
-        allGames.add(three);
+//        allGames.add(one);
+//        allGames.add(two);
+//        allGames.add(three);
     }
     /**
      * setup method to setup window.
