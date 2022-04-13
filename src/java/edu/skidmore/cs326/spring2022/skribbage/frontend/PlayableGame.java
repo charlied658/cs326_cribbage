@@ -212,6 +212,16 @@ public class PlayableGame implements ActiveGame {
         gameName = name;
     }
 
+    @Override
+    public void addPlayer(String player) {
+        players.add(player);
+    }
+
+    @Override
+    public void removePlayer(String player) {
+        players.remove(player);
+    }
+
     /**
      * @param users
      */
