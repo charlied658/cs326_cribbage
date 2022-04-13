@@ -424,7 +424,7 @@ public class DatabaseManager {
 		
     	DatabaseManager test = new DatabaseManager();
     	
-    	test.userAuthenticate("tmawocha", "0000f");
+    	//test.userAuthenticate("tmawocha", "0000f");
 		
 		
 		
