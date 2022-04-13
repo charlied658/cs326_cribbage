@@ -83,12 +83,8 @@ public class DatabaseManager {
 
     public boolean userAuthenticate(String username, String password) {
 
-        String tempQuery =
-<<<<<<< HEAD
-            "SELECT username, password FROM player_account WHERE username='" + username + "'";
-=======
-            "SELECT * FROM player_account WHERE username='" + username + "'";
->>>>>>> persistence_facade_02
+        String tempQuery = 
+        		"SELECT * FROM player_account WHERE username='" + username + "'";
         //Connection conn = dbConnect();
         String storedPassword = "";
 
