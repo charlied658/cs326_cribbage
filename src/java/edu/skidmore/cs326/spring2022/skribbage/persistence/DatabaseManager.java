@@ -45,6 +45,12 @@ public class DatabaseManager {
      * Database Connection.
      */
     private static Connection dbConnection;
+    
+    /**
+     * String array containing the column names.
+     */
+    //static final String[] COLUMN_NAMES = ;
+    
 
     /**
      * This is a function to check the database for a specific user and check
@@ -61,8 +67,8 @@ public class DatabaseManager {
     public boolean userAuthenticate(String username, String password) {
 
         String tempQuery =
-            "SELECT * FROM player_account WHERE username='" + username + "'";
-        // Connection conn = dbConnect();
+            "SELECT username, password FROM player_account WHERE username='" + username + "'";
+        //Connection conn = dbConnect();
         String storedPassword = "";
 
         try {
@@ -160,6 +166,80 @@ public class DatabaseManager {
             String script =
                 "UPDATE player_account SET " + toChange
                     + "= ?  WHERE PersonID = ?";
+            ps = conn.prepareStatement(script);
+
+            ps.setString(1, changeTo);
+            ps.setInt(2, userId);
+
+            System.out.println(ps);
+            System.out.println(ps.executeUpdate());
+
+        }
+        catch (SQLException sqle) {
+            sqle.printStackTrace();
+            // LOGGER.error("Database Interaction Failure", sqle);
+
+        }
+        finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                }
+                catch (SQLException sqle) {
+                    // LOGGER.error("Failed to close result set", sqle);
+
+                }
+
+            }
+
+            if (ps != null) {
+                try {
+                    ps.close();
+                }
+                catch (SQLException sqle) {
+                    // LOGGER.error("Failed to close prepared statement", sqle);
+                }
+            }
+            if (conn != null) {
+                try {
+                    conn.close();
+                }
+                catch (SQLException sqle) {
+                    // LOGGER.error("Failed to close connection", sqle);
+                }
+            }
+        }
+    }
+    
+    
+    /**
+     * This is a method to change a value on the player_account table.
+     *
+     * @author Tinaye Mawocha
+     * @param toChange
+     *            : the name of the column you wish to change
+     * @param changeTo
+     *            : the new value you wish to input into the aforementioned
+     *            table
+     * @param userId
+     *            : the account id of the account you wish to change
+     */
+    public void create(String toChange, String changeTo, int userId) {
+
+        Connection conn = null;
+
+        PreparedStatement ps = null;
+
+        ResultSet rs = null;
+
+        try {
+            // System.out.println("Run a prepared database query");
+            // Class.forName("com.mysql.jdbc.Driver");
+            conn = getDB();
+
+            String script =
+                "INSERT INTO player_account "
+                    + "VALUES = ?";
             ps = conn.prepareStatement(script);
 
             ps.setString(1, changeTo);
