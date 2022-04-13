@@ -333,6 +333,9 @@ public class DatabaseManager {
     
     public boolean createUser(String userName, String password) {
     	
+    	//INSERT INTO player_account (personID, LastName, FirstName, UserName, Password, AvatarURL, Email)
+    	//VALUES (/* comma separated values in the exact order of the above columns*/ ); 
+    	
     	return true;
     }
     
