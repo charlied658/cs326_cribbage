@@ -206,10 +206,10 @@ public class LoginPage extends DrawingSurface {
             case 2:
                 createdUsername = getUserInput(popupTitle, popupMessage,
                     DialogPosition.CENTER_ALL);
-                 currentUser = new User(null, createdUsername, null, null);
-                 ule = (UserCreateAccountEvent) evtFactory.createEvent(
-                 EventType.USER_CREATE_ACCOUNT, this, currentUser);
-                 evtFactory.fireEvent(ule);
+                // currentUser = new User(null, createdUsername, null, null);
+                // ule = (UserCreateAccountEvent) evtFactory.createEvent(
+                // EventType.USER_CREATE_ACCOUNT, this, currentUser);
+                // evtFactory.fireEvent(ule);
                 verifyNewUserCallback();
                 break;
             default:
@@ -227,7 +227,8 @@ public class LoginPage extends DrawingSurface {
         verifyCreatedPassword = getUserInput("New User",
             "Enter password again", DialogPosition.CENTER_ALL, true);
         if (createdPassword.equals(verifyCreatedPassword)) {
-            // userCreatedCallback();
+            currentUser =
+                new User(null, createdUsername, createdPassword, null);
         }
     }
 
@@ -271,9 +272,23 @@ public class LoginPage extends DrawingSurface {
      */
     public boolean loggedIn() {
         LOG.trace("loggedIn method in LoginPage.java");
-        if (!username.isEmpty() && !password.isEmpty()) {
-            return true;
+        System.out.println(
+            "username: " + username + " currentUser: " + createdUsername);
+        if (currentUser != null) {
+            if (username.equals(currentUser.getUserName())
+                && password.equals(currentUser.getPassword())) {
+                System.out.println("SUCCESS");
+                System.out.println(
+                    "username: " + createdUsername + " password: "
+                        + createdPassword);
+                return true;
+            } else {
+                return false;
+            }
         } else {
+            System.out
+                .println(
+                    "FALSE username: " + username + " password: " + password);
             return false;
         }
     }
@@ -285,19 +300,20 @@ public class LoginPage extends DrawingSurface {
     public void drawableMouseClick(Drawable e) {
         LOG.trace("Drawable mouseclick method in LoginPage.java");
         if (e == login) {
+            
             // separate the username and password functionality.
             // outside listener tells me when to run the password method.
             login.setFillColor(Color.GREEN);
             this.username = getUserInput("Login", "Enter username",
                 DialogPosition.CENTER_ALL);
-            verifyUsernameExists();
+            // verifyUsernameExists();
             password = getUserInput("Login", "Enter password for: " + username,
                 DialogPosition.CENTER_ALL, true);
-            verifyUserExists();
+            // verifyUserExists();
             if (loggedIn()) {
                 showMessage("User: " + username, "Successful Log In",
                     DialogType.INFORMATION);
-                navPage = new NavigationPage();
+                navPage = NavigationPageManager.getInstance().getNavPage();
             } else {
                 showMessage("User not found", "Unsuccessful Log In",
                     DialogType.ERROR);
