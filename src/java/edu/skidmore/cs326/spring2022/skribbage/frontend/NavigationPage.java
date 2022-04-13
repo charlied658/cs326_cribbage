@@ -143,6 +143,7 @@ public class NavigationPage extends DrawingSurface {
         user = new Text(
             "" + LoginPageManager.getInstance().getLoginPage().getUsername(),
             new Point(20, 60), 20, Color.black, Color.blue);
+        System.out.println("USERRRRRR: " + user);
         add(user);
         add(welcomeMessage);
     }
@@ -150,23 +151,15 @@ public class NavigationPage extends DrawingSurface {
     @Override
     public void drawableMouseClick(Drawable e) {
         if (e == rulesPageButton) {
-            rulesPage = new RulesPage();
+            rulesPage = RulesPageManager.getInstance().getRulesPage();
         } else if (e == lobbyPageButton) {
             lobbyPage = new LobbyPage();
         } else if (e == pastGamesPageButton) {
             pastGamesPage = new PastGamesPage();
         } else if (e == logOut) {
-            loginPage = new LoginPage();
+            loginPage = LoginPageManager.getInstance().getLoginPage();
         }
     }
 
-    /**
-     * main method to run program.
-     * 
-     * @param args
-     */
-    public static void main(String[] args) {
-        new NavigationPage();
-    }
 
 }

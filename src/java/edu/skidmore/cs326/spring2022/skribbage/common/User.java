@@ -19,7 +19,7 @@ public class User implements Payload {
     /**
      * Private string attribute to store a username of a user.
      */
-    private final String userName;
+    private String userName;
 
     /**
      * 
@@ -100,6 +100,14 @@ public class User implements Payload {
     public UserRole getUserRole() {
         LOG.debug("Returning a user role");
         return userRole;
+    }
+    
+    /**
+     * setUserName method.
+     * @param username to set.
+     */
+    public void setUserName(String username) {
+        this.userName = username;
     }
 
     /**
