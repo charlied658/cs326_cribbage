@@ -50,6 +50,13 @@ public class DatabaseManager {
 	 */
 	private static final Logger LOG;
 	
+	/**
+	 * Initializing Logger
+	 *
+	 */
+	static {
+		LOG = Logger.getLogger(DatabaseManager.class);
+	}
 	
     /**
      * Database Connection.
@@ -72,7 +79,7 @@ public class DatabaseManager {
 
         String tempQuery =
             "SELECT * FROM player_account WHERE username='" + username + "'";
-        // Connection conn = dbConnect();
+        //Connection conn = dbConnect();
         String storedPassword = "";
 
         try {
