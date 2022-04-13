@@ -155,7 +155,7 @@ public class LoginPage extends DrawingSurface {
     public LoginPage() {
         LOG.debug("Instance created");
         loginPage = new MainFrame(this, "Skribbage Battle Royale Login", 900,
-            900, true);
+            900, false);
         createAccount = new Text("Create Account", new Point(375, 360), 20,
             Color.black, Color.blue);
         login =
@@ -251,7 +251,7 @@ public class LoginPage extends DrawingSurface {
      */
     public String getUsername() {
         LOG.trace("getUsername method in LoginPage.java");
-        return username;
+        return this.username;
     }
 
     /**
@@ -288,7 +288,7 @@ public class LoginPage extends DrawingSurface {
             // separate the username and password functionality.
             // outside listener tells me when to run the password method.
             login.setFillColor(Color.GREEN);
-            username = getUserInput("Login", "Enter username",
+            this.username = getUserInput("Login", "Enter username",
                 DialogPosition.CENTER_ALL);
             verifyUsernameExists();
             password = getUserInput("Login", "Enter password for: " + username,
