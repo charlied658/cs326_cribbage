@@ -45,7 +45,6 @@ public final class PersistenceFacade implements UserManagement, GameManagement, 
 		dm = new DatabaseManager();
 	}
 	
-<<<<<<< HEAD
 	/**
 	 * 
 	 * @return
@@ -64,11 +63,11 @@ public final class PersistenceFacade implements UserManagement, GameManagement, 
 	 * 
 	 * @return boolean True or False depending if the method worked or failed
 	 */
-	@Override
-	public boGameolean userCreate(User userToCreate, Password password) {
-		
-		return true;
-	}
+//	@Override
+//	public boGameolean userCreate(User userToCreate, Password password) {
+//		
+//		return true;
+//	}
 	
 	/**
 	 * This will take in a user and delete it
@@ -174,40 +173,42 @@ public final class PersistenceFacade implements UserManagement, GameManagement, 
 	
 	
 	
-	@Override
-	public boolean displayInventory(User user) {
-		return true;
-	}
-	
-	@Override
-	public boolean addItem(User user, String item, int quantity ) {
-		return true;
-
-	}
-	
-	
-	@Override
-	public boolean removeItem(User user, String item, int quantity ) {
-		return true;
-
-	}
-	
-	@Override
-	public boolean transferItem(User sender, User recipient, String item ) {
-		return true;
-
-	}
-	
-	
-	@Override
-	public String displayWallet(User user) {
-		
-		int username = user.getUserId();
-		return dm.walletQuery(username);
-	}
+//	@Override
+//	public boolean displayInventory(User user) {
+//		return true;
+//	}
+//	
+//	@Override
+//	public boolean addItem(User user, String item, int quantity ) {
+//		return true;
+//
+//	}
+//	
+//	
+//	@Override
+//	public boolean removeItem(User user, String item, int quantity ) {
+//		return true;
+//
+//	}
+//	
+//	@Override
+//	public boolean transferItem(User sender, User recipient, String item ) {
+//		return true;
+//
+//	}
+//	
+//	
+//	@Override
+//	public String displayWallet(User user) {
+//		
+//		int username = user.getUserId();
+//		return dm.walletQuery(username);
+//	}
 	
 	public static void main(String[] args) {
-		dm.inventoryQuery(236);
+		//dm.inventoryQuery(236);
+		
+		
 		
 		
 		
