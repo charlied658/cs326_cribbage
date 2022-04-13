@@ -99,7 +99,7 @@ public class UsernameProxy {
 	
 
 	//must be generalized to accept any number of banned words
-	private boolean usernameCheck(String username) {
+	public boolean usernameCheck(String username) {
 		
 		   Boolean usernameIsGood = true;
 		   FileInputStream file = null;
