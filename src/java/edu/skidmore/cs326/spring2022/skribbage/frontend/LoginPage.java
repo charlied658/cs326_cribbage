@@ -252,7 +252,7 @@ public class LoginPage extends DrawingSurface {
      */
     public String getUsername() {
         LOG.trace("getUsername method in LoginPage.java");
-        return this.username;
+        return currentUser.getUserName();
     }
 
     /**
