@@ -33,8 +33,8 @@ public class LoginPageManager {
     
     static {
         LOG = Logger.getLogger(LoginPageManager.class);
-        INSTANCE = new LoginPageManager();
         LOGINKEY = "LoginPage";
+        INSTANCE = new LoginPageManager();
     }
     
     /**
@@ -66,6 +66,7 @@ public class LoginPageManager {
      * @return the login page.
      */
     public LoginPage getLoginPage() {
+        System.out.println(loginPage);
         return loginPage.get(LOGINKEY);
     }
 }
