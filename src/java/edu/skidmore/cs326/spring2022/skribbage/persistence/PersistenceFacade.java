@@ -5,6 +5,7 @@ import org.apache.log4j.Logger;
 import edu.skidmore.cs326.spring2022.skribbage.common.Password;
 import edu.skidmore.cs326.spring2022.skribbage.common.User;
 //import edu.skidmore.cs326.spring2022.skribbage.logic.Game;
+import edu.skidmore.cs326.spring2022.skribbage.logic.Game;
 
 
 
@@ -118,13 +119,13 @@ public final class PersistenceFacade implements UserManagement, GameManagement, 
 	 * 
 	 * @return Game The saved game
 	 */
-//	@Override
-//	public Game retrieveGame(User userName, Game whichGame) {
-//		
-//		
-//		return whichGamSitne;
-//	}
-//	
+	@Override
+	public Game retrieveGame(User userName, Game whichGame) {
+		
+		
+		return whichGame;
+	}
+	
 	/**
 	 * This will saved the users current game that they are playing
 	 * @param userName The name of the user that we are saving the game
@@ -132,12 +133,12 @@ public final class PersistenceFacade implements UserManagement, GameManagement, 
 	 * 	
 	 * @return boolean True or false depending if the method worked
 	 */
-//	@Override
-//	public boolean saveGame(User userName, Game currentGame) {
-//		
-//		return true;
-//	}
-//	
+	@Override
+	public boolean saveGame(User userName, Game currentGame) {
+		
+		return true;
+	}
+	
 	
 	
 	@Override
@@ -214,6 +215,59 @@ public final class PersistenceFacade implements UserManagement, GameManagement, 
 		
 		
 		
+	}
+
+	@Override
+	public boolean displayInventory(User user) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean addItem(User user, String item, int quantity) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean removeItem(User user, String item, int quantity) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean transferItem(User sender, User recipient, String item) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public String displayWallet(User user) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+//	@Override
+//	public Game retrieveGame(User userName, Game whichGame) {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
+//
+//	@Override
+//	public boolean saveGame(User userName, Game currentGame) {
+//		// TODO Auto-generated method stub
+//		return false;
+//	}
+
+	@Override
+	public boolean userCreate(User userToCreate, Password password) {
+		// TODO Auto-generated method stub
+		
+		String usernamge = userToCreate.getUserName();
+		String passwordtemp = password.getPasswordValue();
+		
+		dm.createUser(usernamge, passwordtemp);
+		return false;
 	}
 
 }
