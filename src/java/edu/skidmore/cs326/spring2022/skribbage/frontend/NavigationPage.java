@@ -23,6 +23,11 @@ import us.daveread.edu.graphics.surface.MainFrame;
 public class NavigationPage extends DrawingSurface {
     
     /**
+     * welcomeMessage - Text variable to hold welcome message.
+     */
+    private Text welcomeMessage;
+    
+    /**
      * loginPage - LoginPage window.
      */
     private LoginPage loginPage;

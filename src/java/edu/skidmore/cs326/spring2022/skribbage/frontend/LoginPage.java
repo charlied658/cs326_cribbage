@@ -28,6 +28,7 @@ import us.daveread.edu.graphics.surface.MainFrame;
  *         on my own, but it would still be nice to have."
  */
 public class LoginPage extends DrawingSurface {
+
     /**
      * createAccount - Text variable that represents the create account button.
      */
@@ -209,7 +210,7 @@ public class LoginPage extends DrawingSurface {
                 // ule = (UserCreateAccountEvent) evtFactory.createEvent(
                 // EventType.USER_CREATE_ACCOUNT, this, currentUser);
                 // evtFactory.fireEvent(ule);
-                // verifyNewUserCallback();
+                verifyNewUserCallback();
                 break;
             default:
                 break;
