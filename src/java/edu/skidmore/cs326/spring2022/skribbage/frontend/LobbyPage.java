@@ -43,18 +43,18 @@ public class LobbyPage extends DrawingSurface implements ActionListener {
     /**
      * loggedInPlayer1 - The displayed player 1 name.
      */
-    //private String loggedInPlayer1;
+    // private String loggedInPlayer1;
 
     /**
      * loggedInPlayer2 - The displayed player 2 name.
      */
-    //private String loggedInPlayer2;
+    // private String loggedInPlayer2;
 
     /**
      * loggedInPlayer3 - The displayed player 3 name.
      */
-    //private String loggedInPlayer3;
-    
+    // private String loggedInPlayer3;
+
     /**
      * MAX_PLAYERS - Maximum player count in a given lobby.
      */
@@ -64,14 +64,14 @@ public class LobbyPage extends DrawingSurface implements ActionListener {
      * players - Holds instances of players in lobby.
      */
     private ArrayList<User> players = new ArrayList<User>();
-    
+
     /**
      * playerNotLoggedIn - Up to three players can be logged into a single
      * instance of the program at once. This is the message that is displayed
      * when any one or more of the three potential spots is not filled by
      * a logged in player
      */
-    //private String playerNotLoggedIn = "*PLAYER NOT LOGGED IN*";
+    // private String playerNotLoggedIn = "*PLAYER NOT LOGGED IN*";
 
     /**
      * mainframeWidth - int variable to hold main frame width.
@@ -146,9 +146,10 @@ public class LobbyPage extends DrawingSurface implements ActionListener {
             mainframeHeight, false);
         setup();
     }
-    
+
     /**
      * Takes new player to display on lobby page.
+     * 
      * @param player
      */
     public void retrievePlayer(User player) {
@@ -171,32 +172,32 @@ public class LobbyPage extends DrawingSurface implements ActionListener {
             new Point(20, 40), 25, Color.BLACK, Color.BLUE);
         startButton = new Text("Start Game", new Point(20, 250),
             25, Color.BLACK, Color.BLUE);
-        
+
         int textStartingY = 100;
-        
-        //Hardcoded Users into ArrayList
-        retrievePlayer(new User("doinurmom69@sussybaka.net", "Bo Nehr", 
+
+        // Hardcoded Users into ArrayList
+        retrievePlayer(new User("doinurmom69@sussybaka.net", "Bo Nehr",
             "h0rr1bL3p@$$w0rd", UserRole.AUTHORIZED));
         retrievePlayer(new User("sexhaver@reddit.com", "Hugh G. Rection",
             "07Sept18kx83+&_4ajfS", UserRole.AUTHORIZED));
-        
-        add(new Text("Players in Lobby (Max " + MAX_PLAYERS + ")", 
+
+        add(new Text("Players in Lobby (Max " + MAX_PLAYERS + ")",
             new Point(25, 75), 20, Color.BLACK));
-        
+
         for (int i = 0; i < players.size(); i++) {
-            add(new Text(players.get(i).getUserName(), new Point(35, 
+            add(new Text(players.get(i).getUserName(), new Point(35,
                 textStartingY), 16, Color.BLACK));
             textStartingY += 20;
         }
 
         /*
-        Text player1LoginSection = new Text(loggedInPlayer1,
-            new Point(35, 100), 16, Color.BLACK);
-        Text player2LoginSection = new Text(loggedInPlayer2,
-            new Point(35, 120), 16, Color.BLACK);
-        Text player3LoginSection = new Text(loggedInPlayer3,
-            new Point(35, 140), 16, Color.BLACK);
-        */
+         * Text player1LoginSection = new Text(loggedInPlayer1,
+         * new Point(35, 100), 16, Color.BLACK);
+         * Text player2LoginSection = new Text(loggedInPlayer2,
+         * new Point(35, 120), 16, Color.BLACK);
+         * Text player3LoginSection = new Text(loggedInPlayer3,
+         * new Point(35, 140), 16, Color.BLACK);
+         */
 
         player1Ready = new Circle(new Point(10, 87), 15, Color.RED, Color.RED);
         player2Ready = new Circle(new Point(10, 107), 15, Color.RED, Color.RED);
@@ -209,36 +210,32 @@ public class LobbyPage extends DrawingSurface implements ActionListener {
         // add(inventoryPage);
 
         /*
-        add(player1LoginSection);
-        add(player2LoginSection);
-        add(player3LoginSection);
-        */
-        //add(player1Ready);
-        //add(player2Ready);
-        //add(player3Ready);
+         * add(player1LoginSection);
+         * add(player2LoginSection);
+         * add(player3LoginSection);
+         */
+        // add(player1Ready);
+        // add(player2Ready);
+        // add(player3Ready);
     }
 
-    
     /**
      * getPlayerNames method - placeholder. Will eventually work with the
      * event listeners to receive the names of the players logged into
      * an instance of the program. For now, the names are hardcoded.
      */
     /*
-    private void getPlayerNames() {
-        LOG.trace("Entered getPlayerNames");
-
-        // All three will read playerNotLoggedIn message until a new name is
-        // received.
-        loggedInPlayer1 = playerNotLoggedIn;
-        loggedInPlayer2 = playerNotLoggedIn;
-        loggedInPlayer3 = playerNotLoggedIn;
-
-        loggedInPlayer1 = "[Redacted] \"Crypto\" [Redacted]";
-        loggedInPlayer2 = "Caleb \"Revenant\" Cross";
-    }
-    */
-    
+     * private void getPlayerNames() {
+     * LOG.trace("Entered getPlayerNames");
+     * // All three will read playerNotLoggedIn message until a new name is
+     * // received.
+     * loggedInPlayer1 = playerNotLoggedIn;
+     * loggedInPlayer2 = playerNotLoggedIn;
+     * loggedInPlayer3 = playerNotLoggedIn;
+     * loggedInPlayer1 = "[Redacted] \"Crypto\" [Redacted]";
+     * loggedInPlayer2 = "Caleb \"Revenant\" Cross";
+     * }
+     */
 
     /**
      * setReadyButtonColor method - sets the color of the ready button.

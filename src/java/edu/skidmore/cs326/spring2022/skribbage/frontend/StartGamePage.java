@@ -29,12 +29,12 @@ public class StartGamePage extends DrawingSurface {
      * navPage - NavigationPage window.
      */
     private NavigationPage navPage;
-    
+
     /**
      * spots - Array of spots.
      */
     private Spot[][] spots;
-    
+
     /**
      * startGamePage - Mainframe window.
      */
@@ -44,7 +44,7 @@ public class StartGamePage extends DrawingSurface {
      * gameBoard - Image to hold the game board.
      */
     private Image boardImage;
-    
+
     /**
      * beginGame - Text variable to hold the start game button.
      */
@@ -89,16 +89,16 @@ public class StartGamePage extends DrawingSurface {
      * homeScreen - HomeScreen window.
      */
     private HomeScreen homeScreen;
-    
+
     /**
      * Log.
      */
     private static final Logger LOG;
-    
 
     static {
         LOG = Logger.getLogger(StartGamePage.class);
     }
+
     /**
      * StartGamePage constructor.
      */
@@ -116,10 +116,10 @@ public class StartGamePage extends DrawingSurface {
         boardImage = new Image("newboard.png", new Point(40, 65), 1.5, null);
         gameArea = new Rectangle(new Point(25, 40),
             new Dimension(850, 800), Color.black, Color.green);
-        beginGame = new Text("Start", new Point(375, 400), 20, Color.black, 
+        beginGame = new Text("Start", new Point(375, 400), 20, Color.black,
             Color.blue);
         cardDeck = new Image("card.jpg", new Point(500, 315), .6, null);
-        player1Score = new Text("temp player 1:", new Point(35, 790), 20, 
+        player1Score = new Text("temp player 1:", new Point(35, 790), 20,
             Color.black);
         player2Score = new Text("temp player 2: ", new Point(35, 810), 20,
             Color.black);
@@ -168,9 +168,9 @@ public class StartGamePage extends DrawingSurface {
         }
     }
 
-  
     /**
      * main method.
+     * 
      * @param args
      */
     public static void main(String[] args) {
