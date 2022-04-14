@@ -324,7 +324,62 @@ public class DatabaseManager {
 		}
 	}
 
+	public void deleteUser(String userName, String password) {
+		// INSERT INTO player_account (personID, LastName, FirstName, UserName,
+		// Password, AvatarURL, Email)
+		// VALUES (/* comma separated values in the exact order of the above columns*/
+		// );
+		Connection conn = null;
 
+		PreparedStatement ps = null;
+
+		ResultSet rs = null;
+
+		try {
+			// System.out.println("Run a prepared database query");
+			// Class.forName("com.mysql.jdbc.Driver");
+			conn = getDB();
+
+			String script = "DELETE FROM player_account WHERE PersonID = ?";
+
+			ps = conn.prepareStatement(script);
+
+			ps.setString(1, userName);
+
+			System.out.println(ps);
+			System.out.println(ps.executeUpdate());
+
+		} catch (SQLException sqle) {
+			sqle.printStackTrace();
+			// LOGGER.error("Database Interaction Failure", sqle);
+
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException sqle) {
+					// LOGGER.error("Failed to close result set", sqle);
+
+				}
+
+			}
+
+			if (ps != null) {
+				try {
+					ps.close();
+				} catch (SQLException sqle) {
+					// LOGGER.error("Failed to close prepared statement", sqle);
+				}
+			}
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException sqle) {
+					// LOGGER.error("Failed to close connection", sqle);
+				}
+			}
+		}
+	}
 
 	/**
 	 * This is a function to disconnect the connection passed into the
@@ -341,6 +396,14 @@ public class DatabaseManager {
 			System.out.println("Failed to close connection to database");
 			e.printStackTrace();
 		}
+		/**
+		 * This is a method to delete an existent player from the player_account table.
+		 *
+		 * @author Nikoleta Chantzi
+		 * @param userName : the name of the user deleted, can only occur if you're
+		 *                 logged in
+		 * 
+		 */
 
 	}
 
@@ -456,8 +519,6 @@ public class DatabaseManager {
 
 	}
 
-
-
 	/**
 	 * This is a function to access the connection singleton.
 	 *
@@ -483,8 +544,5 @@ public class DatabaseManager {
 		}
 
 	}
-
-	
-
 
 }
