@@ -227,11 +227,9 @@ public class LoginPage extends DrawingSurface {
         verifyCreatedPassword = getUserInput("New User",
             "Enter password again", DialogPosition.CENTER_ALL, true);
         if (createdPassword.equals(verifyCreatedPassword)) {
-            System.out.println("HDJDOSJFIEJR");
             currentUser =
                 new User(null, createdUsername, createdPassword, null);
         }
-        System.out.println("HELLO: " + currentUser.getUserName());
     }
 
     /**
@@ -371,7 +369,7 @@ public class LoginPage extends DrawingSurface {
      */
     public void goToNextPage() {
         LOG.trace("goToNextPage method in LoginPage.java");
-        new NavigationPage();
+        NavigationPageManager.getInstance().getNavPage();
     }
 
     /**

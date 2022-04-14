@@ -138,7 +138,7 @@ public class RulesPage extends DrawingSurface implements ActionListener {
             Utility.pause(100);
             returnToMainMenu.setBorderColor(Color.BLACK);
             mf.dispose();
-            navPage = new NavigationPage();
+            navPage = NavigationPageManager.getInstance().getNavPage();
         }
     }
 
@@ -152,7 +152,7 @@ public class RulesPage extends DrawingSurface implements ActionListener {
         // mf.dispatchEvent(new WindowEvent(mf, WindowEvent.WINDOW_CLOSING));
         if (e.getSource().equals(returnToMainMenu)) {
             mf.dispose();
-            navPage = new NavigationPage();
+            navPage = NavigationPageManager.getInstance().getNavPage();
             // PastGamesPage pastGames = new PastGamesPage();
             // spastGames.setVisible(true);
         }
@@ -167,6 +167,6 @@ public class RulesPage extends DrawingSurface implements ActionListener {
 
         LOG.trace("RulesPage main method");
 
-        new RulesPage();
+        RulesPageManager.getInstance().getRulesPage();
     }
 }
