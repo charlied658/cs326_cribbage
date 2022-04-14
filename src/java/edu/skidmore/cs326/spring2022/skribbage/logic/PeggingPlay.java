@@ -48,7 +48,7 @@ public class PeggingPlay implements PeggingPlayInterface {
 
             // remove the card from the player's hand and place it in pegging
             // cards
-            p.getHand().removeCardFromHand(cardToAdd);
+            //p.getHand().removeCardFromHand(cardToAdd);
 
             if (p.isDealer()) {
                 gameManager.addDealerPeggingCard(cardToAdd);

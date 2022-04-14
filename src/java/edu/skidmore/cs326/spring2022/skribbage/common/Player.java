@@ -1,5 +1,7 @@
 package edu.skidmore.cs326.spring2022.skribbage.common;
 
+import java.util.HashMap;
+
 /**
  * Generic Player class.
  * 
@@ -21,6 +23,12 @@ public class Player {
      * User associated with player.
      */
     private User user;
+    
+    /**
+     * Hash map that stores items and their quantity.
+     */
+    private HashMap<String, Integer> inventory =
+        new HashMap<String, Integer>();
     
     /**
      * Constructor method.

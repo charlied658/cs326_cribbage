@@ -39,7 +39,7 @@ public class Game {
     private ArrayList<Card> dealerPeggingCards;
 
     /** A GameManager to manipulate the data. */
-    private GameManager gm = new GameManager();
+    //private GameManager gm = new GameManager();
 
 	  /**
 	   * Game constructor. It initializes the list of players,
@@ -55,8 +55,8 @@ public class Game {
         ponePeggingCards = new ArrayList<Card>();
         dealerPeggingCards = new ArrayList<Card>();
         crib = new ArrayList<Card>();
-        gm.initPlayers(numPlayers, playerList);
-        gm.initPeggingTotal();
+        //gm.initPlayers(numPlayers, playerList);
+        //gm.initPeggingTotal();
     }
 
     /**
