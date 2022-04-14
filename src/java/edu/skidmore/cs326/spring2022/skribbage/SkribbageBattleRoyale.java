@@ -4,6 +4,7 @@ import edu.skidmore.cs326.spring2022.skribbage.common.EventFactory;
 import edu.skidmore.cs326.spring2022.skribbage.common.EventManager;
 import edu.skidmore.cs326.spring2022.skribbage.common.EventType;
 import edu.skidmore.cs326.spring2022.skribbage.frontend.AccountResponseController;
+import edu.skidmore.cs326.spring2022.skribbage.frontend.GameStartedResponseController;
 import org.apache.log4j.Logger;
 
 import edu.skidmore.cs326.spring2022.skribbage.frontend.HomeScreen;
@@ -59,11 +60,17 @@ public class SkribbageBattleRoyale implements Runnable {
         eventManager = EventManager.getInstance();
 
         eventManager
-            .addPropertyChangeListener(new AccountResponseController());
+            .addPropertyChangeListener(new AccountResponseController(),
+                EventType.USER_LOGIN_RESPONSE);
 
         eventManager
             .addPropertyChangeListener(new AccountController(),
                 EventType.USER_LOGIN, EventType.USER_CREATE_ACCOUNT);
+
+        eventManager
+            .addPropertyChangeListener(new GameStartedResponseController(),
+                EventType.LOBBY_START_GAME);
+
     }
 
     /**

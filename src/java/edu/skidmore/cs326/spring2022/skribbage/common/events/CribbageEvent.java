@@ -41,7 +41,7 @@ public abstract class CribbageEvent extends PropertyChangeEvent {
      * @return game object stored with this event
      */
     public Game getGame() {
-        return this.game;
+        return game;
     }
 
     /**
@@ -49,5 +49,5 @@ public abstract class CribbageEvent extends PropertyChangeEvent {
      *
      * @return String type of the event name.
      */
-    public abstract String getEventName();
+    public abstract EventType getEventType();
 }
