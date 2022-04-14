@@ -363,11 +363,15 @@ public class DatabaseManager {
     
     public static void main(String[] args) {
 		
+
 		
   
     	DatabaseManager instance = new DatabaseManager();
     	System.out.println(instance.inventoryQuery(236));
-		
+
+    	DatabaseManager test = new DatabaseManager();
+    	
+
 		
 		
 		
