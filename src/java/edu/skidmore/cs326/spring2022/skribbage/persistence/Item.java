@@ -33,7 +33,7 @@ public class Item {
 
 
 	public String toString() {
-		return "";
+		return "item type: " + itemType + "\nquantity held: " + quantityHeld ;
 	}
 
 }

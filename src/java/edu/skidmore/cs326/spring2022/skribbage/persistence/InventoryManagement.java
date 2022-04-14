@@ -5,7 +5,7 @@ import edu.skidmore.cs326.spring2022.skribbage.common.User;
 public interface InventoryManagement {
 	
 
-	public boolean displayInventory(User user);
+	public String displayInventory(User user);
 	
 	public boolean addItem(User user, String item, int quantity );
 	
