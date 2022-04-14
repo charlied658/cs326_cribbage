@@ -5,7 +5,7 @@ import org.apache.log4j.Logger;
 import edu.skidmore.cs326.spring2022.skribbage.common.EventType;
 import edu.skidmore.cs326.spring2022.skribbage.common.Password;
 import edu.skidmore.cs326.spring2022.skribbage.common.User;
-//import edu.skidmore.cs326.spring2022.skribbage.logic.Game;
+import edu.skidmore.cs326.spring2022.skribbage.logic.events.Game;
 
 
 
@@ -108,13 +108,13 @@ public final class PersistenceFacade implements UserManagement, GameManagement, 
 	 * 
 	 * @return Game The saved game
 	 */
-//	@Override
-//	public Game retrieveGame(User userName, Game whichGame) {
-//		
-//		
-//		return whichGamSitne;
-//	}
-//	
+	@Override
+	public Game retrieveGame(User userName, Game whichGame) {
+		
+		
+		return whichGamSitne;
+	}
+	
 	/**
 	 * This will saved the users current game that they are playing
 	 * @param userName The name of the user that we are saving the game
@@ -122,12 +122,12 @@ public final class PersistenceFacade implements UserManagement, GameManagement, 
 	 * 	
 	 * @return boolean True or false depending if the method worked
 	 */
-//	@Override
-//	public boolean saveGame(User userName, Game currentGame) {
-//		
-//		return true;
-//	}
-//	
+	@Override
+	public boolean saveGame(User userName, Game currentGame) {
+		
+		return true;
+	}
+	
 	
 	
 	@Override
@@ -137,29 +137,16 @@ public final class PersistenceFacade implements UserManagement, GameManagement, 
 	}
 	
 	@Override
-	public boolean login(User user) {
-		
-		String username = user.getUserName();
+	public boolean login(User user, Password password) {
 		
 		//note password is currently deprecated and retrieving password from user will have to be 
 		//handled by the front end team in the password prompt method in this class
-		String password = passwordPrompt();	
 		
-		boolean accepted = dm.userAuthenticate(username, password);
+		boolean accepted = dm.userAuthenticate(user, password);
 		
-		//put code here to handle login state change
-		LOG.warn("Login state change not handled , See login() + validateUser() method inPersistenceFacade or contact persistence team");
-
 		return accepted;
 	}
 	
-	
-	//to be replaced by frontend
-	private String passwordPrompt() {
-
-		LOG.warn("Unhandled method, See passwordPrompt() + login() method inPersistenceFacade or contact persistence team");
-		return "";
-	}
 	
 	
 	
