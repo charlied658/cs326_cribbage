@@ -54,6 +54,13 @@ public class DatabaseManager {
 	 */
 	private static final Logger LOG;
 	
+	/**
+	 * Initializing Logger
+	 *
+	 */
+	static {
+		LOG = Logger.getLogger(DatabaseManager.class);
+	}
 	
     /**
      * Database Connection.
@@ -79,7 +86,7 @@ public class DatabaseManager {
     	
         String tempQuery =
             "SELECT * FROM player_account WHERE username='" + username + "'";
-        // Connection conn = dbConnect();
+        //Connection conn = dbConnect();
         String storedPassword = "";
 
         try {
@@ -332,5 +339,26 @@ public class DatabaseManager {
         }
 
     }
+    
+    public boolean createUser(String userName, String password) {
+    	
+    	//INSERT INTO player_account (personID, LastName, FirstName, UserName, Password, AvatarURL, Email)
+    	//VALUES (/* comma separated values in the exact order of the above columns*/ ); 
+    	
+    	return true;
+    }
+    
+    public static void main(String[] args) {
+		//dm.inventoryQuery(236);
+		
+    	DatabaseManager test = new DatabaseManager();
+    	
+    	test.userAuthenticate("tmawocha", "0000f");
+		
+		
+		
+		
+		
+	}
 
 }
