@@ -48,14 +48,14 @@ public class RulesPageManager {
     
     /**
      * getInstance method.
-     * @return the instance of the login page
+     * @return the instance of the rules page
      */
     public static RulesPageManager getInstance() {
         return INSTANCE;
     }
     
     /**
-     * sets up the login page.
+     * sets up the rules page.
      */
     private void setup() {
         rulesPage.put(RULESKEY, new RulesPage());
@@ -63,7 +63,7 @@ public class RulesPageManager {
     
     /**
      * getLoginPage method.
-     * @return the login page.
+     * @return the rules page.
      */
     public RulesPage getRulesPage() {
         return rulesPage.get(RULESKEY);

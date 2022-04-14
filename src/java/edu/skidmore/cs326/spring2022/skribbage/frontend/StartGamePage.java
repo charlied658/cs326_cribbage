@@ -163,7 +163,7 @@ public class StartGamePage extends DrawingSurface {
         if (e == beginGame) {
             // start game
         } else if (e == returnHome) {
-            navPage = new NavigationPage();
+            navPage = NavigationPageManager.getInstance().getNavPage();
             startGamePage.dispose();
         }
     }
