@@ -10,6 +10,10 @@ import java.util.HashMap;
 
 import org.apache.log4j.Logger;
 
+import edu.skidmore.cs326.spring2022.skribbage.common.Password;
+import edu.skidmore.cs326.spring2022.skribbage.common.User;
+import edu.skidmore.cs326.spring2022.skribbage.common.UserRole;
+
 /**
  * Contains the methods that connect to the database. Creates, edits, and
  * deletes profiles. Please note that this file will not function without first
@@ -51,7 +55,6 @@ public class DatabaseManager {
 	static {
 		LOG = Logger.getLogger(DatabaseManager.class);
 	}
-
 	/**
 	 * Database Connection.
 	 */
@@ -109,49 +112,49 @@ public class DatabaseManager {
 	 * @param playerID : the id of the player to check the value
 	 * @return Query result
 	 */
-	public HashMap<String, Item> inventoryQuery(int playerID) {
-
-		System.out.println("we here");
-		String tokenQuery = "SELECT * FROM inventory WHERE PersonID = ? ";
-
-		PreparedStatement ps = null;
-		Connection conn = null;
-		int netWorth = 0;
-		HashMap<String, Item> playerInventory = new HashMap();
-
-		try {
-
-			conn = getDB();
-			ps = dbConnection.prepareStatement(tokenQuery);
-			ps.setInt(1, playerID);
-
-			// System.out.println(ps);
-			ResultSet rs = ps.executeQuery();
-
-			while (rs.next()) {
-
-				Item tempItem = null;
-				String tempType = rs.getString("item_type");
-				dbDisconnect(conn);
-				tempItem.setItemType(ItemTypes.valueOf(tempType));
-				tempItem.setQuantityHeld(rs.getInt("quantity"));
-
-				playerInventory.put(tempType, tempItem);
-
-			}
-
-			dbDisconnect(conn);
-			return playerInventory;
-
-		} catch (SQLException e) {
-			// System.out.println("AccountinventoryQuery not found");
-			e.printStackTrace();
-			dbDisconnect(conn);
-			LOG.error("Account not found");
-			return playerInventory;
-		}
-
-	}
+//	public HashMap<String, Item> inventoryQuery(int playerID) {
+//
+//		System.out.println("we here");
+//		String tokenQuery = "SELECT * FROM inventory WHERE PersonID = ? ";
+//
+//		PreparedStatement ps = null;
+//		Connection conn = null;
+//		int netWorth = 0;
+//		HashMap<String, Item> playerInventory = new HashMap();
+//
+//		try {
+//
+//			conn = getDB();
+//			ps = dbConnection.prepareStatement(tokenQuery);
+//			ps.setInt(1, playerID);
+//
+//			// System.out.println(ps);
+//			ResultSet rs = ps.executeQuery();
+//
+//			while (rs.next()) {
+//
+//				Item tempItem = null;
+//				String tempType = rs.getString("item_type");
+//				dbDisconnect(conn);
+//				tempItem.setItemType(ItemTypes.valueOf(tempType));
+//				tempItem.setQuantityHeld(rs.getInt("quantity"));
+//
+//				playerInventory.put(tempType, tempItem);
+//
+//			}
+//
+//			dbDisconnect(conn);
+//			return playerInventory;
+//
+//		} catch (SQLException e) {
+//			// System.out.println("AccountinventoryQuery not found");
+//			e.printStackTrace();
+//			dbDisconnect(conn);
+//			LOG.error("Account not found");
+//			return playerInventory;
+//		}
+//
+//	}
 
 	/**
 	 * This is a function to query the token value held by a player.
@@ -321,6 +324,140 @@ public class DatabaseManager {
 		}
 	}
 
+
+
+	/**
+	 * This is a function to disconnect the connection passed into the
+	 * "theConnection" parameter.
+	 *
+	 * @param theConnection the connection passed in to be terminated
+	 * @author Tinaye Mawocha
+	 */
+	public void dbDisconnect(Connection theConnection) {
+
+		try {
+			theConnection.close();
+		} catch (SQLException e) {
+			System.out.println("Failed to close connection to database");
+			e.printStackTrace();
+		}
+
+	}
+
+	public static void main(String[] args) {
+		// dm.inventoryQuery(236);
+
+		DatabaseManager test = new DatabaseManager();
+
+		// test.userAuthenticate("tmawocha", "0000f");
+	}
+
+	/**
+	 * This is a function to check the database for a specific user and check
+	 * whether the password functions.
+	 * 
+	 * @author Tinaye Mawocha
+	 * @param username : the username of the desired user
+	 * @param password : the inputted password
+	 * @return Whether password was accepted
+	 */
+	public boolean userAuthenticate(User user, Password password) {
+
+		String username = user.getUserName();
+
+		String tempQuery = "SELECT * FROM player_account WHERE username='" + username + "'";
+		// Connection conn = dbConnect();
+		String storedPassword = "";
+
+		try {
+			Connection conn = getDB();
+			Statement stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery(tempQuery);
+
+			rs.next();
+			storedPassword = rs.getString("Password");
+
+		} catch (SQLException e) {
+			System.out.println("Account not found");
+			e.printStackTrace();
+
+		}
+
+		if (storedPassword.compareTo(password.getPasswordValue()) == 0) {
+			System.out.println("Password Accepted");
+			user.setUserRole(UserRole.AUTHORIZED);
+			return true;
+		} else {
+			System.out.println("Incorrect Password");
+			user.setUserRole(UserRole.UNAUTHORIZED);
+			return false;
+		}
+
+	}
+
+	/**
+	 * This is a function to query the inventory items held by a player.
+	 * 
+	 * @author Tinaye Mawocha
+	 * @param playerID : the id of the player to check the value
+	 * @return Query result
+	 */
+	public HashMap<String, Item> inventoryQuery(int playerID) {
+
+		String tokenQuery = "SELECT * FROM inventory WHERE PersonID = ? ";
+
+		PreparedStatement ps = null;
+		Connection conn = null;
+		int netWorth = 0;
+		HashMap<String, Item> playerInventory = new HashMap();
+
+		try {
+
+			conn = getDB();
+			ps = dbConnection.prepareStatement(tokenQuery);
+			ps.setInt(1, playerID);
+
+			// System.out.println(ps);
+			ResultSet rs = ps.executeQuery();
+
+			while (rs.next()) {
+
+				Item tempItem = new Item();
+				String tempType = rs.getString("itemType");
+
+				tempItem.setItemType(ItemTypes.valueOf(tempType));
+
+				int quantity = rs.getInt("quantity");
+				if (playerInventory.containsKey(tempType)) {
+
+					int existingQuantity = playerInventory.get(tempType).getQuantityHeld();
+					tempItem.setQuantityHeld(quantity + existingQuantity);
+
+				} else {
+
+					tempItem.setQuantityHeld(quantity);
+
+				}
+
+				playerInventory.put(tempType, tempItem);
+
+			}
+
+			dbDisconnect(conn);
+			return playerInventory;
+
+		} catch (SQLException e) {
+			// System.out.println("AccountinventoryQuery not found");
+			e.printStackTrace();
+			dbDisconnect(conn);
+			LOG.error("Account not found");
+			return playerInventory;
+		}
+
+	}
+
+
+
 	/**
 	 * This is a function to access the connection singleton.
 	 *
@@ -347,31 +484,7 @@ public class DatabaseManager {
 
 	}
 
-	/**
-	 * This is a function to disconnect the connection passed into the
-	 * "theConnection" parameter.
-	 *
-	 * @param theConnection the connection passed in to be terminated
-	 * @author Tinaye Mawocha
-	 */
-	public void dbDisconnect(Connection theConnection) {
+	
 
-		try {
-			theConnection.close();
-		} catch (SQLException e) {
-			System.out.println("Failed to close connection to database");
-			e.printStackTrace();
-		}
-
-	}
-
-	public static void main(String[] args) {
-		// dm.inventoryQuery(236);
-
-		DatabaseManager test = new DatabaseManager();
-
-		// test.userAuthenticate("tmawocha", "0000f");
-
-	}
 
 }

@@ -5,7 +5,9 @@ import org.apache.log4j.Logger;
 import edu.skidmore.cs326.spring2022.skribbage.common.Game;
 import edu.skidmore.cs326.spring2022.skribbage.common.Password;
 import edu.skidmore.cs326.spring2022.skribbage.common.User;
-//import edu.skidmore.cs326.spring2022.skribbage.logic.Game;
+
+import edu.skidmore.cs326.spring2022.skribbage.common.Game;
+
 
 /**
  * Will contain the methods for an event listener and call the methods in the
@@ -93,7 +95,7 @@ public final class PersistenceFacade implements UserManagement, GameManagement, 
 	@Override
 	public boolean passwordChange(User userToUpdate, Password currentPassword, Password newPassword) {
 		
-		return true;
+		return false;
 	}
 	
 	/**
@@ -119,7 +121,7 @@ public final class PersistenceFacade implements UserManagement, GameManagement, 
 	@Override
 	public Game retrieveGame(User userName, Game whichGame) {
 		
-		
+
 		return whichGame;
 	}
 	
@@ -145,23 +147,18 @@ public final class PersistenceFacade implements UserManagement, GameManagement, 
 	}
 	
 	@Override
-	public boolean login(User user) {
-		
-		String username = user.getUserName();
+	public boolean login(User user, Password password) {
 		
 		//note password is currently deprecated and retrieving password from user will have to be 
 		//handled by the front end team in the password prompt method in this class
-		String password = passwordPrompt();	
 		
-		boolean accepted = dm.userAuthenticate(username, password);
+		boolean accepted = dm.userAuthenticate(user, password);
 		
-		//put code here to handle login state change
-		LOG.warn("Login state change not handled , See login() + validateUser() method inPersistenceFacade or contact persistence team");
-
 		return accepted;
 	}
 	
 	
+
 	//to be replaced by frontend
 	private String passwordPrompt() {
 
@@ -176,15 +173,25 @@ public final class PersistenceFacade implements UserManagement, GameManagement, 
 				
 	}
 
+
 	@Override
-	public boolean displayInventory(User user) {
-		// TODO Auto-generated method stub
-		return false;
+	public String displayInventory(User user) {
+		
+		return dm.inventoryQuery(user.getUserId()).toString() ;
 	}
+	
+	@Override
+	public String displayWallet(User user) {
+				
+		return dm.walletQuery(user.getUserId());
+	}
+
 
 	@Override
 	public boolean addItem(User user, String item, int quantity) {
 		// TODO Auto-generated method stub
+		
+		
 		return false;
 	}
 
@@ -198,12 +205,6 @@ public final class PersistenceFacade implements UserManagement, GameManagement, 
 	public boolean transferItem(User sender, User recipient, String item) {
 		// TODO Auto-generated method stub
 		return false;
-	}
-
-	@Override
-	public String displayWallet(User user) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 
