@@ -78,7 +78,6 @@ public class DatabaseManager {
      *            : the inputted password
      * @return Whether password was accepted
      */
-
     public boolean userAuthenticate(User user, Password password) {
 
     	
@@ -127,7 +126,7 @@ public class DatabaseManager {
      */
     public HashMap<String,Item> inventoryQuery(int playerID) {
 
-    	System.out.println("we here");
+    	
         String tokenQuery = "SELECT * FROM inventory WHERE PersonID = ? ";
 
         PreparedStatement ps = null;
@@ -148,13 +147,27 @@ public class DatabaseManager {
             
             while(rs.next()) {
             	
-            	Item tempItem = null;
-            	String tempType = rs.getString("item_type");
-            	dbDisconnect(conn);  tempItem.setItemType(ItemTypes.valueOf(tempType));
-                tempItem.setQuantityHeld(rs.getInt("quantity"));
+            	Item tempItem = new Item();
+            	String tempType = rs.getString("itemType");
+            	
+            	  
+            	tempItem.setItemType(ItemTypes.valueOf(tempType));
+            	
+                
+                int quantity = rs.getInt("quantity");
+                if(playerInventory.containsKey(tempType)) {
+                	
+                	int existingQuantity = playerInventory.get(tempType).getQuantityHeld();   
+                	tempItem.setQuantityHeld(quantity + existingQuantity);
+                	
+                } else {
+                	
+                	tempItem.setQuantityHeld(quantity);
+                	
+                }
                 
                 playerInventory.put(tempType,tempItem);
-                
+               
             }
             
             dbDisconnect(conn);
@@ -349,12 +362,16 @@ public class DatabaseManager {
     }
     
     public static void main(String[] args) {
-		//dm.inventoryQuery(236);
 		
+
+		
+  
+    	DatabaseManager instance = new DatabaseManager();
+    	System.out.println(instance.inventoryQuery(236));
+
     	DatabaseManager test = new DatabaseManager();
     	
-    	//test.userAuthenticate("tmawocha", "0000f");
-		
+
 		
 		
 		

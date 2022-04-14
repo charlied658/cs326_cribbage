@@ -5,8 +5,7 @@ import org.apache.log4j.Logger;
 import edu.skidmore.cs326.spring2022.skribbage.common.Password;
 import edu.skidmore.cs326.spring2022.skribbage.common.User;
 
-//import edu.skidmore.cs326.spring2022.skribbage.logic.events.Game;
-//import edu.skidmore.cs326.spring2022.skribbage.logic.Game;
+import edu.skidmore.cs326.spring2022.skribbage.logic.events.Game;
 
 
 
@@ -176,14 +175,23 @@ public final class PersistenceFacade implements UserManagement, GameManagement, 
 
 
 	@Override
-	public boolean displayInventory(User user) {
-		// TODO Auto-generated method stub
-		return false;
+	public String displayInventory(User user) {
+		
+		return dm.inventoryQuery(user.getUserId()).toString() ;
 	}
+	
+	@Override
+	public String displayWallet(User user) {
+				
+		return dm.walletQuery(user.getUserId());
+	}
+
 
 	@Override
 	public boolean addItem(User user, String item, int quantity) {
 		// TODO Auto-generated method stub
+		
+		
 		return false;
 	}
 
@@ -199,12 +207,7 @@ public final class PersistenceFacade implements UserManagement, GameManagement, 
 		return false;
 	}
 
-	@Override
-	public String displayWallet(User user) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+	
 	
 
 }
