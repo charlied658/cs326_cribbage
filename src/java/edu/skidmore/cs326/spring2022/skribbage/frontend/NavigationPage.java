@@ -150,13 +150,13 @@ public class NavigationPage extends DrawingSurface {
     @Override
     public void drawableMouseClick(Drawable e) {
         if (e == rulesPageButton) {
-            rulesPage = RulesPageManager.getInstance().getRulesPage();
+            rulesPage = new RulesPage();
         } else if (e == lobbyPageButton) {
             lobbyPage = new LobbyPage();
         } else if (e == pastGamesPageButton) {
             pastGamesPage = new PastGamesPage();
         } else if (e == logOut) {
-            loginPage = LoginPageManager.getInstance().getLoginPage();
+            loginPage = new LoginPage();
             closeWindow();
         }
     }
@@ -166,6 +166,14 @@ public class NavigationPage extends DrawingSurface {
      */
     public void closeWindow() {
         navPage.dispose();
+    }
+    
+    /**
+     * main.
+     * @param args
+     */
+    public static void main(String[] args) {
+        new NavigationPage();
     }
 
 
