@@ -1,4 +1,8 @@
 package edu.skidmore.cs326.spring2022.skribbage.logic;
+
+import edu.skidmore.cs326.spring2022.skribbage.common.Game;
+import edu.skidmore.cs326.spring2022.skribbage.common.Card;
+//import edu.skidmore.cs326.spring2022.skribbage.common.Rank;
 import java.util.ArrayList;
 
 /**
@@ -41,14 +45,14 @@ public class PeggingPlay implements PeggingPlayInterface {
      */
     public void addCardToPeggingTotal(Card cardToAdd, Player p) {
 
-        int theCardValue = cardToAdd.getPointValue();
+        int theCardValue = cardToAdd.getRank().getPointValue();
 
         if (gameManager.addToPeggingTotal(theCardValue)) {
             // if here, the card was added to the pegging total
 
             // remove the card from the player's hand and place it in pegging
             // cards
-            //p.getHand().removeCardFromHand(cardToAdd);
+            p.getHand().removeCardFromHand(cardToAdd);
 
             if (p.isDealer()) {
                 gameManager.addDealerPeggingCard(cardToAdd);
@@ -204,11 +208,11 @@ public class PeggingPlay implements PeggingPlayInterface {
             return false;
         }
 
-        char id = cards.get(0).getIdentifier();
+        String id = cards.get(0).getRank().getSymbol();
 
         for (int i = 1; i < cards.size(); i++) {
-            char idToCompare = cards.get(i).getIdentifier();
-            if (id != idToCompare) {
+            String idToCompare = cards.get(i).getRank().getSymbol();
+            if (!id.equals(idToCompare)) {
                 return false;
             }
         }
@@ -292,8 +296,8 @@ public class PeggingPlay implements PeggingPlayInterface {
         if (isPair(checkIfPair)) {
             p.addPoints(6);
             return true;
-        } else{
-          return false;
+        } else {
+            return false;
         }
 
     }

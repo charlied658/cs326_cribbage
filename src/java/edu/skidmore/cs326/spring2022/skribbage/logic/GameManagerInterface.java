@@ -1,4 +1,6 @@
 package edu.skidmore.cs326.spring2022.skribbage.logic;
+
+import edu.skidmore.cs326.spring2022.skribbage.common.Card;
 import java.util.ArrayList;
 
 /**
@@ -31,7 +33,7 @@ interface GameManagerInterface {
     void addPonePeggingCard(Card c);
 
     /** Adds a card to the list of the dealer's pegging cards.
-    @param c is the card to add to the dealer's list of pegging cards.
+    * @param c is the card to add to the dealer's list of pegging cards.
     */
     void addDealerPeggingCard(Card c);
 

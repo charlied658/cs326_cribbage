@@ -1,12 +1,13 @@
 package edu.skidmore.cs326.spring2022.skribbage.logic.test;
 
 import edu.skidmore.cs326.spring2022.skribbage.logic.GameManager;
-import edu.skidmore.cs326.spring2022.skribbage.logic.Game;
+import edu.skidmore.cs326.spring2022.skribbage.common.Game;
+import edu.skidmore.cs326.spring2022.skribbage.common.Rank;
 import edu.skidmore.cs326.spring2022.skribbage.logic.Player;
 import org.junit.Before;
 import org.junit.Test;
 import java.util.ArrayList;
-import edu.skidmore.cs326.spring2022.skribbage.logic.Card;
+import edu.skidmore.cs326.spring2022.skribbage.common.Card;
 import static org.junit.Assert.assertTrue;
 import edu.skidmore.cs326.spring2022.skribbage.common.Suit;
 import static org.junit.Assert.assertEquals;
@@ -88,7 +89,7 @@ public class GameManagerTest {
     @Test
     public void testAddPonePeggingCard() {
 
-        Card c = new Card('J', Suit.HEARTS);
+        Card c = new Card(Rank.JACK, Suit.HEARTS);
 
         gameManager.addPonePeggingCard(c);
 
@@ -102,7 +103,7 @@ public class GameManagerTest {
     @Test
     public void testAddDealerPeggingCard() {
 
-        Card c = new Card('J', Suit.HEARTS);
+        Card c = new Card(Rank.JACK, Suit.HEARTS);
 
         gameManager.addDealerPeggingCard(c);
 
