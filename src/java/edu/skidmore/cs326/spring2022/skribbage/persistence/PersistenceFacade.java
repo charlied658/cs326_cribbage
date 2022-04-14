@@ -2,10 +2,11 @@ package edu.skidmore.cs326.spring2022.skribbage.persistence;
 
 import org.apache.log4j.Logger;
 
-import edu.skidmore.cs326.spring2022.skribbage.common.EventType;
 import edu.skidmore.cs326.spring2022.skribbage.common.Password;
 import edu.skidmore.cs326.spring2022.skribbage.common.User;
-import edu.skidmore.cs326.spring2022.skribbage.logic.events.Game;
+
+//import edu.skidmore.cs326.spring2022.skribbage.logic.events.Game;
+//import edu.skidmore.cs326.spring2022.skribbage.logic.Game;
 
 
 
@@ -29,8 +30,6 @@ public final class PersistenceFacade implements UserManagement, GameManagement, 
 	 */
 	private static final Logger LOG;
 	
-	
-	
 	private static final UsernameProxy proxy;
 	
 	private static final DatabaseManager dm;
@@ -46,7 +45,15 @@ public final class PersistenceFacade implements UserManagement, GameManagement, 
 		dm = new DatabaseManager();
 	}
 	
-	/**accounted
+	/**
+	 * 
+	 * @return
+	 */
+	public static PersistenceFacade getInstance() {
+		return INSTANCE;
+	}
+	
+	/**
 	 * This will take in a user and a password and create a new user
 	 * @param userToCreate The user that is to be created
 	 * @param password The password that is connected to the user being created
@@ -54,15 +61,19 @@ public final class PersistenceFacade implements UserManagement, GameManagement, 
 	 * @return boolean True or False depending if the method worked or failed
 	 */
 	@Override
-	public boGameolean userCreate(User userToCreate, Password password) {
+	public boolean userCreate(User userToCreate, Password password) {
+		// TODO Auto-generated method stub
 		
-		return true;
+		String usernamge = userToCreate.getUserName();
+		String passwordtemp = password.getPasswordValue();
+		
+		dm.createUser(usernamge, passwordtemp);
+		return false;
 	}
 	
 	/**
 	 * This will take in a user and delete it
 	 * @param userToDelete The user that is going to be deleted
-	 * 
 	 * 
 	 * @return boolean Returns true or false 
 	 * 		   depending on whether the method worked
@@ -111,8 +122,8 @@ public final class PersistenceFacade implements UserManagement, GameManagement, 
 	@Override
 	public Game retrieveGame(User userName, Game whichGame) {
 		
-		
-		return whichGamSitne;
+
+		return whichGame;
 	}
 	
 	/**
@@ -148,47 +159,52 @@ public final class PersistenceFacade implements UserManagement, GameManagement, 
 	}
 	
 	
-	
-	
-	@Override
-	public boolean displayInventory(User user) {
-		return true;
-	}
-	
-	@Override
-	public boolean addItem(User user, String item, int quantity ) {
-		return true;
 
-	}
-	
-	
-	@Override
-	public boolean removeItem(User user, String item, int quantity ) {
-		return true;
+	//to be replaced by frontend
+	private String passwordPrompt() {
 
+		LOG.warn("Unhandled method, See passwordPrompt() + login() method inPersistenceFacade or contact persistence team");
+		return "";
 	}
-	
-	@Override
-	public boolean transferItem(User sender, User recipient, String item ) {
-		return true;
 
-	}
-	
-	
-	@Override
-	public String displayWallet(User user) {
-		
-		int username = user.getUserId();
-		return dm.walletQuery(username);
-	}
 	
 	public static void main(String[] args) {
-		dm.inventoryQuery(236);
+		//dm.inventoryQuery(236);
 		
-		
-		
-		
-		
+				
 	}
+
+
+	@Override
+	public boolean displayInventory(User user) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean addItem(User user, String item, int quantity) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean removeItem(User user, String item, int quantity) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean transferItem(User sender, User recipient, String item) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public String displayWallet(User user) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
 
 }
