@@ -78,7 +78,6 @@ public class DatabaseManager {
      *            : the inputted password
      * @return Whether password was accepted
      */
-
     public boolean userAuthenticate(User user, Password password) {
 
     	
@@ -127,7 +126,7 @@ public class DatabaseManager {
      */
     public HashMap<String,Item> inventoryQuery(int playerID) {
 
-    	System.out.println("we here");
+    	
         String tokenQuery = "SELECT * FROM inventory WHERE PersonID = ? ";
 
         PreparedStatement ps = null;
