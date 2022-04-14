@@ -1,8 +1,9 @@
 package edu.skidmore.cs326.spring2022.skribbage.common.test;
 
 import edu.skidmore.cs326.spring2022.skribbage.common.Suit;
-import edu.skidmore.cs326.spring2022.skribbage.logic.Game;
-import edu.skidmore.cs326.spring2022.skribbage.logic.Card;
+import edu.skidmore.cs326.spring2022.skribbage.common.Game;
+import edu.skidmore.cs326.spring2022.skribbage.common.Rank;
+import edu.skidmore.cs326.spring2022.skribbage.common.Card;
 import edu.skidmore.cs326.spring2022.skribbage.logic.Deck;
 import org.junit.Before;
 import org.junit.Test;
@@ -137,7 +138,7 @@ public class GameTest {
     public void testSetPonePeggingCards() {
 
         ArrayList<Card> ponePegCardsNew = new ArrayList<Card>();
-        ponePegCardsNew.add(new Card('J', Suit.HEARTS));
+        ponePegCardsNew.add(new Card(Rank.JACK, Suit.HEARTS));
 
         game.setPonePeggingCards(ponePegCardsNew);
 
@@ -153,7 +154,7 @@ public class GameTest {
     public void testSetDealerPeggingCards() {
 
         ArrayList<Card> dealerPegCardsNew = new ArrayList<Card>();
-        dealerPegCardsNew.add(new Card('J', Suit.HEARTS));
+        dealerPegCardsNew.add(new Card(Rank.JACK, Suit.HEARTS));
 
         game.setDealerPeggingCards(dealerPegCardsNew);
 
