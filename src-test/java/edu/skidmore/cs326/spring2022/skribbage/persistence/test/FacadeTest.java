@@ -43,11 +43,11 @@ public class FacadeTest {
 	/**
 	 * Testing when the userDelete corrects with the correct user
 	 */
-	@Test
-	public void userDeleteTestCorrect() {
-		boolean iscorrect = facadeinstanace.userDelete(correctTestUser);
-		assertEquals(true, iscorrect);
-	}
+//	@Test
+//	public void userDeleteTestCorrect() {
+//		boolean iscorrect = facadeinstanace.userDelete(correctTestUser);
+//		assertEquals(true, iscorrect);
+//	}
 
 //	@Test
 //	public void userDeleteTestFail() {
@@ -59,11 +59,11 @@ public class FacadeTest {
 	 * Testing when the user wants to change their password Passing in the user, the
 	 * current pass and the new password
 	 */
-	@Test
-	public void passwordChangeCorrect() {
-		boolean iscorrect = facadeinstanace.passwordChange(correctTestUser, correctTestPassword, wrongTestPassword);
-		assertEquals(true, iscorrect);
-	}
+//	@Test
+//	public void passwordChangeCorrect() {
+//		boolean iscorrect = facadeinstanace.passwordChange(correctTestUser, correctTestPassword, wrongTestPassword);
+//		assertEquals(true, iscorrect);
+//	}
 	
 	/**
 	 * Testing when the user wants to change their password Passing in the user, the
@@ -74,5 +74,14 @@ public class FacadeTest {
 //		boolean iscorrect = facadeinstanace.passwordChange(correctTestUser, correctTestPassword, wrongTestPassword);
 //		assertEquals(true, iscorrect);
 //	}
+	
+	/**
+	 * Testing when the user wants to log in with the correct username and password
+	 */
+	@Test
+	public void loginCorrect() {
+		boolean iscorrect = facadeinstanace.login(correctTestUser, correctTestPassword);
+		assertEquals(true, iscorrect);
+	}
 
 }
