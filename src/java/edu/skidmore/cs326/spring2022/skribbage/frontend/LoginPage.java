@@ -313,7 +313,7 @@ public class LoginPage extends DrawingSurface {
                 showMessage("User: " + username, "Successful Log In",
                     DialogType.INFORMATION);
                 navPage = NavigationPageManager.getInstance().getNavPage();
-                loginPage.dispose();
+                closeWindow();
             } else {
                 showMessage("User not found", "Unsuccessful Log In",
                     DialogType.ERROR);
@@ -371,6 +371,7 @@ public class LoginPage extends DrawingSurface {
     public void goToNextPage() {
         LOG.trace("goToNextPage method in LoginPage.java");
         NavigationPageManager.getInstance().getNavPage();
+        closeWindow();
     }
 
     /**
@@ -380,6 +381,14 @@ public class LoginPage extends DrawingSurface {
     public void returnToHome() {
         LOG.trace("returnToHome method in LoginPage.java");
         homeScreen = new HomeScreen();
+        closeWindow();
+        // loginPage.dispose();
+    }
+
+    /**
+     * close the window.
+     */
+    public void closeWindow() {
         loginPage.dispose();
     }
 

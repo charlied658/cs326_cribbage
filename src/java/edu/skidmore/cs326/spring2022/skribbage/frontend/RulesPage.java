@@ -60,6 +60,7 @@ public class RulesPage extends DrawingSurface implements ActionListener {
      * navPage - NavigationPage window.
      */
     private NavigationPage navPage;
+
     /**
      * LOG - logger.
      */
@@ -98,7 +99,7 @@ public class RulesPage extends DrawingSurface implements ActionListener {
         Text header = new Text("Skribbage Battle Royale Rules",
             new Point(150, 275), 40, Color.BLACK);
         Image logo = new Image("logo.png", new Point(250, 0), 0.4, null);
-        returnToMainMenu = new Text("Main Menu", new Point(375, 325), 24, 
+        returnToMainMenu = new Text("Main Menu", new Point(375, 325), 24,
             Color.BLACK, Color.BLUE);
 
         // This adds a scrollable text area. This will allow us to add as
@@ -123,13 +124,12 @@ public class RulesPage extends DrawingSurface implements ActionListener {
                 + "three distinct parts, "
                 + "The Deal, The Play and The Show.");
 
-        
         add(header);
         add(logo);
         add(returnToMainMenu);
 
     }
-    
+
     @Override
     public void drawableMouseClick(Drawable e) {
         LOG.trace("DrawableMouseClick in PastGamesPage.java");
