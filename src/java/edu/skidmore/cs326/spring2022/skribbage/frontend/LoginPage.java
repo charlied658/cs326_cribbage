@@ -313,6 +313,7 @@ public class LoginPage extends DrawingSurface {
                 showMessage("User: " + username, "Successful Log In",
                     DialogType.INFORMATION);
                 navPage = NavigationPageManager.getInstance().getNavPage();
+                loginPage.dispose();
             } else {
                 showMessage("User not found", "Unsuccessful Log In",
                     DialogType.ERROR);
