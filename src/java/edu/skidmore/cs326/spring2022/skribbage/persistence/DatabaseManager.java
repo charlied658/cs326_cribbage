@@ -10,6 +10,10 @@ import java.util.HashMap;
 
 import org.apache.log4j.Logger;
 
+import edu.skidmore.cs326.spring2022.skribbage.common.Password;
+import edu.skidmore.cs326.spring2022.skribbage.common.User;
+import edu.skidmore.cs326.spring2022.skribbage.common.UserRole;
+
 /**
  * Contains the methods that connect to the database. Creates, edits, and
  * deletes profiles.
@@ -68,8 +72,11 @@ public class DatabaseManager {
      * @return Whether password was accepted
      */
 
-    public boolean userAuthenticate(String username, String password) {
+    public boolean userAuthenticate(User user, Password password) {
 
+    	
+    	String username = user.getUserName();
+    	
         String tempQuery =
             "SELECT * FROM player_account WHERE username='" + username + "'";
         // Connection conn = dbConnect();
@@ -90,11 +97,13 @@ public class DatabaseManager {
 
         }
 
-        if (storedPassword.compareTo(password) == 0) {
+        if (storedPassword.compareTo(password.getPasswordValue()) == 0) {
             System.out.println("Password Accepted");
+            user.setUserRole(UserRole.AUTHORIZED);
             return true;
         } else {
             System.out.println("Incorrect Password");
+            user.setUserRole(UserRole.UNAUTHORIZED);
             return false;
         }
 
