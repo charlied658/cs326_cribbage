@@ -1,5 +1,7 @@
 package edu.skidmore.cs326.spring2022.skribbage.logic;
 
+import edu.skidmore.cs326.spring2022.skribbage.common.Hand;
+
 /**
  * TODO (DSR): Player functionality needs to move to the common package
  * TODO (DSR): Lets talk through the design of Player (compared to User)
