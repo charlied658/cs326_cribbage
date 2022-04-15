@@ -37,6 +37,8 @@ public class Peg {
     
     /**
      * Peg constructor.
+     * 
+     * @param sp Spot of a Peg.
      */
     public Peg(Spot sp) {
         LOG.trace("Peg.java constructor");

@@ -7,10 +7,10 @@ import java.util.Arrays;
 
 import org.apache.log4j.Logger;
 
-import edu.skidmore.cs326.spring2022.skribbage.common.Board;
+
 import edu.skidmore.cs326.spring2022.skribbage.common.BoardManager;
 import edu.skidmore.cs326.spring2022.skribbage.common.Spot;
-import edu.skidmore.cs326.spring2022.skribbage.common.User;
+
 import us.daveread.edu.graphics.shape.Drawable;
 import us.daveread.edu.graphics.shape.impl.Image;
 import us.daveread.edu.graphics.shape.impl.Rectangle;
@@ -23,6 +23,7 @@ import us.daveread.edu.graphics.surface.MainFrame;
  * 
  * @author Zoe Beals
  */
+@SuppressWarnings("serial")
 public class StartGamePage extends DrawingSurface {
 
     /**
@@ -68,12 +69,12 @@ public class StartGamePage extends DrawingSurface {
     /**
      * player 1 - User variable to hold player1.
      */
-    private User player1;
+    // private User player1;
 
     /**
      * player2 - User variable to hold player2.
      */
-    private User player2;
+    // private User player2;
 
     /**
      * gameArea - space to hold the game playing area.
@@ -88,7 +89,7 @@ public class StartGamePage extends DrawingSurface {
     /**
      * homeScreen - HomeScreen window.
      */
-    private HomeScreen homeScreen;
+    // private HomeScreen homeScreen;
 
     /**
      * Log.
@@ -162,6 +163,7 @@ public class StartGamePage extends DrawingSurface {
         LOG.trace("drawableMouseClick method in StartGamepage.java");
         if (e == beginGame) {
             // start game
+            LOG.trace("Going to start the game");
         } else if (e == returnHome) {
             navPage = NavigationPageManager.getInstance().getNavPage();
             startGamePage.dispose();
