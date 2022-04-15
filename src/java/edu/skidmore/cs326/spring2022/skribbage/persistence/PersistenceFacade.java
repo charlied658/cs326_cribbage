@@ -96,7 +96,7 @@ public final class PersistenceFacade implements UserManagement, GameManagement, 
 	@Override
 	public boolean passwordChange(User userToUpdate, Password currentPassword, Password newPassword) {
 		
-		return false;
+		return true;
 	}
 	
 	/**
