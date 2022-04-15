@@ -14,7 +14,7 @@ public class User implements Payload {
     /**
      * Private string attribute to store the email of a user.
      */
-    private final String email;
+    private String email;
 
     /**
      * Private string attribute to store a username of a user.
@@ -52,7 +52,7 @@ public class User implements Payload {
     /**
      * Password.
      */
-    private final Password password;
+    private Password password;
 
     /**
      * Private boolean attribute to store if user is authorized. Mutable.
@@ -94,6 +94,14 @@ public class User implements Payload {
         LOG.info(
             "The parameters of User constructor were assigned"
                 + " to private variable attributes");
+    }
+    /**
+     * 
+     * @param userName user
+     * 
+     */
+    public User(String userName) {
+        this.userName = userName;
     }
 
     /**
