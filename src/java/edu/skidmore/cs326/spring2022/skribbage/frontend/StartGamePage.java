@@ -7,7 +7,6 @@ import java.util.Arrays;
 
 import org.apache.log4j.Logger;
 
-
 import edu.skidmore.cs326.spring2022.skribbage.common.BoardManager;
 import edu.skidmore.cs326.spring2022.skribbage.common.Spot;
 

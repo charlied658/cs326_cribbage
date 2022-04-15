@@ -11,7 +11,7 @@ import edu.skidmore.cs326.spring2022.skribbage.common.events.AccountEvent;
  * DTO associated with a user attempting to change their password.
  *
  * @author Alex Carney
- * Reviewed: Sten Leinasaar
+ *         Reviewed: Sten Leinasaar
  */
 @SuppressWarnings("serial")
 public class UserChangePasswordEvent extends AccountEvent {
@@ -37,9 +37,12 @@ public class UserChangePasswordEvent extends AccountEvent {
     /**
      * Constructs a new {@code PropertyChangeEvent}.
      *
-     * @param source The bean that fired the event.
-     * @param args   List of arguments.
-     * @throws IllegalArgumentException if {@code source} is {@code null}
+     * @param source
+     *            The bean that fired the event.
+     * @param args
+     *            List of arguments.
+     * @throws IllegalArgumentException
+     *             if {@code source} is {@code null}
      */
     public UserChangePasswordEvent(Object source, Object... args) {
         super(source, EventType.USER_CHANGE_PASSWORD, (User) args[0]);

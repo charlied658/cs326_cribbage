@@ -10,14 +10,14 @@ import edu.skidmore.cs326.spring2022.skribbage.common.FactoryTemplate;
  * handle persistance specific events.
  * 
  * @author
- *
  */
 public class PersistanceFactoryTemplate extends FactoryTemplate {
 
-	@Override
-	public PropertyChangeEvent eventCreation(EventType event, Object source, Object... args) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public PropertyChangeEvent eventCreation(EventType event, Object source,
+        Object... args) {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
 }

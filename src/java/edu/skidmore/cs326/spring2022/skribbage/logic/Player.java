@@ -3,9 +3,9 @@ package edu.skidmore.cs326.spring2022.skribbage.logic;
 import edu.skidmore.cs326.spring2022.skribbage.common.Hand;
 
 /**
- * TODO (DSR): Player functionality needs to move to the common package
+ * TODO (DSR): Player functionality needs to move to the common package.
  * TODO (DSR): Lets talk through the design of Player (compared to User)
-
+ * 
  * @author lappiaha
  */
 public class Player {
@@ -23,7 +23,7 @@ public class Player {
      * String to keep the player name.
      */
     private String playername;
-    
+
     /**
      * boolean to help determine the dealer of the game.
      */
@@ -41,6 +41,7 @@ public class Player {
 
     /**
      * Get the name of the player.
+     * 
      * @return Player's name
      */
     public String getName() {
@@ -53,6 +54,7 @@ public class Player {
 
     /**
      * Set the name of the player.
+     * 
      * @param name
      */
     public void setName(String name) {
@@ -61,7 +63,9 @@ public class Player {
 
     /**
      * Sets the PlayerHand.
-     * @param playerHand Player's hand
+     * 
+     * @param playerHand
+     *            Player's hand
      */
     public void setHand(Hand playerHand) {
 
@@ -102,21 +106,23 @@ public class Player {
         points += pointsToAdd;
 
     }
-    
+
     /**
      * Returns true if the player is the dealer.
+     * 
      * @return boolean
      */
     public boolean isDealer() {
         return isDealer;
     }
-    
+
     /**
      * Sets the player to be dealer or not dealer.
+     * 
      * @param dealer
      */
     public void setDealer(boolean dealer) {
         isDealer = dealer;
     }
-    
+
 }

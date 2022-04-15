@@ -1,29 +1,65 @@
 package edu.skidmore.cs326.spring2022.skribbage.persistence;
 
+/**
+ * item class.
+ * 
+ * @author ??
+ */
 public class Item {
 
-	private ItemTypes itemType;
+    /**
+     * itemtype.
+     */
+    private ItemTypes itemType;
 
-	private int quantityHeld;
+    /**
+     * quantity held.
+     */
+    private int quantityHeld;
 
-	public ItemTypes getItemType() {
-		return itemType;
-	}
+    /**
+     * getItem type.
+     * 
+     * @return type.
+     */
+    public ItemTypes getItemType() {
+        return itemType;
+    }
 
-	public void setItemType(ItemTypes itemType) {
-		this.itemType = itemType;
-	}
+    /**
+     * setITem type.
+     * 
+     * @param itemType
+     */
+    public void setItemType(ItemTypes itemType) {
+        this.itemType = itemType;
+    }
 
-	public int getQuantityHeld() {
-		return quantityHeld;
-	}
+    /**
+     * getQuantityHeld.
+     * 
+     * @return quantity.
+     */
+    public int getQuantityHeld() {
+        return quantityHeld;
+    }
 
-	public void setQuantityHeld(int quantityHeld) {
-		this.quantityHeld = quantityHeld;
-	}
+    /**
+     * setQuantityHeld.
+     * 
+     * @param quantityHeld
+     */
+    public void setQuantityHeld(int quantityHeld) {
+        this.quantityHeld = quantityHeld;
+    }
 
-	public String toString() {
-		return "item type: " + itemType + "\nquantity held: " + quantityHeld;
-	}
+    /**
+     * toString.
+     * 
+     * @return the string.
+     */
+    public String toString() {
+        return "item type: " + itemType + "\nquantity held: " + quantityHeld;
+    }
 
 }

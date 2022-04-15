@@ -42,16 +42,15 @@ public class User implements Payload {
     /**
      * Functionality to update user's ID.
      * 
-     * @param userID
+     * @param id
      *            new role.
      */
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setUserId(int id) {
+        this.userId = id;
     }
 
     /**
-     * Private string attribute to store a password of a user.
-     * TODO: DEPRECATED; Should be a Password object type soon
+     * Password.
      */
     private final String password;
 
