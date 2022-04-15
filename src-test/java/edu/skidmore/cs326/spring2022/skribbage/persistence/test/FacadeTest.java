@@ -1,6 +1,6 @@
 package edu.skidmore.cs326.spring2022.skribbage.persistence.test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.util.HashMap;
 
@@ -69,19 +69,21 @@ public class FacadeTest {
     @Before
     public void setUp() throws Exception {
         facadeinstanace = new PersistenceFacade();
-        wrongTestUser = new User("DJKhaled.com", "Khaled", "AnotherOne", null);
+        wrongTestUser = new User("DJKhaled.com", "Khaled",
+            new Password("AnotherOne"), null);
         wrongTestPassword = new Password("AnotherOne");
         correctTestUser =
-            new User("nchantzi@skidmore.edu", "nchantzi", "ILoveSQL", null);
+            new User("nchantzi@skidmore.edu", "nchantzi",
+                new Password("ILoveSQL"), null);
         correctTestPassword = new Password("ILoveSQL");
         correctTestItem = new Item();
         correctTestItem.setItemType(ItemTypes.PARTY_HAT);
         correctTestItem.setQuantityHeld(31);
         inventoryUser = new User("inconsequential", "inconsequential",
-            "inconsequential", null);
+            new Password("inconsequential"), null);
         inventoryUser.setUserId(236);
         walletUser = new User("inconsequential", "inconsequential",
-            "inconsequential", null);
+            new Password("inconsequential"), null);
         walletUser.setUserId(325);
     }
 
