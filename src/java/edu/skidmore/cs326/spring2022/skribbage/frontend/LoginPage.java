@@ -165,6 +165,7 @@ public class LoginPage extends DrawingSurface {
      * LoginPage constructor Initializes the MainFrame window.
      */
     public LoginPage() {
+        currentUser = new User(null);
         persistence = PersistenceFacade.getInstance();
         LOG.debug("Instance created");
         loginPage = new MainFrame(this, "Skribbage Battle Royale Login", 900,
@@ -223,6 +224,7 @@ public class LoginPage extends DrawingSurface {
                 // ule = (UserCreateAccountEvent) evtFactory.createEvent(
                 // EventType.USER_CREATE_ACCOUNT, this, currentUser);
                 // evtFactory.fireEvent(ule);
+                
                 currentUser.setUserName(createdUsername);
                 
                 //Verify if username is available. If so, call password setting.
@@ -245,7 +247,7 @@ public class LoginPage extends DrawingSurface {
             DialogPosition.CENTER_ALL, true);
         verifyCreatedPassword = getUserInput("New User",
             "Enter password again", DialogPosition.CENTER_ALL, true);
-
+        
         if (createdPassword.equals(verifyCreatedPassword)) {
             forChecking = new Password(createdPassword);
             persistence.userCreate(currentUser, forChecking);
@@ -275,7 +277,7 @@ public class LoginPage extends DrawingSurface {
     public String getUsername() {
         LOG.trace("getUsername method in LoginPage.java");
         if (currentUser == null) {
-            return this.username;
+            return username;
         } else {
             return currentUser.getUserName();
         }
@@ -342,17 +344,17 @@ public class LoginPage extends DrawingSurface {
             // separate the username and password functionality.
             // outside listener tells me when to run the password method.
             login.setFillColor(Color.GREEN);
-            this.username = getUserInput("Login", "Enter username",
+            username = getUserInput("Login", "Enter username",
                 DialogPosition.CENTER_ALL);
             // verifyUsernameExists();
-            this.password =
+            password =
                 getUserInput("Login", "Enter password for: " + username,
                     DialogPosition.CENTER_ALL, true);
             forChecking = new Password(password);
-            // verifyUserExists();
-
+            currentUser = new User(username);
+            
             if (loggedIn()) {
-                currentUser.setUserName(username);
+                
                 showMessage("User: " + username, "Successful Log In",
                     DialogType.INFORMATION);
                 // navPage = NavigationPageManager.getInstance().getNavPage();
