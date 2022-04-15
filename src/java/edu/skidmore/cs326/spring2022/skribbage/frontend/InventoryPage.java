@@ -11,6 +11,10 @@ import javax.swing.*;
 
 import org.apache.log4j.Logger;
 
+import edu.skidmore.cs326.spring2022.skribbage.common.Card;
+import edu.skidmore.cs326.spring2022.skribbage.common.Rank;
+import edu.skidmore.cs326.spring2022.skribbage.common.Suit;
+
 import java.util.*;
 
 import us.daveread.edu.graphics.shape.Drawable;
@@ -23,41 +27,40 @@ import us.daveread.edu.graphics.shape.impl.Rectangle;
 import us.daveread.edu.graphics.shape.impl.Circle;
 
 /***
- * The page that shows the player's inventory. Players can 
+ * The page that shows the player's inventory. Players can
  * send and receive tokens and items to and from other players.
+ * 
  * @author Jonah Marcus
- *         Last Update: March 27, 2022
+ *         Last Update: April 11, 2022
  *         Last Edited by Jonah Marcus
  */
 public class InventoryPage extends DrawingSurface implements ActionListener {
-    
+
     /**
      * mf - Holds reference to the window.
      */
     private MainFrame mf;
-    
+
     /**
-     * STACKSIZE - Constant that holds the maximum size any
-     * given stack of items can be.
-     * Ex: In Minecraft, a stack of cannot exceed 64 items.
+     * inventory - Holds all items/cards in inventory.
      */
-    private int stackSize;
-    
+    private HashMap<String, Card> inventory = new HashMap<String, Card>();
+
     /**
      * mainframeHeight - int variable to hold main frame height.
      */
     private int mainframeHeight = 750;
-    
+
     /**
      * mainframeWidth - int variable to hold main frame width.
      */
     private int mainframeWidth = 750;
-    
+
     /**
      * closeWindow - Text object that closes the window when clicked.
      */
     private Text closeWindow;
-    
+
     /**
      * Logger instance for logging.
      */
@@ -66,7 +69,7 @@ public class InventoryPage extends DrawingSurface implements ActionListener {
     static {
         LOG = Logger.getLogger(PastGamesPage.class);
     }
-    
+
     /**
      * InventoryPage constructor.
      */
@@ -74,30 +77,61 @@ public class InventoryPage extends DrawingSurface implements ActionListener {
         LOG.trace("Entered InventoryPage Constructor.");
         mf = new MainFrame(this, "Inventory", mainframeWidth,
             mainframeHeight, false);
-        setup(); 
+        setup();
     }
-    
+
     /**
      * setup method - sets up the window.
      */
     private void setup() {
         LOG.trace("Entered setup (InventoryPage)");
         setLayout(null);
+
+        Image logo = new Image("logo.png", new Point(320, 0), 0.45, null);
+
         closeWindow = new Text("Close",
             new Point(20, 40), 25, Color.BLUE, Color.BLACK);
-    
+
+        add(new Text("Inventory:", new Point(30, 90), 20, Color.BLACK));
+
+        // Placeholder cards
+        inventory.put("one", new Card(Rank.KING, Suit.CLUBS));
+        inventory.put("two", new Card(Rank.ACE, Suit.SPADES));
+        inventory.put("three", new Card(Rank.SEVEN, Suit.DIAMONDS));
+        inventory.put("four", new Card(Rank.TWO, Suit.HEARTS));
+        inventory.put("five", new Card(Rank.SIX, Suit.DIAMONDS));
+        inventory.put("six", new Card(Rank.NINE, Suit.CLUBS));
+        inventory.put("seven", new Card(Rank.QUEEN, Suit.SPADES));
+
+        Card[] allItems =
+            inventory.values().toArray(new Card[inventory.size()]);
+
+        int initXPosition = 30;
+        int initYPosition = 115;
+
+        for (Card item : allItems) {
+            add(new Text(item.getSuit().getName() + " - "
+                + item.getRank().getName(),
+                new Point(initXPosition,
+                    initYPosition),
+                16, Color.BLACK));
+            initYPosition += 25;
+        }
+
         add(closeWindow);
+        add(logo);
     }
-    
+
     /**
      * Main method.
+     * 
      * @param args
      */
     public static void main(String[] args) {
         LOG.trace("Entered main method");
         new InventoryPage();
     }
-    
+
     @Override
     public void drawableMouseClick(Drawable e) {
         LOG.trace("DrawableMosuceClick in InventoryPage.java");
@@ -107,13 +141,13 @@ public class InventoryPage extends DrawingSurface implements ActionListener {
             closeWindow.setBorderColor(Color.BLACK);
             mf.dispose();
         }
-       
+
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         // TODO Auto-generated method stub
-        
+
     }
 
 }

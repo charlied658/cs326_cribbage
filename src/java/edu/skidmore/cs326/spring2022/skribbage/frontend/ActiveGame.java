@@ -1,8 +1,10 @@
 package edu.skidmore.cs326.spring2022.skribbage.frontend;
 
+import java.util.List;
+
 /**
  * @author Jonah Marcus
- *         Code Reviewed by Zoe Beals 3/24/2022
+ *         Code Reviewed by Zoe Beals 4/14/2022
  */
 public interface ActiveGame {
 
@@ -27,14 +29,9 @@ public interface ActiveGame {
     String getName();
 
     /**
-     * @return player1
+     * @return list of players
      */
-    String getPlayer1();
-
-    /**
-     * @return player2
-     */
-    String getPlayer2();
+    List<String> getPlayers();
 
     /**
      * @return completed
@@ -47,14 +44,14 @@ public interface ActiveGame {
      * YYYYMMDD timestamp, the game's name inputted by user,
      * (YYYYMMDD timestamp if this is empty), the name of the
      * first player, and the name of the second player.
-     * 
+     *
      * @return The array of Strings as specified above.
      */
     String[] getGameInfo();
 
     /**
      * Throws exception when mm is less than 1 or greater than 12.
-     * 
+     *
      * @param mm
      * @throws IllegalArgumentException
      */
@@ -62,7 +59,7 @@ public interface ActiveGame {
 
     /**
      * Throws exception when dd is less than 1 or greater than 31.
-     * 
+     *
      * @param dd
      * @throws IllegalArgumentException
      */
@@ -79,14 +76,16 @@ public interface ActiveGame {
     void setName(String name);
 
     /**
-     * @param p1
+     * @param player
+     *            player to add to list of players
      */
-    void setPlayer1(String p1);
+    void addPlayer(String player);
 
     /**
-     * @param p2
+     * @param player
+     *            player to remove from list of players
      */
-    void setPlayer2(String p2);
+    void removePlayer(String player);
 
     /**
      * @param isCompleted

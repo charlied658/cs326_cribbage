@@ -11,6 +11,9 @@ import javax.swing.*;
 
 import org.apache.log4j.Logger;
 
+import edu.skidmore.cs326.spring2022.skribbage.common.User;
+import edu.skidmore.cs326.spring2022.skribbage.common.UserRole;
+
 import java.util.*;
 
 import us.daveread.edu.graphics.shape.Drawable;
@@ -27,30 +30,40 @@ import us.daveread.edu.graphics.shape.impl.Circle;
  * new game.
  * 
  * @author Jonah Marcus
- *         Last Update: March 27, 2022
+ *         Last Update: April 11, 2022
  *         Last Edited by Jonah Marcus
-<<<<<<< HEAD
- * Code Reviewed March 27, 2022 - Zoe Beals
-=======
+ *         <<<<<<< HEAD
  *         Code Reviewed March 27, 2022 - Zoe Beals
->>>>>>> d599e4ec72d372caffa74468e69fe3928d68eb9f
+ *         =======
+ *         Code Reviewed March 27, 2022 - Zoe Beals
+ *         >>>>>>> d599e4ec72d372caffa74468e69fe3928d68eb9f
  */
 
 public class LobbyPage extends DrawingSurface implements ActionListener {
     /**
      * loggedInPlayer1 - The displayed player 1 name.
      */
-    private String loggedInPlayer1;
+    // private String loggedInPlayer1;
 
     /**
      * loggedInPlayer2 - The displayed player 2 name.
      */
-    private String loggedInPlayer2;
+    // private String loggedInPlayer2;
 
     /**
      * loggedInPlayer3 - The displayed player 3 name.
      */
-    private String loggedInPlayer3;
+    // private String loggedInPlayer3;
+
+    /**
+     * MAX_PLAYERS - Maximum player count in a given lobby.
+     */
+    private static final int MAX_PLAYERS = 3;
+
+    /**
+     * players - Holds instances of players in lobby.
+     */
+    private ArrayList<User> players = new ArrayList<User>();
 
     /**
      * playerNotLoggedIn - Up to three players can be logged into a single
@@ -58,7 +71,7 @@ public class LobbyPage extends DrawingSurface implements ActionListener {
      * when any one or more of the three potential spots is not filled by
      * a logged in player
      */
-    private String playerNotLoggedIn = "*PLAYER NOT LOGGED IN*";
+    // private String playerNotLoggedIn = "*PLAYER NOT LOGGED IN*";
 
     /**
      * mainframeWidth - int variable to hold main frame width.
@@ -80,14 +93,12 @@ public class LobbyPage extends DrawingSurface implements ActionListener {
      */
     private Text returnToMainMenu;
 
-    
-    /**
-     * startButton - Text object to act as a button to start the game once 
-=======
-
     /**
      * startButton - Text object to act as a button to start the game once
->>>>>>> d599e4ec72d372caffa74468e69fe3928d68eb9f
+     * =======
+     * /**
+     * startButton - Text object to act as a button to start the game once
+     * >>>>>>> d599e4ec72d372caffa74468e69fe3928d68eb9f
      * all players have readied up.
      */
     private Text startButton;
@@ -113,6 +124,11 @@ public class LobbyPage extends DrawingSurface implements ActionListener {
     private Text inventoryPage;
 
     /**
+     * navPage - NavigationPage window.
+     */
+    private NavigationPage navPage;
+
+    /**
      * Logger instance for logging.
      */
     private static final Logger LOG;
@@ -132,18 +148,23 @@ public class LobbyPage extends DrawingSurface implements ActionListener {
     }
 
     /**
+     * Takes new player to display on lobby page.
+     * 
+     * @param player
+     */
+    public void retrievePlayer(User player) {
+        LOG.trace("Entered LobbyPage's getPlayer");
+        if (players.size() < MAX_PLAYERS) {
+            players.add(player);
+        }
+    }
+
+    /**
      * setup method - sets up the window.
      */
-    public void setup() {
+    private void setup() {
         LOG.trace("LobbyPage setup");
         setLayout(null);
-
-        Rectangle background = new Rectangle(new Point(0, 0),
-            new Dimension(mainframeWidth, mainframeHeight),
-            Color.DARK_GRAY, Color.DARK_GRAY);
-
-    
-        
 
         Image logo = new Image("logo.png", new Point(300, 0), 0.6, null);
 
@@ -152,27 +173,35 @@ public class LobbyPage extends DrawingSurface implements ActionListener {
         startButton = new Text("Start Game", new Point(20, 250),
             25, Color.BLACK, Color.BLUE);
 
-        //inventoryPage = new Text("Inventory", new Point(760, 40), 25, 
-            //Color.BLACK, Color.BLUE);
-        
+        int textStartingY = 100;
 
+        // Hardcoded Users into ArrayList
+        retrievePlayer(new User("doinurmom69@sussybaka.net", "Bo Nehr",
+            "h0rr1bL3p@$$w0rd", UserRole.AUTHORIZED));
+        retrievePlayer(new User("sexhaver@reddit.com", "Hugh G. Rection",
+            "07Sept18kx83+&_4ajfS", UserRole.AUTHORIZED));
 
+        add(new Text("Players in Lobby (Max " + MAX_PLAYERS + ")",
+            new Point(25, 75), 20, Color.BLACK));
 
-        getPlayerNames();
+        for (int i = 0; i < players.size(); i++) {
+            add(new Text(players.get(i).getUserName(), new Point(35,
+                textStartingY), 16, Color.BLACK));
+            textStartingY += 20;
+        }
 
-        Text player1LoginSection = new Text(loggedInPlayer1,
-            new Point(35, 100), 16, Color.BLACK);
-        Text player2LoginSection = new Text(loggedInPlayer2,
-            new Point(35, 120), 16, Color.BLACK);
-        Text player3LoginSection = new Text(loggedInPlayer3,
-            new Point(35, 140), 16, Color.BLACK);
+        /*
+         * Text player1LoginSection = new Text(loggedInPlayer1,
+         * new Point(35, 100), 16, Color.BLACK);
+         * Text player2LoginSection = new Text(loggedInPlayer2,
+         * new Point(35, 120), 16, Color.BLACK);
+         * Text player3LoginSection = new Text(loggedInPlayer3,
+         * new Point(35, 140), 16, Color.BLACK);
+         */
 
         player1Ready = new Circle(new Point(10, 87), 15, Color.RED, Color.RED);
         player2Ready = new Circle(new Point(10, 107), 15, Color.RED, Color.RED);
         player3Ready = new Circle(new Point(10, 127), 15, Color.RED, Color.RED);
-
-
-
 
         // add(background);
         add(logo);
@@ -180,34 +209,33 @@ public class LobbyPage extends DrawingSurface implements ActionListener {
         add(startButton);
         // add(inventoryPage);
 
-        add(player1LoginSection);
-        add(player2LoginSection);
-        add(player3LoginSection);
-        add(player1Ready);
-        add(player2Ready);
-        add(player3Ready);
+        /*
+         * add(player1LoginSection);
+         * add(player2LoginSection);
+         * add(player3LoginSection);
+         */
+        // add(player1Ready);
+        // add(player2Ready);
+        // add(player3Ready);
     }
-
-    
 
     /**
      * getPlayerNames method - placeholder. Will eventually work with the
      * event listeners to receive the names of the players logged into
      * an instance of the program. For now, the names are hardcoded.
      */
-    private void getPlayerNames() {
-        LOG.trace("Entered getPlayerNames");
-
-        //All three will read playerNotLoggedIn message until a new name is 
-        //received.
-        loggedInPlayer1 = playerNotLoggedIn;
-        loggedInPlayer2 = playerNotLoggedIn;
-        loggedInPlayer3 = playerNotLoggedIn;
-        
-        loggedInPlayer1 = "[Redacted] \"Crypto\" [Redacted]";
-        loggedInPlayer2 = "Caleb \"Revenant\" Cross";
-    }
-  
+    /*
+     * private void getPlayerNames() {
+     * LOG.trace("Entered getPlayerNames");
+     * // All three will read playerNotLoggedIn message until a new name is
+     * // received.
+     * loggedInPlayer1 = playerNotLoggedIn;
+     * loggedInPlayer2 = playerNotLoggedIn;
+     * loggedInPlayer3 = playerNotLoggedIn;
+     * loggedInPlayer1 = "[Redacted] \"Crypto\" [Redacted]";
+     * loggedInPlayer2 = "Caleb \"Revenant\" Cross";
+     * }
+     */
 
     /**
      * setReadyButtonColor method - sets the color of the ready button.
@@ -233,7 +261,7 @@ public class LobbyPage extends DrawingSurface implements ActionListener {
             returnToMainMenu.setBorderColor(Color.CYAN);
             Utility.pause(100);
             returnToMainMenu.setBorderColor(Color.BLACK);
-            new HomeScreen();
+            navPage = new NavigationPage();
             mf.dispose();
         } else if (e == player1Ready) {
             setReadyButtonColor(player1Ready);
@@ -243,7 +271,7 @@ public class LobbyPage extends DrawingSurface implements ActionListener {
             setReadyButtonColor(player3Ready);
         } else if (e == startButton) {
 
-            //Placeholder - not functional yet
+            // Placeholder - not functional yet
             startButton.setBorderColor(Color.CYAN);
             Utility.pause(100);
             startButton.setBorderColor(Color.BLACK);
@@ -262,8 +290,6 @@ public class LobbyPage extends DrawingSurface implements ActionListener {
             new InventoryPage();
         }
 
-       
-
     }
 
     @Override
@@ -275,6 +301,7 @@ public class LobbyPage extends DrawingSurface implements ActionListener {
 
     /**
      * main method.
+     * 
      * @param args
      */
     public static void main(String[] args) {
