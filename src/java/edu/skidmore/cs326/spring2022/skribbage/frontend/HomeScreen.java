@@ -106,7 +106,7 @@ public class HomeScreen extends DrawingSurface {
         homeScreen =
             new MainFrame(this, "Skribbage Battle Royale Home", 900, 900, true);
         LOG.trace("Calling a setup method in HomeScreen.java constructor.");
-        //setup();
+        // setup();
     }
 
     /**

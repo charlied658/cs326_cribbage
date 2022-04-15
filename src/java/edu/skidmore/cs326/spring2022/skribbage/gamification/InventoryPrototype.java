@@ -36,7 +36,8 @@ public class InventoryPrototype {
 
     /**
      * Creates map.
-     * @return 
+     * 
+     * @return
      *         returns HashMap
      */
     public HashMap<String, Integer> createInventory() {

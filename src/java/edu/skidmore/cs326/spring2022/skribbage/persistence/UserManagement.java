@@ -3,18 +3,65 @@ package edu.skidmore.cs326.spring2022.skribbage.persistence;
 import edu.skidmore.cs326.spring2022.skribbage.common.Password;
 import edu.skidmore.cs326.spring2022.skribbage.common.User;
 
+/**
+ * user management.
+ * 
+ * @author
+ */
 public interface UserManagement {
 
-	public boolean userCreate(User userToCreate, Password password);
+    /**
+     * usercreate.
+     * 
+     * @param userToCreate
+     * @param password
+     * @return the user.
+     */
+    boolean userCreate(User userToCreate, Password password);
 
-	public boolean userDelete(User userToDelete);
+    /**
+     * userDelete.
+     * 
+     * @param userToDelete
+     * @return the user.
+     */
+    boolean userDelete(User userToDelete);
 
-	public boolean passwordChange(User userToUpdate, Password currentPassword, Password newPassword);
+    /**
+     * password change.
+     * 
+     * @param userToUpdate
+     * @param currentPassword
+     * @param newPassword
+     * @return the password.
+     */
+    boolean passwordChange(User userToUpdate, Password currentPassword,
+        Password newPassword);
 
-	public boolean userChange(User userToChange, Object... args);
+    /**
+     * userCHange.
+     * 
+     * @param userToChange
+     * @param args
+     * @return the user.
+     */
+    boolean userChange(User userToChange, Object... args);
 
-	public boolean login(User user, Password password);
+    /**
+     * login.
+     * 
+     * @param user
+     * @param password
+     * @return the login.
+     */
+    boolean login(User user, Password password);
 
-	public boolean validateUsername(User user);
+    /**
+     * validate user.
+     * 
+     * @param user
+     * @return the user.
+     */
+    boolean validateUsername(User user);
 
 }

@@ -12,7 +12,7 @@ import org.apache.log4j.Logger;
  * @author Henry Wilson
  */
 public class JumpSpot {
-    
+
     /**
      * Logger for the class.
      */
@@ -24,6 +24,7 @@ public class JumpSpot {
     static {
         LOG = Logger.getLogger(JumpSpot.class);
     }
+
     /**
      * Die to determine jump spot outcome.
      */
@@ -42,7 +43,6 @@ public class JumpSpot {
         System.out.println(diceRoll);
         LOG.info("rewardPenalty: Dice roll is " + diceRoll);
         player.addPoints(diceRoll);
-       
 
     }
 

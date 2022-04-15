@@ -156,25 +156,25 @@ public class NavigationPage extends DrawingSurface {
         } else if (e == pastGamesPageButton) {
             pastGamesPage = new PastGamesPage();
         } else if (e == logOut) {
-            loginPage = new LoginPage();
+            loginPage = LoginPageManager.getInstance().getLoginPage();
             closeWindow();
         }
     }
-    
+
     /**
      * closing the navigation page.
      */
     public void closeWindow() {
         navPage.dispose();
     }
-    
+
     /**
      * main.
+     * 
      * @param args
      */
     public static void main(String[] args) {
         new NavigationPage();
     }
-
 
 }

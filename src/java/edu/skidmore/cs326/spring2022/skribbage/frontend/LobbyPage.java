@@ -32,11 +32,8 @@ import us.daveread.edu.graphics.shape.impl.Circle;
  * @author Jonah Marcus
  *         Last Update: April 11, 2022
  *         Last Edited by Jonah Marcus
- *         <<<<<<< HEAD
  *         Code Reviewed March 27, 2022 - Zoe Beals
- *         =======
  *         Code Reviewed March 27, 2022 - Zoe Beals
- *         >>>>>>> d599e4ec72d372caffa74468e69fe3928d68eb9f
  */
 
 public class LobbyPage extends DrawingSurface implements ActionListener {
