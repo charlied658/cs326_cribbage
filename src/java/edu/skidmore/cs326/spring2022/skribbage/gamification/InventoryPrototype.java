@@ -23,6 +23,27 @@ public class InventoryPrototype {
      */
 
     /**
+     * HashMap For inventory.
+     */
+    private HashMap<String, Integer> map;
+
+    /**
+     * Initialize HashMap for Inventory.
+     */
+    public void initializeInventory() {
+        map = new HashMap<String, Integer>();
+    }
+
+    /**
+     * Creates map.
+     * @return 
+     *         returns HashMap
+     */
+    public HashMap<String, Integer> createInventory() {
+        return map;
+    }
+
+    /**
      * When items are used we go to the HashMap and reduce the amount by 1.
      * 
      * @param map
@@ -61,7 +82,7 @@ public class InventoryPrototype {
      * @param key
      *            name of the item
      * @return val
-     *            number of specified item in an inventory
+     *         number of specified item in an inventory
      */
     public int searchForItem(HashMap<String, Integer> map, String key) {
         int val = map.get(key);
