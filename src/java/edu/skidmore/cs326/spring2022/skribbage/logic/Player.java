@@ -1,96 +1,82 @@
+
 package edu.skidmore.cs326.spring2022.skribbage.logic;
 
-import java.util.ArrayList;
 
 /**
  * @author lappiaha
  */
 public class Player {
-	/**
-	 * initializes the player's points
-	 */
-	int points;
-	/**
-	 * Creates hand object
-	 */
-	private Hand hand = new Hand();
-	/**
-	 * string to keep the player name
-	 */
-	private String playername; 
-	/**
-	 * 
-	 */
-	public boolean isDealer;
-	/**
-	 * boolean to help determine the dealer of the game 
-	 */
+    /**
+     * boolean that will determine which player is the dealer.
+     */
+    private boolean isDealer = false;
+    /**
+     * int to for the player's game points.
+     */
+    private int points;
+    /**
+     * object to utilize hand class for player.
+     */
+    private Hand hand = new Hand();
+    /**
+     * String to hold the player name.
+     */
+ 
+    private String playerName;
+    /**
+     * contructor to initialize player. 
+     */
+    public Player() {
+        // initializes the player
+    }
 
-	public Player() {
-		/**
-		 *initialize points to 0  
-		 */
-		intializePoints();
-	}
+    /**
+     * Get the name of the player.
+     * @return playerName
+     */
+    public String getName() {
+        return playerName;
+    }
 
-	/**
-	 * Get the name of the player.
-	 */
-	public void getName() {
-		// need info from frontEnd
-		// player1 = name1.getName();
-		// player2 = name2.getName();
-		// claims the player name
-	}
+    /**
+     * Set the name of the player.
+     */
+    public void setName() {
+        // claims the player name
+    }
+    /**
+     * set the hand to the player's hand.
+     * @param playerHand
+     */
+    public void setHand(Hand playerHand) {
+        hand = playerHand;
 
-	/**
-	 * Set the name of the player.
-	 */
-	public String setName() {
-		return playername;
-	}
+    }
 
-	/**
-	 * Sets the PlayerHand.
-	 */
-	public void setHand(Hand playerHand) {
+    /**
+     * Method to get the hand.
+     * 
+     * @return hand
+     */
+    public Hand getHand() {
+        return hand;
+    }
 
-		hand = playerHand;
-	}
+    /**
+     * Initializes points to 0.
+     */
+    public void setPoints() {
+        points = 0;
+    }
 
-	/**
-	 * Get the hand.
-	 * 
-	 * @return hand
-	 */
-	public Hand getHand() {
-		return hand;
-	}
+    /**
+     * Get the player points.
+     * 
+     * @return points
+     */
 
-	/**
-	 * 
-	 * @return void
-	 */
-	public int intializePoints() {
-		points = 0; 
-		return (Integer) null;
-	}
-	/**
-	 * Get the player points.
-	 * 
-	 * @return points
-	 */
-	public int getPoints() {
-		return points;
-	}
+    public int getPoints() {
+        return points;
+    }
 
-	/**
-	 * Add the player points.
-	 * 
-	 * @param pointsToAdd
-	 */
-	public void addPoints(int pointsToAdd) {
-		points += pointsToAdd;
-
-	}
 }
