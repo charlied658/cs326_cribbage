@@ -7,7 +7,6 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
-
 import edu.skidmore.cs326.spring2022.skribbage.gamification.Die;
 
 /**
@@ -33,9 +32,9 @@ public class DieTest {
      * Attribute to house the test instance.
      */
     private Die testInstance;
-    
+
     /**
-     * Sets up test instance for Die. 
+     * Sets up test instance for Die.
      */
     @Before
     public void setup() {
@@ -68,7 +67,7 @@ public class DieTest {
         while (numTests < 100) {
 
             int dieRoll = testInstance.rollDie(6, 0, true);
-            
+
             assertTrue(dieRoll >= 0 && dieRoll <= 6);
             cases[dieRoll + 3] = true;
             numTests++;

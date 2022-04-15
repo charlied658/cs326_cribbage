@@ -33,7 +33,7 @@ public class RankTest {
     public void testGetName() {
         assertEquals(testInstance.getName(), "Jack");
     }
-    
+
     /**
      * Test the getSymbol method.
      */
@@ -41,7 +41,7 @@ public class RankTest {
     public void testGetSymbol() {
         assertEquals(testInstance.getSymbol(), "J");
     }
-    
+
     /**
      * Test the getPointValue method.
      */

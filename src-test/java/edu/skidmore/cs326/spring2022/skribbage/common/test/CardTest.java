@@ -13,7 +13,6 @@ import edu.skidmore.cs326.spring2022.skribbage.common.Rank;
  * Test class for Card java bean.
  * 
  * @author Declan Morris
- *
  */
 public class CardTest {
     /**
@@ -37,7 +36,7 @@ public class CardTest {
     public void testSetSuit() {
         assertEquals(Suit.HEARTS, testInstance.getSuit());
     }
-    
+
     /**
      * Test that the setRank method worked as expected in the instructor.
      */
