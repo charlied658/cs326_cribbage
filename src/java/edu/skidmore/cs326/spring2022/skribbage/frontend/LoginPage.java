@@ -314,7 +314,8 @@ public class LoginPage extends DrawingSurface {
                     DialogType.INFORMATION);
                 // navPage = NavigationPageManager.getInstance().getNavPage();
                 navPage = new NavigationPage();
-                closeWindow();
+                loginPage.dispose();
+                //closeWindow();
             } else {
                 showMessage("User not found", "Unsuccessful Log In",
                     DialogType.ERROR);
