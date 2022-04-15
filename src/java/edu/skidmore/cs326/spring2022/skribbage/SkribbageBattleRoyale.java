@@ -8,6 +8,7 @@ import edu.skidmore.cs326.spring2022.skribbage.frontend.GameStartedResponseContr
 import org.apache.log4j.Logger;
 
 import edu.skidmore.cs326.spring2022.skribbage.frontend.HomeScreen;
+import edu.skidmore.cs326.spring2022.skribbage.frontend.PageManager;
 import edu.skidmore.cs326.spring2022.skribbage.logic.events.AccountController;
 
 /**
@@ -56,7 +57,6 @@ public class SkribbageBattleRoyale implements Runnable {
         LOG.info("homePage started by initializing it.");
         // Instantiate required class instances
         homePage = new HomeScreen();
-        homePage.setup();
         eventFactory = EventFactory.getInstance();
         eventManager = EventManager.getInstance();
 
