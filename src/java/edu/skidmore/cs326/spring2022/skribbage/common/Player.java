@@ -3,7 +3,6 @@ package edu.skidmore.cs326.spring2022.skribbage.common;
 import java.util.HashMap;
 
 import edu.skidmore.cs326.spring2022.skribbage.gamification.Avatar;
-import edu.skidmore.cs326.spring2022.skribbage.common.Hand;
 
 /**
  * Generic Player class used by logic and gamification.
@@ -53,6 +52,15 @@ public class Player {
      * boolean to help determine the dealer of the game.
      */
     private boolean isDealer;
+    
+    /**
+     * Default constructor.
+     * 
+     */
+    
+    public Player() {
+        
+    }
     
     /**
      * Constructor method.

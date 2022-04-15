@@ -2,8 +2,6 @@ package edu.skidmore.cs326.spring2022.skribbage.common;
 
 import org.apache.log4j.Logger;
 
-import edu.skidmore.cs326.spring2022.skribbage.gamification.Player;
-
 /**
  * An object that represents an individual peg on the Skribbage board.
  * 
