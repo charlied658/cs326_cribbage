@@ -174,14 +174,6 @@ public final class PersistenceFacade
         return accepted;
     }
 
-    /**
-     * main.
-     * @param args
-     */
-    public static void main(String[] args) {
-        // dm.inventoryQuery(236);
-
-    }
 
     @Override
     public HashMap<String, Item> displayInventory(User user) {

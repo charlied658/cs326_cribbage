@@ -52,7 +52,7 @@ public class User implements Payload {
     /**
      * Password.
      */
-    private final String password;
+    private final Password password;
 
     /**
      * Private boolean attribute to store if user is authorized. Mutable.
@@ -82,7 +82,7 @@ public class User implements Payload {
      *            Determines whether or not the user is logged in.
      * @see UserRole
      */
-    public User(String email, String userName, String password,
+    public User(String email, String userName, Password password,
         UserRole userRole) {
         this.email = email;
         LOG.debug("Email value set to:" + email);
@@ -115,7 +115,7 @@ public class User implements Payload {
     /**
      * @return the user password.
      */
-    public String getPassword() {
+    public Password getPassword() {
         LOG.debug("Returning the password of a user");
         return password;
     }

@@ -6,9 +6,11 @@ import org.apache.log4j.Logger;
 
 import edu.skidmore.cs326.spring2022.skribbage.common.EventFactory;
 import edu.skidmore.cs326.spring2022.skribbage.common.EventType;
+import edu.skidmore.cs326.spring2022.skribbage.common.Password;
 import edu.skidmore.cs326.spring2022.skribbage.common.User;
 import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserCreateAccountEvent;
 import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserLoginEvent;
+import edu.skidmore.cs326.spring2022.skribbage.persistence.PersistenceFacade;
 //import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserLoginEvent;
 import us.daveread.edu.graphics.shape.Drawable;
 import us.daveread.edu.graphics.shape.impl.Image;
@@ -35,9 +37,30 @@ public class LoginPage extends DrawingSurface {
     private Text createAccount;
 
     /**
+     * login - Text variable that represents the login button.
+     */
+    private Text login;
+
+    /**
+     * changePassword - Text variable that represents the change password
+     * button.
+     */
+    private Text changePassword;
+
+    /**
+     * Password of type password.
+     */
+    private Password forChecking;
+
+    /**
      * navPage - NavigationPage window.
      */
     private NavigationPage navPage;
+
+    /**
+     * PersistenceFacade event.
+     */
+    private final PersistenceFacade persistence;
 
     /**
      * ule - UserCreateAccountEvent object.
@@ -57,7 +80,7 @@ public class LoginPage extends DrawingSurface {
     /**
      * currentUser - User object.
      */
-    private static User currentUser;
+    private User currentUser;
 
     /**
      * createdUsername - String variable that holds the new username.
@@ -84,11 +107,6 @@ public class LoginPage extends DrawingSurface {
      * loginPage - MainFrame window to hold the UI attributes.
      */
     private MainFrame loginPage;
-
-    /**
-     * login - Text variable that represents the login button.
-     */
-    private Text login;
 
     /**
      * username - String variable that holds the user inputted username.
@@ -121,12 +139,6 @@ public class LoginPage extends DrawingSurface {
     private String verifyPasswordToChange;
 
     /**
-     * changePassword - Text variable that represents the change password
-     * button.
-     */
-    private Text changePassword;
-
-    /**
      * homeScreen - HomeScreen window to hold the home screen.
      */
     private HomeScreen homeScreen;
@@ -153,6 +165,7 @@ public class LoginPage extends DrawingSurface {
      * LoginPage constructor Initializes the MainFrame window.
      */
     public LoginPage() {
+        persistence = PersistenceFacade.getInstance();
         LOG.debug("Instance created");
         loginPage = new MainFrame(this, "Skribbage Battle Royale Login", 900,
             900, false);
@@ -210,7 +223,13 @@ public class LoginPage extends DrawingSurface {
                 // ule = (UserCreateAccountEvent) evtFactory.createEvent(
                 // EventType.USER_CREATE_ACCOUNT, this, currentUser);
                 // evtFactory.fireEvent(ule);
-                verifyNewUserCallback();
+                currentUser.setUserName(createdUsername);
+                
+                //Verify if username is available. If so, call password setting.
+                if (persistence.validateUsername(currentUser)) {
+                    createNewUser();
+                }
+                    
                 break;
             default:
                 break;
@@ -220,15 +239,18 @@ public class LoginPage extends DrawingSurface {
     /**
      * verifyNewUserCallback - method to verify a new user is available.
      */
-    public void verifyNewUserCallback() {
+    public void createNewUser() {
         LOG.trace("verifyNewUserCallback method in LoginPage.java");
         createdPassword = getUserInput("New User", "Enter password",
             DialogPosition.CENTER_ALL, true);
         verifyCreatedPassword = getUserInput("New User",
             "Enter password again", DialogPosition.CENTER_ALL, true);
+
         if (createdPassword.equals(verifyCreatedPassword)) {
-            currentUser =
-                new User(null, createdUsername, createdPassword, null);
+            forChecking = new Password(createdPassword);
+            persistence.userCreate(currentUser, forChecking);
+//            currentUser =
+//                new User(null, createdUsername, forChecking, null);
         }
     }
 
@@ -270,25 +292,35 @@ public class LoginPage extends DrawingSurface {
     }
 
     /**
+     * THIS HERE SHOULD BE COMMUNICATION WITH THE BACKEND.
+     * 1) Create a user
+     * 2) Get an instance of the eventFactory.
+     * 3)Create an instance of type USERLOGIN second argument being User
+     * 4) fire the event.
+     */
+
+    /**
      * loggedIn method.
      *
      * @return if the user is logged in
      */
     public boolean loggedIn() {
-        LOG.trace("loggedIn method in LoginPage.java");
-        if (currentUser != null) {
-            if (username.equals(currentUser.getUserName())
-                && password.equals(currentUser.getPassword())) {
-                return true;
-            } else {
-                return false;
-            }
-        } else {
-            System.out
-                .println(
-                    "FALSE username: " + username + " password: " + password);
-            return false;
-        }
+        LOG.debug("Calling backend facade for a login method.");
+        return persistence.login(currentUser, forChecking);
+
+        // if (currentUser != null) {
+        // if (username.equals(currentUser.getUserName())
+        // && password.equals(currentUser.getPassword())) {
+        // return true;
+        // } else {
+        // return false;
+        // }
+        // } else {
+        // System.out
+        // .println(
+        // "FALSE username: " + username + " password: " + password);
+        // return false;
+        // }
     }
 
     /**
@@ -297,6 +329,14 @@ public class LoginPage extends DrawingSurface {
     @Override
     public void drawableMouseClick(Drawable e) {
         LOG.trace("Drawable mouseclick method in LoginPage.java");
+        /**
+         * If Login is pressed. UserName and password need to be asked.
+         * Then event is created and fired.
+         * I
+         * If succesful login, then close the login page and open a navigation
+         * page.
+         * If not succesful, then prompt them a dialog that says, create a user.
+         */
         if (e == login) {
 
             // separate the username and password functionality.
@@ -305,9 +345,12 @@ public class LoginPage extends DrawingSurface {
             this.username = getUserInput("Login", "Enter username",
                 DialogPosition.CENTER_ALL);
             // verifyUsernameExists();
-            password = getUserInput("Login", "Enter password for: " + username,
-                DialogPosition.CENTER_ALL, true);
+            this.password =
+                getUserInput("Login", "Enter password for: " + username,
+                    DialogPosition.CENTER_ALL, true);
+            forChecking = new Password(password);
             // verifyUserExists();
+
             if (loggedIn()) {
                 currentUser.setUserName(username);
                 showMessage("User: " + username, "Successful Log In",
@@ -315,7 +358,7 @@ public class LoginPage extends DrawingSurface {
                 // navPage = NavigationPageManager.getInstance().getNavPage();
                 navPage = new NavigationPage();
                 loginPage.dispose();
-                //closeWindow();
+                // closeWindow();
             } else {
                 showMessage("User not found", "Unsuccessful Log In",
                     DialogType.ERROR);
@@ -333,15 +376,16 @@ public class LoginPage extends DrawingSurface {
                         "Enter new password");
                 }
             }
-        } else if (e == homeScreenButton) {
-            returnToHome();
         } else if (e == createAccount) {
             // create account = 2
             createAccount.setFillColor(Color.GREEN);
             buttonClicked(2, "New User", "Enter username");
+
             if (!createdPassword.equals(verifyCreatedPassword)) {
                 buttonClicked(1, "Passwords did not match", "Enter password");
             }
+        } else if (e == homeScreenButton) {
+            returnToHome();
         }
     }
 
@@ -359,12 +403,12 @@ public class LoginPage extends DrawingSurface {
     /**
      * verifyUserExists - checks if a user object exists.
      */
-    public void verifyUserExists() {
-        LOG.trace("verifyUserExists method in LoginPage.java");
-        currentUser = new User(null, username, password, null);
-        lEvt = (UserLoginEvent) evtFactory.createEvent(EventType.USER_LOGIN,
-            this, currentUser);
-    }
+    // public void verifyUserExists() {
+    // LOG.trace("verifyUserExists method in LoginPage.java");
+    // currentUser = new User(null, username, password, null);
+    // lEvt = (UserLoginEvent) evtFactory.createEvent(EventType.USER_LOGIN,
+    // this, currentUser);
+    // }
 
     /**
      * goToNextPage method - once a user is logged in,
