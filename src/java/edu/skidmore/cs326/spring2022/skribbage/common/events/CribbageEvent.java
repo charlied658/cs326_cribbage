@@ -15,6 +15,7 @@ import java.beans.PropertyChangeEvent;
  * @author Alex Carney
  * Reviewed
  */
+@SuppressWarnings("serial")
 public abstract class CribbageEvent extends PropertyChangeEvent {
 
     /**
