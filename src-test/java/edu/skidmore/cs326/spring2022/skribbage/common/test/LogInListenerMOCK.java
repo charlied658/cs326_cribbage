@@ -3,11 +3,11 @@ package edu.skidmore.cs326.spring2022.skribbage.common.test;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-import edu.skidmore.cs326.spring2022.skribbage.common.EventManager;
+
 import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserLoginEvent;
 
 /**
- * @author sleinasa
+ * 
  */
 public class LogInListenerMOCK implements PropertyChangeListener {
     /**
@@ -26,6 +26,7 @@ public class LogInListenerMOCK implements PropertyChangeListener {
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         UserLoginEvent test = (UserLoginEvent) evt;
+        
 
     }
 

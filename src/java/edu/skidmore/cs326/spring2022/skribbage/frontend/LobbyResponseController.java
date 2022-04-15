@@ -3,11 +3,10 @@ package edu.skidmore.cs326.spring2022.skribbage.frontend;
 import java.beans.PropertyChangeEvent;
 
 import org.apache.log4j.Logger;
+
 /**
- * 
  * @author Sten Leinasaar
- *      Last Edited : 29 March, 2022
- *
+ *         Last Edited : 29 March, 2022
  */
 public class LobbyResponseController {
     /**

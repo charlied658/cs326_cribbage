@@ -11,6 +11,7 @@ import edu.skidmore.cs326.spring2022.skribbage.gamification.AvatarManager;
 
 /**
  * Unit tests for the AvatarManager class.
+ * 
  * @author Charlie Davidson
  */
 public class AvatarManagerTest {
@@ -76,7 +77,7 @@ public class AvatarManagerTest {
         testInstance.assignPlayerAvatar("jsmith", "cat.jpg");
         assertTrue("Avatar not assigned to player properly",
             testInstance.getAvatarFromMap("jsmith")
-            .equals("cat.jpg"));
+                .equals("cat.jpg"));
     }
 
     /**

@@ -2,11 +2,9 @@ package edu.skidmore.cs326.spring2022.skribbage.common.test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 
+import edu.skidmore.cs326.spring2022.skribbage.common.UserRole;
 import org.apache.log4j.Logger;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -21,6 +19,8 @@ public class UserTest {
      * Test instance of type User for testing.
      */
     private User testInstance;
+    
+    
 
     /**
      * Logger instance for logging.
@@ -38,7 +38,8 @@ public class UserTest {
     public void setup() {
         LOG.trace("Setup method in test class reached.");
         testInstance =
-            new User("sleinasa@skidmore.edu", "sleinasa", "password", true);
+            new User("sleinasa@skidmore.edu", "sleinasa",
+                "password", UserRole.AUTHORIZED);
         LOG.trace("Setup finished");
     }
 
@@ -89,21 +90,9 @@ public class UserTest {
     @Test
     public void testIsAuthorized() {
         LOG.trace("Testing isAuthorized method in User class.");
-        assertTrue(testInstance.isAuthorized());
+        assertEquals(testInstance.getUserRole(), UserRole.AUTHORIZED);
         LOG.trace(" Testing isAuthorized.");
     }
 
-    /**
-     * Tearing down the test environment.
-     */
-    @After
-    public void tearDown() {
-        LOG.trace("Started to tear down the testing environment.");
-        testInstance = null;
-        
-        assertNull(testInstance);
-        LOG.trace("Finished tearing down.");
-
-    }
 
 }

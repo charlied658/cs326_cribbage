@@ -1,74 +1,82 @@
-
 package edu.skidmore.cs326.spring2022.skribbage.logic.test;
+
 import org.junit.Test;
+
 import edu.skidmore.cs326.spring2022.skribbage.logic.Player;
 import static org.junit.Assert.assertEquals;
-import org.apache.log4j.Logger;
 import org.junit.Before;
 import edu.skidmore.cs326.spring2022.skribbage.logic.Card;
 import edu.skidmore.cs326.spring2022.skribbage.logic.Hand;
 
-
+/**
+ * Test class for player.
+ * 
+ * @author lappiaha
+ */
 public class TestPlayer {
-	/**
-	 * Tests for the player class instance for the
-	 */
-	private Player testInstance ;
-	/**
-	 * Card instance to refer to methods in the card class
-	 */
-	public Card c;
-	/**
-	 * Hand instance to refer to methods in the hand class
-	 */
-	public Hand h;
-	
-	/**
-	 * Setup for the Player testing
-	 */
-	@Before
-	public void setup(){
-		testInstance = new Player();
-		testInstance.setName("abby");
-		c = new Card('J', Suit.HEARTS);
-		h.addCardToHand(c);
-		testInstance.setHand(h);
-		testInstance.initializePoints(0);
-		testInstance.addPoints(2);
-		testInstance.getPoints(2);
-	}
-	
-	/**
-	 * Test getName method
-	 */
-	@Test
-	public void testGetName() {
-		assertEquals("abby",testInstance.getName());
-	}
-	/**
-	 * Test setHand method
-	 */
-	@Test
-	public void testSetHand() {
-		assertEquals(h, testInstance.setHand());
-	}
-	/**
-	 * Test addPoints method
-	 */
-	public void testAddPoints() {
-		assertEquals(2, testInstance.addPoints());
-	}
-	/**
-	 * Test getPoints method 
-	 */
-	public void testGetPoints() {
-		assertEquals(2, testInstance.getPoints());
-	}
-	/**
-	 * test intitalizePoints method 
-	 */
-	public void initializePoints() {
-		assertEquals(0, testInstance.initializePoints());
-	}
+    /**
+     * Tests instance for the player class.
+     */
+    private Player testInstance;
+
+    /**
+     * Card instance to refer to methods in the card class.
+     */
+    private Card c;
+
+    /**
+     * Hand instance to refer to methods in the hand class.
+     */
+    private Hand h;
+
+    /**
+     * Setup for the Player testing.
+     */
+    @Before
+    public void setup() {
+        /**
+         * test instance for set name.
+         */
+        testInstance.setName("abby");
+        /**
+         * card instance to test.
+         */
+        c = new Card('J', Suit.HEARTS);
+        /**
+         * add card to hand for player hand.
+         */
+        h.addCardToHand(c);
+        /**
+         * set the player hand.
+         */
+        testInstance.setHand(h);
+        /**
+         * test instance to get point. 
+         */
+        testInstance.getPoints(2);
+    }
+
+    /**
+     * Test getName method.
+     */
+    @Test
+    public void testGetName() {
+        assertEquals("abby", testInstance.getName());
+    }
+
+    /**
+     * Test setHand method.
+     */
+    @Test
+    public void testSetHand() {
+        assertEquals(h, testInstance.setHand());
+    }
+    /**
+     * Test getPoints method.
+     */
+    @Test
+    public void testGetPoints() {
+        assertEquals(2, testInstance.getPoints());
+    }
 
 }

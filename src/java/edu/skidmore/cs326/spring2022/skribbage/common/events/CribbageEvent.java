@@ -1,7 +1,7 @@
 package edu.skidmore.cs326.spring2022.skribbage.common.events;
 
 import edu.skidmore.cs326.spring2022.skribbage.common.EventType;
-import edu.skidmore.cs326.spring2022.skribbage.logic.Game;
+import edu.skidmore.cs326.spring2022.skribbage.common.Game;
 
 import java.beans.PropertyChangeEvent;
 
@@ -41,7 +41,7 @@ public abstract class CribbageEvent extends PropertyChangeEvent {
      * @return game object stored with this event
      */
     public Game getGame() {
-        return this.game;
+        return game;
     }
 
     /**
@@ -49,5 +49,5 @@ public abstract class CribbageEvent extends PropertyChangeEvent {
      *
      * @return String type of the event name.
      */
-    public abstract String getEventName();
+    public abstract EventType getEventType();
 }

@@ -18,7 +18,6 @@ import us.daveread.edu.graphics.surface.MainFrame;
 import us.daveread.edu.utilities.Utility;
 import us.daveread.edu.graphics.shape.impl.Text;
 
-
 /**
  * This class tests the functionality of importing, storing, and displaying
  * playing cards needed for the game.
@@ -50,7 +49,7 @@ public class PlayingCardsDisplayDEMO extends DrawingSurface {
      * mainframeHeight - int variable to hold main frame height.
      */
     private int mainframeHeight = 900;
-    
+
     /**
      * refreshButton - refreshes the page and loads a new card.
      */
@@ -92,8 +91,8 @@ public class PlayingCardsDisplayDEMO extends DrawingSurface {
     private void setup() {
         LOG.trace("Entered TestPlayingCardsDisplay() setup");
         setLayout(null);
-        
-        refreshButton = new Text("Refresh", new Point(375, 450), 40, 
+
+        refreshButton = new Text("Refresh", new Point(375, 450), 40,
             Color.PINK, Color.BLACK);
         /*
          * for (int i = 0; i < 5; i++) {
@@ -110,9 +109,9 @@ public class PlayingCardsDisplayDEMO extends DrawingSurface {
             add(cards[i]);
             Utility.pause(500);
         }
-        add(new Text("Those are all the cards!", new Point(265, 500), 30, 
+        add(new Text("Those are all the cards!", new Point(265, 500), 30,
             Color.BLACK));
-        
+
         // add(refreshButton);
         // System.out.println("\n" + cards[39].toString());
         // add(new Image("ungovernable.jpg", new Point(0, 0), 0.75, null));
@@ -130,7 +129,7 @@ public class PlayingCardsDisplayDEMO extends DrawingSurface {
             System.out.println(card.toString());
         }
     }
-    
+
     @Override
     public void drawableMouseClick(Drawable e) {
         LOG.trace("DrawableMosuceClick in TestPlayingCardsDisplay.java");
@@ -138,7 +137,7 @@ public class PlayingCardsDisplayDEMO extends DrawingSurface {
             mf.dispose();
             new PlayingCardsDisplayDEMO();
         }
-       
+
     }
 
     /**

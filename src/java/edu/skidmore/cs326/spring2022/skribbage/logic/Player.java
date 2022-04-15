@@ -1,6 +1,6 @@
 
 package edu.skidmore.cs326.spring2022.skribbage.logic;
-
+import edu.skidmore.cs326.spring2022.skribbage.common.Hand;
 
 /**
  * @author lappiaha
@@ -10,21 +10,25 @@ public class Player {
      * boolean that will determine which player is the dealer.
      */
     private boolean isDealer = false;
+
     /**
      * int to for the player's game points.
      */
     private int points;
+
     /**
      * object to utilize hand class for player.
      */
     private Hand hand = new Hand();
+
     /**
      * String to hold the player name.
      */
- 
+
     private String playerName;
+
     /**
-     * contructor to initialize player. 
+     * constructor to initialize player.
      */
     public Player() {
         // initializes the player
@@ -32,6 +36,7 @@ public class Player {
 
     /**
      * Get the name of the player.
+     * 
      * @return playerName
      */
     public String getName() {
@@ -42,10 +47,15 @@ public class Player {
      * Set the name of the player.
      */
     public void setName() {
+        // need info from frontEnd
+        // player1 = name1.getName();
+        // player2 = name2.getName();
         // claims the player name
     }
+
     /**
      * set the hand to the player's hand.
+     * 
      * @param playerHand
      */
     public void setHand(Hand playerHand) {
