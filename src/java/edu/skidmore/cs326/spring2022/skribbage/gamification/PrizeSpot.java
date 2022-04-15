@@ -11,8 +11,6 @@ import org.apache.log4j.Logger;
  */
 public class PrizeSpot {
 
-    Random dice = new Random();
-
     /**
      * Logger for the class.
      */
@@ -22,8 +20,13 @@ public class PrizeSpot {
      * Create static resources.
      */
     static {
-        LOG = Logger.getLogger(BattleSpot.class);
+        LOG = Logger.getLogger(PrizeSpot.class);
     }
+
+    /**
+     * Die.
+     */
+    private Die die;
 
     /**
      * Gives the player a prize when they land on the prize spot.
@@ -32,7 +35,7 @@ public class PrizeSpot {
      */
     public void rewardPlayer(Player player) {
 
-        int diceRoll = dice.nextInt(6);
+        int diceRoll = die.rollDie(6, 0, true);
         LOG.info("rewardPenalty: Dice roll is " + diceRoll);
 
     }

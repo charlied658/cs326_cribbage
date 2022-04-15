@@ -88,9 +88,8 @@ public class UserTest {
     @Test
     public void testIsAuthorized() {
         LOG.trace("Testing isAuthorized method in User class.");
-        //assertTrue(testInstance.isAuthorized());
+        assertEquals(testInstance.getUserRole(), UserRole.AUTHORIZED);
         LOG.trace(" Testing isAuthorized.");
     }
-
 
 }

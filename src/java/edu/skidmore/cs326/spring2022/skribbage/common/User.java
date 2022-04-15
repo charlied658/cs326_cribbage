@@ -18,12 +18,39 @@ public class User implements Payload {
 
     /**
      * Private string attribute to store a username of a user.
+     * 
+     * @reviewed Tinaye Mawocha removed keyword final as username may need to
+     *           change
      */
-    private final String userName;
+    private String userName;
 
     /**
-     * Private string attribute to store a password of a user.
-     * //TODO: DEPRECATED; Should be a Password object type soon
+     * Private string attribute to store a userId of a user.
+     * 
+     * @reviewed Tinaye Mawocha removed keyword final as username may need to
+     *           change
+     */
+    private int userId;
+
+    /**
+     * @return the user's ID
+     */
+    public int getUserId() {
+        return userId;
+    }
+
+    /**
+     * Functionality to update user's ID.
+     * 
+     * @param id
+     *            new role.
+     */
+    public void setUserId(int id) {
+        this.userId = id;
+    }
+
+    /**
+     * Password.
      */
     private final String password;
 
@@ -45,10 +72,14 @@ public class User implements Payload {
     }
 
     /**
-     * @param email        User's email
-     * @param userName     userName of user
-     * @param password     Password submitted
-     * @param userRole Determines whether or not the user is logged in.
+     * @param email
+     *            User's email
+     * @param userName
+     *            userName of user
+     * @param password
+     *            Password submitted
+     * @param userRole
+     *            Determines whether or not the user is logged in.
      * @see UserRole
      */
     public User(String email, String userName, String password,
@@ -93,13 +124,25 @@ public class User implements Payload {
      * @return The authorization status of this user.
      */
     public UserRole getUserRole() {
-        LOG.debug("Returning the boolean value of isAuthorized");
+        LOG.debug("Returning a user role");
         return userRole;
     }
 
     /**
+     * setUserName method.
+     * 
+     * @param username
+     *            to set.
+     */
+    public void setUserName(String username) {
+        this.userName = username;
+    }
+
+    /**
      * Functionality to update user's permission level.
-     * @param userRole new role.
+     * 
+     * @param userRole
+     *            new role.
      */
     public void setUserRole(
         UserRole userRole) {
@@ -109,7 +152,9 @@ public class User implements Payload {
     /**
      * Compare two users for equality. Does not compare authorization level
      * or passwords.
-     * @param o Object to compare to this user.
+     * 
+     * @param o
+     *            Object to compare to this user.
      * @return True if the users are equal, false otherwise.
      */
     @Override
@@ -126,6 +171,7 @@ public class User implements Payload {
 
     /**
      * Generate hash code for this object.
+     * 
      * @return int hashcode
      */
     @Override
@@ -133,7 +179,8 @@ public class User implements Payload {
         return Objects.hash(email, userName);
     }
 
-    @Override public String toString() {
+    @Override
+    public String toString() {
         return "User{" + "email='" + email + '\''
             + ", userName='" + userName + '\''
             + ", userRole=" + userRole

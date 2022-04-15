@@ -5,7 +5,8 @@ import org.apache.log4j.Logger;
 import org.junit.Before;
 import org.junit.Test;
 
-import static junit.framework.TestCase.*;
+import static junit.framework.TestCase.assertEquals;
+import static junit.framework.TestCase.assertNotNull;
 import static org.junit.Assert.assertNotEquals;
 
 /**
@@ -54,7 +55,8 @@ public class LocationTest {
     public void setup() {
         testInstance = new Location(ROW_TEST_VALUE, COL_TEST_VALUE);
         testInstanceTwo = new Location(ROW_TEST_VALUE, COL_TEST_VALUE);
-        testInstanceThree = new Location(ROW_TEST_VALUE * 2, COL_TEST_VALUE * 2);
+        testInstanceThree = new Location(ROW_TEST_VALUE * 2,
+            COL_TEST_VALUE * 2);
     }
 
     /**

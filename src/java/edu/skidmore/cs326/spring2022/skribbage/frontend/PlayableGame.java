@@ -1,11 +1,15 @@
 package edu.skidmore.cs326.spring2022.skribbage.frontend;
 
-import java.util.Arrays;
+//import java.sql.Date;
+import java.util.ArrayList;
+//import java.util.Arrays;
+import java.util.Calendar;
 
 import org.apache.log4j.Logger;
 
 /**
  * @author Jonah Marcus
+ *         Last modified: 13 April, 2022
  *         CODEREVIEW BY STEN
  *         in set player1 and play2 methods, you seem to have it the wrong way.
  *         Instead of assigning player1 value to the parameter you take in, you
@@ -20,45 +24,22 @@ import org.apache.log4j.Logger;
  *         we should be able to use dateStamp package or some built in java
  *         methods.
  */
-public class PlayableGame implements ActiveGame {
+public class PlayableGame {
     /**
-     * 
+     * dateStamp - Last date of played game.
      */
-    private int month = 0;
+    private Calendar dateStamp = Calendar.getInstance();
 
     /**
-     * 
+     * gameName - User-specified game name. If no name is specified, name
+     * is YYYYMMDD timestamp.
      */
-    private int day = 0;
+    private String gameName = "";
 
     /**
-     * 
+     * players - Arraylist of players.
      */
-    private int year = 0;
-
-    /**
-     * 
-     */
-    private String[] months =
-        { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug",
-            "Sep", "Oct", "Nov", "Dec" };
-
-    /**
-     * 
-     */
-    private String gameName = ""; // Name of the game specified by user. If no
-                                  // name is
-    // specified, name is YYYYMMDD timestamp.
-
-    /**
-     * 
-     */
-    private String player1 = ""; // Name of player 1
-
-    /**
-     * 
-     */
-    private String player2 = ""; // Name of player 2
+    private ArrayList<String> players = new ArrayList<String>();
 
     /**
      * 
@@ -78,48 +59,30 @@ public class PlayableGame implements ActiveGame {
     }
 
     /**
-     * @param day
      * @param month
+     * @param day
      * @param year
-     * @param p1
-     * @param p2
+     * @param users
      * @param game
      * @param completed
      */
-    public PlayableGame(int month, int day, int year, String p1, String p2,
+    public PlayableGame(int year, int month, int day, ArrayList<String> users,
         String game, boolean completed) {
         LOG.trace("Constructor of PlayableGame reached");
-        setDay(day);
-        setMonth(month);
-        setYear(year);
-        setPlayer1(p1);
-        setPlayer2(p2);
+        dateStamp.set(Calendar.YEAR, year);
+        dateStamp.set(Calendar.MONTH, month);
+        dateStamp.set(Calendar.DATE, day);
+        players = users;
         setName(game);
         setCompletionStatus(completed);
     }
 
     /**
-     * @return month
+     * @return dateStamp
      */
-    public int getMonth() {
-        LOG.trace("Returning the integer value of month");
-        return month;
-    }
-
-    /**
-     * @return day
-     */
-    public int getDay() {
-        LOG.trace("Returning the integer value of day");
-        return day;
-    }
-
-    /**
-     * @return year
-     */
-    public int getYear() {
-        LOG.trace("Returning the integer value of year");
-        return year;
+    public Calendar getDate() {
+        LOG.trace("getDate() method in PlayableGame.java");
+        return dateStamp;
     }
 
     /**
@@ -131,19 +94,10 @@ public class PlayableGame implements ActiveGame {
     }
 
     /**
-     * @return player1
+     * @return players
      */
-    public String getPlayer1() {
-        LOG.trace("Returning the name of player 1 as a String");
-        return player1;
-    }
-
-    /**
-     * @return player2
-     */
-    public String getPlayer2() {
-        LOG.trace("Returning the name of player 2 as a String");
-        return player2;
+    public ArrayList<String> getPlayers() {
+        return players;
     }
 
     /**
@@ -153,22 +107,6 @@ public class PlayableGame implements ActiveGame {
         LOG.trace("Returning the boolean value indicating whether or "
             + "not a game is completed");
         return completed;
-    }
-
-    /**
-     * Formats an array of Strings to provide information for the
-     * PastGamesPage to display. The array contains, in order,
-     * YYYYMMDD timestamp, the game's name inputted by user,
-     * (YYYYMMDD timestamp if this is empty), the name of the
-     * first player, and the name of the second player.
-     * 
-     * @return The array of Strings as specified above.
-     */
-    public String[] getGameInfo() {
-        String[] toReturn = new String[4];
-        
-
-        return toReturn;
     }
 
     /**
@@ -184,7 +122,7 @@ public class PlayableGame implements ActiveGame {
                 "Month cannot be less than 1 or greater than 12.");
 
         } else {
-            month = mm;
+            dateStamp.set(Calendar.MONTH, mm);
         }
     }
 
@@ -195,11 +133,12 @@ public class PlayableGame implements ActiveGame {
      * @throws IllegalArgumentException
      */
     public void setDay(int dd) throws IllegalArgumentException {
+        LOG.trace("setDay() method in PlayableGame.java");
         if (dd < 1 || dd > 31) {
             throw new IllegalArgumentException(
                 "Day cannot be less than 1 or greater than 31.");
         } else {
-            day = dd;
+            dateStamp.set(Calendar.DATE, dd);
         }
     }
 
@@ -207,28 +146,39 @@ public class PlayableGame implements ActiveGame {
      * @param yy
      */
     public void setYear(int yy) {
-        year = yy;
+        LOG.trace("setYear() method in PlayableGame.java");
+        dateStamp.set(Calendar.YEAR, yy);
     }
 
     /**
      * @param name
      */
     public void setName(String name) {
+        LOG.trace("setName() method in PlayableGame.java");
         gameName = name;
     }
 
     /**
-     * @param p1
+     * @param player
+     * @throws Error
+     *             - if maximum number of players are already
+     *             in the game.
      */
-    public void setPlayer1(String p1) {
-        player1 = p1;
+    public void addPlayer(String player) throws Error {
+        if (players.size() >= 3) {
+            throw new Error("Maximum number of players already in game.");
+        } else {
+            players.add(player);
+        }
     }
 
     /**
-     * @param p2
+     * @param player
      */
-    public void setPlayer2(String p2) {
-        player2 = p2;
+    public void removePlayer(String player) {
+        if (players.size() > 0) {
+            players.remove(player);
+        }
     }
 
     /**
@@ -236,16 +186,6 @@ public class PlayableGame implements ActiveGame {
      */
     public void setCompletionStatus(boolean isCompleted) {
         completed = isCompleted;
-    }
-
-    /**
-     * toString method.
-     * 
-     * @return string rep.
-     */
-    public String convertToString() {
-        return player1 + " vs " + player2 + " on " + day + "\\" + month
-            + "\\ " + year;
     }
 
 }

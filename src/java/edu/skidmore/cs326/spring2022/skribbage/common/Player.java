@@ -2,9 +2,12 @@ package edu.skidmore.cs326.spring2022.skribbage.common;
 
 import java.util.HashMap;
 
+<<<<<<< HEAD
 import edu.skidmore.cs326.spring2022.skribbage.gamification.Avatar;
 import edu.skidmore.cs326.spring2022.skribbage.logic.Hand;
 
+=======
+>>>>>>> 9ac4f8a3d4a9dc6c9aa57efb4c86b491553b9503
 /**
  * Generic Player class used by logic and gamification.
  * @author Charlie Davidson
@@ -36,7 +39,13 @@ public class Player {
      * User associated with player.
      */
     private User user;
-    
+
+    /**
+     * Hash map that stores items and their quantity.
+     */
+    private HashMap<String, Integer> inventory =
+        new HashMap<String, Integer>();
+
     /**
      * Inventory of the player.
      */
@@ -83,7 +92,7 @@ public class Player {
     public String getName() {
         return name;
     }
-    
+
     /**
      * Get user associated with player.
      * 
@@ -102,7 +111,7 @@ public class Player {
     public void setName(String name) {
         this.name = name;
     }
-    
+
     /**
      * Set player username.
      * 
@@ -111,7 +120,7 @@ public class Player {
     public void setUsername(String username) {
         this.username = username;
     }
-    
+
     /**
      * Set player user.
      * 
@@ -120,6 +129,7 @@ public class Player {
     public void setUser(User user) {
         this.user = user;
     }
+<<<<<<< HEAD
     
     /**
      * Get player inventory.
@@ -215,4 +225,7 @@ public class Player {
         isDealer = dealer;
     }
     
+=======
+
+>>>>>>> 9ac4f8a3d4a9dc6c9aa57efb4c86b491553b9503
 }

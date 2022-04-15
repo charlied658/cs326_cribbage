@@ -44,6 +44,11 @@ import static org.junit.Assert.assertEquals;
 import org.apache.log4j.Logger;
 import org.junit.Before;
 
+/**
+ * TEst player.
+ * 
+ * @author
+ */
 public class TestPlayer {
     /**
      * Tests for the player class instance for the.

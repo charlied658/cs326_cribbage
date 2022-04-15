@@ -5,7 +5,7 @@ import java.util.HashMap;
 import org.apache.log4j.Logger;
 
 /**
- * Prototype for each special card and item in the shop.
+ * Re-Battle Card item shop class.
  * 
  * @author Muaded Almheiri
  */

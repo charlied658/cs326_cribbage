@@ -30,6 +30,12 @@ public class AccountController implements PropertyChangeListener {
         LOG = Logger.getLogger(PlayableGame.class);
     }
 
+    // @Override
+    // public void propertyChange(PropertyChangeEvent evt) {
+    // // Temporary to resolve errors until database is up and running.
+    //
+    // }
+
     /**
      * Temporary instance of database manager used as tracer bullet.
      */
@@ -42,7 +48,7 @@ public class AccountController implements PropertyChangeListener {
 
     /**
      * Determine whether a user is validated from database.
-     * 
+     *
      * @param userToValidate
      *            The user attempting to manage their account.
      * @return
@@ -71,13 +77,13 @@ public class AccountController implements PropertyChangeListener {
          */
 
         /*
-         * Requires downcasting from PropertyChangeEvent, this is where using an
-         * AccountEvent abstract class is helpful -- We can share functionality
+         * Requires downcasting from PropertyChangeEvent,this is where usingan
+         * AccountEvent abstract class is helpful --We can share functionality
          * between all account events to do similar tasks like these ones.
          * (hashing
          * and validating)
          */
-        System.out.println("AccountController Event: " + (AccountEvent) evt);
+        System.out.println("AccountController Event: " + evt);
         User associatedUser = ((AccountEvent) evt).getUser();
 
         /**
