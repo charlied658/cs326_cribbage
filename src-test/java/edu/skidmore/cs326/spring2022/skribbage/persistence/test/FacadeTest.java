@@ -78,10 +78,20 @@ public class FacadeTest {
 	/**
 	 * Testing when the user wants to log in with the correct username and password
 	 */
+//	@Test
+//	public void loginCorrect() {
+//		boolean iscorrect = facadeinstanace.login(correctTestUser, correctTestPassword);
+//		assertEquals(true, iscorrect);
+//	}
+	
+	/**
+	 * Testing when the user wants to log in with the correct username and password
+	 */
 	@Test
-	public void loginCorrect() {
-		boolean iscorrect = facadeinstanace.login(correctTestUser, correctTestPassword);
-		assertEquals(true, iscorrect);
+	public void createUserCorrect() {
+		facadeinstanace.userCreate(wrongTestUser, wrongTestPassword);
+		//boolean iscorrect = facadeinstanace.login(wrongTestUser, wrongTestPassword);
+		//assertEquals(true, iscorrect);
 	}
 
 }
