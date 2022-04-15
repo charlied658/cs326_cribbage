@@ -120,43 +120,43 @@ public class UsernameProxy {
      */
     public boolean usernameCheck(String username) {
 
-        Boolean usernameIsGood = true;
-        FileInputStream file = null;
-        Properties prop = null;
-        String filePath =
-            "/students/home/tmawocha/eclipse-workspace/"
-                + "SkribbageBattleRoyale/src/java/edu/skidmore/cs326"
-                + "/spring2022/skribbage/persistence/badnicknames.properties";
-        try {
-
-            file = new FileInputStream(filePath);
-            prop = new Properties();
-
-            if (file == null) {
-                System.out.println("Sorry, unable to find config.properties");
-                return false;
-            }
-
-            prop.load(file);
-            // get the property value and print it out
-
-            for (int i = 1; i <= AMOUNT_OF_BANNED_WORDS; i++) {
-                String altProp = "$" + i;
-
-                String tempban = prop.getProperty(altProp);
-                tempban = tempban.trim();
-
-                if (username.contains(tempban)) {
-                    usernameIsGood = false;
-                }
-            }
-
-        }
-        catch (IOException ex) {
-            ex.printStackTrace();
-        }
-
-        return usernameIsGood;
+//        Boolean usernameIsGood = true;
+//        FileInputStream file = null;
+//        Properties prop = null;
+//        String filePath =
+//            "/SkribbageBattleRoyale/src/java/edu/skidmore/cs326/spring2022/"
+//            + "skribbage/persistence/BadNicknames";
+//        try {
+//
+//            file = new FileInputStream(filePath);
+//            prop = new Properties();
+//
+//            if (file == null) {
+//                System.out.println("Sorry, unable to find config.properties");
+//                return false;
+//            }
+//
+//            prop.load(file);
+//            // get the property value and print it out
+//
+//            for (int i = 1; i <= AMOUNT_OF_BANNED_WORDS; i++) {
+//                String altProp = "$" + i;
+//
+//                String tempban = prop.getProperty(altProp);
+//                tempban = tempban.trim();
+//
+//                if (username.contains(tempban)) {
+//                    usernameIsGood = false;
+//                }
+//            }
+//
+//        }
+//        catch (IOException ex) {
+//            ex.printStackTrace();
+//        }
+//
+//        return usernameIsGood;
+        return true;
     }
 
     /**

@@ -50,10 +50,12 @@ public class DatabaseManagerTest {
     @Before
     public void setUp() throws Exception {
         databaseinstance = new DatabaseManager();
-        wrongTestUser = new User("DJKhaled.com", "Khaled", "AnotherOne", null);
+        wrongTestUser = new User("DJKhaled.com", "Khaled",
+            new Password("AnotherOne"), null);
         wrongTestPassword = new Password("AnotherOne");
         correctTestUser =
-            new User("nchantzi@skidmore.edu", "nchantzi", "ILoveSQL", null);
+            new User("nchantzi@skidmore.edu", "nchantzi",
+                new Password("ILoveSQL"), null);
         correctTestPassword = new Password("ILoveSQL");
     }
 

@@ -115,7 +115,7 @@ public class AccountEventLoopTest {
             EventType.USER_LOGIN_RESPONSE);
 
         testPassword = new Password(TEST_PASSWORD);
-        testUser = new User(TEST_EMAIL, TEST_USERNAME, TEST_PASSWORD,
+        testUser = new User(TEST_EMAIL, TEST_USERNAME, testPassword,
             UserRole.UNAUTHORIZED);
 
         // Actually fire the event
