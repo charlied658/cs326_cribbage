@@ -3,8 +3,8 @@ package edu.skidmore.cs326.spring2022.skribbage.common;
 import java.util.ArrayList;
 
 /**
- * Hand Class representing the methods.
- * TODO (DSR): Lets talk through the design of Card, Hand, Deck...
+ * Bean class for Hand, that contains a constructor for the Hand, and
+ * a set and get method.
  *
  * @author Dorjee
  *         Last Edited: Dorjee
@@ -14,35 +14,25 @@ public class Hand {
     /**
      * Creating variable hand to hold a players cards.
      */
-    private ArrayList<Card> hand;
+    private ArrayList<Card> cardsInHand;
 
     /**
      * Constructor for Hand that initializes an ArrayList of Cards.
      */
     public Hand() {
 
-        hand = new ArrayList<Card>();
+        cardsInHand = new ArrayList<Card>();
 
     }
 
     /**
-     * Adding a card to hand. Validity of card is already checked by card class.
-     *
-     * @param card
-     *            to add
+     * Takes in a param of cards and sets those to be the hand.
+     * 
+     * @param cards
+     *            cards to be set as the hand.
      */
-    public void addCardToHand(Card card) {
-        hand.add(card);
-    }
-
-    /**
-     * Call to remove a card from a players hand.
-     *
-     * @param card
-     *            the card to be removed from hand.
-     */
-    public void removeCardFromHand(Card card) {
-        hand.remove(card);
+    public void setCardsInHand(ArrayList<Card> cards) {
+        cardsInHand = cards;
     }
 
     /**
@@ -50,8 +40,8 @@ public class Hand {
      *
      * @return Hand the players current hand
      */
-    public ArrayList<Card> getHand() {
-        return hand;
+    public ArrayList<Card> getCardsInHand() {
+        return cardsInHand;
     }
 
 }
