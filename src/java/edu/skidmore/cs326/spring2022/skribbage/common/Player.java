@@ -5,7 +5,6 @@ import java.util.HashMap;
 import edu.skidmore.cs326.spring2022.skribbage.gamification.Avatar;
 import edu.skidmore.cs326.spring2022.skribbage.common.Hand;
 
-
 /**
  * Generic Player class used by logic and gamification.
  * @author Charlie Davidson
