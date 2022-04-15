@@ -384,7 +384,7 @@ public class LoginPage extends DrawingSurface {
     public void returnToHome() {
         LOG.trace("returnToHome method in LoginPage.java");
         homeScreen = new HomeScreen();
-        // closeWindow();
+        closeWindow();
         // loginPage.dispose();
     }
 
