@@ -10,6 +10,7 @@ import static junit.framework.TestCase.*;
 
 /**
  * Simple class for testing the user bean.
+ * 
  * @author Alex Carney
  */
 public class PasswordTest {
@@ -29,7 +30,6 @@ public class PasswordTest {
      */
     private static final String TEST_PASSWORD_VALUE = "test_password";
 
-
     /**
      * Logger instance for logging.
      */
@@ -46,7 +46,7 @@ public class PasswordTest {
     public void setup() {
         testInstance = new Password(TEST_PASSWORD_VALUE);
 
-        //Grab the password hasher instance
+        // Grab the password hasher instance
         passwordHasher = PasswordHasher.getInstance();
 
     }
@@ -86,11 +86,8 @@ public class PasswordTest {
      */
     @Test
     public void testAddingSaltedPassword() {
-        //TODO: Why is password hasher all protected??
-//        testInstance.setSalt();
+        // TODO: Why is password hasher all protected??
+        // testInstance.setSalt();
     }
-
-
-
 
 }

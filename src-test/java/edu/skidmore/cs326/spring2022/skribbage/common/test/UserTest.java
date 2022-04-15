@@ -19,8 +19,6 @@ public class UserTest {
      * Test instance of type User for testing.
      */
     private User testInstance;
-    
-    
 
     /**
      * Logger instance for logging.
@@ -93,6 +91,5 @@ public class UserTest {
         assertEquals(testInstance.getUserRole(), UserRole.AUTHORIZED);
         LOG.trace(" Testing isAuthorized.");
     }
-
 
 }
