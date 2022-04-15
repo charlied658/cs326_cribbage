@@ -1,5 +1,7 @@
 package edu.skidmore.cs326.spring2022.skribbage.persistence;
 
+import java.util.HashMap;
+
 import org.apache.log4j.Logger;
 
 import edu.skidmore.cs326.spring2022.skribbage.common.Game;
@@ -160,12 +162,7 @@ public final class PersistenceFacade implements UserManagement, GameManagement, 
 	
 	
 
-	//to be replaced by frontend
-	private String passwordPrompt() {
-
-		LOG.warn("Unhandled method, See passwordPrompt() + login() method inPersistenceFacade or contact persistence team");
-		return "";
-	}
+	
 
 	
 	public static void main(String[] args) {
@@ -176,9 +173,11 @@ public final class PersistenceFacade implements UserManagement, GameManagement, 
 
 
 	@Override
-	public String displayInventory(User user) {
+	public HashMap<String, Item> displayInventory(User user) {
 		
-		return dm.inventoryQuery(user.getUserId()).toString() ;
+		HashMap<String, Item> tempMap = dm.inventoryQuery(user.getUserId());
+		System.out.println(tempMap.toString());
+		return tempMap ;
 	}
 	
 	@Override

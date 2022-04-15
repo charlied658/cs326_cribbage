@@ -1,10 +1,12 @@
 package edu.skidmore.cs326.spring2022.skribbage.persistence;
 
+import java.util.HashMap;
+
 import edu.skidmore.cs326.spring2022.skribbage.common.User;
 
 public interface InventoryManagement {
 
-	public String displayInventory(User user);
+	public HashMap<String, Item> displayInventory(User user);
 
 	public boolean addItem(User user, String item, int quantity);
 
