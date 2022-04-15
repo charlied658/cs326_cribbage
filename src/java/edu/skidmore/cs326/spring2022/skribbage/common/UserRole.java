@@ -2,6 +2,7 @@ package edu.skidmore.cs326.spring2022.skribbage.common;
 
 /**
  * Basic enum (no metadata yet) for different roles a user can obtain.
+ * 
  * @author Alex Carney
  */
 public enum UserRole {

@@ -27,7 +27,7 @@ public class UserDeleteAccountEvent extends AccountEvent {
      * @param source
      *            the bean that fired the event
      * @param args
-     *            List of arguments. 
+     *            List of arguments.
      * @throws IllegalArgumentException
      *             if {@code source} is {@code null}
      */

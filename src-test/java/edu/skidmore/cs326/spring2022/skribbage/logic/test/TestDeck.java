@@ -13,9 +13,9 @@ import org.junit.Test;
  * Tests for Deck Class.
  */
 public class TestDeck {
-  /**
-   * Deck instance to use in tests.
-   */
+    /**
+     * Deck instance to use in tests.
+     */
     private Deck testInstance;
 
     /**

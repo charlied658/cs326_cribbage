@@ -3,28 +3,54 @@ package edu.skidmore.cs326.spring2022.skribbage.persistence;
 import java.io.InputStream;
 import java.util.Properties;
 
+/**
+ * Database properties class.
+ * @author ??
+ *
+ */
 public class DatabaseProperties {
 
+    /**
+     * fill in.
+     */
     private static final String PROPERTY_FILE_NAME = "database.properties";
 
+    /**
+     * fill in.
+     */
     private Properties properties;
 
+    /**
+     * fill in.
+     */
     private static final DatabaseProperties INSTANCE;
 
     static {
         INSTANCE = new DatabaseProperties();
     }
 
+    /**
+     * fill in.
+     * @return instance.
+     */
     public static DatabaseProperties getInstance() {
         return INSTANCE;
     }
 
+    /**
+     * fill in.
+     * @param key
+     * @return key
+     */
     public String getValue(String key) {
 
         return (String) properties.get(key);
 
     }
 
+    /**
+     * constructor.
+     */
     private DatabaseProperties() {
 
         InputStream in =

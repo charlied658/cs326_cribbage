@@ -1,6 +1,5 @@
 package edu.skidmore.cs326.spring2022.skribbage.common.test;
 
-
 import edu.skidmore.cs326.spring2022.skribbage.common.EventFactory;
 import edu.skidmore.cs326.spring2022.skribbage.common.EventManager;
 import edu.skidmore.cs326.spring2022.skribbage.common.Password;
@@ -21,6 +20,7 @@ import static org.junit.Assert.assertNull;
  * Full test of event functionality. Mocks an interaction between
  * a user logging in on the front end, and being authenticated and
  * returned by the back end.
+ * 
  * @author Alex Carney
  */
 public class AccountEventLoopTest {
@@ -118,7 +118,7 @@ public class AccountEventLoopTest {
         testUser = new User(TEST_EMAIL, TEST_USERNAME, TEST_PASSWORD,
             UserRole.UNAUTHORIZED);
 
-        //Actually fire the event
+        // Actually fire the event
         testEventInstance = (UserLoginEvent) testFactoryInstance
             .createEvent(EventType.USER_LOGIN, this, testUser);
         assertNotNull(testEventInstance);
@@ -126,7 +126,7 @@ public class AccountEventLoopTest {
         testFactoryInstance.fireEvent(testEventInstance);
         LOG.trace("fired said event");
 
-        //        Fire an event that should be ignored
+        // Fire an event that should be ignored
         testFalseEventInstance = ((UserCreateAccountEvent) testFactoryInstance
             .createEvent(EventType.USER_CREATE_ACCOUNT, this, testUser));
         assertNotNull(testFalseEventInstance);

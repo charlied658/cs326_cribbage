@@ -14,16 +14,6 @@ public class UserLoginResponseEvent extends AccountResponseEvent {
     private static final EventType EVENTTYPE = EventType.USER_LOGIN_RESPONSE;
 
     /**
-     * Getter for user.
-     * 
-     * @return the user
-     */
-    @Override
-    public User getUser() {
-        return user;
-    }
-
-    /**
      * Default constructor.
      * 
      * @param source
@@ -34,7 +24,22 @@ public class UserLoginResponseEvent extends AccountResponseEvent {
      */
     public UserLoginResponseEvent(Object source, Object... args) {
         super(source, EventType.USER_LOGIN_RESPONSE, (User) args[0],
-            (Boolean) args[1],
-            (String) args[2]);
+            (LoginResponse) args[1]);
+    }
+
+    /**
+     * Allows other classes to read EventType of the event.
+     */
+    @Override
+    public EventType getEventType() {
+        return EVENTTYPE;
+    }
+
+    /**
+     * Allows other classes to read LoginResponse of the event.
+     */
+    @Override
+    public LoginResponse getLoginResponse() {
+        return loginResponse;
     }
 }

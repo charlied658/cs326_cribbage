@@ -57,8 +57,8 @@ public class EventFactoryTest {
         LOG.trace("Started the setup method");
         source = new Object();
         // Email, username, password, isauthorized?
-//        userInstance =
-//            new User("sleinasa@skidmore.edu", "sleinasa", "passwd", true);
+        // userInstance =
+        // new User("sleinasa@skidmore.edu", "sleinasa", "passwd", true);
         testInstance = EventFactory.getInstance();
         LOG.info("SetUp method completed");
     }
@@ -77,7 +77,8 @@ public class EventFactoryTest {
 
     /**
      * Method to test factory create Event method.
-     * @throws Exception 
+     * 
+     * @throws Exception
      */
     @Test
     public void testCreateEvent() throws Exception {
@@ -89,22 +90,4 @@ public class EventFactoryTest {
         LOG.trace("Create event test finished");
     }
 
-    /**
-     * Sets all initialized variables to null.
-     */
-    @After
-    public void tearDown() {
-        LOG.trace("Starting the teardown");
-        testInstance = null;
-        source = null;
-        userInstance = null;
-
-        LOG.trace("Assert that teardown was succesful");
-        assertNull(testInstance);
-        assertNull(source);
-        assertNull(userInstance);
-
-        LOG.trace("Teardown completed");
-
-    }
 }

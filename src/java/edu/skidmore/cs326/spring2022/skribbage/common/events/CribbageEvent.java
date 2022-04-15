@@ -1,7 +1,7 @@
 package edu.skidmore.cs326.spring2022.skribbage.common.events;
 
 import edu.skidmore.cs326.spring2022.skribbage.common.EventType;
-import edu.skidmore.cs326.spring2022.skribbage.logic.Game;
+import edu.skidmore.cs326.spring2022.skribbage.common.Game;
 
 import java.beans.PropertyChangeEvent;
 
@@ -13,8 +13,9 @@ import java.beans.PropertyChangeEvent;
  * Yes this is what it does
  *
  * @author Alex Carney
- * Reviewed
+ *         Reviewed
  */
+@SuppressWarnings("serial")
 public abstract class CribbageEvent extends PropertyChangeEvent {
 
     /**
@@ -25,11 +26,14 @@ public abstract class CribbageEvent extends PropertyChangeEvent {
     /**
      * Constructs a new {@code PropertyChangeEvent}.
      *
-     *
-     * @param source    the bean that fired the event
-     * @param eventType event type of subclass
-     * @param game a game object, all cribbage events have access to
-     * @throws IllegalArgumentException if {@code source} is {@code null}
+     * @param source
+     *            the bean that fired the event
+     * @param eventType
+     *            event type of subclass
+     * @param game
+     *            a game object, all cribbage events have access to
+     * @throws IllegalArgumentException
+     *             if {@code source} is {@code null}
      */
     protected CribbageEvent(Object source, EventType eventType, Game game) {
         super(source, eventType.toString(), null, null);
@@ -38,10 +42,11 @@ public abstract class CribbageEvent extends PropertyChangeEvent {
 
     /**
      * Returns game object associated with event.
+     * 
      * @return game object stored with this event
      */
     public Game getGame() {
-        return this.game;
+        return game;
     }
 
     /**
@@ -49,5 +54,5 @@ public abstract class CribbageEvent extends PropertyChangeEvent {
      *
      * @return String type of the event name.
      */
-    public abstract String getEventName();
+    public abstract EventType getEventType();
 }

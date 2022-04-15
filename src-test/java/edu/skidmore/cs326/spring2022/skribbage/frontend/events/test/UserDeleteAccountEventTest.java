@@ -56,8 +56,8 @@ public class UserDeleteAccountEventTest {
         LOG.trace("Started the setup method");
         source = new Object();
         // Email, username, password, isauthorized?
-//        userInstance =
-//            new User("sleinasa@skidmore.edu", "sleinasa", "passwd", true);
+        // userInstance =
+        // new User("sleinasa@skidmore.edu", "sleinasa", "passwd", true);
         createAccountInstance =
             new UserCreateAccountEvent(source, userInstance);
 
@@ -76,11 +76,11 @@ public class UserDeleteAccountEventTest {
         LOG.trace("Testing the constructor of UserDeleteAccountEvent");
 
         assertNotNull(createAccountInstance);
-        //assertTrue(userInstance.isAuthorized());
+        // assertTrue(userInstance.isAuthorized());
 
         testInstance = new UserDeleteAccountEvent(source, userInstance);
         // now the user should not be authorized anymore
-        //assertFalse(userInstance.isAuthorized());
+        // assertFalse(userInstance.isAuthorized());
 
         LOG.trace("Constructor test completed");
 

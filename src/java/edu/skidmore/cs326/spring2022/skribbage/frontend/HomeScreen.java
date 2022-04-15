@@ -106,7 +106,7 @@ public class HomeScreen extends DrawingSurface {
         homeScreen =
             new MainFrame(this, "Skribbage Battle Royale Home", 900, 900, true);
         LOG.trace("Calling a setup method in HomeScreen.java constructor.");
-        setup();
+        // setup();
     }
 
     /**
@@ -116,32 +116,32 @@ public class HomeScreen extends DrawingSurface {
         LOG.trace("Setup method in HomeScreen.java started.");
         LOG.trace("Creating a Logo in HomeScreen.java in setup method.");
         logo = new Image("logo.png", new Point(150, 0), .6, null);
-       
+
         LOG.trace(
             "Creating a RulesPageButton in HomeScreen.java in setup method.");
-//        rulesPageButton = new Text("Rules Page",
-//            new Point(loginPageButton.getLocation().x,
-//                loginPageButton.getLocation().y + 50),
-//            20, Color.black, Color.blue);
+        // rulesPageButton = new Text("Rules Page",
+        // new Point(loginPageButton.getLocation().x,
+        // loginPageButton.getLocation().y + 50),
+        // 20, Color.black, Color.blue);
         LOG.trace(
             "Creating a pastGamesPageButton in homeScreen.java setup method.");
-//        pastGamesPageButton = new Text("Past Games Page",
-//            new Point(rulesPageButton.getLocation().x - 27,
-//                rulesPageButton.getLocation().y + 50),
-//            20, Color.black, Color.blue);
-//        LOG.trace(
-//            "Creating a lobbyPageButton in HomeScreen.java setup method. ");
-//        lobbyPageButton = new Text("Lobby Page", new Point(
-//            pastGamesPageButton.getLocation().x + 27,
-//            pastGamesPageButton.getLocation().y + 50), 20,
-//            Color.black, Color.blue);
-//        LOG.trace(
-//            "Creating a startGameButtong in HomeScreen.java setup method.");
-//        startGameButton = new Text("Start Game",
-//            new Point(lobbyPageButton.getLocation().x,
-//                lobbyPageButton.getLocation().y + 50),
-//            20, Color.black,
-//            Color.blue);
+        // pastGamesPageButton = new Text("Past Games Page",
+        // new Point(rulesPageButton.getLocation().x - 27,
+        // rulesPageButton.getLocation().y + 50),
+        // 20, Color.black, Color.blue);
+        // LOG.trace(
+        // "Creating a lobbyPageButton in HomeScreen.java setup method. ");
+        // lobbyPageButton = new Text("Lobby Page", new Point(
+        // pastGamesPageButton.getLocation().x + 27,
+        // pastGamesPageButton.getLocation().y + 50), 20,
+        // Color.black, Color.blue);
+        // LOG.trace(
+        // "Creating a startGameButtong in HomeScreen.java setup method.");
+        // startGameButton = new Text("Start Game",
+        // new Point(lobbyPageButton.getLocation().x,
+        // lobbyPageButton.getLocation().y + 50),
+        // 20, Color.black,
+        // Color.blue);
         LOG.trace(
             "Going to add a lobby Page Button "
                 + "to the mainFrame in HomeScreen.java.");
@@ -166,14 +166,15 @@ public class HomeScreen extends DrawingSurface {
         add(logo);
         LOG.trace(
             "Creating a loginPageButtong in HomeScreen.java in setup method.");
-        
+
         welcomeMessage =
             new Text("Welcome. Please log in/sign up to begin a new game.",
                 new Point(logo.getLocation().x + 35,
-                    logo.getLocation().y + 350), 20,
+                    logo.getLocation().y + 350),
+                20,
                 Color.black, Color.blue);
         loginPageButton = new Text("Login/Sign Up",
-            new Point(welcomeMessage.getLocation().x 
+            new Point(welcomeMessage.getLocation().x
                 + 195, welcomeMessage.getLocation().y + 40),
             20, Color.black, Color.blue);
         add(loginPageButton);
@@ -206,15 +207,12 @@ public class HomeScreen extends DrawingSurface {
             lobbyPage = new LobbyPage();
             closeCurrentWindow();
         } else if (e == startGameButton) {
-
             if (loginPage.loggedIn()) {
                 lobbyPage = new LobbyPage();
             } else {
-                loginPage = new LoginPage();
+                loginPage = LoginPageManager.getInstance().getLoginPage();
             }
-
             startGamePage = new StartGamePage();
-
             closeCurrentWindow();
         }
     }
