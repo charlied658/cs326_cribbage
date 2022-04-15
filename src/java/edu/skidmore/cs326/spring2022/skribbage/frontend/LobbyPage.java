@@ -173,10 +173,10 @@ public class LobbyPage extends DrawingSurface implements ActionListener {
         int textStartingY = 100;
 
         // Hardcoded Users into ArrayList
-        retrievePlayer(new User("doinurmom69@sussybaka.net", "Bo Nehr",
-            "h0rr1bL3p@$$w0rd", UserRole.AUTHORIZED));
-        retrievePlayer(new User("sexhaver@reddit.com", "Hugh G. Rection",
-            "07Sept18kx83+&_4ajfS", UserRole.AUTHORIZED));
+//        retrievePlayer(new User("doinurmom69@sussybaka.net", "Bo Nehr",
+//            "h0rr1bL3p@$$w0rd", UserRole.AUTHORIZED));
+//        retrievePlayer(new User("sexhaver@reddit.com", "Hugh G. Rection",
+//            "07Sept18kx83+&_4ajfS", UserRole.AUTHORIZED));
 
         add(new Text("Players in Lobby (Max " + MAX_PLAYERS + ")",
             new Point(25, 75), 20, Color.BLACK));

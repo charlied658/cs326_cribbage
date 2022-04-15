@@ -80,7 +80,7 @@ public class DatabaseManager {
      * @return Whether password was accepted
      */
 
-    public boolean userAuthenticate(String username, String password) {
+    public boolean userAuthenticate(String username, Password password) {
 
         String tempQuery =
             "SELECT * FROM player_account WHERE username='" + username + "'";
@@ -102,7 +102,7 @@ public class DatabaseManager {
 
         }
 
-        if (storedPassword.compareTo(password) == 0) {
+        if (storedPassword.compareTo(password.getPasswordValue()) == 0) {
             System.out.println("Password Accepted");
             return true;
         } else {
@@ -253,7 +253,8 @@ public class DatabaseManager {
             conn = getDB();
 
             String script =
-                "INSERT INTO player_account (PersonID, Username, Password) VALUES (RAND()*10000, ?, ?)";
+                "INSERT INTO player_account (PersonID, Username, Password) "
+                    + "VALUES (RAND()*10000, ?, ?)";
             ps = conn.prepareStatement(script);
 
             ps.setString(1, userName);
