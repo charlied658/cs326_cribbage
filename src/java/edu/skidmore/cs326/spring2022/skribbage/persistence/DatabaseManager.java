@@ -232,7 +232,7 @@ public class DatabaseManager {
 			// Class.forName("com.mysql.jdbc.Driver");
 			conn = getDB();
 
-			String script = "INSERT INTO player_account (PersonID, Username, Password) VALUES = ((RAND()*10000, ?, ?)";
+			String script = "INSERT INTO player_account (PersonID, Username, Password) VALUES (RAND()*10000, ?, ?)";
 			ps = conn.prepareStatement(script);
 
 			ps.setString(1, userName);
@@ -360,6 +360,7 @@ public class DatabaseManager {
 		// dm.inventoryQuery(236);
 
 		DatabaseManager test = new DatabaseManager();
+		
 
 		// test.userAuthenticate("tmawocha", "0000f");
 	}
