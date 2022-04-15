@@ -140,10 +140,10 @@ public class NavigationPage extends DrawingSurface {
 
         welcomeMessage =
             new Text("Welcome", new Point(20, 30), 20, Color.black, Color.blue);
-        user = new Text(
-            "" + LoginPageManager.getInstance().getLoginPage().getUsername(),
-            new Point(20, 60), 20, Color.black, Color.blue);
-        add(user);
+//        user = new Text(
+//            "" + LoginPageManager.getInstance().getLoginPage().getUsername(),
+//            new Point(20, 60), 20, Color.black, Color.blue);
+//        add(user);
         add(welcomeMessage);
     }
 
@@ -156,7 +156,8 @@ public class NavigationPage extends DrawingSurface {
         } else if (e == pastGamesPageButton) {
             pastGamesPage = new PastGamesPage();
         } else if (e == logOut) {
-            loginPage = LoginPageManager.getInstance().getLoginPage();
+            loginPage = new LoginPage();
+                //LoginPageManager.getInstance().getLoginPage();
             closeWindow();
         }
     }
