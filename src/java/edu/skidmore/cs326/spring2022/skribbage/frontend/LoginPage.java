@@ -11,7 +11,6 @@ import edu.skidmore.cs326.spring2022.skribbage.common.User;
 import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserCreateAccountEvent;
 import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserLoginEvent;
 import edu.skidmore.cs326.spring2022.skribbage.persistence.PersistenceFacade;
-//import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserLoginEvent;
 import us.daveread.edu.graphics.shape.Drawable;
 import us.daveread.edu.graphics.shape.impl.Image;
 import us.daveread.edu.graphics.shape.impl.Text;
@@ -40,6 +39,11 @@ public class LoginPage extends DrawingSurface {
      * login - Text variable that represents the login button.
      */
     private Text login;
+
+    /**
+     * BACKDOOR FOR LOGIC AND GAMIFICATION.
+     */
+    private Text startGameButton;
 
     /**
      * changePassword - Text variable that represents the change password
@@ -165,9 +169,10 @@ public class LoginPage extends DrawingSurface {
      * LoginPage constructor Initializes the MainFrame window.
      */
     public LoginPage() {
+        LOG.debug("Instance created");
         currentUser = new User(null);
         persistence = PersistenceFacade.getInstance();
-        LOG.debug("Instance created");
+
         loginPage = new MainFrame(this, "Skribbage Battle Royale Login", 900,
             900, false);
         createAccount = new Text("Create Account", new Point(375, 360), 20,
@@ -179,11 +184,18 @@ public class LoginPage extends DrawingSurface {
         homeScreenButton =
             new Text("Back", new Point(10, 25), 20, Color.black, Color.blue);
         logo = new Image("logo.png", new Point(150, 0), 0.6, null);
+
+        // PLACEHOLDER FOR LOGIC AND GAMIFICATION TO WORK ON GAME. BACKDOOR IF
+        // YOU WILL.
+        startGameButton =
+            new Text("Start GAME", new Point(425, 480), 20, Color.black,
+                Color.blue);
         add(homeScreenButton);
         add(login);
         add(changePassword);
         add(logo);
         add(createAccount);
+        add(startGameButton);
     }
 
     /**
@@ -224,14 +236,15 @@ public class LoginPage extends DrawingSurface {
                 // ule = (UserCreateAccountEvent) evtFactory.createEvent(
                 // EventType.USER_CREATE_ACCOUNT, this, currentUser);
                 // evtFactory.fireEvent(ule);
-                
+
                 currentUser.setUserName(createdUsername);
-                
-                //Verify if username is available. If so, call password setting.
+
+                // Verify if username is available. If so, call password
+                // setting.
                 if (persistence.validateUsername(currentUser)) {
                     createNewUser();
                 }
-                    
+
                 break;
             default:
                 break;
@@ -247,12 +260,12 @@ public class LoginPage extends DrawingSurface {
             DialogPosition.CENTER_ALL, true);
         verifyCreatedPassword = getUserInput("New User",
             "Enter password again", DialogPosition.CENTER_ALL, true);
-        
+
         if (createdPassword.equals(verifyCreatedPassword)) {
             forChecking = new Password(createdPassword);
             persistence.userCreate(currentUser, forChecking);
-//            currentUser =
-//                new User(null, createdUsername, forChecking, null);
+            // currentUser =
+            // new User(null, createdUsername, forChecking, null);
         }
     }
 
@@ -352,15 +365,15 @@ public class LoginPage extends DrawingSurface {
                     DialogPosition.CENTER_ALL, true);
             forChecking = new Password(password);
             currentUser = new User(username);
-            
+
             if (loggedIn()) {
-                
+
                 showMessage("User: " + username, "Successful Log In",
                     DialogType.INFORMATION);
                 // navPage = NavigationPageManager.getInstance().getNavPage();
                 navPage = new NavigationPage();
-                loginPage.dispose();
-                // closeWindow();
+
+                closeWindow();
             } else {
                 showMessage("User not found", "Unsuccessful Log In",
                     DialogType.ERROR);
@@ -388,6 +401,11 @@ public class LoginPage extends DrawingSurface {
             }
         } else if (e == homeScreenButton) {
             returnToHome();
+        } else if (e == startGameButton) {
+
+            StartGamePage lol = new StartGamePage();
+            closeWindow();
+
         }
     }
 
