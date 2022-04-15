@@ -42,22 +42,22 @@ public class DatabaseManagerTest {
 	/**
 	 * Testing when the userAuthenticate fails with wrong username and password.
 	 */
-//    @Test
-//    public void userAuthenticatefail() {
-//        boolean verification =
-//            databaseinstance.userAuthenticate(wrongTestUser, wrongTestPassword);
-//        assertEquals(false, verification);
-//    }
+    @Test
+    public void userAuthenticatefail() {
+        boolean verification =
+            databaseinstance.userAuthenticate(wrongTestUser, wrongTestPassword);
+        assertEquals(false, verification);
+    }
 
 	/**
 	 * Testing when the userAuthenticate works with correct username and password.
 	 */
-//    @Test
-//    public void userAuthenticateSuccess() {
-//        Boolean verification =
-//            databaseinstance.userAuthenticate(correctTestUser, correctTestPassword);
-//        assertEquals(true, verification);
-//    }
+    @Test
+    public void userAuthenticateSuccess() {
+        Boolean verification =
+            databaseinstance.userAuthenticate(correctTestUser, correctTestPassword);
+        assertEquals(true, verification);
+    }
 
 	/**
 	 * Testing when asking the inventoryQuery for coin count is successful.
