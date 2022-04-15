@@ -102,11 +102,9 @@ public class HomeScreen extends DrawingSurface {
      */
     public HomeScreen() {
         LOG.trace("HomeScreen.java constructor");
-        LOG.trace("Creating a mainframe in HomeScreen.java constructor.");
         homeScreen =
             new MainFrame(this, "Skribbage Battle Royale Home", 900, 900, true);
-        LOG.trace("Calling a setup method in HomeScreen.java constructor.");
-        // setup();
+        setup();
     }
 
     /**
@@ -117,14 +115,14 @@ public class HomeScreen extends DrawingSurface {
         LOG.trace("Creating a Logo in HomeScreen.java in setup method.");
         logo = new Image("logo.png", new Point(150, 0), .6, null);
 
-        LOG.trace(
-            "Creating a RulesPageButton in HomeScreen.java in setup method.");
+        // LOG.trace(
+        // "Creating a RulesPageButton in HomeScreen.java in setup method.");
         // rulesPageButton = new Text("Rules Page",
         // new Point(loginPageButton.getLocation().x,
         // loginPageButton.getLocation().y + 50),
         // 20, Color.black, Color.blue);
-        LOG.trace(
-            "Creating a pastGamesPageButton in homeScreen.java setup method.");
+        // LOG.trace(
+        // "Creating a pastGamesPageButton in homeScreen.java setup method.");
         // pastGamesPageButton = new Text("Past Games Page",
         // new Point(rulesPageButton.getLocation().x - 27,
         // rulesPageButton.getLocation().y + 50),
@@ -142,25 +140,25 @@ public class HomeScreen extends DrawingSurface {
         // lobbyPageButton.getLocation().y + 50),
         // 20, Color.black,
         // Color.blue);
-        LOG.trace(
-            "Going to add a lobby Page Button "
-                + "to the mainFrame in HomeScreen.java.");
-        // add(lobbyPageButton);
-        LOG.trace(
-            "Going to add a login page button "
-                + "to the main frame in HomeScreen.java.");
-        LOG.trace(
-            "Going to add a rules page button "
-                + "to the main frame in HomeScreen.java class.");
-        // add(rulesPageButton);
-        LOG.trace(
-            " Going to add past games page button "
-                + "to the main frame in HomeScreen.java class.");
+        // LOG.trace(
+        // "Going to add a lobby Page Button "
+        // + "to the mainFrame in HomeScreen.java.");
+        // // add(lobbyPageButton);
+        // LOG.trace(
+        // "Going to add a login page button "
+        // + "to the main frame in HomeScreen.java.");
+        // LOG.trace(
+        // "Going to add a rules page button "
+        // + "to the main frame in HomeScreen.java class.");
+        // // add(rulesPageButton);
+        // LOG.trace(
+        // " Going to add past games page button "
+        // + "to the main frame in HomeScreen.java class.");
         // add(pastGamesPageButton);
-        LOG.trace(
-            " Going to add start game button"
-                + " to the main frame in HomeScreen.java.");
-        // add(startGameButton);
+        // LOG.trace(
+        // " Going to add start game button"
+        // + " to the main frame in HomeScreen.java.");
+        // // add(startGameButton);
         LOG.trace(
             " Going add the logo to the main frame in HomeScreen.java class.");
         add(logo);
@@ -195,7 +193,7 @@ public class HomeScreen extends DrawingSurface {
     public void drawableMouseClick(Drawable e) {
         LOG.trace("DrawableMosuceClick in HomeScreen.java");
         if (e == loginPageButton) {
-            loginPage = new LoginPage();
+            loginPage = PageManager.getInstance().getLoginPage();
             closeCurrentWindow();
         } else if (e == rulesPageButton) {
             rulesPage = new RulesPage();
