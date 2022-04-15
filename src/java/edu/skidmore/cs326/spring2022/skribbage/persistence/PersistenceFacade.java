@@ -64,8 +64,6 @@ public final class PersistenceFacade implements UserManagement, GameManagement, 
 		
 		String usernamge = userToCreate.getUserName();
 		String passwordtemp = password.getPasswordValue();
-		System.out.println(usernamge);
-		System.out.println(passwordtemp);
 		
 		dm.createUser(usernamge, passwordtemp);
 		return true;
