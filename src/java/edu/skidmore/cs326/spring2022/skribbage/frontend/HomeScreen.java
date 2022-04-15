@@ -193,7 +193,9 @@ public class HomeScreen extends DrawingSurface {
     public void drawableMouseClick(Drawable e) {
         LOG.trace("DrawableMosuceClick in HomeScreen.java");
         if (e == loginPageButton) {
-            loginPage = PageManager.getInstance().getLoginPage();
+            loginPage = new LoginPage();
+                //Page manager is broken.
+                //PageManager.getInstance().getLoginPage();
             closeCurrentWindow();
         } else if (e == rulesPageButton) {
             rulesPage = new RulesPage();
@@ -208,7 +210,8 @@ public class HomeScreen extends DrawingSurface {
             if (loginPage.loggedIn()) {
                 lobbyPage = new LobbyPage();
             } else {
-                loginPage = LoginPageManager.getInstance().getLoginPage();
+                loginPage = new LoginPage();
+                    //LoginPageManager.getInstance().getLoginPage();
             }
             startGamePage = new StartGamePage();
             closeCurrentWindow();
