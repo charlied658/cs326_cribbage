@@ -3,7 +3,7 @@ package edu.skidmore.cs326.spring2022.skribbage.logic.test;
 import edu.skidmore.cs326.spring2022.skribbage.logic.GameManager;
 import edu.skidmore.cs326.spring2022.skribbage.common.Game;
 import edu.skidmore.cs326.spring2022.skribbage.common.Rank;
-import edu.skidmore.cs326.spring2022.skribbage.logic.Player;
+import edu.skidmore.cs326.spring2022.skribbage.common.Player;
 import org.junit.Before;
 import org.junit.Test;
 import java.util.ArrayList;

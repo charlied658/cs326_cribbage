@@ -1,7 +1,6 @@
 package edu.skidmore.cs326.spring2022.skribbage.common;
 
 import edu.skidmore.cs326.spring2022.skribbage.logic.Deck;
-import edu.skidmore.cs326.spring2022.skribbage.logic.Player;
 import java.util.ArrayList;
 import edu.skidmore.cs326.spring2022.skribbage.logic.GameManager;
 //import org.apache.log4j.Logger;
