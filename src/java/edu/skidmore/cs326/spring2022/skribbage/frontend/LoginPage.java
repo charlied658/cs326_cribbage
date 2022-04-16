@@ -263,6 +263,9 @@ public class LoginPage extends DrawingSurface {
                     if (passwordToChange.equals(verifyPasswordToChange)) {
                         persistence.passwordChange(currentUser, currentPassword,
                             newPassword);
+                        showMessage("Password changed succesfully", "Success!",
+                            DialogType.ERROR);
+
                     } else {
                         showMessage("Passwords did not match",
                             "Unsuccessful password change",
@@ -464,6 +467,7 @@ public class LoginPage extends DrawingSurface {
                         + "Please create a new account or try again.",
                     "Unsuccessful Log In",
                     DialogType.ERROR);
+
             }
         } else if (e == changePasswordButton) {
             changePasswordButton.setFillColor(Color.GREEN);
