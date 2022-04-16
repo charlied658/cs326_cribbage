@@ -5,7 +5,6 @@ import java.awt.Point;
 import org.apache.log4j.Logger;
 
 import edu.skidmore.cs326.spring2022.skribbage.common.EventFactory;
-import edu.skidmore.cs326.spring2022.skribbage.common.EventType;
 import edu.skidmore.cs326.spring2022.skribbage.common.Password;
 import edu.skidmore.cs326.spring2022.skribbage.common.User;
 import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserCreateAccountEvent;
@@ -21,24 +20,52 @@ import us.daveread.edu.graphics.surface.MainFrame;
 
 /**
  * @author Zoe Beals updated as of 3/22/2022
- *         Code reviewed by Jonah Marcus on April 11, 2022.
- *         Comment by Jonah:
- *         "Commented out an import that was creating a warning. Also, the
- *         ButtonClicked method could benefit from a few additional comments
- *         explaining what each case is. I THINK I was able to figure it out
- *         on my own, but it would still be nice to have."
+ *         Code reviewed and updated by Sten Leinasaar on April 15, 2022.
+ *         Edits made (Sten) :
+ *         1) I changed the flow of the buttonClick and DrawableClick detection.
+ *         2) The buttons are now connected to the backend facade
+ *         3) I added a prompt for a user to write their current password and
+ *         username before attempting to change the password.
+ *         Before prompted to change the password, backend method is called to
+ *         verify if this user exists.
+ *         4) Some code is commented out as it wasn't used. I kept it just in
+ *         case we might need it when we start adding things.
  */
+@SuppressWarnings("serial")
 public class LoginPage extends DrawingSurface {
+    /**
+     * loginPage - MainFrame window to hold the UI attributes.
+     */
+    private MainFrame loginPage;
+
+    /**
+     * Object of type StartGamePage to act as a Backdoor until loggin is
+     * functional.
+     */
+    @SuppressWarnings("unused")
+    private StartGamePage backdoor;
+
+    /**
+     * homeScreen - HomeScreen window to hold the home screen.
+     */
+    @SuppressWarnings("unused")
+    private HomeScreen homeScreen;
+
+    /**
+     * navPage - NavigationPage window.
+     */
+    @SuppressWarnings("unused")
+    private NavigationPage navPage;
 
     /**
      * createAccount - Text variable that represents the create account button.
      */
-    private Text createAccount;
+    private Text createAccountButton;
 
     /**
-     * login - Text variable that represents the login button.
+     * Object of type Text that represents the login button.
      */
-    private Text login;
+    private Text loginButton;
 
     /**
      * BACKDOOR FOR LOGIC AND GAMIFICATION.
@@ -46,20 +73,26 @@ public class LoginPage extends DrawingSurface {
     private Text startGameButton;
 
     /**
-     * changePassword - Text variable that represents the change password
-     * button.
+     * Object of type Text that represents the change password button.
      */
-    private Text changePassword;
+    private Text changePasswordButton;
 
     /**
-     * Password of type password.
+     * Object of type Text that represents the button for returning to the home
+     * screen.
      */
-    private Password forChecking;
+    private Text homeScreenButton;
 
     /**
-     * navPage - NavigationPage window.
+     * Object of type Password that represents the current password.
      */
-    private NavigationPage navPage;
+    private Password currentPassword;
+
+    /**
+     * Object of type Password that represents the new password when password is
+     * being changed.
+     */
+    private Password newPassword;
 
     /**
      * PersistenceFacade event.
@@ -67,22 +100,26 @@ public class LoginPage extends DrawingSurface {
     private final PersistenceFacade persistence;
 
     /**
+     * evtFactory - EventFactory object.
+     */
+    @SuppressWarnings("unused")
+    private EventFactory evtFactory;
+
+    /**
      * ule - UserCreateAccountEvent object.
      */
+    @SuppressWarnings("unused")
     private UserCreateAccountEvent ule;
 
     /**
      * lEvt - UserLoginEvent object.
      */
+    @SuppressWarnings("unused")
     private UserLoginEvent lEvt;
 
     /**
-     * evtFactory - EventFactory object.
-     */
-    private EventFactory evtFactory = EventFactory.getInstance();
-
-    /**
-     * currentUser - User object.
+     * currentUser - User object being changed as the user interacts with the
+     * GUI.
      */
     private User currentUser;
 
@@ -103,24 +140,13 @@ public class LoginPage extends DrawingSurface {
     private String verifyCreatedPassword;
 
     /**
-     * logo - Image to hold the temporary game logo.
-     */
-    private Image logo;
-
-    /**
-     * loginPage - MainFrame window to hold the UI attributes.
-     */
-    private MainFrame loginPage;
-
-    /**
      * username - String variable that holds the user inputted username.
      */
     private String username;
 
     /**
      * usernameToChange - String variable that holds the user inputted username.
-     * in
-     * the case of a changePassword event
+     * in the case of a changePassword event
      */
     private String usernameToChange;
 
@@ -130,57 +156,52 @@ public class LoginPage extends DrawingSurface {
     private String password;
 
     /**
-     * passwordToChange - String variable that holds the user inputted password.
-     * in
-     * the case of a changePassword event
+     * String variable that holds the user inputed password.
+     * Used for changePassword event.
      */
     private String passwordToChange;
 
     /**
-     * verifyPasswordToChange - String variable that holds the user inputted
+     * String variable that holds the user inputed
      * password to verify it in the case of a changePassword event.
      */
     private String verifyPasswordToChange;
 
     /**
-     * homeScreen - HomeScreen window to hold the home screen.
+     * Variable of type Image to hold the temporary game logo.
      */
-    private HomeScreen homeScreen;
+    private Image logo;
 
     /**
-     * homeScreenButton - Text variable that represents the button to go
-     * back to the home screen.
-     */
-    private Text homeScreenButton;
-
-    /**
-     * LOG - logger variable to be able to display logger messages.
+     * Logger instance for logging..
      */
     private static final Logger LOG;
 
-    /**
-     * instantiation of the logger
-     */
     static {
         LOG = Logger.getLogger(LoginPage.class);
     }
 
     /**
-     * LoginPage constructor Initializes the MainFrame window.
+     * LoginPage constructor Initializes the MainFrame window and all the
+     * objects listed in the attributes.
+     * All the buttons are added to the mainframe.
      */
     public LoginPage() {
         LOG.debug("Instance created");
         currentUser = new User(null);
         persistence = PersistenceFacade.getInstance();
+        evtFactory = EventFactory.getInstance();
 
         loginPage = new MainFrame(this, "Skribbage Battle Royale Login", 900,
             900, false);
-        createAccount = new Text("Create Account", new Point(375, 360), 20,
-            Color.black, Color.blue);
-        login =
+        createAccountButton =
+            new Text("Create Account", new Point(375, 360), 20,
+                Color.black, Color.blue);
+        loginButton =
             new Text("Login", new Point(425, 400), 20, Color.black, Color.blue);
-        changePassword = new Text("Change Password", new Point(369, 440), 20,
-            Color.black, Color.blue);
+        changePasswordButton =
+            new Text("Change Password", new Point(369, 440), 20,
+                Color.black, Color.blue);
         homeScreenButton =
             new Text("Back", new Point(10, 25), 20, Color.black, Color.blue);
         logo = new Image("logo.png", new Point(150, 0), 0.6, null);
@@ -190,11 +211,11 @@ public class LoginPage extends DrawingSurface {
         startGameButton =
             new Text("Start GAME", new Point(425, 480), 20, Color.black,
                 Color.blue);
-        add(homeScreenButton);
-        add(login);
-        add(changePassword);
         add(logo);
-        add(createAccount);
+        add(homeScreenButton);
+        add(loginButton);
+        add(changePasswordButton);
+        add(createAccountButton);
         add(startGameButton);
     }
 
@@ -215,20 +236,66 @@ public class LoginPage extends DrawingSurface {
         String popupMessage) {
         LOG.trace("ChangePassword method in LoginPage.java");
         switch (popupType) {
+            // change Password
             case 0:
                 usernameToChange = getUserInput(popupTitle, "Enter username",
                     DialogPosition.CENTER_ALL);
-                passwordToChange = getUserInput(popupTitle, popupMessage,
-                    DialogPosition.CENTER_ALL, true);
-                verifyPasswordToChange = getUserInput(popupTitle,
-                    popupMessage + " again", DialogPosition.CENTER_ALL, true);
+                password = getUserInput(popupTitle,
+                    "Enter your current password", DialogPosition.CENTER_ALL,
+                    true);
+
+                currentUser.setUserName(usernameToChange);
+                currentPassword = new Password(password);
+                // verify if this user exists.
+                // loggedIn returns true if this user and password exists in the
+                // database.
+                // False otherwise.
+                if (loggedIn()) {
+                    passwordToChange = getUserInput(popupTitle, popupMessage,
+                        DialogPosition.CENTER_ALL, true);
+                    verifyPasswordToChange = getUserInput(popupTitle,
+                        popupMessage + " again", DialogPosition.CENTER_ALL,
+                        true);
+                    newPassword = new Password(passwordToChange);
+                    // forChecking is the password from createNewUser. We Should
+                    // not
+                    // Allow changing password before they are verified.
+                    if (passwordToChange.equals(verifyPasswordToChange)) {
+                        persistence.passwordChange(currentUser, currentPassword,
+                            newPassword);
+                    } else {
+                        showMessage("Passwords did not match",
+                            "Unsuccessful password change",
+                            DialogType.ERROR);
+                        buttonClicked(1, popupTitle, popupMessage);
+                    }
+                } else {
+                    showMessage(
+                        "User does not exist. Cannot change the password",
+                        "Create a new account.",
+                        DialogType.ERROR);
+                }
                 break;
+
             case 1:
                 passwordToChange = getUserInput(popupTitle, popupMessage,
                     DialogPosition.CENTER_ALL, true);
                 verifyPasswordToChange = getUserInput(popupTitle,
                     popupMessage + " again", DialogPosition.CENTER_ALL, true);
+                newPassword = new Password(passwordToChange);
+                if (passwordToChange.equals(verifyPasswordToChange)) {
+                    persistence.passwordChange(currentUser, currentPassword,
+                        newPassword);
+                } else {
+                    showMessage("Passwords did not match",
+                        "Unsuccessful password change",
+                        DialogType.ERROR);
+                    buttonClicked(1, popupTitle, popupMessage);
+                }
+
                 break;
+
+            // create account
             case 2:
                 createdUsername = getUserInput(popupTitle, popupMessage,
                     DialogPosition.CENTER_ALL);
@@ -243,6 +310,10 @@ public class LoginPage extends DrawingSurface {
                 // setting.
                 if (persistence.validateUsername(currentUser)) {
                     createNewUser();
+                } else {
+                    showMessage("Username taken", "Please try again",
+                        DialogType.ERROR);
+                    buttonClicked(2, popupTitle, popupMessage);
                 }
 
                 break;
@@ -262,10 +333,17 @@ public class LoginPage extends DrawingSurface {
             "Enter password again", DialogPosition.CENTER_ALL, true);
 
         if (createdPassword.equals(verifyCreatedPassword)) {
-            forChecking = new Password(createdPassword);
-            persistence.userCreate(currentUser, forChecking);
+            currentPassword = new Password(createdPassword);
+            persistence.userCreate(currentUser, currentPassword);
+            userCreatedCallback();
             // currentUser =
             // new User(null, createdUsername, forChecking, null);
+        } else {
+            showMessage("Passwords you entered, do not match",
+                "Please try again",
+                DialogType.ERROR);
+            createNewUser();
+
         }
     }
 
@@ -282,29 +360,29 @@ public class LoginPage extends DrawingSurface {
         // evtFactory.fireEvent(ule);
     }
 
-    /**
-     * getUsername method.
-     *
-     * @return the username
-     */
-    public String getUsername() {
-        LOG.trace("getUsername method in LoginPage.java");
-        if (currentUser == null) {
-            return username;
-        } else {
-            return currentUser.getUserName();
-        }
-    }
+    // /**
+    // * getUsername method.
+    // *
+    // * @return the username
+    // */
+    // public String getUsername() {
+    // LOG.trace("getUsername method in LoginPage.java");
+    // if (currentUser == null) {
+    // return username;
+    // } else {
+    // return currentUser.getUserName();
+    // }
+    // }
 
-    /**
-     * getpassword method.
-     *
-     * @return the password
-     */
-    public String getPassword() {
-        LOG.trace("getPasswrod method in LoginPage.java");
-        return password;
-    }
+    // /**
+    // * getpassword method.
+    // *
+    // * @return the password
+    // */
+    // public String getPassword() {
+    // LOG.trace("getPasswrod method in LoginPage.java");
+    // return password;
+    // }
 
     /**
      * THIS HERE SHOULD BE COMMUNICATION WITH THE BACKEND.
@@ -321,7 +399,7 @@ public class LoginPage extends DrawingSurface {
      */
     public boolean loggedIn() {
         LOG.debug("Calling backend facade for a login method.");
-        return persistence.login(currentUser, forChecking);
+        return persistence.login(currentUser, currentPassword);
 
         // if (currentUser != null) {
         // if (username.equals(currentUser.getUserName())
@@ -352,58 +430,64 @@ public class LoginPage extends DrawingSurface {
          * page.
          * If not succesful, then prompt them a dialog that says, create a user.
          */
-        if (e == login) {
-
-            // separate the username and password functionality.
-            // outside listener tells me when to run the password method.
-            login.setFillColor(Color.GREEN);
+        if (e == loginButton) {
+            /**
+             * Login Button press starts the following steps:
+             * 1) User input for username and password.
+             * 2) Password is used to create a new Password object with the
+             * string input.
+             * 3) Username is used to set it as a usernam for this user object.
+             * 4) loggedIn() is called that communicates with back end.
+             * a. If succesful show message of succesful log in and open a
+             * navigation page and close loginPage.
+             * b. Else it shows an error message. Prompts them to make an
+             * account.
+             */
+            loginButton.setFillColor(Color.GREEN);
             username = getUserInput("Login", "Enter username",
                 DialogPosition.CENTER_ALL);
-            // verifyUsernameExists();
             password =
                 getUserInput("Login", "Enter password for: " + username,
                     DialogPosition.CENTER_ALL, true);
-            forChecking = new Password(password);
-            currentUser = new User(username);
+            currentPassword = new Password(password);
+            currentUser.setUserName(username);
 
             if (loggedIn()) {
-
                 showMessage("User: " + username, "Successful Log In",
                     DialogType.INFORMATION);
                 // navPage = NavigationPageManager.getInstance().getNavPage();
                 navPage = new NavigationPage();
-
                 closeWindow();
             } else {
-                showMessage("User not found", "Unsuccessful Log In",
+                showMessage(
+                    "User does not exist. "
+                        + "Please create a new account or try again.",
+                    "Unsuccessful Log In",
                     DialogType.ERROR);
             }
-        } else if (e == changePassword) {
-            changePassword.setFillColor(Color.GREEN);
-            // change password = 0
+        } else if (e == changePasswordButton) {
+            changePasswordButton.setFillColor(Color.GREEN);
             buttonClicked(0, "Change Password", "Enter new password");
-            if (passwordToChange.equals(verifyPasswordToChange)) {
-                password = passwordToChange;
-                username = usernameToChange;
-            } else {
-                while (!passwordToChange.equals(verifyPasswordToChange)) {
-                    buttonClicked(1, "Passwords did not match",
-                        "Enter new password");
-                }
-            }
-        } else if (e == createAccount) {
-            // create account = 2
-            createAccount.setFillColor(Color.GREEN);
+            // if (passwordToChange.equals(verifyPasswordToChange)) {
+            // password = passwordToChange;
+            // username = usernameToChange;
+            // } else {
+            // while (!passwordToChange.equals(verifyPasswordToChange)) {
+            // buttonClicked(1, "Passwords did not match",
+            // "Enter new password");
+            // }
+            // }
+        } else if (e == createAccountButton) {
+            createAccountButton.setFillColor(Color.GREEN);
             buttonClicked(2, "New User", "Enter username");
 
-            if (!createdPassword.equals(verifyCreatedPassword)) {
-                buttonClicked(1, "Passwords did not match", "Enter password");
-            }
+            // if (!createdPassword.equals(verifyCreatedPassword)) {
+            // buttonClicked(1, "Passwords did not match", "Enter password");
+            // }
         } else if (e == homeScreenButton) {
             returnToHome();
         } else if (e == startGameButton) {
-
-            StartGamePage lol = new StartGamePage();
+            backdoor = new StartGamePage();
             closeWindow();
 
         }
@@ -412,13 +496,13 @@ public class LoginPage extends DrawingSurface {
     /**
      * verifyUsernameExists - checks if a user that's logging in exists.
      */
-    public void verifyUsernameExists() {
-        LOG.trace("verifyUsernameExists method in LoginPage.java");
-        currentUser = new User(null, username, null, null);
-        lEvt = (UserLoginEvent) evtFactory
-            .createEvent(EventType.USER_LOGIN, this, currentUser);
-        evtFactory.fireEvent(lEvt);
-    }
+    // public void verifyUsernameExists() {
+    // LOG.trace("verifyUsernameExists method in LoginPage.java");
+    // currentUser = new User(null, username, null, null);
+    // lEvt = (UserLoginEvent) evtFactory
+    // .createEvent(EventType.USER_LOGIN, this, currentUser);
+    // evtFactory.fireEvent(lEvt);
+    // }
 
     /**
      * verifyUserExists - checks if a user object exists.
