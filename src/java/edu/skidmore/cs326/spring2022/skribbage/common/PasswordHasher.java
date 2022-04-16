@@ -152,7 +152,8 @@ public class PasswordHasher {
      * @return The Base64 encoded salt and salted password hash separated by a
      *         character to allow them to be split apart
      */
-    protected String hashNewPassword(String newPassword) {
+    @SuppressWarnings("unused")
+    public String hashNewPassword(String newPassword) {
         // Generate new salt
         byte[] newSalt = generateSalt(SALT_LENGTH);
 

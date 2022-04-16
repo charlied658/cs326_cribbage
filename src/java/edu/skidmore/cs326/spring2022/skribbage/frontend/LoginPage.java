@@ -6,6 +6,7 @@ import org.apache.log4j.Logger;
 
 import edu.skidmore.cs326.spring2022.skribbage.common.EventFactory;
 import edu.skidmore.cs326.spring2022.skribbage.common.Password;
+import edu.skidmore.cs326.spring2022.skribbage.common.PasswordHasher;
 import edu.skidmore.cs326.spring2022.skribbage.common.User;
 import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserCreateAccountEvent;
 import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserLoginEvent;
@@ -156,6 +157,11 @@ public class LoginPage extends DrawingSurface {
     private String password;
 
     /**
+     * Private object of type passwordhasher.
+     */
+    private PasswordHasher hasher;
+
+    /**
      * String variable that holds the user inputed password.
      * Used for changePassword event.
      */
@@ -191,6 +197,7 @@ public class LoginPage extends DrawingSurface {
         currentUser = new User(null);
         persistence = PersistenceFacade.getInstance();
         evtFactory = EventFactory.getInstance();
+        hasher = PasswordHasher.getInstance();
 
         loginPage = new MainFrame(this, "Skribbage Battle Royale Login", 900,
             900, false);
@@ -245,7 +252,9 @@ public class LoginPage extends DrawingSurface {
                     true);
 
                 currentUser.setUserName(usernameToChange);
-                currentPassword = new Password(password);
+                currentPassword = new Password(
+                    hasher.hashNewPassword(password));
+
                 // verify if this user exists.
                 // loggedIn returns true if this user and password exists in the
                 // database.
@@ -256,7 +265,8 @@ public class LoginPage extends DrawingSurface {
                     verifyPasswordToChange = getUserInput(popupTitle,
                         popupMessage + " again", DialogPosition.CENTER_ALL,
                         true);
-                    newPassword = new Password(passwordToChange);
+                    newPassword =
+                        new Password(hasher.hashNewPassword(passwordToChange));
                     // forChecking is the password from createNewUser. We Should
                     // not
                     // Allow changing password before they are verified.
@@ -285,7 +295,7 @@ public class LoginPage extends DrawingSurface {
                     DialogPosition.CENTER_ALL, true);
                 verifyPasswordToChange = getUserInput(popupTitle,
                     popupMessage + " again", DialogPosition.CENTER_ALL, true);
-                newPassword = new Password(passwordToChange);
+                newPassword = new Password(hasher.hashNewPassword(passwordToChange));
                 if (passwordToChange.equals(verifyPasswordToChange)) {
                     persistence.passwordChange(currentUser, currentPassword,
                         newPassword);
@@ -336,7 +346,7 @@ public class LoginPage extends DrawingSurface {
             "Enter password again", DialogPosition.CENTER_ALL, true);
 
         if (createdPassword.equals(verifyCreatedPassword)) {
-            currentPassword = new Password(createdPassword);
+            currentPassword = new Password(hasher.hashNewPassword(createdPassword));
             persistence.userCreate(currentUser, currentPassword);
             userCreatedCallback();
             // currentUser =
@@ -452,7 +462,7 @@ public class LoginPage extends DrawingSurface {
             password =
                 getUserInput("Login", "Enter password for: " + username,
                     DialogPosition.CENTER_ALL, true);
-            currentPassword = new Password(password);
+            currentPassword = new Password(hasher.hashNewPassword(password));
             currentUser.setUserName(username);
 
             if (loggedIn()) {
