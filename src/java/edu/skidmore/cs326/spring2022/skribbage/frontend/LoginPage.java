@@ -1,6 +1,7 @@
 package edu.skidmore.cs326.spring2022.skribbage.frontend;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Point;
 import org.apache.log4j.Logger;
 
@@ -193,6 +194,7 @@ public class LoginPage extends DrawingSurface {
      * All the buttons are added to the mainframe.
      */
     public LoginPage() {
+        
         LOG.debug("Instance created");
         currentUser = new User(null);
         persistence = PersistenceFacade.getInstance();
@@ -295,7 +297,8 @@ public class LoginPage extends DrawingSurface {
                     DialogPosition.CENTER_ALL, true);
                 verifyPasswordToChange = getUserInput(popupTitle,
                     popupMessage + " again", DialogPosition.CENTER_ALL, true);
-                newPassword = new Password(hasher.hashNewPassword(passwordToChange));
+                newPassword =
+                    new Password(hasher.hashNewPassword(passwordToChange));
                 if (passwordToChange.equals(verifyPasswordToChange)) {
                     persistence.passwordChange(currentUser, currentPassword,
                         newPassword);
@@ -346,7 +349,8 @@ public class LoginPage extends DrawingSurface {
             "Enter password again", DialogPosition.CENTER_ALL, true);
 
         if (createdPassword.equals(verifyCreatedPassword)) {
-            currentPassword = new Password(hasher.hashNewPassword(createdPassword));
+            currentPassword =
+                new Password(hasher.hashNewPassword(createdPassword));
             persistence.userCreate(currentUser, currentPassword);
             userCreatedCallback();
             // currentUser =
