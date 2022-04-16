@@ -16,6 +16,7 @@ import us.daveread.edu.graphics.surface.MainFrame;
  *         of the game of cribbage.
  *         Code reviewed by Jonah Marcus on 3/29/2022
  */
+@SuppressWarnings("serial")
 public class HomeScreen extends DrawingSurface {
 
     /**
@@ -26,6 +27,7 @@ public class HomeScreen extends DrawingSurface {
     /**
      * startGamePage - Start game window.
      */
+    @SuppressWarnings("unused")
     private StartGamePage startGamePage;
 
     /**
@@ -70,16 +72,19 @@ public class HomeScreen extends DrawingSurface {
     /**
      * rulesPage - RulesPage window to be presented upon button click.
      */
+    @SuppressWarnings("unused")
     private RulesPage rulesPage;
 
     /**
      * lobbyPage - LobbyPage window to be presented upon button click.
      */
+    @SuppressWarnings("unused")
     private LobbyPage lobbyPage;
 
     /**
      * pastGamesPage - PastGamesPage window to be presented upon button click.
      */
+    @SuppressWarnings("unused")
     private PastGamesPage pastGamesPage;
 
     /**

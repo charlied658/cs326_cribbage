@@ -27,6 +27,7 @@ public final class PersistenceFacade
     /**
      * Logger for the class.
      */
+    @SuppressWarnings("unused")
     private static final Logger LOG;
 
     /**

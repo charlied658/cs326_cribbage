@@ -140,7 +140,7 @@ public class AccountEventLoopTest {
      * Additionally, ensures User object is the same
      */
     @Test
-    public void listenerCaughtCorrectUser() {
+    public void testListenerCaughtCorrectUser() {
         User caughtUser = accountControllerMOCK.getReceivedUserFromLogin();
         assertNotNull(caughtUser);
         assertEquals(caughtUser, testUser);
@@ -152,7 +152,7 @@ public class AccountEventLoopTest {
      * the event was ignored.
      */
     @Test
-    public void listenerIgnoresIncorrectEvent() {
+    public void testListenerIgnoresIncorrectEvent() {
         User nullUser =
             accountControllerMOCK.getReceivedUserFromCreateAccount();
         assertNull(nullUser);
@@ -164,7 +164,7 @@ public class AccountEventLoopTest {
      * updated accordingly.
      */
     @Test
-    public void responseControllerCaughtCorrectUserAndIsAuthorized() {
+    public void testresponseControllerCaughtCorrectUserAndIsAuthorized() {
         User caughtUserResponse =
             accountResponseControllerMOCK.getReceivedUserFromLogin();
         System.out.println(caughtUserResponse);

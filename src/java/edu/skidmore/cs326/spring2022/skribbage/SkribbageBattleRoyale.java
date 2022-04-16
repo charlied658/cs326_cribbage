@@ -8,7 +8,6 @@ import edu.skidmore.cs326.spring2022.skribbage.frontend.GameStartedResponseContr
 import org.apache.log4j.Logger;
 
 import edu.skidmore.cs326.spring2022.skribbage.frontend.HomeScreen;
-import edu.skidmore.cs326.spring2022.skribbage.frontend.PageManager;
 import edu.skidmore.cs326.spring2022.skribbage.logic.events.AccountController;
 
 /**
@@ -24,6 +23,7 @@ public class SkribbageBattleRoyale implements Runnable {
     /**
      * HomeScreen instance to start the home page from driver class.
      */
+    @SuppressWarnings("unused")
     private HomeScreen homePage;
 
     /**
@@ -34,6 +34,7 @@ public class SkribbageBattleRoyale implements Runnable {
     /**
      * Singleton eventFactory instance.
      */
+    @SuppressWarnings("unused")
     private EventFactory eventFactory;
 
     /**
