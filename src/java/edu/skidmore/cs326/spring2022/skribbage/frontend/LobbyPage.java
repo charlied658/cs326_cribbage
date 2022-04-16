@@ -36,6 +36,7 @@ import us.daveread.edu.graphics.shape.impl.Circle;
  *         Code Reviewed March 27, 2022 - Zoe Beals
  */
 
+@SuppressWarnings("serial")
 public class LobbyPage extends DrawingSurface implements ActionListener {
     /**
      * loggedInPlayer1 - The displayed player 1 name.
@@ -118,7 +119,7 @@ public class LobbyPage extends DrawingSurface implements ActionListener {
     /**
      * inventoryPage - Text object to be button to open the InventoryPage.
      */
-    private Text inventoryPage;
+    private Text inventoryPageButton;
 
     /**
      * navPage - NavigationPage window.
@@ -169,6 +170,8 @@ public class LobbyPage extends DrawingSurface implements ActionListener {
             new Point(20, 40), 25, Color.BLACK, Color.BLUE);
         startButton = new Text("Start Game", new Point(20, 250),
             25, Color.BLACK, Color.BLUE);
+        inventoryPageButton = new Text("Inventory Page", new Point(20, 300),
+            25, Color.BLACK, Color.BLUE);
 
         int textStartingY = 100;
 
@@ -204,7 +207,7 @@ public class LobbyPage extends DrawingSurface implements ActionListener {
         add(logo);
         add(returnToMainMenu);
         add(startButton);
-        // add(inventoryPage);
+        add(inventoryPageButton);
 
         /*
          * add(player1LoginSection);
@@ -280,11 +283,12 @@ public class LobbyPage extends DrawingSurface implements ActionListener {
             new StartGamePage();
             mf.dispose();
 
-        } else if (e == inventoryPage) {
-            inventoryPage.setBorderColor(Color.CYAN);
+        } else if (e == inventoryPageButton) {
+            inventoryPageButton.setBorderColor(Color.CYAN);
             Utility.pause(100);
-            inventoryPage.setBorderColor(Color.BLACK);
+            inventoryPageButton.setBorderColor(Color.BLACK);
             new InventoryPage();
+            mf.dispose();
         }
 
     }

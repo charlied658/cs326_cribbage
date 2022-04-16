@@ -30,6 +30,7 @@ public class StartGamePage extends DrawingSurface {
     /**
      * navPage - NavigationPage window.
      */
+    @SuppressWarnings("unused")
     private NavigationPage navPage;
 
     /**
@@ -250,7 +251,8 @@ public class StartGamePage extends DrawingSurface {
             animateSpots();
             LOG.trace("Going to start the game");
         } else if (e == returnHome) {
-            navPage = NavigationPageManager.getInstance().getNavPage();
+            navPage = new NavigationPage();
+                //NavigationPageManager.getInstance().getNavPage();
             startGamePage.dispose();
         }
     }

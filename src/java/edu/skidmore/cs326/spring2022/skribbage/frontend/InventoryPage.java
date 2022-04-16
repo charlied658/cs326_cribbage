@@ -59,6 +59,11 @@ public class InventoryPage extends DrawingSurface implements ActionListener {
     private Text closeWindow;
 
     /**
+     * Object of type text that represents going back to lobby.
+     */
+    private Text lobbyButton;
+
+    /**
      * Logger instance for logging.
      */
     private static final Logger LOG;
@@ -88,7 +93,8 @@ public class InventoryPage extends DrawingSurface implements ActionListener {
 
         closeWindow = new Text("Close",
             new Point(20, 40), 25, Color.BLUE, Color.BLACK);
-
+        lobbyButton = new Text("Back to Lobby", new Point(20, 60), 25,
+            Color.BLUE, Color.BLACK);
         add(new Text("Inventory:", new Point(30, 90), 20, Color.BLACK));
 
         // Placeholder cards
@@ -116,17 +122,8 @@ public class InventoryPage extends DrawingSurface implements ActionListener {
         }
 
         add(closeWindow);
+        add(lobbyButton);
         add(logo);
-    }
-
-    /**
-     * Main method.
-     * 
-     * @param args
-     */
-    public static void main(String[] args) {
-        LOG.trace("Entered main method");
-        new InventoryPage();
     }
 
     @Override
@@ -136,6 +133,9 @@ public class InventoryPage extends DrawingSurface implements ActionListener {
             closeWindow.setBorderColor(Color.CYAN);
             Utility.pause(100);
             closeWindow.setBorderColor(Color.BLACK);
+            mf.dispose();
+        } else if (e == lobbyButton) {
+            new LobbyPage();
             mf.dispose();
         }
 
