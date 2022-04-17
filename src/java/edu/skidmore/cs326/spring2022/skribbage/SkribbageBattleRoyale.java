@@ -53,7 +53,7 @@ public class SkribbageBattleRoyale implements Runnable {
 
     @Override
     public void run() {
-        System.out.println(getWelcomeMessage());
+        LOG.warn(getWelcomeMessage());
         LOG.info("Run method started");
         LOG.info("homePage started by initializing it.");
         // Instantiate required class instances
