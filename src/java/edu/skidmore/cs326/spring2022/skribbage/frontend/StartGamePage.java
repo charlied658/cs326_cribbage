@@ -94,6 +94,21 @@ public class StartGamePage extends DrawingSurface {
     private Circle[][] spotRenderer;
     
     /**
+     * Visual representation of the pegs on the board.
+     */
+    private Circle[] pegRenderer;
+    
+    /**
+     * Locations of the pegs on the board.
+     */
+    private int[] pegLocations;
+    
+    /**
+     * Buttons to move players. Temp proof of concept.
+     */
+    private Text[] movePlayers;
+    
+    /**
      * returnHome -Text variable to represent back button.
      */
     private Text returnHome;
@@ -130,14 +145,41 @@ public class StartGamePage extends DrawingSurface {
         spotRenderer = new Circle[120][3];
         for (int i = 0; i < spotRenderer.length; i++) {
             for (int j = 0; j < spotRenderer[0].length; j++) {
-                spotRenderer[i][j] = new Circle(
-                    new Point(60 + j * 20 + (i / 30) * 80,
-                        650 - (i % 30) * 20), 16,
-                    Color.black, Color.black);
-                add(spotRenderer[i][j]);
+                if ((i >= 0 && i < 30) || (i >= 60 && i < 90)) {
+                    spotRenderer[i][j] = new Circle(
+                        new Point(60 + j * 20 + (i / 30) * 80,
+                            670 - (i % 30) * 20), 16,
+                        Color.black, Color.black);
+                    add(spotRenderer[i][j]);
+                }
+                
+                if ((i >= 30 && i < 60) || (i >= 90 && i < 120)) {
+                    spotRenderer[i][j] = new Circle(
+                        new Point(100 - j * 20 + (i / 30) * 80,
+                            90 + (i % 30) * 20), 16,
+                        Color.black, Color.black);
+                    add(spotRenderer[i][j]);
+                }
                 //System.out.println("Adding spot [" + i + "][" + j + "]");
             }
         }
+        
+        pegLocations = new int[3];
+        pegLocations[0] = 0;
+        pegLocations[1] = 0;
+        pegLocations[2] = 0;
+        
+        pegRenderer = new Circle[3];
+        pegRenderer[0] = new Circle(new Point(60, 670),
+            16, Color.white, Color.red);
+        pegRenderer[1] = new Circle(new Point(80, 670),
+            16, Color.white, Color.blue);
+        pegRenderer[2] = new Circle(new Point(100, 670),
+            16, Color.white, Color.yellow);
+        
+        add(pegRenderer[0]);
+        add(pegRenderer[1]);
+        add(pegRenderer[2]);
     }
     
     /**
@@ -192,6 +234,76 @@ public class StartGamePage extends DrawingSurface {
     }
 
     /**
+     * Test smooth movement of pegs.
+     */
+    public void animateSpots2() {
+        while (true) {
+            movePeg(0, 7);
+            movePeg(1, 7);
+            movePeg(2, 7);
+        }
+    }
+    
+    /**
+     * Move peg a certain number of spaces.
+     * @param peg
+     * @param spaces
+     */
+    public void movePeg(int peg, int spaces) {
+        
+        //System.out.println("Moving peg " + peg + " by " + spaces + " spaces");
+        
+        if (spaces == 0) {
+            return;
+        }
+        
+        // Handles when a peg crosses an edge (breaks movement into 3 pieces)
+        if ((pegLocations[peg] + spaces) % 30 < pegLocations[peg] % 30 
+            && spaces > 1) {
+            int spacesLeft = (pegLocations[peg] + spaces) % 30;
+            movePeg(peg, 30 - pegLocations[peg] % 30 - 1);
+            movePeg(peg, 1);
+            movePeg(peg, spacesLeft);
+            return;
+        }
+        
+        Point initialPoint = pegRenderer[peg].getLocation();
+        Point destPoint = spotRenderer[(pegLocations[peg] + spaces) % 120]
+            [peg].getLocation();
+        
+        double x = initialPoint.getX();
+        double y = initialPoint.getY();
+        
+        double destX = destPoint.getX();
+        double destY = destPoint.getY();
+        
+        double xDist = destX - x;
+        double yDist = destY - y;
+        
+        for (int i = 0; i < 50; i++) {
+            x += xDist / 50;
+            y += yDist / 50;
+            
+            //System.out.println("x=" + x + ", y=" + y);
+            
+            pegRenderer[peg].setX((int) x);
+            pegRenderer[peg].setY((int) y);
+            
+            try {
+                Thread.sleep(10);
+            }
+            catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+        }
+        
+        //pegRenderer[peg].setLocation(destPoint);
+        
+        pegLocations[peg] = (pegLocations[peg] + spaces) % 120;
+        
+    }
+    
+    /**
      * setup method.
      */
     public void setup() {
@@ -210,6 +322,15 @@ public class StartGamePage extends DrawingSurface {
             Color.black);
         returnHome = new Text("Return to home", new Point(10, 25), 20,
             Color.black, Color.blue);
+        movePlayers = new Text[4];
+        movePlayers[0] = new Text("Move P1", new Point(100, 880), 20,
+            Color.black, Color.blue);
+        movePlayers[1] = new Text("Move P2", new Point(200, 880), 20,
+            Color.black, Color.blue);
+        movePlayers[2] = new Text("Move P3", new Point(300, 880), 20,
+            Color.black, Color.blue);
+        movePlayers[3] = new Text("Set move amt.", new Point(400, 880), 20,
+            Color.black, Color.blue);
         add(gameArea);
         add(beginGame);
         add(cardDeck);
@@ -217,6 +338,10 @@ public class StartGamePage extends DrawingSurface {
         add(player1Score);
         add(returnHome);
         add(board);
+        add(movePlayers[0]);
+        add(movePlayers[1]);
+        add(movePlayers[2]);
+        add(movePlayers[3]);
         //add(boardImage);
         createGrid();
     }
@@ -248,7 +373,7 @@ public class StartGamePage extends DrawingSurface {
         LOG.trace("drawableMouseClick method in StartGamepage.java");
         if (e == beginGame) {
             // start game
-            animateSpots();
+            animateSpots2();
             LOG.trace("Going to start the game");
         } else if (e == returnHome) {
             navPage = new NavigationPage();
