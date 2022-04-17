@@ -23,6 +23,7 @@ import us.daveread.edu.graphics.surface.MainFrame;
  * Class to represent the start game state.
  * 
  * @author Zoe Beals
+ * Code review by Jonah Marcus on 17 April 2022
  */
 @SuppressWarnings("serial")
 public class StartGamePage extends DrawingSurface {
