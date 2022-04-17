@@ -16,6 +16,7 @@ import us.daveread.edu.graphics.shape.impl.Image;
 import us.daveread.edu.graphics.shape.impl.Rectangle;
 import us.daveread.edu.graphics.shape.impl.Circle;
 import us.daveread.edu.graphics.shape.impl.Text;
+import us.daveread.edu.graphics.surface.DialogPosition;
 import us.daveread.edu.graphics.surface.DrawingSurface;
 import us.daveread.edu.graphics.surface.MainFrame;
 
@@ -109,6 +110,16 @@ public class StartGamePage extends DrawingSurface {
     private Text[] movePlayers;
     
     /**
+     * How many spaces each player moves.
+     */
+    private int moveAmt;
+    
+    /**
+     * Store whether the game currently running.
+     */
+    private boolean running;
+    
+    /**
      * returnHome -Text variable to represent back button.
      */
     private Text returnHome;
@@ -139,27 +150,41 @@ public class StartGamePage extends DrawingSurface {
     }
     
     /**
-     * Renders the spots on the board.
+     * Renders the spots and pegs on the board.
+     * @author Charlie Davidson
      */
     public void createSpots() {
         spotRenderer = new Circle[120][3];
         for (int i = 0; i < spotRenderer.length; i++) {
             for (int j = 0; j < spotRenderer[0].length; j++) {
                 if ((i >= 0 && i < 30) || (i >= 60 && i < 90)) {
-                    spotRenderer[i][j] = new Circle(
-                        new Point(60 + j * 20 + (i / 30) * 80,
-                            670 - (i % 30) * 20), 16,
-                        Color.black, Color.black);
-                    add(spotRenderer[i][j]);
+                    if (i % 15 == 14) {
+                        spotRenderer[i][j] = new Circle(
+                            new Point(80 + (i / 30) * 80,
+                                670 - (i % 30) * 20), 16,
+                            Color.black, Color.white);
+                    } else {
+                        spotRenderer[i][j] = new Circle(
+                            new Point(60 + j * 20 + (i / 30) * 80,
+                                670 - (i % 30) * 20), 16,
+                            Color.black, Color.black);
+                    }
                 }
                 
                 if ((i >= 30 && i < 60) || (i >= 90 && i < 120)) {
-                    spotRenderer[i][j] = new Circle(
-                        new Point(100 - j * 20 + (i / 30) * 80,
-                            90 + (i % 30) * 20), 16,
-                        Color.black, Color.black);
-                    add(spotRenderer[i][j]);
+                    if (i % 15 == 14) {
+                        spotRenderer[i][j] = new Circle(
+                            new Point(80 + (i / 30) * 80,
+                                90 + (i % 30) * 20), 16,
+                            Color.black, Color.white);
+                    } else {
+                        spotRenderer[i][j] = new Circle(
+                            new Point(100 - j * 20 + (i / 30) * 80,
+                                90 + (i % 30) * 20), 16,
+                            Color.black, Color.black);
+                    }
                 }
+                add(spotRenderer[i][j]);
                 //System.out.println("Adding spot [" + i + "][" + j + "]");
             }
         }
@@ -183,71 +208,22 @@ public class StartGamePage extends DrawingSurface {
     }
     
     /**
-     * Test animation of spots on board.
-     * @author Charlie Davidson
+     * Test animation of pegs on board.
      */
-    public void animateSpots() {
-        
-        //Random rand = new Random();
-        
-        int redPosition = 0;
-        int bluePosition = 0;
-        int yellowPosition = 0;
-        
-        
-        while (true) {
-            for (int i = 0; i < spotRenderer.length; i++) {
-                if (redPosition == i) {
-                    spotRenderer[i][0].setFillColor(Color.red);
-                } else {
-                    spotRenderer[i][0].setFillColor(Color.black);
-                }
-                
-                if (bluePosition == i) {
-                    spotRenderer[i][1].setFillColor(Color.blue);
-                } else {
-                    spotRenderer[i][1].setFillColor(Color.black);
-                }
-                
-                if (yellowPosition == i) {
-                    spotRenderer[i][2].setFillColor(Color.yellow);
-                } else {
-                    spotRenderer[i][2].setFillColor(Color.black);
-                }
-                
-            }
-            //redPosition = (redPosition + rand.nextInt(5)) % 120;
-            //bluePosition = (bluePosition + rand.nextInt(5)) % 120;
-            //yellowPosition = (yellowPosition + rand.nextInt(5)) % 120;
-            
-            redPosition = (redPosition + 1) % 120;
-            bluePosition = (bluePosition + 1) % 120;
-            yellowPosition = (yellowPosition + 1) % 120;
-            
-            try {
-                Thread.sleep(100);
-            }
-            catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-            }
-        }
-    }
 
-    /**
-     * Test smooth movement of pegs.
-     */
-    public void animateSpots2() {
-        while (true) {
-            movePeg(0, 7);
-            movePeg(1, 7);
-            movePeg(2, 7);
+    public void animatePegs() {
+        while (running) {
+            movePeg(0, moveAmt);
+            movePeg(1, moveAmt);
+            movePeg(2, moveAmt);
         }
     }
     
     /**
      * Move peg a certain number of spaces.
-     * @param peg
-     * @param spaces
+     * @author Charlie Davidson
+     * @param peg : peg to move
+     * @param spaces : number of spaces to move
      */
     public void movePeg(int peg, int spaces) {
         
@@ -257,15 +233,25 @@ public class StartGamePage extends DrawingSurface {
             return;
         }
         
-        // Handles when a peg crosses an edge (breaks movement into 3 pieces)
-        if ((pegLocations[peg] + spaces) % 30 < pegLocations[peg] % 30 
-            && spaces > 1) {
-            int spacesLeft = (pegLocations[peg] + spaces) % 30;
-            movePeg(peg, 30 - pegLocations[peg] % 30 - 1);
-            movePeg(peg, 1);
-            movePeg(peg, spacesLeft);
-            return;
-        }
+//        if (pegLocations[peg] % 15 == 14 && spaces > 1) {
+//            movePeg(peg, 1);
+//            movePeg(peg, spaces - 1);
+//            return;
+//        }
+//        
+//        // Handles when a peg crosses an edge (breaks movement into 3 pieces)
+//        if ((pegLocations[peg] + spaces + 1) % 15 
+//            < (pegLocations[peg] + 1) % 15 
+//            && spaces > 1) {
+//            int spacesLeft = (pegLocations[peg] + spaces + 1) % 15 - 1;
+//            movePeg(peg, 15 - pegLocations[peg] % 15 - 2);
+//            movePeg(peg, 1);
+//            if (spacesLeft > 0) {
+//                movePeg(peg, 1);
+//                movePeg(peg, spacesLeft);
+//            }
+//            return;
+//        }
         
         Point initialPoint = pegRenderer[peg].getLocation();
         Point destPoint = spotRenderer[(pegLocations[peg] + spaces) % 120]
@@ -280,6 +266,7 @@ public class StartGamePage extends DrawingSurface {
         double xDist = destX - x;
         double yDist = destY - y;
         
+        // Glide to new position smoothly
         for (int i = 0; i < 50; i++) {
             x += xDist / 50;
             y += yDist / 50;
@@ -304,6 +291,21 @@ public class StartGamePage extends DrawingSurface {
     }
     
     /**
+     * Set which buttons are clickable to avoid button conflicts.
+     * @param clickable
+     */
+    public void setClickable(boolean[] clickable) {
+        
+        beginGame.setOpacity(clickable[0] ? 1 : 0.5f);
+        beginGame.setClickable(clickable[0]);
+
+        for (int i = 0; i < 5; i++) {
+            movePlayers[i].setOpacity(clickable[i + 1] ? 1 : 0.5f);
+            movePlayers[i].setClickable(clickable[i + 1]);
+        }
+    }
+    
+    /**
      * setup method.
      */
     public void setup() {
@@ -322,7 +324,7 @@ public class StartGamePage extends DrawingSurface {
             Color.black);
         returnHome = new Text("Return to home", new Point(10, 25), 20,
             Color.black, Color.blue);
-        movePlayers = new Text[4];
+        movePlayers = new Text[5];
         movePlayers[0] = new Text("Move P1", new Point(100, 880), 20,
             Color.black, Color.blue);
         movePlayers[1] = new Text("Move P2", new Point(200, 880), 20,
@@ -330,6 +332,8 @@ public class StartGamePage extends DrawingSurface {
         movePlayers[2] = new Text("Move P3", new Point(300, 880), 20,
             Color.black, Color.blue);
         movePlayers[3] = new Text("Set move amt.", new Point(400, 880), 20,
+            Color.black, Color.blue);
+        movePlayers[4] = new Text("Reset", new Point(560, 880), 20,
             Color.black, Color.blue);
         add(gameArea);
         add(beginGame);
@@ -342,7 +346,10 @@ public class StartGamePage extends DrawingSurface {
         add(movePlayers[1]);
         add(movePlayers[2]);
         add(movePlayers[3]);
+        add(movePlayers[4]);
         //add(boardImage);
+        moveAmt = 7;
+        running = false;
         createGrid();
     }
 
@@ -371,14 +378,59 @@ public class StartGamePage extends DrawingSurface {
     @Override
     public void drawableMouseClick(Drawable e) {
         LOG.trace("drawableMouseClick method in StartGamepage.java");
+        
         if (e == beginGame) {
-            // start game
-            animateSpots2();
-            LOG.trace("Going to start the game");
+            setClickable(new boolean[] 
+                {true, false, false, false, false, false});
+            if (!running) {
+                LOG.trace("Going to start the game");
+                // start game
+                running = true;
+                beginGame.setMessage("Stop");
+                animatePegs();
+                setClickable(new boolean[] 
+                    {true, true, true, true, true, true});
+                
+            } else {
+                // stop game
+                running = false;
+                beginGame.setMessage("Start");
+                setClickable(new boolean[] 
+                    {false, false, false, false, false, false});
+            }
+            
         } else if (e == returnHome) {
             navPage = new NavigationPage();
                 //NavigationPageManager.getInstance().getNavPage();
             startGamePage.dispose();
+        } else if (e == movePlayers[0]) {
+            setClickable(new boolean[] 
+                {false, false, false, false, false, false});
+            movePeg(0, moveAmt);
+            setClickable(new boolean[] {true, true, true, true, true, true});
+        } else if (e == movePlayers[1]) {
+            setClickable(new boolean[] 
+                {false, false, false, false, false, false});
+            movePeg(1, moveAmt);
+            setClickable(new boolean[] {true, true, true, true, true, true});
+        } else if (e == movePlayers[2]) {
+            setClickable(new boolean[] 
+                {false, false, false, false, false, false});
+            movePeg(2, moveAmt);
+            setClickable(new boolean[] {true, true, true, true, true, true});
+        } else if (e == movePlayers[3]) {
+            setClickable(new boolean[] 
+                {false, false, false, false, false, false});
+            moveAmt = Integer.parseInt(getUserInput("Move Amount",
+                "How many spaces?", DialogPosition.CENTER_ALL));
+            setClickable(new boolean[] {true, true, true, true, true, true});
+        } else if (e == movePlayers[4]) {
+            setClickable(new boolean[] 
+                {false, false, false, false, false, false});
+            movePeg(0, 120 - pegLocations[0]);
+            movePeg(1, 120 - pegLocations[1]);
+            movePeg(2, 120 - pegLocations[2]);
+            setClickable(new boolean[] {true, true, true, true, true, true});
         }
     }
 
