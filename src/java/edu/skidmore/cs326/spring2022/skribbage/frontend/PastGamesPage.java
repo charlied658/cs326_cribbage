@@ -54,11 +54,6 @@ public class PastGamesPage extends DrawingSurface {
     private MainFrame mf;
 
     /**
-     * homeScreen - HomeScreen.
-     */
-    private HomeScreen homeScreen;
-
-    /**
      * returnToMainMenu - button to return to homepage.
      */
     private Text returnToMainMenu;

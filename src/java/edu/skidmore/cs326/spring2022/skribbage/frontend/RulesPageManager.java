@@ -8,6 +8,7 @@ import org.apache.log4j.Logger;
  * Manager for rules page.
  * 
  * @author Zoe Beals
+ * Code review by Jonah Marcus on 17 April 2022
  */
 public class RulesPageManager {
 
