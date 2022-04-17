@@ -8,6 +8,7 @@ import org.apache.log4j.Logger;
  * Navigation Page manager class.
  * 
  * @author Zoe Beals
+ * Code review by Jonah Marcus on 17 April 2022
  */
 public class NavigationPageManager {
 
