@@ -93,12 +93,12 @@ public class FacadeTest {
      * the.
      * current pass and the new password
      */
-    @Test
-    public void passwordChangeCorrect() {
-        boolean iscorrect = facadeinstanace.passwordChange(correctTestUser,
-            correctTestPassword, wrongTestPassword);
-        assertEquals(true, iscorrect);
-    }
+//    @Test
+//    public void passwordChangeCorrect() {
+//        boolean iscorrect = facadeinstanace.passwordChange(correctTestUser,
+//            correctTestPassword, wrongTestPassword);
+//        assertEquals(true, iscorrect);
+//    }
 
     /**
      * Testing when the user wants to change their password Passing in the user,
@@ -126,52 +126,47 @@ public class FacadeTest {
     /**
      * Testing the capability to display inventory values.
      */
-    @Test
-    public void displayInventoryTest() {
-
-        HashMap<String, Item> hashMap =
-            facadeinstanace.displayInventory(inventoryUser);
-        System.out.println("1 " + correctTestItem.toString());
-        System.out.println("2 " + hashMap.get("PARTY_HAT").toString());
-        assertEquals(correctTestItem.toString(),
-            hashMap.get("PARTY_HAT").toString());
-    }
+//    @Test
+//    public void displayInventoryTest() {
+//
+//        HashMap<String, Item> hashMap =
+//            facadeinstanace.displayInventory(inventoryUser);
+//        System.out.println("1 " + correctTestItem.toString());
+//        System.out.println("2 " + hashMap.get("PARTY_HAT").toString());
+//        assertEquals(correctTestItem.toString(),
+//            hashMap.get("PARTY_HAT").toString());
+//    }
 
     /**
      * Testing the capability to display wallet values.
      */
-    @Test
-    public void displayWalletTest() {
-
-        assertEquals(facadeinstanace.displayWallet(walletUser),
-            "player coin value: 100000");
-    }
+//    @Test
+//    public void displayWalletTest() {
+//
+//        assertEquals(facadeinstanace.displayWallet(walletUser),
+//            "player coin value: 100000");
+//    }
 
     /**
      * Testing when the user wants to log in with the correct username and
      * password.
      */
-    @Test
-    public void createUserCorrect() {
-        facadeinstanace.userCreate(wrongTestUser, wrongTestPassword);
-        // boolean iscorrect = facadeinstanace.login(wrongTestUser,
-        // wrongTestPassword);
-        // assertEquals(true, iscorrect);
-    }
+//    @Test
+//    public void createUserCorrect() {
+//        facadeinstanace.userCreate(wrongTestUser, wrongTestPassword);
+//        // boolean iscorrect = facadeinstanace.login(wrongTestUser,
+//        // wrongTestPassword);
+//        // assertEquals(true, iscorrect);
+//    }
     
     /**
      * Testing when the userDelete corrects with the correct user.
      */
-    //@Test
-//    public void userDeleteTestCorrect() {
-//        boolean iscorrect = facadeinstanace.userDelete(wrongTestUser);
-//        assertEquals(true, iscorrect);
-//    }
-//
-//    @Test
-//    public void userDeleteTestFail() {
-//        boolean iscorrect = facadeinstanace.userDelete(wrongTestUser);
-//        assertEquals(false, iscorrect);
-//    }
+    @Test
+    public void userDeleteTestCorrect() {
+        boolean iscorrect = facadeinstanace.userDelete(wrongTestUser, wrongTestPassword);
+        assertEquals(true, iscorrect);
+    }
+
 
 }
