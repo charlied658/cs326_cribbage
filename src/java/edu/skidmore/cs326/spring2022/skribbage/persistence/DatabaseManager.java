@@ -549,5 +549,90 @@ public class DatabaseManager {
         }
 
     }
+    
+    
+    /**
+     * This is a method to add a new player to the player_account table.
+     *
+     * @author Tinaye Mawocha
+     * @param itemType
+     *            : the type of item to be added
+     * @param quantity
+     *            : the quantity of items to be added
+     * @param user
+     * 			  : the user account to add to
+     */
+    public void inventoryDeposit(ItemTypes itemType, int quantity, User user) {
+    	
+        // INSERT INTO player_account (personID, LastName, FirstName, UserName,
+        // Password, AvatarURL, Email)
+        // VALUES (/* comma separated values in the exact order of the above
+        // columns*/
+        // );
+        Connection conn = null;
+
+        PreparedStatement ps = null;
+
+        ResultSet rs = null;
+        
+        HashMap<String, Item> userInventory = inventoryQuery(user.getUserId());
+       if (userInventory.containsKey(itemType.toString())) {
+    	   Item tempItem = userInventory.get(itemType.toString());
+    	   //get quantity of item and add to desired user quantity
+    	   //delete item from db
+       }
+
+        try {
+            // System.out.println("Run a prepared database query");
+            // Class.forName("com.mysql.jdbc.Driver");
+            conn = getDB();
+
+            String script =
+                "INSERT INTO player_account (PersonID, Username, Password) "
+                    + "VALUES (RAND()*10000, ?, ?)";
+            ps = conn.prepareStatement(script);
+
+            ps.setString(1, userName);
+            ps.setString(2, password);
+
+            System.out.println(ps);
+            System.out.println(ps.executeUpdate());
+
+        }
+        catch (SQLException sqle) {
+            sqle.printStackTrace();
+            // LOGGER.error("Database Interaction Failure", sqle);
+
+        }
+        finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                }
+                catch (SQLException sqle) {
+                    // LOGGER.error("Failed to close result set", sqle);
+
+                }
+
+            }
+
+            if (ps != null) {
+                try {
+                    ps.close();
+                }
+                catch (SQLException sqle) {
+                    // LOGGER.error("Failed to close prepared statement", sqle);
+                }
+            }
+            if (conn != null) {
+                try {
+                    conn.close();
+                }
+                catch (SQLException sqle) {
+                    // LOGGER.error("Failed to close connection", sqle);
+                }
+            }
+        }
+    }
 
 }
