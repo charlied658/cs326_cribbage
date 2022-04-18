@@ -27,7 +27,7 @@ import us.daveread.edu.graphics.surface.MainFrame;
  *         Code review by Jonah Marcus on 17 April 2022
  */
 @SuppressWarnings("serial")
-public class StartGamePage extends DrawingSurface implements Page {
+public class StartGamePage extends DrawingSurface {
 
     /**
      * navPage - NavigationPage window.
