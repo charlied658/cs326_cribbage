@@ -1,11 +1,7 @@
 package edu.skidmore.cs326.spring2022.skribbage.gamification;
 
-<<<<<<< HEAD
-import edu.skidmore.cs326.spring2022.skribbage.logic.Player;
 //import java.util.Random;
-=======
 import edu.skidmore.cs326.spring2022.skribbage.common.Player;
->>>>>>> 16754c857444f9ef2fce117741c86c0c95f1849e
 import org.apache.log4j.Logger;
 
 /**
