@@ -1,7 +1,11 @@
 package edu.skidmore.cs326.spring2022.skribbage.gamification;
 
+<<<<<<< HEAD
 import edu.skidmore.cs326.spring2022.skribbage.logic.Player;
 //import java.util.Random;
+=======
+import edu.skidmore.cs326.spring2022.skribbage.common.Player;
+>>>>>>> 16754c857444f9ef2fce117741c86c0c95f1849e
 import org.apache.log4j.Logger;
 
 /**
@@ -27,18 +31,20 @@ public class BattleSpot {
     static {
         LOG = Logger.getLogger(BattleSpot.class);
     }
+
     /**
      * Die to be rolled in the battle spot class.
      */
     private Die die = new Die();
 
-   /**
-    * Randomly decides the winner when two players land on a battle spot. 
-    * @param p1
-    * @param p2
-    */
+    /**
+     * Randomly decides the winner when two players land on a battle spot.
+     * 
+     * @param p1
+     * @param p2
+     */
     public void decideWinner(Player p1, Player p2) {
-        
+
         int diceRoll = die.rollDie(2, 0, true);
         LOG.info("decideWinner: Dice roll is " + diceRoll);
         System.out.println(diceRoll);
@@ -46,7 +52,7 @@ public class BattleSpot {
         if (diceRoll == 1) {
             LOG.info("decideWinner: " + p1.getName() + " is the winner");
             System.out.println("Player one wins");
-            
+
             rewardPenalty(p1, p2);
         } else {
             LOG.info("decideWinner: " + p2.getName() + " is the winner");
@@ -60,13 +66,14 @@ public class BattleSpot {
      * Rolls a dice and decides whether to reward the winner or penalize the
      * loser
      * and by how much.
+     * 
      * @param loser
      * @param winner
      */
     public void rewardPenalty(Player loser, Player winner) {
 
         int diceRoll = die.rollDie(3, -3, false);
-        
+
         LOG.info("rewardPenalty: Dice roll is " + diceRoll);
         if (diceRoll > 0) {
             LOG.info("rewardPenalty: winner moved up " + diceRoll);

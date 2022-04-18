@@ -3,10 +3,28 @@ package edu.skidmore.cs326.spring2022.skribbage.persistence;
 import edu.skidmore.cs326.spring2022.skribbage.common.Game;
 import edu.skidmore.cs326.spring2022.skribbage.common.User;
 
+/**
+ * game management class.
+ * 
+ * @author ??
+ */
 public interface GameManagement {
 
-	public Game retrieveGame(User userName, Game whichGame);
+    /**
+     * retrieve game method.
+     * 
+     * @param userName
+     * @param whichGame
+     * @return the game.
+     */
+    Game retrieveGame(User userName, Game whichGame);
 
-	public boolean saveGame(User userName, Game currentGame);
+    /**
+     * save game mehtod.
+     * @param userName
+     * @param currentGame
+     * @return the game.
+     */
+    boolean saveGame(User userName, Game currentGame);
 
 }

@@ -9,9 +9,10 @@ import edu.skidmore.cs326.spring2022.skribbage.common.events.AccountEvent;
 /**
  * The UserCreateAccountEvent implements an event class that extends
  * AccountEvent abstract class.
+ * 
  * @
- * @author Alex Carney
- *         Reviewed, commented, Logging added bv Sten Leinasaar
+ *   @author Alex Carney
+ *   Reviewed, commented, Logging added bv Sten Leinasaar
  */
 @SuppressWarnings("serial")
 public class UserCreateAccountEvent extends AccountEvent {

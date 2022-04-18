@@ -46,9 +46,8 @@ public class LoginAuthenticator {
     public String hashNewPassword(String newPassword) {
         return PasswordHasher.getInstance().hashNewPassword(newPassword);
     }
-    
+
     /**
-     * 
      * @param user
      * @param attemptedPassword
      * @return

@@ -10,6 +10,7 @@ import java.beans.PropertyChangeListener;
 /**
  * Mock class for testing if the "logic tier" can communicate a response
  * back to the "front end tier".
+ * 
  * @author Alex Carney
  */
 public class AccountResponseControllerMOCK implements PropertyChangeListener {
@@ -31,21 +32,23 @@ public class AccountResponseControllerMOCK implements PropertyChangeListener {
     /**
      * This method gets called when a bound property is changed.
      *
-     * @param evt A PropertyChangeEvent object describing the event source
+     * @param evt
+     *            A PropertyChangeEvent object describing the event source
      *            and the property that has changed.
      */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        LOG.trace("evt in account response controller = " + evt);
+        LOG.trace("Event in account response controller = " + evt);
         receivedUserFromLogin = ((AccountResponseEvent) evt).getUser();
     }
 
     /**
      * Return user that logged in.
+     * 
      * @return User object
      */
     public User getReceivedUserFromLogin() {
-        LOG.trace("returning received user from login");
+        LOG.trace("Returning received user from login");
         return receivedUserFromLogin;
     }
 }

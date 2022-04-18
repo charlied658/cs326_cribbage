@@ -21,7 +21,7 @@ public abstract class LobbyEvent extends PropertyChangeEvent {
     /**
      * The lobby associated with the event.
      */
-//    private final Lobby lobby;
+    // private final Lobby lobby;
 
     static {
         LOG = Logger.getLogger(LobbyEvent.class);
@@ -32,13 +32,14 @@ public abstract class LobbyEvent extends PropertyChangeEvent {
      * 
      * @param source
      *            The bean that fired the event
-     * @param eventType The event type associated
-     *            
+     * @param eventType
+     *            The event type associated
      */
-    protected LobbyEvent(Object source, EventType eventType /**Lobby lobby*/) {
+    protected LobbyEvent(Object source, EventType eventType /** Lobby lobby */
+    ) {
         super(source, eventType.toString(), null, null);
         LOG.trace("Constructor reached in LobbEvent.java");
-        
+
     }
 
     /**
@@ -46,8 +47,8 @@ public abstract class LobbyEvent extends PropertyChangeEvent {
      */
     public abstract EventType getEventType();
 
-//    public Lobby getLobby() {
-//        return lobby;
-//    }
+    // public Lobby getLobby() {
+    // return lobby;
+    // }
 
 }

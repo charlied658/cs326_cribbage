@@ -5,7 +5,6 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
 import org.apache.log4j.Logger;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -57,8 +56,8 @@ public class EventFactoryTest {
         LOG.trace("Started the setup method");
         source = new Object();
         // Email, username, password, isauthorized?
-//        userInstance =
-//            new User("sleinasa@skidmore.edu", "sleinasa", "passwd", true);
+        // userInstance =
+        // new User("sleinasa@skidmore.edu", "sleinasa", "passwd", true);
         testInstance = EventFactory.getInstance();
         LOG.info("SetUp method completed");
     }
@@ -77,7 +76,8 @@ public class EventFactoryTest {
 
     /**
      * Method to test factory create Event method.
-     * @throws Exception 
+     * 
+     * @throws Exception
      */
     @Test
     public void testCreateEvent() throws Exception {

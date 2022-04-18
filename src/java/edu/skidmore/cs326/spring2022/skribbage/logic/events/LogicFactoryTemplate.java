@@ -11,7 +11,6 @@ import org.apache.log4j.Logger;
  * handle logic specific events.
  * 
  * @author Declan Morris
- *
  * @author Alex Carney
  */
 public class LogicFactoryTemplate extends FactoryTemplate {

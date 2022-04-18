@@ -23,6 +23,7 @@ public class SkribbageBattleRoyale implements Runnable {
     /**
      * HomeScreen instance to start the home page from driver class.
      */
+    @SuppressWarnings("unused")
     private HomeScreen homePage;
 
     /**
@@ -33,6 +34,7 @@ public class SkribbageBattleRoyale implements Runnable {
     /**
      * Singleton eventFactory instance.
      */
+    @SuppressWarnings("unused")
     private EventFactory eventFactory;
 
     /**
@@ -51,12 +53,11 @@ public class SkribbageBattleRoyale implements Runnable {
 
     @Override
     public void run() {
-        System.out.println(getWelcomeMessage());
+        LOG.warn(getWelcomeMessage());
         LOG.info("Run method started");
         LOG.info("homePage started by initializing it.");
         // Instantiate required class instances
         homePage = new HomeScreen();
-        homePage.setup();
         eventFactory = EventFactory.getInstance();
         eventManager = EventManager.getInstance();
 

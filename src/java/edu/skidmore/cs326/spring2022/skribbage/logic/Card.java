@@ -8,7 +8,6 @@ import edu.skidmore.cs326.spring2022.skribbage.common.events.AccountEvent;
 /**
  * Encompasses all information portrayed by a card
  * Card also knows which card type should come after it in a run.
- * 
  * TODO (DSR): Card functionality needs to move to the common package
  * TODO (DSR): Lets talk through the design of Card, Hand, Deck...
  * 
@@ -197,7 +196,7 @@ public class Card {
      *            inputted identifier
      */
     public Card(char inIdentifier, Suit inSuit) {
-        LOG.trace("Constructor called to create " + inIdentifier 
+        LOG.trace("Constructor called to create " + inIdentifier
             + " of " + inSuit);
         setSuit(inSuit);
         setIdentifier(inIdentifier);

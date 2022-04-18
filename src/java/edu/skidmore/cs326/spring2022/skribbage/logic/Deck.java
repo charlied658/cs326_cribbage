@@ -7,12 +7,10 @@ import java.util.Random;
 import edu.skidmore.cs326.spring2022.skribbage.common.Suit;
 
 /**
- *
  * TODO (DSR): Deck functionality needs to move to the common package
  * TODO (DSR): Lets talk through the design of Card, Hand, Deck...
-
+ * 
  * @author kpolite
- *
  */
 
 public class Deck {
@@ -54,7 +52,7 @@ public class Deck {
 
             theDeck.add(new Card('A', theSuits[suit])); // adds an Ace
 
-            for (int charIndex = 0; charIndex <= 8; charIndex++) { //cards 2-10
+            for (int charIndex = 0; charIndex <= 8; charIndex++) { // cards 2-10
                 theDeck.add(new Card(myChars[charIndex], theSuits[suit]));
             } // end numbered card loop
 
@@ -87,8 +85,10 @@ public class Deck {
 
     /**
      * Returns card at indicated index.
-     *@return Card
-     *@param  whereToCut index of where you want to cut in the deck
+     * 
+     * @return Card
+     * @param whereToCut
+     *            index of where you want to cut in the deck
      */
     public Card cut(int whereToCut) {
         return theDeck.get(whereToCut);
@@ -96,7 +96,8 @@ public class Deck {
 
     /**
      * returns a ArrayList<Card> variable, which is the deck.
-     *@return ArrayList<Card>
+     * 
+     * @return ArrayList<Card>
      */
     public ArrayList<Card> getDeck() {
         return theDeck;
@@ -117,7 +118,7 @@ public class Deck {
      * Moves a card to the top.
      *
      * @param whatCardToMove
-     *          index of which card to move to the top.
+     *            index of which card to move to the top.
      */
     public void moveToTop(int whatCardToMove) {
         Card tempCard = theDeck.get(whatCardToMove + 1);

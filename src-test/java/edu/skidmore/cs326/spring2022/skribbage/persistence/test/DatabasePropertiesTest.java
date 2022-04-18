@@ -13,22 +13,29 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
+/**
+ * database properties test.
+ * 
+ * @author
+ */
 public class DatabasePropertiesTest {
 
-	@Test
-	public void testGetUserIDValue() {
-		assertEquals("Incorrect UserID Property", "skribbage_app", DatabaseProperties.getInstance().getValue("UserID"));
-	}
+    @Test
+    public void testGetUserIDValue() {
+        assertEquals("Incorrect UserID Property", "skribbage_app",
+            DatabaseProperties.getInstance().getValue("UserID"));
+    }
 
-	@Test
-	public void testAppPasswordGetValue() {
-		assertEquals("Incorrect AppPassword Property", "z5(DHjabY!O",
-				DatabaseProperties.getInstance().getValue("AppPassword"));
-	}
+    @Test
+    public void testAppPasswordGetValue() {
+        assertEquals("Incorrect AppPassword Property", "z5(DHjabY!O",
+            DatabaseProperties.getInstance().getValue("AppPassword"));
+    }
 
-	@Test
-	public void testDBUrlGetValue() {
-		assertEquals("Incorrect DBUrl Property", "jdbc:mysql://bits.monead.com:3306/skribbage",
-				DatabaseProperties.getInstance().getValue("DBUrl"));
-	}
+    @Test
+    public void testDBUrlGetValue() {
+        assertEquals("Incorrect DBUrl Property",
+            "jdbc:mysql://bits.monead.com:3306/skribbage",
+            DatabaseProperties.getInstance().getValue("DBUrl"));
+    }
 }

@@ -1,9 +1,6 @@
 package edu.skidmore.cs326.spring2022.skribbage.gamification.test;
 
-
-
 import org.apache.log4j.Logger;
-
 
 import static org.junit.Assert.assertTrue;
 
@@ -11,11 +8,12 @@ import org.junit.Before;
 import org.junit.Test;
 
 import edu.skidmore.cs326.spring2022.skribbage.gamification.BattleSpot;
-import edu.skidmore.cs326.spring2022.skribbage.logic.Player;
+import edu.skidmore.cs326.spring2022.skribbage.common.Player;
+
 /**
- * Tests the battle spot class. 
+ * Tests the battle spot class.
+ * 
  * @author Henry Wilson
- *
  */
 public class BattleSpotTest {
 
@@ -56,6 +54,7 @@ public class BattleSpotTest {
         p1 = new Player();
         p2 = new Player();
     }
+
     /**
      * 
      */
@@ -160,7 +159,7 @@ public class BattleSpotTest {
             numTests++;
             System.out.println(numTests);
         }
-        
+
         assertTrue(playerOneWins > 0);
         assertTrue(playerTwoWins > 0);
         assertTrue(winnerUpOne > 0);

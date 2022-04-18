@@ -50,14 +50,16 @@ public class UserLoginEventTest {
 
     /**
      * Setup Method to initialize testing conditions.
-     * @throws Exception when event can not be found.
+     * 
+     * @throws Exception
+     *             when event can not be found.
      */
     @Before
     public void setUp() throws Exception {
         LOG.trace("SetUp method started");
         source = new Object();
-//        userInstance =
-//            new User("sleinasa@skidmore.edu", "sleinasa", "password", true);
+        // userInstance =
+        // new User("sleinasa@skidmore.edu", "sleinasa", "password", true);
         testInstance = (UserLoginEvent) EventFactory.getInstance()
             .createEvent(EventType.USER_LOGIN, source, userInstance);
         new UserLoginEvent(source, userInstance);
@@ -75,8 +77,7 @@ public class UserLoginEventTest {
     }
 
     /**
-     * @throws Exception 
-     * 
+     * @throws Exception
      */
     @Test(expected = IllegalArgumentException.class)
     public void testErrorThrowing() throws Exception {
@@ -87,8 +88,6 @@ public class UserLoginEventTest {
             + testInstance2.getEventType());
         LOG.trace("Error test for checking args completed");
     }
-    
-    
 
     /**
      * Tests that the user assigned to the event is the one passed to the
