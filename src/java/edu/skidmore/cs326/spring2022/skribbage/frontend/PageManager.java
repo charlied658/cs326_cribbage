@@ -11,7 +11,7 @@ import org.apache.log4j.Logger;
  *         4/13/2022
  *         Code review by Jonah Marcus on 17 April 2022
  */
-public class PageManager {
+public final class PageManager {
 
     /**
      * logger.
