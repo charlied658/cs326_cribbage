@@ -1,6 +1,8 @@
 package edu.skidmore.cs326.spring2022.skribbage.gamification;
 
 import edu.skidmore.cs326.spring2022.skribbage.common.Player;
+//import java.util.Random;
+import edu.skidmore.cs326.spring2022.skribbage.common.Player;
 import org.apache.log4j.Logger;
 
 /**
@@ -9,6 +11,7 @@ import org.apache.log4j.Logger;
  * spaces
  * 
  * @author Henry Wilson
+ *         Last Edited by Muaded Almheiri [Fixed checkstyle]
  */
 public class JumpSpot {
 
