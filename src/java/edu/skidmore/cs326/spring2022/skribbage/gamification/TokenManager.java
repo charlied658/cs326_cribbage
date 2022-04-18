@@ -1,18 +1,18 @@
-package edu.skidmore.cs326.spring2022.skribbage.gamification;
+
 
 import java.util.ArrayList;
 
 /**
  * @author jaroderatsimbazafy.
- * Wallet class.
- * Token manager for individual player
+ *         Wallet class.
+ *         Token manager for individual player
  */
-public class Wallet {
+public class TokenManager implements Manager {
 
     /**
      * ArrayList of tokens to simulate a wallet.
      */
-    private ArrayList<Token> Tokens;
+    private ArrayList<Token> tokens;
 
     /**
      * Constructor.
@@ -20,9 +20,9 @@ public class Wallet {
      * @param initialAmount
      *            the amount of tokens in wallet at instantiation
      */
-    public Wallet(int initialAmount) {
+    public TokenManager(int initialAmount) {
         for (int i = 0; i < initialAmount; i++) {
-            Tokens.add(new Token());
+            tokens.add(new Token());
         }
     }
 
@@ -35,7 +35,7 @@ public class Wallet {
     public void addToken(int amount) {
 
         for (int i = 0; i < amount; i++) {
-            Tokens.add(new Token());
+            tokens.add(new Token());
         }
     }
 
@@ -48,7 +48,7 @@ public class Wallet {
     public void removeToken(int amount) {
 
         for (int i = 0; i < amount; i++) {
-            Tokens.remove(0);
+            tokens.remove(0);
         }
     }
 
@@ -58,7 +58,7 @@ public class Wallet {
      * @return the number of tokens in the wallet(size of the ArrayList)
      */
     public int getAmount() {
-        return Tokens.size();
+        return tokens.size();
     }
 
 }
