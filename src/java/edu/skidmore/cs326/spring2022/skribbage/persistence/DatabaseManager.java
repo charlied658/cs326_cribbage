@@ -80,37 +80,38 @@ public class DatabaseManager {
      * @return Whether password was accepted
      */
 
-    public boolean userAuthenticate(String username, Password password) {
-
-        String tempQuery =
-            "SELECT * FROM player_account WHERE username='" + username + "'";
-        // Connection conn = dbConnect();
-        String storedPassword = "";
-
-        try {
-            Connection conn = getDB();
-            Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery(tempQuery);
-
-            rs.next();
-            storedPassword = rs.getString("Password");
-
-        }
-        catch (SQLException e) {
-            System.out.println("Account not found");
-            e.printStackTrace();
-
-        }
-
-        if (storedPassword.compareTo(password.getPasswordValue()) == 0) {
-            System.out.println("Password Accepted");
-            return true;
-        } else {
-            System.out.println("Incorrect Password");
-            return false;
-        }
-
-    }
+//    public boolean userAuthenticate(User user, Password password) {
+//
+//    	String username = user.getUserName();
+//        String tempQuery =
+//            "SELECT * FROM player_account WHERE username='" + username + "'";
+//        // Connection conn = dbConnect();
+//        String storedPassword = "";
+//
+//        try {
+//            Connection conn = getDB();
+//            Statement stmt = conn.createStatement();
+//            ResultSet rs = stmt.executeQuery(tempQuery);
+//
+//            rs.next();
+//            storedPassword = rs.getString("Password");
+//
+//        }
+//        catch (SQLException e) {
+//            System.out.println("Account not found");
+//            e.printStackTrace();
+//
+//        }
+//
+//        if (storedPassword.compareTo(password.getPasswordValue()) == 0) {
+//            System.out.println("Password Accepted");
+//            return true;
+//        } else {
+//            System.out.println("Incorrect Password");
+//            return false;
+//        }
+//
+//    }
 
     /**
      * This is a function to query the token value held by a player.

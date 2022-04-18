@@ -169,6 +169,8 @@ public final class PersistenceFacade
         // user will have to be
         // handled by the front end team in the password prompt method in this
         // class
+    	System.out.println(password.getPasswordValue());
+    	//PRha74NgJISBMA==~mvIwoqOH1VA2AzrxLvxTXyGgJLr0jyS09bHhi4G9tZ4=
 
         boolean accepted = DM.userAuthenticate(user, password);
 
