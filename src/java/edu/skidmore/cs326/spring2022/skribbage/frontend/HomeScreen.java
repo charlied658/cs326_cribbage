@@ -17,7 +17,7 @@ import us.daveread.edu.graphics.surface.MainFrame;
  *         Code reviewed by Jonah Marcus on 3/29/2022
  */
 @SuppressWarnings("serial")
-public class HomeScreen extends DrawingSurface {
+public class HomeScreen extends DrawingSurface implements Page {
 
     /**
      * welcomeMessage - Text variable that holds the welcome message.
