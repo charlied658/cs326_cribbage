@@ -1,13 +1,14 @@
 package edu.skidmore.cs326.spring2022.skribbage.gamification;
 
 import edu.skidmore.cs326.spring2022.skribbage.logic.Player;
-import java.util.Random;
+//import java.util.Random;
 import org.apache.log4j.Logger;
 
 /**
  * If a player lands on a prize spot they get a random prize.
  * 
  * @author Henry Wilson
+ *         Last edited by Muaded Almheiri
  */
 public class PrizeSpot {
 
@@ -23,6 +24,9 @@ public class PrizeSpot {
         LOG = Logger.getLogger(PrizeSpot.class);
     }
     
+    /**
+     * Die class instance.
+     */
     private Die die;
 
     /**
