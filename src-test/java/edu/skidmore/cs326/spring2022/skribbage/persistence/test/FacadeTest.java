@@ -87,20 +87,6 @@ public class FacadeTest {
         walletUser.setUserId(325);
     }
 
-    /**
-     * Testing when the userDelete corrects with the correct user.
-     */
-    @Test
-    public void userDeleteTestCorrect() {
-        boolean iscorrect = facadeinstanace.userDelete(correctTestUser);
-        assertEquals(true, iscorrect);
-    }
-
-    @Test
-    public void userDeleteTestFail() {
-        boolean iscorrect = facadeinstanace.userDelete(wrongTestUser);
-        assertEquals(false, iscorrect);
-    }
 
     /**
      * Testing when the user wants to change their password Passing in the user,
@@ -171,6 +157,21 @@ public class FacadeTest {
         // boolean iscorrect = facadeinstanace.login(wrongTestUser,
         // wrongTestPassword);
         // assertEquals(true, iscorrect);
+    }
+    
+    /**
+     * Testing when the userDelete corrects with the correct user.
+     */
+    @Test
+    public void userDeleteTestCorrect() {
+        boolean iscorrect = facadeinstanace.userDelete(wrongTestUser);
+        assertEquals(true, iscorrect);
+    }
+
+    @Test
+    public void userDeleteTestFail() {
+        boolean iscorrect = facadeinstanace.userDelete(wrongTestUser);
+        assertEquals(false, iscorrect);
     }
 
 }
