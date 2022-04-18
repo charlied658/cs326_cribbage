@@ -4,6 +4,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
+
+
 import org.apache.log4j.Logger;
 import org.junit.Before;
 import org.junit.Test;
@@ -86,7 +88,12 @@ public class EventFactoryTest {
         createInstance = (UserCreateAccountEvent) testInstance
             .createEvent(EventType.USER_CREATE_ACCOUNT, source, userInstance);
         assertNotNull(createInstance);
+        assertEquals(createInstance.getEventType(),
+            EventType.USER_CREATE_ACCOUNT.getName());
         LOG.trace("Create event test finished");
     }
+    
+   
 
+   
 }
