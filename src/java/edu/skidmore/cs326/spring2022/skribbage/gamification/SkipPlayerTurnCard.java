@@ -54,7 +54,8 @@ public class SkipPlayerTurnCard implements ItemShopInterface {
         setPrice(SpecialCard.SKIPPLAYERTURNCARD.getPrice());
         setDescription(SpecialCard.SKIPPLAYERTURNCARD.getDescription());
 
-        LOG.info("Name, price, and description set for Skip-Player-Turn- Card.");
+        LOG.info("Name, price, and description set for "
+            + "Skip-Player-Turn- Card.");
 
         boolean isEntry = false;
 
