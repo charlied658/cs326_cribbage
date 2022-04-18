@@ -87,8 +87,10 @@ public final class PersistenceFacade
      *         depending on whether the method worked
      */
     @Override
-    public boolean userDelete(User userToDelete) {
+    public boolean userDelete(User userToDelete, Password password) {
 
+    	
+    	DM.createUser(userToDelete.getUserName(), password.getPasswordValue());
         return true;
     }
 

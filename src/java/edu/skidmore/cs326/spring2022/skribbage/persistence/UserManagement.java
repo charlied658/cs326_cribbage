@@ -25,7 +25,7 @@ public interface UserManagement {
      * @param userToDelete
      * @return the user.
      */
-    boolean userDelete(User userToDelete);
+    boolean userDelete(User userToDelete, Password password);
 
     /**
      * password change.
