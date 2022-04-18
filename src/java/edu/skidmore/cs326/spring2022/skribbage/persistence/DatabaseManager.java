@@ -592,8 +592,8 @@ public class DatabaseManager {
                     + "VALUES (RAND()*10000, ?, ?)";
             ps = conn.prepareStatement(script);
 
-            ps.setString(1, userName);
-            ps.setString(2, password);
+            //ps.setString(1, userName);
+            //ps.setString(2, password);
 
             System.out.println(ps);
             System.out.println(ps.executeUpdate());
