@@ -9,14 +9,11 @@ import java.util.HashMap;
 
 //import java.awt.Graphics2D;
 
-
 import org.apache.log4j.Logger;
 
 import edu.skidmore.cs326.spring2022.skribbage.common.Card;
 import edu.skidmore.cs326.spring2022.skribbage.common.Rank;
 import edu.skidmore.cs326.spring2022.skribbage.common.Suit;
-
-
 
 import us.daveread.edu.graphics.shape.Drawable;
 import us.daveread.edu.graphics.shape.impl.Image;
@@ -24,7 +21,6 @@ import us.daveread.edu.graphics.shape.impl.Text;
 import us.daveread.edu.graphics.surface.DrawingSurface;
 import us.daveread.edu.graphics.surface.MainFrame;
 import us.daveread.edu.utilities.Utility;
-
 
 /***
  * The page that shows the player's inventory. Players can
@@ -63,6 +59,11 @@ public class InventoryPage extends DrawingSurface implements ActionListener {
     private Text closeWindow;
 
     /**
+     * Object of type text that represents going back to lobby.
+     */
+    private Text lobbyButton;
+
+    /**
      * Logger instance for logging.
      */
     private static final Logger LOG;
@@ -92,7 +93,8 @@ public class InventoryPage extends DrawingSurface implements ActionListener {
 
         closeWindow = new Text("Close",
             new Point(20, 40), 25, Color.BLUE, Color.BLACK);
-
+        lobbyButton = new Text("Back to Lobby", new Point(20, 60), 25,
+            Color.BLUE, Color.BLACK);
         add(new Text("Inventory:", new Point(30, 90), 20, Color.BLACK));
 
         // Placeholder cards
@@ -120,17 +122,8 @@ public class InventoryPage extends DrawingSurface implements ActionListener {
         }
 
         add(closeWindow);
+        add(lobbyButton);
         add(logo);
-    }
-
-    /**
-     * Main method.
-     * 
-     * @param args
-     */
-    public static void main(String[] args) {
-        LOG.trace("Entered main method");
-        new InventoryPage();
     }
 
     @Override
@@ -140,6 +133,9 @@ public class InventoryPage extends DrawingSurface implements ActionListener {
             closeWindow.setBorderColor(Color.CYAN);
             Utility.pause(100);
             closeWindow.setBorderColor(Color.BLACK);
+            mf.dispose();
+        } else if (e == lobbyButton) {
+            new LobbyPage();
             mf.dispose();
         }
 

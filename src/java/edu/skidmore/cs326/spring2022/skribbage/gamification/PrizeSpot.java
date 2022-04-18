@@ -1,7 +1,8 @@
 package edu.skidmore.cs326.spring2022.skribbage.gamification;
 
-import edu.skidmore.cs326.spring2022.skribbage.logic.Player;
+import edu.skidmore.cs326.spring2022.skribbage.common.Player;
 //import java.util.Random;
+import edu.skidmore.cs326.spring2022.skribbage.common.Player;
 import org.apache.log4j.Logger;
 
 /**
@@ -23,9 +24,9 @@ public class PrizeSpot {
     static {
         LOG = Logger.getLogger(PrizeSpot.class);
     }
-    
+
     /**
-     * Die class instance.
+     * Die.
      */
     private Die die;
 
@@ -38,7 +39,6 @@ public class PrizeSpot {
 
         int diceRoll = die.rollDie(6, 0, true);
         LOG.info("rewardPenalty: Dice roll is " + diceRoll);
-        
 
     }
 

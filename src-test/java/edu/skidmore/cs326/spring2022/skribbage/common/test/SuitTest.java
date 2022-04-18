@@ -13,12 +13,12 @@ import edu.skidmore.cs326.spring2022.skribbage.common.Suit;
  * @author Declan Morris
  */
 public class SuitTest {
-    
+
     /**
      * Attribute to house the test instance to run tests on.
      */
     private Suit testInstance;
-    
+
     /**
      * Instantiate the test instance.
      */
@@ -26,7 +26,7 @@ public class SuitTest {
     public void setup() {
         testInstance = Suit.DIAMONDS;
     }
-    
+
     /**
      * Test the getName method.
      */

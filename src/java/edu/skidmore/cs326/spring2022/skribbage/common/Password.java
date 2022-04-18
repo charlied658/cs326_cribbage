@@ -25,7 +25,9 @@ public class Password implements Payload {
     /**
      * Creates a new password object. Only required field is passwordValue,
      * others can be added later
-     * @param passwordValue The string value of the password
+     * 
+     * @param passwordValue
+     *            The string value of the password
      */
     public Password(String passwordValue) {
         this.passwordValue = passwordValue;
@@ -34,6 +36,7 @@ public class Password implements Payload {
 
     /**
      * Returns string password value, may be raw.
+     * 
      * @return String password value
      */
     public String getPasswordValue() {
@@ -42,6 +45,7 @@ public class Password implements Payload {
 
     /**
      * Has the string been hashed yet or is it still raw text.
+     * 
      * @return True: password is hashed.
      */
     public boolean isHashed() {
@@ -50,7 +54,9 @@ public class Password implements Payload {
 
     /**
      * Change the status of this password being hashed or not.
-     * @param hashed boolean update
+     * 
+     * @param hashed
+     *            boolean update
      */
     public void setHashed(boolean hashed) {
         isHashed = hashed;
@@ -59,7 +65,9 @@ public class Password implements Payload {
     /**
      * Update password text. If incoming password is hashed, make sure to
      * update setHashed as well
-     * @param passwordValue Incoming password
+     * 
+     * @param passwordValue
+     *            Incoming password
      */
     public void setPasswordValue(String passwordValue) {
         this.passwordValue = passwordValue;
@@ -67,6 +75,7 @@ public class Password implements Payload {
 
     /**
      * Returns salt associated with password. May be null.
+     * 
      * @return A potentially null byte array representing a salt
      */
     public byte[] getSalt() {
@@ -75,7 +84,9 @@ public class Password implements Payload {
 
     /**
      * Sets salt associated with password.
-     * @param salt Salt to set.
+     * 
+     * @param salt
+     *            Salt to set.
      */
     public void setSalt(byte[] salt) {
         this.salt = salt;

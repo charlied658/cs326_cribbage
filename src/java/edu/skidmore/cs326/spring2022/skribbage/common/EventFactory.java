@@ -18,7 +18,7 @@ import edu.skidmore.cs326.spring2022.skribbage.persistence.events.PersistanceFac
  * from the metadata given in EventType enum.
  *
  * @author Sten Leinasaar
- * Last Edit: March 23, 2022
+ *         Last Edit: March 23, 2022
  */
 public final class EventFactory implements EventDispatcher {
 
@@ -52,7 +52,7 @@ public final class EventFactory implements EventDispatcher {
      * EventFactory private constructor.
      */
     private EventFactory() {
-//        eventManager = EventManager.getInstance();
+        // eventManager = EventManager.getInstance();
         templates = Arrays.asList(
             new LogicFactoryTemplate(), new GamificationFactoryTemplate(),
             new FrontEndFactoryTemplate(), new PersistanceFactoryTemplate());
@@ -72,14 +72,18 @@ public final class EventFactory implements EventDispatcher {
      * Creates an event of type PropertyChangeEvent based on the
      * EventType enum value being passed.
      *
-     * @param event  Type of an event as specified from the ENUM.
-     * @param source Source that fired the update.
-     * @param args   Vararg of Object type.
+     * @param event
+     *            Type of an event as specified from the ENUM.
+     * @param source
+     *            Source that fired the update.
+     * @param args
+     *            Vararg of Object type.
      * @return An event of type that was specified.
-     * @throws Exception Event Not Found when EventType cannot be created.
+     * @throws Exception
+     *             Event Not Found when EventType cannot be created.
      */
     public PropertyChangeEvent createEvent(EventType event, Object source,
-        Object... args) /**throws Exception*/ {
+        Object... args) {
         Object[] eventArgumentList = event.getArgumentList();
 
         for (int i = 0; i < eventArgumentList.length; i++) {
@@ -111,7 +115,7 @@ public final class EventFactory implements EventDispatcher {
         }
 
         LOG.error("Event not found");
-        //        throw new Exception("Event Not Found");
+        // throw new Exception("Event Not Found");
         return null;
 
     }
@@ -125,9 +129,10 @@ public final class EventFactory implements EventDispatcher {
      * Instead, create an instance of the event somewhere outside, then use
      * fireEvent(event)
      *
-     * @param event The event to be fired. Can be any subclass of
-     *              PropertyChangeEvent,
-     *              using Upcasting
+     * @param event
+     *            The event to be fired. Can be any subclass of
+     *            PropertyChangeEvent,
+     *            using Upcasting
      */
     @Override
     public void fireEvent(PropertyChangeEvent event) {
