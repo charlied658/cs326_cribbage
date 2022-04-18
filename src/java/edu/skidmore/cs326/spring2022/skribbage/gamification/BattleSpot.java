@@ -1,5 +1,6 @@
 package edu.skidmore.cs326.spring2022.skribbage.gamification;
 
+//import java.util.Random;
 import edu.skidmore.cs326.spring2022.skribbage.common.Player;
 import org.apache.log4j.Logger;
 
@@ -11,6 +12,7 @@ import org.apache.log4j.Logger;
  * forward that number of spots.
  * 
  * @author Henry Wilson
+ *         Last edited by Muaded Almheiri
  */
 public class BattleSpot {
 
