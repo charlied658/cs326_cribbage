@@ -97,7 +97,6 @@ public class PageManager {
         pages.put(LOBBYKEY, new LobbyPage());
         pages.put(NAVKEY, new NavigationPage());
         pages.put(RULESKEY, new RulesPage());
-        System.out.println("HELLO" + pages);
     }
 
     /**
