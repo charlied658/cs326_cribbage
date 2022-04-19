@@ -156,7 +156,9 @@ public class NavigationPage extends DrawingSurface implements Page {
     @Override
     public void drawableMouseClick(Drawable e) {
         if (e == rulesPageButton) {
-            rulesPage = new RulesPage();
+            rulesPage =
+                (RulesPage) PageManager.getInstance()
+                    .createPage(PageType.RULES_PAGE);
             closeWindow();
         } else if (e == lobbyPageButton) {
             lobbyPage =

@@ -136,7 +136,7 @@ public class InventoryPage extends DrawingSurface
             closeWindow.setBorderColor(Color.BLACK);
             mf.dispose();
         } else if (e == lobbyButton) {
-            new LobbyPage();
+            PageManager.getInstance().createPage(PageType.LOBBY_PAGE);
             mf.dispose();
         }
 

@@ -1,7 +1,6 @@
 package edu.skidmore.cs326.spring2022.skribbage.frontend;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Point;
 import org.apache.log4j.Logger;
 
@@ -451,7 +450,8 @@ public class LoginPage extends DrawingSurface implements Page {
                 showMessage("User: " + username, "Successful Log In",
                     DialogType.INFORMATION);
                 // navPage = NavigationPageManager.getInstance().getNavPage();
-                navPage = new NavigationPage();
+                navPage = (NavigationPage) PageManager.getInstance()
+                    .createPage(PageType.NAVIGATION_PAGE);
                 closeWindow();
             } else {
                 showMessage(
@@ -483,7 +483,8 @@ public class LoginPage extends DrawingSurface implements Page {
         } else if (e == homeScreenButton) {
             returnToHome();
         } else if (e == startGameButton) {
-            backdoor = new StartGamePage();
+            backdoor = (StartGamePage) PageManager.getInstance()
+                .createPage(PageType.START_GAME_PAGE);
             closeWindow();
 
         }
@@ -527,7 +528,9 @@ public class LoginPage extends DrawingSurface implements Page {
      */
     public void returnToHome() {
         LOG.trace("returnToHome method in LoginPage.java");
-        homeScreen = new HomeScreen();
+        homeScreen =
+            (HomeScreen) PageManager.getInstance()
+                .createPage(PageType.HOMESCREEN_PAGE);
         closeWindow();
         // loginPage.dispose();
     }
