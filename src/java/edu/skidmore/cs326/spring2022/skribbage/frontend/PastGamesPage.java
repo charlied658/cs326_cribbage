@@ -39,16 +39,16 @@ import us.daveread.edu.graphics.shape.impl.Rectangle;
  */
 
 @SuppressWarnings("serial")
-public class PastGamesPage extends DrawingSurface implements ActionListener {
+public class PastGamesPage extends DrawingSurface {
     /**
      * mainFrameWidth - int variable that holds mainframe width.
      */
-    private int mainframeWidth = 650;
+    private int mainframeWidth = 900;
 
     /**
      * mainframeHeight - int variable that holds mainframe height.
      */
-    private int mainframeHeight = 1500;
+    private int mainframeHeight = 900;
 
     /**
      * mf - MainFrame window.
@@ -61,9 +61,9 @@ public class PastGamesPage extends DrawingSurface implements ActionListener {
     private HomeScreen homeScreen;
     
     /**
-     * returnToMainMenu - button to return to home.
+     * returnToMainMenu - button to return to homepage.
      */
-    private JButton returnToMainMenu;
+    private Text returnToMainMenu;
 
     /**
      * allGames - array list of playable games.
@@ -84,20 +84,17 @@ public class PastGamesPage extends DrawingSurface implements ActionListener {
     /**
      * one - temporary playable game.
      */
-    private PlayableGame one =
-        new PlayableGame(11, 7, 2021, "Jonah", "Sten", "CS326", true);
+    private PlayableGame one;
 
     /**
      * two - temporary playable game.
      */
-    private PlayableGame two = new PlayableGame(12, 31, 2021, "Chris Cornell",
-        "Ben Shepherd", "Soundgarden", true);
+    private PlayableGame two;
 
     /**
      * three - temporary playable game.
      */
-    private PlayableGame three =
-        new PlayableGame(1, 17, 2022, "Hugh Jass", "Tess T Culls", "", false);
+    private PlayableGame three;
     
     /**
      * navPage - NavigationPage window.
@@ -128,8 +125,25 @@ public class PastGamesPage extends DrawingSurface implements ActionListener {
      */
     public void addGamesToList() {
         LOG.trace("Entered addGamesToList method.");
+        one = new PlayableGame(2021, 11, 30, new ArrayList<String>(), 
+            "", false);
+        one.addPlayer("Jonah");
+        one.addPlayer("Sten");
+        one.addPlayer("Alex");
         allGames.add(one);
+        
+        two = new PlayableGame(2022, 2, 28, new ArrayList<String>(),
+            "Apex Legends", false);
+        two.addPlayer("Wraith");
+        two.addPlayer("Mirage");
+        two.addPlayer("Pathfinder");
         allGames.add(two);
+        
+        three = new PlayableGame(2022, 4, 13, new ArrayList<String>(),
+            "Cringe", true);
+        three.addPlayer("Hugh G. Rection");
+        three.addPlayer("Tess T. Coles");
+        three.addPlayer("Matt Sturbate");
         allGames.add(three);
     }
     /**
@@ -138,19 +152,16 @@ public class PastGamesPage extends DrawingSurface implements ActionListener {
     public void setup() {
         LOG.trace("Setup of PastGamesPage");
         setLayout(null);
-        Rectangle background = new Rectangle(new Point(0, 0),
-            new Dimension(mainframeWidth, mainframeHeight),
-            Color.DARK_GRAY, Color.DARK_GRAY);
         Text header =
-            new Text("Load Previous Game", new Point(120, 70), 40, Color.WHITE);
-        returnToMainMenu = new JButton("Main Menu");
-        returnToMainMenu.setBounds(20, 80, 120, 25);
-        returnToMainMenu.setBackground(Color.LIGHT_GRAY);
-        returnToMainMenu.addActionListener(this);
+            new Text("Load Previous Game", new Point(50, 60), 36, Color.BLACK);
+        returnToMainMenu = new Text("Main Menu", new Point(160, 115), 25, 
+            Color.BLACK, Color.BLUE);
 
-        add(background);
         add(header);
         add(returnToMainMenu);
+        
+        Image logo = new Image("logo.png", new Point(435, 0), 0.48, null);
+        add(logo);
 
         // There is a boolean field in each PlayableGame class that shows
         // whether or not
@@ -177,8 +188,20 @@ public class PastGamesPage extends DrawingSurface implements ActionListener {
         // of the incomplete games will be above the games that
         // have been completed.
         int buttonYPosition = 150;
-        LOG.trace("For loop to check for incompleted games.");
+        LOG.trace("For loop to check for incomplete games.");
         for (int i = 0; i < incompleteGames.size(); i++) {
+            PlayableGame g = incompleteGames.get(i);
+            int year = g.getDate().get(Calendar.YEAR);
+            int month = g.getDate().get(Calendar.MONTH);
+            int date = g.getDate().get(Calendar.DATE);
+            if (g.getName().equals("")) {
+                g.setName(year + formatDateOrMonth(month) 
+                    + formatDateOrMonth(date));
+            }
+            JButton gameButton = new JButton(g.getName() + " - " 
+                + year + " " + formatDateOrMonth(month) + " " 
+                + formatDateOrMonth(date) + " " + g.getPlayers().toString());
+            /*
             String[] gameInfo = incompleteGames.get(i).getGameInfo();
             String timestamp = gameInfo[0];
             String name = gameInfo[1];
@@ -186,14 +209,24 @@ public class PastGamesPage extends DrawingSurface implements ActionListener {
             String player2 = gameInfo[3];
             JButton gameButton = new JButton(
                 name + "   " + timestamp + "   " + player1 + "   " + player2);
-            gameButton.setBounds(50, buttonYPosition, 550, 40);
+            */
+            gameButton.setBounds(25, buttonYPosition, 400, 40);
             buttonYPosition += 50;
-            gameButton.setBackground(Color.RED);
+            gameButton.setBackground(new Color(255, 60, 60));
             add(gameButton);
 
         }
         LOG.trace("For loop to check for completed games");
         for (int i = 0; i < completeGames.size(); i++) {
+            PlayableGame g = completeGames.get(i);
+            int year = g.getDate().get(Calendar.YEAR);
+            int month = g.getDate().get(Calendar.MONTH);
+            int date = g.getDate().get(Calendar.DATE);
+            JButton gameButton = new JButton(g.getName() + " - " 
+                + year + " " + formatDateOrMonth(month) + " " 
+                + formatDateOrMonth(date) + " " + g.getPlayers().toString());
+            
+            /*
             String[] gameInfo = completeGames.get(i).getGameInfo();
 
             String timestamp = gameInfo[0];
@@ -202,7 +235,8 @@ public class PastGamesPage extends DrawingSurface implements ActionListener {
             String player2 = gameInfo[3];
             JButton gameButton = new JButton(
                 name + "   " + timestamp + "   " + player1 + "   " + player2);
-            gameButton.setBounds(50, buttonYPosition, 550, 40);
+            */
+            gameButton.setBounds(25, buttonYPosition, 400, 40);
             buttonYPosition += 50;
             gameButton.setBackground(Color.GREEN);
             add(gameButton);
@@ -210,20 +244,36 @@ public class PastGamesPage extends DrawingSurface implements ActionListener {
         }
 
     }
-
-    // This is a placeholder. In the final product, the "Main Menu" button
-    // will, as the label suggests, take the user back to the main menu.
+    
+    /**
+     * If date or month is only a single digit, this
+     * will add a 0 to the beginning for formatting purposes.
+     * @param i
+     * @return toReturn - a formatted String as specified above
+     */
+    private String formatDateOrMonth(int i) {
+        String toReturn = "";
+        if (i < 10) {
+            toReturn = "0" + i;
+        }
+        else {
+            toReturn = "" + i;
+        }
+        return toReturn;
+    }
+    
     @Override
-    public void actionPerformed(ActionEvent e) {
-        LOG.trace("Entered actionperformed method PastGamesPage.java");
-        // mf.dispatchEvent(new WindowEvent(mf, WindowEvent.WINDOW_CLOSING));
-        if (e.getSource().equals(returnToMainMenu)) {
+    public void drawableMouseClick(Drawable e) {
+        LOG.trace("DrawableMouseClick in PastGamesPage.java");
+        if (e == returnToMainMenu) {
+            returnToMainMenu.setBorderColor(Color.CYAN);
+            Utility.pause(100);
+            returnToMainMenu.setBorderColor(Color.BLACK);
             mf.dispose();
-            //RulesPage rules = new RulesPage();
-            //rules.setVisible(true);
             navPage = new NavigationPage();
         }
     }
+
     /**
      * 
      * @param args

@@ -11,6 +11,10 @@ import javax.swing.*;
 
 import org.apache.log4j.Logger;
 
+import edu.skidmore.cs326.spring2022.skribbage.common.Card;
+import edu.skidmore.cs326.spring2022.skribbage.common.Rank;
+import edu.skidmore.cs326.spring2022.skribbage.common.Suit;
+
 import java.util.*;
 
 import us.daveread.edu.graphics.shape.Drawable;
@@ -26,7 +30,7 @@ import us.daveread.edu.graphics.shape.impl.Circle;
  * The page that shows the player's inventory. Players can 
  * send and receive tokens and items to and from other players.
  * @author Jonah Marcus
- *         Last Update: March 27, 2022
+ *         Last Update: April 11, 2022
  *         Last Edited by Jonah Marcus
  */
 public class InventoryPage extends DrawingSurface implements ActionListener {
@@ -37,11 +41,9 @@ public class InventoryPage extends DrawingSurface implements ActionListener {
     private MainFrame mf;
     
     /**
-     * STACKSIZE - Constant that holds the maximum size any
-     * given stack of items can be.
-     * Ex: In Minecraft, a stack of cannot exceed 64 items.
+     * inventory - Holds all items/cards in inventory.
      */
-    private int stackSize;
+    private HashMap<String, Card> inventory = new HashMap<String, Card>();
     
     /**
      * mainframeHeight - int variable to hold main frame height.
@@ -83,10 +85,40 @@ public class InventoryPage extends DrawingSurface implements ActionListener {
     private void setup() {
         LOG.trace("Entered setup (InventoryPage)");
         setLayout(null);
+        
+        Image logo = new Image("logo.png", new Point(320, 0), 0.45, null);
+        
         closeWindow = new Text("Close",
             new Point(20, 40), 25, Color.BLUE, Color.BLACK);
+        
+        add(new Text("Inventory:", new Point(30, 90), 20, Color.BLACK));
+        
+        //Placeholder cards
+        inventory.put("one", new Card(Rank.KING, Suit.CLUBS));
+        inventory.put("two", new Card(Rank.ACE, Suit.SPADES));
+        inventory.put("three", new Card(Rank.SEVEN, Suit.DIAMONDS));
+        inventory.put("four", new Card(Rank.TWO, Suit.HEARTS));
+        inventory.put("five", new Card(Rank.SIX, Suit.DIAMONDS));
+        inventory.put("six", new Card(Rank.NINE, Suit.CLUBS));
+        inventory.put("seven", new Card(Rank.QUEEN, Suit.SPADES));
+        
+        
+        Card[] allItems = inventory.values().toArray(new Card[inventory.
+                                                              size()]);
+        
+        int initXPosition = 30;
+        int initYPosition = 115;
+        
+        for (Card item : allItems) {
+            add(new Text(item.getSuit().getName() + " - " 
+                + item.getRank().getName(), new Point(initXPosition, 
+                initYPosition), 16, Color.BLACK));
+            initYPosition += 25;
+        }
+        
     
         add(closeWindow);
+        add(logo);
     }
     
     /**

@@ -1,71 +1,210 @@
 package edu.skidmore.cs326.spring2022.skribbage.persistence;
 
-//import edu.skidmore.cs326.spring2022.skribbage.frontend.events.*;
-import edu.skidmore.cs326.spring2022.skribbage.common.EventType;
-//import java.beans.PropertyChangeEvent;
+import org.apache.log4j.Logger;
 
-//import org.apache.log4j.Logger;
+import edu.skidmore.cs326.spring2022.skribbage.common.Game;
+import edu.skidmore.cs326.spring2022.skribbage.common.Password;
+import edu.skidmore.cs326.spring2022.skribbage.common.User;
+//import edu.skidmore.cs326.spring2022.skribbage.logic.Game;
 
 /**
- * Will contain the methods for an event listener and call the methods in the DatabaseManager
+ * Will contain the methods for an event listener and call the methods in the
+ * DatabaseManager.
+ *
+ * @author Ricardo Rosario
+ *         Last Edit: April 10, 2022
  */
-public class PersistenceFacade {
-
-//<<<<<<< HEAD
-	//private static final Logger LOG;
-	//private static final DatabaseManager DB_Instance;
+public final class PersistenceFacade implements UserManagement, GameManagement, InventoryManagement {
 	
-
-//	static {
-//		LOG = Logger.getLogger(FrontEndFactoryTemplate.class);
-//	}
-
-//	public String EventDBManager(EventType eventToHandle, Object[] metaData) {
-//		Boolean isSuccess = true;
-//
-//		return isSuccess ? "success" : "fail";
-//
-//	}
-
-//	 public static void main(String[] args) {
-//
-//	}
-//=======
-//    private static final Logger LOG;
-//
-//    private static DatabaseManager DB_Instance;
-//
-//    static {
-//        LOG = Logger.getLogger(FrontEndFactoryTemplate.class);
-//    }
-
 	/**
-	 * Will listen for the events and manage what method is being called
-	 * @param eventToHandle the event that is being passed
-	 * @param metaData the information that we are going to store
-	 * @return if the event was successful or not
-	 * 
+	 * Singleton instance of PersistenceFacade
+	 * Instance can be accessed through PersistenceFacade.getInstatnce()
 	 */
-    public String EventDBManager(EventType eventToHandle, Object[] metaData) {
-        Boolean isSuccess = true;
-        switch (eventToHandle) {
-            case USER_LOGIN:
+	private static final PersistenceFacade INSTANCE;
+	
+	/**
+	 * Logger for the class
+	 */
+	private static final Logger LOG;
+	
+	private static final UsernameProxy proxy;
+	
+	private static final DatabaseManager dm;
+	
+	/**
+	 * Initializing Logger and the instance of PersistenceFacade
+	 *
+	 */
+	static {
+		LOG = Logger.getLogger(PersistenceFacade.class);
+		INSTANCE = new PersistenceFacade();
+		proxy = new UsernameProxy();
+		dm = new DatabaseManager();
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public static PersistenceFacade getInstance() {
+		return INSTANCE;
+	}
+	
+	/**
+	 * This will take in a user and a password and create a new user
+	 * @param userToCreate The user that is to be created
+	 * @param password The password that is connected to the user being created
+	 * 
+	 * @return boolean True or False depending if the method worked or failed
+	 */
+	@Override
+	public boolean userCreate(User userToCreate, Password password) {
+		// TODO Auto-generated method stub
+		
+		String usernamge = userToCreate.getUserName();
+		String passwordtemp = password.getPasswordValue();
+		
+		dm.createUser(usernamge, passwordtemp);
+		return false;
+	}
+	
+	/**
+	 * This will take in a user and delete it
+	 * @param userToDelete The user that is going to be deleted
+	 * 
+	 * @return boolean Returns true or false 
+	 * 		   depending on whether the method worked
+	 */
+	@Override
+	public boolean userDelete(User userToDelete) {
+		
+		return true;
+	}
+	
+	/**
+	 * This will take in a current user, current password and the new password
+	 * in order to change passwords
+	 * @param userToUpdate This is the user that want to change their password
+	 * @param currentPassword This is the current password that they have in their account
+	 * @param newPassword This is the new password that they want to change
+	 * 
+	 * @return boolean true or false depending if the method worked or failed.
+	 */
+	@Override
+	public boolean passwordChange(User userToUpdate, Password currentPassword, Password newPassword) {
+		
+		return true;
+	}
+	
+	/**
+	 * This will take in a user and the arg of what needs to be change and change it
+	 * @param userToChange The user that wants to change something
+	 * @param args The thing that they want to change
+	 * 
+	 * @return boolean depending on whether the method worked or not
+	 */
+	public boolean userChange(User userToChange, Object... args) {
+		
+		return true;
+	}
+	
+	
+	/**
+	 * This will return the saved game of the user that retrieved it
+	 * @param userName The name of the user that wants the game
+	 * @param whichGame The saved game that is being retrieved
+	 * 
+	 * @return Game The saved game
+	 */
+	@Override
+	public Game retrieveGame(User userName, Game whichGame) {
+		
+		
+		return whichGame;
+	}
+	
+	/**
+	 * This will saved the users current game that they are playing
+	 * @param userName The name of the user that we are saving the game
+	 * @param currentGame The current game that we are saving
+	 * 	
+	 * @return boolean True or false depending if the method worked
+	 */
+	@Override
+	public boolean saveGame(User userName, Game currentGame) {
+		
+		return true;
+	}
+	
+	
+	
+	@Override
+	public boolean validateUsername(User user) {
+		String username = user.getUserName();
+		return proxy.usernameCheck(username);
+	}
+	
+	@Override
+	public boolean login(User user) {
+		
+		String username = user.getUserName();
+		
+		//note password is currently deprecated and retrieving password from user will have to be 
+		//handled by the front end team in the password prompt method in this class
+		String password = passwordPrompt();	
+		
+		boolean accepted = dm.userAuthenticate(username, password);
+		
+		//put code here to handle login state change
+		LOG.warn("Login state change not handled , See login() + validateUser() method inPersistenceFacade or contact persistence team");
 
-                return isSuccess ? "success" : "fail";
-            case USER_DELETE_ACCOUNT:
-                return isSuccess ? "success" : "fail";
-            case USER_CREATE_ACCOUNT:
-                return isSuccess ? "success" : "fail";
-            case USER_CHANGE_PASSWORD:
-                return isSuccess ? "success" : "fail";
-            default:
-                return "not valid persistence event";
-        }
+		return accepted;
+	}
+	
+	
+	//to be replaced by frontend
+	private String passwordPrompt() {
 
-    }
+		LOG.warn("Unhandled method, See passwordPrompt() + login() method inPersistenceFacade or contact persistence team");
+		return "";
+	}
 
-//    public static void main(String[] args) {
-//
-//    }
-//>>>>>>> 01d6bd53f021b02c7735798961a7c627dd271523
+	
+	public static void main(String[] args) {
+		//dm.inventoryQuery(236);
+		
+				
+	}
+
+	@Override
+	public boolean displayInventory(User user) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean addItem(User user, String item, int quantity) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean removeItem(User user, String item, int quantity) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean transferItem(User sender, User recipient, String item) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public String displayWallet(User user) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
 }

@@ -25,11 +25,17 @@ public class BoardTest {
      * Test grid.
      */
     private Spot[][] testGrid;
+
     /**
-     * Test array of pegs. 
+     * Test array of occupied spots.
+     */
+    private Spot[] occupiedSpots;
+
+    /**
+     * Test array of pegs.
      */
     private Peg[] testPegs;
-   
+
     /**
      * Logger instance for logging.
      */
@@ -47,8 +53,10 @@ public class BoardTest {
         LOG.debug("Board setup");
         testInstance = BoardManager.getInstance().getBoard();
         testGrid = new Spot[Board.NUMROWS][Board.NUMCOL];
-        //HARDCODED FOR 3 PLAYERS.
+        // HARDCODED FOR 3 PLAYERS.
         testPegs = new Peg[Board.NUMCOL * 2];
+        // TODO needs to be changed.
+        occupiedSpots = new Spot[10];
     }
 
     /**
@@ -69,40 +77,47 @@ public class BoardTest {
         LOG.debug("Testing getPeg");
         assertArrayEquals(testInstance.getPegs(), testPegs);
     }
+
     /**
      * This method tests if getOccupiedSpots returns a correct value.
      */
     @Test
     public void testGetOccupiedSpots() {
-
+        LOG.debug("Testing getOccupiedSpots.");
+        assertArrayEquals(testInstance.getOccupiedSpots(), occupiedSpots);
     }
+
     /**
      * This method tests if getSpots returns a correct value.
      */
     @Test
     public void testGetSpots() {
+        LOG.debug("Test getSpots.");
 
     }
+
     /**
      * This method tests if AssignPrizeSpot works as intended.
      */
     @Test
     public void testAssignPrizeSpot() {
-
+        LOG.debug(" Testing assignprizeSpot.");
     }
+
     /**
-     * This method tests assignBattleSpot. 
+     * This method tests assignBattleSpot.
      */
     @Test
     public void testAssignBattleSpot() {
-
+        LOG.debug("Testing assignBattleSpot.");
     }
+
     /**
      * This method tests assignJumpSpot.
      */
     @Test
     public void testAssignJumpSpot() {
-
+        LOG.debug(" Testing assignJumpSpot.");
     }
 
 }
