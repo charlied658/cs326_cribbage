@@ -70,6 +70,8 @@ public final class PageManager {
                 activePage = new HomeScreen();
             case PAST_GAMES_PAGE:
                 activePage = new PastGamesPage();
+            case RULES_PAGE:
+                activePage = new RulesPage();
             default:
                 activePage = null;
         }

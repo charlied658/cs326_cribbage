@@ -146,10 +146,10 @@ public class NavigationPage extends DrawingSurface implements Page {
 
         welcomeMessage =
             new Text("Welcome", new Point(20, 30), 20, Color.black, Color.blue);
-//        user = new Text(
-//            "" + LoginPageManager.getInstance().getLoginPage().getUsername(),
-//            new Point(20, 60), 20, Color.black, Color.blue);
-//        add(user);
+        // user = new Text(
+        // "" + LoginPageManager.getInstance().getLoginPage().getUsername(),
+        // new Point(20, 60), 20, Color.black, Color.blue);
+        // add(user);
         add(welcomeMessage);
     }
 
@@ -159,14 +159,20 @@ public class NavigationPage extends DrawingSurface implements Page {
             rulesPage = new RulesPage();
             closeWindow();
         } else if (e == lobbyPageButton) {
-            lobbyPage = new LobbyPage();
+            lobbyPage =
+                (LobbyPage) PageManager.getInstance()
+                    .createPage(PageType.LOBBY_PAGE);
             closeWindow();
         } else if (e == pastGamesPageButton) {
-            pastGamesPage = new PastGamesPage();
+            pastGamesPage =
+                (PastGamesPage) PageManager.getInstance()
+                    .createPage(PageType.PAST_GAMES_PAGE);
             closeWindow();
         } else if (e == logOut) {
-            loginPage = new LoginPage();
-                //LoginPageManager.getInstance().getLoginPage();
+            loginPage =
+                (LoginPage) PageManager.getInstance()
+                    .createPage(PageType.LOGIN_PAGE);
+            // LoginPageManager.getInstance().getLoginPage();
             closeWindow();
         }
     }
@@ -184,7 +190,7 @@ public class NavigationPage extends DrawingSurface implements Page {
      * @param args
      */
     public static void main(String[] args) {
-        new NavigationPage();
+        PageManager.getInstance().createPage(PageType.NAVIGATION_PAGE);
     }
 
 }
