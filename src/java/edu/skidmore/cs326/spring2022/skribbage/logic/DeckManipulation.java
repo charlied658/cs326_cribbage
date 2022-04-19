@@ -20,32 +20,36 @@ public interface DeckManipulation {
      */
 
     /**
-     * Method to shuffle the deck.
+     * Method to shuffle the deck. 
+     * @param deckInstance
      */
-    public void shuffle(Deck deckInstance);
+    void shuffle(Deck deckInstance);
 
     /**
      * Returns card at indicated index.
      * 
-     * @return Card
+     * @return Card 
+     * @param deckInstance
      * @param whereToCut
      *            index of where you want to cut in the deck
      */
-    public Card cut(Deck deckInstance, int whereToCut);
+    Card cut(Deck deckInstance, int whereToCut);
 
     /**
      * Method removes the top card from the deck and returns it.
      *
      * @return a Card that is removed to the top.
+     * @param deckInstance
      */
-    public Card removeTopCard(Deck deckInstance);
+    Card removeTopCard(Deck deckInstance);
 
     /**
      * Moves a card to the top.
      *
+     *@param deckInstance
      * @param whatCardToMove
      *            index of which card to move to the top.
      */
-    public void moveToTop(Deck deckInstance, int whatCardToMove);
+    void moveToTop(Deck deckInstance, int whatCardToMove);
 
 } // end DeckManipulator
