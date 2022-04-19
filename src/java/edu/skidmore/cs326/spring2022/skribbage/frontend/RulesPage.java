@@ -39,7 +39,7 @@ import us.daveread.edu.utilities.Utility;
  *         Code Reviewed by Zoe Beals - 3/24/2022
  */
 @SuppressWarnings("serial")
-public class RulesPage extends DrawingSurface implements ActionListener {
+public class RulesPage extends DrawingSurface implements ActionListener, Page {
     /**
      * mainframeWidth - int var to hold width.
      */
@@ -97,7 +97,7 @@ public class RulesPage extends DrawingSurface implements ActionListener {
     /**
      * setup method to setup window.
      */
-    private void setup() {
+    public void setup() {
 
         LOG.trace("Entering the setup method in RulesPage.java");
 
@@ -157,10 +157,12 @@ public class RulesPage extends DrawingSurface implements ActionListener {
             returnToMainMenu.setBorderColor(Color.CYAN);
             Utility.pause(100);
             returnToMainMenu.setBorderColor(Color.BLACK);
-            navPage = new NavigationPage();
+            navPage =
+                (NavigationPage) PageManager.getInstance()
+                    .createPage(PageType.NAVIGATION_PAGE);
             mf.dispose();
-           
-                //NavigationPageManager.getInstance().getNavPage();
+
+            // NavigationPageManager.getInstance().getNavPage();
         }
     }
 
@@ -174,9 +176,9 @@ public class RulesPage extends DrawingSurface implements ActionListener {
         // mf.dispatchEvent(new WindowEvent(mf, WindowEvent.WINDOW_CLOSING));
         if (e.getSource().equals(returnToMainMenu)) {
             navPage = new NavigationPage();
-                //NavigationPageManager.getInstance().getNavPage();
+            // NavigationPageManager.getInstance().getNavPage();
             mf.dispose();
-            
+
             // PastGamesPage pastGames = new PastGamesPage();
             // spastGames.setVisible(true);
         }

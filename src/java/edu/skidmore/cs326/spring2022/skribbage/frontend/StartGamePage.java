@@ -48,6 +48,7 @@ public class StartGamePage extends DrawingSurface implements Page {
     /**
      * gameBoard - Image to hold the game board.
      */
+    @SuppressWarnings("unused")
     private Image boardImage;
 
     /**
@@ -452,7 +453,7 @@ public class StartGamePage extends DrawingSurface implements Page {
      */
     public static void main(String[] args) {
         LOG.trace("Main method in StartGamePage.java");
-        new StartGamePage();
+        PageManager.getInstance().createPage(PageType.START_GAME_PAGE);
     }
 
 }

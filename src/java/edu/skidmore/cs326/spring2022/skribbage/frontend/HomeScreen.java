@@ -199,26 +199,38 @@ public class HomeScreen extends DrawingSurface implements Page {
         LOG.trace("DrawableMosuceClick in HomeScreen.java");
         if (e == loginPageButton) {
             loginPage = new LoginPage();
-                //Page manager is broken.
-                //PageManager.getInstance().getLoginPage();
+            // Page manager is broken.
+            // PageManager.getInstance().getLoginPage();
             closeCurrentWindow();
         } else if (e == rulesPageButton) {
-            rulesPage = new RulesPage();
+            rulesPage =
+                (RulesPage) PageManager.getInstance()
+                    .createPage(PageType.RULES_PAGE);
             closeCurrentWindow();
         } else if (e == pastGamesPageButton) {
-            pastGamesPage = new PastGamesPage();
+            pastGamesPage =
+                (PastGamesPage) PageManager.getInstance()
+                    .createPage(PageType.PAST_GAMES_PAGE);
             closeCurrentWindow();
         } else if (e == lobbyPageButton) {
-            lobbyPage = new LobbyPage();
+            lobbyPage =
+                (LobbyPage) PageManager.getInstance()
+                    .createPage(PageType.LOBBY_PAGE);
             closeCurrentWindow();
         } else if (e == startGameButton) {
             if (loginPage.loggedIn()) {
-                lobbyPage = new LobbyPage();
+                lobbyPage =
+                    (LobbyPage) PageManager.getInstance()
+                        .createPage(PageType.LOBBY_PAGE);
             } else {
-                loginPage = new LoginPage();
-                    //LoginPageManager.getInstance().getLoginPage();
+                loginPage =
+                    (LoginPage) PageManager.getInstance()
+                        .createPage(PageType.LOGIN_PAGE);
+                // LoginPageManager.getInstance().getLoginPage();
             }
-            startGamePage = new StartGamePage();
+            startGamePage =
+                (StartGamePage) PageManager.getInstance()
+                    .createPage(PageType.START_GAME_PAGE);
             closeCurrentWindow();
         }
     }
@@ -237,6 +249,6 @@ public class HomeScreen extends DrawingSurface implements Page {
      */
     public static void main(String[] args) {
         LOG.trace("Main method in HomeScreen.java");
-        new HomeScreen();
+        PageManager.getInstance().createPage(PageType.HOMESCREEN_PAGE);
     }
 }
