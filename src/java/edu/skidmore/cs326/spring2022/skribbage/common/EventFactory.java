@@ -18,7 +18,7 @@ import edu.skidmore.cs326.spring2022.skribbage.persistence.events.PersistanceFac
  * from the metadata given in EventType enum.
  *
  * @author Sten Leinasaar
- *         Last Edit: March 23, 2022
+ *         Last Edit: April 19, 2022
  */
 public final class EventFactory implements EventDispatcher {
 
