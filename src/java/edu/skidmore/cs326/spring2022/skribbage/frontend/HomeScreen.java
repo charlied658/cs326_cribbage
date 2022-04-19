@@ -198,7 +198,8 @@ public class HomeScreen extends DrawingSurface implements Page {
     public void drawableMouseClick(Drawable e) {
         LOG.trace("DrawableMosuceClick in HomeScreen.java");
         if (e == loginPageButton) {
-            loginPage = new LoginPage();
+            loginPage = (LoginPage) PageManager.getInstance()
+                .createPage(PageType.LOGIN_PAGE);
             // Page manager is broken.
             // PageManager.getInstance().getLoginPage();
             closeCurrentWindow();

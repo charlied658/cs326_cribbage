@@ -287,7 +287,7 @@ public class LobbyPage extends DrawingSurface implements Page {
             inventoryPageButton.setBorderColor(Color.CYAN);
             Utility.pause(100);
             inventoryPageButton.setBorderColor(Color.BLACK);
-            new InventoryPage();
+            PageManager.getInstance().createPage(PageType.INVENTORY_PAGE);
             mf.dispose();
         }
 
@@ -300,6 +300,6 @@ public class LobbyPage extends DrawingSurface implements Page {
      */
     public static void main(String[] args) {
         LOG.trace("LobbyPage.java main method");
-        new LobbyPage();
+        PageManager.getInstance().createPage(PageType.LOBBY_PAGE);
     }
 }

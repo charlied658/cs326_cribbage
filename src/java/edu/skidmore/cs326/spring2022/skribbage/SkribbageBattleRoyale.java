@@ -8,6 +8,8 @@ import edu.skidmore.cs326.spring2022.skribbage.frontend.GameStartedResponseContr
 import org.apache.log4j.Logger;
 
 import edu.skidmore.cs326.spring2022.skribbage.frontend.HomeScreen;
+import edu.skidmore.cs326.spring2022.skribbage.frontend.PageManager;
+import edu.skidmore.cs326.spring2022.skribbage.frontend.PageType;
 import edu.skidmore.cs326.spring2022.skribbage.logic.events.AccountController;
 
 /**
@@ -60,7 +62,6 @@ public class SkribbageBattleRoyale implements Runnable {
         homePage = new HomeScreen();
         eventFactory = EventFactory.getInstance();
         eventManager = EventManager.getInstance();
-
         eventManager
             .addPropertyChangeListener(new AccountResponseController(),
                 EventType.USER_LOGIN_RESPONSE);
