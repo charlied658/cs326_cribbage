@@ -6,6 +6,7 @@ import java.util.Objects;
 
 /**
  * A simple bean representing data associated with a User.
+ *
  * @author Alex Carney
  */
 public class User implements Payload {
@@ -19,7 +20,6 @@ public class User implements Payload {
      * 
      * @reviewed Tinaye Mawocha removed keyword final as username may need to
      *           change
-     * @reviewed Alex Carney added final back, it should be immutable
      */
     private final String userName;
 
@@ -28,8 +28,6 @@ public class User implements Payload {
      * 
      * @reviewed Tinaye Mawocha removed keyword final as username may need to
      *           change
-     * @reviewed Alex Carney this field is mutable ONLY because this information
-     *           is not known when the bean is instantiated
      */
     private int userId;
 
@@ -41,13 +39,15 @@ public class User implements Payload {
     }
 
     /**
-     * Functionality to update user's ID. Should only ever be called once
+     * Functionality to update user's ID.
      * 
-     * @param id new role.
+     * @param id
+     *            new role.
      */
     public void setUserId(int id) {
         userId = id;
     }
+
 
     /**
      * Private boolean attribute to store if user is authorized. Mutable.
@@ -88,6 +88,7 @@ public class User implements Payload {
                 + " to private variable attributes");
     }
 
+
     /**
      * @return the user email.
      */
@@ -104,7 +105,6 @@ public class User implements Payload {
         return userName;
     }
 
-
     /**
      * @return The authorization status of this user.
      */
@@ -112,7 +112,6 @@ public class User implements Payload {
         LOG.debug("Returning a user role");
         return userRole;
     }
-
 
     /**
      * Functionality to update user's permission level.
