@@ -33,7 +33,7 @@ import us.daveread.edu.graphics.surface.MainFrame;
  *         case we might need it when we start adding things.
  */
 @SuppressWarnings("serial")
-public class LoginPage extends DrawingSurface {
+public class LoginPage extends DrawingSurface implements Page {
     /**
      * loginPage - MainFrame window to hold the UI attributes.
      */
@@ -199,7 +199,13 @@ public class LoginPage extends DrawingSurface {
         persistence = PersistenceFacade.getInstance();
         evtFactory = EventFactory.getInstance();
         hasher = PasswordHasher.getInstance();
+        setup();
+    }
 
+       
+    
+    @Override
+    public void setup() {
         loginPage = new MainFrame(this, "Skribbage Battle Royale Login", 900,
             900, false);
         createAccountButton =
@@ -225,6 +231,7 @@ public class LoginPage extends DrawingSurface {
         add(changePasswordButton);
         add(createAccountButton);
         add(startGameButton);
+    
     }
 
     /**
@@ -559,6 +566,8 @@ public class LoginPage extends DrawingSurface {
     public void closeWindow() {
         loginPage.dispose();
     }
+
+    
 
     /**
      * main method to initialize a new LoginPage object.

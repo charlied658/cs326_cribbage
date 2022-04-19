@@ -43,7 +43,7 @@ import us.daveread.edu.utilities.Utility;
  *         Code Reviewed by Zoe Beals - 3/24/2022
  */
 @SuppressWarnings("serial")
-public class RulesPage extends DrawingSurface {
+public class RulesPage extends DrawingSurface implements Page {
     /**
      * mainframeWidth - int var to hold width.
      */
@@ -71,6 +71,16 @@ public class RulesPage extends DrawingSurface {
     private NavigationPage navPage;
 
     /**
+     * JTextArea component.
+     */
+    private JTextArea rulesArea;
+
+    /**
+     * JScrollPane object.
+     */
+    private JScrollPane scrollPane;
+
+    /**
      * LOG - logger.
      */
     private static final Logger LOG;
@@ -95,20 +105,15 @@ public class RulesPage extends DrawingSurface {
         LOG.trace("Entering RulesPage Constructor");
         mf = new MainFrame(this, "Rules Page", mainframeWidth, mainframeHeight,
             false);
-        try {
-            setup();
-        }
-        catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+        setup();
     }
 
     /**
      * setup method to setup window.
-     * @throws FileNotFoundException 
+     * 
+     * 
      */
-    private void setup() throws FileNotFoundException {
+    public void setup() {
 
         LOG.trace("Entering the setup method in RulesPage.java");
 
@@ -124,7 +129,7 @@ public class RulesPage extends DrawingSurface {
         // add the actual text in a later sprint, it is not very important
         // for right now.
 
-        JTextArea rulesArea = new JTextArea(100, 350);
+        rulesArea = new JTextArea(100, 350);
         rulesArea.setFont(new Font("ComicSans", Font.BOLD | Font.ITALIC, 20));
         rulesArea.setLineWrap(true);
         rulesArea.setWrapStyleWord(true);
@@ -140,36 +145,45 @@ public class RulesPage extends DrawingSurface {
         // e.printStackTrace();
         // new Color((float) 107, (float) 94, (float) 47, (float) 1)
         // }
-        JScrollPane scrollPane =
+        scrollPane =
             new JScrollPane(rulesArea, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
                 JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
         scrollPane.setBounds(135, 350, 650, 500);
 
         scrollPane.getViewport().setBackground(Color.CYAN);
         add(scrollPane);
-        
-        //Reads text from a file and adds it to the JScrollPane.
-        String displayText = "";
-        File rulestxt = new File("rules.txt");
-        Scanner myReader = new Scanner(rulestxt);
-        while (myReader.hasNextLine()) {
-            displayText = displayText + myReader.nextLine();
-        }
-        myReader.close();
-        
-        rulesArea.setText(displayText);
 
-//        rulesArea.setText(
-//            "The objective in Cribbage is to be the first player to get "
-//                + "121 points. " + "The gameplay is divided into "
-//                + "three distinct parts, "
-//                + " "
-//                + "The Deal, The Play and The Show.");
+        // Reads text from a file and adds it to the JScrollPane.
+        File rulestxt = new File("rules.txt");
+        readTheRules(rulestxt);
 
         add(header);
         add(logo);
         add(returnToMainMenu);
 
+    }
+
+    /**
+     * Reading the rules to the JScrollPane.
+     * 
+     * @param rulestxt
+     */
+    public void readTheRules(File rulestxt) {
+        try {
+            String displayText = "";
+
+            Scanner myReader = new Scanner(rulestxt);
+            while (myReader.hasNextLine()) {
+                displayText = displayText + myReader.nextLine();
+            }
+
+            myReader.close();
+
+            rulesArea.setText(displayText);
+        }
+        catch (FileNotFoundException e) {
+            LOG.error("File not Found");
+        }
     }
 
     @Override
@@ -180,40 +194,14 @@ public class RulesPage extends DrawingSurface {
             Utility.pause(100);
             returnToMainMenu.setBorderColor(Color.BLACK);
             navPage = new NavigationPage();
-            mf.dispose();
-           
-                //NavigationPageManager.getInstance().getNavPage();
+            closeWindow();
         }
     }
-
-    /*
-    // This is a placeholder. In the final product, the "Main Menu" button
-    // will, as the label suggests, take the user back to the main menu.
-    @Override
-    public void actionPerformed(ActionEvent e) {
-
-        LOG.trace("ActionPerfomed method in RulesPage.java");
-
-        // mf.dispatchEvent(new WindowEvent(mf, WindowEvent.WINDOW_CLOSING));
-        if (e.getSource().equals(returnToMainMenu)) {
-            navPage = new NavigationPage();
-                //NavigationPageManager.getInstance().getNavPage();
-            mf.dispose();
-            
-            // PastGamesPage pastGames = new PastGamesPage();
-            // spastGames.setVisible(true);
-        }
-    }
-    */
 
     /**
-     * main method.
-     * @param args
+     * Close window method from Page interface.
      */
-    public static void main(String[] args) {
-
-        LOG.trace("RulesPage main method");
-
-        RulesPageManager.getInstance().getRulesPage();
+    public void closeWindow() {
+        mf.dispose();
     }
 }
