@@ -1,7 +1,5 @@
 package edu.skidmore.cs326.spring2022.skribbage.frontend;
 
-import java.util.HashMap;
-
 import org.apache.log4j.Logger;
 
 /**
@@ -26,6 +24,7 @@ public final class PageManager {
     /**
      * Single active page open at a time.
      */
+    @SuppressWarnings("unused")
     private final Page activePage;
 
     static {
@@ -38,7 +37,7 @@ public final class PageManager {
      */
     private PageManager() {
         LOG.debug("Instance created");
-        activePage = new HomeScreen();
+        activePage = (Page) new HomeScreen();
     }
 
     /**
