@@ -37,19 +37,39 @@ public class LoginAuthenticator implements LoginAuthentication {
 
     @Override
     public void validateLoginAttempt(User user) {
-       
+
     }
 
     @Override
     public void changePasswordAttempt(User user, Password newPassword) {
-        
+
     }
 
     @Override
     public void createNewUser(User user) {
-        
+
     }
 
-    
+    @Override
+    public Password hashNewPassword(String password) {
+
+        String hashedString = PasswordHasher.getInstance().hashNewPassword(
+            password);
+
+        String[] stringArray = hashedString.split(
+            PasswordHasher.getInstance().SALT_AND_PASSWORD_BASE64_SEPARATOR);
+
+        Password newPassword = new Password(stringArray[1]);
+        newPassword.setSalt(stringArray[0]);
+
+        return newPassword;
+
+    }
+
+    @Override
+    public void encodeExistingPassword(Password password) {
+        // TODO Auto-generated method stub
+
+    }
 
 }

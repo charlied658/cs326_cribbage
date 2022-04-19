@@ -48,7 +48,7 @@ public class PasswordHasher {
      * The character separating the salt from the password in the Base64 encoded
      * value. This should be a character that is not used in Base64 encoding.
      */
-    private static final String SALT_AND_PASSWORD_BASE64_SEPARATOR = "~";
+    public static final String SALT_AND_PASSWORD_BASE64_SEPARATOR = "~";
 
     /**
      * Generate a salt. This is a random set of bytes used to secure the
