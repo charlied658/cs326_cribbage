@@ -24,7 +24,8 @@ public interface InventoryManagement {
      * 
      * @param user
      * @param item
-     * @param quantity: quantity of item to add
+     * @param quantity
+     *            quantity of item to add
      * @return True or false whether the item was added successfully
      */
     boolean addItem(User user, String item, int quantity);
@@ -34,7 +35,8 @@ public interface InventoryManagement {
      * 
      * @param user
      * @param item
-     * @param quantity: quantity of item to remove
+     * @param quantity
+     *            quantity of item to remove
      * @return True or false whether the item was removed successfully
      */
     boolean removeItem(User user, String item, int quantity);
@@ -51,9 +53,10 @@ public interface InventoryManagement {
     boolean transferItem(User sender, User recipient, String item);
 
     /**
-     * display token value held by player
+     * display token value held by player.
      * 
-     * @param user: the user to query
+     * @param user
+     *            the user to query
      * @return String showing token value
      */
     String displayWallet(User user);
