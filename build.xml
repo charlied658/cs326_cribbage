@@ -335,7 +335,14 @@
 		</fail>
 	</target>
 
-	<target name="run" depends="dist">
+	<target name="run" depends="dist, db-pinhole">
+		<java classname="${mainJavaClass}" fork="true">
+			<classpath path="${distDir}/${jarFile}"/>
+			<classpath refid="runtime.class.path" />
+		</java>
+	</target>
+
+	<target name="run-nodb" description="Run without creating DB pinhole" depends="dist">
 		<java classname="${mainJavaClass}" fork="true">
 			<classpath path="${distDir}/${jarFile}"/>
 			<classpath refid="runtime.class.path" />
