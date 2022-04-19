@@ -8,6 +8,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
 
+import java.time.format.DateTimeFormatter;  
+import java.time.LocalDateTime;   
+
 import org.apache.log4j.Logger;
 
 import edu.skidmore.cs326.spring2022.skribbage.common.Password;
@@ -552,7 +555,7 @@ public class DatabaseManager {
     
     
     /**
-     * This is a method to add a new player to the player_account table.
+     * This is a method to add a new item to the inventory table.
      *
      * @author Tinaye Mawocha
      * @param itemType
@@ -575,28 +578,37 @@ public class DatabaseManager {
 
         ResultSet rs = null;
         
-        HashMap<String, Item> userInventory = inventoryQuery(user.getUserId());
-       if (userInventory.containsKey(itemType.toString())) {
-    	   Item tempItem = userInventory.get(itemType.toString());
-    	   //get quantity of item and add to desired user quantity
-    	   //delete item from db
-       }
+//        
 
         try {
             // System.out.println("Run a prepared database query");
             // Class.forName("com.mysql.jdbc.Driver");
             conn = getDB();
+            
+            HashMap<String, Item> userInventory = inventoryQuery(user.getUserId());
+            if (userInventory.containsKey(itemType.toString())) {
+      	    Item tempItem = userInventory.get(itemType.toString());
+            quantity += tempItem.getQuantityHeld();
+//      	   delete item from db
+//       	   inventoryDelete();
+          }
 
             String script =
-                "INSERT INTO player_account (PersonID, Username, Password) "
-                    + "VALUES (RAND()*10000, ?, ?)";
+                "INSERT INTO player_account (ItemID, PersonID, ItemType, Quantity, LastModified ) VALUES (?,?,?,?,?)";
             ps = conn.prepareStatement(script);
 
-            //ps.setString(1, userName);
-            //ps.setString(2, password);
+            ps.setInt(1, itemType.getItemId());
+            ps.setInt(2, user.getUserId());
+            ps.setString(3, itemType.toString());
+            ps.setInt(4, quantity);
+            
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");  
+            LocalDateTime now = LocalDateTime.now();             
+            ps.setString(5, dtf.format(now));
 
-            System.out.println(ps);
-            System.out.println(ps.executeUpdate());
+            
+            ps.executeUpdate();
+            
 
         }
         catch (SQLException sqle) {
