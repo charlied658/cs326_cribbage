@@ -30,5 +30,18 @@ public interface LoginAuthentication {
      * @param user
      */
     void createNewUser(User user);
+    
+    /**
+     * Generate random salt for a previously unhashed password & hash it.
+     * @param password
+     * @return hashedPassword
+     */
+    Password hashNewPassword(String password);
+    
+    /**
+     * Use PasswordHasher to encode a password.
+     * @param password
+     */
+    void encodeExistingPassword(Password password);
 
 }
