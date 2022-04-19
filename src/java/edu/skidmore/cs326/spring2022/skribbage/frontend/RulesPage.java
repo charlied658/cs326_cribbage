@@ -193,6 +193,6 @@ public class RulesPage extends DrawingSurface implements ActionListener, Page {
 
         LOG.trace("RulesPage main method");
 
-        RulesPageManager.getInstance().getRulesPage();
+        PageManager.getInstance().createPage(PageType.RULES_PAGE);
     }
 }
