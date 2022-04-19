@@ -76,14 +76,14 @@ public class PasswordTest {
             + TEST_PASSWORD_VALUE);
     }
 
-    /**
-     * Tests hashing password. (or at least setting isHashed to true)
-     */
-    @Test
-    public void testHashingPassword() {
-        testInstance.setHashed(true);
-        assertTrue(testInstance.isHashed());
-    }
+//    /**
+//     * Tests hashing password. (or at least setting isHashed to true)
+//     */
+//    @Test
+//    public void testHashingPassword() {
+//        testInstance.setHashed(true);
+//        assertTrue(testInstance.isHashed());
+//    }
 
     /**
      * Test adding salted password. Blocked by Logic tier as
