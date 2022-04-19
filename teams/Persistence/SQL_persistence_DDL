@@ -5,7 +5,7 @@ DROP TABLE player_account
 
 //create the table for storing player information:
  CREATE TABLE player_account (
-    PersonID int NOT NULL,
+    PersonID int NOT NULL auto_increment,
     LastName varchar(255),
     FirstName varchar(255),
     Username varchar(255), 

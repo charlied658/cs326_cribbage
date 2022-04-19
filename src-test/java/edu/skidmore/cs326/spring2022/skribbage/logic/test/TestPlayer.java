@@ -40,7 +40,7 @@ import org.junit.Test;
 
 import edu.skidmore.cs326.spring2022.skribbage.common.Player;
 
-import static org.junit.Assert.assertEquals;
+
 import org.apache.log4j.Logger;
 import org.junit.Before;
 
@@ -53,6 +53,7 @@ public class TestPlayer {
     /**
      * Tests for the player class instance for the.
      */
+    @SuppressWarnings("unused")
     private Player testInstance;
 
     /**
@@ -71,13 +72,15 @@ public class TestPlayer {
      */
     @Before
     public void setup() {
+        LOG.debug("Testing setup");
         testInstance = new Player();
     }
 
+    /**
+     * 
+     */
     @Test
     public void testAddPoints() {
-        int points = 2;
-        int pointstoadd = 5;
-        points += pointstoadd;
+        
     }
 }

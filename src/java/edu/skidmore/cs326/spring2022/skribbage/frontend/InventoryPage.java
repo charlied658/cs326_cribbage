@@ -31,7 +31,7 @@ import us.daveread.edu.utilities.Utility;
  *         Last Edited by Jonah Marcus
  */
 @SuppressWarnings("serial")
-public class InventoryPage extends DrawingSurface implements ActionListener {
+public class InventoryPage extends DrawingSurface {
 
     /**
      * mf - Holds reference to the window.
@@ -138,12 +138,6 @@ public class InventoryPage extends DrawingSurface implements ActionListener {
             new LobbyPage();
             mf.dispose();
         }
-
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        // TODO Auto-generated method stub
 
     }
 

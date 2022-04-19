@@ -12,12 +12,12 @@ import org.junit.Test;
  * 
  * @author jratsimb
  */
-public class WalletTest {
+public class TokenManagerTest {
 
     /**
      * instance of wallet to be tested.
      */
-    private Wallet testInstance;
+    private TokenManager testInstance;
 
     /**
      * Test that when the instance of a wallet is created the amount of.
