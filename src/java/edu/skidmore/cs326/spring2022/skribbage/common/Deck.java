@@ -59,7 +59,8 @@ public class Deck {
     } // end getDeck
 
     /**
-     * Sets the deck to a specified ArrayList of cards
+     * Sets the deck to a specified ArrayList of cards. 
+     * @param deckToSet
      */
     public void setDeck(ArrayList<Card> deckToSet) {
         packOfCards = deckToSet;
