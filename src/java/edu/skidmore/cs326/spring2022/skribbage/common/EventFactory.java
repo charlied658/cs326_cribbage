@@ -83,8 +83,7 @@ public final class EventFactory implements EventDispatcher {
      *             Event Not Found when EventType cannot be created.
      */
     public PropertyChangeEvent createEvent(EventType event, Object source,
-        Object... args) /** throws Exception */
-    {
+        Object... args) /** throws Exception */ {
         Object[] eventArgumentList = event.getArgumentList();
 
         for (int i = 0; i < eventArgumentList.length; i++) {
