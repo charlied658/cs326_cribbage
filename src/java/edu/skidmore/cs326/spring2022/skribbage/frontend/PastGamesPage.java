@@ -2,24 +2,18 @@ package edu.skidmore.cs326.spring2022.skribbage.frontend;
 
 import java.awt.Color;
 import java.awt.Point;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
-import java.awt.Dimension;
-import java.awt.Graphics2D;
-import javax.swing.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+
+import javax.swing.JButton;
 
 import org.apache.log4j.Logger;
-
-import java.util.*;
-
 import us.daveread.edu.graphics.shape.Drawable;
 import us.daveread.edu.graphics.shape.impl.Image;
 import us.daveread.edu.graphics.shape.impl.Text;
 import us.daveread.edu.graphics.surface.DrawingSurface;
 import us.daveread.edu.graphics.surface.MainFrame;
 import us.daveread.edu.utilities.Utility;
-import us.daveread.edu.graphics.shape.impl.Rectangle;
 
 /***
  * This is the page that allows the player to load old games.
@@ -92,6 +86,7 @@ public class PastGamesPage extends DrawingSurface {
     /**
      * navPage - NavigationPage window.
      */
+    @SuppressWarnings("unused")
     private NavigationPage navPage;
 
     /**
