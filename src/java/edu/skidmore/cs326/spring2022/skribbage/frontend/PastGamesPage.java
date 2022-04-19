@@ -31,7 +31,7 @@ import us.daveread.edu.utilities.Utility;
  */
 
 @SuppressWarnings("serial")
-public class PastGamesPage extends DrawingSurface {
+public class PastGamesPage extends DrawingSurface implements Page {
     /**
      * mainFrameWidth - int variable that holds mainframe width.
      */
@@ -258,15 +258,14 @@ public class PastGamesPage extends DrawingSurface {
             returnToMainMenu.setBorderColor(Color.CYAN);
             Utility.pause(100);
             returnToMainMenu.setBorderColor(Color.BLACK);
-            mf.dispose();
+            closeWindow();
             navPage = NavigationPageManager.getInstance().getNavPage();
         }
     }
-
     /**
-     * @param args
+     * Close window method from Page interface.
      */
-    public static void main(String[] args) {
-        new PastGamesPage();
+    public void closeWindow() {
+        mf.dispose();
     }
 }
