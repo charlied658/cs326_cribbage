@@ -72,7 +72,6 @@ public class EventManagerTest {
         testInstance = EventManager.getInstance();
         userInstance =
             new User("sleinasa@skidmore.edu", "sleinasa",
-                new Password("passwd"),
                 UserRole.UNAUTHORIZED);
         source = new EventManagerTest();
         loginEventInstance = (UserLoginEvent) EventFactory.getInstance()
@@ -130,7 +129,6 @@ public class EventManagerTest {
         // now change the userInstance and the logInEvent instance.
         userInstance =
             new User("sleinasa@skidmore.edu", "username",
-                new Password("password"),
                 UserRole.AUTHORIZED);
         loginEventInstance = (UserLoginEvent) EventFactory.getInstance()
             .createEvent(EventType.USER_LOGIN, source, userInstance);

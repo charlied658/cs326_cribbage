@@ -115,12 +115,13 @@ public class AccountEventLoopTest {
             EventType.USER_LOGIN_RESPONSE);
 
         testPassword = new Password(TEST_PASSWORD);
-        testUser = new User(TEST_EMAIL, TEST_USERNAME, testPassword,
+        testUser = new User(TEST_EMAIL, TEST_USERNAME,
             UserRole.UNAUTHORIZED);
 
         // Actually fire the event
         testEventInstance = (UserLoginEvent) testFactoryInstance
-            .createEvent(EventType.USER_LOGIN, this, testUser);
+            .createEvent(EventType.USER_LOGIN, this, testUser,
+                testPassword);
         assertNotNull(testEventInstance);
         LOG.trace("created event " + testEventInstance);
         testFactoryInstance.fireEvent(testEventInstance);
@@ -128,7 +129,8 @@ public class AccountEventLoopTest {
 
         // Fire an event that should be ignored
         testFalseEventInstance = ((UserCreateAccountEvent) testFactoryInstance
-            .createEvent(EventType.USER_CREATE_ACCOUNT, this, testUser));
+            .createEvent(EventType.USER_CREATE_ACCOUNT, this, testUser,
+                testPassword));
         assertNotNull(testFalseEventInstance);
         LOG.trace("Created false event " + testEventInstance);
         testFactoryInstance.fireEvent(testFalseEventInstance);
