@@ -420,7 +420,7 @@ public class LoginPage extends DrawingSurface {
         // if (currentUser != null) {
         // if (username.equals(currentUser.getUserName())
         // && password.equals(currentUser.getPassword())) {
-        // return true;
+        // retu rn true;
         // } else {
         // return false;
         // }
