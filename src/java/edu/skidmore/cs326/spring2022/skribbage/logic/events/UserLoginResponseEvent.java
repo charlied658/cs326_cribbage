@@ -24,8 +24,8 @@ public class UserLoginResponseEvent extends AccountResponseEvent {
      *            responseMessage in that order.
      */
     public UserLoginResponseEvent(Object source, Object... args) {
-        super(source, EventType.USER_LOGIN_RESPONSE, (User) args[0],
-            (LoginResponse) args[1]);
+        super(source, EVENTTYPE, (User) args[0],
+            (AccountResponse) args[1]);
     }
 
     /**
@@ -40,7 +40,7 @@ public class UserLoginResponseEvent extends AccountResponseEvent {
      * Allows other classes to read LoginResponse of the event.
      */
     @Override
-    public LoginResponse getLoginResponse() {
-        return loginResponse;
+    public AccountResponse getAccountResponse() {
+        return accountResponse;
     }
 }

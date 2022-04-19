@@ -1,6 +1,6 @@
 package edu.skidmore.cs326.spring2022.skribbage.common;
 
-import edu.skidmore.cs326.spring2022.skribbage.logic.events.LoginResponse;
+import edu.skidmore.cs326.spring2022.skribbage.logic.events.AccountResponse;
 import org.apache.log4j.Logger;
 
 /**
@@ -26,7 +26,11 @@ public enum EventType {
      * Fired from logic tier when user's login request has been handled.
      */
     USER_LOGIN_RESPONSE("User Login Response Event",
-        User.class, LoginResponse.class),
+        User.class, AccountResponse.class),
+    /**
+     * Fired when a user types in their username.
+     */
+    USER_VALIDATION_RESPONSE("User Validation Response Event", User.class),
     /**
      * Fired when a user attempts to change their password via login page.
      */
