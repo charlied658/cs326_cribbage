@@ -34,7 +34,7 @@ import us.daveread.edu.graphics.surface.MainFrame;
  *         case we might need it when we start adding things.
  */
 @SuppressWarnings("serial")
-public class LoginPage extends DrawingSurface {
+public class LoginPage extends DrawingSurface implements Page {
     /**
      * loginPage - MainFrame window to hold the UI attributes.
      */
@@ -194,7 +194,7 @@ public class LoginPage extends DrawingSurface {
      * All the buttons are added to the mainframe.
      */
     public LoginPage() {
-        
+
         LOG.debug("Instance created");
         currentUser = new User(null);
         persistence = PersistenceFacade.getInstance();
@@ -203,29 +203,7 @@ public class LoginPage extends DrawingSurface {
 
         loginPage = new MainFrame(this, "Skribbage Battle Royale Login", 900,
             900, false);
-        createAccountButton =
-            new Text("Create Account", new Point(375, 360), 20,
-                Color.black, Color.blue);
-        loginButton =
-            new Text("Login", new Point(425, 400), 20, Color.black, Color.blue);
-        changePasswordButton =
-            new Text("Change Password", new Point(369, 440), 20,
-                Color.black, Color.blue);
-        homeScreenButton =
-            new Text("Back", new Point(10, 25), 20, Color.black, Color.blue);
-        logo = new Image("logo.png", new Point(150, 0), 0.6, null);
-
-        // PLACEHOLDER FOR LOGIC AND GAMIFICATION TO WORK ON GAME. BACKDOOR IF
-        // YOU WILL.
-        startGameButton =
-            new Text("Start GAME", new Point(425, 480), 20, Color.black,
-                Color.blue);
-        add(logo);
-        add(homeScreenButton);
-        add(loginButton);
-        add(changePasswordButton);
-        add(createAccountButton);
-        add(startGameButton);
+        setup();
     }
 
     /**
@@ -559,6 +537,33 @@ public class LoginPage extends DrawingSurface {
      */
     public void closeWindow() {
         loginPage.dispose();
+    }
+
+    @Override
+    public void setup() {
+        createAccountButton =
+            new Text("Create Account", new Point(375, 360), 20,
+                Color.black, Color.blue);
+        loginButton =
+            new Text("Login", new Point(425, 400), 20, Color.black, Color.blue);
+        changePasswordButton =
+            new Text("Change Password", new Point(369, 440), 20,
+                Color.black, Color.blue);
+        homeScreenButton =
+            new Text("Back", new Point(10, 25), 20, Color.black, Color.blue);
+        logo = new Image("logo.png", new Point(150, 0), 0.6, null);
+
+        // PLACEHOLDER FOR LOGIC AND GAMIFICATION TO WORK ON GAME. BACKDOOR IF
+        // YOU WILL.
+        startGameButton =
+            new Text("Start GAME", new Point(425, 480), 20, Color.black,
+                Color.blue);
+        add(logo);
+        add(homeScreenButton);
+        add(loginButton);
+        add(changePasswordButton);
+        add(createAccountButton);
+        add(startGameButton);
     }
 
     /**

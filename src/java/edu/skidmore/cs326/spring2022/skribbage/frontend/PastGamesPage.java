@@ -37,7 +37,7 @@ import us.daveread.edu.graphics.shape.impl.Rectangle;
  */
 
 @SuppressWarnings("serial")
-public class PastGamesPage extends DrawingSurface {
+public class PastGamesPage extends DrawingSurface implements Page {
     /**
      * mainFrameWidth - int variable that holds mainframe width.
      */
