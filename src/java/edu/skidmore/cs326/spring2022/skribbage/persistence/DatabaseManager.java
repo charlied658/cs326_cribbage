@@ -406,6 +406,7 @@ public class DatabaseManager {
     public static void main(String[] args) {
         // dm.inventoryQuery(236);
 
+        @SuppressWarnings("unused")
         DatabaseManager test = new DatabaseManager();
 
         // test.userAuthenticate("tmawocha", "0000f");
@@ -472,8 +473,9 @@ public class DatabaseManager {
 
         PreparedStatement ps = null;
         Connection conn = null;
+        @SuppressWarnings("unused")
         int netWorth = 0;
-        HashMap<String, Item> playerInventory = new HashMap();
+        HashMap<String, Item> playerInventory = new HashMap<String, Item>();
 
         try {
 
