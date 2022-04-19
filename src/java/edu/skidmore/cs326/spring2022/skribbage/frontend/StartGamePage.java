@@ -3,7 +3,6 @@ package edu.skidmore.cs326.spring2022.skribbage.frontend;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Point;
-import java.util.Arrays;
 //import java.util.Random;
 
 import org.apache.log4j.Logger;
@@ -38,6 +37,7 @@ public class StartGamePage extends DrawingSurface {
     /**
      * spots - Array of spots.
      */
+    @SuppressWarnings("unused")
     private Spot[][] spots;
 
     /**
