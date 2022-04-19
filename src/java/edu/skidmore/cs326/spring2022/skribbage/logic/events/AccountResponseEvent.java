@@ -8,11 +8,13 @@ import java.beans.PropertyChangeEvent;
 /**
  * @author Declan Morris & Alex Carney
  */
+@SuppressWarnings("serial")
 public abstract class AccountResponseEvent extends PropertyChangeEvent {
 
     /**
      * Contains String message and boolean rejection status sent with the event.
      */
+
     protected LoginResponse loginResponse;
 
     /**
