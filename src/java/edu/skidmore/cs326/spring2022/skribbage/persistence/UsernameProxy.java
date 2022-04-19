@@ -11,7 +11,7 @@ import java.util.regex.Pattern;
 /**
  * username proxy.
  * 
- * @author
+ * @author Tinaye Mawochas
  */
 public class UsernameProxy {
 
