@@ -49,6 +49,8 @@ public class User implements Payload {
         this.userId = id;
     }
 
+    // TO DO: Architect recommends that password not be an attribute of User for
+    // security reasons. - Declan Morris 4/19
     /**
      * Password.
      */
@@ -95,10 +97,10 @@ public class User implements Payload {
             "The parameters of User constructor were assigned"
                 + " to private variable attributes");
     }
+
     /**
-     * 
-     * @param userName user
-     * 
+     * @param userName
+     *            user
      */
     public User(String userName) {
         this.userName = userName;

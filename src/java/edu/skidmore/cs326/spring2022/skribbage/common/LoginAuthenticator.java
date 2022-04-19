@@ -1,5 +1,10 @@
 package edu.skidmore.cs326.spring2022.skribbage.common;
 
+import org.apache.log4j.Logger;
+
+import edu.skidmore.cs326.spring2022.skribbage.frontend.events.LobbyStartGameEvent;
+import edu.skidmore.cs326.spring2022.skribbage.persistence.PersistenceFacade;
+
 /**
  * Singleton class used to
  * Check given login/account creation information, hash passwords,
@@ -8,6 +13,15 @@ package edu.skidmore.cs326.spring2022.skribbage.common;
  * @author Declan Morris
  */
 public class LoginAuthenticator implements LoginAuthentication {
+    
+    /**
+     * Logger instance.
+     */
+    private static final Logger LOG;
+
+    static {
+        LOG = Logger.getLogger(LobbyStartGameEvent.class);
+    }
 
     /**
      * The only instance of this class that should ever exist.
@@ -36,35 +50,38 @@ public class LoginAuthenticator implements LoginAuthentication {
     }
 
     @Override
-    public void validateLoginAttempt(User user) {
-
+    public void loginAttempt(User user, String enteredPassword) {
+        
     }
 
     @Override
-    public void changePasswordAttempt(User user, Password newPassword) {
-
+    public void changePasswordAttempt(User user, String newPassword) {
+        
     }
 
     @Override
-    public void createNewUser(User user) {
+    public void createNewUser(User user, String password) {
 
+        if (!PersistenceFacade.getInstance().userCreate(user,
+            hashNewPassword(password))) {
+            LOG.trace("Unable to create new user");
+        }
     }
 
     @Override
     public Password hashNewPassword(String password) {
 
-        String hashedString = PasswordHasher.getInstance().hashNewPassword(
-            password);
+        String hashedStringPassword =
+            PasswordHasher.getInstance().hashNewPassword(password);
 
         @SuppressWarnings("static-access")
-        String[] stringArray = hashedString.split(
+        String[] separatedPassword = hashedStringPassword.split(
             PasswordHasher.getInstance().SALT_AND_PASSWORD_BASE64_SEPARATOR);
 
-        Password newPassword = new Password(stringArray[1]);
-        newPassword.setSalt(stringArray[0]);
+        Password newPassword = new Password(separatedPassword[1]);
+        newPassword.setSalt(separatedPassword[0]);
 
         return newPassword;
-
     }
 
     @Override
