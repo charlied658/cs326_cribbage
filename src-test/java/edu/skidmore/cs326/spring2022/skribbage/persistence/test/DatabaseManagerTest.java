@@ -2,6 +2,7 @@ package edu.skidmore.cs326.spring2022.skribbage.persistence.test;
 
 import static org.junit.Assert.assertEquals;
 
+import edu.skidmore.cs326.spring2022.skribbage.common.UserRole;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -50,12 +51,12 @@ public class DatabaseManagerTest {
     @Before
     public void setUp() throws Exception {
         databaseinstance = new DatabaseManager();
-        wrongTestUser = new User("DJKhaled.com", "Khaled",
-            new Password("AnotherOne"), null);
+        wrongTestUser = new User("DJKhaled@hotmail.com",
+            "Khaled", UserRole.UNAUTHORIZED);
         wrongTestPassword = new Password("AnotherOne");
         correctTestUser =
             new User("nchantzi@skidmore.edu", "nchantzi",
-                new Password("ILoveSQL"), null);
+                UserRole.UNAUTHORIZED);
         correctTestPassword = new Password("ILoveSQL");
     }
 

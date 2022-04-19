@@ -195,7 +195,6 @@ public class LoginPage extends DrawingSurface {
     public LoginPage() {
 
         LOG.debug("Instance created");
-        currentUser = new User(null);
         persistence = PersistenceFacade.getInstance();
         evtFactory = EventFactory.getInstance();
         hasher = PasswordHasher.getInstance();
@@ -252,7 +251,6 @@ public class LoginPage extends DrawingSurface {
                     "Enter your current password", DialogPosition.CENTER_ALL,
                     true);
 
-                currentUser.setUserName(usernameToChange);
                 currentPassword = new Password(
                     hasher.hashNewPassword(password));
 
@@ -319,7 +317,6 @@ public class LoginPage extends DrawingSurface {
                 // EventType.USER_CREATE_ACCOUNT, this, currentUser);
                 // evtFactory.fireEvent(ule);
 
-                currentUser.setUserName(createdUsername);
 
                 // Verify if username is available. If so, call password
                 // setting.
@@ -466,7 +463,6 @@ public class LoginPage extends DrawingSurface {
                 getUserInput("Login", "Enter password for: " + username,
                     DialogPosition.CENTER_ALL, true);
             currentPassword = new Password(hasher.hashNewPassword(password));
-            currentUser.setUserName(username);
 
             if (loggedIn()) {
                 showMessage("User: " + username, "Successful Log In",
