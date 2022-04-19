@@ -1,7 +1,7 @@
 package edu.skidmore.cs326.spring2022.skribbage.common.events;
 
 import edu.skidmore.cs326.spring2022.skribbage.common.EventType;
-import edu.skidmore.cs326.spring2022.skribbage.logic.Game;
+import edu.skidmore.cs326.spring2022.skribbage.common.Game;
 
 import java.beans.PropertyChangeEvent;
 

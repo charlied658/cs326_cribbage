@@ -41,11 +41,11 @@ public class Card {
      * Constructor sets appropriate values for a new card.
      * 
      * @param suit
-     * @param rank
+     * @param c
      */
-    public Card(Rank rank, Suit suit) {
+    public Card(Rank c, Suit suit) {
         this.suit = suit;
-        this.rank = rank;
+        this.rank = c;
     }
 
 }
