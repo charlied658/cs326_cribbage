@@ -38,6 +38,7 @@ public class Game {
     private ArrayList<Card> dealerPeggingCards;
 
     /** A GameManager to manipulate the data. */
+    @SuppressWarnings("unused")
     private GameManager gm = new GameManager(this);
 
     /**

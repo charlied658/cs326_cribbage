@@ -6,6 +6,7 @@ import edu.skidmore.cs326.spring2022.skribbage.common.User;
 /**
  * @author Declan Morris & Alex Carney
  */
+@SuppressWarnings("serial")
 public class UserLoginResponseEvent extends AccountResponseEvent {
 
     /**
