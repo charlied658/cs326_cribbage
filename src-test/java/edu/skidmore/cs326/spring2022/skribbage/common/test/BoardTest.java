@@ -64,7 +64,8 @@ public class BoardTest {
     @Test
     public void testGetGrid() {
         LOG.debug("Testing getGrid");
-        assertArrayEquals(testInstance.getGrid(), testGrid);
+        assertArrayEquals("Grid is not returned properly",
+            testInstance.getGrid(), testGrid);
 
     }
 
