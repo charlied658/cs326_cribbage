@@ -19,7 +19,7 @@ import edu.skidmore.cs326.spring2022.skribbage.persistence.PersistenceFacade;
 public class FacadeTest {
 
     /**
-     * The Test instatnce of Facade Needed to create 2 users There is 1 correct
+     * The Test instance of Facade Needed to create 2 users There is 1 correct
      * user.
      * with the correct password and correct username The other user is with the
      * wrong password and wrong username that is not in the database
