@@ -48,6 +48,7 @@ public class StartGamePage extends DrawingSurface {
     /**
      * gameBoard - Image to hold the game board.
      */
+    @SuppressWarnings("unused")
     private Image boardImage;
 
     /**

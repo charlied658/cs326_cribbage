@@ -15,6 +15,7 @@ public enum ItemTypes {
     /**
      * item ID.
      */
+    @SuppressWarnings("unused")
     private int itemId;
 
     /**
