@@ -1,7 +1,5 @@
 package edu.skidmore.cs326.spring2022.skribbage.frontend;
 
-import java.util.HashMap;
-
 import org.apache.log4j.Logger;
 
 /**
@@ -59,22 +57,23 @@ public final class PageManager {
     public Page createPage(PageType page) {
         switch (page) {
             case LOGIN_PAGE:
-                return new LoginPage();
+                activePage = new LoginPage();
             case LOBBY_PAGE:
-                return new LobbyPage();
+                activePage = new LobbyPage();
             case NAVIGATION_PAGE:
-                return new NavigationPage();
+                activePage = new NavigationPage();
             case START_GAME_PAGE:
-                return new StartGamePage();
+                activePage = new StartGamePage();
             case INVENTORY_PAGE:
-                return new InventoryPage();
+                activePage = new InventoryPage();
             case HOMESCREEN_PAGE:
-                return new HomeScreen();
+                activePage = new HomeScreen();
             case PAST_GAMES_PAGE:
-                return new PastGamesPage();
+                activePage = new PastGamesPage();
             default:
-                return null;
+                activePage = null;
         }
+        return activePage;
     }
 
 }
