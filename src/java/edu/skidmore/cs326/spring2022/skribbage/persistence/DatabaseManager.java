@@ -583,7 +583,7 @@ public class DatabaseManager {
         try {
             // System.out.println("Run a prepared database query");
             // Class.forName("com.mysql.jdbc.Driver");
-            conn = getDB();
+            
             
             HashMap<String, Item> userInventory = inventoryQuery(user.getUserId());
             if (userInventory.containsKey(itemType.toString())) {
@@ -592,10 +592,12 @@ public class DatabaseManager {
 //      	   delete item from db
 //       	   inventoryDelete();
           }
-
+            
             String script =
                 "INSERT INTO player_account (ItemID, PersonID, ItemType, Quantity, LastModified ) VALUES (?,?,?,?,?)";
+            conn = getDB();
             ps = conn.prepareStatement(script);
+            System.out.println("walk");
 
             ps.setInt(1, itemType.getItemId());
             ps.setInt(2, user.getUserId());
