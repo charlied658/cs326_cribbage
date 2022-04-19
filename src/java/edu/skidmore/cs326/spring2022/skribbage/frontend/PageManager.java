@@ -8,8 +8,8 @@ import org.apache.log4j.Logger;
  * Page manager for different page persistence.
  * 
  * @author Zoe Beals
- *            any type.
- *            4/13/2022
+ *         4/13/2022
+ *         Code review by Jonah Marcus on 17 April 2022
  */
 public class PageManager {
 
@@ -93,7 +93,7 @@ public class PageManager {
     private void setup() {
         pages.put(HOMEKEY, new HomeScreen());
         pages.put(LOGINKEY, new LoginPage());
-        //pages.put(LOADKEY, new PastGamesPage());
+        // pages.put(LOADKEY, new PastGamesPage());
         pages.put(LOBBYKEY, new LobbyPage());
         pages.put(NAVKEY, new NavigationPage());
         pages.put(RULESKEY, new RulesPage());

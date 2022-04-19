@@ -42,17 +42,16 @@ public class UserCreateAccountEventTest {
 
     /**
      * Sets up the default testing setting before every test method.
-     * 
      */
     @Before
     public void setUp() {
         LOG.trace("Started the setup method");
         source = new Object();
-//        userInstance =
-//            // Email, username, password, isauthorized?
-//            new User("sleinasa@skidmore.edu", "sleinasa", "passwd", true);
+        // userInstance =
+        // // Email, username, password, isauthorized?
+        // new User("sleinasa@skidmore.edu", "sleinasa", "passwd", true);
         testInstance = new UserCreateAccountEvent(source, userInstance);
-        
+
         LOG.info("SetUp method completed");
     }
 
@@ -80,7 +79,6 @@ public class UserCreateAccountEventTest {
         LOG.trace("Testing getUser finished.");
 
     }
-
 
     /**
      * Tests if the event name passed to the constructor will be returned

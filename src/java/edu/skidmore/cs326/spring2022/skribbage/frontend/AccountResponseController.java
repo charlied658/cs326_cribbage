@@ -1,6 +1,6 @@
 package edu.skidmore.cs326.spring2022.skribbage.frontend;
 
-import edu.skidmore.cs326.spring2022.skribbage.common.events.AccountEvent;
+import edu.skidmore.cs326.spring2022.skribbage.logic.events.AccountResponseEvent;
 import org.apache.log4j.Logger;
 
 import java.beans.PropertyChangeEvent;
@@ -10,7 +10,7 @@ import java.beans.PropertyChangeListener;
  * Handles the responses to any event subclassing from 'AccountResponseEvent'.
  *
  * @author Alex Carney
- * Code Review by: Sten Leinasaar, 3/24/2022
+ *         Code Review by: Sten Leinasaar, 3/24/2022
  */
 public class AccountResponseController implements PropertyChangeListener {
     /**
@@ -33,15 +33,15 @@ public class AccountResponseController implements PropertyChangeListener {
     /**
      * Called from EventManager whenever the properties this.
      *
-     * @param evt The event to fire
+     * @param evt
+     *            The event to fire
      */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         LOG.trace("Account response controller fired property change");
-        //AccountResponseEvent responseEvent = (AccountResponseEvent) evt;
-        AccountEvent accountEvent = (AccountEvent) evt;
+        AccountResponseEvent responseEvent = (AccountResponseEvent) evt;
 
-        switch (accountEvent.getEventType()) {
+        switch (responseEvent.getEventType()) {
             case USER_LOGIN_RESPONSE:
                 LOG.debug("caught a login response event");
                 break;

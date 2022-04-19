@@ -11,13 +11,12 @@ import edu.skidmore.cs326.spring2022.skribbage.common.FactoryTemplate;
  * Subclass of FactoryTemplate that overwrites the eventCreation method to
  * handle frontend specific events.
  * 
- * 
  * @author Sten Leinasaar
- *      Last Edited: March 30, 2022
- *      By: Sten Leinasaar
+ *         Last Edited: March 30, 2022
+ *         By: Sten Leinasaar
  */
 public class FrontEndFactoryTemplate extends FactoryTemplate {
-    
+
     /**
      * Logger instance for logging.
      */
@@ -34,7 +33,7 @@ public class FrontEndFactoryTemplate extends FactoryTemplate {
     @Override
     public PropertyChangeEvent eventCreation(EventType event, Object source,
         Object... args) {
-        
+
         switch (event) {
             case USER_LOGIN:
                 LOG.trace("Returning: " + event.getName());

@@ -1,6 +1,5 @@
 package edu.skidmore.cs326.spring2022.skribbage.frontend;
 
-
 import java.awt.Color;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
@@ -27,15 +26,14 @@ import us.daveread.edu.graphics.shape.impl.Rectangle;
  * 
  * @author Jonah Marcus
  *         Last Update: March 11 2022
- * lOGGING added by Sten Leinasaar March 22, 2022.
- * This is the page that allows the player to view and load old games.
+ *         lOGGING added by Sten Leinasaar March 22, 2022.
+ *         This is the page that allows the player to view and load old games.
  * @author Jonah Marcus
- * Last Update: March 11 2022
- * This is the page that allows the player to load old games.
- * 
+ *         Last Update: March 11 2022
+ *         This is the page that allows the player to load old games.
  * @author Jonah Marcus
  *         Last Update: March 10 2022
- * Code reviewed by Zoe Beals 3/24/2022
+ *         Code reviewed by Zoe Beals 3/24/2022
  */
 
 @SuppressWarnings("serial")
@@ -55,11 +53,6 @@ public class PastGamesPage extends DrawingSurface {
      */
     private MainFrame mf;
 
-    /**
-     * homeScreen - HomeScreen.
-     */
-    private HomeScreen homeScreen;
-    
     /**
      * returnToMainMenu - button to return to homepage.
      */
@@ -95,17 +88,17 @@ public class PastGamesPage extends DrawingSurface {
      * three - temporary playable game.
      */
     private PlayableGame three;
-    
+
     /**
      * navPage - NavigationPage window.
      */
     private NavigationPage navPage;
-    
+
     /**
      * Logger instance for logging.
      */
     private static final Logger LOG;
-    
+
     static {
         LOG = Logger.getLogger(PastGamesPage.class);
     }
@@ -120,25 +113,26 @@ public class PastGamesPage extends DrawingSurface {
         setup();
         LOG.trace("Constructor reached");
     }
+
     /**
      * addGamesToList method to add current games to allGames.
      */
     public void addGamesToList() {
         LOG.trace("Entered addGamesToList method.");
-        one = new PlayableGame(2021, 11, 30, new ArrayList<String>(), 
+        one = new PlayableGame(2021, 11, 30, new ArrayList<String>(),
             "", false);
         one.addPlayer("Jonah");
         one.addPlayer("Sten");
         one.addPlayer("Alex");
         allGames.add(one);
-        
+
         two = new PlayableGame(2022, 2, 28, new ArrayList<String>(),
             "Apex Legends", false);
         two.addPlayer("Wraith");
         two.addPlayer("Mirage");
         two.addPlayer("Pathfinder");
         allGames.add(two);
-        
+
         three = new PlayableGame(2022, 4, 13, new ArrayList<String>(),
             "Cringe", true);
         three.addPlayer("Hugh G. Rection");
@@ -146,6 +140,7 @@ public class PastGamesPage extends DrawingSurface {
         three.addPlayer("Matt Sturbate");
         allGames.add(three);
     }
+
     /**
      * setup method to setup window.
      */
@@ -154,12 +149,12 @@ public class PastGamesPage extends DrawingSurface {
         setLayout(null);
         Text header =
             new Text("Load Previous Game", new Point(50, 60), 36, Color.BLACK);
-        returnToMainMenu = new Text("Main Menu", new Point(160, 115), 25, 
+        returnToMainMenu = new Text("Main Menu", new Point(160, 115), 25,
             Color.BLACK, Color.BLUE);
 
         add(header);
         add(returnToMainMenu);
-        
+
         Image logo = new Image("logo.png", new Point(435, 0), 0.48, null);
         add(logo);
 
@@ -195,21 +190,21 @@ public class PastGamesPage extends DrawingSurface {
             int month = g.getDate().get(Calendar.MONTH);
             int date = g.getDate().get(Calendar.DATE);
             if (g.getName().equals("")) {
-                g.setName(year + formatDateOrMonth(month) 
+                g.setName(year + formatDateOrMonth(month)
                     + formatDateOrMonth(date));
             }
-            JButton gameButton = new JButton(g.getName() + " - " 
-                + year + " " + formatDateOrMonth(month) + " " 
+            JButton gameButton = new JButton(g.getName() + " - "
+                + year + " " + formatDateOrMonth(month) + " "
                 + formatDateOrMonth(date) + " " + g.getPlayers().toString());
             /*
-            String[] gameInfo = incompleteGames.get(i).getGameInfo();
-            String timestamp = gameInfo[0];
-            String name = gameInfo[1];
-            String player1 = gameInfo[2];
-            String player2 = gameInfo[3];
-            JButton gameButton = new JButton(
-                name + "   " + timestamp + "   " + player1 + "   " + player2);
-            */
+             * String[] gameInfo = incompleteGames.get(i).getGameInfo();
+             * String timestamp = gameInfo[0];
+             * String name = gameInfo[1];
+             * String player1 = gameInfo[2];
+             * String player2 = gameInfo[3];
+             * JButton gameButton = new JButton(
+             * name + "   " + timestamp + "   " + player1 + "   " + player2);
+             */
             gameButton.setBounds(25, buttonYPosition, 400, 40);
             buttonYPosition += 50;
             gameButton.setBackground(new Color(255, 60, 60));
@@ -222,20 +217,19 @@ public class PastGamesPage extends DrawingSurface {
             int year = g.getDate().get(Calendar.YEAR);
             int month = g.getDate().get(Calendar.MONTH);
             int date = g.getDate().get(Calendar.DATE);
-            JButton gameButton = new JButton(g.getName() + " - " 
-                + year + " " + formatDateOrMonth(month) + " " 
+            JButton gameButton = new JButton(g.getName() + " - "
+                + year + " " + formatDateOrMonth(month) + " "
                 + formatDateOrMonth(date) + " " + g.getPlayers().toString());
-            
-            /*
-            String[] gameInfo = completeGames.get(i).getGameInfo();
 
-            String timestamp = gameInfo[0];
-            String name = gameInfo[1];
-            String player1 = gameInfo[2];
-            String player2 = gameInfo[3];
-            JButton gameButton = new JButton(
-                name + "   " + timestamp + "   " + player1 + "   " + player2);
-            */
+            /*
+             * String[] gameInfo = completeGames.get(i).getGameInfo();
+             * String timestamp = gameInfo[0];
+             * String name = gameInfo[1];
+             * String player1 = gameInfo[2];
+             * String player2 = gameInfo[3];
+             * JButton gameButton = new JButton(
+             * name + "   " + timestamp + "   " + player1 + "   " + player2);
+             */
             gameButton.setBounds(25, buttonYPosition, 400, 40);
             buttonYPosition += 50;
             gameButton.setBackground(Color.GREEN);
@@ -244,10 +238,11 @@ public class PastGamesPage extends DrawingSurface {
         }
 
     }
-    
+
     /**
      * If date or month is only a single digit, this
      * will add a 0 to the beginning for formatting purposes.
+     * 
      * @param i
      * @return toReturn - a formatted String as specified above
      */
@@ -255,13 +250,12 @@ public class PastGamesPage extends DrawingSurface {
         String toReturn = "";
         if (i < 10) {
             toReturn = "0" + i;
-        }
-        else {
+        } else {
             toReturn = "" + i;
         }
         return toReturn;
     }
-    
+
     @Override
     public void drawableMouseClick(Drawable e) {
         LOG.trace("DrawableMouseClick in PastGamesPage.java");
@@ -270,12 +264,11 @@ public class PastGamesPage extends DrawingSurface {
             Utility.pause(100);
             returnToMainMenu.setBorderColor(Color.BLACK);
             mf.dispose();
-            navPage = new NavigationPage();
+            navPage = NavigationPageManager.getInstance().getNavPage();
         }
     }
 
     /**
-     * 
      * @param args
      */
     public static void main(String[] args) {

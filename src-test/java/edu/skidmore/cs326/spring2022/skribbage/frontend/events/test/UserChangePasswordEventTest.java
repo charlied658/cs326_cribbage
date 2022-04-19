@@ -47,9 +47,9 @@ public class UserChangePasswordEventTest {
     public void setUp() {
         LOG.trace("Started the setup method");
         source = new Object();
-//        userInstance =
-//            // Email, username, password, isauthorized?
-//            new User("sleinasa@skidmore.edu", "sleinasa", "passwd", true);
+        // userInstance =
+        // // Email, username, password, isauthorized?
+        // new User("sleinasa@skidmore.edu", "sleinasa", "passwd", true);
         // Creating testInstance with the parameter of newPassword to be equal
         // to oldpassword.
         // Will change this value when testing.
@@ -81,7 +81,7 @@ public class UserChangePasswordEventTest {
         LOG.trace("Testing getUser method.");
         assertEquals(testInstance.getUser(), userInstance);
         LOG.trace("GetUser test finished.");
-        
+
     }
 
     /**
@@ -95,7 +95,7 @@ public class UserChangePasswordEventTest {
             userInstance.getPassword());
         testInstance =
             new UserChangePasswordEvent(source, userInstance, "lol");
-        //I can only check if correct value was passed.
+        // I can only check if correct value was passed.
         assertEquals(testInstance.getNewPassword(), "lol");
         LOG.trace("Test for new password finished.");
     }

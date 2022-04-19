@@ -4,7 +4,7 @@ import java.util.List;
 
 /**
  * @author Jonah Marcus
- * Code Reviewed by Zoe Beals 3/24/2022
+ *         Code Reviewed by Zoe Beals 4/14/2022
  */
 public interface ActiveGame {
 
@@ -76,12 +76,14 @@ public interface ActiveGame {
     void setName(String name);
 
     /**
-     * @param player player to add to list of players
+     * @param player
+     *            player to add to list of players
      */
     void addPlayer(String player);
 
     /**
-     * @param player player to remove from list of players
+     * @param player
+     *            player to remove from list of players
      */
     void removePlayer(String player);
 

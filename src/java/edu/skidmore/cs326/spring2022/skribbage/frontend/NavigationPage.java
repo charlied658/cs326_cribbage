@@ -19,6 +19,7 @@ import us.daveread.edu.graphics.surface.MainFrame;
  * @author Zoe Beals
  *         Code reviewed by Jonah Marcus on April 11, 2022.
  */
+@SuppressWarnings("serial")
 public class NavigationPage extends DrawingSurface {
 
     /**
@@ -29,11 +30,13 @@ public class NavigationPage extends DrawingSurface {
     /**
      * user - Text variable to hold user.
      */
+    @SuppressWarnings("unused")
     private Text user;
 
     /**
      * loginPage - LoginPage window.
      */
+    @SuppressWarnings("unused")
     private LoginPage loginPage;
 
     /**
@@ -59,11 +62,13 @@ public class NavigationPage extends DrawingSurface {
     /**
      * rulesPage - RulesPage window.
      */
+    @SuppressWarnings("unused")
     private RulesPage rulesPage;
 
     /**
      * lobbyPage - LobbyPage window.
      */
+    @SuppressWarnings("unused")
     private LobbyPage lobbyPage;
 
     /**
@@ -79,6 +84,7 @@ public class NavigationPage extends DrawingSurface {
     /**
      * pastGamesPage - PastGamesPage window.
      */
+    @SuppressWarnings("unused")
     private PastGamesPage pastGamesPage;
 
     /**
@@ -140,26 +146,45 @@ public class NavigationPage extends DrawingSurface {
 
         welcomeMessage =
             new Text("Welcome", new Point(20, 30), 20, Color.black, Color.blue);
-        user = new Text(
-            "" + LoginPageManager.getInstance().getLoginPage().getUsername(),
-            new Point(20, 60), 20, Color.black, Color.blue);
-        System.out.println("USERRRRRR: " + user);
-        add(user);
+//        user = new Text(
+//            "" + LoginPageManager.getInstance().getLoginPage().getUsername(),
+//            new Point(20, 60), 20, Color.black, Color.blue);
+//        add(user);
         add(welcomeMessage);
     }
 
     @Override
     public void drawableMouseClick(Drawable e) {
         if (e == rulesPageButton) {
-            rulesPage = RulesPageManager.getInstance().getRulesPage();
+            rulesPage = new RulesPage();
+            closeWindow();
         } else if (e == lobbyPageButton) {
             lobbyPage = new LobbyPage();
+            closeWindow();
         } else if (e == pastGamesPageButton) {
             pastGamesPage = new PastGamesPage();
+            closeWindow();
         } else if (e == logOut) {
-            loginPage = LoginPageManager.getInstance().getLoginPage();
+            loginPage = new LoginPage();
+                //LoginPageManager.getInstance().getLoginPage();
+            closeWindow();
         }
     }
 
+    /**
+     * closing the navigation page.
+     */
+    public void closeWindow() {
+        navPage.dispose();
+    }
+
+    /**
+     * main.
+     * 
+     * @param args
+     */
+    public static void main(String[] args) {
+        new NavigationPage();
+    }
 
 }

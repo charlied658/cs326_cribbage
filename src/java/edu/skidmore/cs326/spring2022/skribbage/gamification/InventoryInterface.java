@@ -54,7 +54,7 @@ interface InventoryInterface {
      * @param key
      *            name of the item
      * @return val
-     *            number of specified item in an inventory
+     *         number of specified item in an inventory
      */
     int searchForItem(HashMap<String, Integer> map, String key);
 
