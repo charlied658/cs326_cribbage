@@ -2,12 +2,11 @@ package edu.skidmore.cs326.spring2022.skribbage.frontend;
 
 import java.awt.Color;
 import java.awt.Point;
+
+import edu.skidmore.cs326.spring2022.skribbage.common.*;
+import edu.skidmore.cs326.spring2022.skribbage.frontend.events.ValidateUsernameEvent;
 import org.apache.log4j.Logger;
 
-import edu.skidmore.cs326.spring2022.skribbage.common.EventFactory;
-import edu.skidmore.cs326.spring2022.skribbage.common.Password;
-import edu.skidmore.cs326.spring2022.skribbage.common.PasswordHasher;
-import edu.skidmore.cs326.spring2022.skribbage.common.User;
 import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserCreateAccountEvent;
 import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserLoginEvent;
 import edu.skidmore.cs326.spring2022.skribbage.persistence.PersistenceFacade;
@@ -324,21 +323,44 @@ public class LoginPage extends DrawingSurface implements Page {
                 // EventType.USER_CREATE_ACCOUNT, this, currentUser);
                 // evtFactory.fireEvent(ule);
 
+                /**
+                 * General flow: When a user attempts to create an account,
+                 * they enter a username.
+                 *
+                 * An async request is fired to the logic tier, who sends a
+                 * response back to our ResponseController
+                 *
+                 * The ResponseController calls the UsernameValidCallback
+                 */
+                User attemptedUser = new User(null, createdUsername,
+                    UserRole.UNAUTHORIZED);
+                ValidateUsernameEvent event = (ValidateUsernameEvent)
+                    evtFactory.createEvent(
+                        EventType.VALIDATE_USERNAME, this, attemptedUser);
+                evtFactory.fireEvent(event);
 
                 // Verify if username is available. If so, call password
                 // setting.
-                if (persistence.validateUsername(currentUser)) {
-                    createNewUser();
-                } else {
-                    showMessage("Username taken", "Please try again",
-                        DialogType.ERROR);
-                    buttonClicked(2, popupTitle, popupMessage);
-                }
+//                if (persistence.validateUsername(currentUser)) {
+//                    createNewUser();
+//                } else {
+//                    showMessage("Username taken", "Please try again",
+//                        DialogType.ERROR);
+//                    buttonClicked(2, popupTitle, popupMessage);
+//                }
 
                 break;
             default:
                 break;
         }
+    }
+
+    /**
+     * Called by AccountResponseController.
+     * @author Alex Carney
+     */
+    public void validateUsernameCallback() {
+
     }
 
     /**
