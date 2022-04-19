@@ -58,22 +58,30 @@ public final class PageManager {
         switch (page) {
             case LOGIN_PAGE:
                 activePage = new LoginPage();
+                break;
             case LOBBY_PAGE:
                 activePage = new LobbyPage();
+                break;
             case NAVIGATION_PAGE:
                 activePage = new NavigationPage();
+                break;
             case START_GAME_PAGE:
                 activePage = new StartGamePage();
+                break;
             case INVENTORY_PAGE:
                 activePage = new InventoryPage();
+                break;
             case HOMESCREEN_PAGE:
                 activePage = new HomeScreen();
+                break;
             case PAST_GAMES_PAGE:
                 activePage = new PastGamesPage();
+                break;
             case RULES_PAGE:
                 activePage = new RulesPage();
+                break;
             default:
-                activePage = null;
+                break;
         }
         return activePage;
     }
