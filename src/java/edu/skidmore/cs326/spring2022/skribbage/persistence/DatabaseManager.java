@@ -403,6 +403,7 @@ public class DatabaseManager {
      * 
      * @param args
      */
+    @SuppressWarnings("unused")
     public static void main(String[] args) {
         // dm.inventoryQuery(236);
 
@@ -466,6 +467,7 @@ public class DatabaseManager {
      *            : the id of the player to check the value
      * @return Query result
      */
+    @SuppressWarnings("unused")
     public HashMap<String, Item> inventoryQuery(int playerID) {
 
         String tokenQuery = "SELECT * FROM inventory WHERE PersonID = ? ";
@@ -473,7 +475,7 @@ public class DatabaseManager {
         PreparedStatement ps = null;
         Connection conn = null;
         int netWorth = 0;
-        HashMap<String, Item> playerInventory = new HashMap();
+        HashMap<String, Item> playerInventory = new HashMap<String, Item>();
 
         try {
 

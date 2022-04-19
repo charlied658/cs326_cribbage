@@ -50,7 +50,7 @@ public class LoginAuthenticator {
     /**
      * @param user
      * @param attemptedPassword
-     * @return
+     * @return if password is correct.
      */
     public boolean checkPassword(User user, String attemptedPassword) {
         return true;

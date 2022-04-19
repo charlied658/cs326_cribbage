@@ -8,6 +8,7 @@ import java.beans.PropertyChangeEvent;
 /**
  * @author Declan Morris & Alex Carney
  */
+@SuppressWarnings("serial")
 public abstract class AccountResponseEvent extends PropertyChangeEvent {
 
     /**

@@ -24,6 +24,7 @@ public class Board {
     /**
      * Board image attribute.
      */
+    @SuppressWarnings("unused")
     private Image board;
 
     /**
