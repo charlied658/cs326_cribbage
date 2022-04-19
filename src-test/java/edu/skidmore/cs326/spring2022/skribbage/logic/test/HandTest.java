@@ -1,4 +1,5 @@
-// package edu.skidmore.cs326.spring2022.skribbage.logic.test;
+package edu.skidmore.cs326.spring2022.skribbage.logic.test;
+
 //
 // import static org.junit.Assert.assertEquals;
 // import static org.junit.Assert.assertTrue;
