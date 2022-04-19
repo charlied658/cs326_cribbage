@@ -324,7 +324,7 @@ public class DatabaseManager {
             // Class.forName("com.mysql.jdbc.Driver");
             conn = getDB();
 
-            String script = "DELETE FROM player_account WHERE PersonID = ?";
+            String script = "DELETE FROM player_account WHERE Username = ?";
 
             ps = conn.prepareStatement(script);
 
