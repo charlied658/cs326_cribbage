@@ -260,7 +260,9 @@ public class PastGamesPage extends DrawingSurface implements Page {
             Utility.pause(100);
             returnToMainMenu.setBorderColor(Color.BLACK);
             mf.dispose();
-            navPage = NavigationPageManager.getInstance().getNavPage();
+            navPage =
+                (NavigationPage) PageManager.getInstance()
+                    .createPage(PageType.NAVIGATION_PAGE);
         }
     }
 
