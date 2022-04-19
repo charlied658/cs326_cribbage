@@ -92,9 +92,6 @@ public class AccountController implements PropertyChangeListener {
         User associatedUser = accountEvent.getUser();
 
         switch (accountEvent.getEventType()) {
-            case USER_CREATE_ACCOUNT:
-                LOG.debug("caught a create account event");
-                break;
             case USER_LOGIN:
                 LOG.debug("caught a login event");
                 UserLoginEvent ule = ((UserLoginEvent) evt);
@@ -105,6 +102,13 @@ public class AccountController implements PropertyChangeListener {
                             .createEvent(EventType.USER_LOGIN_RESPONSE, this);
                 }
                 break;
+            case USER_CREATE_ACCOUNT:
+                LOG.debug("caught a create account event");
+                break;
+            case USER_DELETE_ACCOUNT:
+                LOG.debug("caught a delete account event");
+            case USER_CHANGE_PASSWORD:
+                LOG.debug("caught a change password event");
             default:
                 LOG.warn("caught unhandled event");
         }
