@@ -136,7 +136,7 @@ public final class EventFactory implements EventDispatcher {
      */
     @Override
     public void fireEvent(PropertyChangeEvent event) {
-        System.out.println("Firing event = " + event);
+        LOG.trace("Firing event = " + event);
         if (event != null) {
             eventManager.notify(event);
         } else {

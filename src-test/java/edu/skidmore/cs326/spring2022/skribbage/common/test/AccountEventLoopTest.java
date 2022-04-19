@@ -167,7 +167,7 @@ public class AccountEventLoopTest {
     public void testresponseControllerCaughtCorrectUserAndIsAuthorized() {
         User caughtUserResponse =
             accountResponseControllerMOCK.getReceivedUserFromLogin();
-        System.out.println(caughtUserResponse);
+        LOG.trace(caughtUserResponse);
         assertEquals(caughtUserResponse, testUser);
         assertEquals(caughtUserResponse.getUserRole(), UserRole.AUTHORIZED);
     }

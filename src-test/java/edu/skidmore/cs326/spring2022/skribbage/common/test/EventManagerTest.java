@@ -164,7 +164,7 @@ public class EventManagerTest {
      */
     @After
     public void tearDown() {
-        System.out.println("Running: tearDown");
+        LOG.trace("Running: tearDown");
         testInstance = null;
         userInstance = null;
         loginEventInstance = null;
