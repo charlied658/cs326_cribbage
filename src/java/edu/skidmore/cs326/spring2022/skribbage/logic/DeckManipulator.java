@@ -22,7 +22,8 @@ public class DeckManipulator implements DeckManipulation {
      */
 
     /**
-     * Method to shuffle the deck.
+     * Method to shuffle the deck. 
+     * @param deckInstance
      */
     public void shuffle(Deck deckInstance) {
         ArrayList<Card> tempDeck = new ArrayList<Card>();
@@ -41,7 +42,8 @@ public class DeckManipulator implements DeckManipulation {
     /**
      * Returns card at indicated index.
      * 
-     * @return Card
+     * @return Card 
+     * @param deckInstance
      * @param whereToCut
      *            index of where you want to cut in the deck
      */
@@ -52,7 +54,8 @@ public class DeckManipulator implements DeckManipulation {
     /**
      * Method removes the top card from the deck and returns it.
      *
-     * @return a Card that is removed to the top.
+     * @return a Card that is removed to the top. 
+     * @param deckInstance
      */
     public Card removeTopCard(Deck deckInstance) {
         Card tempCard = deckInstance.getDeck().get(0);
@@ -63,6 +66,7 @@ public class DeckManipulator implements DeckManipulation {
     /**
      * Moves a card to the top.
      *
+     *@param deckInstance
      * @param whatCardToMove
      *            index of which card to move to the top.
      */
