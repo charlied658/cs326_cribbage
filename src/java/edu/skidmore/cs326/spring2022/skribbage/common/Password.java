@@ -4,6 +4,12 @@ package edu.skidmore.cs326.spring2022.skribbage.common;
  * A simple bean that represents a password object. Contains the raw
  * string of the password (which may or not be hashed), along with
  * the salt required to generate the hashed password
+ * 
+ * Edits by Declan Morris on 4/19:
+ *  Commented out isHashed attribute by recommendation of Architect;
+ *  Passwords should always be hashed when they are created.
+ *  This can be done by calling hashNewPassword on a String using
+ *  the public LoginAuthenticator instance.
  */
 public class Password implements Payload {
     /**
