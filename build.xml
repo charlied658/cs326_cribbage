@@ -341,4 +341,10 @@
 			<classpath refid="runtime.class.path" />
 		</java>
 	</target>
+	
+	<target name="db-pinhole">
+		<exec executable="ssh">
+			<arg value="cs326mysql@bits.monead.com"/>
+		</exec>
+	</target>
 </project>
