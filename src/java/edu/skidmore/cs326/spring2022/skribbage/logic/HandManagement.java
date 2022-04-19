@@ -21,6 +21,7 @@ interface HandManagement {
     void addCardToHand(Hand hand, Card card);
 
     /**
+     * /**
      * Get the index of the card to be removed, and removes it from the
      * specified hand.
      * 
@@ -28,7 +29,9 @@ interface HandManagement {
      *            the hand the card will be removed from.
      * @param index
      *            the index of the card to be removed.
+     * @return Card the card that is removed from hand is returned.
      */
-    void removeCardFromHand(Hand hand, int index);
+
+    Card removeCardFromHand(Hand hand, int index);
 
 }

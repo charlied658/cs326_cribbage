@@ -10,7 +10,7 @@ import edu.skidmore.cs326.spring2022.skribbage.common.Hand;
  * @author Dorjee W.
  */
 public class HandManager implements HandManagement {
-
+    
     /**
      * Adding a card to hand. Validity of card is already checked by card class.
      * 
@@ -31,9 +31,12 @@ public class HandManager implements HandManagement {
      *            the hand the card will be removed from.
      * @param index
      *            the index of the card to be removed.
+     * @return Card the card to be removed is returned.
      */
-    public void removeCardFromHand(Hand hand, int index) {
+    public Card removeCardFromHand(Hand hand, int index) {
+        Card toRemove = hand.getCardsInHand().get(index);
         hand.getCardsInHand().remove(index);
+        return toRemove;
     }
 
 }
