@@ -7,7 +7,7 @@ package edu.skidmore.cs326.spring2022.skribbage.common;
  *
  * @author Declan Morris
  */
-public class LoginAuthenticator {
+public class LoginAuthenticator implements LoginAuthentication {
 
     /**
      * The only instance of this class that should ever exist.
@@ -35,25 +35,41 @@ public class LoginAuthenticator {
         return instance;
     }
 
-    /**
-     * Hashes a new password when a new account is created.
-     * 
-     * @param newPassword
-     *            The requested password to be set to the user.
-     * @return
-     *         The hashed password.
-     */
-    public String hashNewPassword(String newPassword) {
-        return PasswordHasher.getInstance().hashNewPassword(newPassword);
+    @Override
+    public void validateLoginAttempt(User user) {
+
     }
 
-    /**
-     * @param user
-     * @param attemptedPassword
-     * @return
-     */
-    public boolean checkPassword(User user, String attemptedPassword) {
-        return true;
+    @Override
+    public void changePasswordAttempt(User user, Password newPassword) {
+
+    }
+
+    @Override
+    public void createNewUser(User user) {
+
+    }
+
+    @Override
+    public Password hashNewPassword(String password) {
+
+        String hashedString = PasswordHasher.getInstance().hashNewPassword(
+            password);
+
+        String[] stringArray = hashedString.split(
+            PasswordHasher.getInstance().SALT_AND_PASSWORD_BASE64_SEPARATOR);
+
+        Password newPassword = new Password(stringArray[1]);
+        newPassword.setSalt(stringArray[0]);
+
+        return newPassword;
+
+    }
+
+    @Override
+    public void encodeExistingPassword(Password password) {
+        // TODO Auto-generated method stub
+
     }
 
 }

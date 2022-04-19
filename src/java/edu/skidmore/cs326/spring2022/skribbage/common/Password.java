@@ -11,16 +11,16 @@ public class Password implements Payload {
      */
     private String passwordValue;
 
-    /**
-     * Defaults to false when instantiated from the front end. May be set
-     * to true once logic tier hashes incoming password
-     */
-    private boolean isHashed;
+//    /**
+//     * Defaults to false when instantiated from the front end. May be set
+//     * to true once logic tier hashes incoming password
+//     */
+//    private boolean isHashed;
 
     /**
      * The salt required to hash the password.
      */
-    private byte[] salt;
+    private String salt;
 
     /**
      * Creates a new password object. Only required field is passwordValue,
@@ -31,7 +31,7 @@ public class Password implements Payload {
      */
     public Password(String passwordValue) {
         this.passwordValue = passwordValue;
-        isHashed = false;
+//        isHashed = false;
     }
 
     /**
@@ -43,24 +43,24 @@ public class Password implements Payload {
         return passwordValue;
     }
 
-    /**
-     * Has the string been hashed yet or is it still raw text.
-     * 
-     * @return True: password is hashed.
-     */
-    public boolean isHashed() {
-        return isHashed;
-    }
+//    /**
+//     * Has the string been hashed yet or is it still raw text.
+//     * 
+//     * @return True: password is hashed.
+//     */
+//    public boolean isHashed() {
+//        return isHashed;
+//    }
 
-    /**
-     * Change the status of this password being hashed or not.
-     * 
-     * @param hashed
-     *            boolean update
-     */
-    public void setHashed(boolean hashed) {
-        isHashed = hashed;
-    }
+//    /**
+//     * Change the status of this password being hashed or not.
+//     * 
+//     * @param hashed
+//     *            boolean update
+//     */
+//    public void setHashed(boolean hashed) {
+//        isHashed = hashed;
+//    }
 
     /**
      * Update password text. If incoming password is hashed, make sure to
@@ -78,7 +78,7 @@ public class Password implements Payload {
      * 
      * @return A potentially null byte array representing a salt
      */
-    public byte[] getSalt() {
+    public String getSalt() {
         return salt;
     }
 
@@ -88,7 +88,7 @@ public class Password implements Payload {
      * @param salt
      *            Salt to set.
      */
-    public void setSalt(byte[] salt) {
+    public void setSalt(String salt) {
         this.salt = salt;
     }
 }

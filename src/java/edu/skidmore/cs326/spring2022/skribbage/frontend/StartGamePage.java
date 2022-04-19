@@ -48,6 +48,7 @@ public class StartGamePage extends DrawingSurface {
     /**
      * gameBoard - Image to hold the game board.
      */
+    @SuppressWarnings("unused")
     private Image boardImage;
 
     /**
@@ -191,7 +192,6 @@ public class StartGamePage extends DrawingSurface {
                     }
                 }
                 add(spotRenderer[i][j]);
-                // System.out.println("Adding spot [" + i + "][" + j + "]");
             }
         }
 
@@ -236,7 +236,6 @@ public class StartGamePage extends DrawingSurface {
      */
     public void movePeg(int peg, int spaces) {
 
-        // System.out.println("Moving peg " + peg + " by " + spaces + "
         // spaces");
 
         if (spaces == 0) {
@@ -281,7 +280,6 @@ public class StartGamePage extends DrawingSurface {
             x += xDist / 50;
             y += yDist / 50;
 
-            // System.out.println("x=" + x + ", y=" + y);
 
             pegRenderer[peg].setX((int) x);
             pegRenderer[peg].setY((int) y);
@@ -371,9 +369,8 @@ public class StartGamePage extends DrawingSurface {
         LOG.trace("createGrid method in StartGamePage.java");
         assignSpots();
         spots = BoardManager.getInstance().getBoard().getGrid();
-        for (int i = 0; i < spots.length; i++) {
-            System.out.println(Arrays.toString(spots[i]));
-        }
+//        for (int i = 0; i < spots.length; i++) {
+//        }
     }
 
     /**

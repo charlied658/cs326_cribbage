@@ -13,6 +13,10 @@ import java.awt.Point;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
 //import java.awt.event.WindowEvent;
 
 //import java.awt.Graphics2D;
@@ -43,12 +47,12 @@ public class RulesPage extends DrawingSurface {
     /**
      * mainframeWidth - int var to hold width.
      */
-    private int mainframeWidth = 800;
+    private int mainframeWidth = 900;
 
     /**
      * mainframeHeight - int var to hold height.
      */
-    private int mainframeHeight = 800;
+    private int mainframeHeight = 900;
 
     /**
      * mf - MainFrame window.
@@ -91,13 +95,20 @@ public class RulesPage extends DrawingSurface {
         LOG.trace("Entering RulesPage Constructor");
         mf = new MainFrame(this, "Rules Page", mainframeWidth, mainframeHeight,
             false);
-        setup();
+        try {
+            setup();
+        }
+        catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 
     /**
      * setup method to setup window.
+     * @throws FileNotFoundException 
      */
-    private void setup() {
+    private void setup() throws FileNotFoundException {
 
         LOG.trace("Entering the setup method in RulesPage.java");
 
@@ -136,13 +147,24 @@ public class RulesPage extends DrawingSurface {
 
         scrollPane.getViewport().setBackground(Color.CYAN);
         add(scrollPane);
+        
+        //Reads text from a file and adds it to the JScrollPane.
+        String displayText = "";
+        File rulestxt = new File("rules.txt");
+        Scanner myReader = new Scanner(rulestxt);
+        while (myReader.hasNextLine()) {
+            displayText = displayText + myReader.nextLine();
+        }
+        myReader.close();
+        
+        rulesArea.setText(displayText);
 
-        rulesArea.setText(
-            "The objective in Cribbage is to be the first player to get "
-                + "121 points. " + "The gameplay is divided into "
-                + "three distinct parts, "
-                + " "
-                + "The Deal, The Play and The Show.");
+//        rulesArea.setText(
+//            "The objective in Cribbage is to be the first player to get "
+//                + "121 points. " + "The gameplay is divided into "
+//                + "three distinct parts, "
+//                + " "
+//                + "The Deal, The Play and The Show.");
 
         add(header);
         add(logo);
