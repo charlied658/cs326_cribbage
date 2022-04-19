@@ -1,5 +1,7 @@
 package edu.skidmore.cs326.spring2022.skribbage.frontend;
 
+import java.util.HashMap;
+
 import org.apache.log4j.Logger;
 
 /**
@@ -24,8 +26,7 @@ public final class PageManager {
     /**
      * Single active page open at a time.
      */
-    @SuppressWarnings("unused")
-    private final Page activePage;
+    private Page activePage;
 
     static {
         LOG = Logger.getLogger(PageManager.class);
@@ -49,31 +50,5 @@ public final class PageManager {
         return INSTANCE;
     }
 
-    /**
-     * createPage method.
-     * 
-     * @param page
-     * @return the page to create.
-     */
-    public Page createPage(PageType page) {
-        switch (page) {
-            case LOGIN_PAGE:
-                return new LoginPage();
-            case LOBBY_PAGE:
-                return new LobbyPage();
-            case NAVIGATION_PAGE:
-                return new NavigationPage();
-            case START_GAME_PAGE: 
-                return new StartGamePage();
-            case INVENTORY_PAGE:
-                return new InventoryPage();
-            case HOMESCREEN_PAGE:
-                return new HomeScreen();
-            case PAST_GAMES_PAGE:
-                return new PastGamesPage();
-            default:
-                return null;
-        }
-    }
 
 }
