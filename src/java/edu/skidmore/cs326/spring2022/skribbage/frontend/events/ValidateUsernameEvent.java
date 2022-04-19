@@ -1,6 +1,5 @@
 package edu.skidmore.cs326.spring2022.skribbage.frontend.events;
 
-import edu.skidmore.cs326.spring2022.skribbage.common.Password;
 import edu.skidmore.cs326.spring2022.skribbage.common.events.AccountEvent;
 
 import org.apache.log4j.Logger;
