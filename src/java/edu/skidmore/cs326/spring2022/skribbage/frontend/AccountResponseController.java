@@ -19,14 +19,14 @@ public class AccountResponseController implements PropertyChangeListener {
     private static final Logger LOG;
 
     static {
-        LOG = Logger.getLogger(PlayableGame.class);
+        LOG = Logger.getLogger(AccountResponseController.class);
     }
 
     /**
      * Constructor method.
      */
     public AccountResponseController() {
-        LOG.trace("Account response controller instantiated");
+        LOG.debug("Account response controller instantiated");
 
     }
 
