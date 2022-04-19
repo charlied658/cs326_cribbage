@@ -82,7 +82,7 @@ public class AccountControllerMOCK implements PropertyChangeListener {
                             this,
                             receivedUserFromLogin,
                             new LoginResponse("Success Login", false));
-                System.out.println("outgoingEvent = " + outgoingEvent);
+                LOG.trace("outgoingEvent = " + outgoingEvent);
                 eventFactoryTestInstance.fireEvent(outgoingEvent);
                 break;
             case USER_CREATE_ACCOUNT:
