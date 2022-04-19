@@ -54,9 +54,9 @@ public class WalletTest {
     public void testGetAmount() {
         assertEquals(10, testInstance.getAmount());
         testInstance.addToken(7);
-        asserEquals(17, testInstance.getAmount());
+        assertEquals(17, testInstance.getAmount());
         testInstance.removeToken(17);
-        assertEquals(0, testInstance.getAmount);
+        assertEquals(0, testInstance.getAmount());
     }
 
 }
