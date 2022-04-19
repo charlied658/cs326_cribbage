@@ -3,8 +3,6 @@ package edu.skidmore.cs326.spring2022.skribbage.gamification;
 import org.apache.log4j.Logger;
 
 import edu.skidmore.cs326.spring2022.skribbage.common.Player;
-import edu.skidmore.cs326.spring2022.skribbage.common.User;
-
 import java.util.HashMap;
 import java.util.ArrayList;
 
