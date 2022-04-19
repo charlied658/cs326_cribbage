@@ -18,6 +18,7 @@ import edu.skidmore.cs326.spring2022.skribbage.common.UserRole;
 import edu.skidmore.cs326.spring2022.skribbage.common.EventFactory;
 import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserLoginEvent;
 
+
 /**
  * Testing for Event manager API testing.
  * 
