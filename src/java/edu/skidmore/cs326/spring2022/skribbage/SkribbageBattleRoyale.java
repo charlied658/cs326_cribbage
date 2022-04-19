@@ -8,8 +8,6 @@ import edu.skidmore.cs326.spring2022.skribbage.frontend.GameStartedResponseContr
 import org.apache.log4j.Logger;
 
 import edu.skidmore.cs326.spring2022.skribbage.frontend.HomeScreen;
-import edu.skidmore.cs326.spring2022.skribbage.frontend.PageManager;
-import edu.skidmore.cs326.spring2022.skribbage.frontend.PageType;
 import edu.skidmore.cs326.spring2022.skribbage.logic.events.AccountController;
 
 /**
