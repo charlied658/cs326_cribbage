@@ -2,13 +2,11 @@ package edu.skidmore.cs326.spring2022.skribbage.logic.events;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
+
 import org.apache.log4j.Logger;
 
 import edu.skidmore.cs326.spring2022.skribbage.common.EventFactory;
 import edu.skidmore.cs326.spring2022.skribbage.common.EventType;
-import edu.skidmore.cs326.spring2022.skribbage.common.LoginAuthenticator;
-import edu.skidmore.cs326.spring2022.skribbage.common.PasswordHasher;
 import edu.skidmore.cs326.spring2022.skribbage.common.User;
 import edu.skidmore.cs326.spring2022.skribbage.common.events.AccountEvent;
 import edu.skidmore.cs326.spring2022.skribbage.frontend.PlayableGame;
@@ -30,15 +28,15 @@ public class AccountController implements PropertyChangeListener {
         LOG = Logger.getLogger(PlayableGame.class);
     }
 
-//    @Override
-//    public void propertyChange(PropertyChangeEvent evt) {
-//        // Temporary to resolve errors until database is up and running.
-//
-//    }
+    // @Override
+    // public void propertyChange(PropertyChangeEvent evt) {
+    // // Temporary to resolve errors until database is up and running.
+    //
+    // }
 
-//    /**
-//     * Temporary instance of database manager used as tracer bullet.
-//     */
+    /**
+     * Temporary instance of database manager used as tracer bullet.
+     */
     private DatabaseManager dbManager = new DatabaseManager();
 
     /**
@@ -89,6 +87,7 @@ public class AccountController implements PropertyChangeListener {
         /**
          * variable to assure validateUser is only run once.
          */
+        @SuppressWarnings("unused")
         boolean userIsValid = validateUser(associatedUser);
 
         /*
@@ -104,6 +103,7 @@ public class AccountController implements PropertyChangeListener {
             case USER_LOGIN:
                 LOG.debug("caught a login event");
                 if (validateUser(associatedUser)) {
+                    @SuppressWarnings("unused")
                     UserLoginResponseEvent responseEvent =
                         (UserLoginResponseEvent) eventFactory
                             .createEvent(EventType.USER_LOGIN_RESPONSE, this);

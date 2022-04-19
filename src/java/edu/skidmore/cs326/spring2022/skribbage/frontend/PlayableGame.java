@@ -29,13 +29,13 @@ public class PlayableGame {
      * dateStamp - Last date of played game.
      */
     private Calendar dateStamp = Calendar.getInstance();
-    
+
     /**
      * gameName - User-specified game name. If no name is specified, name
      * is YYYYMMDD timestamp.
      */
     private String gameName = "";
-    
+
     /**
      * players - Arraylist of players.
      */
@@ -160,27 +160,26 @@ public class PlayableGame {
 
     /**
      * @param player
-     * @throws Error - if maximum number of players are already
-     * in the game.
+     * @throws Error
+     *             - if maximum number of players are already
+     *             in the game.
      */
     public void addPlayer(String player) throws Error {
         if (players.size() >= 3) {
             throw new Error("Maximum number of players already in game.");
-        }
-        else {
+        } else {
             players.add(player);
         }
     }
-    
+
     /**
      * @param player
      */
     public void removePlayer(String player) {
         if (players.size() > 0) {
-            players.remove(player);   
+            players.remove(player);
         }
     }
-
 
     /**
      * @param isCompleted
@@ -188,6 +187,5 @@ public class PlayableGame {
     public void setCompletionStatus(boolean isCompleted) {
         completed = isCompleted;
     }
-
 
 }

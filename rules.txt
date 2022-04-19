@@ -1,0 +1,8 @@
+this represents rules of cribbage that will be read into the TextArea. This is me hoping that the formatting will be autmated.
+
+
+
+
+Just 					In 			Case
+
+				The Format 						is maintained.....

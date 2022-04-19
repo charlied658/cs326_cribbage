@@ -6,7 +6,7 @@ import org.apache.log4j.Logger;
 import org.junit.Before;
 import org.junit.Test;
 import edu.skidmore.cs326.spring2022.skribbage.gamification.JumpSpot;
-import edu.skidmore.cs326.spring2022.skribbage.logic.Player;
+import edu.skidmore.cs326.spring2022.skribbage.common.Player;
 
 /**
  * Tests the functionality in the jump spot class.
@@ -46,6 +46,7 @@ public class JumpSpotTest {
         testInstance = new JumpSpot();
         testPlayer = new Player();
     }
+
     /**
      * Test to ensure all possible outcomes of jump spot are reachable.
      */
@@ -67,7 +68,7 @@ public class JumpSpotTest {
             assertTrue(
                 testPlayer.getPoints() >= 0 && testPlayer.getPoints() <= 5);
             switch (testPlayer.getPoints()) {
-                
+
                 case 0:
                     backTwo++;
                     break;
@@ -91,7 +92,7 @@ public class JumpSpotTest {
             testPlayer.addPoints(testPlayer.getPoints() * -1);
             numTests++;
         }
-        
+
         assertTrue(backTwo > 0);
         assertTrue(backOne > 0);
         assertTrue(upZero > 0);

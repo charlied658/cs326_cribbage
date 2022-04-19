@@ -2,13 +2,25 @@ package edu.skidmore.cs326.spring2022.skribbage.common;
 
 import java.util.HashMap;
 
-/**
- * Generic Player class.
- * 
- * @author Charlie Davidson
- */
+import edu.skidmore.cs326.spring2022.skribbage.gamification.Avatar;
 
+/**
+ * Generic Player class used by logic and gamification.
+ * @author Charlie Davidson
+ * @author lappiaha
+ */
 public class Player {
+    
+    /**
+     * initializes the player's points.
+     */
+    private int points;
+
+    /**
+     * Creates hand object.
+     */
+    private Hand hand = new Hand();
+    
     /**
      * Username of player.
      */
@@ -23,12 +35,32 @@ public class Player {
      * User associated with player.
      */
     private User user;
-    
+
     /**
      * Hash map that stores items and their quantity.
      */
     private HashMap<String, Integer> inventory =
         new HashMap<String, Integer>();
+
+    
+    /**
+    * Avatar of player.
+    */
+    private Avatar avatar;
+    
+    /**
+     * boolean to help determine the dealer of the game.
+     */
+    private boolean isDealer;
+    
+    /**
+     * Default constructor.
+     * 
+     */
+    
+    public Player() {
+        
+    }
     
     /**
      * Constructor method.
@@ -39,6 +71,9 @@ public class Player {
         this.user = user;
         this.name = null;
         this.username = null;
+        this.inventory = new HashMap<String, Integer>();
+        this.avatar = null;
+        intializePoints();
     }
 
     /**
@@ -58,7 +93,7 @@ public class Player {
     public String getName() {
         return name;
     }
-    
+
     /**
      * Get user associated with player.
      * 
@@ -77,7 +112,7 @@ public class Player {
     public void setName(String name) {
         this.name = name;
     }
-    
+
     /**
      * Set player username.
      * 
@@ -86,7 +121,7 @@ public class Player {
     public void setUsername(String username) {
         this.username = username;
     }
-    
+
     /**
      * Set player user.
      * 
@@ -95,5 +130,101 @@ public class Player {
     public void setUser(User user) {
         this.user = user;
     }
+
     
+    /**
+     * Get player inventory.
+     * @return inventory
+     */
+    public HashMap<String, Integer> getInventory() {
+        return inventory;
+    }
+    
+    /**
+     * Set player inventory.
+     * @param inventory
+     */
+    public void setInventory(HashMap<String, Integer> inventory) {
+        this.inventory = inventory;
+    }
+    
+    /**
+     * Get player avatar.
+     * 
+     * @return avatar
+     */
+    public Avatar getAvatar() {
+        return avatar;
+    }
+    
+    /**
+     * Set player avatar.
+     * 
+     * @param avatar
+     */
+    public void setAvatar(Avatar avatar) {
+        this.avatar = avatar;
+    }
+    
+    /**
+     * Sets the PlayerHand.
+     * @param playerHand Player's hand
+     */
+    public void setHand(Hand playerHand) {
+
+        hand = playerHand;
+    }
+
+    /**
+     * Get the hand.
+     * 
+     * @return hand
+     */
+    public Hand getHand() {
+        return hand;
+    }
+
+    /**
+     * Get the player points.
+     * 
+     * @return points
+     */
+    public int getPoints() {
+        return points;
+    }
+    
+    /**
+     * Initialize points to 0.
+     */
+    public void intializePoints() {
+        points = 0;
+    }
+    
+    /**
+     * Add the player points.
+     * 
+     * @param pointsToAdd
+     */
+    public void addPoints(int pointsToAdd) {
+        points += pointsToAdd;
+
+    }
+    
+    /**
+     * Returns true if the player is the dealer.
+     * @return boolean
+     */
+    public boolean isDealer() {
+        return isDealer;
+    }
+    
+    /**
+     * Sets the player to be dealer or not dealer.
+     * @param dealer
+     */
+    public void setDealer(boolean dealer) {
+        isDealer = dealer;
+    }
+    
+
 }

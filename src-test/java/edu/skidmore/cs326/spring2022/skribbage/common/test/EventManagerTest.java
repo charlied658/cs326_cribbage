@@ -12,6 +12,7 @@ import static org.junit.Assert.assertNull;
 
 import edu.skidmore.cs326.spring2022.skribbage.common.EventManager;
 import edu.skidmore.cs326.spring2022.skribbage.common.EventType;
+import edu.skidmore.cs326.spring2022.skribbage.common.Password;
 import edu.skidmore.cs326.spring2022.skribbage.common.User;
 import edu.skidmore.cs326.spring2022.skribbage.common.UserRole;
 import edu.skidmore.cs326.spring2022.skribbage.common.EventFactory;
@@ -70,7 +71,8 @@ public class EventManagerTest {
     public void setUp() throws Exception {
         testInstance = EventManager.getInstance();
         userInstance =
-            new User("sleinasa@skidmore.edu", "sleinasa", "passwd",
+            new User("sleinasa@skidmore.edu", "sleinasa",
+                new Password("passwd"),
                 UserRole.UNAUTHORIZED);
         source = new EventManagerTest();
         loginEventInstance = (UserLoginEvent) EventFactory.getInstance()
@@ -127,7 +129,8 @@ public class EventManagerTest {
         testInstance.notify(loginEventInstance);
         // now change the userInstance and the logInEvent instance.
         userInstance =
-            new User("sleinasa@skidmore.edu", "username", "password",
+            new User("sleinasa@skidmore.edu", "username",
+                new Password("password"),
                 UserRole.AUTHORIZED);
         loginEventInstance = (UserLoginEvent) EventFactory.getInstance()
             .createEvent(EventType.USER_LOGIN, source, userInstance);

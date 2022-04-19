@@ -36,6 +36,7 @@ public class LobbyStartGameEvent extends LobbyEvent {
         super(source, eventType);
         LOG.trace("Constructor method of LobbyStartGameEvent.");
     }
+
     /**
      * @return Event type as specified in enum.
      */

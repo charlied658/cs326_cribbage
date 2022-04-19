@@ -14,7 +14,7 @@ public class User implements Payload {
     /**
      * Private string attribute to store the email of a user.
      */
-    private final String email;
+    private String email;
 
     /**
      * Private string attribute to store a username of a user.
@@ -42,18 +42,17 @@ public class User implements Payload {
     /**
      * Functionality to update user's ID.
      * 
-     * @param userID
+     * @param id
      *            new role.
      */
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setUserId(int id) {
+        this.userId = id;
     }
 
     /**
-     * Private string attribute to store a password of a user.
-     * TODO: DEPRECATED; Should be a Password object type soon
+     * Password.
      */
-    private final String password;
+    private Password password;
 
     /**
      * Private boolean attribute to store if user is authorized. Mutable.
@@ -83,7 +82,7 @@ public class User implements Payload {
      *            Determines whether or not the user is logged in.
      * @see UserRole
      */
-    public User(String email, String userName, String password,
+    public User(String email, String userName, Password password,
         UserRole userRole) {
         this.email = email;
         LOG.debug("Email value set to:" + email);
@@ -95,6 +94,14 @@ public class User implements Payload {
         LOG.info(
             "The parameters of User constructor were assigned"
                 + " to private variable attributes");
+    }
+    /**
+     * 
+     * @param userName user
+     * 
+     */
+    public User(String userName) {
+        this.userName = userName;
     }
 
     /**
@@ -116,7 +123,7 @@ public class User implements Payload {
     /**
      * @return the user password.
      */
-    public String getPassword() {
+    public Password getPassword() {
         LOG.debug("Returning the password of a user");
         return password;
     }
