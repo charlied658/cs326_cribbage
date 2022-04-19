@@ -55,7 +55,6 @@ public class InventoryPrototype {
     public void useItem(HashMap<String, Integer> map, String key) {
         int val = map.get(key);
         if (val <= 0) {
-            System.out.println("Can not use item, not in your inventory");
             return;
         }
         map.replace(key, val - 1);
@@ -110,7 +109,6 @@ public class InventoryPrototype {
             myReader.close();
         }
         catch (FileNotFoundException e) {
-            System.out.println("An error occurred.");
             e.printStackTrace();
         }
     }
