@@ -37,7 +37,7 @@ public final class PageManager {
      */
     private PageManager() {
         LOG.debug("Instance created");
-        activePage = (Page) new HomeScreen();
+        activePage = new HomeScreen();
     }
 
     /**
@@ -49,5 +49,31 @@ public final class PageManager {
         return INSTANCE;
     }
 
+    /**
+     * createPage method.
+     * 
+     * @param page
+     * @return the page to create.
+     */
+    public Page createPage(PageType page) {
+        switch (page) {
+            case LOGIN_PAGE:
+                return new LoginPage();
+            case LOBBY_PAGE:
+                return new LobbyPage();
+            case NAVIGATION_PAGE:
+                return new NavigationPage();
+            case START_GAME_PAGE: 
+                return new StartGamePage();
+            case INVENTORY_PAGE:
+                return new InventoryPage();
+            case HOMESCREEN_PAGE:
+                return new HomeScreen();
+            case PAST_GAMES_PAGE:
+                return new PastGamesPage();
+            default:
+                return null;
+        }
+    }
 
 }

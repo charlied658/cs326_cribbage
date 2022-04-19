@@ -20,7 +20,7 @@ import us.daveread.edu.graphics.surface.MainFrame;
  *         Code reviewed by Jonah Marcus on April 11, 2022.
  */
 @SuppressWarnings("serial")
-public class NavigationPage extends DrawingSurface {
+public class NavigationPage extends DrawingSurface implements Page {
 
     /**
      * welcomeMessage - Text variable to hold welcome message.

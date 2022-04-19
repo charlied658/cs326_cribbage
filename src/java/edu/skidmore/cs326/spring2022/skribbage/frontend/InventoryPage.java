@@ -31,7 +31,8 @@ import us.daveread.edu.utilities.Utility;
  *         Last Edited by Jonah Marcus
  */
 @SuppressWarnings("serial")
-public class InventoryPage extends DrawingSurface implements ActionListener {
+public class InventoryPage extends DrawingSurface
+    implements ActionListener, Page {
 
     /**
      * mf - Holds reference to the window.
@@ -85,7 +86,7 @@ public class InventoryPage extends DrawingSurface implements ActionListener {
     /**
      * setup method - sets up the window.
      */
-    private void setup() {
+    public void setup() {
         LOG.trace("Entered setup (InventoryPage)");
         setLayout(null);
 
