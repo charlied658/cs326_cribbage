@@ -49,6 +49,15 @@ public final class PageManager {
     }
 
     /**
+     * getActivePage method.
+     * 
+     * @return the active page.
+     */
+    public Page getActivePage() {
+        return activePage;
+    }
+
+    /**
      * returns a created page.
      * 
      * @param page
