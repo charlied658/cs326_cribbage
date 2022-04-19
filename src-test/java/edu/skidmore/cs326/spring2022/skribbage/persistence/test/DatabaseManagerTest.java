@@ -2,12 +2,16 @@ package edu.skidmore.cs326.spring2022.skribbage.persistence.test;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.HashMap;
+
 import org.junit.Before;
 import org.junit.Test;
 
 import edu.skidmore.cs326.spring2022.skribbage.common.Password;
 import edu.skidmore.cs326.spring2022.skribbage.common.User;
 import edu.skidmore.cs326.spring2022.skribbage.persistence.DatabaseManager;
+import edu.skidmore.cs326.spring2022.skribbage.persistence.Item;
+import edu.skidmore.cs326.spring2022.skribbage.persistence.ItemTypes;
 
 /**
  * @author Ricardo Rosario Last Edited: By Ricardo, March 31, 2022
@@ -81,6 +85,29 @@ public class DatabaseManagerTest {
         assertEquals(true, verification);
     }
 
+    
+    /**
+     * Testing when the inventory deposit method
+     */
+    @Test
+    public void inventoryDeposit() {
+  
+    	System.out.println("entered test");
+    	ItemTypes testType = ItemTypes.BIRTHDAY_CAKE;
+    	int testQuantity = 55;
+    	databaseinstance.inventoryDeposit(testType,testQuantity,correctTestUser);
+    	
+    	HashMap<String, Item> resultSet = databaseinstance.inventoryQuery(correctTestUser.getUserId());
+    	Item finalItem = resultSet.get(testType.toString());
+    	
+    	assertEquals(finalItem.getQuantityHeld(),testQuantity);
+    	assertEquals(finalItem.getItemType(), testType);
+    	System.out.println("test end");
+    	
+    	
+    }
+
+    
     /**
      * Testing when asking the inventoryQuery for coin count is successful.
      */// @Test
