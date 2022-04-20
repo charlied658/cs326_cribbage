@@ -5,6 +5,8 @@ import java.awt.Point;
 
 import edu.skidmore.cs326.spring2022.skribbage.common.*;
 import edu.skidmore.cs326.spring2022.skribbage.frontend.events.ValidateUsernameEvent;
+import edu.skidmore.cs326.spring2022.skribbage.logic.events.UserLoginResponseEvent;
+import edu.skidmore.cs326.spring2022.skribbage.logic.events.UserValidationResponseEvent;
 import org.apache.log4j.Logger;
 
 import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserCreateAccountEvent;
@@ -357,9 +359,15 @@ public class LoginPage extends DrawingSurface implements Page {
 
     /**
      * Called by AccountResponseController.
+     * @param userValidationResponseEvent incoming event containing information
      * @author Alex Carney
      */
-    public void validateUsernameCallback() {
+    public void validateUsernameCallback(UserValidationResponseEvent
+        userValidationResponseEvent) {
+
+        userValidationResponseEvent.getAccountResponse().isRejectionStatus();
+
+
 
     }
 
