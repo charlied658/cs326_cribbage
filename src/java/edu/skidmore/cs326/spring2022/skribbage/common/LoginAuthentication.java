@@ -12,8 +12,9 @@ public interface LoginAuthentication {
      * they have in the database.
      * 
      * @param user
+     * @param enteredPassword
      */
-    void validateLoginAttempt(User user);
+    void loginAttempt(User user, String enteredPassword);
 
     /**
      * If the user enters the correct original password,
@@ -22,13 +23,28 @@ public interface LoginAuthentication {
      * @param user
      * @param newPassword
      */
-    void changePasswordAttempt(User user, Password newPassword);
+    void changePasswordAttempt(User user, String newPassword);
 
     /**
-     * Create a new user whose data will be stored in database.
+     * Creates a new user whose data will be stored in database.
+     * Calls hashNewPassword on password entered before passing to database.
      * 
      * @param user
+     * @param password
      */
-    void createNewUser(User user);
+    void createNewUser(User user, String password);
+    
+    /**
+     * Generate random salt for a previously unhashed password & hash it.
+     * @param password
+     * @return hashedPassword
+     */
+    Password hashNewPassword(String password);
+    
+    /**
+     * Use PasswordHasher to encode a password.
+     * @param password
+     */
+    void encodeExistingPassword(Password password);
 
 }

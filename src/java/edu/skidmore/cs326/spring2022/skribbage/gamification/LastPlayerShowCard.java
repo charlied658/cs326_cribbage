@@ -88,12 +88,11 @@ public class LastPlayerShowCard implements ItemShopInterface {
             LOG.info("Last-Player-Show Card bought for 25 tokens");
             playerTokens -= getPrice();
             LOG.info("25 Tokens subtracted from player's tokens.");
-            System.out.println(getName() + " bought at price " + getPrice()
+            LOG.info(getName() + " bought at price " + getPrice()
                 + ". Player now holds " + playerTokens);
             addSpecialCard(cart);
         } else {
-            LOG.info("Not enough tokens to buy a Last-Player-Show Card.");
-            System.out.println("Not enough tokens to buy " + getName());
+            LOG.warn("Not enough tokens to buy a Last-Player-Show Card.");
         }
     }
 

@@ -37,9 +37,8 @@ public class TestDeck {
     @Test
     public void testConstructor() {
         // test deck constructor
-        // see if there's 52 cards
+        // see if a deck was created
         assertNotNull(testInstance);
-        assertEquals(testInstance.getDeck().size(), 52);
 
     } // end testConstructor
 
@@ -49,8 +48,8 @@ public class TestDeck {
     @Test
     public void testGetDeck() {
         // test getDeck
-        // make sure the deck returned is the deck we want
-        assertEquals(testInstance.getDeck(), testInstance);
+        // make sure the deck returned has 52 cards
+        assertEquals(testInstance.getDeck().size(), 52);
     } // end testGetDeck
 
     /**
@@ -61,7 +60,8 @@ public class TestDeck {
         // test setDeck
         //
         testInstance.setDeck(testInstanceOrdered.getDeck());
-        assertEquals(testInstance, testInstanceOrdered);
+        assertEquals(testInstance.getDeck().size(), 
+              testInstanceOrdered.getDeck().size());
     } // end testSetDeck
 
 } // end class TestDeck

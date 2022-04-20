@@ -3,6 +3,8 @@ package edu.skidmore.cs326.spring2022.skribbage.common.test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+
+import edu.skidmore.cs326.spring2022.skribbage.common.UserRole;
 import org.apache.log4j.Logger;
 import org.junit.Before;
 import org.junit.Test;
@@ -50,7 +52,8 @@ public class EventFactoryTest {
     public void setUp() {
         LOG.trace("Started the setup method");
         source = new Object();
-        userInstance = new User("sleinasa");
+        userInstance = new User("sleinasa@skidmore.edu",
+            "sleinasa", UserRole.UNAUTHORIZED);
         testInstance = EventFactory.getInstance();
         LOG.info("SetUp method completed");
     }

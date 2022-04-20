@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.HashMap;
 
+import edu.skidmore.cs326.spring2022.skribbage.common.UserRole;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -70,20 +71,20 @@ public class FacadeTest {
     public void setUp() throws Exception {
         facadeinstanace = new PersistenceFacade();
         wrongTestUser = new User("DJKhaled.com", "Khaled",
-            new Password("AnotherOne"), null);
+            UserRole.UNAUTHORIZED);
         wrongTestPassword = new Password("AnotherOne");
         correctTestUser =
             new User("nchantzi@skidmore.edu", "nchantzi",
-                new Password("ILoveSQL"), null);
+                UserRole.UNAUTHORIZED);
         correctTestPassword = new Password("ILoveSQL");
         correctTestItem = new Item();
         correctTestItem.setItemType(ItemTypes.PARTY_HAT);
         correctTestItem.setQuantityHeld(31);
         inventoryUser = new User("inconsequential", "inconsequential",
-            new Password("inconsequential"), null);
+            UserRole.UNAUTHORIZED);
         inventoryUser.setUserId(236);
         walletUser = new User("inconsequential", "inconsequential",
-            new Password("inconsequential"), null);
+            UserRole.UNAUTHORIZED);
         walletUser.setUserId(325);
     }
 

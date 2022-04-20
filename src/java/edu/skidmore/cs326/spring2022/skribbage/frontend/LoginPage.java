@@ -2,12 +2,13 @@ package edu.skidmore.cs326.spring2022.skribbage.frontend;
 
 import java.awt.Color;
 import java.awt.Point;
+
+import edu.skidmore.cs326.spring2022.skribbage.common.*;
+import edu.skidmore.cs326.spring2022.skribbage.frontend.events.ValidateUsernameEvent;
+import edu.skidmore.cs326.spring2022.skribbage.logic.events.UserLoginResponseEvent;
+import edu.skidmore.cs326.spring2022.skribbage.logic.events.UserValidationResponseEvent;
 import org.apache.log4j.Logger;
 
-import edu.skidmore.cs326.spring2022.skribbage.common.EventFactory;
-import edu.skidmore.cs326.spring2022.skribbage.common.Password;
-import edu.skidmore.cs326.spring2022.skribbage.common.PasswordHasher;
-import edu.skidmore.cs326.spring2022.skribbage.common.User;
 import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserCreateAccountEvent;
 import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserLoginEvent;
 import edu.skidmore.cs326.spring2022.skribbage.persistence.PersistenceFacade;
@@ -33,7 +34,7 @@ import us.daveread.edu.graphics.surface.MainFrame;
  *         case we might need it when we start adding things.
  */
 @SuppressWarnings("serial")
-public class LoginPage extends DrawingSurface {
+public class LoginPage extends DrawingSurface implements Page {
     /**
      * loginPage - MainFrame window to hold the UI attributes.
      */
@@ -195,11 +196,16 @@ public class LoginPage extends DrawingSurface {
     public LoginPage() {
 
         LOG.debug("Instance created");
-        currentUser = new User(null);
         persistence = PersistenceFacade.getInstance();
         evtFactory = EventFactory.getInstance();
         hasher = PasswordHasher.getInstance();
+        setup();
+    }
 
+       
+    
+    @Override
+    public void setup() {
         loginPage = new MainFrame(this, "Skribbage Battle Royale Login", 900,
             900, false);
         createAccountButton =
@@ -225,6 +231,7 @@ public class LoginPage extends DrawingSurface {
         add(changePasswordButton);
         add(createAccountButton);
         add(startGameButton);
+    
     }
 
     /**
@@ -252,7 +259,6 @@ public class LoginPage extends DrawingSurface {
                     "Enter your current password", DialogPosition.CENTER_ALL,
                     true);
 
-                currentUser.setUserName(usernameToChange);
                 currentPassword = new Password(
                     hasher.hashNewPassword(password));
 
@@ -319,22 +325,50 @@ public class LoginPage extends DrawingSurface {
                 // EventType.USER_CREATE_ACCOUNT, this, currentUser);
                 // evtFactory.fireEvent(ule);
 
-                currentUser.setUserName(createdUsername);
+                /**
+                 * General flow: When a user attempts to create an account,
+                 * they enter a username.
+                 *
+                 * An async request is fired to the logic tier, who sends a
+                 * response back to our ResponseController
+                 *
+                 * The ResponseController calls the UsernameValidCallback
+                 */
+                User attemptedUser = new User(null, createdUsername,
+                    UserRole.UNAUTHORIZED);
+                ValidateUsernameEvent event = (ValidateUsernameEvent)
+                    evtFactory.createEvent(
+                        EventType.VALIDATE_USERNAME, this, attemptedUser);
+                evtFactory.fireEvent(event);
 
                 // Verify if username is available. If so, call password
                 // setting.
-                if (persistence.validateUsername(currentUser)) {
-                    createNewUser();
-                } else {
-                    showMessage("Username taken", "Please try again",
-                        DialogType.ERROR);
-                    buttonClicked(2, popupTitle, popupMessage);
-                }
+//                if (persistence.validateUsername(currentUser)) {
+//                    createNewUser();
+//                } else {
+//                    showMessage("Username taken", "Please try again",
+//                        DialogType.ERROR);
+//                    buttonClicked(2, popupTitle, popupMessage);
+//                }
 
                 break;
             default:
                 break;
         }
+    }
+
+    /**
+     * Called by AccountResponseController.
+     * @param userValidationResponseEvent incoming event containing information
+     * @author Alex Carney
+     */
+    public void validateUsernameCallback(UserValidationResponseEvent
+        userValidationResponseEvent) {
+
+        userValidationResponseEvent.getAccountResponse().isRejectionStatus();
+
+
+
     }
 
     /**
@@ -466,7 +500,6 @@ public class LoginPage extends DrawingSurface {
                 getUserInput("Login", "Enter password for: " + username,
                     DialogPosition.CENTER_ALL, true);
             currentPassword = new Password(hasher.hashNewPassword(password));
-            currentUser.setUserName(username);
 
             if (loggedIn()) {
                 showMessage("User: " + username, "Successful Log In",
@@ -559,6 +592,8 @@ public class LoginPage extends DrawingSurface {
     public void closeWindow() {
         loginPage.dispose();
     }
+
+    
 
     /**
      * main method to initialize a new LoginPage object.
