@@ -15,7 +15,6 @@ public enum ItemTypes {
     /**
      * item ID.
      */
-    @SuppressWarnings("unused")
     private int itemId;
 
     /**
@@ -27,11 +26,13 @@ public enum ItemTypes {
         this.itemId = theItemId;
     }
 
-	public int getItemId() {
-		return itemId;
-	}
+    /**
+     * getItemId method.
+     * 
+     * @return the item id
+     */
+    public int getItemId() {
+        return itemId;
+    }
 
-	
-    
-  
 }

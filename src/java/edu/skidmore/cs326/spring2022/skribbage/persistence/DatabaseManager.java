@@ -8,8 +8,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
 
-import java.time.format.DateTimeFormatter;  
-import java.time.LocalDateTime;   
+import java.time.format.DateTimeFormatter;
+import java.time.LocalDateTime;
 
 import org.apache.log4j.Logger;
 
@@ -25,7 +25,7 @@ import edu.skidmore.cs326.spring2022.skribbage.common.UserRole;
  * placeholders and will be injected into code when finally completed
  * 
  * @author PersistenceTeam
- * Edited by Jonah Marcus on 20 April 2022 to address Bug #48.
+ *         Edited by Jonah Marcus on 20 April 2022 to address Bug #48.
  */
 public class DatabaseManager {
 
@@ -311,10 +311,12 @@ public class DatabaseManager {
     /**
      * This is a method to delete an existent player from the player_account
      * table.
+     * 
      * @author Nikoleta Chantzi
      * @param userName
      *            : the name of the user deleted, can only occur if you're
      *            logged in
+     * @param password
      */
     public void deleteUser(String userName, String password) {
         // INSERT INTO player_account (personID, LastName, FirstName, UserName,
@@ -406,7 +408,6 @@ public class DatabaseManager {
     public static void main(String[] args) {
         // dm.inventoryQuery(236);
 
-        @SuppressWarnings("unused")
         DatabaseManager test = new DatabaseManager();
 
         // test.userAuthenticate("tmawocha", "0000f");
@@ -530,7 +531,6 @@ public class DatabaseManager {
 
         PreparedStatement ps = null;
         Connection conn = null;
-        @SuppressWarnings("unused")
         int netWorth = 0;
         HashMap<String, Item> playerInventory = new HashMap<String, Item>();
 
@@ -607,8 +607,7 @@ public class DatabaseManager {
         }
 
     }
-    
-    
+
     /**
      * This is a method to add a new item to the inventory table.
      *
@@ -618,10 +617,10 @@ public class DatabaseManager {
      * @param quantity
      *            : the quantity of items to be added
      * @param user
-     * 			  : the user account to add to
+     *            : the user account to add to
      */
     public void inventoryDeposit(ItemTypes itemType, int quantity, User user) {
-    	
+
         // INSERT INTO player_account (personID, LastName, FirstName, UserName,
         // Password, AvatarURL, Email)
         // VALUES (/* comma separated values in the exact order of the above
@@ -632,23 +631,23 @@ public class DatabaseManager {
         PreparedStatement ps = null;
 
         ResultSet rs = null;
-               
 
         try {
             // System.out.println("Run a prepared database query");
             // Class.forName("com.mysql.jdbc.Driver");
-            
-            
-            HashMap<String, Item> userInventory = inventoryQuery(user.getUserId());
+
+            HashMap<String, Item> userInventory =
+                inventoryQuery(user.getUserId());
             if (userInventory.containsKey(itemType.toString())) {
-      	    Item tempItem = userInventory.get(itemType.toString());
-            quantity += tempItem.getQuantityHeld();
-//      	   delete item from db
-//       	   inventoryDelete();
-          }
-            
+                Item tempItem = userInventory.get(itemType.toString());
+                quantity += tempItem.getQuantityHeld();
+                // delete item from db
+                // inventoryDelete();
+            }
+
             String script =
-                "INSERT INTO player_account (ItemID, PersonID, ItemType, Quantity, LastModified ) VALUES (?,?,?,?,?)";
+                "INSERT INTO player_account (ItemID, PersonID, "
+                    + "ItemType, Quantity, LastModified ) VALUES (?,?,?,?,?)";
             conn = getDB();
             ps = conn.prepareStatement(script);
             System.out.println("walk");
@@ -657,14 +656,12 @@ public class DatabaseManager {
             ps.setInt(2, user.getUserId());
             ps.setString(3, itemType.toString());
             ps.setInt(4, quantity);
-            
-            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");  
-            LocalDateTime now = LocalDateTime.now();             
+
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+            LocalDateTime now = LocalDateTime.now();
             ps.setString(5, dtf.format(now));
 
-            
             ps.executeUpdate();
-            
 
         }
         catch (SQLException sqle) {
