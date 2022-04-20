@@ -6,7 +6,7 @@ import edu.skidmore.cs326.spring2022.skribbage.common.User;
 /**
  * game management class.
  * 
- * @author ??
+ * @author Ricardo Rosario
  */
 public interface GameManagement {
 
@@ -20,7 +20,7 @@ public interface GameManagement {
     Game retrieveGame(User userName, Game whichGame);
 
     /**
-     * save game mehtod.
+     * save game method.
      * @param userName
      * @param currentGame
      * @return the game.

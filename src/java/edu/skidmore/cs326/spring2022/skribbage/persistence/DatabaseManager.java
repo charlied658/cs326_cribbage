@@ -8,6 +8,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
 
+import java.time.format.DateTimeFormatter;  
+import java.time.LocalDateTime;   
+
 import org.apache.log4j.Logger;
 
 import edu.skidmore.cs326.spring2022.skribbage.common.Password;
@@ -20,6 +23,8 @@ import edu.skidmore.cs326.spring2022.skribbage.common.UserRole;
  * opening the keyhole to the connection within your terminal. To achieve this
  * type ssh cs326mysql@bits.monead.com Please also note that queries are
  * placeholders and will be injected into code when finally completed
+ * 
+ * @author PersistenceTeam
  */
 public class DatabaseManager {
 
@@ -111,6 +116,39 @@ public class DatabaseManager {
         }
 
     }
+//=======
+//    public boolean userAuthenticate(User user, Password password) {
+//
+//    	String username = user.getUserName();
+//        String tempQuery =
+//            "SELECT * FROM player_account WHERE username='" + username + "'";
+//        // Connection conn = dbConnect();
+//        String storedPassword = "";
+//
+//        try {
+//            Connection conn = getDB();
+//            Statement stmt = conn.createStatement();
+//            ResultSet rs = stmt.executeQuery(tempQuery);
+//
+//            rs.next();
+//            storedPassword = rs.getString("Password");
+//
+//        }
+//        catch (SQLException e) {
+//            System.out.println("Account not found");
+//            e.printStackTrace();
+//
+//        }
+//
+//        if (storedPassword.compareTo(password.getPasswordValue()) == 0) {
+//            System.out.println("Password Accepted");
+//            return true;
+//        } else {
+//            System.out.println("Incorrect Password");
+//            return false;
+//        }
+//
+//    }
 
     /**
      * This is a function to query the token value held by a player.
@@ -186,7 +224,6 @@ public class DatabaseManager {
             ps.setString(1, changeTo);
             ps.setInt(2, userId);
 
-            System.out.println(ps);
             System.out.println(ps.executeUpdate());
 
         }
@@ -303,10 +340,10 @@ public class DatabaseManager {
     /**
      * This is a method to delete an existent player from the player_account
      * table.
-     * 
      * @author Nikoleta Chantzi
      * @param userName
-     * @param password
+     *            : the name of the user deleted, can only occur if you're
+     *            logged in
      */
     public void deleteUser(String userName, String password) {
         // INSERT INTO player_account (personID, LastName, FirstName, UserName,
@@ -325,7 +362,7 @@ public class DatabaseManager {
             // Class.forName("com.mysql.jdbc.Driver");
             conn = getDB();
 
-            String script = "DELETE FROM player_account WHERE PersonID = ?";
+            String script = "DELETE FROM player_account WHERE Username = ?";
 
             ps = conn.prepareStatement(script);
 
@@ -492,7 +529,6 @@ public class DatabaseManager {
             ps = dbConnection.prepareStatement(tokenQuery);
             ps.setInt(1, playerID);
 
-            // System.out.println(ps);
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
@@ -539,7 +575,7 @@ public class DatabaseManager {
      * @return Connection
      * @author Tinaye Mawocha
      */
-    private static Connection getDB() {
+    public static Connection getDB() {
 
         if (dbConnection == null) {
             try {
@@ -552,12 +588,108 @@ public class DatabaseManager {
                 e.printStackTrace();
             }
             System.out.println("Connected");
+            System.out.println("Testing");
             return dbConnection;
         } else {
             // System.out.println("Already Connected");
             return dbConnection;
         }
 
+    }
+    
+    
+    /**
+     * This is a method to add a new item to the inventory table.
+     *
+     * @author Tinaye Mawocha
+     * @param itemType
+     *            : the type of item to be added
+     * @param quantity
+     *            : the quantity of items to be added
+     * @param user
+     * 			  : the user account to add to
+     */
+    public void inventoryDeposit(ItemTypes itemType, int quantity, User user) {
+    	
+        // INSERT INTO player_account (personID, LastName, FirstName, UserName,
+        // Password, AvatarURL, Email)
+        // VALUES (/* comma separated values in the exact order of the above
+        // columns*/
+        // );
+        Connection conn = null;
+
+        PreparedStatement ps = null;
+
+        ResultSet rs = null;
+               
+
+        try {
+            // System.out.println("Run a prepared database query");
+            // Class.forName("com.mysql.jdbc.Driver");
+            
+            
+            HashMap<String, Item> userInventory = inventoryQuery(user.getUserId());
+            if (userInventory.containsKey(itemType.toString())) {
+      	    Item tempItem = userInventory.get(itemType.toString());
+            quantity += tempItem.getQuantityHeld();
+//      	   delete item from db
+//       	   inventoryDelete();
+          }
+            
+            String script =
+                "INSERT INTO player_account (ItemID, PersonID, ItemType, Quantity, LastModified ) VALUES (?,?,?,?,?)";
+            conn = getDB();
+            ps = conn.prepareStatement(script);
+            System.out.println("walk");
+
+            ps.setInt(1, itemType.getItemId());
+            ps.setInt(2, user.getUserId());
+            ps.setString(3, itemType.toString());
+            ps.setInt(4, quantity);
+            
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");  
+            LocalDateTime now = LocalDateTime.now();             
+            ps.setString(5, dtf.format(now));
+
+            
+            ps.executeUpdate();
+            
+
+        }
+        catch (SQLException sqle) {
+            sqle.printStackTrace();
+            // LOGGER.error("Database Interaction Failure", sqle);
+
+        }
+        finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                }
+                catch (SQLException sqle) {
+                    // LOGGER.error("Failed to close result set", sqle);
+
+                }
+
+            }
+
+            if (ps != null) {
+                try {
+                    ps.close();
+                }
+                catch (SQLException sqle) {
+                    // LOGGER.error("Failed to close prepared statement", sqle);
+                }
+            }
+            if (conn != null) {
+                try {
+                    conn.close();
+                }
+                catch (SQLException sqle) {
+                    // LOGGER.error("Failed to close connection", sqle);
+                }
+            }
+        }
     }
 
 }

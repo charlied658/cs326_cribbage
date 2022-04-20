@@ -4,9 +4,9 @@ import edu.skidmore.cs326.spring2022.skribbage.common.Password;
 import edu.skidmore.cs326.spring2022.skribbage.common.User;
 
 /**
- * user management.
+ * user management interface.
  * 
- * @author
+ * @author Ricardo Rosario
  */
 public interface UserManagement {
 
@@ -25,7 +25,7 @@ public interface UserManagement {
      * @param userToDelete
      * @return the user.
      */
-    boolean userDelete(User userToDelete);
+    boolean userDelete(User userToDelete, Password password);
 
     /**
      * password change.
@@ -39,7 +39,7 @@ public interface UserManagement {
         Password newPassword);
 
     /**
-     * userCHange.
+     * userChange.
      * 
      * @param userToChange
      * @param args
