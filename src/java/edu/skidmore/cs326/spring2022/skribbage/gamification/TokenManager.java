@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class TokenManager implements Manager {
 
     /**
-     * ArrayList of tokens to simulate a wallet.
+     * ArrayList of to simulate a wallet.
      */
     private ArrayList<Token> tokens;
 
@@ -18,7 +18,7 @@ public class TokenManager implements Manager {
      * Constructor.
      *
      * @param initialAmount
-     *            the amount of tokens in wallet at instantiation
+     *            the amount of  in wallet at instantiation
      */
     public TokenManager(int initialAmount) {
         for (int i = 0; i < initialAmount; i++) {
@@ -27,7 +27,7 @@ public class TokenManager implements Manager {
     }
 
     /**
-     * add tokens to wallet.
+     * add to wallet.
      *
      * @param amount
      *            The amount to add to the wallet
@@ -40,7 +40,7 @@ public class TokenManager implements Manager {
     }
 
     /**
-     * remove tokens from wallet.
+     * remove from wallet.
      *
      * @param amount
      *            The amount to remove from the wallet
@@ -53,9 +53,9 @@ public class TokenManager implements Manager {
     }
 
     /**
-     * get the number of Tokens in the wallet.
+     * get the number of in the wallet.
      *
-     * @return the number of tokens in the wallet(size of the ArrayList)
+     * @return the number of in the wallet(size of the ArrayList)
      */
     public int getAmount() {
         return tokens.size();

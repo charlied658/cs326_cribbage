@@ -1,6 +1,5 @@
 package edu.skidmore.cs326.spring2022.skribbage.frontend.events;
 
-import edu.skidmore.cs326.spring2022.skribbage.common.Password;
 import edu.skidmore.cs326.spring2022.skribbage.common.events.AccountEvent;
 
 import org.apache.log4j.Logger;
@@ -10,22 +9,19 @@ import edu.skidmore.cs326.spring2022.skribbage.common.User;
 
 /**
  * A concrete implementation of an Event, representing the data transfer object
- * DTO associated with a user attempting to login.
- * 
+ * DTO associated with a user attempting to create a new account.
+ *
+ * When the user enters a username, that username is immediately checked
+ * for validation and appropriateness.
+ *
  * @author Alex Carney
- *         Reviewed and logging added by Sten Leinasaar @at March 22, 2022
  */
-@SuppressWarnings("serial")
-public class UserLoginEvent extends AccountEvent {
+public class ValidateUsernameEvent extends AccountEvent {
     /**
      * Private static final Logger instance.
      */
     private static final Logger LOG;
 
-    /**
-     * Input password associated with login request.
-     */
-    private final Password password;
 
     static {
         LOG = Logger.getLogger(UserLoginEvent.class);
@@ -41,17 +37,9 @@ public class UserLoginEvent extends AccountEvent {
      * @throws IllegalArgumentException
      *             if {@code source} is {@code null}
      */
-    public UserLoginEvent(Object source, Object... args) {
-        super(source, EventType.USER_LOGIN, (User) args[0]);
-        password = (Password) args[1];
+    public ValidateUsernameEvent(Object source, Object... args) {
+        super(source, EventType.VALIDATE_USERNAME, (User) args[0]);
         LOG.trace("Constructor method reached");
-    }
-
-    /**
-     * @return Password associated with event.
-     */
-    public Password getPassword() {
-        return password;
     }
 
     /**
@@ -60,7 +48,7 @@ public class UserLoginEvent extends AccountEvent {
     @Override
     public EventType getEventType() {
         LOG.trace("Returning a name of the event.");
-        return EventType.USER_LOGIN;
+        return EventType.VALIDATE_USERNAME;
     }
 
 }

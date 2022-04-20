@@ -3,8 +3,8 @@ package edu.skidmore.cs326.spring2022.skribbage.frontend;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Point;
-//import java.awt.event.ActionEvent;
-//import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 //import java.io.BufferedReader;
 //import java.io.FileReader;
 //import java.io.IOException;
@@ -12,10 +12,6 @@ import java.awt.Point;
 //import javax.swing.JEditorPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.Scanner;
 
 //import java.awt.event.WindowEvent;
 
@@ -39,20 +35,20 @@ import us.daveread.edu.utilities.Utility;
  * Creates a page that displays the rules for the user.
  * 
  * @author Jonah Marcus
- *         Last Edit: 18 April, 2022
+ *         Last Edit: March 11, 2022
  *         Code Reviewed by Zoe Beals - 3/24/2022
  */
 @SuppressWarnings("serial")
-public class RulesPage extends DrawingSurface {
+public class RulesPage extends DrawingSurface implements ActionListener, Page {
     /**
      * mainframeWidth - int var to hold width.
      */
-    private int mainframeWidth = 900;
+    private int mainframeWidth = 800;
 
     /**
      * mainframeHeight - int var to hold height.
      */
-    private int mainframeHeight = 900;
+    private int mainframeHeight = 800;
 
     /**
      * mf - MainFrame window.
@@ -95,20 +91,13 @@ public class RulesPage extends DrawingSurface {
         LOG.trace("Entering RulesPage Constructor");
         mf = new MainFrame(this, "Rules Page", mainframeWidth, mainframeHeight,
             false);
-        try {
-            setup();
-        }
-        catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+        setup();
     }
 
     /**
      * setup method to setup window.
-     * @throws FileNotFoundException 
      */
-    private void setup() throws FileNotFoundException {
+    public void setup() {
 
         LOG.trace("Entering the setup method in RulesPage.java");
 
@@ -147,24 +136,13 @@ public class RulesPage extends DrawingSurface {
 
         scrollPane.getViewport().setBackground(Color.CYAN);
         add(scrollPane);
-        
-        //Reads text from a file and adds it to the JScrollPane.
-        String displayText = "";
-        File rulestxt = new File("rules.txt");
-        Scanner myReader = new Scanner(rulestxt);
-        while (myReader.hasNextLine()) {
-            displayText = displayText + myReader.nextLine();
-        }
-        myReader.close();
-        
-        rulesArea.setText(displayText);
 
-//        rulesArea.setText(
-//            "The objective in Cribbage is to be the first player to get "
-//                + "121 points. " + "The gameplay is divided into "
-//                + "three distinct parts, "
-//                + " "
-//                + "The Deal, The Play and The Show.");
+        rulesArea.setText(
+            "The objective in Cribbage is to be the first player to get "
+                + "121 points. " + "The gameplay is divided into "
+                + "three distinct parts, "
+                + " "
+                + "The Deal, The Play and The Show.");
 
         add(header);
         add(logo);
@@ -179,14 +157,15 @@ public class RulesPage extends DrawingSurface {
             returnToMainMenu.setBorderColor(Color.CYAN);
             Utility.pause(100);
             returnToMainMenu.setBorderColor(Color.BLACK);
-            navPage = new NavigationPage();
+            navPage =
+                (NavigationPage) PageManager.getInstance()
+                    .createPage(PageType.NAVIGATION_PAGE);
             mf.dispose();
-           
-                //NavigationPageManager.getInstance().getNavPage();
+
+            // NavigationPageManager.getInstance().getNavPage();
         }
     }
 
-    /*
     // This is a placeholder. In the final product, the "Main Menu" button
     // will, as the label suggests, take the user back to the main menu.
     @Override
@@ -197,23 +176,23 @@ public class RulesPage extends DrawingSurface {
         // mf.dispatchEvent(new WindowEvent(mf, WindowEvent.WINDOW_CLOSING));
         if (e.getSource().equals(returnToMainMenu)) {
             navPage = new NavigationPage();
-                //NavigationPageManager.getInstance().getNavPage();
+            // NavigationPageManager.getInstance().getNavPage();
             mf.dispose();
-            
+
             // PastGamesPage pastGames = new PastGamesPage();
             // spastGames.setVisible(true);
         }
     }
-    */
 
     /**
      * main method.
+     * 
      * @param args
      */
     public static void main(String[] args) {
 
         LOG.trace("RulesPage main method");
 
-        RulesPageManager.getInstance().getRulesPage();
+        PageManager.getInstance().createPage(PageType.RULES_PAGE);
     }
 }

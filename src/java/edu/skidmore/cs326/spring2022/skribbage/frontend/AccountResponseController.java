@@ -18,15 +18,20 @@ public class AccountResponseController implements PropertyChangeListener {
      */
     private static final Logger LOG;
 
+    /**
+     * The Page Manager so that the active page can be accessed at all times.
+     */
+    private PageManager pageManager = PageManager.getInstance();
+
     static {
-        LOG = Logger.getLogger(PlayableGame.class);
+        LOG = Logger.getLogger(AccountResponseController.class);
     }
 
     /**
      * Constructor method.
      */
     public AccountResponseController() {
-        LOG.trace("Account response controller instantiated");
+        LOG.debug("Account response controller instantiated");
 
     }
 
@@ -40,10 +45,13 @@ public class AccountResponseController implements PropertyChangeListener {
     public void propertyChange(PropertyChangeEvent evt) {
         LOG.trace("Account response controller fired property change");
         AccountResponseEvent responseEvent = (AccountResponseEvent) evt;
-
         switch (responseEvent.getEventType()) {
             case USER_LOGIN_RESPONSE:
                 LOG.debug("caught a login response event");
+                break;
+            case USER_VALIDATION_RESPONSE:
+                LOG.debug("caught user validation response");
+                //TODO: Call PageManager.getActivePage(), then pass in a UVR
                 break;
             default:
                 LOG.warn("caught unhandled event");

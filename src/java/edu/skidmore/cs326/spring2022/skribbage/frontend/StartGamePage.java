@@ -3,7 +3,6 @@ package edu.skidmore.cs326.spring2022.skribbage.frontend;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Point;
-import java.util.Arrays;
 //import java.util.Random;
 
 import org.apache.log4j.Logger;
@@ -27,7 +26,7 @@ import us.daveread.edu.graphics.surface.MainFrame;
  *         Code review by Jonah Marcus on 17 April 2022
  */
 @SuppressWarnings("serial")
-public class StartGamePage extends DrawingSurface {
+public class StartGamePage extends DrawingSurface implements Page {
 
     /**
      * navPage - NavigationPage window.
@@ -38,6 +37,7 @@ public class StartGamePage extends DrawingSurface {
     /**
      * spots - Array of spots.
      */
+    @SuppressWarnings("unused")
     private Spot[][] spots;
 
     /**
@@ -59,6 +59,7 @@ public class StartGamePage extends DrawingSurface {
     /**
      * cardDeck - Image to hold card deck.
      */
+    @SuppressWarnings("unused")
     private Image cardDeck;
 
     /**
@@ -120,6 +121,16 @@ public class StartGamePage extends DrawingSurface {
      * Store whether the game currently running.
      */
     private boolean running;
+
+    /**
+     * State of the cards animation.
+     */
+    private boolean cardState;
+
+    /**
+     * Holds the cards of the deck as images.
+     */
+    private Image[] cards;
 
     /**
      * returnHome -Text variable to represent back button.
@@ -226,6 +237,60 @@ public class StartGamePage extends DrawingSurface {
     }
 
     /**
+     * Animate the cards.
+     */
+    public void moveCards() {
+
+        double[] x = new double[20];
+        double[] y = new double[20];
+
+        double[] destX = new double[20];
+        double[] destY = new double[20];
+
+        double[] xDist = new double[20];
+        double[] yDist = new double[20];
+
+        for (int i = 0; i < 20; i++) {
+
+            Point initialPoint = cards[i].getLocation();
+            Point destPoint;
+
+            if (cardState) {
+                destPoint = new Point(400 + 15 * i, 330);
+            } else {
+                destPoint = new Point(500 + 2 * i, 315 + 2 * i);
+            }
+
+            x[i] = initialPoint.getX();
+            y[i] = initialPoint.getY();
+
+            destX[i] = destPoint.getX();
+            destY[i] = destPoint.getY();
+
+            xDist[i] = destX[i] - x[i];
+            yDist[i] = destY[i] - y[i];
+        }
+
+        for (int i = 0; i < 50; i++) {
+            for (int j = 0; j < 20; j++) {
+                x[j] += xDist[j] / 50;
+                y[j] += yDist[j] / 50;
+
+                cards[j].setX((int) x[j]);
+                cards[j].setY((int) y[j]);
+            }
+            try {
+                Thread.sleep(10);
+            }
+            catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+        }
+
+        cardState = !cardState;
+    }
+
+    /**
      * Move peg a certain number of spaces.
      * 
      * @author Charlie Davidson
@@ -280,7 +345,6 @@ public class StartGamePage extends DrawingSurface {
             x += xDist / 50;
             y += yDist / 50;
 
-
             pegRenderer[peg].setX((int) x);
             pegRenderer[peg].setY((int) y);
 
@@ -323,10 +387,10 @@ public class StartGamePage extends DrawingSurface {
         board = new Rectangle(new Point(35, 50), new Dimension(350, 700),
             Color.black, new Color(180, 110, 30));
         gameArea = new Rectangle(new Point(25, 40),
-            new Dimension(850, 800), Color.black, Color.green);
+            new Dimension(850, 800), Color.black, new Color(43, 176, 19));
         beginGame = new Text("Start", new Point(35, 880), 20, Color.black,
             Color.blue);
-        cardDeck = new Image("card.jpg", new Point(500, 315), .6, null);
+        // cardDeck = new Image("card.jpg", new Point(500, 315), .6, null);
         player1Score = new Text("temp player 1:", new Point(35, 790), 20,
             Color.black);
         player2Score = new Text("temp player 2: ", new Point(35, 810), 20,
@@ -344,9 +408,14 @@ public class StartGamePage extends DrawingSurface {
             Color.black, Color.blue);
         movePlayers[4] = new Text("Reset", new Point(560, 880), 20,
             Color.black, Color.blue);
+        cards = new Image[20];
+        for (int i = 0; i < 20; i++) {
+            cards[i] = new Image("card.png",
+                new Point(500 + 2 * i, 315 + 2 * i), .6, null);
+        }
         add(gameArea);
         add(beginGame);
-        add(cardDeck);
+        // add(cardDeck);
         add(player2Score);
         add(player1Score);
         add(returnHome);
@@ -356,9 +425,13 @@ public class StartGamePage extends DrawingSurface {
         add(movePlayers[2]);
         add(movePlayers[3]);
         add(movePlayers[4]);
+        for (int i = 19; i >= 0; i--) {
+            add(cards[i]);
+        }
         // add(boardImage);
         moveAmt = 7;
         running = false;
+        cardState = true;
         createGrid();
     }
 
@@ -369,8 +442,8 @@ public class StartGamePage extends DrawingSurface {
         LOG.trace("createGrid method in StartGamePage.java");
         assignSpots();
         spots = BoardManager.getInstance().getBoard().getGrid();
-//        for (int i = 0; i < spots.length; i++) {
-//        }
+        // for (int i = 0; i < spots.length; i++) {
+        // }
     }
 
     /**
@@ -410,7 +483,7 @@ public class StartGamePage extends DrawingSurface {
         } else if (e == returnHome) {
             navPage = new NavigationPage();
             // NavigationPageManager.getInstance().getNavPage();
-            startGamePage.dispose();
+            closeWindow();
         } else if (e == movePlayers[0]) {
             setClickable(
                 new boolean[] { false, false, false, false, false, false });
@@ -430,7 +503,9 @@ public class StartGamePage extends DrawingSurface {
             setClickable(
                 new boolean[] { false, false, false, false, false, false });
             moveAmt = Integer.parseInt(getUserInput("Move Amount",
-                "How many spaces?", DialogPosition.CENTER_ALL));
+                "How many spaces? (Current = "
+                    + moveAmt + ")",
+                DialogPosition.CENTER_ALL));
             setClickable(new boolean[] { true, true, true, true, true, true });
         } else if (e == movePlayers[4]) {
             setClickable(
@@ -439,17 +514,17 @@ public class StartGamePage extends DrawingSurface {
             movePeg(1, 120 - pegLocations[1]);
             movePeg(2, 120 - pegLocations[2]);
             setClickable(new boolean[] { true, true, true, true, true, true });
+        } else if (e == cards[0]) {
+            cards[0].setClickable(false);
+            moveCards();
+            cards[0].setClickable(true);
         }
     }
-
     /**
-     * main method.
-     * 
-     * @param args
+     * Close window method from Page interface.
      */
-    public static void main(String[] args) {
-        LOG.trace("Main method in StartGamePage.java");
-        new StartGamePage();
+    public void closeWindow() {
+        startGamePage.dispose();
     }
 
 }
