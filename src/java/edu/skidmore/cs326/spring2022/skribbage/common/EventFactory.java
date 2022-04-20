@@ -18,7 +18,7 @@ import edu.skidmore.cs326.spring2022.skribbage.persistence.events.PersistanceFac
  * from the metadata given in EventType enum.
  *
  * @author Sten Leinasaar
- *         Last Edit: March 23, 2022
+ *         Last Edit: April 19, 2022
  */
 public final class EventFactory implements EventDispatcher {
 
@@ -56,7 +56,7 @@ public final class EventFactory implements EventDispatcher {
         templates = Arrays.asList(
             new LogicFactoryTemplate(), new GamificationFactoryTemplate(),
             new FrontEndFactoryTemplate(), new PersistanceFactoryTemplate());
-
+        
     }
 
     /**
@@ -83,8 +83,7 @@ public final class EventFactory implements EventDispatcher {
      *             Event Not Found when EventType cannot be created.
      */
     public PropertyChangeEvent createEvent(EventType event, Object source,
-        Object... args) /** throws Exception */
-    {
+        Object... args) /** throws Exception */ {
         Object[] eventArgumentList = event.getArgumentList();
 
         for (int i = 0; i < eventArgumentList.length; i++) {
@@ -137,7 +136,7 @@ public final class EventFactory implements EventDispatcher {
      */
     @Override
     public void fireEvent(PropertyChangeEvent event) {
-        System.out.println("Firing event = " + event);
+        LOG.trace("Firing event = " + event);
         if (event != null) {
             eventManager.notify(event);
         } else {
