@@ -40,7 +40,7 @@ public class Deck {
         // Card adding loops
         for (int suit = 0; suit <= 3; suit++) {
 
-            for (int rankIndex = 0; rankIndex <= 13; rankIndex++) { // cards
+            for (int rankIndex = 0; rankIndex <= 12; rankIndex++) { // cards
                                                                     // 2-10
                 packOfCards.add(new Card(theRanks[rankIndex], theSuits[suit]));
             } // end numbered card loop

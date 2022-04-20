@@ -23,8 +23,12 @@ import edu.skidmore.cs326.spring2022.skribbage.common.UserRole;
  * opening the keyhole to the connection within your terminal. To achieve this
  * type ssh cs326mysql@bits.monead.com Please also note that queries are
  * placeholders and will be injected into code when finally completed
+<<<<<<< HEAD
  * 
  * @author PersistenceTeam
+=======
+ * Edited by Jonah Marcus on 20 April 2022 to address Bug #48.
+>>>>>>> 97d84c365ac46f838eb01a9778e0a4b76eb945bd
  */
 public class DatabaseManager {
 
@@ -491,17 +495,59 @@ public class DatabaseManager {
     }
 
     /**
-     * This is a function to query the inventory items held by a player.
+     * This is a function to check.
      * 
      * @author Nikoleta Chantzi
-     *            : the id of the player to check the value
+     * @param username
+     *            : the id of the player to check if exists
      * @return whether account exists in the database
+     * @throws SQLException
      */
 
-    public boolean accountExists() {
-        // no need for try catch, it is being handled by the caller methods
+    public boolean accountExists(String username) {
 
-        return true;
+        Connection conn = null;
+
+        PreparedStatement ps = null;
+
+        ResultSet rs = null;
+
+        boolean exists = false;
+
+        try {
+            conn = getDB();
+
+            String tempQuery = "SELECT * FROM player_account WHERE username= ?";
+
+            ps = conn.prepareStatement(tempQuery);
+
+            ps.setString(1, username);
+
+            rs = ps.executeQuery();
+
+            // if result contains player's username, this will return true
+            // (account found)
+            // if result is empty, this will return false (account not found)
+            exists = rs.next();
+
+        }
+        catch (SQLException e) {
+            // System.out.println("Account not found");
+            // e.printStackTrace();
+
+        }
+        finally {
+
+            try {
+                rs.close();
+            }
+            catch (SQLException sqle) {
+
+            }
+        }
+
+        // if we reach this line, we run into a SQLException
+        return exists;
     }
 
     /**
