@@ -37,8 +37,10 @@ public class Password implements Payload {
      * Sets the salt and password hash. The value is expected to be a Base64
      * encoded salt and password hash. The salt and hash are to be separated
      * using the separator character defined in the PasswordHasher class.
-     * The salt is expected at the beginning of the value: salt-SEPARATOR-hash
+     * The salt is expected at the beginning of the value: saltSEPARATORhash
      * 
+     * @throws IllegalArgumentException
+     *             if the string is not in the correct format.
      * @see PasswordHasher#SALT_AND_PASSWORD_BASE64_SEPARATOR
      * @param saltAndHashBase64
      *            The Base64 encoded salt and password hash
