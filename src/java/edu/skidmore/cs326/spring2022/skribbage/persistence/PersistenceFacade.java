@@ -16,7 +16,7 @@ import edu.skidmore.cs326.spring2022.skribbage.common.User;
  *         Last Edit: April 10, 2022
  */
 public final class PersistenceFacade
-    implements UserManagement, GameManagement, InventoryManagement {
+    implements UserManagement , GameManagement , InventoryManagement {
 
     /**
      * Singleton instance of PersistenceFacade.
@@ -52,6 +52,7 @@ public final class PersistenceFacade
 
     /**
      * getInstance.
+     * 
      * @return the instance.
      */
     public static PersistenceFacade getInstance() {
@@ -72,8 +73,9 @@ public final class PersistenceFacade
         // TODO Auto-generated method stub
 
         String usernamge = userToCreate.getUserName();
-        String passwordtemp = password.getPasswordValue();
+        String passwordtemp = password.getBase64PasswordHash();
 
+        // TODO (DSR) This code needs to be updated,user does not house password
         DM.createUser(usernamge, passwordtemp);
         return true;
     }
@@ -174,7 +176,6 @@ public final class PersistenceFacade
 
         return accepted;
     }
-
 
     @Override
     public HashMap<String, Item> displayInventory(User user) {

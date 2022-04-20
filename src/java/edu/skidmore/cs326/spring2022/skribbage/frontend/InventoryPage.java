@@ -2,8 +2,6 @@ package edu.skidmore.cs326.spring2022.skribbage.frontend;
 
 import java.awt.Color;
 import java.awt.Point;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 //import java.awt.event.WindowEvent;
 import java.util.HashMap;
 
@@ -31,7 +29,7 @@ import us.daveread.edu.utilities.Utility;
  *         Last Edited by Jonah Marcus
  */
 @SuppressWarnings("serial")
-public class InventoryPage extends DrawingSurface {
+public class InventoryPage extends DrawingSurface implements Page {
 
     /**
      * mf - Holds reference to the window.
@@ -85,7 +83,7 @@ public class InventoryPage extends DrawingSurface {
     /**
      * setup method - sets up the window.
      */
-    private void setup() {
+    public void setup() {
         LOG.trace("Entered setup (InventoryPage)");
         setLayout(null);
 
@@ -133,12 +131,18 @@ public class InventoryPage extends DrawingSurface {
             closeWindow.setBorderColor(Color.CYAN);
             Utility.pause(100);
             closeWindow.setBorderColor(Color.BLACK);
-            mf.dispose();
+            closeWindow();
         } else if (e == lobbyButton) {
             new LobbyPage();
-            mf.dispose();
+            closeWindow();
         }
 
+    }
+    /**
+     * Method from Page interface, to close the window.
+     */
+    public void closeWindow() {
+        mf.dispose();
     }
 
 }
