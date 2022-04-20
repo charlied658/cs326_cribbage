@@ -267,7 +267,6 @@ public class LoginPage extends DrawingSurface implements Page {
         LOG.trace("ChangePassword method in LoginPage.java");
         switch (popupType) {
             // change Password
-            // TODO currently UserLoginEvent
             case 0:
                 usernameToChange = getUserInput(popupTitle, "Enter username",
                     DialogPosition.CENTER_ALL);
@@ -283,7 +282,7 @@ public class LoginPage extends DrawingSurface implements Page {
                 ValidateForChangePassword eventLogin =
                     (ValidateForChangePassword) evtFactory.createEvent(
                         EventType.USER_CHANGE_PASSWORD_VALIDATION, this,
-                        currentUser);
+                        currentUser, currentPassword);
                 evtFactory.fireEvent(eventLogin);
 
                 break;
@@ -436,6 +435,7 @@ public class LoginPage extends DrawingSurface implements Page {
             showMessage("Password change was succesful.", "You are beautiful!",
                 DialogType.INFORMATION);
         } else {
+            LOG.error("FAILED to change password");
             showMessage(" Couldn't change your password!",
                 "Username or Password is wrong.", DialogType.ERROR);
         }
