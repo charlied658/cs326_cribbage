@@ -38,6 +38,10 @@ public enum EventType {
     USER_CHANGE_PASSWORD("User Change Password Event", User.class,
         Password.class),
     /**
+     * Fired when password change was succesful.
+     */
+    USER_CHANGE_PASSWORD_RESPONSE("User Change Password Response"),
+    /**
      * Fired when a user attempts to create an account via login page.
      */
     USER_CREATE_ACCOUNT("User Create Account Event", User.class,
@@ -52,7 +56,7 @@ public enum EventType {
     /**
      * Fired when a user attempts to delete their account.
      */
-    USER_DELETE_ACCOUNT("User Delete Account Event"),
+    USER_DELETE_ACCOUNT("User Delete Account Event", User.class),
     /**
      * Fired when the host of a lobby clicks 'start game', and all players
      * are added to a new game.
@@ -97,7 +101,7 @@ public enum EventType {
      * @return The name of an event.
      */
     public String getName() {
-        LOG.trace("Returning a name of an event");
+        LOG.debug("Returning a name of an event");
         return name;
     }
 
@@ -107,7 +111,7 @@ public enum EventType {
      * @return The argument list.
      */
     public Object[] getArgumentList() {
-        LOG.trace("Returning arguments list of an event");
+        LOG.debug("Returning arguments list of an event");
         return args;
     }
 
