@@ -1,15 +1,13 @@
 package edu.skidmore.cs326.spring2022.skribbage.frontend;
 
-import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserChangePasswordResponseEvent;
-import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserLoginEvent;
-import edu.skidmore.cs326.spring2022.skribbage.logic.events.AccountResponseEvent;
-import edu.skidmore.cs326.spring2022.skribbage.logic.events.UserLoginResponseEvent;
-import edu.skidmore.cs326.spring2022.skribbage.logic.events.UserValidationResponseEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
 import org.apache.log4j.Logger;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
+import edu.skidmore.cs326.spring2022.skribbage.logic.events.AccountResponseEvent;
+import edu.skidmore.cs326.spring2022.skribbage.logic.events.UserLoginResponseEvent;
+import edu.skidmore.cs326.spring2022.skribbage.logic.events.UserValidationResponseEvent;
 
 /**
  * Handles the responses to any event subclassing from 'AccountResponseEvent'.
