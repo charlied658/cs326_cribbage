@@ -3,6 +3,7 @@ package edu.skidmore.cs326.spring2022.skribbage.common;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import org.apache.log4j.Logger;
 
@@ -14,6 +15,7 @@ import us.daveread.edu.graphics.shape.impl.Image;
  *         Code reviewed by Jonah Marcus on April 11, 2022.
  *         Comment by Jonah:
  *         "Commented out an import that was causing an error for some reason."
+ *         Last edited by Charlie Davidson
  */
 public class Board {
     /**
@@ -38,6 +40,11 @@ public class Board {
     private Spot[][] grid;
 
     /**
+     * Random number generator for spot generation.
+     */
+    private Random rand = new Random();
+    
+    /**
      * Constant number of rows.
      */
     public static final Integer NUMROWS;
@@ -49,8 +56,8 @@ public class Board {
 
     static {
         LOG = Logger.getLogger(Board.class);
-        NUMROWS = 100;
-        NUMCOL = 5;
+        NUMROWS = 120;
+        NUMCOL = 3;
     }
 
     /**
@@ -65,9 +72,13 @@ public class Board {
          *       be easily retrieved. as Shows.
          */
         // NUMCOL = p.getPlayerList().size();
+        //System.out.println("Creating new grid of size [" 
+        //    + NUMROWS + "][" + NUMCOL + "]");
         grid = new Spot[NUMROWS][NUMCOL];
         // each player has two pegs.
         pegs = new Peg[NUMCOL * 2];
+        
+        initializeGrid();
         // TODO, the grid has to be populated with pegs and spots.
         // TODO separate method?
 
@@ -133,6 +144,17 @@ public class Board {
     public Spot getSpot(Peg p) {
         return p.getSpot();
     }
+    
+    /**
+     * Initialize the grid of spots.
+     */
+    public void initializeGrid() {
+        for (int i = 0; i < NUMROWS; i++) {
+            for (int j = 0; j < NUMCOL; j++) {
+                grid[i][j] = new Spot(new Location(i, j));
+            }
+        }
+    }
 
     /**
      * This method assigns a random spot to be a prize spot and returns the grid
@@ -142,7 +164,10 @@ public class Board {
      */
     public Spot assignPrizeSpot() {
         LOG.trace("Returning a location of a prizeSpot.");
-        return null;
+        int row = rand.nextInt(120);
+        int col = rand.nextInt(3);
+        grid[row][col].setType(SpotType.PRIZE);
+        return grid[row][col];
 
     }
 
@@ -156,7 +181,22 @@ public class Board {
     public Spot[] assignBattleSpot() {
         LOG.trace(
             "Returning a location of a battleSpots as an array of spots.");
-        return null;
+        
+        Spot[] spotLocations = new Spot[8];
+        int row;
+        int col;
+        
+        for (int i = 0; i < 8; i++) {
+            row = (i + 1) * 15 - 1;
+            for (int j = 0; j < NUMCOL; j++) {
+                col = j;
+                //System.out.println("i = " + i + ", j = " + j);
+                grid[row][col].setType(SpotType.BATTLE);
+                spotLocations[i] = grid[row][col];
+            }
+        }
+        
+        return spotLocations;
 
     }
 
@@ -168,7 +208,10 @@ public class Board {
      */
     public Spot assignJumpSpot() {
         LOG.trace("Returning a location of a jumpSpot.");
-        return null;
+        int row = rand.nextInt(120);
+        int col = rand.nextInt(3);
+        grid[row][col].setType(SpotType.JUMP);
+        return grid[row][col];
 
     }
 

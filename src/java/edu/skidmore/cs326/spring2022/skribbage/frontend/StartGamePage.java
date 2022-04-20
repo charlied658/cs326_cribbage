@@ -7,10 +7,12 @@ import java.awt.Point;
 
 import org.apache.log4j.Logger;
 
+import edu.skidmore.cs326.spring2022.skribbage.common.Board;
 import edu.skidmore.cs326.spring2022.skribbage.common.BoardManager;
 import edu.skidmore.cs326.spring2022.skribbage.common.Spot;
-
+import edu.skidmore.cs326.spring2022.skribbage.common.SpotType;
 import us.daveread.edu.graphics.shape.Drawable;
+import us.daveread.edu.graphics.shape.VisibleObject;
 import us.daveread.edu.graphics.shape.impl.Image;
 import us.daveread.edu.graphics.shape.impl.Rectangle;
 import us.daveread.edu.graphics.shape.impl.Circle;
@@ -95,8 +97,13 @@ public class StartGamePage extends DrawingSurface implements Page {
     /**
      * Visual representation of the spots on the board.
      */
-    private Circle[][] spotRenderer;
+    private VisibleObject[][] spotRenderer;
 
+    /**
+     * Location of spots on the board.
+     */
+    private Point[][] spotLocations;
+    
     /**
      * Visual representation of the pegs on the board.
      */
@@ -158,49 +165,55 @@ public class StartGamePage extends DrawingSurface implements Page {
         LOG.trace("StartGamePage constructor");
         startGamePage = new MainFrame(this, "Start Game Page", 900, 900, false);
         setup();
+        createGrid();
         createSpots();
         // animateSpots();
     }
-
+    
     /**
      * Renders the spots and pegs on the board.
      * 
      * @author Charlie Davidson
      */
     public void createSpots() {
-        spotRenderer = new Circle[120][3];
+        
+        spotLocations = new Point[120][3];
+        for (int i = 0; i < spotLocations.length; i++) {
+            for (int j = 0; j < spotLocations[0].length; j++) {
+                if ((i >= 0 && i < 30) || (i >= 60 && i < 90)) {
+                    spotLocations[i][j] = new Point(60 + j * 20 + (i / 30) * 80,
+                                670 - (i % 30) * 20);
+                } else {
+                    spotLocations[i][j] = new Point(100 - j * 20 
+                        + (i / 30) * 80, 90 + (i % 30) * 20);
+                }
+            }
+        }
+        
+        spotRenderer = new VisibleObject[120][3];
+        Board boardInstance = BoardManager.getInstance().getBoard();
         for (int i = 0; i < spotRenderer.length; i++) {
             for (int j = 0; j < spotRenderer[0].length; j++) {
-                if ((i >= 0 && i < 30) || (i >= 60 && i < 90)) {
-                    if (i % 15 == 14) {
-                        spotRenderer[i][j] = new Circle(
-                            new Point(80 + (i / 30) * 80,
-                                670 - (i % 30) * 20),
-                            16,
-                            Color.black, Color.white);
-                    } else {
-                        spotRenderer[i][j] = new Circle(
-                            new Point(60 + j * 20 + (i / 30) * 80,
-                                670 - (i % 30) * 20),
-                            16,
-                            Color.black, Color.black);
-                    }
-                }
-
-                if ((i >= 30 && i < 60) || (i >= 90 && i < 120)) {
-                    if (i % 15 == 14) {
-                        spotRenderer[i][j] = new Circle(
-                            new Point(80 + (i / 30) * 80,
-                                90 + (i % 30) * 20),
-                            16,
-                            Color.black, Color.white);
-                    } else {
-                        spotRenderer[i][j] = new Circle(
-                            new Point(100 - j * 20 + (i / 30) * 80,
-                                90 + (i % 30) * 20),
-                            16,
-                            Color.black, Color.black);
-                    }
+                if (boardInstance.getGrid()[i][j]
+                    .getType() == SpotType.BATTLE) {
+                    spotRenderer[i][j] = new Circle(spotLocations[i][1],
+                        16, Color.black, Color.white);
+                } else if (boardInstance.getGrid()[i][j]
+                    .getType() == SpotType.PRIZE) {
+                    spotRenderer[i][j] = new Circle(spotLocations[i][j],
+                        16, Color.yellow, Color.black);
+                    
+                } else if (boardInstance.getGrid()[i][j]
+                    .getType() == SpotType.JUMP) {
+                    spotRenderer[i][j] = new Rectangle(new Point(
+                        (int) spotLocations[i][j].getX() + 2,
+                        (int) spotLocations[i][j].getY() + 2),
+                        new Dimension(12, 12), Color.yellow, Color.black);
+                    spotRenderer[i][j].setRotationDegrees(45);
+                    
+                } else {
+                    spotRenderer[i][j] = new Circle(spotLocations[i][j],
+                        16, Color.black, Color.black);
                 }
                 add(spotRenderer[i][j]);
             }
@@ -441,7 +454,7 @@ public class StartGamePage extends DrawingSurface implements Page {
     public void createGrid() {
         LOG.trace("createGrid method in StartGamePage.java");
         assignSpots();
-        spots = BoardManager.getInstance().getBoard().getGrid();
+        // spots = BoardManager.getInstance().getBoard().getGrid();
         // for (int i = 0; i < spots.length; i++) {
         // }
     }
