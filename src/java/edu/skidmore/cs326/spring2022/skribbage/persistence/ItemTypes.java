@@ -27,4 +27,11 @@ public enum ItemTypes {
         this.itemId = theItemId;
     }
 
+	public int getItemId() {
+		return itemId;
+	}
+
+	
+    
+  
 }
