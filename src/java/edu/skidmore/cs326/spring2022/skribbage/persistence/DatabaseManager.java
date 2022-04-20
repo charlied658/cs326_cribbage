@@ -102,7 +102,7 @@ public class DatabaseManager {
 
         }
 
-        if (storedPassword.compareTo(password.getPasswordValue()) == 0) {
+        if (storedPassword.compareTo(password.getBase64PasswordHash()) == 0) {
             System.out.println("Password Accepted");
             return true;
         } else {
@@ -301,8 +301,10 @@ public class DatabaseManager {
     }
 
     /**
-     * delete user method.
+     * This is a method to delete an existent player from the player_account
+     * table.
      * 
+     * @author Nikoleta Chantzi
      * @param userName
      * @param password
      */
@@ -386,15 +388,6 @@ public class DatabaseManager {
             System.out.println("Failed to close connection to database");
             e.printStackTrace();
         }
-        /**
-         * This is a method to delete an existent player from the player_account
-         * table.
-         *
-         * @author Nikoleta Chantzi
-         * @param userName
-         *            : the name of the user deleted, can only occur if you're
-         *            logged in
-         */
 
     }
 
@@ -403,6 +396,7 @@ public class DatabaseManager {
      * 
      * @param args
      */
+    @SuppressWarnings("unused")
     public static void main(String[] args) {
         // dm.inventoryQuery(236);
 
@@ -447,7 +441,7 @@ public class DatabaseManager {
 
         }
 
-        if (storedPassword.compareTo(password.getPasswordValue()) == 0) {
+        if (storedPassword.compareTo(password.getBase64PasswordHash()) == 0) {
             System.out.println("Password Accepted");
             user.setUserRole(UserRole.AUTHORIZED);
             return true;
@@ -462,11 +456,26 @@ public class DatabaseManager {
     /**
      * This is a function to query the inventory items held by a player.
      * 
+     * @author Nikoleta Chantzi
+     *            : the id of the player to check the value
+     * @return whether account exists in the database
+     */
+
+    public boolean accountExists() {
+        // no need for try catch, it is being handled by the caller methods
+
+        return true;
+    }
+
+    /**
+     * This is a function to query the inventory items held by a player.
+     * 
      * @author Tinaye Mawocha
      * @param playerID
      *            : the id of the player to check the value
      * @return Query result
      */
+    @SuppressWarnings("unused")
     public HashMap<String, Item> inventoryQuery(int playerID) {
 
         String tokenQuery = "SELECT * FROM inventory WHERE PersonID = ? ";

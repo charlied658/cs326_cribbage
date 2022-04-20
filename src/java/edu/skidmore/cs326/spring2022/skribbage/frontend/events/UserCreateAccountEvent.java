@@ -1,5 +1,6 @@
 package edu.skidmore.cs326.spring2022.skribbage.frontend.events;
 
+import edu.skidmore.cs326.spring2022.skribbage.common.Password;
 import org.apache.log4j.Logger;
 
 import edu.skidmore.cs326.spring2022.skribbage.common.EventType;
@@ -21,6 +22,11 @@ public class UserCreateAccountEvent extends AccountEvent {
      */
     private static final Logger LOG;
 
+    /**
+     * Input password associated with login request.
+     */
+    private final Password password;
+
     static {
         LOG = Logger.getLogger(UserCreateAccountEvent.class);
     }
@@ -38,7 +44,15 @@ public class UserCreateAccountEvent extends AccountEvent {
      */
     public UserCreateAccountEvent(Object source, Object... args) {
         super(source, EventType.USER_CREATE_ACCOUNT, (User) args[0]);
+        password = (Password) args[1];
         LOG.trace(" Constructor reached.");
+    }
+
+    /**
+     * @return return password associated with event.
+     */
+    public Password getPassword() {
+        return password;
     }
 
     @Override
