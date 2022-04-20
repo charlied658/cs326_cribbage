@@ -492,6 +492,58 @@ public class StartGamePage extends DrawingSurface implements Page {
         pegLocations[peg] = pegLocations[peg] + spaces;
 
     }
+    
+    /**
+     * Animation to select a card.
+     * @param index index of selected card
+     */
+    public void selectCard(int index) {
+        double[] x = new double[20];
+        double[] y = new double[20];
+
+        double[] destX = new double[20];
+        double[] destY = new double[20];
+
+        double[] xDist = new double[20];
+        double[] yDist = new double[20];
+
+        for (int i = 0; i < 20; i++) {
+
+            Point initialPoint = cards[i].getLocation();
+            Point destPoint;
+
+            if (i == index) {
+                destPoint = new Point(600 + 15 * i, 300);
+            } else {
+                destPoint = new Point(600 + 15 * i, 330);
+            }
+
+            x[i] = initialPoint.getX();
+            y[i] = initialPoint.getY();
+
+            destX[i] = destPoint.getX();
+            destY[i] = destPoint.getY();
+
+            xDist[i] = destX[i] - x[i];
+            yDist[i] = destY[i] - y[i];
+        }
+
+        for (int i = 0; i < 50; i++) {
+            for (int j = 0; j < 20; j++) {
+                x[j] += xDist[j] / 50;
+                y[j] += yDist[j] / 50;
+
+                cards[j].setX((int) x[j]);
+                cards[j].setY((int) y[j]);
+            }
+            try {
+                Thread.sleep(10);
+            }
+            catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+        }
+    }
 
     /**
      * Set which buttons are clickable to avoid button conflicts.
@@ -581,10 +633,24 @@ public class StartGamePage extends DrawingSurface implements Page {
             movePeg(1, -1 - pegLocations[1]);
             movePeg(2, -1 - pegLocations[2]);
             setClickable(new boolean[] { true, true, true, true, true, true });
-        } else if (e == cards[0]) {
-            cards[0].setClickable(false);
-            moveCards();
-            cards[0].setClickable(true);
+            if (!cardState) {
+                moveCards();
+            }
+        } 
+        for (int i = 0; i < 20; i++) {
+            if (e == cards[i]) {
+                for (int j = 0; j < 20; j++) {
+                    cards[j].setClickable(false);
+                }
+                if (i == 0 && cardState) {
+                    moveCards();
+                } else if (!cardState) {
+                    selectCard(i);
+                }
+                for (int j = 0; j < 20; j++) {
+                    cards[j].setClickable(true);
+                }
+            }
         }
     }
     /**
