@@ -20,7 +20,7 @@ public class LoginAuthenticator implements LoginAuthentication {
     private static final Logger LOG;
 
     static {
-        LOG = Logger.getLogger(LobbyStartGameEvent.class);
+        LOG = Logger.getLogger(LoginAuthenticator.class);
     }
 
     /**
