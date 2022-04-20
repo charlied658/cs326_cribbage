@@ -77,9 +77,9 @@ public class AccountResponseController implements PropertyChangeListener {
                 break;
             case USER_CREATE_ACCOUNT_RESPONSE:
                 LOG.debug("Caught user create account response.");
-                ((LoginPage) activePage).validateCreateAccountCallback((CreateAccountResponseEvent) evt);
+                ((LoginPage) activePage).validateCreateAccountCallback(
+                    (CreateAccountResponseEvent) evt);
                 break;
-                
 
             default:
                 LOG.warn("caught unhandled event");
