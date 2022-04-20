@@ -74,6 +74,17 @@ public class Password implements Payload {
         return saltBase64;
     }
 
+    /**
+     * Returns the properly formatted Base64-encoded salt and password hash.
+     * 
+     * @return The Base64-encoded salt and password hash
+     */
+    public String getBase64SaltAndPasswordHash() {
+        return getBase64Salt()
+            + PasswordHasher.SALT_AND_PASSWORD_BASE64_SEPARATOR
+            + getBase64PasswordHash();
+    }
+
     @Override
     public String toString() {
         return "Hashed password and salt";

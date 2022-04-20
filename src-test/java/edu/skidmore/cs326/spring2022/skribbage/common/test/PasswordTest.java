@@ -71,4 +71,18 @@ public class PasswordTest {
                 + "testPassword");
         assertEquals("Incorrect salt value", "testSalt", p.getBase64Salt());
     }
+
+    /**
+     * Test the salt accessor.
+     */
+    @Test
+    public void testGetBase64SaltAndPasswordHash() {
+        Password p = new Password(
+            "testSalt" + PasswordHasher.SALT_AND_PASSWORD_BASE64_SEPARATOR
+                + "testPassword");
+        assertEquals("Incorrect salt and hashed password value",
+            "testSalt" + PasswordHasher.SALT_AND_PASSWORD_BASE64_SEPARATOR
+                + "testPassword",
+            p.getBase64SaltAndPasswordHash());
+    }
 }
