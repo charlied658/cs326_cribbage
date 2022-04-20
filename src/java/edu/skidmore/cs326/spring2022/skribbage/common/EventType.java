@@ -1,7 +1,8 @@
 package edu.skidmore.cs326.spring2022.skribbage.common;
 
-import edu.skidmore.cs326.spring2022.skribbage.logic.events.AccountResponse;
 import org.apache.log4j.Logger;
+
+import edu.skidmore.cs326.spring2022.skribbage.logic.events.AccountResponse;
 
 /**
  * An enum representing all possible events. Whenever a new event type is
