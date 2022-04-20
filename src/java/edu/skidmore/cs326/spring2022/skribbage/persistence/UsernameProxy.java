@@ -8,10 +8,16 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.log4j.Logger;
+
+import edu.skidmore.cs326.spring2022.skribbage.frontend.PastGamesPage;
+
 /**
  * username proxy.
  * 
  * @author
+ * 
+ *      Edited by Jonah Marcus on 20 April 2022 to address Bug #48.
  */
 public class UsernameProxy {
 
@@ -31,6 +37,15 @@ public class UsernameProxy {
      */
     @SuppressWarnings("unused")
     private static final int AMOUNT_OF_BANNED_WORDS = 451;
+    
+    /**
+     * Logger instance for logging.
+     */
+    private static final Logger LOG;
+
+    static {
+        LOG = Logger.getLogger(UsernameProxy.class);
+    }
 
     static {
         INSTANCE = new UsernameProxy();
@@ -76,7 +91,8 @@ public class UsernameProxy {
         }
         catch (FileNotFoundException e) {
 
-            e.printStackTrace();
+            //e.printStackTrace();
+            LOG.error(e);
         }
 
         toPrint.clear();
