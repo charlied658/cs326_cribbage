@@ -104,12 +104,12 @@ public class StartGamePage extends DrawingSurface implements Page {
      * Location of spots on the board.
      */
     private Point[][] spotLocations;
-    
+
     /**
      * Locations where the pegs can move on the board.
      */
     private Point[][] pegSpotLocations;
-    
+
     /**
      * Visual representation of the pegs on the board.
      */
@@ -119,12 +119,12 @@ public class StartGamePage extends DrawingSurface implements Page {
      * Starting positions of the pegs.
      */
     private Circle[][] initialSpots;
-    
+
     /**
      * Final spot on the board.
      */
     private Circle endSpot;
-    
+
     /**
      * Locations of the pegs on the board.
      */
@@ -159,6 +159,7 @@ public class StartGamePage extends DrawingSurface implements Page {
      * returnHome -Text variable to represent back button.
      */
     private Text returnHome;
+
     /**
      * PageManager instance for page management.
      */
@@ -188,13 +189,13 @@ public class StartGamePage extends DrawingSurface implements Page {
             this, "Start Game Page", 1400, 900, false);
         setup();
     }
-    
+
     /**
      * setup method.
      */
     public void setup() {
         LOG.trace("setup method in StartGamePage.java");
-        
+
         board = new Rectangle(new Point(35, 50), new Dimension(350, 700),
             Color.black, new Color(180, 110, 30));
         gameArea = new Rectangle(new Point(25, 40),
@@ -244,7 +245,7 @@ public class StartGamePage extends DrawingSurface implements Page {
         assignSpots();
         renderSpots();
     }
-    
+
     /**
      * createGrid method creates the board grid.
      */
@@ -264,16 +265,16 @@ public class StartGamePage extends DrawingSurface implements Page {
             BoardManager.getInstance().getBoard().assignPrizeSpot();
         }
     }
-    
+
     /**
      * Renders the spots and pegs on the board.
      * 
      * @author Charlie Davidson
      */
     public void renderSpots() {
-        
+
         initialSpots = new Circle[2][3];
-        
+
         for (int i = 0; i < initialSpots.length; i++) {
             for (int j = 0; j < initialSpots[0].length; j++) {
                 initialSpots[i][j] = new Circle(
@@ -282,24 +283,24 @@ public class StartGamePage extends DrawingSurface implements Page {
                 add(initialSpots[i][j]);
             }
         }
-        
+
         endSpot = new Circle(new Point(320, 700),
             16, Color.black, Color.black);
         add(endSpot);
-        
+
         spotLocations = new Point[120][3];
         for (int i = 0; i < spotLocations.length; i++) {
             for (int j = 0; j < spotLocations[0].length; j++) {
                 if ((i >= 0 && i < 30) || (i >= 60 && i < 90)) {
                     spotLocations[i][j] = new Point(60 + j * 20 + (i / 30) * 80,
-                                670 - (i % 30) * 20);
+                        670 - (i % 30) * 20);
                 } else {
-                    spotLocations[i][j] = new Point(100 - j * 20 
+                    spotLocations[i][j] = new Point(100 - j * 20
                         + (i / 30) * 80, 90 + (i % 30) * 20);
                 }
             }
         }
-        
+
         pegSpotLocations = new Point[120][3];
         spotRenderer = new VisibleObject[120][3];
         Board boardInstance = BoardManager.getInstance().getBoard();
@@ -315,7 +316,7 @@ public class StartGamePage extends DrawingSurface implements Page {
                     spotRenderer[i][j] = new Circle(spotLocations[i][j],
                         16, Color.yellow, Color.black);
                     pegSpotLocations[i][j] = spotLocations[i][j];
-                    
+
                 } else if (boardInstance.getGrid()[i][j]
                     .getType() == SpotType.JUMP) {
                     spotRenderer[i][j] = new Rectangle(new Point(
@@ -324,7 +325,7 @@ public class StartGamePage extends DrawingSurface implements Page {
                         new Dimension(12, 12), Color.yellow, Color.black);
                     spotRenderer[i][j].setRotationDegrees(45);
                     pegSpotLocations[i][j] = spotLocations[i][j];
-                    
+
                 } else {
                     spotRenderer[i][j] = new Circle(spotLocations[i][j],
                         16, Color.black, Color.black);
@@ -349,7 +350,7 @@ public class StartGamePage extends DrawingSurface implements Page {
         pegRenderer[2] = new Circle(
             (Point) initialSpots[1][2].getLocation().clone(),
             16, Color.white, Color.yellow);
-        
+
         add(pegRenderer[0]);
         add(pegRenderer[1]);
         add(pegRenderer[2]);
@@ -364,8 +365,8 @@ public class StartGamePage extends DrawingSurface implements Page {
             movePeg(0, moveAmt);
             movePeg(1, moveAmt);
             movePeg(2, moveAmt);
-            if (pegLocations[0] == 120 
-                && pegLocations[1] == 120 
+            if (pegLocations[0] == 120
+                && pegLocations[1] == 120
                 && pegLocations[2] == 120) {
                 running = false;
                 beginGame.setMessage("Start");
@@ -443,12 +444,12 @@ public class StartGamePage extends DrawingSurface implements Page {
         if (spaces == 0) {
             return;
         }
-        
+
         if (pegLocations[peg] + spaces < -1) {
             movePeg(peg, -1 - pegLocations[peg]);
             return;
         }
-        
+
         if (pegLocations[peg] + spaces > 120) {
             movePeg(peg, 120 - pegLocations[peg]);
             return;
@@ -456,16 +457,15 @@ public class StartGamePage extends DrawingSurface implements Page {
 
         Point initialPoint = pegRenderer[peg].getLocation();
         Point destPoint;
-        
+
         if (pegLocations[peg] + spaces == -1) {
             destPoint = initialSpots[1][peg].getLocation();
         } else if (pegLocations[peg] + spaces == 120) {
             destPoint = endSpot.getLocation();
         } else {
-            destPoint = pegSpotLocations[pegLocations[peg] + spaces]
-                [peg].getLocation();
+            destPoint =
+                pegSpotLocations[pegLocations[peg] + spaces][peg].getLocation();
         }
-        
 
         double x = initialPoint.getX();
         double y = initialPoint.getY();
@@ -497,10 +497,12 @@ public class StartGamePage extends DrawingSurface implements Page {
         pegLocations[peg] = pegLocations[peg] + spaces;
 
     }
-    
+
     /**
      * Animation to select a card.
-     * @param index index of selected card
+     * 
+     * @param index
+     *            index of selected card
      */
     public void selectCard(int index) {
         double[] x = new double[20];
@@ -591,7 +593,8 @@ public class StartGamePage extends DrawingSurface implements Page {
             }
 
         } else if (e == returnHome) {
-            navPage = new NavigationPage();
+            navPage = (NavigationPage) pageManager
+                .createPage(PageType.NAVIGATION_PAGE);
             // NavigationPageManager.getInstance().getNavPage();
             closeWindow();
         } else if (e == movePlayers[0]) {
@@ -612,24 +615,25 @@ public class StartGamePage extends DrawingSurface implements Page {
         } else if (e == movePlayers[3]) {
             setClickable(
                 new boolean[] { false, false, false, false, false, false });
-            
+
             int userInput;
             try {
                 userInput = Integer.parseInt(getUserInput("Move Amount",
                     "How many spaces? (Current = " + moveAmt + ")",
                     DialogPosition.CENTER_ALL));
-            } catch (Exception e1) {
+            }
+            catch (Exception e1) {
                 setClickable(
                     new boolean[] { true, true, true, true, true, true });
                 return;
             }
-            
+
             if (userInput <= 0) {
                 moveAmt = 1;
             } else {
                 moveAmt = userInput;
             }
-            
+
             setClickable(new boolean[] { true, true, true, true, true, true });
         } else if (e == movePlayers[4]) {
             setClickable(
@@ -641,7 +645,7 @@ public class StartGamePage extends DrawingSurface implements Page {
             if (!cardState) {
                 moveCards();
             }
-        } 
+        }
         for (int i = 0; i < 20; i++) {
             if (e == cards[i]) {
                 for (int j = 0; j < 20; j++) {
@@ -658,6 +662,7 @@ public class StartGamePage extends DrawingSurface implements Page {
             }
         }
     }
+
     /**
      * Close window method from Page interface.
      */
