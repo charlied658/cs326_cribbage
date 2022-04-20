@@ -9,6 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import edu.skidmore.cs326.spring2022.skribbage.common.Password;
+import edu.skidmore.cs326.spring2022.skribbage.common.PasswordHasher;
 import edu.skidmore.cs326.spring2022.skribbage.common.User;
 import edu.skidmore.cs326.spring2022.skribbage.persistence.DatabaseManager;
 import edu.skidmore.cs326.spring2022.skribbage.persistence.Item;
@@ -79,9 +80,9 @@ public class FacadeTest {
 
 		
 		correctTestUser = new User("nchantzi@skidmore.edu", "nchantzi", null);
-		//correctTestPassword = new Password("ILoveSQL");
-		//wrongTestPassword = new Password("Anotherone");
-		//newTestPassword = new Password("thisIsNewPass");
+		correctTestPassword = new Password(PasswordHasher.getInstance().hashNewPassword("ILoveSQL"));
+//		wrongTestPassword = new Password("Anotherone");
+//		newTestPassword = new Password("thisIsNewPass");
 		correctTestItem = new Item();
 		correctTestItem.setItemType(ItemTypes.PARTY_HAT);
 		correctTestItem.setQuantityHeld(31);
@@ -117,12 +118,15 @@ public class FacadeTest {
 	/**
 	 * Testing when the user wants to log in with the correct username and password
 	 */
-	// @Test
-	// public void loginCorrect() {
-	// boolean iscorrect = facadeinstanace.login(correctTestUser,
-	// correctTestPassword);
-	// assertEquals(true, iscorrect);
-	// }
+	 @Test
+	 public void loginCorrect() {
+	 boolean iscorrect = facadeinstanace.login(correctTestUser,
+	 correctTestPassword);
+	 System.out.println("Hased and salted " + correctTestPassword.getBase64PasswordHash());
+	 //0dXD0xdeBTtg2qQ1tG183bcvbyizeAz0PDIeUADjA+I=
+	 //mBZsQpEnaSI1cA==~/ZP2qPHOs4AuqW6rDqwnQpbjHawoFpvR3ptUSKLbJCI=
+	 assertEquals(true, iscorrect);
+	 }
 
 	/**
 	 * Testing the capability to display inventory values.

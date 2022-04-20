@@ -103,53 +103,22 @@ public class DatabaseManager {
 
         }
         catch (SQLException e) {
-            System.out.println("Account not found");
-            e.printStackTrace();
+        	LOG.trace("Account not found: " + e);
+            //e.printStackTrace();
 
         }
 
         if (storedPassword.compareTo(password.getBase64PasswordHash()) == 0) {
+        	LOG.info("Password Accepted");
             System.out.println("Password Accepted");
             return true;
         } else {
+        	LOG.info("Incorrect Password");
             System.out.println("Incorrect Password");
             return false;
         }
 
     }
-//=======
-//    public boolean userAuthenticate(User user, Password password) {
-//
-//    	String username = user.getUserName();
-//        String tempQuery =
-//            "SELECT * FROM player_account WHERE username='" + username + "'";
-//        // Connection conn = dbConnect();
-//        String storedPassword = "";
-//
-//        try {
-//            Connection conn = getDB();
-//            Statement stmt = conn.createStatement();
-//            ResultSet rs = stmt.executeQuery(tempQuery);
-//
-//            rs.next();
-//            storedPassword = rs.getString("Password");
-//
-//        }
-//        catch (SQLException e) {
-//            System.out.println("Account not found");
-//            e.printStackTrace();
-//
-//        }
-//
-//        if (storedPassword.compareTo(password.getPasswordValue()) == 0) {
-//            System.out.println("Password Accepted");
-//            return true;
-//        } else {
-//            System.out.println("Incorrect Password");
-//            return false;
-//        }
-//
-//    }
 
     /**
      * This is a function to query the token value held by a player.
@@ -298,13 +267,14 @@ public class DatabaseManager {
             ps.setString(1, userName);
             ps.setString(2, password);
 
-            System.out.println(ps);
-            System.out.println(ps.executeUpdate());
+            ps.executeUpdate();
+
 
         }
         catch (SQLException sqle) {
-            sqle.printStackTrace();
-            // LOGGER.error("Database Interaction Failure", sqle);
+        	LOG.error("Database Interaction Failure", sqle);
+            //sqle.printStackTrace();
+            
 
         }
         finally {
@@ -313,7 +283,7 @@ public class DatabaseManager {
                     rs.close();
                 }
                 catch (SQLException sqle) {
-                    // LOGGER.error("Failed to close result set", sqle);
+                    LOG.error("Failed to close result set", sqle);
 
                 }
 
@@ -359,8 +329,6 @@ public class DatabaseManager {
         ResultSet rs = null;
 
         try {
-            // System.out.println("Run a prepared database query");
-            // Class.forName("com.mysql.jdbc.Driver");
             conn = getDB();
 
             String script = "DELETE FROM player_account WHERE Username = ?";
@@ -369,13 +337,13 @@ public class DatabaseManager {
 
             ps.setString(1, userName);
 
-            System.out.println(ps);
-            System.out.println(ps.executeUpdate());
+            ps.executeUpdate();
 
         }
         catch (SQLException sqle) {
+        	LOG.error("Database Interaction Failure", sqle);
             sqle.printStackTrace();
-            // LOGGER.error("Database Interaction Failure", sqle);
+            
 
         }
         finally {
@@ -423,7 +391,7 @@ public class DatabaseManager {
             theConnection.close();
         }
         catch (SQLException e) {
-            System.out.println("Failed to close connection to database");
+        	LOG.error("Failed to close connection", e);
             e.printStackTrace();
         }
 
