@@ -88,12 +88,11 @@ public class ReBattleCard implements ItemShopInterface {
             LOG.info("Re-battle card bought for 25 tokens");
             playerTokens -= getPrice();
             LOG.info("25 Tokens subtracted from player's tokens.");
-            System.out.println(getName() + " bought at price " + getPrice()
+            LOG.info(getName() + " bought at price " + getPrice()
                 + ". Player now holds " + playerTokens);
             addSpecialCard(cart);
         } else {
             LOG.info("Not enough tokens to buy a Re-battle card.");
-            System.out.println("Not enough tokens to buy " + getName());
         }
     }
 
