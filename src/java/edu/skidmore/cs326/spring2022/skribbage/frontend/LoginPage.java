@@ -16,7 +16,6 @@ import edu.skidmore.cs326.spring2022.skribbage.common.User;
 import edu.skidmore.cs326.spring2022.skribbage.common.UserRole;
 import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserChangePasswordEvent;
 
-
 import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserChangePasswordResponseController;
 
 import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserCreateAccountEvent;
@@ -107,11 +106,6 @@ public class LoginPage extends DrawingSurface implements Page {
     private Password newPassword;
 
     /**
-     * PersistenceFacade event.
-     */
-    private final PersistenceFacade persistence;
-
-    /**
      * evtFactory - EventFactory object.
      */
     @SuppressWarnings("unused")
@@ -190,6 +184,11 @@ public class LoginPage extends DrawingSurface implements Page {
     private Image logo;
 
     /**
+     * PageManager instance to manage creation of pages.
+     */
+    private PageManager pageManager;
+
+    /**
      * Logger instance for logging..
      */
     private static final Logger LOG;
@@ -206,9 +205,9 @@ public class LoginPage extends DrawingSurface implements Page {
     public LoginPage() {
 
         LOG.debug("Instance created");
-        persistence = PersistenceFacade.getInstance();
         evtFactory = EventFactory.getInstance();
         hasher = PasswordHasher.getInstance();
+        pageManager = PageManager.getInstance();
         setup();
     }
 
@@ -260,6 +259,7 @@ public class LoginPage extends DrawingSurface implements Page {
         LOG.trace("ChangePassword method in LoginPage.java");
         switch (popupType) {
             // change Password
+            // TODO currently UserLoginEvent
             case 0:
                 usernameToChange = getUserInput(popupTitle, "Enter username",
                     DialogPosition.CENTER_ALL);
@@ -277,7 +277,6 @@ public class LoginPage extends DrawingSurface implements Page {
                         EventType.USER_LOGIN, this, currentUser);
                 evtFactory.fireEvent(eventLogin);
 
-                
                 // TODO Need to verify the user without prompting them to the
                 // new navigation page.
                 // verify if this user exists.
@@ -422,7 +421,8 @@ public class LoginPage extends DrawingSurface implements Page {
             showMessage("User: " + username, "Successful Log In",
                 DialogType.INFORMATION);
             // navPage = NavigationPageManager.getInstance().getNavPage();
-            navPage = new NavigationPage();
+            navPage = (NavigationPage) pageManager
+                .createPage(PageType.NAVIGATION_PAGE);
             closeWindow();
         } else {
             showMessage(
@@ -439,11 +439,6 @@ public class LoginPage extends DrawingSurface implements Page {
      * 
      * @param evt
      *            --> Incoming event containing information.
-
-     * @TODO WIll be finished today.
-
-     * 
-
      */
     public void validateChangePasswordCallback(
         UserChangePasswordResponseController evt) {
@@ -501,89 +496,15 @@ public class LoginPage extends DrawingSurface implements Page {
 
     }
 
-    // /**
-    // * getUsername method.
-    // *
-    // * @return the username
-    // */
-    // public String getUsername() {
-    // LOG.trace("getUsername method in LoginPage.java");
-    // if (currentUser == null) {
-    // return username;
-    // } else {
-    // return currentUser.getUserName();
-    // }
-    // }
-
-    // /**
-    // * getpassword method.
-    // *
-    // * @return the password
-    // */
-    // public String getPassword() {
-    // LOG.trace("getPasswrod method in LoginPage.java");
-    // return password;
-    // }
-
-    /**
-     * THIS HERE SHOULD BE COMMUNICATION WITH THE BACKEND.
-     * 1) Create a user
-     * 2) Get an instance of the eventFactory.
-     * 3)Create an instance of type USERLOGIN second argument being User
-     * 4) fire the event.
-     */
-
-    /**
-     * loggedIn method.
-     *
-     * @return if the user is logged in
-     */
-    public boolean loggedIn() {
-        LOG.debug("Calling backend facade for a login method.");
-        return persistence.login(currentUser, currentPassword);
-
-        // if (currentUser != null) {
-        // if (username.equals(currentUser.getUserName())
-        // && password.equals(currentUser.getPassword())) {
-        // retu rn true;
-        // } else {
-        // return false;
-        // }
-        // } else {
-        // System.out
-        // .println(
-        // "FALSE username: " + username + " password: " + password);
-        // return false;
-        // }
-    }
-
     /**
     *
     */
     @Override
     public void drawableMouseClick(Drawable e) {
         LOG.trace("Drawable mouseclick method in LoginPage.java");
-        /**
-         * If Login is pressed. UserName and password need to be asked.
-         * Then event is created and fired.
-         * I
-         * If succesful login, then close the login page and open a navigation
-         * page.
-         * If not succesful, then prompt them a dialog that says, create a user.
-         */
+
         if (e == loginButton) {
-            /**
-             * Login Button press starts the following steps:
-             * 1) User input for username and password.
-             * 2) Password is used to create a new Password object with the
-             * string input.
-             * 3) Username is used to set it as a usernam for this user object.
-             * 4) loggedIn() is called that communicates with back end.
-             * a. If succesful show message of succesful log in and open a
-             * navigation page and close loginPage.
-             * b. Else it shows an error message. Prompts them to make an
-             * account.
-             */
+
             loginButton.setFillColor(Color.GREEN);
             username = getUserInput("Login", "Enter username",
                 DialogPosition.CENTER_ALL);
@@ -591,6 +512,12 @@ public class LoginPage extends DrawingSurface implements Page {
                 getUserInput("Login", "Enter password for: " + username,
                     DialogPosition.CENTER_ALL, true);
             currentPassword = new Password(hasher.hashNewPassword(password));
+            currentUser = new User(null, username,
+                UserRole.UNAUTHORIZED);
+            UserLoginEvent eventLogin =
+                (UserLoginEvent) evtFactory.createEvent(
+                    EventType.USER_LOGIN, this, currentUser);
+            evtFactory.fireEvent(eventLogin);
 
         } else if (e == changePasswordButton) {
             changePasswordButton.setFillColor(Color.GREEN);
@@ -614,7 +541,8 @@ public class LoginPage extends DrawingSurface implements Page {
         } else if (e == homeScreenButton) {
             returnToHome();
         } else if (e == startGameButton) {
-            backdoor = new StartGamePage();
+            backdoor = (StartGamePage) pageManager
+                .createPage(PageType.START_GAME_PAGE);
             closeWindow();
 
         }
@@ -658,7 +586,8 @@ public class LoginPage extends DrawingSurface implements Page {
      */
     public void returnToHome() {
         LOG.trace("returnToHome method in LoginPage.java");
-        homeScreen = new HomeScreen();
+        homeScreen =
+            (HomeScreen) pageManager.createPage(PageType.HOMESCREEN_PAGE);
         closeWindow();
         // loginPage.dispose();
     }
@@ -670,13 +599,5 @@ public class LoginPage extends DrawingSurface implements Page {
         loginPage.dispose();
     }
 
-    /**
-     * main method to initialize a new LoginPage object.
-     *
-     * @param args
-     */
-    // public static void main(String[] args) {
-    // LOG.trace("Main method in loginPage.java");
-    // new Logi();
-    // }
+ 
 }

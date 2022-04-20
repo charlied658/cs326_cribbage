@@ -3,8 +3,7 @@ package edu.skidmore.cs326.spring2022.skribbage.frontend;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Point;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+
 import java.io.File;
 //import java.io.BufferedReader;
 //import java.io.FileReader;
@@ -42,7 +41,7 @@ import us.daveread.edu.utilities.Utility;
  *         Code Reviewed by Zoe Beals - 3/24/2022
  */
 @SuppressWarnings("serial")
-public class RulesPage extends DrawingSurface implements ActionListener, Page {
+public class RulesPage extends DrawingSurface implements Page {
     /**
      * mainframeWidth - int var to hold width.
      */
@@ -68,17 +67,17 @@ public class RulesPage extends DrawingSurface implements ActionListener, Page {
      */
     @SuppressWarnings("unused")
     private NavigationPage navPage;
+    
+    /**
+     * PageManager instance for page management.
+     */
+    private PageManager pageManager;
 
     /**
      * LOG - logger.
      */
     private static final Logger LOG;
 
-    /**
-     * homeScreen - HomeScreen window.
-     */
-    @SuppressWarnings("unused")
-    private HomeScreen homeScreen;
 
     static {
         LOG = Logger.getLogger(RulesPage.class);
@@ -91,6 +90,7 @@ public class RulesPage extends DrawingSurface implements ActionListener, Page {
      *         Last Edit: March 11, 2022
      */
     public RulesPage() {
+        pageManager = PageManager.getInstance();
         LOG.trace("Entering RulesPage Constructor");
         mf = new MainFrame(this, "Rules Page", mainframeWidth, mainframeHeight,
             false);
@@ -185,7 +185,7 @@ public class RulesPage extends DrawingSurface implements ActionListener, Page {
             Utility.pause(100);
             returnToMainMenu.setBorderColor(Color.BLACK);
             navPage =
-                (NavigationPage) PageManager.getInstance()
+                (NavigationPage) pageManager
                     .createPage(PageType.NAVIGATION_PAGE);
             closeWindow();
 
@@ -193,27 +193,14 @@ public class RulesPage extends DrawingSurface implements ActionListener, Page {
         }
     }
 
-    // This is a placeholder. In the final product, the "Main Menu" button
-    // will, as the label suggests, take the user back to the main menu.
-    @Override
-    public void actionPerformed(ActionEvent e) {
-
-        LOG.trace("ActionPerfomed method in RulesPage.java");
-
-        // mf.dispatchEvent(new WindowEvent(mf, WindowEvent.WINDOW_CLOSING));
-        if (e.getSource().equals(returnToMainMenu)) {
-            navPage = new NavigationPage();
-            // NavigationPageManager.getInstance().getNavPage();
-            closeWindow();
-
-            // PastGamesPage pastGames = new PastGamesPage();
-            // spastGames.setVisible(true);
-        }
-    }
+ 
     /**
      * Method from page interface.
      */
     public void closeWindow() {
         mf.dispose();
     }
+
+   
+    
 }
