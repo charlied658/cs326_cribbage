@@ -159,6 +159,10 @@ public class StartGamePage extends DrawingSurface implements Page {
      * returnHome -Text variable to represent back button.
      */
     private Text returnHome;
+    /**
+     * PageManager instance for page management.
+     */
+    private PageManager pageManager;
 
     /**
      * homeScreen - HomeScreen window.
@@ -178,6 +182,7 @@ public class StartGamePage extends DrawingSurface implements Page {
      * StartGamePage constructor.
      */
     public StartGamePage() {
+        pageManager = PageManager.getInstance();
         LOG.trace("StartGamePage constructor");
         startGamePage = new MainFrame(
             this, "Start Game Page", 1400, 900, false);
