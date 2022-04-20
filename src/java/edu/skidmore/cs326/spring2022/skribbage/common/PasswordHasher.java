@@ -7,13 +7,12 @@ import java.util.Base64;
 
 import org.apache.log4j.Logger;
 
-import edu.skidmore.cs326.spring2022.skribbage.frontend.PastGamesPage;
 
 /**
  * Singleton class used to hash given passwords.
  *
  * @author Declan Morris
- *      Edited by Jonah Marcus on 20 April 2022 to address Bug #48.
+ *         Edited by Jonah Marcus on 20 April 2022 to address Bug #48.
  */
 public class PasswordHasher {
 
@@ -21,7 +20,7 @@ public class PasswordHasher {
      * The only instance of this class that should ever exist.
      */
     private static PasswordHasher instance = null;
-    
+
     /**
      * Logger instance for logging.
      */
@@ -102,8 +101,8 @@ public class PasswordHasher {
             return md.digest(saltAndPassword);
         }
         catch (Throwable throwable) {
-            //System.out.println("Unable to create SHA-256 digest for data");
-            //throwable.printStackTrace();
+            // System.out.println("Unable to create SHA-256 digest for data");
+            // throwable.printStackTrace();
             LOG.error("Unable to create SHA-256 digest for data", throwable);
         }
 
@@ -167,7 +166,6 @@ public class PasswordHasher {
      * @return The Base64 encoded salt and salted password hash separated by a
      *         character to allow them to be split apart
      */
-    @SuppressWarnings("unused")
     public String hashNewPassword(String newPassword) {
         // Generate new salt
         byte[] newSalt = generateSalt(SALT_LENGTH);
