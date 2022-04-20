@@ -76,11 +76,12 @@ public class FacadeTest {
 	public void setUp() throws Exception {
 		facadeinstanace = new PersistenceFacade();
 		wrongTestUser = new User("DJKhaled.com", "Khaled", null);
-		wrongTestPassword = new Password("Anotherone");
+
 		
 		correctTestUser = new User("nchantzi@skidmore.edu", "nchantzi", null);
-		correctTestPassword = new Password("ILoveSQL");
-		newTestPassword = new Password("thisIsNewPass");
+		//correctTestPassword = new Password("ILoveSQL");
+		//wrongTestPassword = new Password("Anotherone");
+		//newTestPassword = new Password("thisIsNewPass");
 		correctTestItem = new Item();
 		correctTestItem.setItemType(ItemTypes.PARTY_HAT);
 		correctTestItem.setQuantityHeld(31);
@@ -147,13 +148,13 @@ public class FacadeTest {
 	/**
 	 * Testing when the user wants to log in with the correct username and password.
 	 */
-	@Test
-	public void createUserCorrect() {
-		facadeinstanace.userCreate(wrongTestUser, wrongTestPassword);
-		// boolean iscorrect = facadeinstanace.login(wrongTestUser,
-		// wrongTestPassword);
-		// assertEquals(true, iscorrect);
-	}
+//	@Test
+//	public void createUserCorrect() {
+//		facadeinstanace.userCreate(wrongTestUser, wrongTestPassword);
+//		// boolean iscorrect = facadeinstanace.login(wrongTestUser,
+//		// wrongTestPassword);
+//		// assertEquals(true, iscorrect);
+//	}
 
 	/**
 	 * Testing when the userDelete corrects with the correct user.
@@ -236,5 +237,14 @@ public class FacadeTest {
 //        boolean iscorrect = facadeinstanace.userDelete(wrongTestUser, wrongTestPassword);
 //        assertEquals(true, iscorrect);
 //    }
+	
+	/**
+	 * Testing to see if the username exists already
+	 */
+	@Test
+	public void accountExistsSuccess() {
+		Boolean verification = facadeinstanace.userNameExists(correctTestUser);
+		assertEquals("User should exist", true, verification);
+	}
 
 }
