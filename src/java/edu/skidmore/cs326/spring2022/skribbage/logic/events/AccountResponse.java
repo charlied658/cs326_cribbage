@@ -5,7 +5,7 @@ package edu.skidmore.cs326.spring2022.skribbage.logic.events;
  * 
  * @author Declan Morris
  */
-public class LoginResponse {
+public class AccountResponse {
 
     /**
      * Constructor sets all attributes to given values.
@@ -13,8 +13,9 @@ public class LoginResponse {
      * @param responseMessage
      * @param rejectionStatus
      */
-    public LoginResponse(String responseMessage, boolean rejectionStatus) {
-
+    public AccountResponse(String responseMessage, boolean rejectionStatus) {
+        this.responseMessage = responseMessage;
+        this.rejectionStatus = rejectionStatus;
     }
 
     /**

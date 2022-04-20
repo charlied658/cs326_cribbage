@@ -7,7 +7,7 @@ import edu.skidmore.cs326.spring2022.skribbage.common.User;
 /**
  * inventory management.
  * 
- * @author ??
+ * @author Tinaye Mawocha
  */
 public interface InventoryManagement {
 
@@ -25,7 +25,8 @@ public interface InventoryManagement {
      * @param user
      * @param item
      * @param quantity
-     * @return ??
+     *            quantity of item to add
+     * @return True or false whether the item was added successfully
      */
     boolean addItem(User user, String item, int quantity);
 
@@ -35,7 +36,8 @@ public interface InventoryManagement {
      * @param user
      * @param item
      * @param quantity
-     * @return ??
+     *            quantity of item to remove
+     * @return True or false whether the item was removed successfully
      */
     boolean removeItem(User user, String item, int quantity);
 
@@ -45,16 +47,17 @@ public interface InventoryManagement {
      * @param sender
      * @param recipient
      * @param item
-     * @return ??
+     * @return True or false whether the transaction was successful or not
      */
 
     boolean transferItem(User sender, User recipient, String item);
 
     /**
-     * display wallet.
+     * display token value held by player.
      * 
      * @param user
-     * @return ??
+     *            the user to query
+     * @return String showing token value
      */
     String displayWallet(User user);
 

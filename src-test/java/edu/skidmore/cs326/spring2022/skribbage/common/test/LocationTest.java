@@ -42,6 +42,7 @@ public class LocationTest {
     /**
      * Logger instance for logging.
      */
+    @SuppressWarnings("unused")
     private static final Logger LOG;
 
     static {

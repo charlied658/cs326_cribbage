@@ -2,19 +2,18 @@ package edu.skidmore.cs326.spring2022.skribbage.frontend;
 
 import java.awt.Color;
 import java.awt.Point;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 //import java.awt.event.WindowEvent;
-import java.awt.Dimension;
+//import java.awt.Dimension;
 //import java.awt.Graphics2D;
-import javax.swing.*;
+//import javax.swing.*;
+import java.util.ArrayList;
 
 import org.apache.log4j.Logger;
 
 import edu.skidmore.cs326.spring2022.skribbage.common.User;
-import edu.skidmore.cs326.spring2022.skribbage.common.UserRole;
+//import edu.skidmore.cs326.spring2022.skribbage.common.UserRole;
 
-import java.util.*;
+//import java.util.*;
 
 import us.daveread.edu.graphics.shape.Drawable;
 import us.daveread.edu.graphics.shape.impl.Image;
@@ -22,7 +21,7 @@ import us.daveread.edu.graphics.shape.impl.Text;
 import us.daveread.edu.graphics.surface.DrawingSurface;
 import us.daveread.edu.graphics.surface.MainFrame;
 import us.daveread.edu.utilities.Utility;
-import us.daveread.edu.graphics.shape.impl.Rectangle;
+//import us.daveread.edu.graphics.shape.impl.Rectangle;
 import us.daveread.edu.graphics.shape.impl.Circle;
 
 /***
@@ -36,7 +35,8 @@ import us.daveread.edu.graphics.shape.impl.Circle;
  *         Code Reviewed March 27, 2022 - Zoe Beals
  */
 
-public class LobbyPage extends DrawingSurface implements ActionListener {
+@SuppressWarnings("serial")
+public class LobbyPage extends DrawingSurface implements Page {
     /**
      * loggedInPlayer1 - The displayed player 1 name.
      */
@@ -92,10 +92,6 @@ public class LobbyPage extends DrawingSurface implements ActionListener {
 
     /**
      * startButton - Text object to act as a button to start the game once
-     * =======
-     * /**
-     * startButton - Text object to act as a button to start the game once
-     * >>>>>>> d599e4ec72d372caffa74468e69fe3928d68eb9f
      * all players have readied up.
      */
     private Text startButton;
@@ -118,11 +114,12 @@ public class LobbyPage extends DrawingSurface implements ActionListener {
     /**
      * inventoryPage - Text object to be button to open the InventoryPage.
      */
-    private Text inventoryPage;
+    private Text inventoryPageButton;
 
     /**
      * navPage - NavigationPage window.
      */
+    @SuppressWarnings("unused")
     private NavigationPage navPage;
 
     /**
@@ -159,7 +156,7 @@ public class LobbyPage extends DrawingSurface implements ActionListener {
     /**
      * setup method - sets up the window.
      */
-    private void setup() {
+    public void setup() {
         LOG.trace("LobbyPage setup");
         setLayout(null);
 
@@ -169,14 +166,16 @@ public class LobbyPage extends DrawingSurface implements ActionListener {
             new Point(20, 40), 25, Color.BLACK, Color.BLUE);
         startButton = new Text("Start Game", new Point(20, 250),
             25, Color.BLACK, Color.BLUE);
+        inventoryPageButton = new Text("Inventory Page", new Point(20, 300),
+            25, Color.BLACK, Color.BLUE);
 
         int textStartingY = 100;
 
         // Hardcoded Users into ArrayList
-        retrievePlayer(new User("doinurmom69@sussybaka.net", "Bo Nehr",
-            "h0rr1bL3p@$$w0rd", UserRole.AUTHORIZED));
-        retrievePlayer(new User("sexhaver@reddit.com", "Hugh G. Rection",
-            "07Sept18kx83+&_4ajfS", UserRole.AUTHORIZED));
+        // retrievePlayer(new User("doinurmom69@sussybaka.net", "Joe Byron",
+        // "h0rr1bL3p@$$w0rd", UserRole.AUTHORIZED));
+        // retrievePlayer(new User("sexhaver@reddit.com", "Obama Lastname",
+        // "07Sept18kx83+&_4ajfS", UserRole.AUTHORIZED));
 
         add(new Text("Players in Lobby (Max " + MAX_PLAYERS + ")",
             new Point(25, 75), 20, Color.BLACK));
@@ -204,7 +203,7 @@ public class LobbyPage extends DrawingSurface implements ActionListener {
         add(logo);
         add(returnToMainMenu);
         add(startButton);
-        // add(inventoryPage);
+        add(inventoryPageButton);
 
         /*
          * add(player1LoginSection);
@@ -259,7 +258,7 @@ public class LobbyPage extends DrawingSurface implements ActionListener {
             Utility.pause(100);
             returnToMainMenu.setBorderColor(Color.BLACK);
             navPage = new NavigationPage();
-            mf.dispose();
+            closeWindow();
         } else if (e == player1Ready) {
             setReadyButtonColor(player1Ready);
         } else if (e == player2Ready) {
@@ -278,31 +277,23 @@ public class LobbyPage extends DrawingSurface implements ActionListener {
             Utility.pause(100);
             startButton.setBorderColor(Color.BLACK);
             new StartGamePage();
-            mf.dispose();
+            closeWindow();
 
-        } else if (e == inventoryPage) {
-            inventoryPage.setBorderColor(Color.CYAN);
+        } else if (e == inventoryPageButton) {
+            inventoryPageButton.setBorderColor(Color.CYAN);
             Utility.pause(100);
-            inventoryPage.setBorderColor(Color.BLACK);
+            inventoryPageButton.setBorderColor(Color.BLACK);
             new InventoryPage();
+            closeWindow();
         }
 
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        // TODO Auto-generated method stub
-        LOG.trace("Entered actionPerformed method in LobbyPage.java");
-
-    }
-
     /**
-     * main method.
-     * 
-     * @param args
+     * Close current window method.
      */
-    public static void main(String[] args) {
-        LOG.trace("LobbyPage.java main method");
-        new LobbyPage();
+    public void closeWindow() {
+        mf.dispose();
     }
+
 }

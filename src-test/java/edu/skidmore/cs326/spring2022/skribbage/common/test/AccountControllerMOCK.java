@@ -6,7 +6,7 @@ import edu.skidmore.cs326.spring2022.skribbage.common.User;
 import edu.skidmore.cs326.spring2022.skribbage.common.UserRole;
 import edu.skidmore.cs326.spring2022.skribbage.common.events.AccountEvent;
 import edu.skidmore.cs326.spring2022.skribbage.logic.events.AccountResponseEvent;
-import edu.skidmore.cs326.spring2022.skribbage.logic.events.LoginResponse;
+import edu.skidmore.cs326.spring2022.skribbage.logic.events.AccountResponse;
 import edu.skidmore.cs326.spring2022.skribbage.logic.events.UserLoginResponseEvent;
 import org.apache.log4j.Logger;
 
@@ -81,8 +81,8 @@ public class AccountControllerMOCK implements PropertyChangeListener {
                             EventType.USER_LOGIN_RESPONSE,
                             this,
                             receivedUserFromLogin,
-                            new LoginResponse("Success Login", false));
-                System.out.println("outgoingEvent = " + outgoingEvent);
+                            new AccountResponse("Success Login", false));
+                LOG.trace("outgoingEvent = " + outgoingEvent);
                 eventFactoryTestInstance.fireEvent(outgoingEvent);
                 break;
             case USER_CREATE_ACCOUNT:

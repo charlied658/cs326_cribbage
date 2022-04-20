@@ -38,7 +38,7 @@ public class AccountResponseControllerMOCK implements PropertyChangeListener {
      */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        LOG.trace("evt in account response controller = " + evt);
+        LOG.trace("Event in account response controller = " + evt);
         receivedUserFromLogin = ((AccountResponseEvent) evt).getUser();
     }
 
@@ -48,7 +48,7 @@ public class AccountResponseControllerMOCK implements PropertyChangeListener {
      * @return User object
      */
     public User getReceivedUserFromLogin() {
-        LOG.trace("returning received user from login");
+        LOG.trace("Returning received user from login");
         return receivedUserFromLogin;
     }
 }

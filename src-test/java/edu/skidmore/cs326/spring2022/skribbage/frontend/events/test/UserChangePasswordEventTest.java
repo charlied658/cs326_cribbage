@@ -85,22 +85,6 @@ public class UserChangePasswordEventTest {
     }
 
     /**
-     * Tests if the password was changed or not.
-     */
-    @Test
-    public void testGetNewPassword() {
-        LOG.trace("Testing new password being created");
-        // Make sure passwords are the same to begin with.
-        assertEquals(testInstance.getUser().getPassword(),
-            userInstance.getPassword());
-        testInstance =
-            new UserChangePasswordEvent(source, userInstance, "lol");
-        // I can only check if correct value was passed.
-        assertEquals(testInstance.getNewPassword(), "lol");
-        LOG.trace("Test for new password finished.");
-    }
-
-    /**
      * Tests if the event name passed to the constructor will be returned
      * correctly.
      */

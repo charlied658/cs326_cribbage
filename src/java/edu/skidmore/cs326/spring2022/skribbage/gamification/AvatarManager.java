@@ -2,6 +2,7 @@ package edu.skidmore.cs326.spring2022.skribbage.gamification;
 
 import org.apache.log4j.Logger;
 
+import edu.skidmore.cs326.spring2022.skribbage.common.Player;
 import java.util.HashMap;
 import java.util.ArrayList;
 
@@ -110,7 +111,8 @@ public class AvatarManager {
      *            Player username
      */
     public void createPlayer(String username) {
-        Player player = new Player(username);
+        Player player = new Player();
+        player.setUsername(username);
         players.add(player);
     }
 

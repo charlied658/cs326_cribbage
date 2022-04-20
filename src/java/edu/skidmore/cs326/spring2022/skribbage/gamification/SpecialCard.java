@@ -54,7 +54,7 @@ public enum SpecialCard {
      * @param description
      *            Description of Special Card.
      */
-    private SpecialCard(String type, int price, String description) {
+    SpecialCard(String type, int price, String description) {
         this.type = type;
         this.price = price;
         this.description = description;

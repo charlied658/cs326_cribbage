@@ -2,8 +2,6 @@ package edu.skidmore.cs326.spring2022.skribbage.frontend;
 
 import java.awt.Color;
 import java.awt.Point;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 //import java.awt.event.WindowEvent;
 import java.util.HashMap;
 
@@ -31,7 +29,7 @@ import us.daveread.edu.utilities.Utility;
  *         Last Edited by Jonah Marcus
  */
 @SuppressWarnings("serial")
-public class InventoryPage extends DrawingSurface implements ActionListener {
+public class InventoryPage extends DrawingSurface implements Page {
 
     /**
      * mf - Holds reference to the window.
@@ -59,6 +57,11 @@ public class InventoryPage extends DrawingSurface implements ActionListener {
     private Text closeWindow;
 
     /**
+     * Object of type text that represents going back to lobby.
+     */
+    private Text lobbyButton;
+
+    /**
      * Logger instance for logging.
      */
     private static final Logger LOG;
@@ -80,7 +83,7 @@ public class InventoryPage extends DrawingSurface implements ActionListener {
     /**
      * setup method - sets up the window.
      */
-    private void setup() {
+    public void setup() {
         LOG.trace("Entered setup (InventoryPage)");
         setLayout(null);
 
@@ -88,7 +91,8 @@ public class InventoryPage extends DrawingSurface implements ActionListener {
 
         closeWindow = new Text("Close",
             new Point(20, 40), 25, Color.BLUE, Color.BLACK);
-
+        lobbyButton = new Text("Back to Lobby", new Point(20, 60), 25,
+            Color.BLUE, Color.BLACK);
         add(new Text("Inventory:", new Point(30, 90), 20, Color.BLACK));
 
         // Placeholder cards
@@ -116,17 +120,8 @@ public class InventoryPage extends DrawingSurface implements ActionListener {
         }
 
         add(closeWindow);
+        add(lobbyButton);
         add(logo);
-    }
-
-    /**
-     * Main method.
-     * 
-     * @param args
-     */
-    public static void main(String[] args) {
-        LOG.trace("Entered main method");
-        new InventoryPage();
     }
 
     @Override
@@ -136,15 +131,18 @@ public class InventoryPage extends DrawingSurface implements ActionListener {
             closeWindow.setBorderColor(Color.CYAN);
             Utility.pause(100);
             closeWindow.setBorderColor(Color.BLACK);
-            mf.dispose();
+            closeWindow();
+        } else if (e == lobbyButton) {
+            new LobbyPage();
+            closeWindow();
         }
 
     }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        // TODO Auto-generated method stub
-
+    /**
+     * Method from Page interface, to close the window.
+     */
+    public void closeWindow() {
+        mf.dispose();
     }
 
 }

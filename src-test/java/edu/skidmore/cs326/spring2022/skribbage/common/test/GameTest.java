@@ -25,6 +25,7 @@ public class GameTest {
     private Game game;
 
     /** Deck used to check the getDeck method in Game. */
+    @SuppressWarnings("unused")
     private Deck testDeck;
 
     /**

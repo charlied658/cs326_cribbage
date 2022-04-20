@@ -1,7 +1,6 @@
 package edu.skidmore.cs326.spring2022.skribbage.common;
 
 import edu.skidmore.cs326.spring2022.skribbage.logic.Deck;
-import edu.skidmore.cs326.spring2022.skribbage.logic.Player;
 import java.util.ArrayList;
 import edu.skidmore.cs326.spring2022.skribbage.logic.GameManager;
 //import org.apache.log4j.Logger;
@@ -39,6 +38,7 @@ public class Game {
     private ArrayList<Card> dealerPeggingCards;
 
     /** A GameManager to manipulate the data. */
+    @SuppressWarnings("unused")
     private GameManager gm = new GameManager(this);
 
     /**

@@ -12,10 +12,12 @@ import static org.junit.Assert.assertNull;
 
 import edu.skidmore.cs326.spring2022.skribbage.common.EventManager;
 import edu.skidmore.cs326.spring2022.skribbage.common.EventType;
+import edu.skidmore.cs326.spring2022.skribbage.common.Password;
 import edu.skidmore.cs326.spring2022.skribbage.common.User;
 import edu.skidmore.cs326.spring2022.skribbage.common.UserRole;
 import edu.skidmore.cs326.spring2022.skribbage.common.EventFactory;
 import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserLoginEvent;
+
 
 /**
  * Testing for Event manager API testing.
@@ -70,7 +72,7 @@ public class EventManagerTest {
     public void setUp() throws Exception {
         testInstance = EventManager.getInstance();
         userInstance =
-            new User("sleinasa@skidmore.edu", "sleinasa", "passwd",
+            new User("sleinasa@skidmore.edu", "sleinasa",
                 UserRole.UNAUTHORIZED);
         source = new EventManagerTest();
         loginEventInstance = (UserLoginEvent) EventFactory.getInstance()
@@ -127,7 +129,7 @@ public class EventManagerTest {
         testInstance.notify(loginEventInstance);
         // now change the userInstance and the logInEvent instance.
         userInstance =
-            new User("sleinasa@skidmore.edu", "username", "password",
+            new User("sleinasa@skidmore.edu", "username",
                 UserRole.AUTHORIZED);
         loginEventInstance = (UserLoginEvent) EventFactory.getInstance()
             .createEvent(EventType.USER_LOGIN, source, userInstance);
@@ -161,7 +163,7 @@ public class EventManagerTest {
      */
     @After
     public void tearDown() {
-        System.out.println("Running: tearDown");
+        LOG.trace("Running: tearDown");
         testInstance = null;
         userInstance = null;
         loginEventInstance = null;
