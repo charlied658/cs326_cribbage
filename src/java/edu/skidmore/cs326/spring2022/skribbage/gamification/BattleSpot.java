@@ -39,6 +39,11 @@ public class BattleSpot extends Spot {
      */
     private Die die = new Die();
     
+    /**
+     * Type of spot.
+     */
+    private SpotType spotType;
+    
     
     /**
      * Constructor for battle spot.
@@ -49,15 +54,16 @@ public class BattleSpot extends Spot {
         this.spotType = SpotType.BATTLE;
         
     }
+  
     /**
-     * Type of spot.
+     * Returns type of spot.
+     * @return type of spot
      */
-    private SpotType spotType;
+    public SpotType getType() {
+        return this.spotType;
+    }
     
-    /**
-     * Location of spot.
-     */
-
+    
     /**
      * Randomly decides the winner when two players land on a battle spot.
      * 

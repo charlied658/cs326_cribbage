@@ -1,6 +1,7 @@
 package edu.skidmore.cs326.spring2022.skribbage.common.test;
 
 import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
 
 import org.apache.log4j.Logger;
 import org.junit.Before;
@@ -10,6 +11,7 @@ import edu.skidmore.cs326.spring2022.skribbage.common.Board;
 import edu.skidmore.cs326.spring2022.skribbage.common.BoardManager;
 import edu.skidmore.cs326.spring2022.skribbage.common.Peg;
 import edu.skidmore.cs326.spring2022.skribbage.common.Spot;
+import edu.skidmore.cs326.spring2022.skribbage.common.SpotType;
 
 /**
  * @author sleinasa
@@ -102,6 +104,21 @@ public class BoardTest {
     @Test
     public void testAssignPrizeSpot() {
         LOG.debug(" Testing assignprizeSpot.");
+        for (int i = 0; i < 5; i++) {
+            assertEquals(SpotType.PRIZE,
+                testInstance.assignPrizeSpot().getType());
+        }
+        int prizeSpotCounter = 0;
+        for (int i = 0; i < 120; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (testInstance.getGrid()[i][j].getType() == SpotType.PRIZE) {
+                    prizeSpotCounter++;
+                }
+            }
+
+        }
+        assertEquals(prizeSpotCounter, 5);
+
     }
 
     /**
@@ -110,7 +127,20 @@ public class BoardTest {
     @Test
     public void testAssignBattleSpot() {
         LOG.debug("Testing assignBattleSpot.");
+        Spot[] battleSpots = testInstance.assignBattleSpot();
+        int battleSpotCounter = 0;
+        for (int i = 0; i < 120; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (testInstance.getGrid()[i][j].getType() == SpotType.BATTLE) {
+                    battleSpotCounter++;
+                }
+            }
+
+        }
+        assertEquals(battleSpotCounter, 24);
+
     }
+    
 
     /**
      * This method tests assignJumpSpot.
@@ -118,6 +148,21 @@ public class BoardTest {
     @Test
     public void testAssignJumpSpot() {
         LOG.debug(" Testing assignJumpSpot.");
+        for (int i = 0; i < 5; i++) {
+            assertEquals(SpotType.JUMP,
+                testInstance.assignJumpSpot().getType());
+        }
+        int jumpSpotCounter = 0;
+        for (int i = 0; i < 120; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (testInstance.getGrid()[i][j].getType() == SpotType.JUMP) {
+                    jumpSpotCounter++;
+                }
+            }
+
+        }
+        assertEquals(jumpSpotCounter, 5);
+
     }
 
 }

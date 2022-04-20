@@ -7,6 +7,9 @@ import java.util.Random;
 
 import org.apache.log4j.Logger;
 
+import edu.skidmore.cs326.spring2022.skribbage.gamification.BattleSpot;
+import edu.skidmore.cs326.spring2022.skribbage.gamification.JumpSpot;
+import edu.skidmore.cs326.spring2022.skribbage.gamification.PrizeSpot;
 //import edu.skidmore.cs326.spring2022.skribbage.logic.Game;
 import us.daveread.edu.graphics.shape.impl.Image;
 
@@ -15,7 +18,7 @@ import us.daveread.edu.graphics.shape.impl.Image;
  *         Code reviewed by Jonah Marcus on April 11, 2022.
  *         Comment by Jonah:
  *         "Commented out an import that was causing an error for some reason."
- *         Last edited by Charlie Davidson
+ *         Last edited by Henry Wilson.
  */
 public class Board {
     /**
@@ -166,7 +169,8 @@ public class Board {
         LOG.trace("Returning a location of a prizeSpot.");
         int row = rand.nextInt(120);
         int col = rand.nextInt(3);
-        grid[row][col].setType(SpotType.PRIZE);
+        Location loc = new Location(row, col);
+        grid[row][col] = new PrizeSpot(loc);
         return grid[row][col];
 
     }
@@ -191,7 +195,8 @@ public class Board {
             for (int j = 0; j < NUMCOL; j++) {
                 col = j;
                 //System.out.println("i = " + i + ", j = " + j);
-                grid[row][col].setType(SpotType.BATTLE);
+                Location loc = new Location(row, col);
+                grid[row][col] = new BattleSpot(loc);
                 spotLocations[i] = grid[row][col];
             }
         }
@@ -210,7 +215,8 @@ public class Board {
         LOG.trace("Returning a location of a jumpSpot.");
         int row = rand.nextInt(120);
         int col = rand.nextInt(3);
-        grid[row][col].setType(SpotType.JUMP);
+        Location loc = new Location(row, col);
+        grid[row][col] = new JumpSpot(loc);
         return grid[row][col];
 
     }
