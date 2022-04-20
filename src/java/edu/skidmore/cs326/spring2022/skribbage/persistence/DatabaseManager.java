@@ -329,13 +329,6 @@ public class DatabaseManager {
 					// LOGGER.error("Failed to close prepared statement", sqle);
 				}
 			}
-			if (conn != null) {
-				try {
-					conn.close();
-				} catch (SQLException sqle) {
-					// LOGGER.error("Failed to close connection", sqle);
-				}
-			}
 		}
 	}
 
@@ -415,17 +408,54 @@ public class DatabaseManager {
 	}
 
 	/**
-	 * This is a function to query the inventory items held by a player.
+	 * This is a function to check
 	 * 
 	 * @author Nikoleta Chantzi
-	 * @param username : the id of the player to check the value
+	 * @param username : the id of the player to check if exists
 	 * @return whether account exists in the database
+	 * @throws SQLException
 	 */
 
-	public boolean accountExists() {
-		// no need for try catch, it is being handled by the caller methods
+	public boolean accountExists(String username) {
 
-		return true;
+		Connection conn = null;
+
+		PreparedStatement ps = null;
+
+		ResultSet rs = null;
+
+		boolean exists = false;
+
+		try {
+			conn = getDB();
+
+			String tempQuery = "SELECT * FROM player_account WHERE username= ?";
+
+			ps = conn.prepareStatement(tempQuery);
+
+			ps.setString(1, username);
+
+			rs = ps.executeQuery();
+
+			// if result contains player's username, this will return true (account found)
+			// if result is empty, this will return false (account not found)
+			exists = rs.next();
+
+		} catch (SQLException e) {
+			// System.out.println("Account not found");
+			// e.printStackTrace();
+
+		} finally {
+
+			try {
+				rs.close();
+			} catch (SQLException sqle) {
+
+			}
+		}
+
+		// if we reach this line, we run into a SQLException
+		return exists;
 	}
 
 	/**
