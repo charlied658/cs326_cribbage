@@ -23,6 +23,7 @@ public interface UserManagement {
      * userDelete.
      * 
      * @param userToDelete
+     * @param password
      * @return the user.
      */
     boolean userDelete(User userToDelete, Password password);
@@ -63,11 +64,12 @@ public interface UserManagement {
      * @return the user.
      */
     boolean validateUsername(User user);
-    
+
     /**
-     * Check if the user name exists
+     * Check if the user name exists.
      * 
-     * @param user as a user
+     * @param user
+     *            as a user
      * @return boolean depending if the user name exists
      */
     boolean userNameExists(User user);
