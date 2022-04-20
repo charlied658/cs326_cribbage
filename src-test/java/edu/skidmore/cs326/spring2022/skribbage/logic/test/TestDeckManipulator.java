@@ -1,6 +1,7 @@
 package edu.skidmore.cs326.spring2022.skribbage.logic.test;
 
-import edu.skidmore.cs326.spring2022.skribbage.common.Deck;
+import edu.skidmore.cs326.spring2022.skribbage.common.Deck; 
+import edu.skidmore.cs326.spring2022.skribbage.common.Card;
 import edu.skidmore.cs326.spring2022.skribbage.logic.DeckManipulator;
 
 import static org.junit.Assert.assertEquals;
@@ -80,9 +81,10 @@ public class TestDeckManipulator {
     @Test
     public void testMove() {
         // test move to top method
-        // make sure the chosen card is in the correct place
+        // make sure the chosen card is in the correct place 
+        Card tempCard = testInstance.getDeck().get(20);
         manipulatorInstance.moveToTop(testInstance, 20);
-        assertEquals(testInstance, testInstance.getDeck().get(0));
+        assertEquals(tempCard, testInstance.getDeck().get(0));
 
     } // end testMove
 

@@ -5,6 +5,10 @@ import java.io.File; // Import the File class
 import java.io.FileNotFoundException; // Import this class to handle errors
 import java.util.Scanner; // Import the Scanner class to read text files
 
+import org.apache.log4j.Logger;
+
+import edu.skidmore.cs326.spring2022.skribbage.frontend.PastGamesPage;
+
 /**
  * Prototype for inventory that will store special cards and items.
  */
@@ -20,12 +24,23 @@ public class InventoryPrototype {
      *         addItem()
      *         searchForItem()
      *         updateInventory()
+     *         
+     *         Edited by Jonah Marcus on 20 April 2022 to address Bug #48.
      */
 
     /**
      * HashMap For inventory.
      */
     private HashMap<String, Integer> map;
+    
+    /**
+     * Logger instance for logging.
+     */
+    private static final Logger LOG;
+
+    static {
+        LOG = Logger.getLogger(InventoryPrototype.class);
+    }
 
     /**
      * Initialize HashMap for Inventory.
@@ -109,7 +124,8 @@ public class InventoryPrototype {
             myReader.close();
         }
         catch (FileNotFoundException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
+            LOG.error("inventory.txt not found", e);
         }
     }
 }
