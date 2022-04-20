@@ -4,21 +4,18 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
+import edu.skidmore.cs326.spring2022.skribbage.common.UserRole;
 import org.apache.log4j.Logger;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
 import edu.skidmore.cs326.spring2022.skribbage.common.EventFactory;
 import edu.skidmore.cs326.spring2022.skribbage.common.EventType;
 import edu.skidmore.cs326.spring2022.skribbage.common.User;
 import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserCreateAccountEvent;
 
-import edu.skidmore.cs326.spring2022.skribbage.frontend.events.test.UserDeleteAccountEventTest;
-
 /**
  * @author Sten Leinasaar
- *         Last Edited: March 24, 2022, by Sten Leinasaar
+ *         Last Edited: April 19, 2022, by Sten Leinasaar
  */
 public class EventFactoryTest {
     /**
@@ -30,7 +27,6 @@ public class EventFactoryTest {
      * Create Account instance.
      */
     private UserCreateAccountEvent createInstance;
-
     /**
      * User test instance to be passed.
      */
@@ -46,7 +42,7 @@ public class EventFactoryTest {
      */
     private static final Logger LOG;
     static {
-        LOG = Logger.getLogger(UserDeleteAccountEventTest.class);
+        LOG = Logger.getLogger(EventFactoryTest.class);
     }
 
     /**
@@ -56,16 +52,14 @@ public class EventFactoryTest {
     public void setUp() {
         LOG.trace("Started the setup method");
         source = new Object();
-        // Email, username, password, isauthorized?
-        // userInstance =
-        // new User("sleinasa@skidmore.edu", "sleinasa", "passwd", true);
+        userInstance = new User("sleinasa@skidmore.edu",
+            "sleinasa", UserRole.UNAUTHORIZED);
         testInstance = EventFactory.getInstance();
         LOG.info("SetUp method completed");
     }
 
     /**
-     * Test that the instance is created by asserting that the testInstance is
-     * not null.
+     * Test that the instance is created and functions as singleton.
      */
     @Test
     public void testGetInstance() {
@@ -87,7 +81,12 @@ public class EventFactoryTest {
         createInstance = (UserCreateAccountEvent) testInstance
             .createEvent(EventType.USER_CREATE_ACCOUNT, source, userInstance);
         assertNotNull(createInstance);
+        assertEquals(createInstance.getEventType(),
+            EventType.USER_CREATE_ACCOUNT);
         LOG.trace("Create event test finished");
     }
+    
+   
 
+   
 }

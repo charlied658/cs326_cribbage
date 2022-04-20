@@ -1,9 +1,10 @@
 package edu.skidmore.cs326.spring2022.skribbage.persistence.test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.util.HashMap;
 
+import edu.skidmore.cs326.spring2022.skribbage.common.UserRole;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -69,36 +70,24 @@ public class FacadeTest {
     @Before
     public void setUp() throws Exception {
         facadeinstanace = new PersistenceFacade();
-        wrongTestUser = new User("DJKhaled.com", "Khaled", "AnotherOne", null);
+        wrongTestUser = new User("DJKhaled.com", "Khaled",
+            UserRole.UNAUTHORIZED);
         wrongTestPassword = new Password("AnotherOne");
         correctTestUser =
-            new User("nchantzi@skidmore.edu", "nchantzi", "ILoveSQL", null);
+            new User("nchantzi@skidmore.edu", "nchantzi",
+                UserRole.UNAUTHORIZED);
         correctTestPassword = new Password("ILoveSQL");
         correctTestItem = new Item();
         correctTestItem.setItemType(ItemTypes.PARTY_HAT);
         correctTestItem.setQuantityHeld(31);
         inventoryUser = new User("inconsequential", "inconsequential",
-            "inconsequential", null);
+            UserRole.UNAUTHORIZED);
         inventoryUser.setUserId(236);
         walletUser = new User("inconsequential", "inconsequential",
-            "inconsequential", null);
+            UserRole.UNAUTHORIZED);
         walletUser.setUserId(325);
     }
 
-    /**
-     * Testing when the userDelete corrects with the correct user.
-     */
-    @Test
-    public void userDeleteTestCorrect() {
-        boolean iscorrect = facadeinstanace.userDelete(correctTestUser);
-        assertEquals(true, iscorrect);
-    }
-
-    @Test
-    public void userDeleteTestFail() {
-        boolean iscorrect = facadeinstanace.userDelete(wrongTestUser);
-        assertEquals(false, iscorrect);
-    }
 
     /**
      * Testing when the user wants to change their password Passing in the user,
@@ -169,6 +158,21 @@ public class FacadeTest {
         // boolean iscorrect = facadeinstanace.login(wrongTestUser,
         // wrongTestPassword);
         // assertEquals(true, iscorrect);
+    }
+    
+    /**
+     * Testing when the userDelete corrects with the correct user.
+     */
+    @Test
+    public void userDeleteTestCorrect() {
+        boolean iscorrect = facadeinstanace.userDelete(wrongTestUser);
+        assertEquals(true, iscorrect);
+    }
+
+    @Test
+    public void userDeleteTestFail() {
+        boolean iscorrect = facadeinstanace.userDelete(wrongTestUser);
+        assertEquals(false, iscorrect);
     }
 
 }

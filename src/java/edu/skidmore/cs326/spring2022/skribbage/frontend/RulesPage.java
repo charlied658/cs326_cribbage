@@ -1,16 +1,20 @@
 package edu.skidmore.cs326.spring2022.skribbage.frontend;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+//import java.io.BufferedReader;
+//import java.io.FileReader;
+//import java.io.IOException;
 
-import javax.swing.JButton;
+//import javax.swing.JEditorPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 //import java.awt.event.WindowEvent;
-import java.awt.Dimension;
+
 //import java.awt.Graphics2D;
 //import javax.swing.*;
 
@@ -18,7 +22,7 @@ import org.apache.log4j.Logger;
 
 import us.daveread.edu.graphics.shape.Drawable;
 import us.daveread.edu.graphics.shape.impl.Image;
-import us.daveread.edu.graphics.shape.impl.Rectangle;
+
 //import us.daveread.edu.graphics.shape.Drawable;
 //import us.daveread.edu.graphics.shape.impl.Image;
 import us.daveread.edu.graphics.shape.impl.Text;
@@ -35,16 +39,16 @@ import us.daveread.edu.utilities.Utility;
  *         Code Reviewed by Zoe Beals - 3/24/2022
  */
 @SuppressWarnings("serial")
-public class RulesPage extends DrawingSurface implements ActionListener {
+public class RulesPage extends DrawingSurface implements ActionListener, Page {
     /**
      * mainframeWidth - int var to hold width.
      */
-    private int mainframeWidth = 900;
+    private int mainframeWidth = 800;
 
     /**
      * mainframeHeight - int var to hold height.
      */
-    private int mainframeHeight = 900;
+    private int mainframeHeight = 800;
 
     /**
      * mf - MainFrame window.
@@ -59,6 +63,7 @@ public class RulesPage extends DrawingSurface implements ActionListener {
     /**
      * navPage - NavigationPage window.
      */
+    @SuppressWarnings("unused")
     private NavigationPage navPage;
 
     /**
@@ -69,6 +74,7 @@ public class RulesPage extends DrawingSurface implements ActionListener {
     /**
      * homeScreen - HomeScreen window.
      */
+    @SuppressWarnings("unused")
     private HomeScreen homeScreen;
 
     static {
@@ -91,7 +97,7 @@ public class RulesPage extends DrawingSurface implements ActionListener {
     /**
      * setup method to setup window.
      */
-    private void setup() {
+    public void setup() {
 
         LOG.trace("Entering the setup method in RulesPage.java");
 
@@ -106,22 +112,36 @@ public class RulesPage extends DrawingSurface implements ActionListener {
         // much text as we want without worrying about formatting. We will
         // add the actual text in a later sprint, it is not very important
         // for right now.
-        JTextArea rulesArea = new JTextArea("", 100, 350);
+
+        JTextArea rulesArea = new JTextArea(100, 350);
+        rulesArea.setFont(new Font("ComicSans", Font.BOLD | Font.ITALIC, 20));
         rulesArea.setLineWrap(true);
         rulesArea.setWrapStyleWord(true);
         rulesArea.setEditable(false);
 
+        // try {
+        // rulesArea.read(new BufferedReader(
+        // new FileReader("/SkribbageBattleRoyale/rules.txt")), null);
+        // rulesArea.setVisible(true);
+        // }
+        // catch (IOException e) {
+        // // TODO Auto-generated catch block
+        // e.printStackTrace();
+        // new Color((float) 107, (float) 94, (float) 47, (float) 1)
+        // }
         JScrollPane scrollPane =
             new JScrollPane(rulesArea, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
                 JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
         scrollPane.setBounds(135, 350, 650, 500);
-        scrollPane.getViewport().setBackground(Color.DARK_GRAY);
+
+        scrollPane.getViewport().setBackground(Color.CYAN);
         add(scrollPane);
 
         rulesArea.setText(
             "The objective in Cribbage is to be the first player to get "
                 + "121 points. " + "The gameplay is divided into "
                 + "three distinct parts, "
+                + " "
                 + "The Deal, The Play and The Show.");
 
         add(header);
@@ -137,8 +157,12 @@ public class RulesPage extends DrawingSurface implements ActionListener {
             returnToMainMenu.setBorderColor(Color.CYAN);
             Utility.pause(100);
             returnToMainMenu.setBorderColor(Color.BLACK);
+            navPage =
+                (NavigationPage) PageManager.getInstance()
+                    .createPage(PageType.NAVIGATION_PAGE);
             mf.dispose();
-            navPage = NavigationPageManager.getInstance().getNavPage();
+
+            // NavigationPageManager.getInstance().getNavPage();
         }
     }
 
@@ -151,8 +175,10 @@ public class RulesPage extends DrawingSurface implements ActionListener {
 
         // mf.dispatchEvent(new WindowEvent(mf, WindowEvent.WINDOW_CLOSING));
         if (e.getSource().equals(returnToMainMenu)) {
+            navPage = new NavigationPage();
+            // NavigationPageManager.getInstance().getNavPage();
             mf.dispose();
-            navPage = NavigationPageManager.getInstance().getNavPage();
+
             // PastGamesPage pastGames = new PastGamesPage();
             // spastGames.setVisible(true);
         }
@@ -167,6 +193,6 @@ public class RulesPage extends DrawingSurface implements ActionListener {
 
         LOG.trace("RulesPage main method");
 
-        RulesPageManager.getInstance().getRulesPage();
+        PageManager.getInstance().createPage(PageType.RULES_PAGE);
     }
 }

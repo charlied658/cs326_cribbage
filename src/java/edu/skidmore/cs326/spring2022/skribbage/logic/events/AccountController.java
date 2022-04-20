@@ -2,14 +2,11 @@ package edu.skidmore.cs326.spring2022.skribbage.logic.events;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
+
+import edu.skidmore.cs326.spring2022.skribbage.common.*;
+import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserLoginEvent;
 import org.apache.log4j.Logger;
 
-import edu.skidmore.cs326.spring2022.skribbage.common.EventFactory;
-import edu.skidmore.cs326.spring2022.skribbage.common.EventType;
-import edu.skidmore.cs326.spring2022.skribbage.common.LoginAuthenticator;
-import edu.skidmore.cs326.spring2022.skribbage.common.PasswordHasher;
-import edu.skidmore.cs326.spring2022.skribbage.common.User;
 import edu.skidmore.cs326.spring2022.skribbage.common.events.AccountEvent;
 import edu.skidmore.cs326.spring2022.skribbage.frontend.PlayableGame;
 import edu.skidmore.cs326.spring2022.skribbage.persistence.DatabaseManager;
@@ -51,12 +48,14 @@ public class AccountController implements PropertyChangeListener {
      *
      * @param userToValidate
      *            The user attempting to manage their account.
+     * @param inputPassword
+     *            The password for this request to login.
      * @return
      *         Whether or not the user is validated.
      */
-    public boolean validateUser(User userToValidate) {
+    public boolean validateUser(User userToValidate, Password inputPassword) {
         return dbManager.userAuthenticate(userToValidate.getUserName(),
-            userToValidate.getPassword());
+            inputPassword);
     }
 
     @Override
@@ -83,31 +82,34 @@ public class AccountController implements PropertyChangeListener {
          * (hashing
          * and validating)
          */
-        System.out.println("AccountController Event: " + evt);
-        User associatedUser = ((AccountEvent) evt).getUser();
-
-        /**
-         * variable to assure validateUser is only run once.
-         */
-        boolean userIsValid = validateUser(associatedUser);
+        LOG.trace("AccountController Event: " + evt);
 
         /*
          * Step 2: Handle each type of account event accordingly. There is
          * likely
          */
         AccountEvent accountEvent = (AccountEvent) evt;
+        User associatedUser = accountEvent.getUser();
 
         switch (accountEvent.getEventType()) {
-            case USER_CREATE_ACCOUNT:
-                LOG.debug("caught a create account event");
-                break;
             case USER_LOGIN:
                 LOG.debug("caught a login event");
-                if (validateUser(associatedUser)) {
+                UserLoginEvent ule = ((UserLoginEvent) evt);
+                if (validateUser(associatedUser, ule.getPassword())) {
+                    @SuppressWarnings("unused")
                     UserLoginResponseEvent responseEvent =
                         (UserLoginResponseEvent) eventFactory
                             .createEvent(EventType.USER_LOGIN_RESPONSE, this);
                 }
+                break;
+            case USER_CREATE_ACCOUNT:
+                LOG.debug("caught a create account event");
+                break;
+            case USER_DELETE_ACCOUNT:
+                LOG.debug("caught a delete account event");
+                break;
+            case USER_CHANGE_PASSWORD:
+                LOG.debug("caught a change password event");
                 break;
             default:
                 LOG.warn("caught unhandled event");

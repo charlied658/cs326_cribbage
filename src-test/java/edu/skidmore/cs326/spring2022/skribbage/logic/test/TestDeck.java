@@ -1,9 +1,8 @@
 package edu.skidmore.cs326.spring2022.skribbage.logic.test;
 
-import edu.skidmore.cs326.spring2022.skribbage.logic.Deck;
+import edu.skidmore.cs326.spring2022.skribbage.common.Deck;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 
 import org.junit.Before;
@@ -36,67 +35,33 @@ public class TestDeck {
      * Test whether or not deck is created with 52 cards.
      */
     @Test
-    public void testOne() {
-        // test 1 deck constructor
-        // see if there's 52 cards
+    public void testConstructor() {
+        // test deck constructor
+        // see if a deck was created
         assertNotNull(testInstance);
+
+    } // end testConstructor
+
+    /**
+     * Test to see deck is properly returned.
+     */
+    @Test
+    public void testGetDeck() {
+        // test getDeck
+        // make sure the deck returned has 52 cards
         assertEquals(testInstance.getDeck().size(), 52);
-
-    } // end testOne
-
-    /**
-     * Test if cards are shuffled.
-     */
-    @Test
-    public void testTwo() {
-        // test 2 shuffle
-        // see if cards are in random order
-        testInstance.shuffle();
-        assertNotEquals(testInstance, testInstanceOrdered);
-
-    } // end testTwo
+    } // end testGetDeck
 
     /**
-     * Test if cut returns the right card.
+     * Test to see deck is properly set.
      */
     @Test
-    public void testThree() {
-        // test 3 cut
-        // make sure the returned card is the card of choice
-        assertEquals(testInstance.cut(20), testInstance.getDeck().get(20));
-
-    } // end testThree
-
-    /**
-     * Test if cards are in correct order.
-     */
-    @Test
-    public void testFour() {
-        // test 4 getDeck
-        // print the order of both decks and make sure they're the same
-
-    } // end testFour
-
-    /**
-     * Test to see if remove properly removes a card.
-     */
-    @Test
-    public void testFive() {
-        // test 5 remove top card
-        // print the size and order, make sure the top card is BANISHED
-
-    } // end testFive
-
-    /**
-     * Test to make sure card is moved to top.
-     */
-    @Test
-    public void testSix() {
-        // test 6 move to top
-        // make sure the chosen card is in the correct place
-        testInstance.moveToTop(20);
-        assertEquals(testInstance, testInstance.getDeck().get(0));
-
-    } // end testSix
+    public void testSetDeck() {
+        // test setDeck
+        //
+        testInstance.setDeck(testInstanceOrdered.getDeck());
+        assertEquals(testInstance.getDeck().size(), 
+              testInstanceOrdered.getDeck().size());
+    } // end testSetDeck
 
 } // end class TestDeck

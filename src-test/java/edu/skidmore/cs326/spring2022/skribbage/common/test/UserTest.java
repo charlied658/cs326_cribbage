@@ -8,6 +8,7 @@ import org.apache.log4j.Logger;
 import org.junit.Before;
 import org.junit.Test;
 
+import edu.skidmore.cs326.spring2022.skribbage.common.Password;
 import edu.skidmore.cs326.spring2022.skribbage.common.User;
 
 /**
@@ -37,7 +38,7 @@ public class UserTest {
         LOG.trace("Setup method in test class reached.");
         testInstance =
             new User("sleinasa@skidmore.edu", "sleinasa",
-                "password", UserRole.AUTHORIZED);
+                UserRole.AUTHORIZED);
         LOG.trace("Setup finished");
     }
 
@@ -72,15 +73,6 @@ public class UserTest {
         LOG.trace("Testing getUserName finished.");
     }
 
-    /**
-     * Testing getPassword method in User class.
-     */
-    @Test
-    public void testGetPassword() {
-        LOG.trace("Testing getPassword method in User class");
-        assertEquals(testInstance.getPassword(), "password");
-        LOG.trace("Testing getPassword finished.");
-    }
 
     /**
      * Testing isAuthorized method in User Class.

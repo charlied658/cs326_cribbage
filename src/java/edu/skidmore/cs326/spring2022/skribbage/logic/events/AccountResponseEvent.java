@@ -8,12 +8,14 @@ import java.beans.PropertyChangeEvent;
 /**
  * @author Declan Morris & Alex Carney
  */
+@SuppressWarnings("serial")
 public abstract class AccountResponseEvent extends PropertyChangeEvent {
 
     /**
      * Contains String message and boolean rejection status sent with the event.
      */
-    protected LoginResponse loginResponse;
+
+    protected AccountResponse accountResponse;
 
     /**
      * The user associated with the event.
@@ -34,10 +36,10 @@ public abstract class AccountResponseEvent extends PropertyChangeEvent {
      */
     protected AccountResponseEvent(Object source, EventType eventType,
         User user,
-        LoginResponse loginResponse) {
+        AccountResponse loginResponse) {
         super(source, eventType.toString(), null, null);
         this.user = user;
-        this.loginResponse = loginResponse;
+        this.accountResponse = loginResponse;
     }
 
     /**
@@ -61,5 +63,5 @@ public abstract class AccountResponseEvent extends PropertyChangeEvent {
      * 
      * @return loginResponse
      */
-    public abstract LoginResponse getLoginResponse();
+    public abstract AccountResponse getAccountResponse();
 }

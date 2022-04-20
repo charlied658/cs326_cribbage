@@ -24,6 +24,7 @@ public class LogInListenerMOCK implements PropertyChangeListener {
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
+        @SuppressWarnings("unused")
         UserLoginEvent test = (UserLoginEvent) evt;
 
     }

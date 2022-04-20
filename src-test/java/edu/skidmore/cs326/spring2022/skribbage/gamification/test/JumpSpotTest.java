@@ -6,7 +6,7 @@ import org.apache.log4j.Logger;
 import org.junit.Before;
 import org.junit.Test;
 import edu.skidmore.cs326.spring2022.skribbage.gamification.JumpSpot;
-import edu.skidmore.cs326.spring2022.skribbage.logic.Player;
+import edu.skidmore.cs326.spring2022.skribbage.common.Player;
 
 /**
  * Tests the functionality in the jump spot class.

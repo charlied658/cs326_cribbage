@@ -5,10 +5,15 @@ import java.security.SecureRandom;
 import java.util.Arrays;
 import java.util.Base64;
 
+import org.apache.log4j.Logger;
+
+import edu.skidmore.cs326.spring2022.skribbage.frontend.PastGamesPage;
+
 /**
  * Singleton class used to hash given passwords.
  *
  * @author Declan Morris
+ *      Edited by Jonah Marcus on 20 April 2022 to address Bug #48.
  */
 public class PasswordHasher {
 
@@ -16,6 +21,15 @@ public class PasswordHasher {
      * The only instance of this class that should ever exist.
      */
     private static PasswordHasher instance = null;
+    
+    /**
+     * Logger instance for logging.
+     */
+    private static final Logger LOG;
+
+    static {
+        LOG = Logger.getLogger(PasswordHasher.class);
+    }
 
     /**
      * Constructor should only be accessed when the instance
@@ -48,7 +62,7 @@ public class PasswordHasher {
      * The character separating the salt from the password in the Base64 encoded
      * value. This should be a character that is not used in Base64 encoding.
      */
-    private static final String SALT_AND_PASSWORD_BASE64_SEPARATOR = "~";
+    public static final String SALT_AND_PASSWORD_BASE64_SEPARATOR = "~";
 
     /**
      * Generate a salt. This is a random set of bytes used to secure the
@@ -88,8 +102,9 @@ public class PasswordHasher {
             return md.digest(saltAndPassword);
         }
         catch (Throwable throwable) {
-            System.out.println("Unable to create SHA-256 digest for data");
-            throwable.printStackTrace();
+            //System.out.println("Unable to create SHA-256 digest for data");
+            //throwable.printStackTrace();
+            LOG.error("Unable to create SHA-256 digest for data", throwable);
         }
 
         return null;
@@ -152,7 +167,8 @@ public class PasswordHasher {
      * @return The Base64 encoded salt and salted password hash separated by a
      *         character to allow them to be split apart
      */
-    protected String hashNewPassword(String newPassword) {
+    @SuppressWarnings("unused")
+    public String hashNewPassword(String newPassword) {
         // Generate new salt
         byte[] newSalt = generateSalt(SALT_LENGTH);
 

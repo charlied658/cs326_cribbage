@@ -115,12 +115,13 @@ public class AccountEventLoopTest {
             EventType.USER_LOGIN_RESPONSE);
 
         testPassword = new Password(TEST_PASSWORD);
-        testUser = new User(TEST_EMAIL, TEST_USERNAME, TEST_PASSWORD,
+        testUser = new User(TEST_EMAIL, TEST_USERNAME,
             UserRole.UNAUTHORIZED);
 
         // Actually fire the event
         testEventInstance = (UserLoginEvent) testFactoryInstance
-            .createEvent(EventType.USER_LOGIN, this, testUser);
+            .createEvent(EventType.USER_LOGIN, this, testUser,
+                testPassword);
         assertNotNull(testEventInstance);
         LOG.trace("created event " + testEventInstance);
         testFactoryInstance.fireEvent(testEventInstance);
@@ -128,7 +129,8 @@ public class AccountEventLoopTest {
 
         // Fire an event that should be ignored
         testFalseEventInstance = ((UserCreateAccountEvent) testFactoryInstance
-            .createEvent(EventType.USER_CREATE_ACCOUNT, this, testUser));
+            .createEvent(EventType.USER_CREATE_ACCOUNT, this, testUser,
+                testPassword));
         assertNotNull(testFalseEventInstance);
         LOG.trace("Created false event " + testEventInstance);
         testFactoryInstance.fireEvent(testFalseEventInstance);
@@ -140,7 +142,7 @@ public class AccountEventLoopTest {
      * Additionally, ensures User object is the same
      */
     @Test
-    public void listenerCaughtCorrectUser() {
+    public void testListenerCaughtCorrectUser() {
         User caughtUser = accountControllerMOCK.getReceivedUserFromLogin();
         assertNotNull(caughtUser);
         assertEquals(caughtUser, testUser);
@@ -152,7 +154,7 @@ public class AccountEventLoopTest {
      * the event was ignored.
      */
     @Test
-    public void listenerIgnoresIncorrectEvent() {
+    public void testListenerIgnoresIncorrectEvent() {
         User nullUser =
             accountControllerMOCK.getReceivedUserFromCreateAccount();
         assertNull(nullUser);
@@ -164,10 +166,10 @@ public class AccountEventLoopTest {
      * updated accordingly.
      */
     @Test
-    public void responseControllerCaughtCorrectUserAndIsAuthorized() {
+    public void testresponseControllerCaughtCorrectUserAndIsAuthorized() {
         User caughtUserResponse =
             accountResponseControllerMOCK.getReceivedUserFromLogin();
-        System.out.println(caughtUserResponse);
+        LOG.trace(caughtUserResponse);
         assertEquals(caughtUserResponse, testUser);
         assertEquals(caughtUserResponse.getUserRole(), UserRole.AUTHORIZED);
     }

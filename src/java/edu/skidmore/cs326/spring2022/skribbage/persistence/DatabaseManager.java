@@ -23,6 +23,491 @@ import edu.skidmore.cs326.spring2022.skribbage.common.UserRole;
  */
 public class DatabaseManager {
 
+<<<<<<< HEAD
+	/**
+	 * Database URL.
+	 */
+	static final String DB_URL = DatabaseProperties.getInstance().getValue("DBUrl");
+
+	/**
+	 * UserID.
+	 */
+	static final String USER = DatabaseProperties.getInstance().getValue("UserID");
+
+	/**
+	 * App Password.
+	 */
+	static final String PASS = DatabaseProperties.getInstance().getValue("AppPassword");
+
+	/**
+	 * Query String.
+	 */
+	static final String QUERY = "SELECT * FROM prototype_table";
+
+	/**
+	 * Logger for the class.
+	 */
+	private static final Logger LOG;
+
+	/**
+	 * Initializing Logger
+	 */
+	static {
+		LOG = Logger.getLogger(DatabaseManager.class);
+	}
+
+	/**
+	 * Database Connection.
+	 */
+	private static Connection dbConnection;
+
+	/**
+	 * String array containing the column names.
+	 */
+	// static final String[] COLUMN_NAMES = ;
+
+	/**
+	 * This is a function to check the database for a specific user and check
+	 * whether the password functions.
+	 * 
+	 * @author Tinaye Mawocha
+	 * @param username : the username of the desired user
+	 * @param password : the inputted password
+	 * @return Whether password was accepted
+	 */
+
+	public boolean userAuthenticate(String username, Password password) {
+
+		String tempQuery = "SELECT * FROM player_account WHERE username='" + username + "'";
+		// Connection conn = dbConnect();
+		String storedPassword = "";
+
+		try {
+			Connection conn = getDB();
+			Statement stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery(tempQuery);
+
+			rs.next();
+			storedPassword = rs.getString("Password");
+
+		} catch (SQLException e) {
+			System.out.println("Account not found");
+			e.printStackTrace();
+
+		}
+
+		if (storedPassword.compareTo(password.getPasswordValue()) == 0) {
+			System.out.println("Password Accepted");
+			return true;
+		} else {
+			System.out.println("Incorrect Password");
+			return false;
+		}
+
+	}
+
+	/**
+	 * This is a function to query the token value held by a player.
+	 * 
+	 * @author Tinaye Mawocha
+	 * @param playerID : the id of the player to check the value
+	 * @return Query result
+	 */
+	public String walletQuery(int playerID) {
+
+		String tokenQuery = "SELECT * FROM player_account WHERE PersonID = ? ";
+
+		PreparedStatement ps = null;
+		Connection conn = null;
+		int netWorth = 0;
+
+		try {
+
+			conn = getDB();
+			ps = dbConnection.prepareStatement(tokenQuery);
+			ps.setInt(1, playerID);
+
+			// System.out.println(ps);
+			ResultSet rs = ps.executeQuery();
+
+			rs.next();
+			netWorth = rs.getInt("Wallet");
+
+		} catch (SQLException e) {
+			// System.out.println("AccountinventoryQuery not found");
+			e.printStackTrace();
+			dbDisconnect(conn);
+			return "Account not found";
+
+		}
+
+		dbDisconnect(conn);
+		return "player coin value: " + netWorth;
+
+	}
+
+	/**
+	 * This is a method to change a value on the player_account table.
+	 *
+	 * @author Tinaye Mawocha
+	 * @param toChange : the name of the column you wish to change
+	 * @param changeTo : the new value you wish to input into the aforementioned
+	 *                 table
+	 * @param userId   : the account id of the account you wish to change
+	 */
+	public void update(String toChange, String changeTo, int userId) {
+
+		Connection conn = null;
+
+		PreparedStatement ps = null;
+
+		ResultSet rs = null;
+
+		try {
+			// System.out.println("Run a prepared database query");
+			// Class.forName("com.mysql.jdbc.Driver");
+			conn = getDB();
+
+			String script = "UPDATE player_account SET " + toChange + "= ?  WHERE PersonID = ?";
+			ps = conn.prepareStatement(script);
+
+			ps.setString(1, changeTo);
+			ps.setInt(2, userId);
+
+			System.out.println(ps);
+			System.out.println(ps.executeUpdate());
+
+		} catch (SQLException sqle) {
+			sqle.printStackTrace();
+			// LOGGER.error("Database Interaction Failure", sqle);
+
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException sqle) {
+					// LOGGER.error("Failed to close result set", sqle);
+
+				}
+
+			}
+
+			if (ps != null) {
+				try {
+					ps.close();
+				} catch (SQLException sqle) {
+					// LOGGER.error("Failed to close prepared statement", sqle);
+				}
+			}
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException sqle) {
+					// LOGGER.error("Failed to close connection", sqle);
+				}
+			}
+		}
+	}
+
+	/**
+	 * This is a method to add a new player to the player_account table.
+	 *
+	 * @author Nikoleta Chantzi and Jamie Brunstad
+	 * @param userName : the name of the user added
+	 * @param password : the password of the new user
+	 */
+	public void createUser(String userName, String password) {
+		// INSERT INTO player_account (personID, LastName, FirstName, UserName,
+		// Password, AvatarURL, Email)
+		// VALUES (/* comma separated values in the exact order of the above
+		// columns*/
+		// );
+		Connection conn = null;
+
+		PreparedStatement ps = null;
+
+		ResultSet rs = null;
+
+		try {
+			// System.out.println("Run a prepared database query");
+			// Class.forName("com.mysql.jdbc.Driver");
+			conn = getDB();
+
+			String script = "INSERT INTO player_account (PersonID, Username, Password) "
+					+ "VALUES (RAND()*10000, ?, ?)";
+			ps = conn.prepareStatement(script);
+
+			ps.setString(1, userName);
+			ps.setString(2, password);
+
+			System.out.println(ps);
+			System.out.println(ps.executeUpdate());
+
+		} catch (SQLException sqle) {
+			sqle.printStackTrace();
+			// LOGGER.error("Database Interaction Failure", sqle);
+
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException sqle) {
+					// LOGGER.error("Failed to close result set", sqle);
+
+				}
+
+			}
+
+			if (ps != null) {
+				try {
+					ps.close();
+				} catch (SQLException sqle) {
+					// LOGGER.error("Failed to close prepared statement", sqle);
+				}
+			}
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException sqle) {
+					// LOGGER.error("Failed to close connection", sqle);
+				}
+			}
+		}
+	}
+
+	/**
+	 * This is a method to delete an existent player from the player_account table.
+	 * 
+	 * @author Nikoleta Chantzi
+	 * @param userName
+	 * @param password
+	 */
+	public void deleteUser(String userName, String password) {
+		// INSERT INTO player_account (personID, LastName, FirstName, UserName,
+		// Password, AvatarURL, Email)
+		// VALUES (/* comma separated values in the exact order of the above
+		// columns*/
+		// );
+		Connection conn = null;
+
+		PreparedStatement ps = null;
+
+		ResultSet rs = null;
+
+		try {
+			// System.out.println("Run a prepared database query");
+			// Class.forName("com.mysql.jdbc.Driver");
+			conn = getDB();
+
+			String script = "DELETE FROM player_account WHERE PersonID = ?";
+
+			ps = conn.prepareStatement(script);
+
+			ps.setString(1, userName);
+
+			System.out.println(ps);
+			System.out.println(ps.executeUpdate());
+
+		} catch (SQLException sqle) {
+			sqle.printStackTrace();
+			// LOGGER.error("Database Interaction Failure", sqle);
+
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException sqle) {
+					// LOGGER.error("Failed to close result set", sqle);
+
+				}
+
+			}
+
+			if (ps != null) {
+				try {
+					ps.close();
+				} catch (SQLException sqle) {
+					// LOGGER.error("Failed to close prepared statement", sqle);
+				}
+			}
+		}
+	}
+
+	/**
+	 * This is a function to disconnect the connection passed into the
+	 * "theConnection" parameter.
+	 *
+	 * @param theConnection the connection passed in to be terminated
+	 * @author Tinaye Mawocha
+	 */
+	public void dbDisconnect(Connection theConnection) {
+
+		try {
+			theConnection.close();
+		} catch (SQLException e) {
+			System.out.println("Failed to close connection to database");
+			e.printStackTrace();
+		}
+
+	}
+
+	/**
+	 * main method.
+	 * 
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		// dm.inventoryQuery(236);
+
+		@SuppressWarnings("unused")
+		DatabaseManager test = new DatabaseManager();
+
+		// test.userAuthenticate("tmawocha", "0000f");
+	}
+
+	/**
+	 * This is a function to check the database for a specific user and check
+	 * whether the password functions.
+	 * 
+	 * @author Tinaye Mawocha
+	 * @param user     : the username of the desired user
+	 * @param password : the inputted password
+	 * @return Whether password was accepted
+	 */
+	public boolean userAuthenticate(User user, Password password) {
+
+		String username = user.getUserName();
+
+		String tempQuery = "SELECT * FROM player_account WHERE username='" + username + "'";
+		// Connection conn = dbConnect();
+		String storedPassword = "";
+
+		try {
+			Connection conn = getDB();
+			Statement stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery(tempQuery);
+
+			rs.next();
+			storedPassword = rs.getString("Password");
+
+		} catch (SQLException e) {
+			System.out.println("Account not found");
+			e.printStackTrace();
+
+		}
+
+		if (storedPassword.compareTo(password.getPasswordValue()) == 0) {
+			System.out.println("Password Accepted");
+			user.setUserRole(UserRole.AUTHORIZED);
+			return true;
+		} else {
+			System.out.println("Incorrect Password");
+			user.setUserRole(UserRole.UNAUTHORIZED);
+			return false;
+		}
+
+	}
+
+	/**
+	 * This is a function to check
+	 * 
+	 * @author Nikoleta Chantzi
+	 * @param username : the id of the player to check if exists
+	 * @return whether account exists in the database
+	 * @throws SQLException
+	 */
+
+	public boolean accountExists(String username) {
+
+		Connection conn = null;
+
+		PreparedStatement ps = null;
+
+		ResultSet rs = null;
+
+		boolean exists = false;
+
+		try {
+			conn = getDB();
+
+			String tempQuery = "SELECT * FROM player_account WHERE username= ?";
+
+			ps = conn.prepareStatement(tempQuery);
+
+			ps.setString(1, username);
+
+			rs = ps.executeQuery();
+
+			// if result contains player's username, this will return true (account found)
+			// if result is empty, this will return false (account not found)
+			exists = rs.next();
+
+		} catch (SQLException e) {
+			// System.out.println("Account not found");
+			// e.printStackTrace();
+
+		} finally {
+
+			try {
+				rs.close();
+			} catch (SQLException sqle) {
+
+			}
+		}
+
+		// if we reach this line, we run into a SQLException
+		return exists;
+	}
+
+	/**
+	 * This is a function to query the inventory items held by a player.
+	 * 
+	 * @author Tinaye Mawocha
+	 * @param playerID : the id of the player to check the value
+	 * @return Query result
+	 */
+	public HashMap<String, Item> inventoryQuery(int playerID) {
+
+		String tokenQuery = "SELECT * FROM inventory WHERE PersonID = ? ";
+
+		PreparedStatement ps = null;
+		Connection conn = null;
+		@SuppressWarnings("unused")
+		int netWorth = 0;
+		HashMap<String, Item> playerInventory = new HashMap<String, Item>();
+
+		try {
+
+			conn = getDB();
+			ps = dbConnection.prepareStatement(tokenQuery);
+			ps.setInt(1, playerID);
+
+			// System.out.println(ps);
+			ResultSet rs = ps.executeQuery();
+
+			while (rs.next()) {
+
+				Item tempItem = new Item();
+				String tempType = rs.getString("itemType");
+
+				tempItem.setItemType(ItemTypes.valueOf(tempType));
+
+				int quantity = rs.getInt("quantity");
+				if (playerInventory.containsKey(tempType)) {
+
+					int existingQuantity = playerInventory.get(tempType).getQuantityHeld();
+					tempItem.setQuantityHeld(quantity + existingQuantity);
+
+				} else {
+
+					tempItem.setQuantityHeld(quantity);
+
+				}
+
+				playerInventory.put(tempType, tempItem);
+
+			}
+=======
     /**
      * Database URL.
      */
@@ -80,7 +565,7 @@ public class DatabaseManager {
      * @return Whether password was accepted
      */
 
-    public boolean userAuthenticate(String username, String password) {
+    public boolean userAuthenticate(String username, Password password) {
 
         String tempQuery =
             "SELECT * FROM player_account WHERE username='" + username + "'";
@@ -102,7 +587,7 @@ public class DatabaseManager {
 
         }
 
-        if (storedPassword.compareTo(password) == 0) {
+        if (storedPassword.compareTo(password.getBase64PasswordHash()) == 0) {
             System.out.println("Password Accepted");
             return true;
         } else {
@@ -253,7 +738,8 @@ public class DatabaseManager {
             conn = getDB();
 
             String script =
-                "INSERT INTO player_account (PersonID, Username, Password) VALUES (RAND()*10000, ?, ?)";
+                "INSERT INTO player_account (PersonID, Username, Password) "
+                    + "VALUES (RAND()*10000, ?, ?)";
             ps = conn.prepareStatement(script);
 
             ps.setString(1, userName);
@@ -300,8 +786,10 @@ public class DatabaseManager {
     }
 
     /**
-     * delete user method.
+     * This is a method to delete an existent player from the player_account
+     * table.
      * 
+     * @author Nikoleta Chantzi
      * @param userName
      * @param password
      */
@@ -385,15 +873,6 @@ public class DatabaseManager {
             System.out.println("Failed to close connection to database");
             e.printStackTrace();
         }
-        /**
-         * This is a method to delete an existent player from the player_account
-         * table.
-         *
-         * @author Nikoleta Chantzi
-         * @param userName
-         *            : the name of the user deleted, can only occur if you're
-         *            logged in
-         */
 
     }
 
@@ -402,9 +881,11 @@ public class DatabaseManager {
      * 
      * @param args
      */
+    @SuppressWarnings("unused")
     public static void main(String[] args) {
         // dm.inventoryQuery(236);
 
+        @SuppressWarnings("unused")
         DatabaseManager test = new DatabaseManager();
 
         // test.userAuthenticate("tmawocha", "0000f");
@@ -445,7 +926,7 @@ public class DatabaseManager {
 
         }
 
-        if (storedPassword.compareTo(password.getPasswordValue()) == 0) {
+        if (storedPassword.compareTo(password.getBase64PasswordHash()) == 0) {
             System.out.println("Password Accepted");
             user.setUserRole(UserRole.AUTHORIZED);
             return true;
@@ -460,19 +941,35 @@ public class DatabaseManager {
     /**
      * This is a function to query the inventory items held by a player.
      * 
+     * @author Nikoleta Chantzi
+     *            : the id of the player to check the value
+     * @return whether account exists in the database
+     */
+
+    public boolean accountExists() {
+        // no need for try catch, it is being handled by the caller methods
+
+        return true;
+    }
+
+    /**
+     * This is a function to query the inventory items held by a player.
+     * 
      * @author Tinaye Mawocha
      * @param playerID
      *            : the id of the player to check the value
      * @return Query result
      */
+    @SuppressWarnings("unused")
     public HashMap<String, Item> inventoryQuery(int playerID) {
 
         String tokenQuery = "SELECT * FROM inventory WHERE PersonID = ? ";
 
         PreparedStatement ps = null;
         Connection conn = null;
+        @SuppressWarnings("unused")
         int netWorth = 0;
-        HashMap<String, Item> playerInventory = new HashMap();
+        HashMap<String, Item> playerInventory = new HashMap<String, Item>();
 
         try {
 
@@ -545,6 +1042,7 @@ public class DatabaseManager {
             // System.out.println("Already Connected");
             return dbConnection;
         }
+>>>>>>> 03eb7fe9ec421a84fbd712db0977b1f53d5f5e19
 
     }
 

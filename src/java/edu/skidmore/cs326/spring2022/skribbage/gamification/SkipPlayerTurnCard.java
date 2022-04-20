@@ -54,6 +54,8 @@ public class SkipPlayerTurnCard implements ItemShopInterface {
         setPrice(SpecialCard.SKIPPLAYERTURNCARD.getPrice());
         setDescription(SpecialCard.SKIPPLAYERTURNCARD.getDescription());
 
+        LOG.info("Name, price, and description set for "
+            + "Skip-Player-Turn- Card.");
         LOG.info(
             "Name, price, and description set for Skip-Player-Turn- Card.");
 
@@ -89,12 +91,11 @@ public class SkipPlayerTurnCard implements ItemShopInterface {
             LOG.info("Skip-Player-Turn Card bought for 100 tokens");
             playerTokens -= getPrice();
             LOG.info("100 Tokens subtracted from player's tokens.");
-            System.out.println(getName() + " bought at price " + getPrice()
+            LOG.info(getName() + " bought at price " + getPrice()
                 + ". Player now holds " + playerTokens);
             addSpecialCard(cart);
         } else {
             LOG.info("Not enough tokens to buy a Skip-Player-Turn Card.");
-            System.out.println("Not enough tokens to buy " + getName());
         }
     }
 

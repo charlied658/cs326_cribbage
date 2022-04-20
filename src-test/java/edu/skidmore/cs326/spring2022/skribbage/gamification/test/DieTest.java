@@ -47,7 +47,7 @@ public class DieTest {
      */
     @Test
     public void testRollDie() {
-
+        LOG.debug("Test die roll");
         int numTests = 0;
 
         Boolean negThrees = false;
