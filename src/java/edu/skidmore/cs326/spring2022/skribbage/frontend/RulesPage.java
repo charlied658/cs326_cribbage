@@ -5,32 +5,24 @@ import java.awt.Font;
 import java.awt.Point;
 
 import java.io.File;
-//import java.io.BufferedReader;
-//import java.io.FileReader;
-//import java.io.IOException;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-//import javax.swing.JEditorPane;
+
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
-//import java.awt.event.WindowEvent;
 
-//import java.awt.Graphics2D;
-//import javax.swing.*;
 
 import org.apache.log4j.Logger;
 
 import us.daveread.edu.graphics.shape.Drawable;
 import us.daveread.edu.graphics.shape.impl.Image;
 
-//import us.daveread.edu.graphics.shape.Drawable;
-//import us.daveread.edu.graphics.shape.impl.Image;
+
 import us.daveread.edu.graphics.shape.impl.Text;
 import us.daveread.edu.graphics.surface.DrawingSurface;
 import us.daveread.edu.graphics.surface.MainFrame;
-//import us.daveread.edu.graphics.shape.impl.Rectangle;
 import us.daveread.edu.utilities.Utility;
 
 /***
@@ -122,16 +114,6 @@ public class RulesPage extends DrawingSurface implements Page {
         rulesArea.setWrapStyleWord(true);
         rulesArea.setEditable(false);
 
-        // try {
-        // rulesArea.read(new BufferedReader(
-        // new FileReader("/SkribbageBattleRoyale/rules.txt")), null);
-        // rulesArea.setVisible(true);
-        // }
-        // catch (IOException e) {
-        // // TODO Auto-generated catch block
-        // e.printStackTrace();
-        // new Color((float) 107, (float) 94, (float) 47, (float) 1)
-        // }
         JScrollPane scrollPane =
             new JScrollPane(rulesArea, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
                 JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
@@ -142,14 +124,7 @@ public class RulesPage extends DrawingSurface implements Page {
         String toRead = " ";
 
         toRead = readFromFile();
-
         rulesArea.setText(toRead);
-
-        // "The objective in Cribbage is to be the first player to get "
-        // + "121 points. " + "The gameplay is divided into "
-        // + "three distinct parts, "
-        // + " "
-        // + "The Deal, The Play and The Show.");
 
         add(header);
         add(logo);
@@ -177,6 +152,7 @@ public class RulesPage extends DrawingSurface implements Page {
         return read;
     }
 
+    
     @Override
     public void drawableMouseClick(Drawable e) {
         LOG.trace("DrawableMouseClick in PastGamesPage.java");
