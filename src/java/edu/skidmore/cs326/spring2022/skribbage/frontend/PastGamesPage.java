@@ -8,6 +8,7 @@ import java.util.Calendar;
 import javax.swing.JButton;
 
 import org.apache.log4j.Logger;
+
 import us.daveread.edu.graphics.shape.Drawable;
 import us.daveread.edu.graphics.shape.impl.Image;
 import us.daveread.edu.graphics.shape.impl.Text;
@@ -258,14 +259,17 @@ public class PastGamesPage extends DrawingSurface implements Page {
             returnToMainMenu.setBorderColor(Color.CYAN);
             Utility.pause(100);
             returnToMainMenu.setBorderColor(Color.BLACK);
-            closeWindow();
-            navPage = NavigationPageManager.getInstance().getNavPage();
+            mf.dispose();
+            navPage =
+                (NavigationPage) PageManager.getInstance()
+                    .createPage(PageType.NAVIGATION_PAGE);
         }
     }
+
     /**
-     * Close window method from Page interface.
+     * @param args
      */
-    public void closeWindow() {
-        mf.dispose();
+    public static void main(String[] args) {
+        PageManager.getInstance().createPage(PageType.PAST_GAMES_PAGE);
     }
 }
