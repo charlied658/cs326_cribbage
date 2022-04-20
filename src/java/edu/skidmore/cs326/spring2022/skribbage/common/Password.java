@@ -88,6 +88,21 @@ public class Password implements Payload {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (o != null && o instanceof Password) {
+            return ((Password) o).getBase64SaltAndPasswordHash()
+                .equals(getBase64SaltAndPasswordHash());
+        }
+
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return getBase64SaltAndPasswordHash().hashCode();
+    }
+
+    @Override
     public String toString() {
         return "Hashed password and salt";
     }
