@@ -23,12 +23,9 @@ import edu.skidmore.cs326.spring2022.skribbage.common.UserRole;
  * opening the keyhole to the connection within your terminal. To achieve this
  * type ssh cs326mysql@bits.monead.com Please also note that queries are
  * placeholders and will be injected into code when finally completed
-<<<<<<< HEAD
  * 
  * @author PersistenceTeam
-=======
  * Edited by Jonah Marcus on 20 April 2022 to address Bug #48.
->>>>>>> 97d84c365ac46f838eb01a9778e0a4b76eb945bd
  */
 public class DatabaseManager {
 
