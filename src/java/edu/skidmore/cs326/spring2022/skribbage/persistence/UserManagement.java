@@ -63,5 +63,12 @@ public interface UserManagement {
      * @return the user.
      */
     boolean validateUsername(User user);
-
+    
+    /**
+     * Check if the user name exists
+     * 
+     * @param user as a user
+     * @return boolean depending if the user name exists
+     */
+    boolean userNameExists(User user);
 }

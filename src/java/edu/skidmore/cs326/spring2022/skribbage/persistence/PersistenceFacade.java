@@ -182,6 +182,19 @@ public final class PersistenceFacade
 
         return accepted;
     }
+    
+    /**
+     * This checks the database to see if the user name exists already
+     * 
+     * @param user
+     * @return
+     */
+    public boolean userNameExists(User user) {
+    	
+    	boolean doesExist = DM.accountExists(user.getUserName());
+    	
+    	return doesExist;
+    }
 
     @Override
     public HashMap<String, Item> displayInventory(User user) {
