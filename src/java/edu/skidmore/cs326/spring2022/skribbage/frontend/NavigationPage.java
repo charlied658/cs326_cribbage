@@ -20,7 +20,7 @@ import us.daveread.edu.graphics.surface.MainFrame;
  *         Code reviewed by Jonah Marcus on April 11, 2022.
  */
 @SuppressWarnings("serial")
-public class NavigationPage extends DrawingSurface {
+public class NavigationPage extends DrawingSurface implements Page {
 
     /**
      * welcomeMessage - Text variable to hold welcome message.
@@ -146,10 +146,10 @@ public class NavigationPage extends DrawingSurface {
 
         welcomeMessage =
             new Text("Welcome", new Point(20, 30), 20, Color.black, Color.blue);
-//        user = new Text(
-//            "" + LoginPageManager.getInstance().getLoginPage().getUsername(),
-//            new Point(20, 60), 20, Color.black, Color.blue);
-//        add(user);
+        // user = new Text(
+        // "" + LoginPageManager.getInstance().getLoginPage().getUsername(),
+        // new Point(20, 60), 20, Color.black, Color.blue);
+        // add(user);
         add(welcomeMessage);
     }
 
@@ -166,7 +166,7 @@ public class NavigationPage extends DrawingSurface {
             closeWindow();
         } else if (e == logOut) {
             loginPage = new LoginPage();
-                //LoginPageManager.getInstance().getLoginPage();
+            // LoginPageManager.getInstance().getLoginPage();
             closeWindow();
         }
     }

@@ -1,6 +1,7 @@
 package edu.skidmore.cs326.spring2022.skribbage.common;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Bean class for Hand, that contains a constructor for the Hand, and
@@ -14,7 +15,7 @@ public class Hand {
     /**
      * Creating variable hand to hold a players cards.
      */
-    private ArrayList<Card> cardsInHand;
+    private List<Card> cardsInHand = new ArrayList<Card>();
 
     /**
      * Constructor for Hand that initializes an ArrayList of Cards.
@@ -40,7 +41,7 @@ public class Hand {
      *
      * @return Hand the players current hand
      */
-    public ArrayList<Card> getCardsInHand() {
+    public List<Card> getCardsInHand() {
         return cardsInHand;
     }
 

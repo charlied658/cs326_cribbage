@@ -8,6 +8,7 @@ import java.util.Calendar;
 import javax.swing.JButton;
 
 import org.apache.log4j.Logger;
+
 import us.daveread.edu.graphics.shape.Drawable;
 import us.daveread.edu.graphics.shape.impl.Image;
 import us.daveread.edu.graphics.shape.impl.Text;
@@ -31,7 +32,7 @@ import us.daveread.edu.utilities.Utility;
  */
 
 @SuppressWarnings("serial")
-public class PastGamesPage extends DrawingSurface {
+public class PastGamesPage extends DrawingSurface implements Page {
     /**
      * mainFrameWidth - int variable that holds mainframe width.
      */
@@ -259,7 +260,9 @@ public class PastGamesPage extends DrawingSurface {
             Utility.pause(100);
             returnToMainMenu.setBorderColor(Color.BLACK);
             mf.dispose();
-            navPage = NavigationPageManager.getInstance().getNavPage();
+            navPage =
+                (NavigationPage) PageManager.getInstance()
+                    .createPage(PageType.NAVIGATION_PAGE);
         }
     }
 
@@ -267,6 +270,6 @@ public class PastGamesPage extends DrawingSurface {
      * @param args
      */
     public static void main(String[] args) {
-        new PastGamesPage();
+        PageManager.getInstance().createPage(PageType.PAST_GAMES_PAGE);
     }
 }

@@ -1,7 +1,8 @@
 package edu.skidmore.cs326.spring2022.skribbage.common;
 
-import edu.skidmore.cs326.spring2022.skribbage.logic.events.LoginResponse;
 import org.apache.log4j.Logger;
+
+import edu.skidmore.cs326.spring2022.skribbage.logic.events.AccountResponse;
 
 /**
  * An enum representing all possible events. Whenever a new event type is
@@ -17,25 +18,37 @@ public enum EventType {
     /**
      * Fired when a user attempts to create an account via login page.
      */
-    USER_LOGIN("User Login Event", User.class),
+    USER_LOGIN("User Login Event", User.class, Password.class),
     /**
      * Fired when.
      */
-    USER_LOGIN_HASHED("User Login Hashed Event", User.class),
+    USER_LOGIN_HASHED("User Login Hashed Event", User.class, Password.class),
     /**
      * Fired from logic tier when user's login request has been handled.
      */
     USER_LOGIN_RESPONSE("User Login Response Event",
-        User.class, LoginResponse.class),
+        User.class, AccountResponse.class),
+    /**
+     * Fired when a user types in their username.
+     */
+    USER_VALIDATION_RESPONSE("User Validation Response Event", User.class),
     /**
      * Fired when a user attempts to change their password via login page.
      */
     USER_CHANGE_PASSWORD("User Change Password Event", User.class,
-        String.class),
+        Password.class),
     /**
      * Fired when a user attempts to create an account via login page.
      */
-    USER_CREATE_ACCOUNT("User Create Account Event", User.class),
+    USER_CREATE_ACCOUNT("User Create Account Event", User.class,
+        Password.class),
+
+    /**
+     * Fired when a user is attempting to create an account but just enters
+     * their username.
+     */
+    VALIDATE_USERNAME("Validate Username", User.class),
+
     /**
      * Fired when a user attempts to delete their account.
      */

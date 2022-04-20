@@ -40,6 +40,13 @@ public enum PageType {
     /**
      * past games page.
      */
-    PAST_GAMES_PAGE;
+    PAST_GAMES_PAGE,
+    
+    /**
+     * rules page.
+     */
+    RULES_PAGE;
+    
+    
 
 }
