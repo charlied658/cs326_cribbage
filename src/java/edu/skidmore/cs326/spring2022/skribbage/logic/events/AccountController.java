@@ -111,6 +111,9 @@ public class AccountController implements PropertyChangeListener {
             case USER_CHANGE_PASSWORD:
                 LOG.debug("caught a change password event");
                 break;
+            case VALIDATE_USERNAME:
+                LOG.debug("caught a user validation event");
+                break;
             default:
                 LOG.warn("caught unhandled event");
         }
