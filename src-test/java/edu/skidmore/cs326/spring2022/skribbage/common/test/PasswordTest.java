@@ -4,14 +4,12 @@ import edu.skidmore.cs326.spring2022.skribbage.common.Password;
 import edu.skidmore.cs326.spring2022.skribbage.common.PasswordHasher;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import org.apache.log4j.Logger;
-import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 
 /**
  * Simple class for testing the user bean.
@@ -35,6 +33,7 @@ public class PasswordTest {
      */
     @Test
     public void testPassword() {
+        LOG.trace("Test Password constructor");
         assertNotNull("Password object not created",
             new Password(
                 "testSalt" + PasswordHasher.SALT_AND_PASSWORD_BASE64_SEPARATOR
@@ -46,6 +45,7 @@ public class PasswordTest {
      */
     @Test(expected = IllegalArgumentException.class)
     public void testPasswordBadFormat() {
+        LOG.trace("Test Password constructor with bad salt and hash encoding");
         new Password("testSalt testPassword");
     }
 
@@ -54,6 +54,7 @@ public class PasswordTest {
      */
     @Test
     public void testGetBase64PasswordHash() {
+        LOG.trace("Test Password hash getter");
         Password p = new Password(
             "testSalt" + PasswordHasher.SALT_AND_PASSWORD_BASE64_SEPARATOR
                 + "testPassword");
@@ -66,6 +67,7 @@ public class PasswordTest {
      */
     @Test
     public void testGetBase64Salt() {
+        LOG.trace("Test Password salt getter");
         Password p = new Password(
             "testSalt" + PasswordHasher.SALT_AND_PASSWORD_BASE64_SEPARATOR
                 + "testPassword");
@@ -73,10 +75,11 @@ public class PasswordTest {
     }
 
     /**
-     * Test the salt accessor.
+     * Test the salt and password hash accessor.
      */
     @Test
     public void testGetBase64SaltAndPasswordHash() {
+        LOG.trace("Test Password salt and hash getter");
         Password p = new Password(
             "testSalt" + PasswordHasher.SALT_AND_PASSWORD_BASE64_SEPARATOR
                 + "testPassword");
@@ -85,4 +88,54 @@ public class PasswordTest {
                 + "testPassword",
             p.getBase64SaltAndPasswordHash());
     }
+
+    /**
+     * Test the equals method when Password are equal.
+     */
+    @Test
+    public void testEqualsIsEqual() {
+        LOG.trace("Test Password equals when equal");
+        Password p1 = new Password(
+            "testSalt" + PasswordHasher.SALT_AND_PASSWORD_BASE64_SEPARATOR
+                + "testPassword");
+        Password p2 = new Password(
+            "testSalt" + PasswordHasher.SALT_AND_PASSWORD_BASE64_SEPARATOR
+                + "testPassword");
+
+        assertTrue("Passwords should match", p1.equals(p2));
+    }
+
+    /**
+     * Test the equals method when Password are not equal.
+     */
+    @Test
+    public void testEqualsNotEqual() {
+        LOG.trace("Test Password equals when not equal");
+        Password p1 = new Password(
+            "testSalt" + PasswordHasher.SALT_AND_PASSWORD_BASE64_SEPARATOR
+                + "testPassword");
+        Password p2 = new Password(
+            "testSalt2" + PasswordHasher.SALT_AND_PASSWORD_BASE64_SEPARATOR
+                + "testPassword2");
+
+        assertFalse("Passwords should not match", p1.equals(p2));
+    }
+
+    /**
+     * Test the hashCode method when Passwords are equal.
+     */
+    @Test
+    public void testHashCode() {
+        LOG.trace("Test Password hashCode when equal");
+        Password p1 = new Password(
+            "testSalt" + PasswordHasher.SALT_AND_PASSWORD_BASE64_SEPARATOR
+                + "testPassword");
+        Password p2 = new Password(
+            "testSalt" + PasswordHasher.SALT_AND_PASSWORD_BASE64_SEPARATOR
+                + "testPassword");
+
+        assertEquals("Password hashCodes should match", p1.hashCode(),
+            p2.hashCode());
+    }
+
 }
