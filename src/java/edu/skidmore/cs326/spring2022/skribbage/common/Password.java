@@ -8,7 +8,7 @@ package edu.skidmore.cs326.spring2022.skribbage.common;
  * This can be done by calling hashNewPassword on a String using
  * the public LoginAuthenticator instance.
  * Edits by DSR on 4/19:
- * Fixed JavaDoc and updated to manage Base64encoded hash information
+ * Fixed JavaDoc and updated to manage Base64-encoded hash information
  */
 public class Password implements Payload {
     /**
