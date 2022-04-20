@@ -179,11 +179,85 @@ public class StartGamePage extends DrawingSurface implements Page {
      */
     public StartGamePage() {
         LOG.trace("StartGamePage constructor");
-        startGamePage = new MainFrame(this, "Start Game Page", 900, 900, false);
+        startGamePage = new MainFrame(
+            this, "Start Game Page", 1400, 900, false);
         setup();
+    }
+    
+    /**
+     * setup method.
+     */
+    public void setup() {
+        LOG.trace("setup method in StartGamePage.java");
+        
+        board = new Rectangle(new Point(35, 50), new Dimension(350, 700),
+            Color.black, new Color(180, 110, 30));
+        gameArea = new Rectangle(new Point(25, 40),
+            new Dimension(1350, 800), Color.black, new Color(43, 176, 19));
+        beginGame = new Text("Start", new Point(35, 880), 20, Color.black,
+            Color.blue);
+        player1Score = new Text("temp player 1:", new Point(35, 790), 20,
+            Color.black);
+        player2Score = new Text("temp player 2: ", new Point(35, 810), 20,
+            Color.black);
+        returnHome = new Text("Return to home", new Point(10, 25), 20,
+            Color.black, Color.blue);
+        movePlayers = new Text[5];
+        movePlayers[0] = new Text("Move P1", new Point(100, 880), 20,
+            Color.black, Color.blue);
+        movePlayers[1] = new Text("Move P2", new Point(200, 880), 20,
+            Color.black, Color.blue);
+        movePlayers[2] = new Text("Move P3", new Point(300, 880), 20,
+            Color.black, Color.blue);
+        movePlayers[3] = new Text("Set move amt.", new Point(400, 880), 20,
+            Color.black, Color.blue);
+        movePlayers[4] = new Text("Reset", new Point(560, 880), 20,
+            Color.black, Color.blue);
+        cards = new Image[20];
+        for (int i = 0; i < 20; i++) {
+            cards[i] = new Image("card.png",
+                new Point(700 + 2 * i, 315 + 2 * i), .6, null);
+        }
+        add(gameArea);
+        add(beginGame);
+        add(player2Score);
+        add(player1Score);
+        add(returnHome);
+        add(board);
+        add(movePlayers[0]);
+        add(movePlayers[1]);
+        add(movePlayers[2]);
+        add(movePlayers[3]);
+        add(movePlayers[4]);
+        for (int i = 19; i >= 0; i--) {
+            add(cards[i]);
+        }
+        moveAmt = 5;
+        running = false;
+        cardState = true;
         createGrid();
-        createSpots();
-        // animateSpots();
+        assignSpots();
+        renderSpots();
+    }
+    
+    /**
+     * createGrid method creates the board grid.
+     */
+    public void createGrid() {
+        LOG.trace("createGrid method in StartGamePage.java");
+        BoardManager.getInstance().getBoard().initializeGrid();
+    }
+
+    /**
+     * assignSpots method assigns all the special spots.
+     */
+    public void assignSpots() {
+        LOG.trace("assignSpots method in StartGamePage,java");
+        BoardManager.getInstance().getBoard().assignBattleSpot();
+        for (int i = 0; i < 2; i++) {
+            BoardManager.getInstance().getBoard().assignJumpSpot();
+            BoardManager.getInstance().getBoard().assignPrizeSpot();
+        }
     }
     
     /**
@@ -191,7 +265,7 @@ public class StartGamePage extends DrawingSurface implements Page {
      * 
      * @author Charlie Davidson
      */
-    public void createSpots() {
+    public void renderSpots() {
         
         initialSpots = new Circle[2][3];
         
@@ -314,9 +388,9 @@ public class StartGamePage extends DrawingSurface implements Page {
             Point destPoint;
 
             if (cardState) {
-                destPoint = new Point(400 + 15 * i, 330);
+                destPoint = new Point(600 + 15 * i, 330);
             } else {
-                destPoint = new Point(500 + 2 * i, 315 + 2 * i);
+                destPoint = new Point(700 + 2 * i, 315 + 2 * i);
             }
 
             x[i] = initialPoint.getX();
@@ -433,84 +507,6 @@ public class StartGamePage extends DrawingSurface implements Page {
             movePlayers[i].setOpacity(clickable[i + 1] ? 1 : 0.5f);
             movePlayers[i].setClickable(clickable[i + 1]);
         }
-    }
-
-    /**
-     * setup method.
-     */
-    public void setup() {
-        LOG.trace("setup method in StartGamePage.java");
-        // boardImage = new Image("newboard.png", new Point(40, 65), 1.5, null);
-        board = new Rectangle(new Point(35, 50), new Dimension(350, 700),
-            Color.black, new Color(180, 110, 30));
-        gameArea = new Rectangle(new Point(25, 40),
-            new Dimension(850, 800), Color.black, new Color(43, 176, 19));
-        beginGame = new Text("Start", new Point(35, 880), 20, Color.black,
-            Color.blue);
-        // cardDeck = new Image("card.jpg", new Point(500, 315), .6, null);
-        player1Score = new Text("temp player 1:", new Point(35, 790), 20,
-            Color.black);
-        player2Score = new Text("temp player 2: ", new Point(35, 810), 20,
-            Color.black);
-        returnHome = new Text("Return to home", new Point(10, 25), 20,
-            Color.black, Color.blue);
-        movePlayers = new Text[5];
-        movePlayers[0] = new Text("Move P1", new Point(100, 880), 20,
-            Color.black, Color.blue);
-        movePlayers[1] = new Text("Move P2", new Point(200, 880), 20,
-            Color.black, Color.blue);
-        movePlayers[2] = new Text("Move P3", new Point(300, 880), 20,
-            Color.black, Color.blue);
-        movePlayers[3] = new Text("Set move amt.", new Point(400, 880), 20,
-            Color.black, Color.blue);
-        movePlayers[4] = new Text("Reset", new Point(560, 880), 20,
-            Color.black, Color.blue);
-        cards = new Image[20];
-        for (int i = 0; i < 20; i++) {
-            cards[i] = new Image("card.png",
-                new Point(500 + 2 * i, 315 + 2 * i), .6, null);
-        }
-        add(gameArea);
-        add(beginGame);
-        // add(cardDeck);
-        add(player2Score);
-        add(player1Score);
-        add(returnHome);
-        add(board);
-        add(movePlayers[0]);
-        add(movePlayers[1]);
-        add(movePlayers[2]);
-        add(movePlayers[3]);
-        add(movePlayers[4]);
-        for (int i = 19; i >= 0; i--) {
-            add(cards[i]);
-        }
-        // add(boardImage);
-        moveAmt = 5;
-        running = false;
-        cardState = true;
-        createGrid();
-    }
-
-    /**
-     * createGrid method creates the board grid.
-     */
-    public void createGrid() {
-        LOG.trace("createGrid method in StartGamePage.java");
-        assignSpots();
-        // spots = BoardManager.getInstance().getBoard().getGrid();
-        // for (int i = 0; i < spots.length; i++) {
-        // }
-    }
-
-    /**
-     * assignSpots method assigns all the special spots.
-     */
-    public void assignSpots() {
-        LOG.trace("assignSpots method in StartGamePage,java");
-        BoardManager.getInstance().getBoard().assignBattleSpot();
-        BoardManager.getInstance().getBoard().assignJumpSpot();
-        BoardManager.getInstance().getBoard().assignPrizeSpot();
     }
 
     @Override

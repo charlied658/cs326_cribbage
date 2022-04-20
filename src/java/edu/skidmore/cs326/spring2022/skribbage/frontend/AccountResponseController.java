@@ -5,6 +5,7 @@ import java.beans.PropertyChangeListener;
 
 import org.apache.log4j.Logger;
 
+import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserChangePasswordResponseEvent;
 import edu.skidmore.cs326.spring2022.skribbage.logic.events.AccountResponseEvent;
 import edu.skidmore.cs326.spring2022.skribbage.logic.events.UserLoginResponseEvent;
 import edu.skidmore.cs326.spring2022.skribbage.logic.events.UserValidationResponseEvent;
