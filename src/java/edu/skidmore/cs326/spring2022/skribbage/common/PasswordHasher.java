@@ -5,10 +5,15 @@ import java.security.SecureRandom;
 import java.util.Arrays;
 import java.util.Base64;
 
+import org.apache.log4j.Logger;
+
+import edu.skidmore.cs326.spring2022.skribbage.frontend.PastGamesPage;
+
 /**
  * Singleton class used to hash given passwords.
  *
  * @author Declan Morris
+ *      Edited by Jonah Marcus on 20 April 2022 to address Bug #48.
  */
 public class PasswordHasher {
 
@@ -16,6 +21,15 @@ public class PasswordHasher {
      * The only instance of this class that should ever exist.
      */
     private static PasswordHasher instance = null;
+    
+    /**
+     * Logger instance for logging.
+     */
+    private static final Logger LOG;
+
+    static {
+        LOG = Logger.getLogger(PasswordHasher.class);
+    }
 
     /**
      * Constructor should only be accessed when the instance
@@ -88,8 +102,9 @@ public class PasswordHasher {
             return md.digest(saltAndPassword);
         }
         catch (Throwable throwable) {
-            System.out.println("Unable to create SHA-256 digest for data");
-            throwable.printStackTrace();
+            //System.out.println("Unable to create SHA-256 digest for data");
+            //throwable.printStackTrace();
+            LOG.error("Unable to create SHA-256 digest for data", throwable);
         }
 
         return null;
