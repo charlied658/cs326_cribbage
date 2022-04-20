@@ -4,8 +4,11 @@ import java.awt.Color;
 import java.awt.Point;
 
 import edu.skidmore.cs326.spring2022.skribbage.frontend.events.ValidateUsernameEvent;
+import edu.skidmore.cs326.spring2022.skribbage.logic.events.CreateAccountResponseEvent;
 import edu.skidmore.cs326.spring2022.skribbage.logic.events.UserLoginResponseEvent;
 import edu.skidmore.cs326.spring2022.skribbage.logic.events.UserValidationResponseEvent;
+import edu.skidmore.cs326.spring2022.skribbage.logic.events.ValidateChangeResponseEvent;
+
 import org.apache.log4j.Logger;
 
 import edu.skidmore.cs326.spring2022.skribbage.common.EventFactory;
@@ -20,7 +23,7 @@ import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserChangePasswor
 
 import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserCreateAccountEvent;
 import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserLoginEvent;
-import edu.skidmore.cs326.spring2022.skribbage.persistence.PersistenceFacade;
+import edu.skidmore.cs326.spring2022.skribbage.frontend.events.ValidateForChangePassword;
 import us.daveread.edu.graphics.shape.Drawable;
 import us.daveread.edu.graphics.shape.impl.Image;
 import us.daveread.edu.graphics.shape.impl.Text;
@@ -189,6 +192,11 @@ public class LoginPage extends DrawingSurface implements Page {
     private PageManager pageManager;
 
     /**
+     * UserChangePasswordEvent instance.
+     */
+    private UserChangePasswordEvent evt;
+
+    /**
      * Logger instance for logging..
      */
     private static final Logger LOG;
@@ -242,7 +250,7 @@ public class LoginPage extends DrawingSurface implements Page {
     }
 
     /**
-     * method to handle different button clicks.
+     * Method to handle different button clicks.
      *
      * @param popupType
      *            - integer variable that is used to determine
@@ -259,7 +267,6 @@ public class LoginPage extends DrawingSurface implements Page {
         LOG.trace("ChangePassword method in LoginPage.java");
         switch (popupType) {
             // change Password
-            // TODO currently UserLoginEvent
             case 0:
                 usernameToChange = getUserInput(popupTitle, "Enter username",
                     DialogPosition.CENTER_ALL);
@@ -272,52 +279,11 @@ public class LoginPage extends DrawingSurface implements Page {
 
                 currentUser = new User(null, usernameToChange,
                     UserRole.UNAUTHORIZED);
-                UserLoginEvent eventLogin =
-                    (UserLoginEvent) evtFactory.createEvent(
-                        EventType.USER_LOGIN, this, currentUser);
+                ValidateForChangePassword eventLogin =
+                    (ValidateForChangePassword) evtFactory.createEvent(
+                        EventType.USER_CHANGE_PASSWORD_VALIDATION, this,
+                        currentUser, currentPassword);
                 evtFactory.fireEvent(eventLogin);
-
-                // TODO Need to verify the user without prompting them to the
-                // new navigation page.
-                // verify if this user exists.
-                // loggedIn returns true if this user and password exists in the
-                // database.
-                // False otherwise.
-
-                // THIS CHECK HAS TO BE SOMETHING ELSE. IF I GET A POSITIVE
-                // RESPONSE FROM LOGINEVENT.
-
-                // if (loggedIn()) {
-                // passwordToChange = getUserInput(popupTitle, popupMessage,
-                // DialogPosition.CENTER_ALL, true);
-                // verifyPasswordToChange = getUserInput(popupTitle,
-                // popupMessage + " again", DialogPosition.CENTER_ALL,
-                // true);
-                //
-                // if (passwordToChange.equals(verifyPasswordToChange)) {
-                // newPassword = new Password(
-                // hasher.hashNewPassword(passwordToChange));
-                // UserChangePasswordEvent evt =
-                // (UserChangePasswordEvent) evtFactory.createEvent(
-                // EventType.USER_CHANGE_PASSWORD,
-                // this, currentUser, newPassword);
-                // evtFactory.fireEvent(evt);
-                //
-                // showMessage("Password changed succesfully", "Success!",
-                // DialogType.ERROR);
-                //
-                // } else {
-                // showMessage("Passwords did not match",
-                // "Unsuccessful password change",
-                // DialogType.ERROR);
-                // buttonClicked(1, popupTitle, popupMessage);
-                // }
-                // } else {
-                // showMessage(
-                // "User does not exist. Cannot change the password",
-                // "Create a new account.",
-                // DialogType.ERROR);
-                // }
 
                 break;
 
@@ -331,16 +297,15 @@ public class LoginPage extends DrawingSurface implements Page {
 
                 if (passwordToChange.equals(verifyPasswordToChange)) {
 
-                    UserChangePasswordEvent evt =
+                    evt =
                         (UserChangePasswordEvent) evtFactory.createEvent(
                             EventType.USER_CHANGE_PASSWORD,
                             this, currentUser, newPassword);
                     evtFactory.fireEvent(evt);
-                    // persistence.passwordChange(currentUser, currentPassword,
-                    // newPassword);
+
                 } else {
                     showMessage("Passwords did not match",
-                        "Unsuccessful password change",
+                        "Unsuccessful password change. Try Again!",
                         DialogType.ERROR);
                     buttonClicked(1, popupTitle, popupMessage);
                 }
@@ -351,36 +316,13 @@ public class LoginPage extends DrawingSurface implements Page {
             case 2:
                 createdUsername = getUserInput(popupTitle, popupMessage,
                     DialogPosition.CENTER_ALL);
-                // currentUser = new User(null, createdUsername, null, null);
-                // ule = (UserCreateAccountEvent) evtFactory.createEvent(
-                // EventType.USER_CREATE_ACCOUNT, this, currentUser);
-                // evtFactory.fireEvent(ule);
-
-                /**
-                 * General flow: When a user attempts to create an account,
-                 * they enter a username.
-                 * An async request is fired to the logic tier, who sends a
-                 * response back to our ResponseController
-                 * The ResponseController calls the UsernameValidCallback
-                 */
+      
                 currentUser = new User(null, createdUsername,
                     UserRole.UNAUTHORIZED);
                 ValidateUsernameEvent event =
                     (ValidateUsernameEvent) evtFactory.createEvent(
                         EventType.VALIDATE_USERNAME, this, currentUser);
                 evtFactory.fireEvent(event);
-
-                // If it comes back true, that it was not taken.
-
-                // Verify if username is available. If so, call password
-                // setting.
-                // if (persistence.validateUsername(currentUser)) {
-
-                // } else {
-                // showMessage("Username taken", "Please try again",
-                // DialogType.ERROR);
-                // buttonClicked(2, popupTitle, popupMessage);
-                // }
 
                 break;
             default:
@@ -391,14 +333,14 @@ public class LoginPage extends DrawingSurface implements Page {
     /**
      * Called by AccountResponseController.
      * 
-     * @param userValidationResponseEvent
+     * @param event
      *            incoming event containing information
      * @author Alex Carney
      */
     public void validateUsernameCallback(
-        UserValidationResponseEvent userValidationResponseEvent) {
+        UserValidationResponseEvent event) {
 
-        if (userValidationResponseEvent.getAccountResponse()
+        if (!event.getAccountResponse()
             .isRejectionStatus()) {
             createNewUser();
         } else {
@@ -406,6 +348,38 @@ public class LoginPage extends DrawingSurface implements Page {
                 "Please try again",
                 DialogType.ERROR);
             createNewUser();
+        }
+
+    }
+
+    /**
+     * Called by AccountResponseController to verify user for password change.
+     * 
+     * @param event
+     */
+    public void validateForChangePassword(ValidateChangeResponseEvent event) {
+        if (!event.getAccountResponse().isRejectionStatus()) {
+            passwordToChange =
+                getUserInput("Change Password", "Enter new password",
+                    DialogPosition.CENTER_ALL, true);
+            verifyPasswordToChange = getUserInput("Change Password",
+                "Enter new password again", DialogPosition.CENTER_ALL,
+                true);
+
+            if (passwordToChange.equals(verifyPasswordToChange)) {
+                newPassword = new Password(
+                    hasher.hashNewPassword(passwordToChange));
+                evt = (UserChangePasswordEvent) evtFactory.createEvent(
+                    EventType.USER_CHANGE_PASSWORD, this, currentUser,
+                    newPassword);
+                evtFactory.fireEvent(evt);
+
+            } else {
+                showMessage("Passwords did not match",
+                    "Unsuccessful password change",
+                    DialogType.ERROR);
+                buttonClicked(1, "Change Password", "Enter New Password");
+            }
         }
 
     }
@@ -435,6 +409,21 @@ public class LoginPage extends DrawingSurface implements Page {
     }
 
     /**
+     * Called by AccountResponseController to verify Create account success.
+     * 
+     * @param event
+     */
+    public void validateCreateAccountCallback(
+        CreateAccountResponseEvent event) {
+        if (!event.getAccountResponse().isRejectionStatus()) {
+            userCreatedCallback();
+        } else {
+            LOG.error("Failed to create an user.");
+        }
+
+    }
+
+    /**
      * Called by AccountResponseController.
      * 
      * @param evt
@@ -442,10 +431,11 @@ public class LoginPage extends DrawingSurface implements Page {
      */
     public void validateChangePasswordCallback(
         UserChangePasswordResponseController evt) {
-        if (evt.getAccountResponse().isRejectionStatus()) {
+        if (!evt.getAccountResponse().isRejectionStatus()) {
             showMessage("Password change was succesful.", "You are beautiful!",
                 DialogType.INFORMATION);
         } else {
+            LOG.error("FAILED to change password");
             showMessage(" Couldn't change your password!",
                 "Username or Password is wrong.", DialogType.ERROR);
         }
@@ -472,11 +462,6 @@ public class LoginPage extends DrawingSurface implements Page {
                     currentPassword);
             evtFactory.fireEvent(evt);
 
-            // persistence.userCreate(currentUser, currentPassword);
-
-            userCreatedCallback();
-            // currentUser =
-            // new User(null, createdUsername, forChecking, null);
         } else {
             showMessage("Passwords you entered, do not match",
                 "Please try again",
@@ -493,7 +478,6 @@ public class LoginPage extends DrawingSurface implements Page {
         LOG.trace("userCreatedCallback method in Loginpage.java");
         showMessage("User: " + createdUsername + " created.",
             "New account created.", DialogType.INFORMATION);
-
     }
 
     /**
@@ -502,7 +486,7 @@ public class LoginPage extends DrawingSurface implements Page {
     @Override
     public void drawableMouseClick(Drawable e) {
         LOG.trace("Drawable mouseclick method in LoginPage.java");
-
+        // User Login.
         if (e == loginButton) {
 
             loginButton.setFillColor(Color.GREEN);
@@ -516,28 +500,17 @@ public class LoginPage extends DrawingSurface implements Page {
                 UserRole.UNAUTHORIZED);
             UserLoginEvent eventLogin =
                 (UserLoginEvent) evtFactory.createEvent(
-                    EventType.USER_LOGIN, this, currentUser);
+                    EventType.USER_LOGIN, this, currentUser, currentPassword);
             evtFactory.fireEvent(eventLogin);
 
         } else if (e == changePasswordButton) {
             changePasswordButton.setFillColor(Color.GREEN);
             buttonClicked(0, "Change Password", "Enter new password");
-            // if (passwordToChange.equals(verifyPasswordToChange)) {
-            // password = passwordToChange;
-            // username = usernameToChange;
-            // } else {
-            // while (!passwordToChange.equals(verifyPasswordToChange)) {
-            // buttonClicked(1, "Passwords did not match",
-            // "Enter new password");
-            // }
-            // }
+
         } else if (e == createAccountButton) {
             createAccountButton.setFillColor(Color.GREEN);
             buttonClicked(2, "New User", "Enter username");
 
-            // if (!createdPassword.equals(verifyCreatedPassword)) {
-            // buttonClicked(1, "Passwords did not match", "Enter password");
-            // }
         } else if (e == homeScreenButton) {
             returnToHome();
         } else if (e == startGameButton) {
@@ -549,38 +522,6 @@ public class LoginPage extends DrawingSurface implements Page {
     }
 
     /**
-     * verifyUsernameExists - checks if a user that's logging in exists.
-     */
-    // public void verifyUsernameExists() {
-    // LOG.trace("verifyUsernameExists method in LoginPage.java");
-    // currentUser = new User(null, username, null, null);
-    // lEvt = (UserLoginEvent) evtFactory
-    // .createEvent(EventType.USER_LOGIN, this, currentUser);
-    // evtFactory.fireEvent(lEvt);
-    // }
-
-    /**
-     * verifyUserExists - checks if a user object exists.
-     */
-    // public void verifyUserExists() {
-    // LOG.trace("verifyUserExists method in LoginPage.java");
-    // currentUser = new User(null, username, password, null);
-    // lEvt = (UserLoginEvent) evtFactory.createEvent(EventType.USER_LOGIN,
-    // this, currentUser);
-    // }
-
-    /**
-     * goToNextPage method - once a user is logged in,
-     * shows the navigation page.
-     */
-    // public void goToNextPage() {
-    // LOG.trace("goToNextPage method in LoginPage.java");
-    //// navPage = NavigationPageManager.getInstance().getNavPage();
-    // navPage = new NavigationPage();
-    // closeWindow();
-    // }
-
-    /**
      * returnToHome method handles if a user needs
      * to return to the main menu.
      */
@@ -589,15 +530,13 @@ public class LoginPage extends DrawingSurface implements Page {
         homeScreen =
             (HomeScreen) pageManager.createPage(PageType.HOMESCREEN_PAGE);
         closeWindow();
-        // loginPage.dispose();
     }
 
     /**
-     * close the window.
+     * Method to close the window.
      */
     public void closeWindow() {
         loginPage.dispose();
     }
 
- 
 }

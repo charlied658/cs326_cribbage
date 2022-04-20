@@ -14,6 +14,7 @@ import edu.skidmore.cs326.spring2022.skribbage.common.SpotType;
 import us.daveread.edu.graphics.shape.Drawable;
 import us.daveread.edu.graphics.shape.VisibleObject;
 import us.daveread.edu.graphics.shape.impl.Image;
+import us.daveread.edu.graphics.shape.impl.LineSegment;
 import us.daveread.edu.graphics.shape.impl.Rectangle;
 import us.daveread.edu.graphics.shape.impl.Circle;
 import us.daveread.edu.graphics.shape.impl.Text;
@@ -126,6 +127,11 @@ public class StartGamePage extends DrawingSurface implements Page {
     private Circle endSpot;
 
     /**
+     * Lines displayed on the board which occur every 5 spaces.
+     */
+    private LineSegment[] boardLines;
+    
+    /**
      * Locations of the pegs on the board.
      */
     private int[] pegLocations;
@@ -154,6 +160,11 @@ public class StartGamePage extends DrawingSurface implements Page {
      * Holds the cards of the deck as images.
      */
     private Image[] cards;
+    
+    /**
+     * Arrows displayed on board.
+     */
+    private Image[] arrows;
 
     /**
      * returnHome -Text variable to represent back button.
@@ -224,12 +235,38 @@ public class StartGamePage extends DrawingSurface implements Page {
             cards[i] = new Image("card.png",
                 new Point(700 + 2 * i, 315 + 2 * i), .6, null);
         }
+        arrows = new Image[3];
+        arrows[0] = new Image("arrow.png", new Point(100, 70), 1, null);
+        arrows[1] = new Image("arrow.png", new Point(260, 70), 1, null);
+        arrows[2] = new Image("arrow2.png", new Point(180, 695), -1, null);
+        
         add(gameArea);
         add(beginGame);
         add(player2Score);
         add(player1Score);
         add(returnHome);
         add(board);
+        
+        boardLines = new LineSegment[24];
+        for (int i = 0; i < 24; i++) {
+            if ((i >= 0 && i < 6) || (i >= 12 && i < 18)) {
+                boardLines[i] = new LineSegment(
+                    new Point(60 + (i / 6) * 80, 590 - (i % 6) * 100 - 2),
+                    new Point(120 + (i / 6) * 80 - 4, 590 - (i % 6) * 100 - 2),
+                    Color.yellow);
+            } else {
+                boardLines[i] = new LineSegment(
+                    new Point(60 + (i / 6) * 80, 690 - (i % 6) * 100 - 2),
+                    new Point(120 + (i / 6) * 80 - 4, 690 - (i % 6) * 100 - 2),
+                    Color.yellow);
+            }
+            add(boardLines[i]);
+        }
+        
+        add(arrows[0]);
+        add(arrows[1]);
+        add(arrows[2]);
+        
         add(movePlayers[0]);
         add(movePlayers[1]);
         add(movePlayers[2]);
@@ -244,6 +281,8 @@ public class StartGamePage extends DrawingSurface implements Page {
         createGrid();
         assignSpots();
         renderSpots();
+        
+        
     }
 
     /**

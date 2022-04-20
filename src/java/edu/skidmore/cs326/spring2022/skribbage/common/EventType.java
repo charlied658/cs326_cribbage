@@ -38,6 +38,16 @@ public enum EventType {
     USER_CHANGE_PASSWORD("User Change Password Event", User.class,
         Password.class),
     /**
+     * Fired when user needs to be verified to change password.
+     */
+    USER_CHANGE_PASSWORD_VALIDATION("User Change Password Validation",
+        User.class),
+    /**
+     * Fired when user is successfully verified for password change.
+     */
+    USER_CHANGE_PASSWORD_VALIDATION_RESPONSE(
+        "User Change Password Validation Response", User.class),
+    /**
      * Fired when password change was succesful.
      */
     USER_CHANGE_PASSWORD_RESPONSE("User Change Password Response"),
@@ -46,6 +56,10 @@ public enum EventType {
      */
     USER_CREATE_ACCOUNT("User Create Account Event", User.class,
         Password.class),
+    /**
+     * Fired when user create account is succesful.
+     */
+    USER_CREATE_ACCOUNT_RESPONSE("User Create Account Response", User.class),
 
     /**
      * Fired when a user is attempting to create an account but just enters
