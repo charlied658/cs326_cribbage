@@ -10,7 +10,7 @@ public class Lobby {
     /**
      * The maximum number of users that can be in one lobby.
      */
-    private static final int MAXIMUM_LOBBY_SIZE = 4;
+    private static final int MAXIMUM_LOBBY_SIZE = 3;
     
     /**
      * The number of users currently in the lobby.
@@ -72,7 +72,8 @@ public class Lobby {
      */
     public void addUser(User user) {
         if (numUsers < MAXIMUM_LOBBY_SIZE) {
-            
+            users[numUsers] = user;
+            numUsers += 1;
         }
     }
 
