@@ -19,17 +19,6 @@ import org.apache.log4j.Logger;
 public class JumpSpot extends Spot {
     
     /**
-     * Constructor for jump spot. 
-     * @param location
-     */
-    public JumpSpot(Location location) {
-        super(location);
-        this.spotType = SpotType.JUMP;
-        
-        // TODO Auto-generated constructor stub
-    }
-
-    /**
      * Logger for the class.
      */
     private static final Logger LOG;
@@ -45,8 +34,27 @@ public class JumpSpot extends Spot {
      * Type of spot.
      */
     private SpotType spotType;
+    
     /**
-     * Die to determine jump spot outcome.
+     * Constructor for jump spot. 
+     * @param location
+     */
+    public JumpSpot(Location location) {
+        super(location);
+        this.spotType = SpotType.JUMP;
+       
+    }
+    
+    /**
+     * Returns type of spot.
+     * @return type of spot
+     */
+    public SpotType getType() {
+        return this.spotType;
+    }
+    
+    /**
+     * Die for jump spot.
      */
     private Die die = new Die();
 

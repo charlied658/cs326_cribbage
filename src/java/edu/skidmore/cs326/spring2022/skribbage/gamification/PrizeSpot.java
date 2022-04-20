@@ -57,5 +57,13 @@ public class PrizeSpot extends Spot {
         LOG.info("rewardPenalty: Dice roll is " + diceRoll);
 
     }
+    
+    /**
+     * Returns type of spot.
+     * @return type of spot
+     */
+    public SpotType getType() {
+        return this.spotType;
+    }
 
 }
