@@ -3,14 +3,18 @@ package edu.skidmore.cs326.spring2022.skribbage.frontend;
 import java.awt.Color;
 import java.awt.Point;
 
-import edu.skidmore.cs326.spring2022.skribbage.common.*;
 import edu.skidmore.cs326.spring2022.skribbage.frontend.events.ValidateUsernameEvent;
 import edu.skidmore.cs326.spring2022.skribbage.logic.events.UserLoginResponseEvent;
 import edu.skidmore.cs326.spring2022.skribbage.logic.events.UserValidationResponseEvent;
 import org.apache.log4j.Logger;
 
+import edu.skidmore.cs326.spring2022.skribbage.common.EventFactory;
+import edu.skidmore.cs326.spring2022.skribbage.common.EventType;
+import edu.skidmore.cs326.spring2022.skribbage.common.Password;
+import edu.skidmore.cs326.spring2022.skribbage.common.PasswordHasher;
+import edu.skidmore.cs326.spring2022.skribbage.common.User;
+import edu.skidmore.cs326.spring2022.skribbage.common.UserRole;
 import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserChangePasswordEvent;
-import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserChangePasswordResponseEvent;
 import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserCreateAccountEvent;
 import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserLoginEvent;
 import edu.skidmore.cs326.spring2022.skribbage.persistence.PersistenceFacade;
@@ -433,8 +437,7 @@ public class LoginPage extends DrawingSurface implements Page {
      * 
      * @param evt
      *            --> Incoming event containing information.
-     *            
-     *  @TODO  WIll be finished today.
+     * @TODO WIll be finished today.
      */
     public void validateChangePasswordCallback(
         UserChangePasswordResponseEvent evt) {

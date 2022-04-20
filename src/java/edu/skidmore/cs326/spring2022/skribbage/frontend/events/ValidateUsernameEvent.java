@@ -10,18 +10,17 @@ import edu.skidmore.cs326.spring2022.skribbage.common.User;
 /**
  * A concrete implementation of an Event, representing the data transfer object
  * DTO associated with a user attempting to create a new account.
- *
  * When the user enters a username, that username is immediately checked
  * for validation and appropriateness.
  *
  * @author Alex Carney
  */
+@SuppressWarnings("serial")
 public class ValidateUsernameEvent extends AccountEvent {
     /**
      * Private static final Logger instance.
      */
     private static final Logger LOG;
-
 
     static {
         LOG = Logger.getLogger(UserLoginEvent.class);
