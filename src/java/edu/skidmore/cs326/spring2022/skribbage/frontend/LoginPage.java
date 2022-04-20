@@ -15,7 +15,10 @@ import edu.skidmore.cs326.spring2022.skribbage.common.PasswordHasher;
 import edu.skidmore.cs326.spring2022.skribbage.common.User;
 import edu.skidmore.cs326.spring2022.skribbage.common.UserRole;
 import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserChangePasswordEvent;
-import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserChangePasswordResponseEvent;
+
+
+import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserChangePasswordResponseController;
+
 import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserCreateAccountEvent;
 import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserLoginEvent;
 import edu.skidmore.cs326.spring2022.skribbage.persistence.PersistenceFacade;
@@ -273,6 +276,10 @@ public class LoginPage extends DrawingSurface implements Page {
                     (UserLoginEvent) evtFactory.createEvent(
                         EventType.USER_LOGIN, this, currentUser);
                 evtFactory.fireEvent(eventLogin);
+
+                
+                // TODO Need to verify the user without prompting them to the
+                // new navigation page.
                 // verify if this user exists.
                 // loggedIn returns true if this user and password exists in the
                 // database.
@@ -281,44 +288,38 @@ public class LoginPage extends DrawingSurface implements Page {
                 // THIS CHECK HAS TO BE SOMETHING ELSE. IF I GET A POSITIVE
                 // RESPONSE FROM LOGINEVENT.
 
-                if (loggedIn()) {
-                    passwordToChange = getUserInput(popupTitle, popupMessage,
-                        DialogPosition.CENTER_ALL, true);
-                    verifyPasswordToChange = getUserInput(popupTitle,
-                        popupMessage + " again", DialogPosition.CENTER_ALL,
-                        true);
-                    // newPassword = (Password)
-                    // hasher.hashNewPassword(passwordToChange);
-                    // forChecking is the password from createNewUser. We Should
-                    // not
-                    // Allow changing password before they are verified.
-                    if (passwordToChange.equals(verifyPasswordToChange)) {
-                        newPassword = new Password(
-                            hasher.hashNewPassword(passwordToChange));
-                        UserChangePasswordEvent evt =
-                            (UserChangePasswordEvent) evtFactory.createEvent(
-                                EventType.USER_CHANGE_PASSWORD,
-                                this, currentUser, newPassword);
-                        evtFactory.fireEvent(evt);
+                // if (loggedIn()) {
+                // passwordToChange = getUserInput(popupTitle, popupMessage,
+                // DialogPosition.CENTER_ALL, true);
+                // verifyPasswordToChange = getUserInput(popupTitle,
+                // popupMessage + " again", DialogPosition.CENTER_ALL,
+                // true);
+                //
+                // if (passwordToChange.equals(verifyPasswordToChange)) {
+                // newPassword = new Password(
+                // hasher.hashNewPassword(passwordToChange));
+                // UserChangePasswordEvent evt =
+                // (UserChangePasswordEvent) evtFactory.createEvent(
+                // EventType.USER_CHANGE_PASSWORD,
+                // this, currentUser, newPassword);
+                // evtFactory.fireEvent(evt);
+                //
+                // showMessage("Password changed succesfully", "Success!",
+                // DialogType.ERROR);
+                //
+                // } else {
+                // showMessage("Passwords did not match",
+                // "Unsuccessful password change",
+                // DialogType.ERROR);
+                // buttonClicked(1, popupTitle, popupMessage);
+                // }
+                // } else {
+                // showMessage(
+                // "User does not exist. Cannot change the password",
+                // "Create a new account.",
+                // DialogType.ERROR);
+                // }
 
-                        // persistence.passwordChange(currentUser,
-                        // currentPassword,
-                        // newPassword);
-                        showMessage("Password changed succesfully", "Success!",
-                            DialogType.ERROR);
-
-                    } else {
-                        showMessage("Passwords did not match",
-                            "Unsuccessful password change",
-                            DialogType.ERROR);
-                        buttonClicked(1, popupTitle, popupMessage);
-                    }
-                } else {
-                    showMessage(
-                        "User does not exist. Cannot change the password",
-                        "Create a new account.",
-                        DialogType.ERROR);
-                }
                 break;
 
             case 1:
@@ -438,11 +439,21 @@ public class LoginPage extends DrawingSurface implements Page {
      * 
      * @param evt
      *            --> Incoming event containing information.
+
      * @TODO WIll be finished today.
+
+     * 
+
      */
     public void validateChangePasswordCallback(
-        UserChangePasswordResponseEvent evt) {
-        // if()
+        UserChangePasswordResponseController evt) {
+        if (evt.getAccountResponse().isRejectionStatus()) {
+            showMessage("Password change was succesful.", "You are beautiful!",
+                DialogType.INFORMATION);
+        } else {
+            showMessage(" Couldn't change your password!",
+                "Username or Password is wrong.", DialogType.ERROR);
+        }
     }
 
     /**

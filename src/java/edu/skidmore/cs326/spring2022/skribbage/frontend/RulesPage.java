@@ -5,9 +5,12 @@ import java.awt.Font;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 //import java.io.BufferedReader;
 //import java.io.FileReader;
 //import java.io.IOException;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
 
 //import javax.swing.JEditorPane;
 import javax.swing.JScrollPane;
@@ -136,18 +139,42 @@ public class RulesPage extends DrawingSurface implements ActionListener, Page {
 
         scrollPane.getViewport().setBackground(Color.CYAN);
         add(scrollPane);
+        String toRead = " ";
 
-        rulesArea.setText(
-            "The objective in Cribbage is to be the first player to get "
-                + "121 points. " + "The gameplay is divided into "
-                + "three distinct parts, "
-                + " "
-                + "The Deal, The Play and The Show.");
+        toRead = readFromFile();
+
+        rulesArea.setText(toRead);
+
+        // "The objective in Cribbage is to be the first player to get "
+        // + "121 points. " + "The gameplay is divided into "
+        // + "three distinct parts, "
+        // + " "
+        // + "The Deal, The Play and The Show.");
 
         add(header);
         add(logo);
         add(returnToMainMenu);
 
+    }
+
+    /**
+     * Method to read the rules from the rules text file.
+     * 
+     * @return
+     *         A string that will be set as a text.
+     */
+    public String readFromFile() {
+        String read = " ";
+        try {
+            Scanner fileRead = new Scanner(new File("rules.txt"));
+            while (fileRead.hasNext()) {
+                read += fileRead.nextLine();
+            }
+        }
+        catch (FileNotFoundException e) {
+            LOG.error("FileNotFoundException occured.");
+        }
+        return read;
     }
 
     @Override
@@ -160,7 +187,7 @@ public class RulesPage extends DrawingSurface implements ActionListener, Page {
             navPage =
                 (NavigationPage) PageManager.getInstance()
                     .createPage(PageType.NAVIGATION_PAGE);
-            mf.dispose();
+            closeWindow();
 
             // NavigationPageManager.getInstance().getNavPage();
         }
@@ -177,22 +204,16 @@ public class RulesPage extends DrawingSurface implements ActionListener, Page {
         if (e.getSource().equals(returnToMainMenu)) {
             navPage = new NavigationPage();
             // NavigationPageManager.getInstance().getNavPage();
-            mf.dispose();
+            closeWindow();
 
             // PastGamesPage pastGames = new PastGamesPage();
             // spastGames.setVisible(true);
         }
     }
-
     /**
-     * main method.
-     * 
-     * @param args
+     * Method from page interface.
      */
-    public static void main(String[] args) {
-
-        LOG.trace("RulesPage main method");
-
-        PageManager.getInstance().createPage(PageType.RULES_PAGE);
+    public void closeWindow() {
+        mf.dispose();
     }
 }

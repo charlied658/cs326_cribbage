@@ -1,14 +1,18 @@
 package edu.skidmore.cs326.spring2022.skribbage.frontend;
 
+
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-import org.apache.log4j.Logger;
-
-import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserChangePasswordResponseEvent;
+import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserChangePasswordResponseController;
 import edu.skidmore.cs326.spring2022.skribbage.logic.events.AccountResponseEvent;
 import edu.skidmore.cs326.spring2022.skribbage.logic.events.UserLoginResponseEvent;
 import edu.skidmore.cs326.spring2022.skribbage.logic.events.UserValidationResponseEvent;
+
+
+import org.apache.log4j.Logger;
+
+
 
 /**
  * Handles the responses to any event subclassing from 'AccountResponseEvent'.
@@ -61,10 +65,10 @@ public class AccountResponseController implements PropertyChangeListener {
                 ((LoginPage) activePage).validateUsernameCallback(
                     (UserValidationResponseEvent) evt);
                 break;
-            case USER_CHANGE_PASSWORD:
+            case USER_CHANGE_PASSWORD_RESPONSE:
                 LOG.debug("Caught user change password");
                 ((LoginPage) activePage).validateChangePasswordCallback(
-                    (UserChangePasswordResponseEvent) evt);
+                    (UserChangePasswordResponseController) evt);
             default:
                 LOG.warn("caught unhandled event");
         }
