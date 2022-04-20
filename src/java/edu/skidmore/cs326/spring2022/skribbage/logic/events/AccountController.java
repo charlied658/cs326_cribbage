@@ -30,15 +30,15 @@ public class AccountController implements PropertyChangeListener {
         LOG = Logger.getLogger(PlayableGame.class);
     }
 
-//    @Override
-//    public void propertyChange(PropertyChangeEvent evt) {
-//        // Temporary to resolve errors until database is up and running.
-//
-//    }
+    // @Override
+    // public void propertyChange(PropertyChangeEvent evt) {
+    // // Temporary to resolve errors until database is up and running.
+    //
+    // }
 
-//    /**
-//     * Temporary instance of database manager used as tracer bullet.
-//     */
+    /**
+     * Temporary instance of database manager used as tracer bullet.
+     */
     private DatabaseManager dbManager = new DatabaseManager();
 
     /**

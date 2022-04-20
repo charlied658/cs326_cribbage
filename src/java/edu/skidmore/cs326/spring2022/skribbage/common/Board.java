@@ -67,8 +67,8 @@ public class Board {
         grid = new Spot[NUMROWS][NUMCOL];
         // each player has two pegs.
         pegs = new Peg[NUMCOL * 2];
-        //TODO, the grid has to be populated with pegs and spots. 
-        //TODO separate method? 
+        // TODO, the grid has to be populated with pegs and spots.
+        // TODO separate method?
 
     }
 
@@ -115,8 +115,8 @@ public class Board {
             }
 
         }
-        
-        Spot [] listOfOccupied;
+
+        Spot[] listOfOccupied;
         listOfOccupied = (Spot[]) occupied.toArray();
         LOG.info("Returning an array of occupied spots.");
         return listOfOccupied;

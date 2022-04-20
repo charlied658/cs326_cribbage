@@ -17,6 +17,7 @@ import java.beans.PropertyChangeListener;
  * Mock instance of listener on logic's end. Listens for the proper
  * events from the front end tier, validates user, then sends
  * an event back to the front end to handle.
+ * 
  * @author Alex Carney
  */
 public class AccountControllerMOCK implements PropertyChangeListener {
@@ -47,7 +48,6 @@ public class AccountControllerMOCK implements PropertyChangeListener {
     private final EventFactory eventFactoryTestInstance =
         EventFactory.getInstance();
 
-
     /**
      * Logger.
      */
@@ -57,11 +57,11 @@ public class AccountControllerMOCK implements PropertyChangeListener {
         LOG = Logger.getLogger(AccountControllerMOCK.class);
     }
 
-
     /**
      * This method gets called when a bound property is changed.
      *
-     * @param evt A PropertyChangeEvent object describing the event source
+     * @param evt
+     *            A PropertyChangeEvent object describing the event source
      *            and the property that has changed.
      */
     @Override
@@ -75,12 +75,13 @@ public class AccountControllerMOCK implements PropertyChangeListener {
                 LOG.trace("handling user login event");
                 receivedUserFromLogin = incomingEvent.getUser();
                 receivedUserFromLogin.setUserRole(UserRole.AUTHORIZED);
-                outgoingEvent = (UserLoginResponseEvent)
-                    eventFactoryTestInstance.createEvent(
-                        EventType.USER_LOGIN_RESPONSE,
-                        this,
-                        receivedUserFromLogin,
-                        new LoginResponse("Success Login", false));
+                outgoingEvent =
+                    (UserLoginResponseEvent) eventFactoryTestInstance
+                        .createEvent(
+                            EventType.USER_LOGIN_RESPONSE,
+                            this,
+                            receivedUserFromLogin,
+                            new LoginResponse("Success Login", false));
                 System.out.println("outgoingEvent = " + outgoingEvent);
                 eventFactoryTestInstance.fireEvent(outgoingEvent);
                 break;
@@ -96,6 +97,7 @@ public class AccountControllerMOCK implements PropertyChangeListener {
 
     /**
      * Return "logged in" user.
+     * 
      * @return User object
      */
     public User getReceivedUserFromLogin() {
@@ -104,6 +106,7 @@ public class AccountControllerMOCK implements PropertyChangeListener {
 
     /**
      * Return null user.
+     * 
      * @return null.
      */
     public User getReceivedUserFromCreateAccount() {

@@ -23,13 +23,13 @@ public class Player {
      * User associated with player.
      */
     private User user;
-    
+
     /**
      * Hash map that stores items and their quantity.
      */
     private HashMap<String, Integer> inventory =
         new HashMap<String, Integer>();
-    
+
     /**
      * Constructor method.
      * 
@@ -58,7 +58,7 @@ public class Player {
     public String getName() {
         return name;
     }
-    
+
     /**
      * Get user associated with player.
      * 
@@ -77,7 +77,7 @@ public class Player {
     public void setName(String name) {
         this.name = name;
     }
-    
+
     /**
      * Set player username.
      * 
@@ -86,7 +86,7 @@ public class Player {
     public void setUsername(String username) {
         this.username = username;
     }
-    
+
     /**
      * Set player user.
      * 
@@ -95,5 +95,5 @@ public class Player {
     public void setUser(User user) {
         this.user = user;
     }
-    
+
 }

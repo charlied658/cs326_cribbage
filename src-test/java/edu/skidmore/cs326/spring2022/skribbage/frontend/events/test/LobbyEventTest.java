@@ -41,8 +41,7 @@ public class LobbyEventTest {
     public void setUp() {
         LOG.trace("Started the setup method");
         source = new Object();
-        //TODO: CHange this to a concrete impl
-//        testInstance = new LobbyEvent(source);
+        // testInstance = new LobbyEvent(source);
         LOG.info("SetUp method completed");
     }
 
@@ -69,6 +68,7 @@ public class LobbyEventTest {
         assertEquals(testInstance.getEventType(), "Lobby Event");
         LOG.trace("Completed testing the getEventName method");
     }
+
     /**
      * Sets all initialized variables to null.
      */

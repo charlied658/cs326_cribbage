@@ -312,8 +312,8 @@ public class LoginPage extends DrawingSurface {
                 currentUser.setUserName(username);
                 showMessage("User: " + username, "Successful Log In",
                     DialogType.INFORMATION);
-//                navPage = NavigationPageManager.getInstance().getNavPage();
-                navPage = NavigationPageManager.getInstance().getNavPage();
+                // navPage = NavigationPageManager.getInstance().getNavPage();
+                navPage = new NavigationPage();
                 closeWindow();
             } else {
                 showMessage("User not found", "Unsuccessful Log In",
@@ -369,12 +369,12 @@ public class LoginPage extends DrawingSurface {
      * goToNextPage method - once a user is logged in,
      * shows the navigation page.
      */
-//    public void goToNextPage() {
-//        LOG.trace("goToNextPage method in LoginPage.java");
-////        navPage = NavigationPageManager.getInstance().getNavPage();
-//        navPage = new NavigationPage();
-//        closeWindow();
-//    }
+    // public void goToNextPage() {
+    // LOG.trace("goToNextPage method in LoginPage.java");
+    //// navPage = NavigationPageManager.getInstance().getNavPage();
+    // navPage = new NavigationPage();
+    // closeWindow();
+    // }
 
     /**
      * returnToHome method handles if a user needs
@@ -383,7 +383,7 @@ public class LoginPage extends DrawingSurface {
     public void returnToHome() {
         LOG.trace("returnToHome method in LoginPage.java");
         homeScreen = new HomeScreen();
-       // closeWindow();
+        // closeWindow();
         // loginPage.dispose();
     }
 
@@ -391,7 +391,7 @@ public class LoginPage extends DrawingSurface {
      * close the window.
      */
     public void closeWindow() {
-        //LoginPageManager.getInstance().getLoginPage().closeWindow();
+        loginPage.dispose();
     }
 
     /**
@@ -399,8 +399,8 @@ public class LoginPage extends DrawingSurface {
      *
      * @param args
      */
-//    public static void main(String[] args) {
-//        LOG.trace("Main method in loginPage.java");
-//        new Logi();
-//    }
+    // public static void main(String[] args) {
+    // LOG.trace("Main method in loginPage.java");
+    // new Logi();
+    // }
 }

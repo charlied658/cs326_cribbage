@@ -1,4 +1,3 @@
-
 package edu.skidmore.cs326.spring2022.skribbage.logic;
 import edu.skidmore.cs326.spring2022.skribbage.common.Hand;
 
@@ -31,7 +30,10 @@ public class Player {
      * constructor to initialize player.
      */
     public Player() {
-        // initializes the player
+        /**
+         * initialize points to 0
+         */
+        intializePoints();
     }
 
     /**
@@ -47,16 +49,15 @@ public class Player {
      * Set the name of the player.
      */
     public void setName() {
-        // need info from frontEnd
-        // player1 = name1.getName();
-        // player2 = name2.getName();
+
         // claims the player name
     }
 
     /**
-     * set the hand to the player's hand.
+     * Sets the PlayerHand.
      * 
      * @param playerHand
+     *            Player's hand
      */
     public void setHand(Hand playerHand) {
         hand = playerHand;
@@ -73,9 +74,9 @@ public class Player {
     }
 
     /**
-     * Initializes points to 0.
+     * initialize points to zero.
      */
-    public void setPoints() {
+    public void intializePoints() {
         points = 0;
     }
 
@@ -87,6 +88,24 @@ public class Player {
 
     public int getPoints() {
         return points;
+    }
+
+    /**
+     * Returns true if the player is the dealer.
+     * 
+     * @return boolean
+     */
+    public boolean isDealer() {
+        return isDealer;
+    }
+
+    /**
+     * Sets the player to be dealer or not dealer.
+     * 
+     * @param dealer
+     */
+    public void setDealer(boolean dealer) {
+        isDealer = dealer;
     }
 
 }

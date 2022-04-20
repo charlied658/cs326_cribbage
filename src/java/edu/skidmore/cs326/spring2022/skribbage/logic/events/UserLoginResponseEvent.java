@@ -26,7 +26,7 @@ public class UserLoginResponseEvent extends AccountResponseEvent {
         super(source, EventType.USER_LOGIN_RESPONSE, (User) args[0],
             (LoginResponse) args[1]);
     }
-    
+
     /**
      * Allows other classes to read EventType of the event.
      */
@@ -34,7 +34,7 @@ public class UserLoginResponseEvent extends AccountResponseEvent {
     public EventType getEventType() {
         return EVENTTYPE;
     }
-    
+
     /**
      * Allows other classes to read LoginResponse of the event.
      */
