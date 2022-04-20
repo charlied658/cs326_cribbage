@@ -74,12 +74,7 @@ public class LoginAuthenticator implements LoginAuthentication {
         String hashedStringPassword =
             PasswordHasher.getInstance().hashNewPassword(password);
 
-        @SuppressWarnings("static-access")
-        String[] separatedPassword = hashedStringPassword.split(
-            PasswordHasher.getInstance().SALT_AND_PASSWORD_BASE64_SEPARATOR);
-
-        Password newPassword = new Password(separatedPassword[1]);
-        newPassword.setSalt(separatedPassword[0]);
+        Password newPassword = new Password(hashedStringPassword);
 
         return newPassword;
     }

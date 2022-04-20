@@ -102,7 +102,7 @@ public class DatabaseManager {
 
         }
 
-        if (storedPassword.compareTo(password.getPasswordValue()) == 0) {
+        if (storedPassword.compareTo(password.getBase64PasswordHash()) == 0) {
             System.out.println("Password Accepted");
             return true;
         } else {
@@ -440,7 +440,7 @@ public class DatabaseManager {
 
         }
 
-        if (storedPassword.compareTo(password.getPasswordValue()) == 0) {
+        if (storedPassword.compareTo(password.getBase64PasswordHash()) == 0) {
             System.out.println("Password Accepted");
             user.setUserRole(UserRole.AUTHORIZED);
             return true;
