@@ -60,7 +60,6 @@ public class SkribbageBattleRoyale implements Runnable {
         homePage = new HomeScreen();
         eventFactory = EventFactory.getInstance();
         eventManager = EventManager.getInstance();
-
         eventManager
             .addPropertyChangeListener(new AccountResponseController(),
                 EventType.USER_LOGIN_RESPONSE);
