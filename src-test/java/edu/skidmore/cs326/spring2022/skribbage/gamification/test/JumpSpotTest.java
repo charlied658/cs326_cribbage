@@ -6,6 +6,7 @@ import org.apache.log4j.Logger;
 import org.junit.Before;
 import org.junit.Test;
 import edu.skidmore.cs326.spring2022.skribbage.gamification.JumpSpot;
+import edu.skidmore.cs326.spring2022.skribbage.common.Location;
 import edu.skidmore.cs326.spring2022.skribbage.common.Player;
 
 /**
@@ -31,6 +32,11 @@ public class JumpSpotTest {
      * Attribute to house the test instance.
      */
     private JumpSpot testInstance;
+    
+    /**
+     * location of test instance of jump spot. 
+     */
+    private Location testLocation;
 
     /**
      * Player being jumped.
@@ -43,7 +49,8 @@ public class JumpSpotTest {
     @Before
     public void setup() {
         LOG.info("Setup for test");
-        testInstance = new JumpSpot();
+        testLocation = new Location(1, 1);
+        testInstance = new JumpSpot(testLocation);
         testPlayer = new Player();
     }
 
