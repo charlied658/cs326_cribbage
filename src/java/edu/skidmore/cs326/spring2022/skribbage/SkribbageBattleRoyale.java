@@ -56,6 +56,7 @@ public class SkribbageBattleRoyale implements Runnable {
         LOG.info("homePage started by initializing it.");
         // Instantiate required class instances
         homePage = new HomeScreen();
+        homePage.setup();
         eventFactory = EventFactory.getInstance();
         eventManager = EventManager.getInstance();
 

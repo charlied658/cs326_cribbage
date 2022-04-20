@@ -10,12 +10,12 @@ import edu.skidmore.cs326.spring2022.skribbage.logic.events.UserLoginResponseEve
  * @author Declan Morris
  */
 public class UserLoginResponseEventTest {
-    
+
     /**
      * Instance for testing.
      */
     private UserLoginResponseEvent testInstance;
-    
+
     /**
      * Set up for testing and instantiate test instance.
      */

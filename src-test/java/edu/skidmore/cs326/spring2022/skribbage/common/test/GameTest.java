@@ -168,13 +168,13 @@ public class GameTest {
     // @Test
     // public void testGetDeck() {
     //
-    //   Deck deckReturned = game.getDeck();
+    // Deck deckReturned = game.getDeck();
     //
-    //   ArrayList <Card> deckListReturned = deckReturned.getDeck();
+    // ArrayList <Card> deckListReturned = deckReturned.getDeck();
     //
-    //   ArrayList <Card> testDeckList = testDeck.getDeck();
+    // ArrayList <Card> testDeckList = testDeck.getDeck();
     //
-    //   assertTrue(deckListReturned.equals(testDeckList));
+    // assertTrue(deckListReturned.equals(testDeckList));
     //
     // }
 

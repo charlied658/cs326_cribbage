@@ -22,7 +22,10 @@ public class PrizeSpot {
     static {
         LOG = Logger.getLogger(PrizeSpot.class);
     }
-    
+
+    /**
+     * Die.
+     */
     private Die die;
 
     /**
@@ -34,7 +37,6 @@ public class PrizeSpot {
 
         int diceRoll = die.rollDie(6, 0, true);
         LOG.info("rewardPenalty: Dice roll is " + diceRoll);
-        
 
     }
 

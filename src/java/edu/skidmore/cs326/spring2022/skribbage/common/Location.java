@@ -5,11 +5,10 @@ import java.util.Objects;
 /**
  * A simple bean that represents the coordinate
  * location of a peg on the game board.
- *
  * Currently immutable. This can change in the future
- * @author Alex Carney
  * 
- *      Code reviewed by Jonah Marcus on April 11, 2022.
+ * @author Alex Carney
+ *         Code reviewed by Jonah Marcus on April 11, 2022.
  */
 public class Location {
     /**
@@ -23,9 +22,10 @@ public class Location {
     private final Integer column;
 
     /**
-     *
-     * @param row An integer for row coordinate
-     * @param column An integer for column coordinate
+     * @param row
+     *            An integer for row coordinate
+     * @param column
+     *            An integer for column coordinate
      */
     public Location(Integer row, Integer column) {
         this.row = row;
@@ -49,7 +49,9 @@ public class Location {
     /**
      * Two locations are only equivalent if their row and column coordinates
      * are BOTH equivalent.
-     * @param o the object to compare to this location
+     * 
+     * @param o
+     *            the object to compare to this location
      * @return True if the locations are equal
      */
     @Override

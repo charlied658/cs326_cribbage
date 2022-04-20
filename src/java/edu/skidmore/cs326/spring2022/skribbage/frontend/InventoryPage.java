@@ -5,9 +5,9 @@ import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 //import java.awt.event.WindowEvent;
-import java.awt.Dimension;
+import java.util.HashMap;
+
 //import java.awt.Graphics2D;
-import javax.swing.*;
 
 import org.apache.log4j.Logger;
 
@@ -15,16 +15,12 @@ import edu.skidmore.cs326.spring2022.skribbage.common.Card;
 import edu.skidmore.cs326.spring2022.skribbage.common.Rank;
 import edu.skidmore.cs326.spring2022.skribbage.common.Suit;
 
-import java.util.*;
-
 import us.daveread.edu.graphics.shape.Drawable;
 import us.daveread.edu.graphics.shape.impl.Image;
 import us.daveread.edu.graphics.shape.impl.Text;
 import us.daveread.edu.graphics.surface.DrawingSurface;
 import us.daveread.edu.graphics.surface.MainFrame;
 import us.daveread.edu.utilities.Utility;
-import us.daveread.edu.graphics.shape.impl.Rectangle;
-import us.daveread.edu.graphics.shape.impl.Circle;
 
 /***
  * The page that shows the player's inventory. Players can
@@ -34,6 +30,7 @@ import us.daveread.edu.graphics.shape.impl.Circle;
  *         Last Update: April 11, 2022
  *         Last Edited by Jonah Marcus
  */
+@SuppressWarnings("serial")
 public class InventoryPage extends DrawingSurface implements ActionListener {
 
     /**

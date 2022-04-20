@@ -13,9 +13,10 @@ import edu.skidmore.cs326.spring2022.skribbage.common.Suit;
 import static org.junit.Assert.assertEquals;
 
 /**
-GameManagerTest tests the methods in GameManager.
-@author Michael Shriner
-*/
+ * GameManagerTest tests the methods in GameManager.
+ * 
+ * @author Michael Shriner
+ */
 public class GameManagerTest {
 
     /** Object used to manipulate the Game data. */
@@ -32,7 +33,7 @@ public class GameManagerTest {
     public void setup() {
         // initialize the game
         game = new Game();
-        //initialize the GameManager
+        // initialize the GameManager
         gameManager = new GameManager(game);
     }
 
@@ -129,19 +130,18 @@ public class GameManagerTest {
      */
     @Test
     public void testGetDealerIdx() {
-        //initialize player list
+        // initialize player list
         gameManager.initPlayers(2, game.getPlayerList());
 
-        //set the dealer
-        ArrayList <Player> playerList = game.getPlayerList();
+        // set the dealer
+        ArrayList<Player> playerList = game.getPlayerList();
         playerList.get(0).setDealer(true);
         playerList.get(1).setDealer(false);
 
-        //get the index of the dealer
+        // get the index of the dealer
         int idxOfDealer = gameManager.getDealerIdx(game.getPlayerList());
 
         assertEquals(idxOfDealer, 0);
     }
-
 
 } // end of class

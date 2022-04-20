@@ -7,12 +7,12 @@
 //
 // public class TestGameCreation{
 //
-//   @Test
-//   public void createGame (){
-//     //create a new game
-//     Game g = new Game (2);
-//     //make sure that the player's were initialized
-//     //how do I do this?
-//   }
+// @Test
+// public void createGame (){
+// //create a new game
+// Game g = new Game (2);
+// //make sure that the player's were initialized
+// //how do I do this?
+// }
 //
 // }
