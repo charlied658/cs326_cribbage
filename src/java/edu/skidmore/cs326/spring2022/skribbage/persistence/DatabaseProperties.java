@@ -5,12 +5,12 @@ import java.util.Properties;
 
 import org.apache.log4j.Logger;
 
-import edu.skidmore.cs326.spring2022.skribbage.frontend.PastGamesPage;
 
 /**
  * Database properties class.
+ * 
  * @author ??
- *      Edited by Jonah Marcus on 20 April 2022 to address Bug #48.
+ *         Edited by Jonah Marcus on 20 April 2022 to address Bug #48.
  */
 public class DatabaseProperties {
 
@@ -32,7 +32,7 @@ public class DatabaseProperties {
     static {
         INSTANCE = new DatabaseProperties();
     }
-    
+
     /**
      * Logger instance for logging.
      */
@@ -44,6 +44,7 @@ public class DatabaseProperties {
 
     /**
      * fill in.
+     * 
      * @return instance.
      */
     public static DatabaseProperties getInstance() {
@@ -52,6 +53,7 @@ public class DatabaseProperties {
 
     /**
      * fill in.
+     * 
      * @param key
      * @return key
      */
