@@ -9,90 +9,66 @@ import static org.junit.Assert.assertTrue;
 
 import org.apache.log4j.Logger;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 /**
  * Simple class for testing the user bean.
  * 
  * @author Alex Carney
+ * @author DSR
  */
 public class PasswordTest {
 
     /**
-     * Test instance of password.
-     */
-    private Password testInstance;
-
-    /**
-     * Grab the instance of password hasher to test salting.
-     */
-    @SuppressWarnings("unused")
-    private PasswordHasher passwordHasher;
-
-    /**
-     * Test password value.
-     */
-    private static final String TEST_PASSWORD_VALUE = "test_password";
-
-    /**
      * Logger instance for logging.
      */
-    @SuppressWarnings("unused")
     private static final Logger LOG;
 
     static {
-        LOG = Logger.getLogger(UserTest.class);
+        LOG = Logger.getLogger(PasswordTest.class);
     }
 
     /**
-     * Method to set up testing env.
-     */
-    @Before
-    public void setup() {
-        testInstance = new Password(TEST_PASSWORD_VALUE);
-
-        // Grab the password hasher instance
-        passwordHasher = PasswordHasher.getInstance();
-
-    }
-
-    /**
-     * Tests getting password value.
+     * Test password constructor passing correctly formatted salt and hash.
      */
     @Test
-    public void testPasswordValue() {
-        assertNotNull(testInstance);
-        assertEquals(testInstance.getPasswordValue(), TEST_PASSWORD_VALUE);
+    public void testPassword() {
+        assertNotNull("Password object not created",
+            new Password(
+                "testSalt" + PasswordHasher.SALT_AND_PASSWORD_BASE64_SEPARATOR
+                    + "testPassword"));
     }
 
     /**
-     * Tests resetting password value.
+     * Test password constructor passing incorrectly formatted salt and hash.
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public void testPasswordBadFormat() {
+        new Password("testSalt testPassword");
+    }
+
+    /**
+     * Test the hashed password accessor.
      */
     @Test
-    public void testResettingPasswordValue() {
-        testInstance.setPasswordValue(TEST_PASSWORD_VALUE
-            + TEST_PASSWORD_VALUE);
-        assertEquals(testInstance.getPasswordValue(), TEST_PASSWORD_VALUE
-            + TEST_PASSWORD_VALUE);
+    public void testGetBase64PasswordHash() {
+        Password p = new Password(
+            "testSalt" + PasswordHasher.SALT_AND_PASSWORD_BASE64_SEPARATOR
+                + "testPassword");
+        assertEquals("Incorrect hashed password value", "testPassword",
+            p.getBase64PasswordHash());
     }
 
     /**
-     * Tests hashing password. (or at least setting isHashed to true)
-     */
-//    @Test
-//    public void testHashingPassword() {
-//        testInstance.setHashed(true);
-//        assertTrue(testInstance.isHashed());
-//    }
-
-    /**
-     * Test adding salted password. Blocked by Logic tier as
-     * of 4/14.
+     * Test the salt accessor.
      */
     @Test
-    public void testAddingSaltedPassword() {
-        // TODO Why is password hasher all protected??
-        // testInstance.setSalt();
+    public void testGetBase64Salt() {
+        Password p = new Password(
+            "testSalt" + PasswordHasher.SALT_AND_PASSWORD_BASE64_SEPARATOR
+                + "testPassword");
+        assertEquals("Incorrect salt value", "testSalt", p.getBase64Salt());
     }
-
 }

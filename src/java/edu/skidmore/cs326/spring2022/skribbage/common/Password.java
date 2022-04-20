@@ -1,100 +1,81 @@
 package edu.skidmore.cs326.spring2022.skribbage.common;
 
 /**
- * A simple bean that represents a password object. Contains the raw
- * string of the password (which may or not be hashed), along with
- * the salt required to generate the hashed password
- * 
+ * Represents a hashed password. Contains the hashed password and salt.
  * Edits by Declan Morris on 4/19:
- *  Commented out isHashed attribute by recommendation of Architect;
- *  Passwords should always be hashed when they are created.
- *  This can be done by calling hashNewPassword on a String using
- *  the public LoginAuthenticator instance.
+ * Commented out isHashed attribute by recommendation of Architect;
+ * Passwords should always be hashed when they are created.
+ * This can be done by calling hashNewPassword on a String using
+ * the public LoginAuthenticator instance.
+ * Edits by DSR on 4/19:
+ * Fixed JavaDoc and updated to manage Base64encoded hash information
  */
 public class Password implements Payload {
     /**
-     * Represents the string password. May or may not be hashed
+     * The Base64-encoded password.
      */
-    private String passwordValue;
-
-//    /**
-//     * Defaults to false when instantiated from the front end. May be set
-//     * to true once logic tier hashes incoming password
-//     */
-//    private boolean isHashed;
+    private String hashedPasswordBase64;
 
     /**
-     * The salt required to hash the password.
+     * The Base64-encoded salt.
      */
-    private String salt;
+    private String saltBase64;
 
     /**
-     * Creates a new password object. Only required field is passwordValue,
-     * others can be added later
+     * Creates a new password object. The value is expected to be a Base64
+     * encoded salt and password hash.
      * 
-     * @param passwordValue
-     *            The string value of the password
+     * @see #setSaltAndPasswordBase64(String)
+     * @param saltAndHashBase64
+     *            The Base64 encoded salt and password hash
      */
-    public Password(String passwordValue) {
-        this.passwordValue = passwordValue;
-//        isHashed = false;
+    public Password(String saltAndHashBase64) {
+        setSaltAndPasswordBase64(saltAndHashBase64);
     }
 
     /**
-     * Returns string password value, may be raw.
+     * Sets the salt and password hash. The value is expected to be a Base64
+     * encoded salt and password hash. The salt and hash are to be separated
+     * using the separator character defined in the PasswordHasher class.
+     * The salt is expected at the beginning of the value: salt-SEPARATOR-hash
      * 
-     * @return String password value
+     * @see PasswordHasher#SALT_AND_PASSWORD_BASE64_SEPARATOR
+     * @param saltAndHashBase64
+     *            The Base64 encoded salt and password hash
      */
-    public String getPasswordValue() {
-        return passwordValue;
-    }
+    private void setSaltAndPasswordBase64(String saltAndHashBase64) {
+        String[] saltAndHashSplit = saltAndHashBase64
+            .split(PasswordHasher.SALT_AND_PASSWORD_BASE64_SEPARATOR);
 
-//    /**
-//     * Has the string been hashed yet or is it still raw text.
-//     * 
-//     * @return True: password is hashed.
-//     */
-//    public boolean isHashed() {
-//        return isHashed;
-//    }
+        if (saltAndHashSplit.length != 2) {
+            throw new IllegalArgumentException(
+                "Supplied salt and hash are not in expected format");
+        }
 
-//    /**
-//     * Change the status of this password being hashed or not.
-//     * 
-//     * @param hashed
-//     *            boolean update
-//     */
-//    public void setHashed(boolean hashed) {
-//        isHashed = hashed;
-//    }
-
-    /**
-     * Update password text. If incoming password is hashed, make sure to
-     * update setHashed as well
-     * 
-     * @param passwordValue
-     *            Incoming password
-     */
-    public void setPasswordValue(String passwordValue) {
-        this.passwordValue = passwordValue;
+        saltBase64 = saltAndHashSplit[0];
+        hashedPasswordBase64 = saltAndHashSplit[1];
     }
 
     /**
-     * Returns salt associated with password. May be null.
+     * Returns Base64-encoded hashed password.
      * 
-     * @return A potentially null byte array representing a salt
+     * @return String Base64-encoded password hash
      */
-    public String getSalt() {
-        return salt;
+    public String getBase64PasswordHash() {
+        return hashedPasswordBase64;
     }
 
     /**
-     * Sets salt associated with password.
+     * Returns the Base64-encoded salt for the password.
      * 
-     * @param salt
-     *            Salt to set.
+     * @return The Base64-encoded salt
      */
-    public void setSalt(String salt) {
-        this.salt = salt;
+    public String getBase64Salt() {
+        return saltBase64;
+    }
+
+    @Override
+    public String toString() {
+        return "Hashed password and salt";
     }
 }
