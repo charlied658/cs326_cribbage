@@ -20,6 +20,8 @@ import edu.skidmore.cs326.spring2022.skribbage.common.UserRole;
  * opening the keyhole to the connection within your terminal. To achieve this
  * type ssh cs326mysql@bits.monead.com Please also note that queries are
  * placeholders and will be injected into code when finally completed
+ * 
+ * Edited by Jonah Marcus on 20 April 2022 to address Bug #48.
  */
 public class DatabaseManager {
 
@@ -62,6 +64,8 @@ public class DatabaseManager {
      * Database Connection.
      */
     private static Connection dbConnection;
+    
+    
 
     /**
      * String array containing the column names.
@@ -97,8 +101,9 @@ public class DatabaseManager {
 
         }
         catch (SQLException e) {
-            System.out.println("Account not found");
-            e.printStackTrace();
+            //System.out.println("Account not found");
+            //e.printStackTrace();
+            LOG.error("Account not found", e);
 
         }
 
@@ -143,7 +148,8 @@ public class DatabaseManager {
         }
         catch (SQLException e) {
             // System.out.println("AccountinventoryQuery not found");
-            e.printStackTrace();
+            // e.printStackTrace();
+            LOG.error("Account not found", e);
             dbDisconnect(conn);
             return "Account not found";
 
@@ -191,8 +197,8 @@ public class DatabaseManager {
 
         }
         catch (SQLException sqle) {
-            sqle.printStackTrace();
-            // LOGGER.error("Database Interaction Failure", sqle);
+            // sqle.printStackTrace();
+            LOG.error("Database Interaction Failure", sqle);
 
         }
         finally {
@@ -265,8 +271,8 @@ public class DatabaseManager {
 
         }
         catch (SQLException sqle) {
-            sqle.printStackTrace();
-            // LOGGER.error("Database Interaction Failure", sqle);
+            // sqle.printStackTrace();
+            LOG.error("Database Interaction Failure", sqle);
 
         }
         finally {
@@ -336,8 +342,8 @@ public class DatabaseManager {
 
         }
         catch (SQLException sqle) {
-            sqle.printStackTrace();
-            // LOGGER.error("Database Interaction Failure", sqle);
+            // sqle.printStackTrace();
+            LOG.error("Database Interaction Failure", sqle);
 
         }
         finally {
@@ -385,8 +391,9 @@ public class DatabaseManager {
             theConnection.close();
         }
         catch (SQLException e) {
-            System.out.println("Failed to close connection to database");
-            e.printStackTrace();
+            //System.out.println("Failed to close connection to database");
+            //e.printStackTrace();
+            LOG.error("Failed to close connection to database", e);
         }
 
     }
@@ -436,8 +443,9 @@ public class DatabaseManager {
 
         }
         catch (SQLException e) {
-            System.out.println("Account not found");
-            e.printStackTrace();
+            // System.out.println("Account not found");
+            // e.printStackTrace();
+            LOG.error("Account not found", e);
 
         }
 
@@ -525,9 +533,9 @@ public class DatabaseManager {
         }
         catch (SQLException e) {
             // System.out.println("AccountinventoryQuery not found");
-            e.printStackTrace();
+            // e.printStackTrace();
             dbDisconnect(conn);
-            LOG.error("Account not found");
+            LOG.error("Account not found", e);
             return playerInventory;
         }
 
@@ -549,7 +557,8 @@ public class DatabaseManager {
             catch (SQLException e) {
                 // System.out.println("Failed to establish connection with
                 // database");
-                e.printStackTrace();
+                // e.printStackTrace();
+                LOG.fatal("Failed to establish connection with database", e);
             }
             System.out.println("Connected");
             return dbConnection;
