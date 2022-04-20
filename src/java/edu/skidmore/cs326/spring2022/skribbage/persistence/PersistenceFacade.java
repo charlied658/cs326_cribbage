@@ -9,8 +9,8 @@ import edu.skidmore.cs326.spring2022.skribbage.common.Password;
 import edu.skidmore.cs326.spring2022.skribbage.common.User;
 
 /**
- * Will contain the methods for an event listener and call the methods in the
- * DatabaseManager.
+ * The Facade will have the methods that require communication with the database.
+ * It will call methods in the DatabaseManager class to communicate with the database.
  *
  * @author Ricardo Rosario
  *         Last Edit: April 10, 2022
@@ -65,7 +65,8 @@ public final class PersistenceFacade
      *            The user that is to be created
      * @param password
      *            The password that is connected to the user being created
-     * @return boolean True or False depending if the method worked or failed
+     * @return boolean 
+     * 			  True or False depending if the method worked or failed
      */
     @Override
     public boolean userCreate(User userToCreate, Password password) {
@@ -89,8 +90,6 @@ public final class PersistenceFacade
     @Override
     public boolean userDelete(User userToDelete, Password password) {
 
-    	System.out.println(userToDelete.getUserName());
-    	System.out.println(password.getPasswordValue());
     	DM.deleteUser(userToDelete.getUserName(), password.getPasswordValue());
         return true;
     }
@@ -110,6 +109,8 @@ public final class PersistenceFacade
     @Override
     public boolean passwordChange(User userToUpdate, Password currentPassword,
         Password newPassword) {
+    	System.out.println("UserID: " + userToUpdate.getUserId());
+    	DM.update("Password", newPassword.getPasswordValue(), 1);
 
         return true;
     }
@@ -172,7 +173,6 @@ public final class PersistenceFacade
         // user will have to be
         // handled by the front end team in the password prompt method in this
         // class
-    	System.out.println(password.getPasswordValue());
     	//PRha74NgJISBMA==~mvIwoqOH1VA2AzrxLvxTXyGgJLr0jyS09bHhi4G9tZ4=
 
         boolean accepted = DM.userAuthenticate(user, password);
@@ -209,9 +209,9 @@ public final class PersistenceFacade
     }
 
     @Override
-    public boolean transferItem(User sender, User recipient, String item) {
-        // TODO Auto-generated method stub
-        return false;
-    }
+	public boolean transferItem(User sender, User recipient, String item) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 
 }
