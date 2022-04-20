@@ -90,7 +90,7 @@ public class PasswordTest {
     }
 
     /**
-     * Test the equals method when Password are equal.
+     * Test the equals method when Passwords are equal.
      */
     @Test
     public void testEqualsIsEqual() {
@@ -106,7 +106,7 @@ public class PasswordTest {
     }
 
     /**
-     * Test the equals method when Password are not equal.
+     * Test the equals method when Passwords are not equal.
      */
     @Test
     public void testEqualsNotEqual() {
