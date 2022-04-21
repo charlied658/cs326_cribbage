@@ -128,6 +128,14 @@ public enum EventType {
         LOG.debug("Returning arguments list of an event");
         return args;
     }
+    /**
+     * Returns the password object associated with event. It is hashed.
+     * @return password object with hashed password.
+     */
+    public Password getPassword() {
+        LOG.debug("Sending password object");
+        return (Password) args[1];
+    }
     
 
 }
