@@ -50,6 +50,7 @@ public class AccountResponseController implements PropertyChangeListener {
      */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
+
         LOG.trace("Account response controller fired property change");
         AccountResponseEvent responseEvent = (AccountResponseEvent) evt;
         Page activePage = pageManager.getActivePage();
