@@ -23,12 +23,7 @@ import us.daveread.edu.utilities.Utility;
  *         Last Update: March 11 2022
  *         lOGGING added by Sten Leinasaar March 22, 2022.
  *         This is the page that allows the player to view and load old games.
- * @author Jonah Marcus
- *         Last Update: March 11 2022
- *         This is the page that allows the player to load old games.
- * @author Jonah Marcus
- *         Last Update: March 10 2022
- *         Code reviewed by Zoe Beals 3/24/2022
+ * 
  */
 
 @SuppressWarnings("serial")
@@ -89,6 +84,10 @@ public class PastGamesPage extends DrawingSurface implements Page {
      */
     @SuppressWarnings("unused")
     private NavigationPage navPage;
+    /**
+     * PageManager instance for page handling.
+     */
+    private PageManager pageManager;
 
     /**
      * Logger instance for logging.
@@ -103,6 +102,7 @@ public class PastGamesPage extends DrawingSurface implements Page {
      * PastGamesPage constructor.
      */
     public PastGamesPage() {
+        pageManager = PageManager.getInstance();
         mf = new MainFrame(this, "Past Games Page", mainframeWidth,
             mainframeHeight, false);
         addGamesToList();
@@ -261,15 +261,8 @@ public class PastGamesPage extends DrawingSurface implements Page {
             returnToMainMenu.setBorderColor(Color.BLACK);
             mf.dispose();
             navPage =
-                (NavigationPage) PageManager.getInstance()
+                (NavigationPage) pageManager
                     .createPage(PageType.NAVIGATION_PAGE);
         }
-    }
-
-    /**
-     * @param args
-     */
-    public static void main(String[] args) {
-        PageManager.getInstance().createPage(PageType.PAST_GAMES_PAGE);
     }
 }

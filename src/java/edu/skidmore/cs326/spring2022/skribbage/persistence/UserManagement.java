@@ -4,9 +4,9 @@ import edu.skidmore.cs326.spring2022.skribbage.common.Password;
 import edu.skidmore.cs326.spring2022.skribbage.common.User;
 
 /**
- * user management.
+ * user management interface.
  * 
- * @author
+ * @author Ricardo Rosario
  */
 public interface UserManagement {
 
@@ -23,9 +23,10 @@ public interface UserManagement {
      * userDelete.
      * 
      * @param userToDelete
+     * @param password
      * @return the user.
      */
-    boolean userDelete(User userToDelete);
+    boolean userDelete(User userToDelete, Password password);
 
     /**
      * password change.
@@ -39,7 +40,7 @@ public interface UserManagement {
         Password newPassword);
 
     /**
-     * userCHange.
+     * userChange.
      * 
      * @param userToChange
      * @param args
@@ -64,4 +65,20 @@ public interface UserManagement {
      */
     boolean validateUsername(User user);
 
+    /**
+     * Check if the user name exists.
+     * 
+     * @param user
+     *            as a user
+     * @return boolean depending if the user name exists
+     */
+    boolean userNameExists(User user);
+    
+    /**
+     * Get the user's password Base64-encoded salt.
+     * 
+     * @param user The user's whose password salt is to be obtained
+     * @return The password salt or null if the user's account is not found
+     */
+    String getUserSaltBase64(User user);
 }

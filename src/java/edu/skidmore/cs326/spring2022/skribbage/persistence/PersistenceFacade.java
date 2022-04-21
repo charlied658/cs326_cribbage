@@ -9,18 +9,19 @@ import edu.skidmore.cs326.spring2022.skribbage.common.Password;
 import edu.skidmore.cs326.spring2022.skribbage.common.User;
 
 /**
- * Will contain the methods for an event listener and call the methods in the
- * DatabaseManager.
+ * The Facade will have the methods that require communication with the
+ * database. It will call methods in the DatabaseManager class to communicate
+ * with the database.
  *
- * @author Ricardo Rosario
- *         Last Edit: April 10, 2022
+ * @author Ricardo Rosario Last Edit: April 10, 2022
  */
+
 public final class PersistenceFacade
-    implements UserManagement , GameManagement , InventoryManagement {
+    implements UserManagement, GameManagement, InventoryManagement {
 
     /**
-     * Singleton instance of PersistenceFacade.
-     * Instance can be accessed through PersistenceFacade.getInstatnce()
+     * Singleton instance of PersistenceFacade. Instance can be accessed through
+     * PersistenceFacade.getInstatnce()
      */
     private static final PersistenceFacade INSTANCE;
 
@@ -85,23 +86,27 @@ public final class PersistenceFacade
      * 
      * @param userToDelete
      *            The user that is going to be deleted
-     * @return boolean Returns true or false
-     *         depending on whether the method worked
+     * @return boolean Returns true or false depending on whether the method
+     *         worked
      */
     @Override
-    public boolean userDelete(User userToDelete) {
+    public boolean userDelete(User userToDelete, Password password) {
 
+        DM.deleteUser(userToDelete.getUserName(),
+            password.getBase64PasswordHash());
         return true;
     }
 
     /**
      * This will take in a current user, current password and the new password
-     * in order to change passwords.
+     * in
+     * order to change passwords.
      * 
      * @param userToUpdate
      *            This is the user that want to change their password
      * @param currentPassword
-     *            This is the current password that they have in their account
+     *            This is the current password that they have in their
+     *            account
      * @param newPassword
      *            This is the new password that they want to change
      * @return boolean true or false depending if the method worked or failed.
@@ -109,13 +114,16 @@ public final class PersistenceFacade
     @Override
     public boolean passwordChange(User userToUpdate, Password currentPassword,
         Password newPassword) {
+        System.out.println("UserID: " + userToUpdate.getUserId());
+        DM.update("Password", newPassword.getBase64PasswordHash(), 1);
 
         return true;
     }
 
     /**
      * This will take in a user and the arg of what needs to be change and
-     * change it.
+     * change
+     * it.
      * 
      * @param userToChange
      *            The user that wants to change something
@@ -171,10 +179,24 @@ public final class PersistenceFacade
         // user will have to be
         // handled by the front end team in the password prompt method in this
         // class
+        // PRha74NgJISBMA==~mvIwoqOH1VA2AzrxLvxTXyGgJLr0jyS09bHhi4G9tZ4=
 
         boolean accepted = DM.userAuthenticate(user, password);
 
         return accepted;
+    }
+
+    /**
+     * This checks the database to see if the user name exists already
+     * 
+     * @param user
+     * @return boolean depending if the user name already exists
+     */
+    public boolean userNameExists(User user) {
+
+        boolean doesExist = DM.accountExists(user.getUserName());
+
+        return doesExist;
     }
 
     @Override
@@ -208,6 +230,11 @@ public final class PersistenceFacade
     public boolean transferItem(User sender, User recipient, String item) {
         // TODO Auto-generated method stub
         return false;
+    }
+
+    @Override
+    public String getUserSaltBase64(User user) {
+        return DM.getUserSaltBase64(user.getUserName());
     }
 
 }

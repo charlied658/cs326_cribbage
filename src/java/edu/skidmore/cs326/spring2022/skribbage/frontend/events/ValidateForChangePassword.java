@@ -8,22 +8,20 @@ import edu.skidmore.cs326.spring2022.skribbage.common.EventType;
 import edu.skidmore.cs326.spring2022.skribbage.common.User;
 
 /**
- * A concrete implementation of an Event, representing the data transfer object
- * DTO associated with a user attempting to create a new account.
- * When the user enters a username, that username is immediately checked
- * for validation and appropriateness.
+ * Event that is fired to verify the user before change password can be allowed.
+ * .
  *
- * @author Alex Carney
+ * @author Sten Leinasaar
  */
 @SuppressWarnings("serial")
-public class ValidateUsernameEvent extends AccountEvent {
+public class ValidateForChangePassword extends AccountEvent {
     /**
      * Private static final Logger instance.
      */
     private static final Logger LOG;
 
     static {
-        LOG = Logger.getLogger(UserLoginEvent.class);
+        LOG = Logger.getLogger(ValidateForChangePassword.class);
     }
 
     /**
@@ -36,18 +34,19 @@ public class ValidateUsernameEvent extends AccountEvent {
      * @throws IllegalArgumentException
      *             if {@code source} is {@code null}
      */
-    public ValidateUsernameEvent(Object source, Object... args) {
-        super(source, EventType.VALIDATE_USERNAME, (User) args[0]);
+    public ValidateForChangePassword(Object source, Object... args) {
+        super(source, EventType.USER_CHANGE_PASSWORD_VALIDATION,
+            (User) args[0]);
         LOG.trace("Constructor method reached");
     }
 
     /**
-     * @return Type of the Event. 
+     * @return Type of the Event.
      */
     @Override
     public EventType getEventType() {
         LOG.trace("Returning a name of the event.");
-        return EventType.VALIDATE_USERNAME;
+        return EventType.USER_CHANGE_PASSWORD_VALIDATION;
     }
 
 }
