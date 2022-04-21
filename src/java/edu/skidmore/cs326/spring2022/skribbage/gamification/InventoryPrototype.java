@@ -3,7 +3,7 @@ package edu.skidmore.cs326.spring2022.skribbage.gamification;
 import java.util.HashMap; //Import HashMap
 import org.apache.log4j.Logger;
 
-import edu.skidmore.cs326.spring2022.skribbage.frontend.PastGamesPage;
+//import edu.skidmore.cs326.spring2022.skribbage.frontend.PastGamesPage;
 
 /**
  * Prototype for inventory that will store special cards and items.
@@ -119,7 +119,7 @@ public class InventoryPrototype {
         map.put("LastPlayerShowCard", 0);
         map.put("Re-Battle", 0);
         map.put("ThrowAwayPickUp", 0);
-        map.put("Mirror", 0);
+        map.put("Mirror", 1);
         map.put("Swap-Card", 0);
         map.put("Copy", 0);
         map.put("Disarm", 0);
