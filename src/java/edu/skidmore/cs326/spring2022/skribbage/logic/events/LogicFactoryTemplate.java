@@ -31,8 +31,12 @@ public class LogicFactoryTemplate extends FactoryTemplate {
             case USER_LOGIN_RESPONSE:
                 LOG.trace("Returning: " + event.getName());
                 return new UserLoginResponseEvent(source, args);
+            case USER_VALIDATION_RESPONSE:
+                LOG.trace("Returning: " + event.getName());
+                return new UserValidationResponseEvent(source, args);
             default:
-                LOG.warn("Event passed was not one of logic events");
+                LOG.warn("Event passed + " + event.toString()
+                    + " was not one of logic events ");
                 return null;
         }
     }
