@@ -3,12 +3,16 @@ package edu.skidmore.cs326.spring2022.skribbage.logic.events;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-import edu.skidmore.cs326.spring2022.skribbage.common.*;
 import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserLoginEvent;
+
+
 import org.apache.log4j.Logger;
 
+import edu.skidmore.cs326.spring2022.skribbage.common.EventFactory;
+import edu.skidmore.cs326.spring2022.skribbage.common.EventType;
+import edu.skidmore.cs326.spring2022.skribbage.common.Password;
+import edu.skidmore.cs326.spring2022.skribbage.common.User;
 import edu.skidmore.cs326.spring2022.skribbage.common.events.AccountEvent;
-import edu.skidmore.cs326.spring2022.skribbage.frontend.PlayableGame;
 import edu.skidmore.cs326.spring2022.skribbage.persistence.DatabaseManager;
 
 /**
@@ -24,7 +28,7 @@ public class AccountController implements PropertyChangeListener {
     private static final Logger LOG;
 
     static {
-        LOG = Logger.getLogger(PlayableGame.class);
+        LOG = Logger.getLogger(AccountController.class);
     }
 
     // @Override
@@ -42,6 +46,11 @@ public class AccountController implements PropertyChangeListener {
      * Factor instance for this class.
      */
     private EventFactory eventFactory = EventFactory.getInstance();
+
+    /**
+     * UserLoginEvent object.
+     */
+    private UserLoginEvent ule;
 
     /**
      * Determine whether a user is validated from database.
@@ -94,13 +103,16 @@ public class AccountController implements PropertyChangeListener {
         switch (accountEvent.getEventType()) {
             case USER_LOGIN:
                 LOG.debug("caught a login event");
-                UserLoginEvent ule = ((UserLoginEvent) evt);
+                ule = ((UserLoginEvent) evt);
                 if (validateUser(associatedUser, ule.getPassword())) {
                     @SuppressWarnings("unused")
                     UserLoginResponseEvent responseEvent =
                         (UserLoginResponseEvent) eventFactory
                             .createEvent(EventType.USER_LOGIN_RESPONSE, this);
+                    eventFactory.fireEvent(responseEvent);
+                   
                 }
+
                 break;
             case USER_CREATE_ACCOUNT:
                 LOG.debug("caught a create account event");
@@ -110,6 +122,24 @@ public class AccountController implements PropertyChangeListener {
                 break;
             case USER_CHANGE_PASSWORD:
                 LOG.debug("caught a change password event");
+                break;
+            case VALIDATE_USERNAME:
+                LOG.debug("caught a user validation event");
+                break;
+            case USER_CHANGE_PASSWORD_VALIDATION:
+                LOG.debug(
+                    "Caught a user validated before change password method.");
+                // Validation is same as logging in validation.
+                ule = ((UserLoginEvent) evt);
+                if (validateUser(associatedUser, ule.getPassword())) {
+                    ValidateChangeResponseEvent responseEvent =
+                        (ValidateChangeResponseEvent) eventFactory.createEvent(
+                            EventType.USER_CHANGE_PASSWORD_VALIDATION_RESPONSE,
+                            this);
+                    eventFactory.fireEvent(responseEvent);
+                   
+                }
+
                 break;
             default:
                 LOG.warn("caught unhandled event");

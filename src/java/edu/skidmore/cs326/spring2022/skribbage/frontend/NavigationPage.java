@@ -17,7 +17,7 @@ import us.daveread.edu.graphics.surface.MainFrame;
  * between Rules, Past Games, and New Game pages.
  * 
  * @author Zoe Beals
- *         Code reviewed by Jonah Marcus on April 11, 2022.
+ *         Code reviewed by Sten Leinasaar 04/20/22
  */
 @SuppressWarnings("serial")
 public class NavigationPage extends DrawingSurface implements Page {
@@ -88,6 +88,11 @@ public class NavigationPage extends DrawingSurface implements Page {
     private PastGamesPage pastGamesPage;
 
     /**
+     * PageManager instance for page management.
+     */
+    private PageManager pageManager;
+
+    /**
      * Logger.
      */
     private static final Logger LOG;
@@ -101,6 +106,7 @@ public class NavigationPage extends DrawingSurface implements Page {
      */
     public NavigationPage() {
         LOG.trace("Entered NavigationPage Constructor.");
+        pageManager = PageManager.getInstance();
         navPage = new MainFrame(this, "Skribbage Battle Royale Navigation",
             900, 900, false);
         setup();
@@ -156,17 +162,17 @@ public class NavigationPage extends DrawingSurface implements Page {
     @Override
     public void drawableMouseClick(Drawable e) {
         if (e == rulesPageButton) {
-            rulesPage = new RulesPage();
+            rulesPage = (RulesPage) pageManager.createPage(PageType.RULES_PAGE);
             closeWindow();
         } else if (e == lobbyPageButton) {
-            lobbyPage = new LobbyPage();
+            lobbyPage = (LobbyPage) pageManager.createPage(PageType.LOBBY_PAGE);
             closeWindow();
         } else if (e == pastGamesPageButton) {
-            pastGamesPage = new PastGamesPage();
+            pastGamesPage = (PastGamesPage) pageManager
+                .createPage(PageType.PAST_GAMES_PAGE);
             closeWindow();
         } else if (e == logOut) {
-            loginPage = new LoginPage();
-            // LoginPageManager.getInstance().getLoginPage();
+            loginPage = (LoginPage) pageManager.createPage(PageType.LOGIN_PAGE);
             closeWindow();
         }
     }
@@ -176,15 +182,6 @@ public class NavigationPage extends DrawingSurface implements Page {
      */
     public void closeWindow() {
         navPage.dispose();
-    }
-
-    /**
-     * main.
-     * 
-     * @param args
-     */
-    public static void main(String[] args) {
-        new NavigationPage();
     }
 
 }

@@ -3,6 +3,10 @@ package edu.skidmore.cs326.spring2022.skribbage.gamification;
 import java.util.HashMap; //Import HashMap
 import org.apache.log4j.Logger;
 
+import org.apache.log4j.Logger;
+
+import edu.skidmore.cs326.spring2022.skribbage.frontend.PastGamesPage;
+
 /**
  * Prototype for inventory that will store special cards and items.
  */
@@ -18,6 +22,8 @@ public class InventoryPrototype {
      *         addItem()
      *         searchForItem()
      *         updateInventory()
+     *         
+     *         Edited by Jonah Marcus on 20 April 2022 to address Bug #48.
      */
     
     /**
@@ -36,6 +42,15 @@ public class InventoryPrototype {
      * HashMap For inventory.
      */
     private HashMap<String, Integer> map;
+    
+    /**
+     * Logger instance for logging.
+     */
+    private static final Logger LOG;
+
+    static {
+        LOG = Logger.getLogger(InventoryPrototype.class);
+    }
 
     /**
      * Initialize HashMap for Inventory.
@@ -113,6 +128,7 @@ public class InventoryPrototype {
      *            HashMap used as our inventory
      */
     public void updateInventory(HashMap<String, Integer> map) {
+<<<<<<< HEAD
         map.put("LastPlayerShowCard", 0);
         map.put("Re-Battle", 0);
         map.put("ThrowAwayPickUp", 0);
@@ -124,5 +140,22 @@ public class InventoryPrototype {
         map.put("autoPilot", 0);
         map.put("copyCat", 0);
         LOG.info("Players Inventory has been filled with current data");
+=======
+        try {
+            File myObj = new File("inventory.txt");
+            Scanner myReader = new Scanner(myObj);
+
+            while (myReader.hasNextLine()) {
+                String item = myReader.nextLine();
+                int value = Integer.parseInt(myReader.nextLine());
+                map.put(item, value);
+            }
+            myReader.close();
+        }
+        catch (FileNotFoundException e) {
+            //e.printStackTrace();
+            LOG.error("inventory.txt not found", e);
+        }
+>>>>>>> d68e237a926d0e528a9b7be27a43d0151e713dfd
     }
 }

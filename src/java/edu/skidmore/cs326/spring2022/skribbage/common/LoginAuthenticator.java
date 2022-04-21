@@ -2,7 +2,6 @@ package edu.skidmore.cs326.spring2022.skribbage.common;
 
 import org.apache.log4j.Logger;
 
-import edu.skidmore.cs326.spring2022.skribbage.frontend.events.LobbyStartGameEvent;
 import edu.skidmore.cs326.spring2022.skribbage.persistence.PersistenceFacade;
 
 /**
@@ -20,7 +19,7 @@ public class LoginAuthenticator implements LoginAuthentication {
     private static final Logger LOG;
 
     static {
-        LOG = Logger.getLogger(LobbyStartGameEvent.class);
+        LOG = Logger.getLogger(LoginAuthenticator.class);
     }
 
     /**
