@@ -103,17 +103,17 @@ public class DatabaseManager {
 
         }
         catch (SQLException e) {
-        	LOG.trace("Account not found: " + e);
-            //e.printStackTrace();
+            LOG.trace("Account not found: " + e);
+            // e.printStackTrace();
 
         }
 
         if (storedPassword.compareTo(password.getBase64PasswordHash()) == 0) {
-        	LOG.info("Password Accepted");
+            LOG.info("Password Accepted");
             System.out.println("Password Accepted");
             return true;
         } else {
-        	LOG.info("Incorrect Password");
+            LOG.info("Incorrect Password");
             System.out.println("Incorrect Password");
             return false;
         }
@@ -269,12 +269,10 @@ public class DatabaseManager {
 
             ps.executeUpdate();
 
-
         }
         catch (SQLException sqle) {
-        	LOG.error("Database Interaction Failure", sqle);
-            //sqle.printStackTrace();
-            
+            LOG.error("Database Interaction Failure", sqle);
+            // sqle.printStackTrace();
 
         }
         finally {
@@ -343,9 +341,8 @@ public class DatabaseManager {
 
         }
         catch (SQLException sqle) {
-        	LOG.error("Database Interaction Failure", sqle);
+            LOG.error("Database Interaction Failure", sqle);
             sqle.printStackTrace();
-            
 
         }
         finally {
@@ -393,7 +390,7 @@ public class DatabaseManager {
             theConnection.close();
         }
         catch (SQLException e) {
-        	LOG.error("Failed to close connection", e);
+            LOG.error("Failed to close connection", e);
             e.printStackTrace();
         }
 
@@ -514,6 +511,51 @@ public class DatabaseManager {
 
         // if we reach this line, we run into a SQLException
         return exists;
+    }
+
+    /**
+     * Retrieve the user's Base64-encoded password salt.
+     * 
+     * @author Dave Read
+     * @param username
+     *            : the id of the user whose salt is to be obtained
+     * @return The Base64-encoded user's salt or null if the user is not found
+     * @throws SQLException
+     */
+    public String getUserSaltBase64(String username) {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String salt = null;
+
+        try {
+            conn = getDB();
+
+            String tempQuery =
+                "SELECT Password FROM player_account WHERE username= ?";
+            ps = conn.prepareStatement(tempQuery);
+            ps.setString(1, username);
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                salt = new Password(rs.getString(1)).getBase64Salt();
+            }
+        }
+        catch (SQLException e) {
+            LOG.error("Error obtaining user's password salt", e);
+        }
+        finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                }
+                catch (SQLException sqle) {
+                    LOG.error("Error closing database connection", sqle);
+                }
+            }
+        }
+        
+        return salt;
     }
 
     /**
