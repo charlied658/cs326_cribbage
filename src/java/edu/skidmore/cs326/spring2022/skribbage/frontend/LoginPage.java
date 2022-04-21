@@ -392,7 +392,7 @@ public class LoginPage extends DrawingSurface implements Page {
      *            Incoming event containing information.
      */
     public void validateLoginCallback(UserLoginResponseEvent event) {
-        if (event.getAccountResponse().isRejectionStatus()) {
+        if (!event.getAccountResponse().isRejectionStatus()) {
             showMessage("User: " + username, "Successful Log In",
                 DialogType.INFORMATION);
             // navPage = NavigationPageManager.getInstance().getNavPage();
