@@ -3,6 +3,7 @@ package edu.skidmore.cs326.spring2022.skribbage.logic.events;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserCreateAccountEvent;
 import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserLoginEvent;
 
 import org.apache.log4j.Logger;
@@ -124,11 +125,12 @@ public class AccountController implements PropertyChangeListener {
 
                 break;
             case USER_CREATE_ACCOUNT:
+                UserCreateAccountEvent ucae = ((UserCreateAccountEvent) evt);
                 LOG.debug("caught a create account event");
                 // password from the user hashed.
                 // Then register user to database.
                 if (PersistenceFacade.getInstance().userCreate(associatedUser,
-                    accountEvent.getEventType().getPassword())) {
+                    ucae.getPassword())) {
                     accountResponse =
                         new AccountResponse("Account created!", false);
                 } else {
