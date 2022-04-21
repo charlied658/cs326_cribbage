@@ -162,7 +162,7 @@ public class AccountController implements PropertyChangeListener {
             // To do: rename to clarify event's purpose
             // (check_username_existence)
             case VALIDATE_USERNAME:
-                LOG.debug("caught a user validation event");
+                LOG.debug("caught a user validation event " + evt);
                 if (PersistenceFacade.getInstance()
                     .userNameExists(associatedUser)) {
                     // fire event w rejectionStatus true

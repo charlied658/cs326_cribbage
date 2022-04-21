@@ -51,7 +51,7 @@ public class AccountResponseController implements PropertyChangeListener {
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
 
-        LOG.trace("Account response controller fired property change");
+        LOG.trace("Account response controller fired property change " + evt);
         AccountResponseEvent responseEvent = (AccountResponseEvent) evt;
         Page activePage = pageManager.getActivePage();
         switch (responseEvent.getEventType()) {
@@ -61,7 +61,7 @@ public class AccountResponseController implements PropertyChangeListener {
                     .validateLoginCallback((UserLoginResponseEvent) evt);
                 break;
             case USER_VALIDATION_RESPONSE:
-                LOG.debug("caught user validation response");
+                LOG.debug("caught user validation response " + responseEvent.getAccountResponse());
                 ((LoginPage) activePage).validateUsernameCallback(
                     (UserValidationResponseEvent) evt);
                 break;
