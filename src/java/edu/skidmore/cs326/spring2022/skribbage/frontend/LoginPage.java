@@ -495,12 +495,11 @@ public class LoginPage extends DrawingSurface implements Page {
             password =
                 getUserInput("Login", "Enter password for: " + username,
                     DialogPosition.CENTER_ALL, true);
-            currentPassword = new Password(hasher.hashNewPassword(password));
             currentUser = new User(null, username,
                 UserRole.UNAUTHORIZED);
             UserLoginEvent eventLogin =
                 (UserLoginEvent) evtFactory.createEvent(
-                    EventType.USER_LOGIN, this, currentUser, currentPassword);
+                    EventType.USER_LOGIN, this, currentUser, password);
             evtFactory.fireEvent(eventLogin);
 
         } else if (e == changePasswordButton) {
