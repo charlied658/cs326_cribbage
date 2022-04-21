@@ -345,10 +345,10 @@ public class LoginPage extends DrawingSurface implements Page {
             .isRejectionStatus()) {
             createNewUser();
         } else {
-            showMessage("Passwords you entered, do not match",
-                "Please try again",
+            showMessage("Invalid Username",
+                "Username is taken or is a bad word, try again",
                 DialogType.ERROR);
-            createNewUser();
+            //createNewUser();
         }
 
     }
