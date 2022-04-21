@@ -142,6 +142,21 @@ public class StartGamePage extends DrawingSurface implements Page {
     private Text[] movePlayers;
 
     /**
+     * Stores the file names of the 52 cards.
+     */
+    private String[] fileNames;
+    
+    /**
+     * Button to show or hide the cards. Temporary.
+     */
+    private Text showCardsButton;
+    
+    /**
+     * Stores whether the cards are shown or not.
+     */
+    private boolean cardsShowing;
+    
+    /**
      * How many spaces each player moves.
      */
     private int moveAmt;
@@ -155,11 +170,11 @@ public class StartGamePage extends DrawingSurface implements Page {
      * State of the cards animation.
      */
     private boolean cardState;
-
+    
     /**
-     * Holds the cards of the deck as images.
+     * Holds the face values of the cards as images.
      */
-    private Image[] cards;
+    private Image[] cardRenderer;
     
     /**
      * Arrows displayed on board.
@@ -176,6 +191,11 @@ public class StartGamePage extends DrawingSurface implements Page {
      */
     private PageManager pageManager;
 
+    /**
+     * Number of cards displayed on the deck. This is only for visual purposes.
+     */
+    private final int numcards = 20;
+    
     /**
      * homeScreen - HomeScreen window.
      */
@@ -230,11 +250,13 @@ public class StartGamePage extends DrawingSurface implements Page {
             Color.black, Color.blue);
         movePlayers[4] = new Text("Reset", new Point(560, 880), 20,
             Color.black, Color.blue);
-        cards = new Image[20];
-        for (int i = 0; i < 20; i++) {
-            cards[i] = new Image("card.png",
-                new Point(700 + 2 * i, 315 + 2 * i), .6, null);
-        }
+        showCardsButton = new Text("Show cards", new Point(630, 880), 20,
+            Color.black, Color.blue);
+//        cards = new Image[numcards];
+//        for (int i = 0; i < numcards; i++) {
+//            cards[i] = new Image("card.png",
+//                new Point(700 + 2 * i, 315 + 2 * i), .6, null);
+//        }
         arrows = new Image[3];
         arrows[0] = new Image("arrow.png", new Point(100, 70), 1, null);
         arrows[1] = new Image("arrow.png", new Point(260, 70), 1, null);
@@ -272,16 +294,17 @@ public class StartGamePage extends DrawingSurface implements Page {
         add(movePlayers[2]);
         add(movePlayers[3]);
         add(movePlayers[4]);
-        for (int i = 19; i >= 0; i--) {
-            add(cards[i]);
-        }
+        add(showCardsButton);
+
         moveAmt = 5;
         running = false;
         cardState = true;
+        cardsShowing = false;
+        
         createGrid();
         assignSpots();
         renderSpots();
-        
+        createCards();
         
     }
 
@@ -394,6 +417,56 @@ public class StartGamePage extends DrawingSurface implements Page {
         add(pegRenderer[1]);
         add(pegRenderer[2]);
     }
+    
+    /**
+     * Initialize the cards.
+     */
+    public void createCards() {
+        
+        fileNames = new String[52];
+        for (int i = 0; i < 4; i++) {
+            String suit;
+            if (i == 0) {
+                suit = "clubs";
+            } else if (i == 1) {
+                suit = "diamonds";
+            } else if (i == 2) {
+                suit = "hearts";
+            } else {
+                suit = "spades";
+            }
+       
+            fileNames[13 * i] = "ace_of_" + suit + ".png";
+            fileNames[13 * i + 1] = "2_of_" + suit + ".png";
+            fileNames[13 * i + 2] = "3_of_" + suit + ".png";
+            fileNames[13 * i + 3] = "4_of_" + suit + ".png";
+            fileNames[13 * i + 4] = "5_of_" + suit + ".png";
+            fileNames[13 * i + 5] = "6_of_" + suit + ".png";
+            fileNames[13 * i + 6] = "7_of_" + suit + ".png";
+            fileNames[13 * i + 7] = "8_of_" + suit + ".png";
+            fileNames[13 * i + 8] = "9_of_" + suit + ".png";
+            fileNames[13 * i + 9] = "10_of_" + suit + ".png";
+            fileNames[13 * i + 10] = "jack_of_" + suit + ".png";
+            fileNames[13 * i + 11] = "queen_of_" + suit + ".png";
+            fileNames[13 * i + 12] = "king_of_" + suit + ".png";
+        }
+        
+        cardRenderer = new Image[numcards];
+        
+        for (int i = 0; i < numcards; i++) {
+            fileNames[i] = "Playing Cards/" + fileNames[i];
+//            cardRenderer[i] = new Image(
+//                fileNames[i], new Point(
+//            700 - 2 * i, 315 + 2 * i), 0.25, null);
+            cardRenderer[i] = new Image(
+            "card.png", new Point(700 + 2 * i, 315 + 2 * i), 0.6, null);
+        }
+        
+        for (int i = numcards - 1; i >= 0; i--) {
+            add(cardRenderer[i]);
+        }
+        
+    }
 
     /**
      * Test animation of pegs on board.
@@ -418,22 +491,22 @@ public class StartGamePage extends DrawingSurface implements Page {
      */
     public void moveCards() {
 
-        double[] x = new double[20];
-        double[] y = new double[20];
+        double[] x = new double[numcards];
+        double[] y = new double[numcards];
 
-        double[] destX = new double[20];
-        double[] destY = new double[20];
+        double[] destX = new double[numcards];
+        double[] destY = new double[numcards];
 
-        double[] xDist = new double[20];
-        double[] yDist = new double[20];
+        double[] xDist = new double[numcards];
+        double[] yDist = new double[numcards];
 
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < numcards; i++) {
 
-            Point initialPoint = cards[i].getLocation();
+            Point initialPoint = cardRenderer[i].getLocation();
             Point destPoint;
 
             if (cardState) {
-                destPoint = new Point(600 + 15 * i, 330);
+                destPoint = new Point(600 - 15 * (i - numcards), 330);
             } else {
                 destPoint = new Point(700 + 2 * i, 315 + 2 * i);
             }
@@ -449,12 +522,12 @@ public class StartGamePage extends DrawingSurface implements Page {
         }
 
         for (int i = 0; i < 50; i++) {
-            for (int j = 0; j < 20; j++) {
+            for (int j = 0; j < numcards; j++) {
                 x[j] += xDist[j] / 50;
                 y[j] += yDist[j] / 50;
 
-                cards[j].setX((int) x[j]);
-                cards[j].setY((int) y[j]);
+                cardRenderer[j].setX((int) x[j]);
+                cardRenderer[j].setY((int) y[j]);
             }
             try {
                 Thread.sleep(10);
@@ -538,30 +611,46 @@ public class StartGamePage extends DrawingSurface implements Page {
     }
 
     /**
+     * Method to show or hide the cards.
+     */
+    public void showCards() {
+        for (int i = 0; i < numcards; i++) {
+            if (!cardsShowing) {
+                cardRenderer[i].setImageFileName(fileNames[i]);
+                cardRenderer[i].setScaleFactor(0.25);
+            } else {
+                cardRenderer[i].setImageFileName("card.png");
+                cardRenderer[i].setScaleFactor(0.6);
+            }
+        }
+        cardsShowing = !cardsShowing;
+    }
+    
+    /**
      * Animation to select a card.
      * 
      * @param index
      *            index of selected card
      */
     public void selectCard(int index) {
-        double[] x = new double[20];
-        double[] y = new double[20];
+        double[] x = new double[numcards];
+        double[] y = new double[numcards];
 
-        double[] destX = new double[20];
-        double[] destY = new double[20];
+        double[] destX = new double[numcards];
+        double[] destY = new double[numcards];
 
-        double[] xDist = new double[20];
-        double[] yDist = new double[20];
+        double[] xDist = new double[numcards];
+        double[] yDist = new double[numcards];
 
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < numcards; i++) {
 
-            Point initialPoint = cards[i].getLocation();
+            Point initialPoint = cardRenderer[i].getLocation();
             Point destPoint;
 
             if (i == index) {
-                destPoint = new Point(600 + 15 * i, 300);
+                destPoint = new Point(600 - 15 * (i - numcards), 270);
             } else {
-                destPoint = new Point(600 + 15 * i, 330);
+                destPoint = new Point(600 - 15 * (i - numcards), 330);
             }
 
             x[i] = initialPoint.getX();
@@ -575,12 +664,12 @@ public class StartGamePage extends DrawingSurface implements Page {
         }
 
         for (int i = 0; i < 50; i++) {
-            for (int j = 0; j < 20; j++) {
+            for (int j = 0; j < numcards; j++) {
                 x[j] += xDist[j] / 50;
                 y[j] += yDist[j] / 50;
 
-                cards[j].setX((int) x[j]);
-                cards[j].setY((int) y[j]);
+                cardRenderer[j].setX((int) x[j]);
+                cardRenderer[j].setY((int) y[j]);
             }
             try {
                 Thread.sleep(10);
@@ -684,19 +773,34 @@ public class StartGamePage extends DrawingSurface implements Page {
             if (!cardState) {
                 moveCards();
             }
+            if (cardsShowing) {
+                showCards();
+                showCardsButton.setMessage("Show cards");
+            }
+        } else if (e == showCardsButton) {
+            
+            showCardsButton.setClickable(false);
+            if (!cardsShowing) {
+                showCardsButton.setMessage("Hide cards");
+            } else {
+                showCardsButton.setMessage("Show cards");
+            }
+            showCards();
+            showCardsButton.setClickable(true);
+            
         }
-        for (int i = 0; i < 20; i++) {
-            if (e == cards[i]) {
-                for (int j = 0; j < 20; j++) {
-                    cards[j].setClickable(false);
+        for (int i = 0; i < numcards; i++) {
+            if (e == cardRenderer[i]) {
+                for (int j = 0; j < numcards; j++) {
+                    cardRenderer[j].setClickable(false);
                 }
                 if (i == 0 && cardState) {
                     moveCards();
                 } else if (!cardState) {
                     selectCard(i);
                 }
-                for (int j = 0; j < 20; j++) {
-                    cards[j].setClickable(true);
+                for (int j = 0; j < numcards; j++) {
+                    cardRenderer[j].setClickable(true);
                 }
             }
         }
