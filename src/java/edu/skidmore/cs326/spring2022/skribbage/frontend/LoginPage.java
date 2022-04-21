@@ -13,6 +13,7 @@ import org.apache.log4j.Logger;
 
 import edu.skidmore.cs326.spring2022.skribbage.common.EventFactory;
 import edu.skidmore.cs326.spring2022.skribbage.common.EventType;
+import edu.skidmore.cs326.spring2022.skribbage.common.LoginAuthenticator;
 import edu.skidmore.cs326.spring2022.skribbage.common.Password;
 import edu.skidmore.cs326.spring2022.skribbage.common.PasswordHasher;
 import edu.skidmore.cs326.spring2022.skribbage.common.User;
@@ -274,11 +275,12 @@ public class LoginPage extends DrawingSurface implements Page {
                     "Enter your current password", DialogPosition.CENTER_ALL,
                     true);
 
-                currentPassword = new Password(
-                    hasher.hashNewPassword(password));
+                currentPassword =
+                    LoginAuthenticator.getInstance().hashNewPassword(password);
 
                 currentUser = new User(null, usernameToChange,
                     UserRole.UNAUTHORIZED);
+
                 ValidateForChangePassword eventLogin =
                     (ValidateForChangePassword) evtFactory.createEvent(
                         EventType.USER_CHANGE_PASSWORD_VALIDATION, this,
@@ -292,11 +294,10 @@ public class LoginPage extends DrawingSurface implements Page {
                     DialogPosition.CENTER_ALL, true);
                 verifyPasswordToChange = getUserInput(popupTitle,
                     popupMessage + " again", DialogPosition.CENTER_ALL, true);
-                newPassword =
-                    new Password(hasher.hashNewPassword(passwordToChange));
 
                 if (passwordToChange.equals(verifyPasswordToChange)) {
-
+                    newPassword = LoginAuthenticator.getInstance()
+                        .hashNewPassword(passwordToChange);
                     evt =
                         (UserChangePasswordEvent) evtFactory.createEvent(
                             EventType.USER_CHANGE_PASSWORD,
@@ -316,7 +317,7 @@ public class LoginPage extends DrawingSurface implements Page {
             case 2:
                 createdUsername = getUserInput(popupTitle, popupMessage,
                     DialogPosition.CENTER_ALL);
-      
+
                 currentUser = new User(null, createdUsername,
                     UserRole.UNAUTHORIZED);
                 ValidateUsernameEvent event =
@@ -367,8 +368,8 @@ public class LoginPage extends DrawingSurface implements Page {
                 true);
 
             if (passwordToChange.equals(verifyPasswordToChange)) {
-                newPassword = new Password(
-                    hasher.hashNewPassword(passwordToChange));
+                newPassword = LoginAuthenticator.getInstance()
+                    .hashNewPassword(passwordToChange);
                 evt = (UserChangePasswordEvent) evtFactory.createEvent(
                     EventType.USER_CHANGE_PASSWORD, this, currentUser,
                     newPassword);
@@ -452,10 +453,10 @@ public class LoginPage extends DrawingSurface implements Page {
             "Enter password again", DialogPosition.CENTER_ALL, true);
 
         if (createdPassword.equals(verifyCreatedPassword)) {
-            currentPassword =
-                new Password(hasher.hashNewPassword(createdPassword));
             currentUser = new User(null, createdUsername,
                 UserRole.UNAUTHORIZED);
+            currentPassword = LoginAuthenticator.getInstance()
+                .hashNewPassword(createdPassword);
             UserCreateAccountEvent evt =
                 (UserCreateAccountEvent) evtFactory.createEvent(
                     EventType.USER_CREATE_ACCOUNT, this, currentUser,
@@ -497,9 +498,12 @@ public class LoginPage extends DrawingSurface implements Page {
                     DialogPosition.CENTER_ALL, true);
             currentUser = new User(null, username,
                 UserRole.UNAUTHORIZED);
+
+            currentPassword =
+                LoginAuthenticator.getInstance().hashNewPassword(password);
             UserLoginEvent eventLogin =
                 (UserLoginEvent) evtFactory.createEvent(
-                    EventType.USER_LOGIN, this, currentUser, password);
+                    EventType.USER_LOGIN, this, currentUser, currentPassword);
             evtFactory.fireEvent(eventLogin);
 
         } else if (e == changePasswordButton) {
