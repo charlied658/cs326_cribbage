@@ -106,10 +106,12 @@ public class AccountController implements PropertyChangeListener {
             case USER_LOGIN:
                 LOG.debug("caught a login event");
                 ule = ((UserLoginEvent) evt);
-                if (validateUser(associatedUser, ule.getPassword())) {
+                
+                if (validateUser(associatedUser,
+                    ule.getPassword())) {
                     accountResponse =
                         new AccountResponse("Login successful!", false);
-                 
+
                 } else {
                     accountResponse =
                         new AccountResponse("Login unsuccessful...", true);

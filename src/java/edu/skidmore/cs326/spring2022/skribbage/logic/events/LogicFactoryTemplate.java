@@ -34,6 +34,8 @@ public class LogicFactoryTemplate extends FactoryTemplate {
             case USER_VALIDATION_RESPONSE:
                 LOG.trace("Returning: " + event.getName());
                 return new UserValidationResponseEvent(source, args);
+            case USER_CREATE_ACCOUNT_RESPONSE:
+                return new CreateAccountResponseEvent(source, args);
             default:
                 LOG.warn("Event passed + " + event.toString()
                     + " was not one of logic events ");
