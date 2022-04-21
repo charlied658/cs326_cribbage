@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Point;
 //import java.util.Random;
+import java.util.Random;
 
 import org.apache.log4j.Logger;
 
@@ -152,6 +153,11 @@ public class StartGamePage extends DrawingSurface implements Page {
     private Text showCardsButton;
     
     /**
+     * Button to shuffle cards.
+     */
+    private Text shuffleButton;
+    
+    /**
      * Stores whether the cards are shown or not.
      */
     private boolean cardsShowing;
@@ -165,11 +171,6 @@ public class StartGamePage extends DrawingSurface implements Page {
      * Store whether the game currently running.
      */
     private boolean running;
-
-    /**
-     * State of the cards animation.
-     */
-    private boolean cardState;
     
     /**
      * Holds the face values of the cards as images.
@@ -194,7 +195,17 @@ public class StartGamePage extends DrawingSurface implements Page {
     /**
      * Number of cards displayed on the deck. This is only for visual purposes.
      */
-    private final int numcards = 20;
+    private final int numcards = 52;
+    
+    /**
+     * Cards currently displayed in the center of the play area.
+     */
+    private int cardsInPlay;
+    
+    /**
+     * Locations of the cards in the deck. Allows for shuffling.
+     */
+    private int[] cardLocations;
     
     /**
      * homeScreen - HomeScreen window.
@@ -252,6 +263,8 @@ public class StartGamePage extends DrawingSurface implements Page {
             Color.black, Color.blue);
         showCardsButton = new Text("Show cards", new Point(630, 880), 20,
             Color.black, Color.blue);
+        shuffleButton = new Text("Shuffle", new Point(760, 880), 20,
+            Color.black, Color.blue);
 //        cards = new Image[numcards];
 //        for (int i = 0; i < numcards; i++) {
 //            cards[i] = new Image("card.png",
@@ -295,10 +308,11 @@ public class StartGamePage extends DrawingSurface implements Page {
         add(movePlayers[3]);
         add(movePlayers[4]);
         add(showCardsButton);
+        add(shuffleButton);
 
+        cardsInPlay = 0;
         moveAmt = 5;
         running = false;
-        cardState = true;
         cardsShowing = false;
         
         createGrid();
@@ -423,6 +437,12 @@ public class StartGamePage extends DrawingSurface implements Page {
      */
     public void createCards() {
         
+        cardLocations = new int[numcards];
+        
+        for (int i = 0; i < numcards; i++) {
+            cardLocations[i] = i;
+        }
+        
         fileNames = new String[52];
         for (int i = 0; i < 4; i++) {
             String suit;
@@ -459,7 +479,9 @@ public class StartGamePage extends DrawingSurface implements Page {
 //                fileNames[i], new Point(
 //            700 - 2 * i, 315 + 2 * i), 0.25, null);
             cardRenderer[i] = new Image(
-            "card.png", new Point(700 + 2 * i, 315 + 2 * i), 0.6, null);
+            "card.png", new Point(
+                1150 + (i * 25) / numcards,
+                315 + (i * 25) / numcards), 0.6, null);
         }
         
         for (int i = numcards - 1; i >= 0; i--) {
@@ -491,6 +513,14 @@ public class StartGamePage extends DrawingSurface implements Page {
      */
     public void moveCards() {
 
+        if (cardsInPlay > 52) {
+            cardsInPlay = 52;
+        }
+        if (cardsInPlay < 0) {
+            cardsInPlay = 0;
+        }
+        
+        
         double[] x = new double[numcards];
         double[] y = new double[numcards];
 
@@ -505,10 +535,13 @@ public class StartGamePage extends DrawingSurface implements Page {
             Point initialPoint = cardRenderer[i].getLocation();
             Point destPoint;
 
-            if (cardState) {
-                destPoint = new Point(600 - 15 * (i - numcards), 330);
+            if (i < cardsInPlay) {
+                destPoint = new Point(
+                    550 + (i * 350) / cardsInPlay, 330);
             } else {
-                destPoint = new Point(700 + 2 * i, 315 + 2 * i);
+                destPoint = new Point(
+                    1150 + (i - cardsInPlay) * 25 / (numcards - cardsInPlay),
+                    315 + (i - cardsInPlay) * 25 / (numcards - cardsInPlay));
             }
 
             x[i] = initialPoint.getX();
@@ -522,6 +555,19 @@ public class StartGamePage extends DrawingSurface implements Page {
         }
 
         for (int i = 0; i < 50; i++) {
+            
+            if (i == 25) {
+                for (int j = 0; j < cardsInPlay; j++) {
+                    remove(cardRenderer[j]);
+                    add(cardRenderer[j]);
+                }
+                
+                for (int j = numcards - 1; j >= cardsInPlay; j--) {
+                    remove(cardRenderer[j]);
+                    add(cardRenderer[j]);
+                }
+            }
+            
             for (int j = 0; j < numcards; j++) {
                 x[j] += xDist[j] / 50;
                 y[j] += yDist[j] / 50;
@@ -536,8 +582,6 @@ public class StartGamePage extends DrawingSurface implements Page {
                 Thread.currentThread().interrupt();
             }
         }
-
-        cardState = !cardState;
     }
 
     /**
@@ -616,7 +660,7 @@ public class StartGamePage extends DrawingSurface implements Page {
     public void showCards() {
         for (int i = 0; i < numcards; i++) {
             if (!cardsShowing) {
-                cardRenderer[i].setImageFileName(fileNames[i]);
+                cardRenderer[i].setImageFileName(fileNames[cardLocations[i]]);
                 cardRenderer[i].setScaleFactor(0.25);
             } else {
                 cardRenderer[i].setImageFileName("card.png");
@@ -642,15 +686,17 @@ public class StartGamePage extends DrawingSurface implements Page {
         double[] xDist = new double[numcards];
         double[] yDist = new double[numcards];
 
-        for (int i = 0; i < numcards; i++) {
+        for (int i = 0; i < cardsInPlay; i++) {
 
             Point initialPoint = cardRenderer[i].getLocation();
             Point destPoint;
 
             if (i == index) {
-                destPoint = new Point(600 - 15 * (i - numcards), 270);
+                destPoint = new Point(
+                    550 + (i * 350) / cardsInPlay, 270);
             } else {
-                destPoint = new Point(600 - 15 * (i - numcards), 330);
+                destPoint = new Point(
+                    550 + (i * 350) / cardsInPlay, 330);
             }
 
             x[i] = initialPoint.getX();
@@ -662,9 +708,9 @@ public class StartGamePage extends DrawingSurface implements Page {
             xDist[i] = destX[i] - x[i];
             yDist[i] = destY[i] - y[i];
         }
-
+        
         for (int i = 0; i < 50; i++) {
-            for (int j = 0; j < numcards; j++) {
+            for (int j = 0; j < cardsInPlay; j++) {
                 x[j] += xDist[j] / 50;
                 y[j] += yDist[j] / 50;
 
@@ -680,6 +726,37 @@ public class StartGamePage extends DrawingSurface implements Page {
         }
     }
 
+    /**
+     * Shuffle the deck.
+     */
+    public void shuffleCards() {
+        
+        Random rand = new Random();
+        int index1;
+        int index2;
+        int temp;
+        
+        for (int i = 0; i < 100; i++) {
+            index1 = rand.nextInt(numcards);
+            index2 = rand.nextInt(numcards);
+            
+            temp = cardLocations[index1];
+            cardLocations[index1] = cardLocations[index2];
+            cardLocations[index2] = temp;
+        }
+        
+        if (cardsShowing) {
+            for (int i = 0; i < 52; i++) {
+                cardRenderer[i].setImageFileName(fileNames[cardLocations[i]]);
+            }
+        }
+        
+//        for (int i = 0; i < 52; i++) {
+//            System.out.println("Card at index " 
+//                + i + "has position " + cardLocations[i]);
+//        }
+    }
+    
     /**
      * Set which buttons are clickable to avoid button conflicts.
      * 
@@ -770,13 +847,16 @@ public class StartGamePage extends DrawingSurface implements Page {
             movePeg(1, -1 - pegLocations[1]);
             movePeg(2, -1 - pegLocations[2]);
             setClickable(new boolean[] { true, true, true, true, true, true });
-            if (!cardState) {
-                moveCards();
+            cardsInPlay = 0;
+            moveCards();
+            for (int i = 0; i < numcards; i++) {
+                cardLocations[i] = i;
             }
             if (cardsShowing) {
                 showCards();
                 showCardsButton.setMessage("Show cards");
             }
+            
         } else if (e == showCardsButton) {
             
             showCardsButton.setClickable(false);
@@ -788,15 +868,20 @@ public class StartGamePage extends DrawingSurface implements Page {
             showCards();
             showCardsButton.setClickable(true);
             
+        } else if (e == shuffleButton) {
+            shuffleButton.setClickable(false);
+            shuffleCards();
+            shuffleButton.setClickable(true);
         }
         for (int i = 0; i < numcards; i++) {
             if (e == cardRenderer[i]) {
                 for (int j = 0; j < numcards; j++) {
                     cardRenderer[j].setClickable(false);
                 }
-                if (i == 0 && cardState) {
+                if (i == cardsInPlay) {
+                    cardsInPlay += 5;
                     moveCards();
-                } else if (!cardState) {
+                } else if (i < cardsInPlay) {
                     selectCard(i);
                 }
                 for (int j = 0; j < numcards; j++) {
