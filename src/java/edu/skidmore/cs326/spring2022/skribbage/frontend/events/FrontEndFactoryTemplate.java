@@ -37,7 +37,6 @@ public class FrontEndFactoryTemplate extends FactoryTemplate {
         switch (event) {
 
             case USER_LOGIN:
-
                 return new UserLoginEvent(source, args);
             case USER_DELETE_ACCOUNT:
                 return new UserDeleteAccountEvent(source, args);
