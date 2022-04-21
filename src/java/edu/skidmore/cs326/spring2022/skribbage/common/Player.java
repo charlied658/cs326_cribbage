@@ -151,7 +151,7 @@ public class Player {
      * @param inventory
      */
     public void setInventory(HashMap<String, Integer> inventory) {
-        this.inventory = inventory;
+        this.inventory = inventoryManager.createInventory();
     }
     
     /**
