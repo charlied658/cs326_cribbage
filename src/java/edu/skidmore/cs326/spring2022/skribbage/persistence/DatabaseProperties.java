@@ -5,7 +5,6 @@ import java.util.Properties;
 
 import org.apache.log4j.Logger;
 
-
 /**
  * Database properties class.
  * 
