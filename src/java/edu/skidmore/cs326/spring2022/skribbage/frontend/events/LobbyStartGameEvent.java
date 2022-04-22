@@ -27,6 +27,7 @@ public class LobbyStartGameEvent extends LobbyEvent {
      *
      * @param source
      *            The bean that fired the event
+     * @param args
      */
     public LobbyStartGameEvent(Object source, Object... args) {
         super(source, EventType.LOBBY_START_GAME, (Lobby) args[0]);

@@ -19,9 +19,7 @@ import edu.skidmore.cs326.spring2022.skribbage.common.PasswordHasher;
 import edu.skidmore.cs326.spring2022.skribbage.common.User;
 import edu.skidmore.cs326.spring2022.skribbage.common.UserRole;
 import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserChangePasswordEvent;
-
 import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserChangePasswordResponseController;
-
 import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserCreateAccountEvent;
 import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserLoginEvent;
 import edu.skidmore.cs326.spring2022.skribbage.frontend.events.ValidateForChangePassword;
@@ -112,7 +110,6 @@ public class LoginPage extends DrawingSurface implements Page {
     /**
      * evtFactory - EventFactory object.
      */
-    @SuppressWarnings("unused")
     private EventFactory evtFactory;
 
     /**
@@ -168,6 +165,7 @@ public class LoginPage extends DrawingSurface implements Page {
     /**
      * Private object of type passwordhasher.
      */
+    @SuppressWarnings("unused")
     private PasswordHasher hasher;
 
     /**
@@ -348,7 +346,7 @@ public class LoginPage extends DrawingSurface implements Page {
             showMessage("Invalid Username",
                 "Username is taken or is a bad word, try again",
                 DialogType.ERROR);
-            //createNewUser();
+            // createNewUser();
         }
 
     }
@@ -393,7 +391,8 @@ public class LoginPage extends DrawingSurface implements Page {
      */
     public void validateLoginCallback(UserLoginResponseEvent event) {
         LOG.trace("validateLoginCallback called with event " + event);
-        LOG.trace("validateLoginCallback has response " +
+        LOG.trace("validateLoginCallback has response "
+            +
             event.getAccountResponse());
         if (!event.getAccountResponse().isRejectionStatus()) {
             showMessage("User: " + username, "Successful Log In",
@@ -502,11 +501,9 @@ public class LoginPage extends DrawingSurface implements Page {
             currentUser = new User(null, username,
                 UserRole.UNAUTHORIZED);
 
-            currentPassword =
-                LoginAuthenticator.getInstance().hashNewPassword(password);
             UserLoginEvent eventLogin =
                 (UserLoginEvent) evtFactory.createEvent(
-                    EventType.USER_LOGIN, this, currentUser, currentPassword);
+                    EventType.USER_LOGIN, this, currentUser, password);
             evtFactory.fireEvent(eventLogin);
 
         } else if (e == changePasswordButton) {

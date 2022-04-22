@@ -5,8 +5,9 @@ import java.awt.Point;
 import us.daveread.edu.graphics.shape.impl.Image;
 
 /**
- * Card Image object to be rendered on the screen. 
+ * Card Image object to be rendered on the screen.
  * @author Charlie Davidson
+ *         Code review by Jonah Marcus on 22 April 2022
  *
  */
 public class CardImage {

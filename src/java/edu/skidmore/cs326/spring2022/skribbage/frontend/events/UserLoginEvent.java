@@ -25,7 +25,7 @@ public class UserLoginEvent extends AccountEvent {
     /**
      * Input password associated with login request.
      */
-    private final Password password;
+    private final String password;
 
     static {
         LOG = Logger.getLogger(UserLoginEvent.class);
@@ -43,14 +43,14 @@ public class UserLoginEvent extends AccountEvent {
      */
     public UserLoginEvent(Object source, Object... args) {
         super(source, EventType.USER_LOGIN, (User) args[0]);
-        password = (Password) args[1];
+        password = (String) args[1];
         LOG.trace("Constructor method reached");
     }
 
     /**
      * @return Password associated with event.
      */
-    public Password getPassword() {
+    public String getPassword() {
         return password;
     }
 

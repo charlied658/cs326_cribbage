@@ -17,7 +17,7 @@ import edu.skidmore.cs326.spring2022.skribbage.common.User;
  */
 
 public final class PersistenceFacade
-    implements UserManagement, GameManagement, InventoryManagement {
+    implements UserManagement , GameManagement , InventoryManagement {
 
     /**
      * Singleton instance of PersistenceFacade. Instance can be accessed through
@@ -74,7 +74,7 @@ public final class PersistenceFacade
         // TODO Auto-generated method stub
 
         String usernamge = userToCreate.getUserName();
-        String passwordtemp = password.getBase64PasswordHash();
+        String passwordtemp = password.getBase64SaltAndPasswordHash();
 
         // TODO (DSR) This code needs to be updated,user does not house password
         DM.createUser(usernamge, passwordtemp);
@@ -173,7 +173,7 @@ public final class PersistenceFacade
     }
 
     @Override
-    public boolean login(User user, Password password) {
+    public Password getPassword(User user) {
 
         // note password is currently deprecated and retrieving password from
         // user will have to be
@@ -181,13 +181,13 @@ public final class PersistenceFacade
         // class
         // PRha74NgJISBMA==~mvIwoqOH1VA2AzrxLvxTXyGgJLr0jyS09bHhi4G9tZ4=
 
-        boolean accepted = DM.userAuthenticate(user, password);
+        Password accepted = DM.getPassword(user);
 
         return accepted;
     }
 
     /**
-     * This checks the database to see if the user name exists already
+     * This checks the database to see if the user name exists already.
      * 
      * @param user
      * @return boolean depending if the user name already exists
