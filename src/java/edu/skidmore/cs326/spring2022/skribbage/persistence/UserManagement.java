@@ -55,7 +55,7 @@ public interface UserManagement {
      * @param password
      * @return the login.
      */
-    boolean login(User user, Password password);
+    Password getPassword(User user);
 
     /**
      * validate user.
