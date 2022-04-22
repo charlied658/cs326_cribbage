@@ -260,8 +260,8 @@ public class DatabaseManager {
             conn = getDB();
 
             String script =
-                "INSERT INTO player_account (PersonID, Username, Password) "
-                    + "VALUES (RAND()*10000, ?, ?)";
+                "INSERT INTO player_account (Username, Password) "
+                    + "VALUES (?, ?)";
             ps = conn.prepareStatement(script);
 
             ps.setString(1, userName);
@@ -440,17 +440,17 @@ public class DatabaseManager {
 
         }
         catch (SQLException e) {
-            System.out.println("Account not found");
+            //System.out.println("Account not found");
             e.printStackTrace();
 
         }
 
         if (storedPassword.compareTo(password.getBase64PasswordHash()) == 0) {
-            System.out.println("Password Accepted");
+            //System.out.println("Password Accepted");
             user.setUserRole(UserRole.AUTHORIZED);
             return true;
         } else {
-            System.out.println("Incorrect Password");
+            //System.out.println("Incorrect Password");
             user.setUserRole(UserRole.UNAUTHORIZED);
             return false;
         }
