@@ -1,5 +1,6 @@
 package edu.skidmore.cs326.spring2022.skribbage.frontend.events;
 
+import edu.skidmore.cs326.spring2022.skribbage.common.Lobby;
 import org.apache.log4j.Logger;
 
 import edu.skidmore.cs326.spring2022.skribbage.common.EventType;
@@ -26,14 +27,9 @@ public class LobbyStartGameEvent extends LobbyEvent {
      *
      * @param source
      *            The bean that fired the event
-     * @param eventType
-     *            The event type associated
-     *            Will also require the lobby being destroyed, unless deemed
-     *            unnecessary. At the very least, the lobby ID that
-     *            called this event will be required.
      */
-    public LobbyStartGameEvent(Object source, EventType eventType) {
-        super(source, eventType);
+    public LobbyStartGameEvent(Object source, Object... args) {
+        super(source, EventType.LOBBY_START_GAME, (Lobby) args[0]);
         LOG.trace("Constructor method of LobbyStartGameEvent.");
     }
 
