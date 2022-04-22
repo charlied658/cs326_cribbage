@@ -10,7 +10,6 @@ import org.apache.log4j.Logger;
 
 import edu.skidmore.cs326.spring2022.skribbage.common.EventFactory;
 import edu.skidmore.cs326.spring2022.skribbage.common.EventType;
-import edu.skidmore.cs326.spring2022.skribbage.common.LoginAuthenticator;
 import edu.skidmore.cs326.spring2022.skribbage.common.Password;
 import edu.skidmore.cs326.spring2022.skribbage.common.User;
 import edu.skidmore.cs326.spring2022.skribbage.common.events.AccountEvent;
@@ -108,7 +107,6 @@ public class AccountController implements PropertyChangeListener {
                 LOG.debug("caught a login event");
                 ule = ((UserLoginEvent) evt);
                 if (validateUser(associatedUser, ule.getPassword())) {
-                    @SuppressWarnings("unused")
                     UserLoginResponseEvent responseEvent =
                         (UserLoginResponseEvent) eventFactory
                             .createEvent(EventType.USER_LOGIN_RESPONSE, this);
@@ -202,7 +200,7 @@ public class AccountController implements PropertyChangeListener {
                         (ValidateChangeResponseEvent) eventFactory.createEvent(
                             EventType.USER_CHANGE_PASSWORD_VALIDATION_RESPONSE,
                             this);
-//                    eventFactory.fireEvent(responseEvent);
+                    // eventFactory.fireEvent(responseEvent);
                     eventFactory.fireEvent(responseEventPV);
 
                 }

@@ -85,7 +85,13 @@ public enum EventType {
     /**
      * Fired when a User enters the proper lobby id and is entering said lobby.
      */
-    LOBBY_ADD_USER("Lobby Add User Event", User.class);
+    LOBBY_ADD_USER("Lobby Add User Event", User.class),
+
+    /**
+     * Fired when a logged in user attempts to start a new lobby.
+     */
+    LOBBY_CREATE_GAME("Lobby Create Game Event", User.class);
+
 
     /**
      * The name of the event.
