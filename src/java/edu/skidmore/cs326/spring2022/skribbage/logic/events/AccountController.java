@@ -113,22 +113,23 @@ public class AccountController implements PropertyChangeListener {
                         (UserLoginResponseEvent) eventFactory
                             .createEvent(EventType.USER_LOGIN_RESPONSE, this);
                     eventFactory.fireEvent(responseEvent);
-                if (validateUser(associatedUser,
-                    ule.getPassword())) {
-                    accountResponse =
-                        new AccountResponse("Login successful!", false);
+                    if (validateUser(associatedUser,
+                        ule.getPassword())) {
+                        accountResponse =
+                            new AccountResponse("Login successful!", false);
 
-                } else {
-                    accountResponse =
-                        new AccountResponse("Login unsuccessful...", true);
+                    } else {
+                        accountResponse =
+                            new AccountResponse("Login unsuccessful...", true);
+                    }
+                    responseEvent =
+                        (UserLoginResponseEvent) eventFactory
+                            .createEvent(EventType.USER_LOGIN_RESPONSE, this,
+                                associatedUser, accountResponse);
+                    eventFactory.fireEvent(responseEvent);
+                    break;
                 }
-                UserLoginResponseEvent responseEvent =
-                    (UserLoginResponseEvent) eventFactory
-                        .createEvent(EventType.USER_LOGIN_RESPONSE, this,
-                            associatedUser, accountResponse);
-                eventFactory.fireEvent(responseEvent);
 
-                break;
             case USER_CREATE_ACCOUNT:
                 UserCreateAccountEvent ucae = ((UserCreateAccountEvent) evt);
                 LOG.debug("caught a create account event");
@@ -201,11 +202,8 @@ public class AccountController implements PropertyChangeListener {
                         (ValidateChangeResponseEvent) eventFactory.createEvent(
                             EventType.USER_CHANGE_PASSWORD_VALIDATION_RESPONSE,
                             this);
-<<<<<<< HEAD
-                    eventFactory.fireEvent(responseEvent);
-=======
+//                    eventFactory.fireEvent(responseEvent);
                     eventFactory.fireEvent(responseEventPV);
->>>>>>> cce2d9a6bd4c012021b7350e4cee54e199299ba2
 
                 }
 
