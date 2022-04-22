@@ -501,11 +501,9 @@ public class LoginPage extends DrawingSurface implements Page {
             currentUser = new User(null, username,
                 UserRole.UNAUTHORIZED);
 
-            currentPassword =
-                LoginAuthenticator.getInstance().hashNewPassword(password);
             UserLoginEvent eventLogin =
                 (UserLoginEvent) evtFactory.createEvent(
-                    EventType.USER_LOGIN, this, currentUser, currentPassword);
+                    EventType.USER_LOGIN, this, currentUser, password);
             evtFactory.fireEvent(eventLogin);
 
         } else if (e == changePasswordButton) {
