@@ -28,6 +28,11 @@ public class CardImage {
     private int cardID;
     
     /**
+     * Stores whether the card face is showing or not.
+     */
+    private boolean showing;
+    
+    /**
      * Constructor method.
      * @param image
      * @param cardID
@@ -35,6 +40,7 @@ public class CardImage {
     public CardImage(Image image, int cardID) {
         this.image = image;
         this.cardID = cardID;
+        this.showing = false;
     }
     
     /**
@@ -62,6 +68,14 @@ public class CardImage {
     }
     
     /**
+     * Get whether the card is showing.
+     * @return boolean
+     */
+    public boolean isShowing() {
+        return this.showing;
+    }
+    
+    /**
      * Set the image.
      * @param image
      */
@@ -83,6 +97,14 @@ public class CardImage {
      */
     public void setCardID(int cardID) {
         this.cardID = cardID;
+    }
+    
+    /**
+     * Set whether the card is showing.
+     * @param showing
+     */
+    public void setShowing(boolean showing) {
+        this.showing = showing;
     }
     
 }
