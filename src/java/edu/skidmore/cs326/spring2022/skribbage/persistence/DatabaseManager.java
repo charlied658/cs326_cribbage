@@ -421,9 +421,10 @@ public class DatabaseManager {
      *            : the inputted password
      * @return Whether password was accepted
      */
-    public boolean userAuthenticate(User user, Password password) {
+    public Password getPassword(User user) {
 
         String username = user.getUserName();
+        Password returningPassword;
 
         String tempQuery =
             "SELECT * FROM player_account WHERE username='" + username + "'";
@@ -444,16 +445,11 @@ public class DatabaseManager {
             e.printStackTrace();
 
         }
+        
+        returningPassword = new Password(storedPassword);
+        System.out.println("Stored Pass: " + storedPassword);
 
-        if (storedPassword.compareTo(password.getBase64PasswordHash()) == 0) {
-            //System.out.println("Password Accepted");
-            user.setUserRole(UserRole.AUTHORIZED);
-            return true;
-        } else {
-            //System.out.println("Incorrect Password");
-            user.setUserRole(UserRole.UNAUTHORIZED);
-            return false;
-        }
+        return returningPassword;
 
     }
 
