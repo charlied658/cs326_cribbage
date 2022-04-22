@@ -75,7 +75,12 @@ public enum EventType {
      * Fired when the host of a lobby clicks 'start game', and all players
      * are added to a new game.
      */
-    LOBBY_START_GAME("Lobby Start Game Event");
+    LOBBY_START_GAME("Lobby Start Game Event"),
+
+    /**
+     * Fired when a logged in user attempts to start a new lobby.
+     */
+    LOBBY_CREATE_GAME("Lobby Create Game Event", User.class);
 
     /**
      * The name of the event.

@@ -177,6 +177,7 @@ public class RulesPage extends DrawingSurface implements Page {
         mf.dispose();
     }
 
+
    
     
 }
