@@ -311,5 +311,17 @@ public class GameManager implements GameManagerInterface {
             g.getCardsInPlay().add(temp);
         }
     }
+    
+    /**
+     * Have the opponent pick a random card to play.
+     */
+    public void opponentPlayCard() {
+        Random rand = new Random();
+        int index = rand.nextInt(g.getCardsInOpponentHand().size());
+        if (g.getCardsInOpponentHand().size() > 0) {
+            Card temp = g.getCardsInOpponentHand().remove(index);
+            g.getCardsInPlay().add(temp);
+        }
+    }
 
 }
