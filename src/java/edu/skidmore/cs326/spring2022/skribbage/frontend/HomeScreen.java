@@ -12,9 +12,9 @@ import us.daveread.edu.graphics.surface.MainFrame;
 /**
  * @author Zoe Beals
  *         updated as of 4/19/2022. By Sten
- *              Made the page implement Page interface
- *              Changed the method from closeCurrentWindow --> closeWindow
- *              Deleted dead code. 
+ *         Made the page implement Page interface
+ *         Changed the method from closeCurrentWindow --> closeWindow
+ *         Deleted dead code.
  *         HomeScreen class to act as the main menu
  *         of the game of cribbage.
  *         Code reviewed by Jonah Marcus on 3/29/2022
@@ -26,12 +26,6 @@ public class HomeScreen extends DrawingSurface implements Page {
      * welcomeMessage - Text variable that holds the welcome message.
      */
     private Text welcomeMessage;
-
-    /**
-     * startGamePage - Start game window.
-     */
-    @SuppressWarnings("unused")
-    private StartGamePage startGamePage;
 
     /**
      * logo - Image to hold the temporary game logo.
@@ -46,13 +40,8 @@ public class HomeScreen extends DrawingSurface implements Page {
     /**
      * loginPage - LoginPage window to be presented upon button click.
      */
+    @SuppressWarnings("unused")
     private LoginPage loginPage;
-
-    /**
-     * rulesPageButton - Text variable that represents the button to go to
-     * rules page.
-     */
-    private Text rulesPageButton;
 
     /**
      * loginPageButton - Text variable that represents the button to go to the
@@ -60,40 +49,6 @@ public class HomeScreen extends DrawingSurface implements Page {
      */
     private Text loginPageButton;
 
-    /**
-     * lobbyPageButton - Text variable that represents the button to go to the
-     * lobby page.
-     */
-    private Text lobbyPageButton;
-
-    /**
-     * pastGamesPageButton - Text variable that represents the button to go to
-     * the past games page.
-     */
-    private Text pastGamesPageButton;
-
-    /**
-     * rulesPage - RulesPage window to be presented upon button click.
-     */
-    @SuppressWarnings("unused")
-    private RulesPage rulesPage;
-
-    /**
-     * lobbyPage - LobbyPage window to be presented upon button click.
-     */
-    @SuppressWarnings("unused")
-    private LobbyPage lobbyPage;
-
-    /**
-     * pastGamesPage - PastGamesPage window to be presented upon button click.
-     */
-    @SuppressWarnings("unused")
-    private PastGamesPage pastGamesPage;
-
-    /**
-     * startGameButton - Text var to represent starting a game.
-     */
-    private Text startGameButton;
 
     /**
      * Logger instance for logging.
@@ -129,7 +84,7 @@ public class HomeScreen extends DrawingSurface implements Page {
             "Creating a loginPageButtong in HomeScreen.java in setup method.");
 
         welcomeMessage =
-            new Text("Welcome. Please log in/sign up to begin a new game.",
+            new Text("Welcome! Please log in/sign up to begin a new game.",
                 new Point(logo.getLocation().x + 35,
                     logo.getLocation().y + 350),
                 20,
@@ -142,7 +97,6 @@ public class HomeScreen extends DrawingSurface implements Page {
         add(welcomeMessage);
     }
 
-    
     /**
      * override from DrawingSurface class.
      * 
@@ -151,33 +105,12 @@ public class HomeScreen extends DrawingSurface implements Page {
      *            checks for a mouseclick on the DrawingSurface, then determines
      *            if the clickable surface was any of the buttons created.
      *            if loginPageButton, displays the login page
-     *            if rulesPageButton, displays the rules page
-     *            if pastGamesPageButton, displays the past games page
      */
     public void drawableMouseClick(Drawable e) {
         LOG.trace("DrawableMosuceClick in HomeScreen.java");
         if (e == loginPageButton) {
-            loginPage = new LoginPage();
-            // Page manager is broken.
-            // PageManager.getInstance().getLoginPage();
-            closeWindow();
-        } else if (e == rulesPageButton) {
-            rulesPage = new RulesPage();
-            closeWindow();
-        } else if (e == pastGamesPageButton) {
-            pastGamesPage = new PastGamesPage();
-            closeWindow();
-        } else if (e == lobbyPageButton) {
-            lobbyPage = new LobbyPage();
-            closeWindow();
-        } else if (e == startGameButton) {
-            if (loginPage.loggedIn()) {
-                lobbyPage = new LobbyPage();
-            } else {
-                loginPage = new LoginPage();
-                // LoginPageManager.getInstance().getLoginPage();
-            }
-            startGamePage = new StartGamePage();
+            loginPage = (LoginPage) PageManager.getInstance()
+                .createPage(PageType.LOGIN_PAGE);
             closeWindow();
         }
     }

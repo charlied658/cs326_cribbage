@@ -1,175 +1,179 @@
 package edu.skidmore.cs326.spring2022.skribbage.persistence;
 
 import java.util.ArrayList;
-
+import java.util.Properties;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.log4j.Logger;
+
 /**
  * username proxy.
  * 
- * @author
+ * @author Edited by Jonah Marcus on 20 April 2022 to address Bug #48.
  */
 public class UsernameProxy {
 
-    /**
-     * file name.
-     */
-    @SuppressWarnings("unused")
-    private static final String PROPERTY_FILE_NAME = "database.properties";
+	/**
+	 * file name.
+	 */
+	@SuppressWarnings("unused")
+	private static final String PROPERTY_FILE_NAME = "database.properties";
 
-    /**
-     * instance.
-     */
-    private static final UsernameProxy INSTANCE;
+	/**
+	 * instance.
+	 */
+	private static final UsernameProxy INSTANCE;
 
-    /**
-     * banned words.
-     */
-    @SuppressWarnings("unused")
-    private static final int AMOUNT_OF_BANNED_WORDS = 451;
+	/**
+	 * banned words.
+	 */
+	@SuppressWarnings("unused")
+	private static final int AMOUNT_OF_BANNED_WORDS = 451;
 
-    static {
-        INSTANCE = new UsernameProxy();
-    }
+	/**
+	 * Logger instance for logging.
+	 */
+	private static final Logger LOG;
 
-    /**
-     * getInstance.
-     * 
-     * @return instance.
-     */
-    public static UsernameProxy getInstance() {
-        return INSTANCE;
-    }
+	static {
+		LOG = Logger.getLogger(UsernameProxy.class);
+	}
 
-    /**
-     * parseString.
-     * 
-     * @return string.
-     */
-    @SuppressWarnings("unused")
-    private ArrayList<String> parseString() {
-        String path =
-            "/students/home/tmawocha/eclipse-workspace/"
-                + "SkribbageBattleRoyale/src/java/edu/skidmore"
-                + "/cs326/spring2022/skribbage/persistence/BadNicknames";
+	static {
+		INSTANCE = new UsernameProxy();
+	}
 
-        File file = new File(path);
-        Scanner sc = null;
-        String tempbadname = "";
-        int lastUsed = 0;
+	/**
+	 * getInstance.
+	 * 
+	 * @return instance.
+	 */
+	public static UsernameProxy getInstance() {
+		return INSTANCE;
+	}
 
-        String pattern = "(\\$)(\\d+).*";
-        String emptySpace = "^\\s+(.*)";
+	/**
+	 * parseString.
+	 * 
+	 * @return string.
+	 */
+	@SuppressWarnings("unused")
+	private ArrayList<String> parseString() {
+		String path = "/students/home/tmawocha/eclipse-workspace/" + "SkribbageBattleRoyale/src/java/edu/skidmore"
+				+ "/cs326/spring2022/skribbage/persistence/BadNicknames";
 
-        Pattern p = Pattern.compile(pattern, Pattern.CASE_INSENSITIVE);
-        Pattern emp = Pattern.compile(emptySpace, Pattern.CASE_INSENSITIVE);
+		File file = new File(path);
+		Scanner sc = null;
+		String tempbadname = "";
+		int lastUsed = 0;
 
-        ArrayList<String> toPrint = new ArrayList<String>();
+		String pattern = "(\\$)(\\d+).*";
+		String emptySpace = "^\\s+(.*)";
 
-        try {
+		Pattern p = Pattern.compile(pattern, Pattern.CASE_INSENSITIVE);
+		Pattern emp = Pattern.compile(emptySpace, Pattern.CASE_INSENSITIVE);
 
-            sc = new Scanner(file);
-        }
-        catch (FileNotFoundException e) {
+		ArrayList<String> toPrint = new ArrayList<String>();
 
-            e.printStackTrace();
-        }
+		try {
 
-        toPrint.clear();
+			sc = new Scanner(file);
+		} catch (FileNotFoundException e) {
 
-        while (sc.hasNextLine()) {
+			// e.printStackTrace();
+			LOG.error(e);
+		}
 
-            tempbadname = sc.nextLine();
+		toPrint.clear();
 
-            if (tempbadname.contains("$")) {
+		while (sc.hasNextLine()) {
 
-                System.out.println(tempbadname);
-                Matcher matcher = p.matcher(tempbadname);
-                matcher.find();
-                lastUsed = Integer.parseInt(matcher.group(2));
-                toPrint.add(tempbadname);
+			tempbadname = sc.nextLine();
 
-            } else {
+			if (tempbadname.contains("$")) {
 
-                Matcher matcher = emp.matcher(tempbadname);
+				System.out.println(tempbadname);
+				Matcher matcher = p.matcher(tempbadname);
+				matcher.find();
+				lastUsed = Integer.parseInt(matcher.group(2));
+				toPrint.add(tempbadname);
 
-                if (matcher.find()) {
-                    tempbadname = matcher.group(1);
-                }
+			} else {
 
-                lastUsed += 1;
-                String process = "$" + lastUsed + " = " + tempbadname;
-                toPrint.add(process);
+				Matcher matcher = emp.matcher(tempbadname);
 
-            }
+				if (matcher.find()) {
+					tempbadname = matcher.group(1);
+				}
 
-        }
+				lastUsed += 1;
+				String process = "$" + lastUsed + " = " + tempbadname;
+				toPrint.add(process);
 
-        return toPrint;
-    }
+			}
 
-    /**
-     * username check.
-     * 
-     * @param username
-     * @return bool.
-     */
-    public boolean usernameCheck(String username) {
+		}
 
-        // Boolean usernameIsGood = true;
-        // FileInputStream file = null;
-        // Properties prop = null;
-        // String filePath =
-        // "/SkribbageBattleRoyale/src/java/edu/skidmore/cs326/spring2022/"
-        // + "skribbage/persistence/BadNicknames";
-        // try {
-        //
-        // file = new FileInputStream(filePath);
-        // prop = new Properties();
-        //
-        // if (file == null) {
-        // System.out.println("Sorry, unable to find config.properties");
-        // return false;
-        // }
-        //
-        // prop.load(file);
-        // // get the property value and print it out
-        //
-        // for (int i = 1; i <= AMOUNT_OF_BANNED_WORDS; i++) {
-        // String altProp = "$" + i;
-        //
-        // String tempban = prop.getProperty(altProp);
-        // tempban = tempban.trim();
-        //
-        // if (username.contains(tempban)) {
-        // usernameIsGood = false;
-        // }
-        // }
-        //
-        // }
-        // catch (IOException ex) {
-        // ex.printStackTrace();
-        // }
-        //
-        // return usernameIsGood;
-        return true;
-    }
+		return toPrint;
+	}
 
-    /**
-     * main.
-     * 
-     * @param args
-     */
-    public static void main(String[] args) {
+	/**
+	 * username check.
+	 * 
+	 * @param username
+	 * @return bool.
+	 */
+	public boolean usernameCheck(String username) {
 
-        UsernameProxy instance = new UsernameProxy();
+		Boolean usernameIsGood = true;
+		FileInputStream file = null;
+		Properties prop = null;
+		String filePath = "/SkribbageBattleRoyale/src/java/edu/skidmore/cs326/spring2022/"
+				+ "skribbage/persistence/BadNicknames";
+		try {
 
-        System.out.println(instance.usernameCheck("naughtynicknam"));
-        System.out.println(instance.usernameCheck("fuck"));
+			file = new FileInputStream(filePath);
+			prop = new Properties();
 
-    }
+			prop.load(file);
+			// get the property value and print it out
+
+			for (int i = 1; i <= AMOUNT_OF_BANNED_WORDS; i++) {
+				String altProp = "$" + i;
+
+				String tempban = prop.getProperty(altProp);
+				tempban = tempban.trim();
+
+				if (username.contains(tempban)) {
+					usernameIsGood = false;
+				}
+			}
+
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
+
+		return usernameIsGood;
+		//return true;
+	}
+
+	/**
+	 * main.
+	 * 
+	 * @param args
+	 */
+	public static void main(String[] args) {
+
+		UsernameProxy instance = new UsernameProxy();
+
+		System.out.println(instance.usernameCheck("naughtynicknam"));
+		System.out.println(instance.usernameCheck("fuck"));
+
+	}
 }

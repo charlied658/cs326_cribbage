@@ -1,6 +1,7 @@
 package edu.skidmore.cs326.spring2022.skribbage.common.test;
 
 import edu.skidmore.cs326.spring2022.skribbage.common.User;
+import edu.skidmore.cs326.spring2022.skribbage.logic.events.AccountResponse;
 import edu.skidmore.cs326.spring2022.skribbage.logic.events.AccountResponseEvent;
 import org.apache.log4j.Logger;
 
@@ -19,6 +20,9 @@ public class AccountResponseControllerMOCK implements PropertyChangeListener {
      * User received from logging in event.
      */
     private User receivedUserFromLogin;
+
+
+    private AccountResponse accountResponse;
 
     /**
      * Logger.
@@ -40,6 +44,7 @@ public class AccountResponseControllerMOCK implements PropertyChangeListener {
     public void propertyChange(PropertyChangeEvent evt) {
         LOG.trace("Event in account response controller = " + evt);
         receivedUserFromLogin = ((AccountResponseEvent) evt).getUser();
+        accountResponse = ((AccountResponseEvent) evt).getAccountResponse();
     }
 
     /**
@@ -50,5 +55,13 @@ public class AccountResponseControllerMOCK implements PropertyChangeListener {
     public User getReceivedUserFromLogin() {
         LOG.trace("Returning received user from login");
         return receivedUserFromLogin;
+    }
+
+    /**
+     * Return account response message.
+     * @return Account response
+     */
+    public AccountResponse getAccountResponseMessage() {
+        return accountResponse;
     }
 }

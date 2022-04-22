@@ -3,6 +3,7 @@ package edu.skidmore.cs326.spring2022.skribbage.common;
 import java.util.HashMap;
 
 import edu.skidmore.cs326.spring2022.skribbage.gamification.Avatar;
+import edu.skidmore.cs326.spring2022.skribbage.gamification.InventoryPrototype;
 
 /**
  * Generic Player class used by logic and gamification.
@@ -35,6 +36,11 @@ public class Player {
      * User associated with player.
      */
     private User user;
+    
+    /**
+     * User associated with player.
+     */
+    private InventoryPrototype inventoryManager;
 
     /**
      * Hash map that stores items and their quantity.
@@ -145,7 +151,7 @@ public class Player {
      * @param inventory
      */
     public void setInventory(HashMap<String, Integer> inventory) {
-        this.inventory = inventory;
+        this.inventory = inventoryManager.createInventory();
     }
     
     /**

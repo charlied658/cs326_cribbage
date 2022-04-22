@@ -55,6 +55,14 @@ public class Spot {
         LOG.trace("getType method in Spot class");
         return spotType;
     }
+    
+    /**
+     * Sets the type of a spot.
+     * @param type
+     */
+    public void setType(SpotType type) {
+        this.spotType = type;
+    }
 
     /**
      * getLocation method returns the location of the spot.
