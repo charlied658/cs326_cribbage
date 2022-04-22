@@ -46,7 +46,7 @@ public class Board {
      * Random number generator for spot generation.
      */
     private Random rand = new Random();
-    
+
     /**
      * Constant number of rows.
      */
@@ -75,12 +75,12 @@ public class Board {
          *       be easily retrieved. as Shows.
          */
         // NUMCOL = p.getPlayerList().size();
-        //System.out.println("Creating new grid of size [" 
-        //    + NUMROWS + "][" + NUMCOL + "]");
+        // System.out.println("Creating new grid of size ["
+        // + NUMROWS + "][" + NUMCOL + "]");
         grid = new Spot[NUMROWS][NUMCOL];
         // each player has two pegs.
         pegs = new Peg[NUMCOL * 2];
-        
+
         initializeGrid();
         // TODO, the grid has to be populated with pegs and spots.
         // TODO separate method?
@@ -147,7 +147,7 @@ public class Board {
     public Spot getSpot(Peg p) {
         return p.getSpot();
     }
-    
+
     /**
      * Initialize the grid of spots.
      */
@@ -185,22 +185,22 @@ public class Board {
     public Spot[] assignBattleSpot() {
         LOG.trace(
             "Returning a location of a battleSpots as an array of spots.");
-        
+
         Spot[] spotLocations = new Spot[8];
         int row;
         int col;
-        
+
         for (int i = 0; i < 8; i++) {
             row = (i + 1) * 15 - 1;
             for (int j = 0; j < NUMCOL; j++) {
                 col = j;
-                //System.out.println("i = " + i + ", j = " + j);
+                // System.out.println("i = " + i + ", j = " + j);
                 Location loc = new Location(row, col);
                 grid[row][col] = new BattleSpot(loc);
                 spotLocations[i] = grid[row][col];
             }
         }
-        
+
         return spotLocations;
 
     }
