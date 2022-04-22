@@ -4,13 +4,14 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.util.ArrayList;
-import java.util.Random;
 
 import org.apache.log4j.Logger;
 
 import edu.skidmore.cs326.spring2022.skribbage.common.Board;
 import edu.skidmore.cs326.spring2022.skribbage.common.BoardManager;
+import edu.skidmore.cs326.spring2022.skribbage.common.Card;
 import edu.skidmore.cs326.spring2022.skribbage.common.SpotType;
+import edu.skidmore.cs326.spring2022.skribbage.logic.GameManager;
 import us.daveread.edu.graphics.shape.Drawable;
 import us.daveread.edu.graphics.shape.VisibleObject;
 import us.daveread.edu.graphics.shape.impl.Image;
@@ -40,6 +41,11 @@ public class StartGamePage extends DrawingSurface implements Page {
      * PageManager instance for page management.
      */
     private PageManager pageManager;
+    
+    /**
+     * GameManager instance to manage the game.
+     */
+    private GameManager gameManager;
     
     /**
      * navPage - NavigationPage window.
@@ -111,11 +117,6 @@ public class StartGamePage extends DrawingSurface implements Page {
      * Toggles the screen being resized.
      */
     private boolean resizeWindow;
-    
-    /**
-     * Store whether the deck is in sorted order.
-     */
-    private boolean deckIsReset;
     
     /**
      * Visual representation of the spots on the board.
@@ -211,6 +212,7 @@ public class StartGamePage extends DrawingSurface implements Page {
      */
     public StartGamePage() {
         pageManager = PageManager.getInstance();
+        gameManager = new GameManager();
         LOG.trace("StartGamePage constructor");
         startGamePage = new MainFrame(
             this, "Start Game Page", 1400, 900, false);
@@ -278,7 +280,6 @@ public class StartGamePage extends DrawingSurface implements Page {
         moveAmt = 5;
         running = false;
         resizeWindow = false;
-        deckIsReset = true;
         
         createGrid();
         assignSpots();
@@ -443,8 +444,10 @@ public class StartGamePage extends DrawingSurface implements Page {
                 "card.png", new Point(
                 1150 + (i * 25) / numcards,
                 315 + (i * 25) / numcards), 0.6, null), i));
-            cardsInDeck.add(standardDeck.get(i));
         }
+        
+        gameManager.initializeDeck();
+        updateCardPositions();
         
         for (int i = cardsInDeck.size() - 1; i >= 0; i--) {
             add(cardsInDeck.get(i).getImage());
@@ -452,6 +455,50 @@ public class StartGamePage extends DrawingSurface implements Page {
         
     }
 
+    /**
+     * Update the card positions based on the data in the Game object.
+     */
+    public void updateCardPositions() {
+        cardsInDeck.clear();
+        cardsInPlay.clear();
+        cardsInHand.clear();
+        cardsInOpponentHand.clear();
+        
+        ArrayList<Card> gameCardsInDeck = 
+            gameManager.getGame().getCardsInDeck();
+        ArrayList<Card> gameCardsInPlay = 
+            gameManager.getGame().getCardsInPlay();
+        ArrayList<Card> gameCardsInHand = 
+            gameManager.getGame().getCardsInHand();
+        ArrayList<Card> gameCardsInOpponentHand = 
+            gameManager.getGame().getCardsInOpponentHand();
+        
+        for (int i = 0; i < gameCardsInDeck.size(); i++) {
+            cardsInDeck.add(
+                standardDeck.get(
+                    gameCardsInDeck.get(i).getCardID()));
+        }
+        
+        for (int i = 0; i < gameCardsInPlay.size(); i++) {
+            cardsInPlay.add(
+                standardDeck.get(
+                    gameCardsInPlay.get(i).getCardID()));
+        }
+        
+        for (int i = 0; i < gameCardsInHand.size(); i++) {
+            cardsInHand.add(
+                standardDeck.get(
+                    gameCardsInHand.get(i).getCardID()));
+        }
+        
+        for (int i = 0; i < gameCardsInOpponentHand.size(); i++) {
+            cardsInOpponentHand.add(
+                standardDeck.get(
+                    gameCardsInOpponentHand.get(i).getCardID()));
+        }
+        
+    }
+    
     /**
      * Test animation of pegs on board.
      */
@@ -499,7 +546,8 @@ public class StartGamePage extends DrawingSurface implements Page {
         int handSize = cardsInHand.size();
         for (int i = 0; i < handSize; i++) {
             cardsInHand.get(i).setDestLocation(
-                new Point(550 + (i * 350) / handSize, 630));
+                new Point(550 + (i * 350) / handSize,
+                    resizeWindow ? 550 : 630));
         }
     }
     
@@ -736,26 +784,14 @@ public class StartGamePage extends DrawingSurface implements Page {
      */
     public void resetCards() {
         
-        if (cardsInDeck.size() != standardDeck.size()) {
-            deckIsReset = false;
-        }
-        
-        if (deckIsReset) {
+        if (gameManager.deckIsSorted()) {
             return;
         }
         
-        cardsInDeck.clear();
-        cardsInPlay.clear();
-        cardsInHand.clear();
-        cardsInOpponentHand.clear();
-        
-        
-        for (int i = 0; i < standardDeck.size(); i++) {
-            cardsInDeck.add(standardDeck.get(i));
-        }
+        gameManager.resetCards();
+        updateCardPositions();
         
         moveCards(50);
-        deckIsReset = true;
     }
 
     /**
@@ -766,20 +802,8 @@ public class StartGamePage extends DrawingSurface implements Page {
         showCards(false);
         resetCards();
         
-        deckIsReset = false;
-        
-        Random rand = new Random();
-        CardImage temp;
-        int index1;
-        int index2;
-        
-        for (int i = 0; i < 100; i++) {
-            index1 = rand.nextInt(numcards);
-            index2 = rand.nextInt(numcards);
-            temp = cardsInDeck.get(index1);
-            cardsInDeck.set(index1, cardsInDeck.get(index2));
-            cardsInDeck.set(index2, temp);
-        }
+        gameManager.shuffleCards();
+        updateCardPositions();
         
         moveCards(50);
     }
@@ -792,13 +816,13 @@ public class StartGamePage extends DrawingSurface implements Page {
         
         for (int i = 0; i < 6; i++) {
             if (cardsInDeck.size() > 0) {
-                CardImage temp = cardsInDeck.remove(0);
-                cardsInHand.add(temp);
+                gameManager.dealPlayerCards(1);
+                updateCardPositions();
                 moveCards(20);
             }
             if (cardsInDeck.size() > 0) {
-                CardImage temp = cardsInDeck.remove(0);
-                cardsInOpponentHand.add(temp);
+                gameManager.dealOpponentCards(1);
+                updateCardPositions();
                 moveCards(20);
             }
         }
@@ -847,12 +871,8 @@ public class StartGamePage extends DrawingSurface implements Page {
             if (e == cardsInDeck.get(i).getImage()) {
                 setCardsClickable(false);
                 if (i == 0) {
-                    for (int j = 0; j < 5; j++) {
-                        if (cardsInDeck.size() > 0) {
-                            CardImage temp = cardsInDeck.remove(0);
-                            cardsInPlay.add(temp);
-                        }
-                    }
+                    gameManager.dealPlayCards(5);
+                    updateCardPositions();
                     moveCards(50);
                 }
                 setCardsClickable(true);
@@ -863,10 +883,8 @@ public class StartGamePage extends DrawingSurface implements Page {
         for (int i = 0; i < cardsInPlay.size(); i++) {
             if (e == cardsInPlay.get(i).getImage()) {
                 setCardsClickable(false);
-                if (cardsInPlay.size() > 0) {
-                    CardImage temp = cardsInPlay.remove(i);
-                    cardsInHand.add(temp);
-                }
+                gameManager.addCardToHand(i);
+                updateCardPositions();
                 moveCards(50);
                 setCardsClickable(true);
                 return;
@@ -876,10 +894,8 @@ public class StartGamePage extends DrawingSurface implements Page {
         for (int i = 0; i < cardsInHand.size(); i++) {
             if (e == cardsInHand.get(i).getImage()) {
                 setCardsClickable(false);
-                if (cardsInHand.size() > 0) {
-                    CardImage temp = cardsInHand.remove(i);
-                    cardsInPlay.add(temp);
-                }
+                gameManager.playCard(i);
+                updateCardPositions();
                 moveCards(50);
                 setCardsClickable(true);
                 return;
@@ -925,6 +941,7 @@ public class StartGamePage extends DrawingSurface implements Page {
             dealButton.setY(resizeWindow ? 880 : 800);
             startGamePage.setSize(1400, resizeWindow ? 940 : 860);
             resizeWindow = ! resizeWindow;
+            moveCards(10);
             
         } else if (e == resetButton) {
             LOG.trace("Reset the game state");
