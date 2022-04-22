@@ -79,21 +79,6 @@ public class StartGamePage extends DrawingSurface implements Page {
     private Text startButton;
     
     /**
-     * Button to reset the state of the game. Temporary.
-     */
-    private Text resetButton;
-    
-    /**
-     * Button to shuffle cards. Temporary.
-     */
-    private Text shuffleButton;
-    
-    /**
-     * Button to deal cards. Temporary.
-     */
-    private Text dealButton;
-    
-    /**
      * Arrows displayed on board.
      */
     private Image[] arrows;
@@ -233,13 +218,7 @@ public class StartGamePage extends DrawingSurface implements Page {
             Color.black, Color.blue);
         resizeButton = new Text("Resize Window", new Point(180, 25), 20,
             Color.black, Color.blue);
-        startButton = new Text("Start", new Point(35, 880), 20, Color.black,
-            Color.blue);
-        resetButton = new Text("Reset", new Point(100, 880), 20,
-            Color.black, Color.blue);
-        shuffleButton = new Text("Shuffle", new Point(170, 880), 20,
-            Color.black, Color.blue);
-        dealButton = new Text("Deal", new Point(255, 880), 20,
+        startButton = new Text("Start Game", new Point(700, 420), 20, 
             Color.black, Color.blue);
         arrows = new Image[3];
         arrows[0] = new Image("arrow.png", new Point(100, 70), 1, null);
@@ -251,11 +230,7 @@ public class StartGamePage extends DrawingSurface implements Page {
         
         add(returnHomeButton);
         add(resizeButton);
-        
         add(startButton);
-        add(resetButton);
-        add(shuffleButton);
-        add(dealButton);
         
         boardLines = new LineSegment[24];
         for (int i = 0; i < 24; i++) {
@@ -837,20 +812,6 @@ public class StartGamePage extends DrawingSurface implements Page {
         button.setClickable(clickable);
         button.setOpacity(clickable ? 1 : 0.5f);
     }
-    
-    /**
-     * Set whether the buttons are clickable to avoid button conflicts.
-     * 
-     * @param clickable
-     */
-    public void setButtonsClickable(boolean clickable) {
-
-        setButtonClickable(startButton, clickable);
-        setButtonClickable(resetButton, clickable);
-        setButtonClickable(shuffleButton, clickable);
-        setButtonClickable(dealButton, clickable);
-
-    }
 
     /**
      * Set whether the cards are clickable to avoid conflicts.
@@ -867,36 +828,24 @@ public class StartGamePage extends DrawingSurface implements Page {
      * @param e
      */
     public void checkCardClick(Drawable e) {
-        for (int i = 0; i < cardsInDeck.size(); i++) {
-            if (e == cardsInDeck.get(i).getImage()) {
-                setCardsClickable(false);
-                if (i == 0) {
-                    gameManager.dealPlayCards(5);
-                    updateCardPositions();
-                    moveCards(50);
-                }
-                setCardsClickable(true);
-                return;
-            }
-        }
-        
-        for (int i = 0; i < cardsInPlay.size(); i++) {
-            if (e == cardsInPlay.get(i).getImage()) {
-                setCardsClickable(false);
-                gameManager.addCardToHand(i);
-                updateCardPositions();
-                moveCards(50);
-                setCardsClickable(true);
-                return;
-            }
-        }
-        
         for (int i = 0; i < cardsInHand.size(); i++) {
             if (e == cardsInHand.get(i).getImage()) {
                 setCardsClickable(false);
                 gameManager.playCard(i);
                 updateCardPositions();
                 moveCards(50);
+                gameManager.opponentPlayCard();
+                updateCardPositions();
+                moveCards(50);
+                
+                if (gameManager.getGame().getCardsInPlay().size() == 12) {
+                    movePeg(0, 5);
+                    movePeg(1, 5);
+                    if (pegLocations[0] == 120) {
+                        closeWindow();
+                    }
+                    dealCards();
+                }
                 setCardsClickable(true);
                 return;
             }
@@ -908,23 +857,10 @@ public class StartGamePage extends DrawingSurface implements Page {
         LOG.trace("drawableMouseClick method in StartGamepage.java");
 
         if (e == startButton) {
-            setButtonClickable(startButton, true);
-            setButtonClickable(resetButton, false);
-            if (!running) {
-                LOG.trace("Starting game");
-                running = true;
-                startButton.setMessage("Stop");
-                animatePegs();
-                setButtonClickable(startButton, true);
-                setButtonClickable(resetButton, true);
+            LOG.trace("Starting game");
+            remove(startButton);
+            dealCards();
 
-            } else {
-                LOG.trace("Stopping game");
-                running = false;
-                startButton.setMessage("Start");
-                setButtonClickable(startButton, false);
-                setButtonClickable(resetButton, false);
-            }
 
         } else if (e == returnHomeButton) {
             LOG.trace("Return to previous screen");
@@ -935,35 +871,9 @@ public class StartGamePage extends DrawingSurface implements Page {
             LOG.trace("Resize window");
             gameArea.setDimension(
                 new Dimension(1350, resizeWindow ? 800 : 720));
-            startButton.setY(resizeWindow ? 880 : 800);
-            resetButton.setY(resizeWindow ? 880 : 800);
-            shuffleButton.setY(resizeWindow ? 880 : 800);
-            dealButton.setY(resizeWindow ? 880 : 800);
             startGamePage.setSize(1400, resizeWindow ? 940 : 860);
             resizeWindow = ! resizeWindow;
             moveCards(10);
-            
-        } else if (e == resetButton) {
-            LOG.trace("Reset the game state");
-            setButtonClickable(startButton, false);
-            setButtonClickable(resetButton, false);
-            movePeg(0, -1 - pegLocations[0]);
-            movePeg(1, -1 - pegLocations[1]);
-            movePeg(2, -1 - pegLocations[2]);
-            showCards(false);
-            resetCards();
-            setButtonClickable(startButton, true);
-            setButtonClickable(resetButton, true);
-            
-        } else if (e == shuffleButton) {
-            LOG.trace("Shuffle the deck");
-            setButtonClickable(shuffleButton, false);
-            shuffleCards();
-            setButtonClickable(shuffleButton, true);
-        } else if (e == dealButton) {
-            setButtonClickable(dealButton, false);
-            dealCards();
-            setButtonClickable(dealButton, true);
         }
         
         checkCardClick(e);
