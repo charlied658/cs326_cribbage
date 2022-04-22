@@ -133,7 +133,7 @@ public class InventoryPage extends DrawingSurface implements Page {
             closeWindow.setBorderColor(Color.BLACK);
             closeWindow();
         } else if (e == lobbyButton) {
-            new LobbyPage();
+            PageManager.getInstance().createPage(PageType.LOBBY_PAGE);
             closeWindow();
         }
 
