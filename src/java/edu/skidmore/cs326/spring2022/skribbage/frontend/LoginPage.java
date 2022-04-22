@@ -4,10 +4,8 @@ import java.awt.Color;
 import java.awt.Point;
 
 import edu.skidmore.cs326.spring2022.skribbage.frontend.events.ValidateUsernameEvent;
-import edu.skidmore.cs326.spring2022.skribbage.logic.events.CreateAccountResponseEvent;
 import edu.skidmore.cs326.spring2022.skribbage.logic.events.UserLoginResponseEvent;
 import edu.skidmore.cs326.spring2022.skribbage.logic.events.UserValidationResponseEvent;
-import edu.skidmore.cs326.spring2022.skribbage.logic.events.ValidateChangeResponseEvent;
 
 import org.apache.log4j.Logger;
 
@@ -19,11 +17,9 @@ import edu.skidmore.cs326.spring2022.skribbage.common.User;
 import edu.skidmore.cs326.spring2022.skribbage.common.UserRole;
 import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserChangePasswordEvent;
 
-import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserChangePasswordResponseController;
 
 import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserCreateAccountEvent;
 import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserLoginEvent;
-import edu.skidmore.cs326.spring2022.skribbage.frontend.events.ValidateForChangePassword;
 import us.daveread.edu.graphics.shape.Drawable;
 import us.daveread.edu.graphics.shape.impl.Image;
 import us.daveread.edu.graphics.shape.impl.Text;

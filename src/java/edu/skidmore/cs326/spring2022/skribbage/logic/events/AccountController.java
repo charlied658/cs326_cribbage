@@ -2,9 +2,7 @@ package edu.skidmore.cs326.spring2022.skribbage.logic.events;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-
 import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserLoginEvent;
-
 
 import org.apache.log4j.Logger;
 
@@ -110,7 +108,7 @@ public class AccountController implements PropertyChangeListener {
                         (UserLoginResponseEvent) eventFactory
                             .createEvent(EventType.USER_LOGIN_RESPONSE, this);
                     eventFactory.fireEvent(responseEvent);
-                   
+
                 }
 
                 break;
@@ -137,7 +135,7 @@ public class AccountController implements PropertyChangeListener {
                             EventType.USER_CHANGE_PASSWORD_VALIDATION_RESPONSE,
                             this);
                     eventFactory.fireEvent(responseEvent);
-                   
+
                 }
 
                 break;

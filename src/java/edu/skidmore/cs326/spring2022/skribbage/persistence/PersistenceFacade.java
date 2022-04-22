@@ -187,7 +187,7 @@ public final class PersistenceFacade
     }
 
     /**
-     * This checks the database to see if the user name exists already
+     * This checks the database to see if the user name exists already.
      * 
      * @param user
      * @return boolean depending if the user name already exists
