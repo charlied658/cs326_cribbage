@@ -126,7 +126,7 @@ public class InventoryPage extends DrawingSurface implements Page {
 
     @Override
     public void drawableMouseClick(Drawable e) {
-        LOG.trace("DrawableMosuceClick in InventoryPage.java");
+        LOG.trace("DrawableMouseClick in InventoryPage.java");
         if (e == closeWindow) {
             closeWindow.setBorderColor(Color.CYAN);
             Utility.pause(100);
