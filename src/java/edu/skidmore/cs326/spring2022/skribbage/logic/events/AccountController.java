@@ -10,10 +10,9 @@ import org.apache.log4j.Logger;
 
 import edu.skidmore.cs326.spring2022.skribbage.common.EventFactory;
 import edu.skidmore.cs326.spring2022.skribbage.common.EventType;
-import edu.skidmore.cs326.spring2022.skribbage.common.Password;
+import edu.skidmore.cs326.spring2022.skribbage.common.LoginAuthenticator;
 import edu.skidmore.cs326.spring2022.skribbage.common.User;
 import edu.skidmore.cs326.spring2022.skribbage.common.events.AccountEvent;
-import edu.skidmore.cs326.spring2022.skribbage.persistence.DatabaseManager;
 import edu.skidmore.cs326.spring2022.skribbage.persistence.PersistenceFacade;
 
 /**
@@ -38,10 +37,10 @@ public class AccountController implements PropertyChangeListener {
     //
     // }
 
-    /**
-     * Temporary instance of database manager used as tracer bullet.
-     */
-    private DatabaseManager dbManager = new DatabaseManager();
+//    /**
+//     * Temporary instance of database manager used as tracer bullet.
+//     */
+//    private DatabaseManager dbManager = new DatabaseManager();
 
     /**
      * Factor instance for this class.
@@ -63,8 +62,10 @@ public class AccountController implements PropertyChangeListener {
      * @return
      *         Whether or not the user is validated.
      */
-    public boolean validateUser(User userToValidate, Password inputPassword) {
-        return dbManager.userAuthenticate(userToValidate.getUserName(),
+    private boolean isPasswordCorrect(User userToValidate,
+        String inputPassword) {
+
+        return LoginAuthenticator.getInstance().passwordMatches(userToValidate,
             inputPassword);
     }
 
@@ -106,27 +107,24 @@ public class AccountController implements PropertyChangeListener {
             case USER_LOGIN:
                 LOG.debug("caught a login event");
                 ule = ((UserLoginEvent) evt);
-                if (validateUser(associatedUser, ule.getPassword())) {
-                    UserLoginResponseEvent responseEvent =
-                        (UserLoginResponseEvent) eventFactory
-                            .createEvent(EventType.USER_LOGIN_RESPONSE, this);
-                    eventFactory.fireEvent(responseEvent);
-                    if (validateUser(associatedUser,
-                        ule.getPassword())) {
-                        accountResponse =
-                            new AccountResponse("Login successful!", false);
 
-                    } else {
-                        accountResponse =
-                            new AccountResponse("Login unsuccessful...", true);
-                    }
-                    responseEvent =
-                        (UserLoginResponseEvent) eventFactory
-                            .createEvent(EventType.USER_LOGIN_RESPONSE, this,
-                                associatedUser, accountResponse);
-                    eventFactory.fireEvent(responseEvent);
-                    break;
+                UserLoginResponseEvent responseEvent;
+
+                if (isPasswordCorrect(associatedUser, ule.getPassword())) {
+
+                    accountResponse =
+                        new AccountResponse("Login successful!", false);
+
+                } else {
+                    accountResponse =
+                        new AccountResponse("Login unsuccessful...", true);
                 }
+                responseEvent =
+                    (UserLoginResponseEvent) eventFactory
+                        .createEvent(EventType.USER_LOGIN_RESPONSE, this,
+                            associatedUser, accountResponse);
+                eventFactory.fireEvent(responseEvent);
+                break;
 
             case USER_CREATE_ACCOUNT:
                 UserCreateAccountEvent ucae = ((UserCreateAccountEvent) evt);
@@ -195,7 +193,7 @@ public class AccountController implements PropertyChangeListener {
                     "Caught a user validated before change password method.");
                 // Validation is same as logging in validation.
                 ule = ((UserLoginEvent) evt);
-                if (validateUser(associatedUser, ule.getPassword())) {
+                if (isPasswordCorrect(associatedUser, ule.getPassword())) {
                     ValidateChangeResponseEvent responseEventPV =
                         (ValidateChangeResponseEvent) eventFactory.createEvent(
                             EventType.USER_CHANGE_PASSWORD_VALIDATION_RESPONSE,
