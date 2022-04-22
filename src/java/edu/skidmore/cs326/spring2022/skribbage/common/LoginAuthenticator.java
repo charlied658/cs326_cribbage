@@ -72,16 +72,16 @@ public class LoginAuthenticator implements LoginAuthentication {
         Password storedPassword =
             PersistenceFacade.getInstance().getPassword(userToValidate);
 
-        byte[] passwordAndSaltBytes =
+        byte[] saltedPasswordBytes =
             PasswordHasher.getInstance().base64Decode(
-                storedPassword.getBase64SaltAndPasswordHash());
+                storedPassword.getBase64PasswordHash());
 
         byte[] saltBytes = PasswordHasher.getInstance()
             .base64Decode(storedPassword.getBase64Salt());
 
         return PasswordHasher.getInstance()
             .doesPasswordMatch(inputPassword,
-                passwordAndSaltBytes, saltBytes);
+                saltedPasswordBytes, saltBytes);
     }
 
     @Override
