@@ -71,11 +71,13 @@ public class StartGamePage extends DrawingSurface implements Page {
     /**
      * player1Score - Text variable to hold player1 score.
      */
+    @SuppressWarnings("unused")
     private Text player1Score;
 
     /**
      * player2Score - Text variable to hold player2 score.
      */
+    @SuppressWarnings("unused")
     private Text player2Score;
 
     /**
@@ -132,7 +134,7 @@ public class StartGamePage extends DrawingSurface implements Page {
      * Lines displayed on the board which occur every 5 spaces.
      */
     private LineSegment[] boardLines;
-    
+
     /**
      * Locations of the pegs on the board.
      */
@@ -147,22 +149,22 @@ public class StartGamePage extends DrawingSurface implements Page {
      * Stores the file names of the 52 cards.
      */
     private String[] fileNames;
-    
+
     /**
      * Button to show or hide the cards. Temporary.
      */
     private Text showCardsButton;
-    
+
     /**
      * Button to shuffle cards.
      */
     private Text shuffleButton;
-    
+
     /**
      * Stores whether the cards are shown or not.
      */
     private boolean cardsShowing;
-    
+
     /**
      * How many spaces each player moves.
      */
@@ -172,27 +174,27 @@ public class StartGamePage extends DrawingSurface implements Page {
      * Store whether the game currently running.
      */
     private boolean running;
-    
+
     /**
      * Arraylist of card images.
      */
     private ArrayList<CardImage> standardDeck;
-    
+
     /**
      * Cards currently displayed in the deck.
      */
     private ArrayList<CardImage> cardsInDeck;
-    
+
     /**
      * Cards currently displayed in center of board.
      */
     private ArrayList<CardImage> cardsInPlay;
-    
+
     /**
      * Cards currently displayed in the player's hand.
      */
     private ArrayList<CardImage> cardsInHand;
-    
+
     /**
      * Arrows displayed on board.
      */
@@ -202,7 +204,7 @@ public class StartGamePage extends DrawingSurface implements Page {
      * returnHome -Text variable to represent back button.
      */
     private Text returnHome;
-    
+
     /**
      * Button to resize the window to be smaller.
      */
@@ -212,7 +214,7 @@ public class StartGamePage extends DrawingSurface implements Page {
      * Toggles the screen being resized.
      */
     private boolean resizeWindow;
-    
+
     /**
      * PageManager instance for page management.
      */
@@ -222,7 +224,7 @@ public class StartGamePage extends DrawingSurface implements Page {
      * Number of cards displayed on the deck. This is only for visual purposes.
      */
     private final int numcards = 52;
-    
+
     /**
      * homeScreen - HomeScreen window.
      */
@@ -260,10 +262,10 @@ public class StartGamePage extends DrawingSurface implements Page {
             new Dimension(1350, 800), Color.black, new Color(43, 176, 19));
         beginGame = new Text("Start", new Point(35, 880), 20, Color.black,
             Color.blue);
-//        player1Score = new Text("temp player 1:", new Point(35, 790), 20,
-//            Color.black);
-//        player2Score = new Text("temp player 2: ", new Point(35, 810), 20,
-//            Color.black);
+        // player1Score = new Text("temp player 1:", new Point(35, 790), 20,
+        // Color.black);
+        // player2Score = new Text("temp player 2: ", new Point(35, 810), 20,
+        // Color.black);
         returnHome = new Text("Return to home", new Point(10, 25), 20,
             Color.black, Color.blue);
         resizeButton = new Text("Resize Window", new Point(180, 25), 20,
@@ -283,24 +285,24 @@ public class StartGamePage extends DrawingSurface implements Page {
             Color.black, Color.blue);
         shuffleButton = new Text("Shuffle", new Point(760, 880), 20,
             Color.black, Color.blue);
-//        cards = new Image[numcards];
-//        for (int i = 0; i < numcards; i++) {
-//            cards[i] = new Image("card.png",
-//                new Point(700 + 2 * i, 315 + 2 * i), .6, null);
-//        }
+        // cards = new Image[numcards];
+        // for (int i = 0; i < numcards; i++) {
+        // cards[i] = new Image("card.png",
+        // new Point(700 + 2 * i, 315 + 2 * i), .6, null);
+        // }
         arrows = new Image[3];
         arrows[0] = new Image("arrow.png", new Point(100, 70), 1, null);
         arrows[1] = new Image("arrow.png", new Point(260, 70), 1, null);
         arrows[2] = new Image("arrow2.png", new Point(180, 695), -1, null);
-        
+
         add(gameArea);
         add(beginGame);
-//        add(player2Score);
-//        add(player1Score);
+        // add(player2Score);
+        // add(player1Score);
         add(returnHome);
         add(resizeButton);
         add(board);
-        
+
         boardLines = new LineSegment[24];
         for (int i = 0; i < 24; i++) {
             if ((i >= 0 && i < 6) || (i >= 12 && i < 18)) {
@@ -316,11 +318,11 @@ public class StartGamePage extends DrawingSurface implements Page {
             }
             add(boardLines[i]);
         }
-        
+
         add(arrows[0]);
         add(arrows[1]);
         add(arrows[2]);
-        
+
         add(movePlayers[0]);
         add(movePlayers[1]);
         add(movePlayers[2]);
@@ -333,12 +335,12 @@ public class StartGamePage extends DrawingSurface implements Page {
         running = false;
         cardsShowing = false;
         resizeWindow = false;
-        
+
         createGrid();
         assignSpots();
         renderSpots();
         createCards();
-        
+
     }
 
     /**
@@ -450,12 +452,12 @@ public class StartGamePage extends DrawingSurface implements Page {
         add(pegRenderer[1]);
         add(pegRenderer[2]);
     }
-    
+
     /**
      * Initialize the cards.
      */
     public void createCards() {
-        
+
         fileNames = new String[52];
         for (int i = 0; i < 4; i++) {
             String suit;
@@ -468,7 +470,7 @@ public class StartGamePage extends DrawingSurface implements Page {
             } else {
                 suit = "spades";
             }
-       
+
             fileNames[13 * i] = "ace_of_" + suit + ".png";
             fileNames[13 * i + 1] = "2_of_" + suit + ".png";
             fileNames[13 * i + 2] = "3_of_" + suit + ".png";
@@ -483,28 +485,28 @@ public class StartGamePage extends DrawingSurface implements Page {
             fileNames[13 * i + 11] = "queen_of_" + suit + ".png";
             fileNames[13 * i + 12] = "king_of_" + suit + ".png";
         }
-        
-        //cardRenderer = new Image[numcards];
-        
+
+        // cardRenderer = new Image[numcards];
+
         standardDeck = new ArrayList<CardImage>();
         cardsInDeck = new ArrayList<CardImage>();
         cardsInPlay = new ArrayList<CardImage>();
         cardsInHand = new ArrayList<CardImage>();
-        
-        
+
         for (int i = 0; i < numcards; i++) {
             fileNames[i] = "Playing Cards/" + fileNames[i];
             standardDeck.add(new CardImage(new Image(
                 "card.png", new Point(
-                1150 + (i * 25) / numcards,
-                315 + (i * 25) / numcards), 0.6, null), i));
+                    1150 + (i * 25) / numcards,
+                    315 + (i * 25) / numcards),
+                0.6, null), i));
             cardsInDeck.add(standardDeck.get(i));
         }
-        
+
         for (int i = cardsInDeck.size() - 1; i >= 0; i--) {
             add(cardsInDeck.get(i).getImage());
         }
-        
+
     }
 
     /**
@@ -535,7 +537,7 @@ public class StartGamePage extends DrawingSurface implements Page {
                 new Point(1150 + i * 25 / deckSize, 315 + i * 25 / deckSize));
         }
     }
-    
+
     /**
      * Move cards in the play area.
      */
@@ -546,7 +548,7 @@ public class StartGamePage extends DrawingSurface implements Page {
                 new Point(550 + (i * 350) / playSize, 330));
         }
     }
-    
+
     /**
      * Move cards in the player's hand.
      */
@@ -557,16 +559,16 @@ public class StartGamePage extends DrawingSurface implements Page {
                 new Point(550 + (i * 350) / handSize, 630));
         }
     }
-    
+
     /**
      * Animate the cards.
      */
     public void moveCards() {
-        
+
         moveDeck();
         movePlayCards();
         moveHandCards();
-        
+
         double[] x = new double[numcards];
         double[] y = new double[numcards];
 
@@ -592,11 +594,11 @@ public class StartGamePage extends DrawingSurface implements Page {
         }
 
         for (int i = 0; i < 50; i++) {
-            
+
             if (i == 25) {
                 updateLayers();
             }
-            
+
             for (int j = 0; j < numcards; j++) {
                 x[j] += xDist[j] / 50;
                 y[j] += yDist[j] / 50;
@@ -612,22 +614,22 @@ public class StartGamePage extends DrawingSurface implements Page {
             }
         }
     }
-    
+
     /**
      * Bring certain cards to the front.
      */
     public void updateLayers() {
-        
+
         for (int i = cardsInDeck.size() - 1; i >= 0; i--) {
             remove(cardsInDeck.get(i).getImage());
             add(cardsInDeck.get(i).getImage());
         }
-        
+
         for (int i = 0; i < cardsInPlay.size(); i++) {
             remove(cardsInPlay.get(i).getImage());
             add(cardsInPlay.get(i).getImage());
         }
-        
+
         for (int i = 0; i < cardsInHand.size(); i++) {
             remove(cardsInHand.get(i).getImage());
             add(cardsInHand.get(i).getImage());
@@ -706,7 +708,7 @@ public class StartGamePage extends DrawingSurface implements Page {
      * Method to show or hide the cards.
      */
     public void showCards() {
-        
+
         for (int i = 0; i < cardsInHand.size(); i++) {
             if (!cardsShowing) {
                 cardsInHand.get(i).getImage().setImageFileName(
@@ -717,7 +719,7 @@ public class StartGamePage extends DrawingSurface implements Page {
                 cardsInHand.get(i).getImage().setScaleFactor(0.6);
             }
         }
-        
+
         for (int i = 0; i < cardsInPlay.size(); i++) {
             if (!cardsShowing) {
                 cardsInPlay.get(i).getImage().setImageFileName(
@@ -728,7 +730,7 @@ public class StartGamePage extends DrawingSurface implements Page {
                 cardsInPlay.get(i).getImage().setScaleFactor(0.6);
             }
         }
-        
+
         for (int i = 0; i < cardsInDeck.size(); i++) {
             if (!cardsShowing) {
                 cardsInDeck.get(i).getImage().setImageFileName(
@@ -741,7 +743,7 @@ public class StartGamePage extends DrawingSurface implements Page {
         }
         cardsShowing = !cardsShowing;
     }
-    
+
     /**
      * Animation to select a card.
      * 
@@ -761,21 +763,20 @@ public class StartGamePage extends DrawingSurface implements Page {
         }
         moveCards();
     }
-    
+
     /**
      * Reset card positions.
      */
     public void resetCards() {
-        
+
         cardsInDeck.clear();
         cardsInPlay.clear();
         cardsInHand.clear();
-        
-        
+
         for (int i = 0; i < standardDeck.size(); i++) {
             cardsInDeck.add(standardDeck.get(i));
         }
-        
+
         moveCards();
     }
 
@@ -788,12 +789,12 @@ public class StartGamePage extends DrawingSurface implements Page {
             showCardsButton.setMessage("Show cards");
         }
         resetCards();
-        
+
         Random rand = new Random();
         CardImage temp;
         int index1;
         int index2;
-        
+
         for (int i = 0; i < 100; i++) {
             index1 = rand.nextInt(numcards);
             index2 = rand.nextInt(numcards);
@@ -801,10 +802,10 @@ public class StartGamePage extends DrawingSurface implements Page {
             cardsInDeck.set(index1, cardsInDeck.get(index2));
             cardsInDeck.set(index2, temp);
         }
-        
+
         moveCards();
     }
-    
+
     /**
      * Set which buttons are clickable to avoid button conflicts.
      * 
@@ -823,6 +824,7 @@ public class StartGamePage extends DrawingSurface implements Page {
 
     /**
      * Check if a card has been clicked.
+     * 
      * @param e
      */
     public void checkCardClick(Drawable e) {
@@ -846,7 +848,7 @@ public class StartGamePage extends DrawingSurface implements Page {
                 return;
             }
         }
-        
+
         for (int i = 0; i < cardsInPlay.size(); i++) {
             if (e == cardsInPlay.get(i).getImage()) {
                 for (int k = 0; k < standardDeck.size(); k++) {
@@ -863,7 +865,7 @@ public class StartGamePage extends DrawingSurface implements Page {
                 return;
             }
         }
-        
+
         for (int i = 0; i < cardsInHand.size(); i++) {
             if (e == cardsInHand.get(i).getImage()) {
                 for (int k = 0; k < standardDeck.size(); k++) {
@@ -881,7 +883,7 @@ public class StartGamePage extends DrawingSurface implements Page {
             }
         }
     }
-    
+
     @Override
     public void drawableMouseClick(Drawable e) {
         LOG.trace("drawableMouseClick method in StartGamepage.java");
@@ -923,8 +925,8 @@ public class StartGamePage extends DrawingSurface implements Page {
             showCardsButton.setY(resizeWindow ? 880 : 800);
             shuffleButton.setY(resizeWindow ? 880 : 800);
             startGamePage.setSize(1400, resizeWindow ? 940 : 860);
-            resizeWindow = ! resizeWindow;
-            
+            resizeWindow = !resizeWindow;
+
         } else if (e == movePlayers[0]) {
             setClickable(
                 new boolean[] { false, false, false, false, false, false });
@@ -975,8 +977,7 @@ public class StartGamePage extends DrawingSurface implements Page {
                 showCardsButton.setMessage("Show cards");
             }
             resetCards();
-            
-            
+
         } else if (e == showCardsButton) {
             showCardsButton.setClickable(false);
             if (!cardsShowing) {
@@ -991,9 +992,9 @@ public class StartGamePage extends DrawingSurface implements Page {
             shuffleCards();
             shuffleButton.setClickable(true);
         }
-        
+
         checkCardClick(e);
-        
+
     }
 
     /**

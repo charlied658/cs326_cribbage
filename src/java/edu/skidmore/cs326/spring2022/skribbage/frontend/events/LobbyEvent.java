@@ -9,9 +9,10 @@ import java.beans.PropertyChangeEvent;
 
 /**
  * @author Sten Leinasaar
- * Last Edited: March 23, 2022
- * @reviewed Alex Carney - Added lobby functionality now that the bean is done
- * April 21, 2022
+ *         Last Edited: March 23, 2022
+ *         reviewed by Alex Carney - Added lobby
+ *         functionality now that the bean is done
+ *         April 21, 2022
  */
 @SuppressWarnings("serial")
 public abstract class LobbyEvent extends PropertyChangeEvent {
@@ -33,11 +34,13 @@ public abstract class LobbyEvent extends PropertyChangeEvent {
     /**
      * Constructor method for LobbyEvent.java.
      *
-     * @param source    The bean that fired the event
-     * @param eventType The event type associated
+     * @param source
+     *            The bean that fired the event
+     * @param eventType
+     *            The event type associated
+     * @param lobby
      */
-    protected LobbyEvent(Object source, EventType eventType, Lobby lobby
-    ) {
+    protected LobbyEvent(Object source, EventType eventType, Lobby lobby) {
         super(source, eventType.toString(), null, null);
         LOG.trace("Constructor reached in LobbEvent.java");
         this.lobby = lobby;
@@ -49,6 +52,11 @@ public abstract class LobbyEvent extends PropertyChangeEvent {
      */
     public abstract EventType getEventType();
 
+    /**
+     * getLobby method.
+     * 
+     * @return the lobby
+     */
     public Lobby getLobby() {
         return lobby;
     }
