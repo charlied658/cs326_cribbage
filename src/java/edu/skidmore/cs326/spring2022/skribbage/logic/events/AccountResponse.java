@@ -6,7 +6,7 @@ import java.util.Objects;
  * Bean to store data such as responseMessage used by response event classes.
  *
  * @author Declan Morris
- * @reviewed Alex Carney 4/21 added toString and HashCode
+ *         reviewed by Alex Carney 4/21 added toString and HashCode
  */
 public class AccountResponse {
 
@@ -77,16 +77,19 @@ public class AccountResponse {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o)
+        if (this == o) {
             return true;
-        if (o == null || getClass() != o.getClass())
+        }
+        if (o == null || getClass() != o.getClass()) {
             return false;
+        }
         AccountResponse that = (AccountResponse) o;
         return rejectionStatus == that.rejectionStatus && Objects
             .equals(responseMessage, that.responseMessage);
     }
 
-    @Override public int hashCode() {
+    @Override
+    public int hashCode() {
         return Objects.hash(responseMessage, rejectionStatus);
     }
 }

@@ -4,8 +4,10 @@ import java.awt.Color;
 import java.awt.Point;
 
 import edu.skidmore.cs326.spring2022.skribbage.frontend.events.ValidateUsernameEvent;
+import edu.skidmore.cs326.spring2022.skribbage.logic.events.CreateAccountResponseEvent;
 import edu.skidmore.cs326.spring2022.skribbage.logic.events.UserLoginResponseEvent;
 import edu.skidmore.cs326.spring2022.skribbage.logic.events.UserValidationResponseEvent;
+import edu.skidmore.cs326.spring2022.skribbage.logic.events.ValidateChangeResponseEvent;
 
 import org.apache.log4j.Logger;
 
@@ -17,10 +19,10 @@ import edu.skidmore.cs326.spring2022.skribbage.common.PasswordHasher;
 import edu.skidmore.cs326.spring2022.skribbage.common.User;
 import edu.skidmore.cs326.spring2022.skribbage.common.UserRole;
 import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserChangePasswordEvent;
-
-
+import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserChangePasswordResponseController;
 import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserCreateAccountEvent;
 import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserLoginEvent;
+import edu.skidmore.cs326.spring2022.skribbage.frontend.events.ValidateForChangePassword;
 import us.daveread.edu.graphics.shape.Drawable;
 import us.daveread.edu.graphics.shape.impl.Image;
 import us.daveread.edu.graphics.shape.impl.Text;
@@ -108,7 +110,6 @@ public class LoginPage extends DrawingSurface implements Page {
     /**
      * evtFactory - EventFactory object.
      */
-    @SuppressWarnings("unused")
     private EventFactory evtFactory;
 
     /**
@@ -164,6 +165,7 @@ public class LoginPage extends DrawingSurface implements Page {
     /**
      * Private object of type passwordhasher.
      */
+    @SuppressWarnings("unused")
     private PasswordHasher hasher;
 
     /**
@@ -344,7 +346,7 @@ public class LoginPage extends DrawingSurface implements Page {
             showMessage("Invalid Username",
                 "Username is taken or is a bad word, try again",
                 DialogType.ERROR);
-            //createNewUser();
+            // createNewUser();
         }
 
     }
@@ -389,7 +391,8 @@ public class LoginPage extends DrawingSurface implements Page {
      */
     public void validateLoginCallback(UserLoginResponseEvent event) {
         LOG.trace("validateLoginCallback called with event " + event);
-        LOG.trace("validateLoginCallback has response " +
+        LOG.trace("validateLoginCallback has response "
+            +
             event.getAccountResponse());
         if (!event.getAccountResponse().isRejectionStatus()) {
             showMessage("User: " + username, "Successful Log In",
