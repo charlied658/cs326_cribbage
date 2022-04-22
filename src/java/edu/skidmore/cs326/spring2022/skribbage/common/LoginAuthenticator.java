@@ -12,7 +12,7 @@ import edu.skidmore.cs326.spring2022.skribbage.persistence.PersistenceFacade;
  * @author Declan Morris
  */
 public class LoginAuthenticator implements LoginAuthentication {
-    
+
     /**
      * Logger instance.
      */
@@ -50,12 +50,38 @@ public class LoginAuthenticator implements LoginAuthentication {
 
     @Override
     public void loginAttempt(User user, String enteredPassword) {
-        
+
     }
 
     @Override
     public void changePasswordAttempt(User user, String newPassword) {
-        
+
+    }
+
+    /**
+     * Determine if a given password in string form entered by a user matches
+     * what is stored in the database.
+     * 
+     * @param userToValidate
+     * @param inputPassword
+     * @return doesPasswordMatch
+     */
+    public boolean passwordMatches(User userToValidate,
+        String inputPassword) {
+
+        Password storedPassword =
+            PersistenceFacade.getInstance().getPassword(userToValidate);
+
+        byte[] passwordAndSaltBytes =
+            PasswordHasher.getInstance().base64Decode(
+                storedPassword.getBase64SaltAndPasswordHash());
+
+        byte[] saltBytes = PasswordHasher.getInstance()
+            .base64Decode(storedPassword.getBase64Salt());
+
+        return PasswordHasher.getInstance()
+            .doesPasswordMatch(inputPassword,
+                passwordAndSaltBytes, saltBytes);
     }
 
     @Override
