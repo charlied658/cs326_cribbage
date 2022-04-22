@@ -121,6 +121,10 @@ public class LobbyPage extends DrawingSurface implements Page {
      */
     @SuppressWarnings("unused")
     private NavigationPage navPage;
+    /**
+     * PageManager instance for managing pages.
+     */
+    private PageManager pageManager;
 
     /**
      * Logger instance for logging.
@@ -136,6 +140,7 @@ public class LobbyPage extends DrawingSurface implements Page {
      */
     public LobbyPage() {
         LOG.trace("Entered LobbyPage Constructor.");
+        pageManager = PageManager.getInstance();
         mf = new MainFrame(this, "Pre-Game Lobby", mainframeWidth,
             mainframeHeight, false);
         setup();
@@ -205,11 +210,6 @@ public class LobbyPage extends DrawingSurface implements Page {
         add(startButton);
         add(inventoryPageButton);
 
-        /*
-         * add(player1LoginSection);
-         * add(player2LoginSection);
-         * add(player3LoginSection);
-         */
         // add(player1Ready);
         // add(player2Ready);
         // add(player3Ready);
@@ -257,7 +257,8 @@ public class LobbyPage extends DrawingSurface implements Page {
             returnToMainMenu.setBorderColor(Color.CYAN);
             Utility.pause(100);
             returnToMainMenu.setBorderColor(Color.BLACK);
-            navPage = new NavigationPage();
+            navPage = (NavigationPage) pageManager
+                .createPage(PageType.NAVIGATION_PAGE);
             closeWindow();
         } else if (e == player1Ready) {
             setReadyButtonColor(player1Ready);
@@ -276,14 +277,14 @@ public class LobbyPage extends DrawingSurface implements Page {
             startButton.setBorderColor(Color.CYAN);
             Utility.pause(100);
             startButton.setBorderColor(Color.BLACK);
-            new StartGamePage();
+            pageManager.createPage(PageType.START_GAME_PAGE);
             closeWindow();
 
         } else if (e == inventoryPageButton) {
             inventoryPageButton.setBorderColor(Color.CYAN);
             Utility.pause(100);
             inventoryPageButton.setBorderColor(Color.BLACK);
-            new InventoryPage();
+            pageManager.createPage(PageType.INVENTORY_PAGE);
             closeWindow();
         }
 

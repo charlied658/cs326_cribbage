@@ -62,7 +62,8 @@ public class SkribbageBattleRoyale implements Runnable {
         eventManager = EventManager.getInstance();
         eventManager
             .addPropertyChangeListener(new AccountResponseController(),
-                EventType.USER_LOGIN_RESPONSE);
+                EventType.USER_LOGIN_RESPONSE,
+                EventType.USER_VALIDATION_RESPONSE);
 
         eventManager
             .addPropertyChangeListener(new AccountController(),

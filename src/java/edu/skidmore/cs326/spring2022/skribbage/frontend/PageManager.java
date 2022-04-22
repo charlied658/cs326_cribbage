@@ -36,7 +36,8 @@ public final class PageManager {
      */
     private PageManager() {
         LOG.debug("Instance created");
-        activePage = new HomeScreen();
+        // This line was causing 2 homescreens to display when starting the game
+        // activePage = new HomeScreen();
     }
 
     /**
