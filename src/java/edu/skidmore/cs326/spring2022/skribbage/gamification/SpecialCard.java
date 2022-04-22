@@ -27,7 +27,48 @@ public enum SpecialCard {
      */
     SKIPPLAYERTURNCARD("Skip-Player-Turn Card", 100, "Use this card to"
         + "to skip the opponent's next turn. May only use one Skip-Player"
-        + "-Turn card per turn. Cannot be used during the show phase.");
+        + "-Turn card per turn. Cannot be used during the show phase."),
+
+    /**
+     * THROWAWAYPICKUPCARD - If special card is a Throw-Away-Pickup Card.
+     */
+    THROWAWAYPICKUPCARD("Throw-Away-Pickup Card", 100, "Pick any player"
+        + " to throw one card away and pick up a new one."),
+
+    /**
+     * MIRROR - If special card is a mirror card.
+     */
+    MIRROR("Mirror", 100, "After the show phase has begun, if a card"
+        + " is used against you, deflect to an available player of"
+        + " your choosing."),
+
+    /**
+     * DISARM - If special card is a disarm card.
+     */
+    DISARM("Disarm", 100,
+        "Target a player and prevent them from using any special"
+            + " cards."),
+
+    /**
+     * PICKPOCKET - If special card is a Pick Pocket card.
+     */
+    PICKPOCKET("Pick Pocket", 100,
+        "Once the show phase has started, pick a player"
+            + " to steal a card from. Cannot be used against players with "
+            + "one card."),
+
+    /**
+     * AUTOPILOT - If special card is a Auto Pilot card.
+     */
+    AUTOPILOT("Auto Pilot", 100,
+        "Target a player who has not played a card yet. Auto"
+            + " Pilot would pick a random card and force the player to "
+            + "use it."),
+
+    /**
+     * COPYCAT - If special card is a Copy Cat card.
+     */
+    COPYCAT("Copycat", 100, "Copies last card that was placed down.");
 
     /**
      * Name of Special Card.
