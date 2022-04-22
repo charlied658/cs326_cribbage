@@ -18,7 +18,7 @@ public enum EventType {
     /**
      * Fired when a user attempts to create an account via login page.
      */
-    USER_LOGIN("User Login Event", User.class, Password.class),
+    USER_LOGIN("User Login Event", User.class, String.class),
     /**
      * Fired when.
      */
