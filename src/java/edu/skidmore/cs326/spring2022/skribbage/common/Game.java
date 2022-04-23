@@ -1,7 +1,8 @@
 package edu.skidmore.cs326.spring2022.skribbage.common;
 
-import edu.skidmore.cs326.spring2022.skribbage.logic.Deck;
-import java.util.ArrayList;
+import edu.skidmore.cs326.spring2022.skribbage.common.Deck;
+import edu.skidmore.cs326.spring2022.skribbage.common.Hand;
+import java.util.*;
 import edu.skidmore.cs326.spring2022.skribbage.logic.GameManager;
 //import org.apache.log4j.Logger;
 
@@ -14,13 +15,13 @@ import edu.skidmore.cs326.spring2022.skribbage.logic.GameManager;
  *
  * @author Michael Shriner
  */
-public class Game {
+public class Game implements GameInterface {
 
     /** The deck of cards used to play Cribbage. */
     private Deck theDeck = new Deck();
 
     /** The list of players who are playing this game of Cribbage. */
-    private ArrayList<Player> playerList = new ArrayList<Player>();
+    private List <Player> playerList = new ArrayList<Player>();
 
     /**
      * The total score among the players during the pegging phase of
@@ -29,17 +30,14 @@ public class Game {
     private int peggingTotal;
 
     /** The crib for the game. */
-    private ArrayList<Card> crib;
+    private Hand cribCards;
 
     /** The set of cards played by the pone during the pegging phase. */
-    private ArrayList<Card> ponePeggingCards;
+    //private List <Card> ponePeggingCards;
+    private Hand ponePeggingCards;
 
     /** The set of cards played by the dealer during the pegging phase. */
-    private ArrayList<Card> dealerPeggingCards;
-
-    /** A GameManager to manipulate the data. */
-    @SuppressWarnings("unused")
-    private GameManager gm = new GameManager(this);
+    private Hand dealerPeggingCards;
 
     /**
      * Game constructor. It initializes the list of players,
@@ -53,23 +51,27 @@ public class Game {
      */
     public Game(int numPlayers) {
 
-        ponePeggingCards = new ArrayList<Card>();
-        dealerPeggingCards = new ArrayList<Card>();
-        crib = new ArrayList<Card>();
-        // gm.initPlayers(numPlayers, playerList);
-        // gm.initPeggingTotal();
+        //ponePeggingCards = new ArrayList<Card>();
+        ponePeggingCards = new Hand ();
+        dealerPeggingCards = new Hand();
+        cribCards = new Hand();
+        peggingTotal = 0;
+        initPlayers(numPlayers);
     }
 
     /**
-     * Game constructor
-     * This was created for testing Game. In particular,
-     * for testing methods related
+     * Initializes the ArrayList of Player objects given the
+     * number of players for this game. However, there is
+     * the assumption, for now, that the number of players
+     * is 2.
+     *
+     * @param numPlayers is the number of players.
      */
-    public Game() {
-        ponePeggingCards = new ArrayList<Card>();
-        dealerPeggingCards = new ArrayList<Card>();
-        crib = new ArrayList<Card>();
-        peggingTotal = 0;
+    public void initPlayers(int numPlayers) {
+
+        for (int i = 0; i < numPlayers; i++) {
+            playerList.add(new Player());
+        }
     }
 
     /**
@@ -88,7 +90,7 @@ public class Game {
      * @param ponePegCards
      *            is an ArrayList of Card objects.
      */
-    public void setPonePeggingCards(ArrayList<Card> ponePegCards) {
+    public void setPonePeggingCards(Hand ponePegCards) {
         ponePeggingCards = ponePegCards;
     }
 
@@ -98,7 +100,7 @@ public class Game {
      * @param dealerPegCards
      *            is an ArrayList of Card objects.
      */
-    public void setDealerPeggingCards(ArrayList<Card> dealerPegCards) {
+    public void setDealerPeggingCards(Hand dealerPegCards) {
         dealerPeggingCards = dealerPegCards;
     }
 
@@ -125,7 +127,7 @@ public class Game {
      *
      * @return the pone's pegging cards.
      */
-    public ArrayList<Card> getPonePeggingCards() {
+    public Hand getPonePeggingCards() {
         return ponePeggingCards;
     }
 
@@ -134,7 +136,7 @@ public class Game {
      *
      * @return the dealer's pegging cards.
      */
-    public ArrayList<Card> getDealerPeggingCards() {
+    public Hand getDealerPeggingCards() {
         return dealerPeggingCards;
     }
 
@@ -143,7 +145,7 @@ public class Game {
      *
      * @return an ArrayList of players.
      */
-    public ArrayList<Player> getPlayerList() {
+    public List <Player> getPlayerList() {
         return playerList;
     }
 
@@ -152,8 +154,8 @@ public class Game {
      *
      * @return the crib as an ArrayList of Card objects.
      */
-    public ArrayList<Card> getCrib() {
-        return crib;
+    public Hand getCribCards() {
+        return cribCards;
     }
 
 }

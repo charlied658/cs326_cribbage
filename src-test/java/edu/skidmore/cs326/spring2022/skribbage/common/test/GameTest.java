@@ -4,12 +4,14 @@ import edu.skidmore.cs326.spring2022.skribbage.common.Suit;
 import edu.skidmore.cs326.spring2022.skribbage.common.Game;
 import edu.skidmore.cs326.spring2022.skribbage.common.Rank;
 import edu.skidmore.cs326.spring2022.skribbage.common.Card;
-import edu.skidmore.cs326.spring2022.skribbage.logic.Deck;
+import edu.skidmore.cs326.spring2022.skribbage.common.Hand;
+import edu.skidmore.cs326.spring2022.skribbage.common.Deck;
 import org.junit.Before;
 import org.junit.Test;
-import java.util.ArrayList;
+import java.util.*;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
+import edu.skidmore.cs326.spring2022.skribbage.logic.HandManager;
 
 /**
  * GameTest tests the methods in Game.
@@ -25,26 +27,28 @@ public class GameTest {
     private Game game;
 
     /** Deck used to check the getDeck method in Game. */
-    @SuppressWarnings("unused")
+    // @SuppressWarnings("unused")
     private Deck testDeck;
 
     /**
      * ArrayList of pone pegging cards to check the getPonePeggingCards
      * method in Game.
      */
-    private ArrayList<Card> testPonePeggingCards;
+    private Hand testPonePeggingCards;
 
     /**
      * ArrayList of dealer pegging cards to check the getDealerPeggingCards
      * method in Game.
      */
-    private ArrayList<Card> testDealerPeggingCards;
+    private Hand testDealerPeggingCards;
 
     /**
      * ArrayList of cards in crib to check the getCrib
      * method in Game.
      */
-    private ArrayList<Card> testCrib;
+    private Hand testCrib;
+
+    private HandManager handManager;
 
     /**
      * Initializes fields.
@@ -54,27 +58,15 @@ public class GameTest {
 
         testDeck = new Deck();
 
-        testPonePeggingCards = new ArrayList<Card>();
+        handManager = new HandManager();
 
-        testDealerPeggingCards = new ArrayList<Card>();
+        testPonePeggingCards = new Hand();
 
-        testCrib = new ArrayList<Card>();
+        testDealerPeggingCards = new Hand();
+
+        testCrib = new Hand();
 
         game = new Game(2);
-    }
-
-    /**
-     * Tests the setPeggingTotal method.
-     * Passes.
-     */
-    @Test
-    public void testSetPeggingTotal() {
-
-        assertEquals(game.getPeggingTotal(), 0);
-
-        game.setPeggingTotal(5);
-
-        assertEquals(game.getPeggingTotal(), 5);
     }
 
     /**
@@ -92,6 +84,55 @@ public class GameTest {
 
     }
 
+
+    /**
+     * Test the initialize players method.
+     * Passes.
+     */
+    @Test
+    public void testInitPlayers() {
+        game.initPlayers(2);
+        assertEquals(game.getPlayerList().size(), 4);
+        //it should be 4 because the player list was already initialized
+        //for 2 players
+    }
+
+    /**
+     * Tests the setPeggingTotal method.
+     * Passes.
+     */
+    @Test
+    public void testSetPeggingTotal() {
+
+        game.setPeggingTotal(5);
+
+        assertEquals(game.getPeggingTotal(), 5);
+    }
+
+    /**
+     * Tests the setPonePeggingCards method.
+     * Passes.
+     */
+    @Test
+    public void testSetPonePeggingCards() {
+
+        Hand ponePegCardsNew = new Hand();
+
+        handManager.addCardToHand(ponePegCardsNew, new Card(Rank.JACK, Suit.HEARTS));
+
+        game.setPonePeggingCards(ponePegCardsNew);
+
+        Hand ponePegCardsToCompare = game.getPonePeggingCards();
+
+        List <Card> ponePegCardsToCompareList = ponePegCardsToCompare.getCardsInHand();
+
+        List <Card> ponePegCardsNewList = ponePegCardsNew.getCardsInHand();
+
+        assertTrue(ponePegCardsNewList.equals(ponePegCardsToCompareList));
+
+    }
+
+
     /**
      * Tests the getPonePeggingCards method.
      * Passes.
@@ -99,9 +140,13 @@ public class GameTest {
     @Test
     public void testGetPonePeggingCards() {
 
-        ArrayList<Card> returnedPonePeggingCards = game.getPonePeggingCards();
+        Hand returnedPonePeggingCards = game.getPonePeggingCards();
 
-        assertTrue(returnedPonePeggingCards.equals(testPonePeggingCards));
+        List <Card> retPonePeggingCardsList = returnedPonePeggingCards.getCardsInHand();
+
+        List <Card> testPonePeggingCardsList = testPonePeggingCards.getCardsInHand();
+
+        assertTrue(retPonePeggingCardsList.equals(testPonePeggingCardsList));
 
     }
 
@@ -112,9 +157,13 @@ public class GameTest {
     @Test
     public void testGetDealerPeggingCards() {
 
-        ArrayList<Card> dealerPeggingCards = game.getDealerPeggingCards();
+      Hand returnedDealerPeggingCards = game.getDealerPeggingCards();
 
-        assertTrue(dealerPeggingCards.equals(testDealerPeggingCards));
+      List <Card> retDealerPeggingCardsList = returnedDealerPeggingCards.getCardsInHand();
+
+      List <Card> testDealerPeggingCardsList = testDealerPeggingCards.getCardsInHand();
+
+      assertTrue(retDealerPeggingCardsList.equals(testDealerPeggingCardsList));
 
     }
 
@@ -125,25 +174,13 @@ public class GameTest {
     @Test
     public void testGetCrib() {
 
-        ArrayList<Card> returnedCrib = game.getCrib();
+        Hand returnedCrib = game.getCribCards();
 
-        assertTrue(returnedCrib.equals(testCrib));
+        List <Card> returnedCribList = returnedCrib.getCardsInHand();
 
-    }
+        List <Card> testCribList = testCrib.getCardsInHand();
 
-    /**
-     * Tests the setPonePeggingCards method.
-     * Passes.
-     */
-    @Test
-    public void testSetPonePeggingCards() {
-
-        ArrayList<Card> ponePegCardsNew = new ArrayList<Card>();
-        ponePegCardsNew.add(new Card(Rank.JACK, Suit.HEARTS));
-
-        game.setPonePeggingCards(ponePegCardsNew);
-
-        assertTrue(ponePegCardsNew.equals(game.getPonePeggingCards()));
+        assertTrue(returnedCribList.equals(testCribList));
 
     }
 
@@ -154,18 +191,25 @@ public class GameTest {
     @Test
     public void testSetDealerPeggingCards() {
 
-        ArrayList<Card> dealerPegCardsNew = new ArrayList<Card>();
-        dealerPegCardsNew.add(new Card(Rank.JACK, Suit.HEARTS));
+      Hand dealerPegCardsNew = new Hand();
 
-        game.setDealerPeggingCards(dealerPegCardsNew);
+      handManager.addCardToHand(dealerPegCardsNew, new Card(Rank.JACK, Suit.HEARTS));
 
-        assertTrue(dealerPegCardsNew.equals(game.getDealerPeggingCards()));
+      game.setDealerPeggingCards(dealerPegCardsNew);
+
+      Hand dealerPegCardsToCompare = game.getDealerPeggingCards();
+
+      List <Card> dealerPegCardsToCompareList = dealerPegCardsToCompare.getCardsInHand();
+
+      List <Card> dealerPegCardsNewList = dealerPegCardsNew.getCardsInHand();
+
+      assertTrue(dealerPegCardsNewList.equals(dealerPegCardsToCompareList));
 
     }
 
-    // /**
-    // * Test the setPeggingTotal method.
-    // */
+    /**
+    * Test the setPeggingTotal method.
+    */
     // @Test
     // public void testGetDeck() {
     //
