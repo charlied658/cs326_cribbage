@@ -32,7 +32,7 @@ public class GameManager implements GameManagerInterface {
      * Number of cards in the deck.
      */
     private final int numcards = 52;
-    
+
     /**
      * GameManager constructor that initializes a Game.
      *
@@ -43,13 +43,13 @@ public class GameManager implements GameManagerInterface {
         // g = new Game(numPlayers);
         this.g = game;
     }
-    
-    /**
-     * Constructor.
-     */
-    public GameManager() {
-        g = new Game();
-    }
+
+    // /**
+    //  * Constructor.
+    //  */
+    // public GameManager() {
+    //     g = new Game();
+    // }
 
     // /**
     // * GameManager constructor that initializes a Game using the
@@ -182,7 +182,7 @@ public class GameManager implements GameManagerInterface {
         }
         return -1;
     }
-    
+
     /**
      * Initialize the state of the cards.
      */
@@ -193,13 +193,13 @@ public class GameManager implements GameManagerInterface {
         g.getCardsInHand().clear();
         g.getCardsInCrib().clear();
         g.getCardsInOpponentHand().clear();
-        
+
         for (int i = 0; i < numcards; i++) {
             g.getStandardDeck().add(new Card(i));
             g.getCardsInDeck().add(g.getStandardDeck().get(i));
         }
     }
-    
+
     /**
      * Return whether the deck is sorted.
      * @return boolean
@@ -208,7 +208,7 @@ public class GameManager implements GameManagerInterface {
         if (g.getCardsInDeck().size() != g.getStandardDeck().size()) {
             return false;
         }
-        
+
         for (int i = 0; i < g.getCardsInDeck().size(); i++) {
             if (g.getCardsInDeck().get(i) != g.getStandardDeck().get(i)) {
                 return false;
@@ -216,7 +216,7 @@ public class GameManager implements GameManagerInterface {
         }
         return true;
     }
-    
+
     /**
      * Reset the cards to their starting positions.
      */
@@ -230,18 +230,18 @@ public class GameManager implements GameManagerInterface {
             g.getCardsInDeck().add(g.getStandardDeck().get(i));
         }
     }
-    
+
     /**
      * Shuffle the cards.
      */
     public void shuffleCards() {
         resetCards();
-        
+
         Random rand = new Random();
         Card temp;
         int index1;
         int index2;
-        
+
         for (int i = 0; i < 100; i++) {
             index1 = rand.nextInt(numcards);
             index2 = rand.nextInt(numcards);
@@ -251,7 +251,7 @@ public class GameManager implements GameManagerInterface {
             g.getCardsInDeck().set(index2, temp);
         }
     }
-    
+
     /**
      * Deal cards to the player.
      * @param num
@@ -264,7 +264,7 @@ public class GameManager implements GameManagerInterface {
             }
         }
     }
-    
+
     /**
      * Deal cards to opponent.
      * @param num
@@ -277,7 +277,7 @@ public class GameManager implements GameManagerInterface {
             }
         }
     }
-    
+
     /**
      * Deal cards to the center of the board.
      * @param num
@@ -290,7 +290,7 @@ public class GameManager implements GameManagerInterface {
             }
         }
     }
-    
+
     /**
      * Add card from the play field to your hand.
      * This should not be used in the final game.
@@ -302,7 +302,7 @@ public class GameManager implements GameManagerInterface {
             g.getCardsInHand().add(temp);
         }
     }
-    
+
     /**
      * Play a card from your hand to the center of the board.
      * @param index
@@ -313,7 +313,7 @@ public class GameManager implements GameManagerInterface {
             g.getCardsInPlay().add(temp);
         }
     }
-    
+
     /**
      * Have the opponent pick a random card to play.
      */
