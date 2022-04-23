@@ -17,7 +17,7 @@ import java.util.Random;
  * determines the index in the player list where the dealer is. A key
  * assumption for this class is that there are only two players.
  *
- * @author Michael Shriner
+ * @author Michael Shriner and someone who didn't include their name 
  */
 public class GameManager implements GameManagerInterface {
 
@@ -40,24 +40,9 @@ public class GameManager implements GameManagerInterface {
      *            is the Game to set the class Game to.
      */
     public GameManager(Game game) {
-        // g = new Game(numPlayers);
         this.g = game;
     }
 
-    // /**
-    //  * Constructor.
-    //  */
-    // public GameManager() {
-    //     g = new Game();
-    // }
-
-    // /**
-    // * GameManager constructor that initializes a Game using the
-    // * empty constructor in Game.
-    // */
-    // public GameManager(Game g) {
-    // g = new Game();
-    // }
 
     /**
      * Returns the Game used for this class.
