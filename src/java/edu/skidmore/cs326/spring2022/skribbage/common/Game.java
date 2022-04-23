@@ -109,6 +109,7 @@ public class Game implements GameInterface {
         }
     }
 
+    //to whoever added this: it wasn't compiling so I commented it out for now
     // public Game() {
     //     ponePeggingCards = new ArrayList<Card>();
     //     dealerPeggingCards = new ArrayList<Card>();
