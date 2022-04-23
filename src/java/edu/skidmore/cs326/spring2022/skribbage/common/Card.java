@@ -20,6 +20,11 @@ public class Card {
     private Rank rank;
 
     /**
+     * ID of the card.
+     */
+    private int cardID;
+    
+    /**
      * Allows other classes to access the card's suit.
      * 
      * @return suit.
@@ -36,6 +41,22 @@ public class Card {
     public Rank getRank() {
         return rank;
     }
+    
+    /**
+     * Get the card ID.
+     * @return cardID
+     */
+    public int getCardID() {
+        return this.cardID;
+    }
+    
+    /**
+     * Set the cardID.
+     * @param cardID
+     */
+    public void setCardID(int cardID) {
+        this.cardID = cardID;
+    }
 
     /**
      * Constructor sets appropriate values for a new card.
@@ -46,6 +67,14 @@ public class Card {
     public Card(Rank c, Suit suit) {
         this.suit = suit;
         this.rank = c;
+    }
+    
+    /**
+     * Constructor.
+     * @param cardID
+     */
+    public Card(int cardID) {
+        this.cardID = cardID;
     }
 
 }
