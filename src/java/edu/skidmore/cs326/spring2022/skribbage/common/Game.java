@@ -40,6 +40,41 @@ public class Game implements GameInterface {
     private Hand dealerPeggingCards;
 
     /**
+     * State of the game.
+     */
+    private GameState state;
+
+    /**
+     * Arraylist of card images.
+     */
+    private ArrayList<Card> standardDeck;
+
+    /**
+     * Cards currently displayed in the deck.
+     */
+    private ArrayList<Card> cardsInDeck;
+
+    /**
+     * Cards currently displayed in center of board.
+     */
+    private ArrayList<Card> cardsInPlay;
+
+    /**
+     * Cards currently displayed in the player's hand.
+     */
+    private ArrayList<Card> cardsInHand;
+
+    /**
+     * Cards currently displayed in the crib.
+     */
+    private ArrayList<Card> cardsInCrib;
+
+    /**
+     * Cards currently displayed in the opponent's hand.
+     */
+    private ArrayList<Card> cardsInOpponentHand;
+
+    /**
      * Game constructor. It initializes the list of players,
      * the pegging total the ArrayList of the pone's pegging cards,
      * the ArrayList of the dealer's pegging cards, and the crib.
@@ -57,21 +92,6 @@ public class Game implements GameInterface {
         cribCards = new Hand();
         peggingTotal = 0;
         initPlayers(numPlayers);
-    }
-
-    /**
-     * Initializes the ArrayList of Player objects given the
-     * number of players for this game. However, there is
-     * the assumption, for now, that the number of players
-     * is 2.
-     *
-     * @param numPlayers is the number of players.
-     */
-    public void initPlayers(int numPlayers) {
-
-        for (int i = 0; i < numPlayers; i++) {
-            playerList.add(new Player());
-        }
     }
 
     /**
@@ -156,6 +176,70 @@ public class Game implements GameInterface {
      */
     public Hand getCribCards() {
         return cribCards;
+    }
+
+    /**
+     * Get the state of the game.
+     * @return state
+     */
+    public GameState getState() {
+        return this.state;
+    }
+
+    /**
+     * Set the state of the game.
+     * @param state
+     */
+    public void setState(GameState state) {
+        this.state = state;
+    }
+
+    /**
+     * Get the standard deck.
+     * @return standardDeck
+     */
+    public ArrayList<Card> getStandardDeck() {
+        return this.standardDeck;
+    }
+
+    /**
+     * Get the cards in the deck.
+     * @return cardsInDeck
+     */
+    public ArrayList<Card> getCardsInDeck() {
+        return this.cardsInDeck;
+    }
+
+    /**
+     * Get the cards currently in play.
+     * @return cardsInPlay
+     */
+    public ArrayList<Card> getCardsInPlay() {
+        return this.cardsInPlay;
+    }
+
+    /**
+     * Get the cards in the player's hand.
+     * @return cardsInHand
+     */
+    public ArrayList<Card> getCardsInHand() {
+        return this.cardsInHand;
+    }
+
+    /**
+     * Get the cards in the crib.
+     * @return cardsInCrib
+     */
+    public ArrayList<Card> getCardsInCrib() {
+        return this.cardsInCrib;
+    }
+
+    /**
+     * Get the cards in the opponent's hand.
+     * @return cardsInOpponentHand
+     */
+    public ArrayList<Card> getCardsInOpponentHand() {
+        return this.cardsInOpponentHand;
     }
 
 }

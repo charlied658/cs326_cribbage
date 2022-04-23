@@ -7,6 +7,7 @@ import edu.skidmore.cs326.spring2022.skribbage.common.Hand;
 import edu.skidmore.cs326.spring2022.skribbage.logic.HandManager;
 import java.util.*;
 //import org.apache.log4j.Logger;
+import java.util.Random;
 
 /**
  * GameManager contains methods to manipulate the data in Game. It includes
@@ -28,6 +29,11 @@ public class GameManager implements GameManagerInterface {
     private HandManager handManager = new HandManager();
 
     /**
+     * Number of cards in the deck.
+     */
+    private final int numcards = 52;
+    
+    /**
      * GameManager constructor that initializes a Game.
      *
      * @param game
@@ -36,6 +42,13 @@ public class GameManager implements GameManagerInterface {
     public GameManager(Game game) {
         // g = new Game(numPlayers);
         this.g = game;
+    }
+    
+    /**
+     * Constructor.
+     */
+    public GameManager() {
+        g = new Game();
     }
 
     // /**
@@ -168,6 +181,149 @@ public class GameManager implements GameManagerInterface {
             }
         }
         return -1;
+    }
+    
+    /**
+     * Initialize the state of the cards.
+     */
+    public void initializeDeck() {
+        g.getStandardDeck().clear();
+        g.getCardsInDeck().clear();
+        g.getCardsInPlay().clear();
+        g.getCardsInHand().clear();
+        g.getCardsInCrib().clear();
+        g.getCardsInOpponentHand().clear();
+        
+        for (int i = 0; i < numcards; i++) {
+            g.getStandardDeck().add(new Card(i));
+            g.getCardsInDeck().add(g.getStandardDeck().get(i));
+        }
+    }
+    
+    /**
+     * Return whether the deck is sorted.
+     * @return boolean
+     */
+    public boolean deckIsSorted() {
+        if (g.getCardsInDeck().size() != g.getStandardDeck().size()) {
+            return false;
+        }
+        
+        for (int i = 0; i < g.getCardsInDeck().size(); i++) {
+            if (g.getCardsInDeck().get(i) != g.getStandardDeck().get(i)) {
+                return false;
+            }
+        }
+        return true;
+    }
+    
+    /**
+     * Reset the cards to their starting positions.
+     */
+    public void resetCards() {
+        g.getCardsInDeck().clear();
+        g.getCardsInPlay().clear();
+        g.getCardsInHand().clear();
+        g.getCardsInCrib().clear();
+        g.getCardsInOpponentHand().clear();
+        for (int i = 0; i < numcards; i++) {
+            g.getCardsInDeck().add(g.getStandardDeck().get(i));
+        }
+    }
+    
+    /**
+     * Shuffle the cards.
+     */
+    public void shuffleCards() {
+        resetCards();
+        
+        Random rand = new Random();
+        Card temp;
+        int index1;
+        int index2;
+        
+        for (int i = 0; i < 100; i++) {
+            index1 = rand.nextInt(numcards);
+            index2 = rand.nextInt(numcards);
+            temp = g.getCardsInDeck().get(index1);
+            g.getCardsInDeck().set(
+                index1, g.getCardsInDeck().get(index2));
+            g.getCardsInDeck().set(index2, temp);
+        }
+    }
+    
+    /**
+     * Deal cards to the player.
+     * @param num
+     */
+    public void dealPlayerCards(int num) {
+        for (int i = 0; i < num; i++) {
+            if (g.getCardsInDeck().size() > 0) {
+                Card temp = g.getCardsInDeck().remove(0);
+                g.getCardsInHand().add(temp);
+            }
+        }
+    }
+    
+    /**
+     * Deal cards to opponent.
+     * @param num
+     */
+    public void dealOpponentCards(int num) {
+        for (int i = 0; i < num; i++) {
+            if (g.getCardsInDeck().size() > 0) {
+                Card temp = g.getCardsInDeck().remove(0);
+                g.getCardsInOpponentHand().add(temp);
+            }
+        }
+    }
+    
+    /**
+     * Deal cards to the center of the board.
+     * @param num
+     */
+    public void dealPlayCards(int num) {
+        for (int i = 0; i < num; i++) {
+            if (g.getCardsInDeck().size() > 0) {
+                Card temp = g.getCardsInDeck().remove(0);
+                g.getCardsInPlay().add(temp);
+            }
+        }
+    }
+    
+    /**
+     * Add card from the play field to your hand.
+     * This should not be used in the final game.
+     * @param index
+     */
+    public void addCardToHand(int index) {
+        if (g.getCardsInPlay().size() > 0) {
+            Card temp = g.getCardsInPlay().remove(index);
+            g.getCardsInHand().add(temp);
+        }
+    }
+    
+    /**
+     * Play a card from your hand to the center of the board.
+     * @param index
+     */
+    public void playCard(int index) {
+        if (g.getCardsInHand().size() > 0) {
+            Card temp = g.getCardsInHand().remove(index);
+            g.getCardsInPlay().add(temp);
+        }
+    }
+    
+    /**
+     * Have the opponent pick a random card to play.
+     */
+    public void opponentPlayCard() {
+        Random rand = new Random();
+        int index = rand.nextInt(g.getCardsInOpponentHand().size());
+        if (g.getCardsInOpponentHand().size() > 0) {
+            Card temp = g.getCardsInOpponentHand().remove(index);
+            g.getCardsInPlay().add(temp);
+        }
     }
 
 }
