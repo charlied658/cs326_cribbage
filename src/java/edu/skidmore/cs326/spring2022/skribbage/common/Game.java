@@ -13,7 +13,7 @@ import edu.skidmore.cs326.spring2022.skribbage.logic.GameManager;
  * Currently, a key assumption for this class is that there are only two
  * players.
  *
- * @author Michael Shriner
+ * @author Michael Shriner and someone who made edits without adding their name 
  */
 public class Game implements GameInterface {
 
@@ -92,6 +92,35 @@ public class Game implements GameInterface {
         cribCards = new Hand();
         peggingTotal = 0;
         initPlayers(numPlayers);
+    }
+
+    /**
+     * Initializes the ArrayList of Player objects given the
+     * number of players for this game. However, there is
+     * the assumption, for now, that the number of players
+     * is 2.
+     *
+     * @param numPlayers is the number of players.
+     */
+    public void initPlayers(int numPlayers) {
+
+        for (int i = 0; i < numPlayers; i++) {
+            playerList.add(new Player());
+        }
+    }
+
+    public Game() {
+        ponePeggingCards = new ArrayList<Card>();
+        dealerPeggingCards = new ArrayList<Card>();
+        crib = new ArrayList<Card>();
+        peggingTotal = 0;
+        state = GameState.START_GAME;
+        standardDeck = new ArrayList<Card>();
+        cardsInDeck = new ArrayList<Card>();
+        cardsInPlay = new ArrayList<Card>();
+        cardsInHand = new ArrayList<Card>();
+        cardsInCrib = new ArrayList<Card>();
+        cardsInOpponentHand = new ArrayList<Card>();
     }
 
     /**
