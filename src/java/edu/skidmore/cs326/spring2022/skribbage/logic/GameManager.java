@@ -3,7 +3,9 @@ package edu.skidmore.cs326.spring2022.skribbage.logic;
 import edu.skidmore.cs326.spring2022.skribbage.common.Game;
 import edu.skidmore.cs326.spring2022.skribbage.common.Player;
 import edu.skidmore.cs326.spring2022.skribbage.common.Card;
-import java.util.ArrayList;
+import edu.skidmore.cs326.spring2022.skribbage.common.Hand;
+import edu.skidmore.cs326.spring2022.skribbage.logic.HandManager;
+import java.util.*;
 //import org.apache.log4j.Logger;
 
 /**
@@ -22,6 +24,8 @@ public class GameManager implements GameManagerInterface {
      * A Game to access the data this class is designed to manipulate.
      */
     private Game g;
+
+    private HandManager handManager = new HandManager();
 
     /**
      * GameManager constructor that initializes a Game.
@@ -44,7 +48,7 @@ public class GameManager implements GameManagerInterface {
 
     /**
      * Returns the Game used for this class.
-     * 
+     *
      * @return the Game used for this class.
      */
     public Game getGame() {
@@ -53,7 +57,7 @@ public class GameManager implements GameManagerInterface {
 
     /**
      * Sets the Game used for this class.
-     * 
+     *
      * @param game
      *            is a Game object.
      */
@@ -61,35 +65,35 @@ public class GameManager implements GameManagerInterface {
         g = game;
     }
 
-    /**
-     * Initializes the ArrayList of Player objects given the
-     * number of players for this game. However, there is
-     * the assumption, for now, that the number of players
-     * is 2.
-     *
-     * @param numPlayers
-     *            is the number of players.
-     * @param playerList
-     *            is the list of players.
-     */
-    public void initPlayers(int numPlayers, ArrayList<Player> playerList) {
+    // /**
+    //  * Initializes the ArrayList of Player objects given the
+    //  * number of players for this game. However, there is
+    //  * the assumption, for now, that the number of players
+    //  * is 2.
+    //  *
+    //  * @param numPlayers
+    //  *            is the number of players.
+    //  * @param playerList
+    //  *            is the list of players.
+    //  */
+    // public void initPlayers(int numPlayers, ArrayList<Player> playerList) {
+    //
+    //     for (int i = 0; i < numPlayers; i++) {
+    //         addPlayer(new Player(), playerList);
+    //     }
+    // }
 
-        for (int i = 0; i < numPlayers; i++) {
-            addPlayer(new Player(), playerList);
-        }
-    }
-
-    /**
-     * Adds a player to the player list.
-     *
-     * @param p
-     *            is the player to add to the player list.
-     * @param playerList
-     *            is the list of players.
-     */
-    public void addPlayer(Player p, ArrayList<Player> playerList) {
-        playerList.add(p);
-    }
+    // /**
+    //  * Adds a player to the player list.
+    //  *
+    //  * @param p
+    //  *            is the player to add to the player list.
+    //  * @param playerList
+    //  *            is the list of players.
+    //  */
+    // public void addPlayer(Player p, ArrayList<Player> playerList) {
+    //     playerList.add(p);
+    // }
 
     /**
      * Takes in the amount to add to the pegging total
@@ -123,8 +127,8 @@ public class GameManager implements GameManagerInterface {
      *            is the Card to add to the list of the pone's pegging cards.
      */
     public void addPonePeggingCard(Card c) {
-        ArrayList<Card> ponePegCards = g.getPonePeggingCards();
-        ponePegCards.add(c);
+        Hand ponePegCards = g.getPonePeggingCards();
+        handManager.addCardToHand(ponePegCards, c);
         g.setPonePeggingCards(ponePegCards);
     }
 
@@ -136,8 +140,8 @@ public class GameManager implements GameManagerInterface {
      *            pegging cards.
      */
     public void addDealerPeggingCard(Card c) {
-        ArrayList<Card> dealerPegCards = g.getDealerPeggingCards();
-        dealerPegCards.add(c);
+        Hand dealerPegCards = g.getDealerPeggingCards();
+        handManager.addCardToHand(dealerPegCards, c);
         g.setDealerPeggingCards(dealerPegCards);
     }
 
@@ -145,21 +149,19 @@ public class GameManager implements GameManagerInterface {
      * Initializes the pegging total to 0.
      */
     public void initPeggingTotal() {
-        int peggingTotal = g.getPeggingTotal();
-        peggingTotal = 0;
-        g.setPeggingTotal(peggingTotal);
+        g.setPeggingTotal(0);
     }
 
     /**
      * Returns the index in playerList where the dealer is or
      * -1 if there is no dealer.
-     * 
+     *
      * @param playerList
      *            is the list of players.
      * @return the index in playerList where the dealer is or
      *         -1 if there is no dealer.
      */
-    public int getDealerIdx(ArrayList<Player> playerList) {
+    public int getDealerIdx(List <Player> playerList) {
         for (int i = 0; i < playerList.size(); i++) {
             if (playerList.get(i).isDealer()) {
                 return i;
