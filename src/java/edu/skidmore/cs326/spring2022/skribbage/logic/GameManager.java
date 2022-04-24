@@ -17,7 +17,8 @@ import java.util.Random;
  * determines the index in the player list where the dealer is. A key
  * assumption for this class is that there are only two players.
  *
- * @author Michael Shriner and someone who didn't include their name
+ * @author Michael Shriner
+ * Last edited by Charlie Davidson
  */
 public class GameManager implements GameManagerInterface {
 
