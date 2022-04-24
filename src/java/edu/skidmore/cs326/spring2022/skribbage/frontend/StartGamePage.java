@@ -10,6 +10,7 @@ import org.apache.log4j.Logger;
 import edu.skidmore.cs326.spring2022.skribbage.common.Board;
 import edu.skidmore.cs326.spring2022.skribbage.common.BoardManager;
 import edu.skidmore.cs326.spring2022.skribbage.common.Card;
+import edu.skidmore.cs326.spring2022.skribbage.common.Game;
 import edu.skidmore.cs326.spring2022.skribbage.common.SpotType;
 import edu.skidmore.cs326.spring2022.skribbage.logic.GameManager;
 import us.daveread.edu.graphics.shape.Drawable;
@@ -197,7 +198,7 @@ public class StartGamePage extends DrawingSurface implements Page {
      */
     public StartGamePage() {
         pageManager = PageManager.getInstance();
-        gameManager = new GameManager();
+        gameManager = new GameManager(new Game(2));
         LOG.trace("StartGamePage constructor");
         startGamePage = new MainFrame(
             this, "Start Game Page", 1400, 900, false);

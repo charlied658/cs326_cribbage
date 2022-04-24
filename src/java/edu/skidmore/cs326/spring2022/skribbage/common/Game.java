@@ -13,7 +13,8 @@ import edu.skidmore.cs326.spring2022.skribbage.logic.GameManager;
  * Currently, a key assumption for this class is that there are only two
  * players.
  *
- * @author Michael Shriner and someone who made edits without adding their name
+ * @author Michael Shriner
+ * Last edited by Charlie Davidson
  */
 public class Game implements GameInterface {
 
@@ -87,10 +88,17 @@ public class Game implements GameInterface {
     public Game(int numPlayers) {
 
         //ponePeggingCards = new ArrayList<Card>();
-        ponePeggingCards = new Hand ();
+        ponePeggingCards = new Hand();
         dealerPeggingCards = new Hand();
         cribCards = new Hand();
         peggingTotal = 0;
+        state = GameState.START_GAME;
+        standardDeck = new ArrayList<Card>();
+        cardsInDeck = new ArrayList<Card>();
+        cardsInPlay = new ArrayList<Card>();
+        cardsInHand = new ArrayList<Card>();
+        cardsInCrib = new ArrayList<Card>();
+        cardsInOpponentHand = new ArrayList<Card>();
         initPlayers(numPlayers);
     }
 
@@ -108,21 +116,6 @@ public class Game implements GameInterface {
             playerList.add(new Player());
         }
     }
-
-    //to whoever added this: it wasn't compiling so I commented it out for now
-    // public Game() {
-    //     ponePeggingCards = new ArrayList<Card>();
-    //     dealerPeggingCards = new ArrayList<Card>();
-    //     crib = new ArrayList<Card>();
-    //     peggingTotal = 0;
-    //     state = GameState.START_GAME;
-    //     standardDeck = new ArrayList<Card>();
-    //     cardsInDeck = new ArrayList<Card>();
-    //     cardsInPlay = new ArrayList<Card>();
-    //     cardsInHand = new ArrayList<Card>();
-    //     cardsInCrib = new ArrayList<Card>();
-    //     cardsInOpponentHand = new ArrayList<Card>();
-    // }
 
     /**
      * Set the pegging total to the parameter amount of points.
