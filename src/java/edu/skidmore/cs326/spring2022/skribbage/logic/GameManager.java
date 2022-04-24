@@ -17,7 +17,7 @@ import java.util.Random;
  * determines the index in the player list where the dealer is. A key
  * assumption for this class is that there are only two players.
  *
- * @author Michael Shriner and someone who didn't include their name 
+ * @author Michael Shriner and someone who didn't include their name
  */
 public class GameManager implements GameManagerInterface {
 
@@ -62,36 +62,6 @@ public class GameManager implements GameManagerInterface {
     public void setGame(Game game) {
         g = game;
     }
-
-    // /**
-    //  * Initializes the ArrayList of Player objects given the
-    //  * number of players for this game. However, there is
-    //  * the assumption, for now, that the number of players
-    //  * is 2.
-    //  *
-    //  * @param numPlayers
-    //  *            is the number of players.
-    //  * @param playerList
-    //  *            is the list of players.
-    //  */
-    // public void initPlayers(int numPlayers, ArrayList<Player> playerList) {
-    //
-    //     for (int i = 0; i < numPlayers; i++) {
-    //         addPlayer(new Player(), playerList);
-    //     }
-    // }
-
-    // /**
-    //  * Adds a player to the player list.
-    //  *
-    //  * @param p
-    //  *            is the player to add to the player list.
-    //  * @param playerList
-    //  *            is the list of players.
-    //  */
-    // public void addPlayer(Player p, ArrayList<Player> playerList) {
-    //     playerList.add(p);
-    // }
 
     /**
      * Takes in the amount to add to the pegging total
