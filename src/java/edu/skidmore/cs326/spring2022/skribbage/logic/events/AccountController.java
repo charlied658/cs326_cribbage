@@ -3,6 +3,8 @@ package edu.skidmore.cs326.spring2022.skribbage.logic.events;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserChangePasswordEvent;
+import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserChangePasswordResponseEvent;
 import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserCreateAccountEvent;
 import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserLoginEvent;
 
@@ -37,10 +39,10 @@ public class AccountController implements PropertyChangeListener {
     //
     // }
 
-//    /**
-//     * Temporary instance of database manager used as tracer bullet.
-//     */
-//    private DatabaseManager dbManager = new DatabaseManager();
+    // /**
+    // * Temporary instance of database manager used as tracer bullet.
+    // */
+    // private DatabaseManager dbManager = new DatabaseManager();
 
     /**
      * Factor instance for this class.
@@ -160,6 +162,26 @@ public class AccountController implements PropertyChangeListener {
                 break;
             case USER_CHANGE_PASSWORD:
                 LOG.debug("caught a change password event");
+                UserChangePasswordEvent chan = ((UserChangePasswordEvent) evt);
+                if (PersistenceFacade.getInstance().passwordChange(
+                    associatedUser,
+                    PersistenceFacade.getInstance().getPassword(associatedUser),
+                    chan.getNewPassword())) {
+                    accountResponse =
+                        new AccountResponse("Password change succesful!",
+                            false);
+                } else {
+                    accountResponse =
+                        new AccountResponse("Password change unsuccesful!",
+                            true);
+                }
+
+                UserChangePasswordResponseEvent response =
+                    (UserChangePasswordResponseEvent) eventFactory.createEvent(
+                        EventType.USER_CHANGE_PASSWORD_RESPONSE, this,
+                        associatedUser, accountResponse);
+                eventFactory.fireEvent(response);
+
                 break;
             // To do: rename to clarify event's purpose
             // (check_username_existence)

@@ -50,7 +50,7 @@ public enum EventType {
     /**
      * Fired when password change was succesful.
      */
-    USER_CHANGE_PASSWORD_RESPONSE("User Change Password Response"),
+    USER_CHANGE_PASSWORD_RESPONSE("User Change Password Response", User.class),
     /**
      * Fired when a user attempts to create an account via login page.
      */

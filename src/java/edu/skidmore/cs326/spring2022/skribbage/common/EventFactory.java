@@ -1,4 +1,4 @@
- package edu.skidmore.cs326.spring2022.skribbage.common;
+package edu.skidmore.cs326.spring2022.skribbage.common;
 
 import java.beans.PropertyChangeEvent;
 
@@ -11,7 +11,6 @@ import org.apache.log4j.Logger;
 import edu.skidmore.cs326.spring2022.skribbage.frontend.events.FrontEndFactoryTemplate;
 import edu.skidmore.cs326.spring2022.skribbage.gamification.events.GamificationFactoryTemplate;
 import edu.skidmore.cs326.spring2022.skribbage.logic.events.LogicFactoryTemplate;
-import edu.skidmore.cs326.spring2022.skribbage.persistence.events.PersistanceFactoryTemplate;
 
 /**
  * This class creates an event of type PropertyChangeEvent
@@ -55,8 +54,8 @@ public final class EventFactory implements EventDispatcher {
         // eventManager = EventManager.getInstance();
         templates = Arrays.asList(
             new LogicFactoryTemplate(), new GamificationFactoryTemplate(),
-            new FrontEndFactoryTemplate(), new PersistanceFactoryTemplate());
-        
+            new FrontEndFactoryTemplate());
+
     }
 
     /**
@@ -83,7 +82,7 @@ public final class EventFactory implements EventDispatcher {
      *             Event Not Found when EventType cannot be created.
      */
     public PropertyChangeEvent createEvent(EventType event, Object source,
-        Object... args) /** throws Exception */ {
+        Object... args) {
         Object[] eventArgumentList = event.getArgumentList();
 
         for (int i = 0; i < eventArgumentList.length; i++) {
