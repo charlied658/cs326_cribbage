@@ -9,7 +9,6 @@ import edu.skidmore.cs326.spring2022.skribbage.common.EventType;
 import edu.skidmore.cs326.spring2022.skribbage.common.Lobby;
 import org.apache.log4j.Logger;
 
-import org.checkerframework.checker.units.qual.C;
 import us.daveread.edu.graphics.shape.Drawable;
 import us.daveread.edu.graphics.shape.impl.Image;
 import us.daveread.edu.graphics.shape.impl.Text;

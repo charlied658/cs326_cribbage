@@ -1,9 +1,9 @@
 package edu.skidmore.cs326.spring2022.skribbage.logic;
 
+import java.util.ArrayList;
+import edu.skidmore.cs326.spring2022.skribbage.common.Game;
 import edu.skidmore.cs326.spring2022.skribbage.common.Card;
 import edu.skidmore.cs326.spring2022.skribbage.common.Player;
-import edu.skidmore.cs326.spring2022.skribbage.common.Game;
-import java.util.*;
 
 /**
  * Interface for GameManager.
@@ -12,14 +12,19 @@ import java.util.*;
  */
 interface GameManagerInterface {
 
-
+    /**
+     * getGame.
+     * 
+     * @return game
+     */
     Game getGame();
 
+    /**
+     * setGame.
+     * 
+     * @param game
+     */
     void setGame(Game game);
-
-
-
-
 
     /**
      * Initializes the list of players.
@@ -29,7 +34,7 @@ interface GameManagerInterface {
      * @param playerList
      *            is the list of players.
      */
-    //void initPlayers(int numPlayers, ArrayList<Player> playerList);
+    // void initPlayers(int numPlayers, ArrayList<Player> playerList);
 
     /**
      * Adds a player to the list of players.
@@ -39,7 +44,7 @@ interface GameManagerInterface {
      * @param playerList
      *            is the list of players.
      */
-    //void addPlayer(Player p, ArrayList<Player> playerList);
+    // void addPlayer(Player p, ArrayList<Player> playerList);
 
     /**
      * Adds a value to the pegging total.
@@ -76,6 +81,6 @@ interface GameManagerInterface {
      *            is the list of players.
      * @return the index in the player list where the dealer is at.
      */
-    int getDealerIdx(List <Player> playerList);
+    int getDealerIdx(ArrayList<Player> playerList);
 
 }
