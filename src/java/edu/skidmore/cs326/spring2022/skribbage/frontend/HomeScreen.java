@@ -142,8 +142,10 @@ public class HomeScreen extends DrawingSurface implements Page {
                         + logo.getDimension().height + 170),
                     20, null, Color.white);
                 add(versionWarn);
+            } else {
+                LOG.debug(
+                    "Version of GUI library found: " + version.getByte(mf));
             }
-            LOG.debug("Version of GUI library found: " + version.getByte(mf));
         }
         catch (Throwable t) {
             LOG.warn("Unable to verify GUI Library version", t);
