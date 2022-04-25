@@ -392,8 +392,7 @@ public class LoginPage extends DrawingSurface implements Page {
     public void validateLoginCallback(UserLoginResponseEvent event) {
         LOG.trace("validateLoginCallback called with event " + event);
         LOG.trace("validateLoginCallback has response "
-            +
-            event.getAccountResponse());
+            + event.getAccountResponse());
         if (!event.getAccountResponse().isRejectionStatus()) {
             showMessage("User: " + username, "Successful Log In",
                 DialogType.INFORMATION);
@@ -501,11 +500,9 @@ public class LoginPage extends DrawingSurface implements Page {
             currentUser = new User(null, username,
                 UserRole.UNAUTHORIZED);
 
-            currentPassword =
-                LoginAuthenticator.getInstance().hashNewPassword(password);
             UserLoginEvent eventLogin =
                 (UserLoginEvent) evtFactory.createEvent(
-                    EventType.USER_LOGIN, this, currentUser, currentPassword);
+                    EventType.USER_LOGIN, this, currentUser, password);
             evtFactory.fireEvent(eventLogin);
 
         } else if (e == changePasswordButton) {

@@ -21,6 +21,7 @@ public class TokenManager implements Manager {
      *            the amount of  in wallet at instantiation
      */
     public TokenManager(int initialAmount) {
+        tokens = new ArrayList<Token>();
         for (int i = 0; i < initialAmount; i++) {
             tokens.add(new Token());
         }

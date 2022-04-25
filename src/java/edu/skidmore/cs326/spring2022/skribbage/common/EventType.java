@@ -18,7 +18,7 @@ public enum EventType {
     /**
      * Fired when a user attempts to create an account via login page.
      */
-    USER_LOGIN("User Login Event", User.class, Password.class),
+    USER_LOGIN("User Login Event", User.class, String.class),
     /**
      * Fired when.
      */
@@ -75,7 +75,23 @@ public enum EventType {
      * Fired when the host of a lobby clicks 'start game', and all players
      * are added to a new game.
      */
-    LOBBY_START_GAME("Lobby Start Game Event");
+    LOBBY_START_GAME("Lobby Start Game Event"),
+    
+    /**
+     * Fired when a user clicks 'leave lobby' and is removed from the lobby.
+     */
+    LOBBY_REMOVE_USER("Lobby Remove User Event", User.class),
+    
+    /**
+     * Fired when a User enters the proper lobby id and is entering said lobby.
+     */
+    LOBBY_ADD_USER("Lobby Add User Event", User.class),
+
+    /**
+     * Fired when a logged in user attempts to start a new lobby.
+     */
+    LOBBY_CREATE_GAME("Lobby Create Game Event", User.class);
+
 
     /**
      * The name of the event.

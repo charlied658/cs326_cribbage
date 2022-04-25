@@ -79,7 +79,7 @@ public class FacadeTest {
 		wrongTestUser = new User("DJKhaled.com", "Khaled", null);
 
 		
-		correctTestUser = new User("nchantzi@skidmore.edu", "nchantzi", null);
+		correctTestUser = new User("Ricardo@skidmore.edu", "Rick", null);
 		correctTestPassword = new Password(PasswordHasher.getInstance().hashNewPassword("ILoveSQL"));
 //		wrongTestPassword = new Password("Anotherone");
 //		newTestPassword = new Password("thisIsNewPass");
@@ -118,15 +118,11 @@ public class FacadeTest {
 	/**
 	 * Testing when the user wants to log in with the correct username and password
 	 */
-	 @Test
-	 public void loginCorrect() {
-	 boolean iscorrect = facadeinstanace.login(correctTestUser,
-	 correctTestPassword);
-	 System.out.println("Hased and salted " + correctTestPassword.getBase64PasswordHash());
-	 //0dXD0xdeBTtg2qQ1tG183bcvbyizeAz0PDIeUADjA+I=
-	 //mBZsQpEnaSI1cA==~/ZP2qPHOs4AuqW6rDqwnQpbjHawoFpvR3ptUSKLbJCI=
-	 assertEquals(true, iscorrect);
-	 }
+	@Test
+	public void getpass() {
+		Password pass = facadeinstanace.getPassword(correctTestUser);
+		assertEquals("testing to see if we get same password", "/025VfOmQYX8Hg==~RPhhsr1aWQ8jSRM1lj785RchB5YM2PcTXQGsK/oBfZ4=", pass.getBase64SaltAndPasswordHash());
+	}
 
 	/**
 	 * Testing the capability to display inventory values.
