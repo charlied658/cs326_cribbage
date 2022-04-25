@@ -60,13 +60,10 @@ public class LobbyManager implements LobbyManagement {
 
     @Override
     public void createLobby(User host) {
-<<<<<<< HEAD
         // TODO Auto-generated method stub
-
-=======
+        @SuppressWarnings("unused")
         int newIndex = nextEmptyIndex();
         lobbies[nextEmptyIndex()] = new Lobby(host);
->>>>>>> 19d86ddee8ceded0457410b62340f916cfaadf94
     }
 
     @Override

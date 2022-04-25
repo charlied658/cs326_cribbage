@@ -54,11 +54,8 @@ public final class EventFactory implements EventDispatcher {
         // eventManager = EventManager.getInstance();
         templates = Arrays.asList(
             new LogicFactoryTemplate(), new GamificationFactoryTemplate(),
-<<<<<<< HEAD
-            new FrontEndFactoryTemplate(), new PersistanceFactoryTemplate());
-=======
+            new FrontEndFactoryTemplate(), new PersistanceFactoryTemplate();
             new FrontEndFactoryTemplate());
->>>>>>> 19d86ddee8ceded0457410b62340f916cfaadf94
 
     }
 
