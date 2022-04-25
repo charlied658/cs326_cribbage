@@ -7,6 +7,7 @@ import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserChangePasswor
 import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserChangePasswordResponseEvent;
 import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserCreateAccountEvent;
 import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserLoginEvent;
+import edu.skidmore.cs326.spring2022.skribbage.frontend.events.ValidateForChangePassword;
 
 import org.apache.log4j.Logger;
 
@@ -213,8 +214,9 @@ public class AccountController implements PropertyChangeListener {
                 LOG.debug(
                     "Caught a user validated before change password method.");
                 // Validation is same as logging in validation.
-                ule = ((UserLoginEvent) evt);
-                if (isPasswordCorrect(associatedUser, ule.getPassword())) {
+                ValidateForChangePassword call =
+                    ((ValidateForChangePassword) evt);
+                if (isPasswordCorrect(associatedUser, call.getPassword())) {
                     ValidateChangeResponseEvent responseEventPV =
                         (ValidateChangeResponseEvent) eventFactory.createEvent(
                             EventType.USER_CHANGE_PASSWORD_VALIDATION_RESPONSE,
