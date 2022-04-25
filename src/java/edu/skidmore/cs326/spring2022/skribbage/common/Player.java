@@ -40,14 +40,7 @@ public class Player {
     /**
      * User associated with player.
      */
-    private InventoryPrototype inventoryManager;
-
-    /**
-     * Hash map that stores items and their quantity.
-     */
-    private HashMap<String, Integer> inventory =
-        new HashMap<String, Integer>();
-
+    private InventoryPrototype inventoryManager = new InventoryPrototype();
     
     /**
     * Avatar of player.
@@ -77,7 +70,6 @@ public class Player {
         this.user = user;
         this.name = null;
         this.username = null;
-        this.inventory = new HashMap<String, Integer>();
         this.avatar = null;
         intializePoints();
     }
@@ -135,23 +127,6 @@ public class Player {
      */
     public void setUser(User user) {
         this.user = user;
-    }
-
-    
-    /**
-     * Get player inventory.
-     * @return inventory
-     */
-    public HashMap<String, Integer> getInventory() {
-        return inventory;
-    }
-    
-    /**
-     * Set player inventory.
-     * @param inventory
-     */
-    public void setInventory(HashMap<String, Integer> inventory) {
-        this.inventory = inventoryManager.createInventory();
     }
     
     /**
@@ -230,6 +205,24 @@ public class Player {
      */
     public void setDealer(boolean dealer) {
         isDealer = dealer;
+    }
+    
+    /**
+     * Getter for inventory.
+     * @return
+     *      returns inventoryManager
+     */
+    public InventoryPrototype getInventoryManager() {
+        return inventoryManager;
+    }
+    
+    /**
+     * Setter for inventory.
+     * @param inventoryManager
+     *      setter
+     */
+    public void setInventoryManager(InventoryPrototype inventoryManager) {
+        this.inventoryManager = inventoryManager;
     }
     
 

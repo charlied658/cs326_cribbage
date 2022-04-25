@@ -6,8 +6,7 @@ import org.apache.log4j.Logger;
 
 import org.junit.Before;
 import org.junit.Test;
-import java.util.HashMap;
-
+import edu.skidmore.cs326.spring2022.skribbage.common.Player;
 import edu.skidmore.cs326.spring2022.skribbage.gamification.InventoryPrototype;
 
 /**
@@ -33,6 +32,11 @@ public class InventoryPrototypeTest {
      * Attribute to house the test instance.
      */
     private InventoryPrototype testInstance;
+    
+    /**
+     * Instance for a player.
+     */
+    private Player player = new Player();
 
     /**
      * Test scaffold set up. Creates the test instance.
@@ -40,7 +44,7 @@ public class InventoryPrototypeTest {
     @Before
     public void setup() {
         LOG.info("Setup for test");
-        testInstance = new InventoryPrototype();
+        testInstance = player.getInventoryManager();
     }
 
     /**
@@ -48,28 +52,28 @@ public class InventoryPrototypeTest {
      */
     @Test
     public void testUpdateInventory() {
-        HashMap<String, Integer> inventory = new HashMap<String, Integer>();
-        testInstance.updateInventory(inventory);
+        //HashMap<String, Integer> inventory = new HashMap<String, Integer>();
+        testInstance.updateInventory();
         assertTrue("Inventory is still empty",
-            testInstance.searchForItem(inventory, "Mirror") == 1);
+            testInstance.searchForItem("Mirror") == 1);
         assertTrue("Inventory is still empty",
-            testInstance.searchForItem(inventory, "Re-Battle") == 0);
+            testInstance.searchForItem("Re-Battle") == 0);
         assertTrue("Inventory is still empty",
-            testInstance.searchForItem(inventory, "LastPlayerShowCard") == 0);
+            testInstance.searchForItem("LastPlayerShowCard") == 0);
         assertTrue("Inventory is still empty",
-            testInstance.searchForItem(inventory, "autoPilot") == 0);
+            testInstance.searchForItem("autoPilot") == 0);
         assertTrue("Inventory is still empty",
-            testInstance.searchForItem(inventory, "copyCat") == 0);
+            testInstance.searchForItem("copyCat") == 0);
         assertTrue("Inventory is still empty",
-            testInstance.searchForItem(inventory, "Copy") == 0);
+            testInstance.searchForItem("Copy") == 0);
         assertTrue("Inventory is still empty",
-            testInstance.searchForItem(inventory, "PickPocket") == 0);
+            testInstance.searchForItem("PickPocket") == 0);
         assertTrue("Inventory is still empty",
-            testInstance.searchForItem(inventory, "Disarm") == 0);
+            testInstance.searchForItem("Disarm") == 0);
         assertTrue("Inventory is still empty",
-            testInstance.searchForItem(inventory, "ThrowAwayPickUp") == 0);
+            testInstance.searchForItem("ThrowAwayPickUp") == 0);
         assertTrue("Inventory is still empty",
-            testInstance.searchForItem(inventory, "Swap-Card") == 0);
+            testInstance.searchForItem("Swap-Card") == 0);
     }
 
     /**
@@ -77,10 +81,10 @@ public class InventoryPrototypeTest {
      */
     @Test
     public void testAvatarAssignment() {
-        HashMap<String, Integer> inventory = new HashMap<String, Integer>();
-        testInstance.updateInventory(inventory);
+        //HashMap<String, Integer> inventory = new HashMap<String, Integer>();
+        testInstance.updateInventory();
         assertTrue("Avatar not assigned to player properly",
-            testInstance.searchForItem(inventory, "Mirror") == 1);
+            testInstance.searchForItem("Mirror") == 1);
     }
 
     /**
@@ -88,11 +92,11 @@ public class InventoryPrototypeTest {
      */
     @Test
     public void testUsingItem() {
-        HashMap<String, Integer> inventory = new HashMap<String, Integer>();
-        testInstance.updateInventory(inventory);
-        testInstance.useItem(inventory, "Mirror");
+        //HashMap<String, Integer> inventory = new HashMap<String, Integer>();
+        testInstance.updateInventory();
+        testInstance.useItem("Mirror");
         assertTrue("Item was not used",
-            testInstance.searchForItem(inventory, "Mirror") == 0);
+            testInstance.searchForItem("Mirror") == 0);
     }
 
     /**
@@ -100,11 +104,11 @@ public class InventoryPrototypeTest {
      */
     @Test
     public void testAddingItem() {
-        HashMap<String, Integer> inventory = new HashMap<String, Integer>();
-        testInstance.updateInventory(inventory);
-        testInstance.addItem(inventory, "Mirror");
+        //HashMap<String, Integer> inventory = new HashMap<String, Integer>();
+        testInstance.updateInventory();
+        testInstance.addItem("Mirror", 1);
         assertTrue("Item was not added",
-            testInstance.searchForItem(inventory, "Mirror") == 2);
+            testInstance.searchForItem("Mirror") == 2);
     }
 
 }

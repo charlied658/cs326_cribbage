@@ -36,8 +36,7 @@ public interface UserManagement {
      * @param newPassword
      * @return the password.
      */
-    boolean passwordChange(User userToUpdate, Password currentPassword,
-        Password newPassword);
+    boolean passwordChange(User userToUpdate, Password newPassword);
 
     /**
      * userChange.

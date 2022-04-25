@@ -68,7 +68,6 @@ public class JumpSpot extends Spot {
     public void jump(Player player) {
 
         int diceRoll = die.rollDie(3, -2, true);
-        System.out.println(diceRoll);
         LOG.info("rewardPenalty: Dice roll is " + diceRoll);
         player.addPoints(diceRoll);
 

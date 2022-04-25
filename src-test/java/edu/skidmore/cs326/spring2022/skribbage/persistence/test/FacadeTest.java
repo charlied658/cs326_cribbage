@@ -121,7 +121,7 @@ public class FacadeTest {
 	@Test
 	public void getpass() {
 		Password pass = facadeinstanace.getPassword(correctTestUser);
-		assertEquals("testing to see if we get same password", "/025VfOmQYX8Hg==~RPhhsr1aWQ8jSRM1lj785RchB5YM2PcTXQGsK/oBfZ4=", pass.getBase64SaltAndPasswordHash());
+		assertEquals("testing to see if we get same password", "9TRMu+qZwS8JHg==~D1YF2LUPx48x5eHKLrxYI22XDJh+1uOPZ5FKHByqsg8=", pass.getBase64SaltAndPasswordHash());
 	}
 
 	/**
