@@ -1,13 +1,12 @@
 package edu.skidmore.cs326.spring2022.skribbage.logic;
 
-import edu.skidmore.cs326.spring2022.skribbage.common.Game;
-import edu.skidmore.cs326.spring2022.skribbage.common.Player;
-import edu.skidmore.cs326.spring2022.skribbage.common.Card;
-import edu.skidmore.cs326.spring2022.skribbage.common.Hand;
-import edu.skidmore.cs326.spring2022.skribbage.logic.HandManager;
-import java.util.*;
-//import org.apache.log4j.Logger;
+import java.util.ArrayList;
 import java.util.Random;
+
+import edu.skidmore.cs326.spring2022.skribbage.common.Hand;
+import edu.skidmore.cs326.spring2022.skribbage.common.Game;
+import edu.skidmore.cs326.spring2022.skribbage.common.Card;
+import edu.skidmore.cs326.spring2022.skribbage.common.Player;
 
 /**
  * GameManager contains methods to manipulate the data in Game. It includes
@@ -18,7 +17,7 @@ import java.util.Random;
  * assumption for this class is that there are only two players.
  *
  * @author Michael Shriner
- * Last edited by Charlie Davidson
+ *         Last edited by Charlie Davidson
  */
 public class GameManager implements GameManagerInterface {
 
@@ -27,6 +26,9 @@ public class GameManager implements GameManagerInterface {
      */
     private Game g;
 
+    /**
+     * handManager.
+     */
     private HandManager handManager = new HandManager();
 
     /**
@@ -43,7 +45,6 @@ public class GameManager implements GameManagerInterface {
     public GameManager(Game game) {
         this.g = game;
     }
-
 
     /**
      * Returns the Game used for this class.
@@ -130,7 +131,7 @@ public class GameManager implements GameManagerInterface {
      * @return the index in playerList where the dealer is or
      *         -1 if there is no dealer.
      */
-    public int getDealerIdx(List <Player> playerList) {
+    public int getDealerIdx(ArrayList<Player> playerList) {
         for (int i = 0; i < playerList.size(); i++) {
             if (playerList.get(i).isDealer()) {
                 return i;
@@ -158,6 +159,7 @@ public class GameManager implements GameManagerInterface {
 
     /**
      * Return whether the deck is sorted.
+     * 
      * @return boolean
      */
     public boolean deckIsSorted() {
@@ -210,6 +212,7 @@ public class GameManager implements GameManagerInterface {
 
     /**
      * Deal cards to the player.
+     * 
      * @param num
      */
     public void dealPlayerCards(int num) {
@@ -223,6 +226,7 @@ public class GameManager implements GameManagerInterface {
 
     /**
      * Deal cards to opponent.
+     * 
      * @param num
      */
     public void dealOpponentCards(int num) {
@@ -236,6 +240,7 @@ public class GameManager implements GameManagerInterface {
 
     /**
      * Deal cards to the center of the board.
+     * 
      * @param num
      */
     public void dealPlayCards(int num) {
@@ -250,6 +255,7 @@ public class GameManager implements GameManagerInterface {
     /**
      * Add card from the play field to your hand.
      * This should not be used in the final game.
+     * 
      * @param index
      */
     public void addCardToHand(int index) {
@@ -261,6 +267,7 @@ public class GameManager implements GameManagerInterface {
 
     /**
      * Play a card from your hand to the center of the board.
+     * 
      * @param index
      */
     public void playCard(int index) {
@@ -281,5 +288,7 @@ public class GameManager implements GameManagerInterface {
             g.getCardsInPlay().add(temp);
         }
     }
+
+
 
 }

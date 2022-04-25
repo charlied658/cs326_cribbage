@@ -1,0 +1,134 @@
+<html>
+<head><title>FractalJulia Source Code</title></head>
+<body>
+<h1>FractalJulia</h1><h2>Screenshot</h2><img src="FractalJulia.png" alt="Screenshot" style="border:1px solid #000000"/>
+<br clear="all"/>
+<hr>
+<h2>Source Code</h2>
+<pre>
+package us.daveread.edu.graphics.test;
+
+import org.apache.commons.math3.complex.Complex;
+
+/**
+ * &lt;a href=&quot;doc-files/FractalJulia.html&quot;&gt;&lt;img src=&quot;doc-files/FractalJulia.png&quot;
+ * alt=&quot;Screenshot&quot; style=&quot;float:right;width:100px;height:auto;border:1px solid
+ * #000000&quot;&gt;&lt;/a&gt;
+ * Calculate and display portions of a Julia set. To use, create an instance and
+ * run it on a thread.
+ * 
+ * &lt;pre&gt;
+ * 
+ * public static void main(String[] args) {
+ *   new Thread(new FractalJulia()).start();
+ * }
+ * &lt;/pre&gt;
+ * 
+ * &lt;p&gt;
+ * Here is a link to the &lt;a href=&quot;doc-files/FractalJulia.html&quot;&gt;Source Code&lt;/a&gt;.
+ * &lt;/p&gt;
+ * 
+ * @author readda
+ */
+public class FractalJulia extends Fractal {
+
+  /**
+   * Serial version id
+   */
+  private static final long serialVersionUID = 1L;
+
+  /**
+   * Which area of the Julia set to plot at startup
+   */
+  private static final FractalArea AREA_TO_PLOT = FractalArea.BROAD_SET;
+
+  /**
+   * The fixed value for this Julia set
+   */
+  // private static final Complex C = new Complex(-.35, .65);
+  // private static final Complex C = new Complex(1 - ((1 + Math.sqrt(5)) / 2),
+  // 0);
+  // private static final Complex C = new Complex(-.4, .6);
+  // private static final Complex C = new Complex(.285, 0);
+  private static final Complex C = new Complex(.285, .01);
+  // private static final Complex C = new Complex(.45, .1428);
+  // private static final Complex C = new Complex(-.70176, -.3842);
+  // private static final Complex C = new Complex(-.835, -.2321);
+  // private static final Complex C = new Complex(-.8, -.156);
+  // private static final Complex C = new Complex(-.7269, .1889);
+  // private static final Complex C = new Complex(0, .8);
+
+  /**
+   * Create and setup the display
+   */
+  public FractalJulia() {
+    super(&quot;Julia Set Plot&quot;, AREA_TO_PLOT);
+  }
+
+  /**
+   * Apply the Julia function until either diverging or reaching the
+   * iteration limit.
+   * @param z
+   *          The point being evaluated (e.g. changing over the surface of the
+   *          plot)
+   * @param c
+   *          The fixed value for this Julia set
+   * @param maxIterations
+   *          The maximum number of iterations to apply the function
+   * @return The number of iterations reached (a value less than the maximum
+   *         means that the value was determined to be diverging)
+   */
+  private int juliaCalc(Complex z, Complex c, int maxIterations) {
+    int iterationCount;
+
+    for (iterationCount = 0; iterationCount &lt; maxIterations; ++iterationCount) {
+      z = z.multiply(z).add(c);
+      if (z.abs() &gt; LIMIT) {
+        break;
+      }
+    }
+
+    return iterationCount;
+  }
+
+  /**
+   * Plot the requested portion of a Julia set
+   */
+  public void plot() {
+    int smallerDim = Math.min(getWidth(), getHeight());
+    // double xStart = areaToPlot.xStart();
+    double xEnd = getxStart() + getDistance();
+    setxIncrement((getxStart() - xEnd) / smallerDim * -1);
+    addMessage(&quot;X: &quot; + getxStart() + &quot;, &quot; + xEnd + &quot;, &quot; + getxIncrement());
+    double yEnd = getyStart() - getDistance();
+    setyIncrement((getyStart() - yEnd) / smallerDim * -1);
+    addMessage(&quot;Y: &quot; + getyStart() + &quot;, &quot; + yEnd + &quot;, &quot; + getyIncrement());
+
+    int row;
+    int col;
+    double x = 0;
+    double y = 0;
+    for (row = 0, y = getyStart(); row &lt; getHeight(); row++, y +=
+      getyIncrement()) {
+      for (col = 0, x = getxStart(); col &lt; getWidth(); col++, x +=
+        getxIncrement()) {
+        Complex z = new Complex(x, y);
+        plot(row, col, juliaCalc(z, C, getMaxIterations()));
+      }
+    }
+    addMessage(&quot;Resulting x, y: &quot; + x + &quot;, &quot; + y);
+  }
+
+  /**
+   * Setup the display and plot the set.
+   * @param args
+   *          Command line arguments - not used
+   */
+  public static void main(String[] args) {
+    new Thread(new FractalJulia()).start();
+  }
+}
+</pre>
+<p>Wed Apr 06 16:33:05 EDT 2022</p>
+</body>
+</head>
