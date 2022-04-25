@@ -165,7 +165,6 @@ public class AccountController implements PropertyChangeListener {
                 UserChangePasswordEvent chan = ((UserChangePasswordEvent) evt);
                 if (PersistenceFacade.getInstance().passwordChange(
                     associatedUser,
-                    PersistenceFacade.getInstance().getPassword(associatedUser),
                     chan.getNewPassword())) {
                     accountResponse =
                         new AccountResponse("Password change succesful!",
