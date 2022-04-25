@@ -8,6 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import edu.skidmore.cs326.spring2022.skribbage.gamification.BattleSpot;
+import edu.skidmore.cs326.spring2022.skribbage.common.Location;
 import edu.skidmore.cs326.spring2022.skribbage.common.Player;
 
 /**
@@ -33,6 +34,10 @@ public class BattleSpotTest {
      * Attribute to house the test instance.
      */
     private BattleSpot testInstance;
+    /**
+     * Test spot's location.
+     */
+    private Location testLocation;
 
     /**
      * The first player.
@@ -50,7 +55,8 @@ public class BattleSpotTest {
     @Before
     public void setup() {
         LOG.info("Setup for test");
-        testInstance = new BattleSpot();
+        testLocation = new Location(1, 1);
+        testInstance = new BattleSpot(testLocation);
         p1 = new Player();
         p2 = new Player();
     }

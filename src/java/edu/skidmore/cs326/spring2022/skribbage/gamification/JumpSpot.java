@@ -1,6 +1,10 @@
 package edu.skidmore.cs326.spring2022.skribbage.gamification;
 
+import edu.skidmore.cs326.spring2022.skribbage.common.Location;
 import edu.skidmore.cs326.spring2022.skribbage.common.Player;
+import edu.skidmore.cs326.spring2022.skribbage.common.Spot;
+import edu.skidmore.cs326.spring2022.skribbage.common.SpotType;
+
 //import java.util.Random;
 import org.apache.log4j.Logger;
 
@@ -12,8 +16,8 @@ import org.apache.log4j.Logger;
  * @author Henry Wilson
  *         Last Edited by Muaded Almheiri [Fixed checkstyle]
  */
-public class JumpSpot {
-
+public class JumpSpot extends Spot {
+    
     /**
      * Logger for the class.
      */
@@ -25,9 +29,32 @@ public class JumpSpot {
     static {
         LOG = Logger.getLogger(JumpSpot.class);
     }
-
+    
     /**
-     * Die to determine jump spot outcome.
+     * Type of spot.
+     */
+    private SpotType spotType;
+    
+    /**
+     * Constructor for jump spot. 
+     * @param location
+     */
+    public JumpSpot(Location location) {
+        super(location);
+        this.spotType = SpotType.JUMP;
+       
+    }
+    
+    /**
+     * Returns type of spot.
+     * @return type of spot
+     */
+    public SpotType getType() {
+        return this.spotType;
+    }
+    
+    /**
+     * Die for jump spot.
      */
     private Die die = new Die();
 

@@ -1,20 +1,24 @@
 package edu.skidmore.cs326.spring2022.skribbage.logic.events;
 
+import java.util.Objects;
+
 /**
  * Bean to store data such as responseMessage used by response event classes.
- * 
+ *
  * @author Declan Morris
+ *         reviewed by Alex Carney 4/21 added toString and HashCode
  */
-public class LoginResponse {
+public class AccountResponse {
 
     /**
      * Constructor sets all attributes to given values.
-     * 
+     *
      * @param responseMessage
      * @param rejectionStatus
      */
-    public LoginResponse(String responseMessage, boolean rejectionStatus) {
-
+    public AccountResponse(String responseMessage, boolean rejectionStatus) {
+        this.responseMessage = responseMessage;
+        this.rejectionStatus = rejectionStatus;
     }
 
     /**
@@ -29,7 +33,7 @@ public class LoginResponse {
 
     /**
      * Allow access to responseMessage to other classes.
-     * 
+     *
      * @return responseMessage
      */
     public String getResponseMessage() {
@@ -46,7 +50,7 @@ public class LoginResponse {
 
     /**
      * Allow access to rejectionStatus to other classes.
-     * 
+     *
      * @return rejectionStatus
      */
     public boolean isRejectionStatus() {
@@ -61,4 +65,31 @@ public class LoginResponse {
     // this.rejectionStatus = rejectionStatus;
     // }
 
+    @Override
+    public String toString() {
+        final StringBuilder sb =
+            new StringBuilder("AccountResponse{");
+        sb.append("responseMessage='").append(responseMessage).append('\'');
+        sb.append(", rejectionStatus=").append(rejectionStatus);
+        sb.append('}');
+        return sb.toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        AccountResponse that = (AccountResponse) o;
+        return rejectionStatus == that.rejectionStatus && Objects
+            .equals(responseMessage, that.responseMessage);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(responseMessage, rejectionStatus);
+    }
 }

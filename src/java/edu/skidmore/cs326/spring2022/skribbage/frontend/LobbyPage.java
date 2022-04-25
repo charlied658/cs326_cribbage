@@ -36,7 +36,7 @@ import us.daveread.edu.graphics.shape.impl.Circle;
  */
 
 @SuppressWarnings("serial")
-public class LobbyPage extends DrawingSurface {
+public class LobbyPage extends DrawingSurface implements Page {
     /**
      * loggedInPlayer1 - The displayed player 1 name.
      */
@@ -92,10 +92,6 @@ public class LobbyPage extends DrawingSurface {
 
     /**
      * startButton - Text object to act as a button to start the game once
-     * =======
-     * /**
-     * startButton - Text object to act as a button to start the game once
-     * >>>>>>> d599e4ec72d372caffa74468e69fe3928d68eb9f
      * all players have readied up.
      */
     private Text startButton;
@@ -125,6 +121,10 @@ public class LobbyPage extends DrawingSurface {
      */
     @SuppressWarnings("unused")
     private NavigationPage navPage;
+    /**
+     * PageManager instance for managing pages.
+     */
+    private PageManager pageManager;
 
     /**
      * Logger instance for logging.
@@ -140,6 +140,7 @@ public class LobbyPage extends DrawingSurface {
      */
     public LobbyPage() {
         LOG.trace("Entered LobbyPage Constructor.");
+        pageManager = PageManager.getInstance();
         mf = new MainFrame(this, "Pre-Game Lobby", mainframeWidth,
             mainframeHeight, false);
         setup();
@@ -160,7 +161,7 @@ public class LobbyPage extends DrawingSurface {
     /**
      * setup method - sets up the window.
      */
-    private void setup() {
+    public void setup() {
         LOG.trace("LobbyPage setup");
         setLayout(null);
 
@@ -176,10 +177,10 @@ public class LobbyPage extends DrawingSurface {
         int textStartingY = 100;
 
         // Hardcoded Users into ArrayList
-//        retrievePlayer(new User("doinurmom69@sussybaka.net", "Joe Byron",
-//            "h0rr1bL3p@$$w0rd", UserRole.AUTHORIZED));
-//        retrievePlayer(new User("sexhaver@reddit.com", "Obama Lastname",
-//            "07Sept18kx83+&_4ajfS", UserRole.AUTHORIZED));
+        // retrievePlayer(new User("doinurmom69@sussybaka.net", "Joe Byron",
+        // "h0rr1bL3p@$$w0rd", UserRole.AUTHORIZED));
+        // retrievePlayer(new User("sexhaver@reddit.com", "Obama Lastname",
+        // "07Sept18kx83+&_4ajfS", UserRole.AUTHORIZED));
 
         add(new Text("Players in Lobby (Max " + MAX_PLAYERS + ")",
             new Point(25, 75), 20, Color.BLACK));
@@ -209,11 +210,6 @@ public class LobbyPage extends DrawingSurface {
         add(startButton);
         add(inventoryPageButton);
 
-        /*
-         * add(player1LoginSection);
-         * add(player2LoginSection);
-         * add(player3LoginSection);
-         */
         // add(player1Ready);
         // add(player2Ready);
         // add(player3Ready);
@@ -261,8 +257,9 @@ public class LobbyPage extends DrawingSurface {
             returnToMainMenu.setBorderColor(Color.CYAN);
             Utility.pause(100);
             returnToMainMenu.setBorderColor(Color.BLACK);
-            navPage = new NavigationPage();
-            mf.dispose();
+            navPage = (NavigationPage) pageManager
+                .createPage(PageType.NAVIGATION_PAGE);
+            closeWindow();
         } else if (e == player1Ready) {
             setReadyButtonColor(player1Ready);
         } else if (e == player2Ready) {
@@ -280,26 +277,24 @@ public class LobbyPage extends DrawingSurface {
             startButton.setBorderColor(Color.CYAN);
             Utility.pause(100);
             startButton.setBorderColor(Color.BLACK);
-            new StartGamePage();
-            mf.dispose();
+            pageManager.createPage(PageType.START_GAME_PAGE);
+            closeWindow();
 
         } else if (e == inventoryPageButton) {
             inventoryPageButton.setBorderColor(Color.CYAN);
             Utility.pause(100);
             inventoryPageButton.setBorderColor(Color.BLACK);
-            new InventoryPage();
-            mf.dispose();
+            pageManager.createPage(PageType.INVENTORY_PAGE);
+            closeWindow();
         }
 
     }
 
     /**
-     * main method.
-     * 
-     * @param args
+     * Close current window method.
      */
-    public static void main(String[] args) {
-        LOG.trace("LobbyPage.java main method");
-        new LobbyPage();
+    public void closeWindow() {
+        mf.dispose();
     }
+
 }

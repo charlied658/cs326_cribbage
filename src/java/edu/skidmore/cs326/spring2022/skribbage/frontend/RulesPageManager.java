@@ -1,5 +1,6 @@
 package edu.skidmore.cs326.spring2022.skribbage.frontend;
 
+import java.io.FileNotFoundException;
 import java.util.HashMap;
 
 import org.apache.log4j.Logger;
@@ -40,6 +41,7 @@ public class RulesPageManager {
 
     /**
      * Constructor.
+     * @throws FileNotFoundException 
      */
     private RulesPageManager() {
         LOG.debug("Instance created");
@@ -58,6 +60,7 @@ public class RulesPageManager {
 
     /**
      * sets up the rules page.
+     * @throws FileNotFoundException 
      */
     private void setup() {
         rulesPage.put(RULESKEY, new RulesPage());

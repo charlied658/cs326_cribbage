@@ -38,7 +38,7 @@ public class UserTest {
         LOG.trace("Setup method in test class reached.");
         testInstance =
             new User("sleinasa@skidmore.edu", "sleinasa",
-                new Password("password"), UserRole.AUTHORIZED);
+                UserRole.AUTHORIZED);
         LOG.trace("Setup finished");
     }
 
@@ -73,15 +73,6 @@ public class UserTest {
         LOG.trace("Testing getUserName finished.");
     }
 
-    /**
-     * Testing getPassword method in User class.
-     */
-    @Test
-    public void testGetPassword() {
-        LOG.trace("Testing getPassword method in User class");
-        assertEquals(testInstance.getPassword(), "password");
-        LOG.trace("Testing getPassword finished.");
-    }
 
     /**
      * Testing isAuthorized method in User Class.

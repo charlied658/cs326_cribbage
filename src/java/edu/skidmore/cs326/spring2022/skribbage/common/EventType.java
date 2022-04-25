@@ -1,7 +1,8 @@
 package edu.skidmore.cs326.spring2022.skribbage.common;
 
-import edu.skidmore.cs326.spring2022.skribbage.logic.events.LoginResponse;
 import org.apache.log4j.Logger;
+
+import edu.skidmore.cs326.spring2022.skribbage.logic.events.AccountResponse;
 
 /**
  * An enum representing all possible events. Whenever a new event type is
@@ -17,34 +18,80 @@ public enum EventType {
     /**
      * Fired when a user attempts to create an account via login page.
      */
-    USER_LOGIN("User Login Event", User.class),
+    USER_LOGIN("User Login Event", User.class, String.class),
     /**
      * Fired when.
      */
-    USER_LOGIN_HASHED("User Login Hashed Event", User.class),
+    USER_LOGIN_HASHED("User Login Hashed Event", User.class, Password.class),
     /**
      * Fired from logic tier when user's login request has been handled.
      */
     USER_LOGIN_RESPONSE("User Login Response Event",
-        User.class, LoginResponse.class),
+        User.class, AccountResponse.class),
+    /**
+     * Fired when a user types in their username.
+     */
+    USER_VALIDATION_RESPONSE("User Validation Response Event", User.class),
     /**
      * Fired when a user attempts to change their password via login page.
      */
     USER_CHANGE_PASSWORD("User Change Password Event", User.class,
-        String.class),
+        Password.class),
+    /**
+     * Fired when user needs to be verified to change password.
+     */
+    USER_CHANGE_PASSWORD_VALIDATION("User Change Password Validation",
+        User.class),
+    /**
+     * Fired when user is successfully verified for password change.
+     */
+    USER_CHANGE_PASSWORD_VALIDATION_RESPONSE(
+        "User Change Password Validation Response", User.class),
+    /**
+     * Fired when password change was succesful.
+     */
+    USER_CHANGE_PASSWORD_RESPONSE("User Change Password Response"),
     /**
      * Fired when a user attempts to create an account via login page.
      */
-    USER_CREATE_ACCOUNT("User Create Account Event", User.class),
+    USER_CREATE_ACCOUNT("User Create Account Event", User.class,
+        Password.class),
+    /**
+     * Fired when user create account is succesful.
+     */
+    USER_CREATE_ACCOUNT_RESPONSE("User Create Account Response", User.class),
+
+    /**
+     * Fired when a user is attempting to create an account but just enters
+     * their username.
+     */
+    VALIDATE_USERNAME("Validate Username", User.class),
+
     /**
      * Fired when a user attempts to delete their account.
      */
-    USER_DELETE_ACCOUNT("User Delete Account Event"),
+    USER_DELETE_ACCOUNT("User Delete Account Event", User.class),
     /**
      * Fired when the host of a lobby clicks 'start game', and all players
      * are added to a new game.
      */
-    LOBBY_START_GAME("Lobby Start Game Event");
+    LOBBY_START_GAME("Lobby Start Game Event"),
+    
+    /**
+     * Fired when a user clicks 'leave lobby' and is removed from the lobby.
+     */
+    LOBBY_REMOVE_USER("Lobby Remove User Event", User.class),
+    
+    /**
+     * Fired when a User enters the proper lobby id and is entering said lobby.
+     */
+    LOBBY_ADD_USER("Lobby Add User Event", User.class),
+
+    /**
+     * Fired when a logged in user attempts to start a new lobby.
+     */
+    LOBBY_CREATE_GAME("Lobby Create Game Event", User.class);
+
 
     /**
      * The name of the event.
@@ -84,7 +131,7 @@ public enum EventType {
      * @return The name of an event.
      */
     public String getName() {
-        LOG.trace("Returning a name of an event");
+        LOG.debug("Returning a name of an event");
         return name;
     }
 
@@ -94,8 +141,10 @@ public enum EventType {
      * @return The argument list.
      */
     public Object[] getArgumentList() {
-        LOG.trace("Returning arguments list of an event");
+        LOG.debug("Returning arguments list of an event");
         return args;
     }
+    
+    
 
 }

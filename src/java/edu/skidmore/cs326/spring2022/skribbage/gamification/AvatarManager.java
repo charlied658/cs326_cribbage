@@ -188,7 +188,7 @@ public class AvatarManager {
     }
 
     /**
-     * Check if plaer with given imageUrl exists.
+     * Check if player with given imageUrl exists.
      * 
      * @param imageUrl
      *            ImageUrl of avatar

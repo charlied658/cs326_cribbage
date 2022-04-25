@@ -18,6 +18,7 @@ import edu.skidmore.cs326.spring2022.skribbage.common.UserRole;
 import edu.skidmore.cs326.spring2022.skribbage.common.EventFactory;
 import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserLoginEvent;
 
+
 /**
  * Testing for Event manager API testing.
  * 
@@ -72,7 +73,6 @@ public class EventManagerTest {
         testInstance = EventManager.getInstance();
         userInstance =
             new User("sleinasa@skidmore.edu", "sleinasa",
-                new Password("passwd"),
                 UserRole.UNAUTHORIZED);
         source = new EventManagerTest();
         loginEventInstance = (UserLoginEvent) EventFactory.getInstance()
@@ -130,7 +130,6 @@ public class EventManagerTest {
         // now change the userInstance and the logInEvent instance.
         userInstance =
             new User("sleinasa@skidmore.edu", "username",
-                new Password("password"),
                 UserRole.AUTHORIZED);
         loginEventInstance = (UserLoginEvent) EventFactory.getInstance()
             .createEvent(EventType.USER_LOGIN, source, userInstance);
@@ -164,7 +163,7 @@ public class EventManagerTest {
      */
     @After
     public void tearDown() {
-        System.out.println("Running: tearDown");
+        LOG.trace("Running: tearDown");
         testInstance = null;
         userInstance = null;
         loginEventInstance = null;

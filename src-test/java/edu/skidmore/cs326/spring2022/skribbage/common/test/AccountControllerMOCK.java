@@ -6,8 +6,10 @@ import edu.skidmore.cs326.spring2022.skribbage.common.User;
 import edu.skidmore.cs326.spring2022.skribbage.common.UserRole;
 import edu.skidmore.cs326.spring2022.skribbage.common.events.AccountEvent;
 import edu.skidmore.cs326.spring2022.skribbage.logic.events.AccountResponseEvent;
-import edu.skidmore.cs326.spring2022.skribbage.logic.events.LoginResponse;
+import edu.skidmore.cs326.spring2022.skribbage.logic.events.AccountResponse;
 import edu.skidmore.cs326.spring2022.skribbage.logic.events.UserLoginResponseEvent;
+import edu.skidmore.cs326.spring2022.skribbage.logic.events.UserValidationResponseEvent;
+import edu.skidmore.cs326.spring2022.skribbage.persistence.PersistenceFacade;
 import org.apache.log4j.Logger;
 
 import java.beans.PropertyChangeEvent;
@@ -68,7 +70,7 @@ public class AccountControllerMOCK implements PropertyChangeListener {
     public void propertyChange(PropertyChangeEvent evt) {
 
         incomingEvent = (AccountEvent) evt;
-        LOG.trace("Caught incoming event in AccountController MOCK" + evt);
+        LOG.warn("Caught incoming event in AccountController MOCK" + evt);
 
         switch (incomingEvent.getEventType()) {
             case USER_LOGIN:
@@ -81,13 +83,33 @@ public class AccountControllerMOCK implements PropertyChangeListener {
                             EventType.USER_LOGIN_RESPONSE,
                             this,
                             receivedUserFromLogin,
-                            new LoginResponse("Success Login", false));
-                System.out.println("outgoingEvent = " + outgoingEvent);
+                            new AccountResponse("Success Login", false));
+                LOG.trace("outgoingEvent = " + outgoingEvent);
                 eventFactoryTestInstance.fireEvent(outgoingEvent);
                 break;
             case USER_CREATE_ACCOUNT:
                 LOG.error("Handled impossible event " + evt);
                 receivedUserFromCreateAccount = incomingEvent.getUser();
+                break;
+            case VALIDATE_USERNAME:
+                receivedUserFromLogin = incomingEvent.getUser();
+
+                /*
+                 *PersistenceFacade.getInstance()
+                 *.validateUsername(receivedUserFromLogin);
+                 *
+                 * must remain commented until DB works.
+                 */
+
+
+                outgoingEvent =
+                    (UserValidationResponseEvent) eventFactoryTestInstance
+                    .createEvent(
+                        EventType.USER_VALIDATION_RESPONSE,
+                        this,
+                        receivedUserFromLogin,
+                        new AccountResponse("Good username", false));
+                eventFactoryTestInstance.fireEvent(outgoingEvent);
                 break;
             default:
                 LOG.error("Illegal logical flow from event: " + evt);

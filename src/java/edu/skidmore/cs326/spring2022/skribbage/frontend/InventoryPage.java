@@ -29,7 +29,7 @@ import us.daveread.edu.utilities.Utility;
  *         Last Edited by Jonah Marcus
  */
 @SuppressWarnings("serial")
-public class InventoryPage extends DrawingSurface {
+public class InventoryPage extends DrawingSurface implements Page {
 
     /**
      * mf - Holds reference to the window.
@@ -83,7 +83,7 @@ public class InventoryPage extends DrawingSurface {
     /**
      * setup method - sets up the window.
      */
-    private void setup() {
+    public void setup() {
         LOG.trace("Entered setup (InventoryPage)");
         setLayout(null);
 
@@ -91,8 +91,8 @@ public class InventoryPage extends DrawingSurface {
 
         closeWindow = new Text("Close",
             new Point(20, 40), 25, Color.BLUE, Color.BLACK);
-        lobbyButton = new Text("Back to Lobby", new Point(20, 60), 25,
-            Color.BLUE, Color.BLACK);
+        lobbyButton = new Text("Back to Lobby", new Point(20, 50), 25,
+            Color.BLACK, Color.BLUE);
         add(new Text("Inventory:", new Point(30, 90), 20, Color.BLACK));
 
         // Placeholder cards
@@ -119,24 +119,38 @@ public class InventoryPage extends DrawingSurface {
             initYPosition += 25;
         }
 
-        add(closeWindow);
+        //add(closeWindow);
         add(lobbyButton);
         add(logo);
     }
 
     @Override
     public void drawableMouseClick(Drawable e) {
-        LOG.trace("DrawableMosuceClick in InventoryPage.java");
+        LOG.trace("DrawableMouseClick in InventoryPage.java");
         if (e == closeWindow) {
             closeWindow.setBorderColor(Color.CYAN);
             Utility.pause(100);
             closeWindow.setBorderColor(Color.BLACK);
-            mf.dispose();
+            closeWindow();
         } else if (e == lobbyButton) {
-            new LobbyPage();
-            mf.dispose();
+            PageManager.getInstance().createPage(PageType.LOBBY_PAGE);
+            closeWindow();
         }
 
     }
+    /**
+     * Method from Page interface, to close the window.
+     */
+    public void closeWindow() {
+        mf.dispose();
+    }
+     /**
+     * @param args
+     */
+    /*
+    public static void main(String[] args) {
+        new InventoryPage();
+    }
+    */
 
 }

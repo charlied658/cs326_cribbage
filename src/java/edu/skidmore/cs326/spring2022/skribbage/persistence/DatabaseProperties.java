@@ -3,10 +3,13 @@ package edu.skidmore.cs326.spring2022.skribbage.persistence;
 import java.io.InputStream;
 import java.util.Properties;
 
+import org.apache.log4j.Logger;
+
 /**
  * Database properties class.
+ * 
  * @author ??
- *
+ *         Edited by Jonah Marcus on 20 April 2022 to address Bug #48.
  */
 public class DatabaseProperties {
 
@@ -30,7 +33,17 @@ public class DatabaseProperties {
     }
 
     /**
+     * Logger instance for logging.
+     */
+    private static final Logger LOG;
+
+    static {
+        LOG = Logger.getLogger(DatabaseProperties.class);
+    }
+
+    /**
      * fill in.
+     * 
      * @return instance.
      */
     public static DatabaseProperties getInstance() {
@@ -39,6 +52,7 @@ public class DatabaseProperties {
 
     /**
      * fill in.
+     * 
      * @param key
      * @return key
      */
@@ -60,7 +74,8 @@ public class DatabaseProperties {
             properties.load(in);
         }
         catch (Throwable e) {
-            e.printStackTrace();
+            // e.printStackTrace();
+            LOG.error(e);
         }
 
     }

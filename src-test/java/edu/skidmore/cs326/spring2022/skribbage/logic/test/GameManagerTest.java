@@ -6,7 +6,7 @@ import edu.skidmore.cs326.spring2022.skribbage.common.Rank;
 import edu.skidmore.cs326.spring2022.skribbage.common.Player;
 import org.junit.Before;
 import org.junit.Test;
-import java.util.ArrayList;
+import java.util.*;
 import edu.skidmore.cs326.spring2022.skribbage.common.Card;
 import static org.junit.Assert.assertTrue;
 import edu.skidmore.cs326.spring2022.skribbage.common.Suit;
@@ -14,7 +14,7 @@ import static org.junit.Assert.assertEquals;
 
 /**
  * GameManagerTest tests the methods in GameManager.
- * 
+ *
  * @author Michael Shriner
  */
 public class GameManagerTest {
@@ -32,30 +32,9 @@ public class GameManagerTest {
     @Before
     public void setup() {
         // initialize the game
-        game = new Game();
+        game = new Game(2);
         // initialize the GameManager
         gameManager = new GameManager(game);
-    }
-
-    /**
-     * Test the add player method.
-     * Passes.
-     */
-    @Test
-    public void testAddPlayer() {
-
-        gameManager.addPlayer(new Player(), game.getPlayerList());
-        assertEquals(game.getPlayerList().size(), 1);
-    }
-
-    /**
-     * Test the initialize players method.
-     * Passes.
-     */
-    @Test
-    public void testInitPlayers() {
-        gameManager.initPlayers(2, game.getPlayerList());
-        assertEquals(game.getPlayerList().size(), 2);
     }
 
     /**
@@ -94,7 +73,7 @@ public class GameManagerTest {
 
         gameManager.addPonePeggingCard(c);
 
-        assertTrue(game.getPonePeggingCards().get(0).equals(c));
+        assertTrue(game.getPonePeggingCards().getCardsInHand().get(0).equals(c));
     }
 
     /**
@@ -108,7 +87,7 @@ public class GameManagerTest {
 
         gameManager.addDealerPeggingCard(c);
 
-        assertTrue(game.getDealerPeggingCards().get(0).equals(c));
+        assertTrue(game.getDealerPeggingCards().getCardsInHand().get(0).equals(c));
     }
 
     /**
@@ -131,10 +110,10 @@ public class GameManagerTest {
     @Test
     public void testGetDealerIdx() {
         // initialize player list
-        gameManager.initPlayers(2, game.getPlayerList());
+        //gameManager.initPlayers(2, game.getPlayerList());
 
         // set the dealer
-        ArrayList<Player> playerList = game.getPlayerList();
+        List<Player> playerList = game.getPlayerList();
         playerList.get(0).setDealer(true);
         playerList.get(1).setDealer(false);
 

@@ -1,30 +1,25 @@
 package edu.skidmore.cs326.spring2022.skribbage.common.test;
 
-import edu.skidmore.cs326.spring2022.skribbage.common.EventFactory;
-import edu.skidmore.cs326.spring2022.skribbage.common.EventManager;
-import edu.skidmore.cs326.spring2022.skribbage.common.Password;
-import edu.skidmore.cs326.spring2022.skribbage.common.User;
-import edu.skidmore.cs326.spring2022.skribbage.common.EventType;
-import edu.skidmore.cs326.spring2022.skribbage.common.UserRole;
+import edu.skidmore.cs326.spring2022.skribbage.common.*;
 import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserCreateAccountEvent;
 import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserLoginEvent;
+import edu.skidmore.cs326.spring2022.skribbage.frontend.events.ValidateUsernameEvent;
+import edu.skidmore.cs326.spring2022.skribbage.logic.events.AccountResponse;
 import org.apache.log4j.Logger;
 import org.junit.Before;
 import org.junit.Test;
 
+import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 
 /**
  * Full test of event functionality. Mocks an interaction between
  * a user logging in on the front end, and being authenticated and
  * returned by the back end.
- * 
+ *
  * @author Alex Carney
  */
-public class AccountEventLoopTest {
-
+public class ValidateUsernameEventLoopTest {
     /**
      * Borrow an instance of event factory for testing.
      */
@@ -51,9 +46,9 @@ public class AccountEventLoopTest {
     private User testUser;
 
     /**
-     * Mock email for mock user.
+     * Bad user with BAD username.
      */
-    private static final String TEST_EMAIL = "acarney@skidmore.edu";
+    private User testBadUser;
 
     /**
      * Mock username for mock user.
@@ -61,24 +56,15 @@ public class AccountEventLoopTest {
     private static final String TEST_USERNAME = "acarney";
 
     /**
-     * Mock password raw string value for mock user.
+     * Bad word username.
      */
-    private static final String TEST_PASSWORD = "password";
+    private static final String TEST_BAD_USERNAME = "boobs";
 
-    /**
-     * Mock Password object for mock user.
-     */
-    private Password testPassword;
 
     /**
      * Mock login event.
      */
-    private UserLoginEvent testEventInstance;
-
-    /**
-     * Mock create account event.
-     */
-    private UserCreateAccountEvent testFalseEventInstance;
+    private ValidateUsernameEvent testEventInstance;
 
     /**
      * Logger.
@@ -86,7 +72,7 @@ public class AccountEventLoopTest {
     private static final Logger LOG;
 
     static {
-        LOG = Logger.getLogger(AccountEventLoopTest.class);
+        LOG = Logger.getLogger(ValidateUsernameEventLoopTest.class);
     }
 
     /**
@@ -108,31 +94,24 @@ public class AccountEventLoopTest {
         LOG.trace("added account controller mock to listeners");
         eventManagerInstance.addPropertyChangeListener(
             accountControllerMOCK,
-            EventType.USER_LOGIN);
+            EventType.VALIDATE_USERNAME);
         LOG.trace("added account response controller mock to listeners");
         eventManagerInstance.addPropertyChangeListener(
             accountResponseControllerMOCK,
-            EventType.USER_LOGIN_RESPONSE);
+            EventType.USER_VALIDATION_RESPONSE);
 
-        testPassword = new Password(TEST_PASSWORD);
-        testUser = new User(TEST_EMAIL, TEST_USERNAME, testPassword,
-            UserRole.UNAUTHORIZED);
+        testUser = new User(null, TEST_USERNAME, UserRole.UNAUTHORIZED);
+
+        testBadUser = new User(null, TEST_BAD_USERNAME, UserRole.UNAUTHORIZED);
 
         // Actually fire the event
-        testEventInstance = (UserLoginEvent) testFactoryInstance
-            .createEvent(EventType.USER_LOGIN, this, testUser);
+        testEventInstance = (ValidateUsernameEvent) testFactoryInstance
+            .createEvent(EventType.VALIDATE_USERNAME, this, testUser);
         assertNotNull(testEventInstance);
         LOG.trace("created event " + testEventInstance);
         testFactoryInstance.fireEvent(testEventInstance);
         LOG.trace("fired said event");
 
-        // Fire an event that should be ignored
-        testFalseEventInstance = ((UserCreateAccountEvent) testFactoryInstance
-            .createEvent(EventType.USER_CREATE_ACCOUNT, this, testUser));
-        assertNotNull(testFalseEventInstance);
-        LOG.trace("Created false event " + testEventInstance);
-        testFactoryInstance.fireEvent(testFalseEventInstance);
-        LOG.trace("fired said false event");
     }
 
     /**
@@ -147,29 +126,24 @@ public class AccountEventLoopTest {
     }
 
     /**
-     * Determines whether the mock controller ignored an event
-     * not subscribed to. There should be no User object since
-     * the event was ignored.
+     * Determines if the response controller catches the Response event
+     * correctly.
      */
     @Test
-    public void testListenerIgnoresIncorrectEvent() {
-        User nullUser =
-            accountControllerMOCK.getReceivedUserFromCreateAccount();
-        assertNull(nullUser);
+    public void testReceiverCaughtCorrectUser() {
+        User caughtUser = accountResponseControllerMOCK.getReceivedUserFromLogin();
+        assertNotNull(caughtUser);
+        assertEquals(caughtUser, testUser);
     }
 
     /**
-     * Determines if the response controller obtained the User from
-     * the logic end. Additionally, ensures that permissions were
-     * updated accordingly.
+     * Ensure that a proper account response is returned, and that it is false.
      */
     @Test
-    public void testresponseControllerCaughtCorrectUserAndIsAuthorized() {
-        User caughtUserResponse =
-            accountResponseControllerMOCK.getReceivedUserFromLogin();
-        System.out.println(caughtUserResponse);
-        assertEquals(caughtUserResponse, testUser);
-        assertEquals(caughtUserResponse.getUserRole(), UserRole.AUTHORIZED);
+    public void responseMessageAccepted() {
+        AccountResponse accountResponse =
+            accountResponseControllerMOCK.getAccountResponseMessage();
+        assertFalse(accountResponse.isRejectionStatus());
     }
 
 }
