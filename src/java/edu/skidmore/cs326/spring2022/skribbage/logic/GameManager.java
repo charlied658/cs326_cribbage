@@ -3,7 +3,6 @@ package edu.skidmore.cs326.spring2022.skribbage.logic;
 import java.util.List;
 import java.util.Random;
 
-import edu.skidmore.cs326.spring2022.skribbage.common.Hand;
 import edu.skidmore.cs326.spring2022.skribbage.common.Game;
 import edu.skidmore.cs326.spring2022.skribbage.common.Card;
 import edu.skidmore.cs326.spring2022.skribbage.common.Player;
@@ -29,6 +28,7 @@ public class GameManager implements GameManagerInterface {
     /**
      * handManager.
      */
+    @SuppressWarnings("unused")
     private HandManager handManager = new HandManager();
 
     /**
@@ -101,11 +101,11 @@ public class GameManager implements GameManagerInterface {
      * @param c
      *            is the Card to add to the list of the pone's pegging cards.
      */
-    public void addPonePeggingCard(Card c) {
-        Hand ponePegCards = g.getPonePeggingCards();
-        handManager.addCardToHand(ponePegCards, c);
-        g.setPonePeggingCards(ponePegCards);
-    }
+    // public void addPonePeggingCard(Card c) {
+    //     Hand ponePegCards = g.getPonePeggingCards();
+    //     handManager.addCardToHand(ponePegCards, c);
+    //     g.setPonePeggingCards(ponePegCards);
+    // }
 
     /**
      * Add the parameter Card to the dealer's pegging cards.
@@ -114,11 +114,11 @@ public class GameManager implements GameManagerInterface {
      *            is the Card to add to the list of the dealer's
      *            pegging cards.
      */
-    public void addDealerPeggingCard(Card c) {
-        Hand dealerPegCards = g.getDealerPeggingCards();
-        handManager.addCardToHand(dealerPegCards, c);
-        g.setDealerPeggingCards(dealerPegCards);
-    }
+    // public void addDealerPeggingCard(Card c) {
+    //     Hand dealerPegCards = g.getDealerPeggingCards();
+    //     handManager.addCardToHand(dealerPegCards, c);
+    //     g.setDealerPeggingCards(dealerPegCards);
+    // }
 
     /**
      * Initializes the pegging total to 0.
