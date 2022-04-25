@@ -61,7 +61,7 @@ interface GameManagerInterface {
      * @param c
      *            is the card to add to the pone's list of pegging cards.
      */
-    void addPonePeggingCard(Card c);
+    //void addPonePeggingCard(Card c);
 
     /**
      * Adds a card to the list of the dealer's pegging cards.
@@ -69,7 +69,7 @@ interface GameManagerInterface {
      * @param c
      *            is the card to add to the dealer's list of pegging cards.
      */
-    void addDealerPeggingCard(Card c);
+    //void addDealerPeggingCard(Card c);
 
     /** Initializes the pegging total. */
     void initPeggingTotal();
