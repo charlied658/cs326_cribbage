@@ -1,6 +1,6 @@
 package edu.skidmore.cs326.spring2022.skribbage.logic;
 
-import java.util.*;
+import java.util.List;
 import java.util.Random;
 
 import edu.skidmore.cs326.spring2022.skribbage.common.Hand;

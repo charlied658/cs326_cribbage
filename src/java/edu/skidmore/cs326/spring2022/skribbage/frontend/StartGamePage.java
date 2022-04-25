@@ -3,6 +3,7 @@ package edu.skidmore.cs326.spring2022.skribbage.frontend;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Point;
+import java.util.List;
 import java.util.ArrayList;
 
 import org.apache.log4j.Logger;
@@ -443,13 +444,13 @@ public class StartGamePage extends DrawingSurface implements Page {
         cardsInHand.clear();
         cardsInOpponentHand.clear();
         
-        ArrayList<Card> gameCardsInDeck = 
+        List<Card> gameCardsInDeck = 
             gameManager.getGame().getCardsInDeck();
-        ArrayList<Card> gameCardsInPlay = 
+        List<Card> gameCardsInPlay = 
             gameManager.getGame().getCardsInPlay();
-        ArrayList<Card> gameCardsInHand = 
+        List<Card> gameCardsInHand = 
             gameManager.getGame().getCardsInHand();
-        ArrayList<Card> gameCardsInOpponentHand = 
+        List<Card> gameCardsInOpponentHand = 
             gameManager.getGame().getCardsInOpponentHand();
         
         for (int i = 0; i < gameCardsInDeck.size(); i++) {
