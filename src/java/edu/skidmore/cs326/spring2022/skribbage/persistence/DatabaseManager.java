@@ -360,7 +360,7 @@ public class DatabaseManager {
         try {
 
             conn = getDB();
-            ps = dbConnection.prepareStatement(tokenQuery);
+            ps = conn.prepareStatement(tokenQuery);
             ps.setInt(1, playerID);
 
             ResultSet rs = ps.executeQuery();
@@ -371,7 +371,7 @@ public class DatabaseManager {
         }
         catch (SQLException e) {
             e.printStackTrace();
-            dbDisconnect(conn);
+           
             return "Account not found";
 
         }
