@@ -1,0 +1,404 @@
+<html>
+<head><title>SirQlateBoard Source Code</title></head>
+<body>
+<h1>SirQlateBoard</h1><h2>Screenshot</h2><img src="SirQlateBoard.png" alt="Screenshot" style="border:1px solid #000000"/>
+<br clear="all"/>
+<hr>
+<h2>Source Code</h2>
+<pre>
+package us.daveread.edu.graphics.test;
+
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Point;
+import java.util.Random;
+
+import org.apache.log4j.Logger;
+
+import us.daveread.edu.graphics.shape.Drawable;
+import us.daveread.edu.graphics.shape.impl.Circle;
+import us.daveread.edu.graphics.shape.impl.Image;
+import us.daveread.edu.graphics.shape.impl.Rectangle;
+import us.daveread.edu.graphics.shape.impl.Text;
+import us.daveread.edu.graphics.surface.DrawingSurface;
+import us.daveread.edu.graphics.surface.MainFrame;
+
+/**
+ * &lt;a href=&quot;doc-files/SirQlateBoard.html&quot;&gt;&lt;img src=&quot;doc-files/SirQlateBoard.png&quot;
+ * alt=&quot;Screenshot&quot; style=&quot;float:right;width:100px;height:auto;border:1px solid
+ * #000000&quot;&gt;&lt;/a&gt;
+ * An early mock-up of the main playing board for SirQlate. To use, create an
+ * instance.
+ * 
+ * &lt;pre&gt;
+ * 
+ * public static void main(String[] args) {
+ *   new SirQlateBoard();
+ * }
+ * &lt;/pre&gt;
+ * 
+ * &lt;p&gt;
+ * Here is a link to the &lt;a href=&quot;doc-files/SirQlateBoard.html&quot;&gt;Source Code&lt;/a&gt;.
+ * &lt;/p&gt;
+ * 
+ * @author readda
+ */
+public class SirQlateBoard extends DrawingSurface {
+  /**
+   * Setup the logger for the class.
+   */
+  private static final Logger LOG = Logger.getLogger(SirQlateBoard.class);
+
+  /**
+   * Random number generator.
+   */
+  private static final Random RAND;
+
+  /**
+   * The die image file names.
+   */
+  private final String[] dieImages =
+    { &quot;die_01_42158_mth.gif&quot;, &quot;die_02_42159_mth.gif&quot;, &quot;die_03_42160_mth.gif&quot;,
+      &quot;die_04_42161_mth.gif&quot;, &quot;die_05_42162_mth.gif&quot;, &quot;die_06_42164_mth.gif&quot; };
+
+  /**
+   * Serial version id.
+   */
+  private static final long serialVersionUID = 1L;
+
+  /**
+   * The window width.
+   */
+  private static final int WINDOW_WIDTH = 800;
+
+  /**
+   * The window height.
+   */
+  private static final int WINDOW_HEIGHT = 600;
+
+  /**
+   * The number of sides.
+   */
+  private static final int NUM_SIDES = 3;
+
+  /**
+   * The number of pieces per player.
+   */
+  private static final int NUM_PIECES_PER_PLAYER = 3;
+
+  /**
+   * The number of cells per side.
+   */
+  private static final int NUM_CELLS_PER_SIDE = 10;
+
+  /**
+   * The length of a cell side.
+   */
+  private static final int CELL_SIDE_LEN = 50;
+
+  /**
+   * The width of the die image.
+   */
+  private static final int DIE_IMAGE_WIDTH = 150;
+
+  /**
+   * The height of the die image.
+   */
+  private static final int DIE_IMAGE_HEIGHT = 115;
+
+  /**
+   * The diameter of a playing piece.
+   */
+  private static final int PIECE_DIAMETER = 20;
+
+  /**
+   * The spacing between playing pieces on a cell.
+   */
+  private static final int PIECE_SPACING = 5;
+
+  /**
+   * The height of the area reserved for a label.
+   */
+  private static final int LABEL_AREA_HEIGHT = 40;
+
+  /**
+   * The width of the area reserved for a label.
+   */
+  private static final int ASSUMED_LABEL_WIDTH = 120;
+
+  /**
+   * The perimeter cells collection.
+   */
+  private Rectangle[] perimeterCells;
+
+  /**
+   * The start cells collection.
+   */
+  private Rectangle[] startCells;
+
+  /**
+   * The home cells collection.
+   */
+  private Rectangle[] homeCells;
+
+  /**
+   * The player pieces collection.
+   */
+  private Circle[][] playerPieces;
+
+  /**
+   * The die image.
+   */
+  private Image die;
+
+  /**
+   * The player name labels.
+   */
+  private Text[] playerLabels;
+
+  /**
+   * Static setup.
+   */
+  static {
+    RAND = new Random();
+  }
+
+  /**
+   * Create the frame.
+   */
+  public SirQlateBoard() {
+    new MainFrame(this, &quot;Sir-Q-Late&quot;, WINDOW_WIDTH, WINDOW_HEIGHT);
+
+    login();
+    setupBoardPerimeter();
+    setupDie();
+    setupPlayerLabels();
+    setupPieces();
+  }
+
+  /**
+   * Handle the user login process.
+   */
+  private void login() {
+    String userId = getUserInput(&quot;User Id&quot;, &quot;Enter your user id&quot;);
+    getUserInput(&quot;Password&quot;, &quot;Enter your password&quot;, true);
+    addMessage(&quot;Welcome &quot; + userId + &quot; to Sir-Q-Late!&quot;);
+  }
+
+  /**
+   * Setup the pieces.
+   */
+  private void setupPieces() {
+    playerPieces = new Circle[NUM_SIDES][NUM_PIECES_PER_PLAYER];
+    int player = 0;
+    int piece;
+
+    for (player = 0; player &lt; NUM_SIDES; ++player) {
+      for (piece = 0; piece &lt; NUM_PIECES_PER_PLAYER; ++piece) {
+        playerPieces[player][piece] =
+          new Circle(calculateLocationForPiece(startCells[player], piece),
+            PIECE_DIAMETER, Color.white,
+            player == 0 ? Color.green.brighter()
+                        : player == 1 ? Color.blue.brighter()
+                                      : Color.yellow.brighter());
+        add(playerPieces[player][piece]);
+        // playerPieces[player][piece].addMouseListener(this);
+      }
+    }
+
+  }
+
+  /**
+   * Determine the location for a player's piece.
+   * @param rect
+   *          The rectangle where the piece is being placed
+   * @param pieceNum
+   *          The piece number
+   * @return The location where the piece should be placed
+   */
+  private Point calculateLocationForPiece(Rectangle rect, int pieceNum) {
+    int x;
+    int y;
+    Point p = rect.getLocation();
+    int width = rect.getDimension().width;
+
+    if (pieceNum % 2 == 0) {
+      x = p.x + width / 2 - PIECE_SPACING / 2 - PIECE_DIAMETER;
+    } else {
+      x = p.x + width / 2 + PIECE_SPACING / 2;
+    }
+
+    if (pieceNum / 2 == 0) {
+      y = p.y + width / 2 - PIECE_SPACING / 2 - PIECE_DIAMETER;
+    } else {
+      y = p.y + width / 2 + PIECE_SPACING / 2;
+    }
+
+    return new Point(x, y);
+  }
+
+  /**
+   * Setup the player labels.
+   */
+  private void setupPlayerLabels() {
+    playerLabels = new Text[NUM_SIDES];
+    playerLabels[0] =
+      new Text(&quot;Player 1&quot;, new Point(getWidth() / 2 - ASSUMED_LABEL_WIDTH / 2,
+        getHeight() - LABEL_AREA_HEIGHT / 2), 20, null, Color.BLUE);
+    playerLabels[1] =
+      new Text(&quot;Player 2&quot;, new Point(getWidth() / 2
+        - NUM_CELLS_PER_SIDE * CELL_SIDE_LEN / 2 - LABEL_AREA_HEIGHT,
+        getHeight() / 2), 20, 285, null, Color.BLUE);
+    playerLabels[2] =
+      new Text(&quot;Player 3&quot;, new Point(getWidth() / 2
+        + NUM_CELLS_PER_SIDE * CELL_SIDE_LEN / 2 - LABEL_AREA_HEIGHT,
+        getHeight() / 2), 20, 70, null, Color.BLUE);
+
+    for (Text text : playerLabels) {
+      add(text);
+    }
+  }
+
+  /**
+   * Setup the die image.
+   */
+  private void setupDie() {
+    die =
+      new Image(&quot;assets/images/&quot; + dieImages[RAND.nextInt(dieImages.length)],
+        new Point(getWidth() / 2 - DIE_IMAGE_WIDTH / 2,
+          getHeight() / 2 - DIE_IMAGE_HEIGHT / 2),
+        Color.white);
+    add(die);
+  }
+
+  /**
+   * Setup the board perimeter cells.
+   */
+  private void setupBoardPerimeter() {
+    int relativeX = getWidth() / 2 - (CELL_SIDE_LEN * 5);
+    int bottomY = getHeight() - LABEL_AREA_HEIGHT - CELL_SIDE_LEN;
+    int verticalY = bottomY - (CELL_SIDE_LEN * NUM_CELLS_PER_SIDE);
+
+    perimeterCells = new Rectangle[NUM_CELLS_PER_SIDE * NUM_SIDES];
+    startCells = new Rectangle[3];
+    homeCells = new Rectangle[3];
+
+    for (int cell = 0; cell &lt; NUM_CELLS_PER_SIDE; ++cell) {
+      // Horizontal cells
+      perimeterCells[cell] =
+        new Rectangle(new Point(relativeX + cell * CELL_SIDE_LEN, bottomY),
+          new Dimension(CELL_SIDE_LEN, CELL_SIDE_LEN), Color.black,
+          Color.lightGray);
+
+      // Home cells align with penultimate cell on side
+      if (cell == 8) {
+        homeCells[0] = new Rectangle(
+          new Point(relativeX + cell * CELL_SIDE_LEN, bottomY - CELL_SIDE_LEN),
+          new Dimension(CELL_SIDE_LEN, CELL_SIDE_LEN), Color.black,
+          Color.green);
+        homeCells[1] = new Rectangle(
+          new Point(relativeX - CELL_SIDE_LEN
+            + ((NUM_CELLS_PER_SIDE - (cell - 2)) * CELL_SIDE_LEN / 2),
+            verticalY + (cell * CELL_SIDE_LEN)),
+          new Dimension(CELL_SIDE_LEN, CELL_SIDE_LEN), Color.black,
+          Color.blue);
+      } else if (cell == 1) {
+        homeCells[2] = new Rectangle(
+          new Point(relativeX
+            + (CELL_SIDE_LEN * NUM_CELLS_PER_SIDE
+              - ((NUM_CELLS_PER_SIDE - (cell - 2)) * CELL_SIDE_LEN / 2)),
+            verticalY + (cell * CELL_SIDE_LEN)),
+          new Dimension(CELL_SIDE_LEN, CELL_SIDE_LEN), Color.black,
+          Color.yellow);
+      } else if (cell == 7) {
+        startCells[0] = new Rectangle(
+          new Point(relativeX + cell * CELL_SIDE_LEN, bottomY - CELL_SIDE_LEN),
+          new Dimension(CELL_SIDE_LEN, CELL_SIDE_LEN), Color.black,
+          Color.green.darker());
+        startCells[1] = new Rectangle(
+          new Point(relativeX - CELL_SIDE_LEN
+            + ((NUM_CELLS_PER_SIDE - (cell - 2)) * CELL_SIDE_LEN / 2),
+            verticalY + (cell * CELL_SIDE_LEN)),
+          new Dimension(CELL_SIDE_LEN, CELL_SIDE_LEN), Color.black,
+          Color.blue.darker());
+
+      } else if (cell == 2) {
+        startCells[2] = new Rectangle(
+          new Point(relativeX
+            + (CELL_SIDE_LEN * NUM_CELLS_PER_SIDE
+              - ((NUM_CELLS_PER_SIDE - (cell - 2)) * CELL_SIDE_LEN / 2)),
+            verticalY + (cell * CELL_SIDE_LEN)),
+          new Dimension(CELL_SIDE_LEN, CELL_SIDE_LEN), Color.black,
+          Color.yellow.darker());
+      }
+
+      // Left vertical side
+      perimeterCells[cell + NUM_CELLS_PER_SIDE] = new Rectangle(
+        new Point(relativeX - CELL_SIDE_LEN
+          + ((NUM_CELLS_PER_SIDE - cell) * CELL_SIDE_LEN / 2),
+          verticalY + (cell * CELL_SIDE_LEN)),
+        new Dimension(CELL_SIDE_LEN, CELL_SIDE_LEN), Color.black,
+        Color.lightGray);
+
+      // Right vertical side
+      perimeterCells[cell + NUM_CELLS_PER_SIDE * 2] = new Rectangle(
+        new Point(relativeX
+          + (CELL_SIDE_LEN * NUM_CELLS_PER_SIDE
+            - ((NUM_CELLS_PER_SIDE - cell) * CELL_SIDE_LEN / 2)),
+          verticalY + (cell * CELL_SIDE_LEN)),
+        new Dimension(CELL_SIDE_LEN, CELL_SIDE_LEN), Color.black,
+        Color.lightGray);
+
+    }
+
+    for (Rectangle cell : perimeterCells) {
+      add(cell);
+    }
+
+    for (Rectangle home : homeCells) {
+      if (home != null) {
+        add(home);
+      }
+    }
+
+    for (Rectangle start : startCells) {
+      if (start != null) {
+        add(start);
+      }
+    }
+
+  }
+
+  @Override
+  public void drawableMouseClick(Drawable drawable) {
+    LOG.info(&quot;drawable mouse click: &quot; + drawable);
+    Circle chosenPiece = null;
+    int chosenPlayerNum = -1;
+    int chosenPieceNum = -1;
+    for (int player = 0; player &lt; playerPieces.length; player++) {
+      for (int piece = 0; piece &lt; playerPieces[player].length; ++piece) {
+        if (drawable == playerPieces[player][piece]) {
+          chosenPiece = playerPieces[player][piece];
+          chosenPlayerNum = player;
+          chosenPieceNum = piece;
+        }
+      }
+    }
+
+    LOG.info(&quot;Chosen piece: &quot; + chosenPiece + &quot; player#&quot; + chosenPlayerNum
+      + &quot; piece#&quot; + chosenPieceNum);
+  }
+
+  /**
+   * Run the program.
+   * @param args
+   *          Command line arguments - not used
+   */
+  public static void main(String[] args) {
+    new SirQlateBoard();
+  }
+}
+</pre>
+<p>Wed Apr 06 16:33:05 EDT 2022</p>
+</body>
+</head>

@@ -1,0 +1,339 @@
+<html>
+<head><title>DemoDrawingSurface Source Code</title></head>
+<body>
+<h1>DemoDrawingSurface</h1><h2>Screenshot</h2><img src="DemoDrawingSurface.png" alt="Screenshot" style="border:1px solid #000000"/>
+<br clear="all"/>
+<hr>
+<h2>Source Code</h2>
+<pre>
+package us.daveread.edu.graphics.test;
+
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.KeyStroke;
+
+import us.daveread.edu.graphics.shape.Drawable;
+import us.daveread.edu.graphics.shape.impl.Circle;
+import us.daveread.edu.graphics.shape.impl.Image;
+import us.daveread.edu.graphics.shape.impl.LineSegment;
+import us.daveread.edu.graphics.shape.impl.Ellipse;
+import us.daveread.edu.graphics.shape.impl.Rectangle;
+import us.daveread.edu.graphics.shape.impl.Text;
+import us.daveread.edu.graphics.surface.DialogPosition;
+import us.daveread.edu.graphics.surface.DialogType;
+import us.daveread.edu.graphics.surface.DrawingSurface;
+import us.daveread.edu.graphics.surface.MainFrame;
+import us.daveread.edu.graphics.surface.WindowMode;
+
+/**
+ * &lt;a href=&quot;doc-files/DemoDrawingSurface.html&quot;&gt;&lt;img src=
+ * &quot;doc-files/DemoDrawingSurface.png&quot; alt=&quot;Screenshot&quot; style=
+ * &quot;float:right;width:100px;height:auto;border:1px solid #000000&quot;&gt;&lt;/a&gt; A trivial
+ * demonstration (and test) of the DrawingSurface features. To use, create an
+ * instance.
+ * 
+ * &lt;pre&gt;
+ * 
+ * public static void main(String[] args) {
+ *   new DemoDrawingSurface();
+ * }
+ * &lt;/pre&gt;
+ * &lt;p&gt;
+ * Here is a link to the &lt;a href=&quot;doc-files/DemoDrawingSurface.html&quot;&gt;Source
+ * Code&lt;/a&gt;.
+ * &lt;/p&gt;
+ * @author readda
+ */
+public class DemoDrawingSurface extends DrawingSurface implements Runnable {
+  /**
+   * Serial version id
+   */
+  private static final long serialVersionUID = 1L;
+
+  /**
+   * Die image filenames.
+   */
+  private static final String[] DIE_IMAGE_FILENAMES = { &quot;die_01.82.gif&quot;,
+    &quot;die_02.82.gif&quot;, &quot;die_03.82.gif&quot;, &quot;die_04.82.gif&quot;, &quot;die_05.82.gif&quot;,
+    &quot;die_06.82.gif&quot; };
+
+  /**
+   * Circle.
+   */
+  private Circle circle;
+
+  /**
+   * Line segment.
+   */
+  private LineSegment lineSegment;
+
+  /**
+   * First rectangle.
+   */
+  private Rectangle rectangle1;
+
+  /**
+   * Second rectangle.
+   */
+  private Rectangle rectangle2;
+
+  /**
+   * Hello World message.
+   */
+  private Text helloWorld;
+
+  /**
+   * Ship image.
+   */
+  private Image ship;
+
+  /**
+   * Die image.
+   */
+  private Image die;
+
+  /**
+   * Ellipse.
+   */
+  private Ellipse oval;
+
+  /**
+   * Card image.
+   */
+  private Image card;
+
+  /**
+   * User instruction message.
+   */
+  private Text startMessage;
+
+  /**
+   * Create the instance of this class and provide it to an instance of the
+   * main frame.
+   */
+  public DemoDrawingSurface() {
+    MainFrame myFrame = new MainFrame(this,
+      &quot;Demo of GUI Framework Features&quot;, 400, 400,
+      WindowMode.FIXED_SIZE);
+    // myFrame.setJMenuBar(createMenuBar());
+    myFrame.setJMenuBar(createMenuBar());
+    setup();
+  }
+
+  /**
+   * Setup a menu bar for the program
+   * @return The configured JMenuBar instance
+   */
+  private JMenuBar createMenuBar() {
+    JMenuBar mb = new JMenuBar();
+    JMenu menu;
+    JMenuItem menuItem;
+
+    menu = new JMenu(&quot;File&quot;);
+    menu.setMnemonic('F');
+
+    menuItem = new JMenuItem(&quot;Run&quot;, KeyEvent.VK_R);
+    menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R,
+      ActionEvent.ALT_MASK));
+    menu.add(menuItem);
+
+    menu.addSeparator();
+
+    menuItem = new JMenuItem(&quot;Exit&quot;, KeyEvent.VK_X);
+    menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X,
+      ActionEvent.ALT_MASK));
+    menu.add(menuItem);
+
+    mb.add(menu);
+
+    return mb;
+  }
+
+  /**
+   * Setup the graphical components.
+   */
+  private void setup() {
+    circle = new Circle(new Point(0, 0), 20, Color.black, Color.yellow);
+    circle.setOpacity(.3f);
+    add(circle);
+    lineSegment = new LineSegment(new Point(70, 70), new Point(100, 100),
+      Color.red);
+    add(lineSegment);
+    rectangle1 = new Rectangle(new Point(0, 0), new Dimension(10, 20), 45,
+      Color.blue, Color.green);
+    rectangle1.setOpacity(0);
+    add(rectangle1);
+    rectangle2 = new Rectangle(new Point(30, 30), new Dimension(20, 40), 0,
+      Color.blue, Color.green);
+    add(rectangle2);
+    helloWorld = new Text(&quot;Hello World!&quot;, new Point(100, 50), 25, 0,
+      Color.black, Color.red);
+    add(helloWorld);
+    ship = new Image(&quot;assets/images/asteroid_ship.png&quot;, new Point(70, 170),
+      .1, Color.white);
+    ship.setOpacity(0);
+    add(ship);
+
+    die = new Image(&quot;assets/images/&quot; + DIE_IMAGE_FILENAMES[0], new Point(
+      40, 300), Color.yellow.brighter());
+    add(die);
+    oval = new Ellipse(new Point(200, 250), new Dimension(100, 35),
+      Color.blue, Color.yellow);
+    add(oval);
+
+    card = new Image(&quot;assets/images/deck_of_cards-72x100x16.gif&quot;,
+      new java.awt.Rectangle(0, 0, 72, 100), new Point(250, 130), 1,
+      Color.white);
+    add(card);
+
+    startMessage = new Text(&quot;Click the Die!&quot;, new Point(50, 50), 50,
+      Color.black, Color.red);
+    startMessage.setClickable(false);
+
+    add(startMessage);
+
+    String extraMessage = getUserInput(&quot;User input test&quot;,
+      &quot;Enter secret term&quot;, DialogPosition.CENTER_ALL, true);
+
+    if (extraMessage != null) {
+      add(new Text(extraMessage, new Point(170, 330), 20,
+        Color.pink.darker(), Color.black));
+    }
+
+    String extraMessage2 = getUserInput(&quot;User input test - information&quot;,
+      &quot;Enter non-secret term&quot;, DialogPosition.BOTTOM_VERT_CENTER_HORIZ, false,
+      DialogType.INFORMATION);
+
+    if (extraMessage2 != null) {
+      add(new Text(extraMessage2, new Point(170, 370), 20,
+        Color.pink.darker(), Color.black));
+    }
+    
+    showMessage(&quot;A message&quot;, &quot;A question is about to be asked&quot;, DialogType.INFORMATION);
+    showMessage(&quot;Another message&quot;, &quot;Okay, now a question will be asked&quot;, DialogPosition.BOTTOM_VERT_CENTER_HORIZ, DialogType.WARNING);
+
+    int response = askYesNoQuestion(
+      &quot;Starting Mode&quot;,
+      &quot;Would you like to start the animation immediately?\n\nUse cancel to exit the program&quot;,
+      true);
+
+    if (response == CANCEL_OPTION) {
+      int response2 =
+        askYesNoQuestion(&quot;Are You Sure? (warning)&quot;, &quot;Are you sure you want to exit?&quot;,
+          DialogPosition.BOTTOM_VERT_CENTER_HORIZ, DialogType.WARNING);
+      if (response2 == YES_OPTION) {
+        System.exit(0);
+      }
+    } else if (response == YES_OPTION) {
+      showErrorMessage(&quot;Starting Up (info)&quot;, &quot;Starting the thread&quot;,
+        DialogPosition.BOTTOM_VERT_CENTER_HORIZ);
+      new Thread(this).start();
+    } else {
+      showErrorMessage(&quot;Not Starting Up&quot;, &quot;Not starting the thread&quot;);
+    }
+  }
+
+  /**
+   * Exercise the drawing surface features.
+   */
+  public void run() {
+    synchronized (startMessage) {
+      int dieImageIndex = -1;
+      ship.setLocation(new Point(70, 170));
+
+      remove(startMessage);
+
+      playSound(&quot;assets/sounds/ball-hit-paddle.ping_pong_8bit_beeep.wav&quot;);
+      int cardNum = 0;
+      for (int x = 0; x &lt; 400; ++x) {
+        circle.setLocation(new Point(x, circle.getLocation().y));
+        rectangle1.setLocation(new Point(x, x));
+        rectangle1.setOpacity((float) x / 400);
+        rectangle2.setRotationDegrees(x);
+        helloWorld.setRotationDegrees(x);
+        helloWorld.setOpacity(((float) 400 - x) / 400);
+        lineSegment.setRotationDegrees(x);
+
+        ship.setRotationDegrees(x);
+        ship.setOpacity((float) x / 400);
+
+        oval.setRotationDegrees(x);
+        card.setRotationDegrees(x);
+
+        if (x % 7 == 0) {
+          card.setCropArea(new java.awt.Rectangle(
+            72 * (cardNum % 13), 100 * (cardNum / 13), 72, 100));
+          cardNum++;
+          cardNum = cardNum % 52;
+
+        }
+
+        if (x % 10 == 0) {
+          Point current = ship.getLocation();
+
+          ship.setLocation(new Point(current.x + 1, current.y - 1));
+        }
+
+        if (x % 50 == 0) {
+          dieImageIndex = (dieImageIndex + 1)
+            % DIE_IMAGE_FILENAMES.length;
+
+          die.setImageFileName(&quot;assets/images/&quot;
+            + DIE_IMAGE_FILENAMES[dieImageIndex]);
+        }
+        try {
+          Thread.sleep(10);
+        } catch (InterruptedException e) {
+          e.printStackTrace();
+        }
+      }
+
+      add(startMessage);
+    }
+  }
+
+  @Override
+  public void drawableMouseClick(Drawable e) {
+    addMessage(&quot;Clicked: &quot; + e);
+    if (e == die) {
+      new Thread(this).start();
+    }
+  }
+
+  @Override
+  public void handleMenuClick(String menuItemName) {
+    switch (menuItemName) {
+      case &quot;Run&quot;:
+        new Thread(this).start();
+        break;
+      case &quot;Exit&quot;:
+        int exitOk = askYesNoQuestion(&quot;Verify Exit Request (error)&quot;,
+          &quot;Are you sure you want to exit the program?&quot;, DialogType.ERROR);
+        if (exitOk == YES_OPTION) {
+          closeWindow();
+        }
+        break;
+
+    }
+  }
+
+  /**
+   * Start the program.
+   * @param args
+   *          Command line arguments (not used)
+   */
+  public static final void main(String[] args) {
+    new DemoDrawingSurface();
+  }
+}
+</pre>
+<p>Wed Apr 06 16:33:05 EDT 2022</p>
+</body>
+</head>

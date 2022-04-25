@@ -164,8 +164,6 @@ public class DatabaseManager {
      * @author Tinaye Mawocha
      * @param user
      *            : the username of the desired user
-     * @param password
-     *            : the inputted password
      * @return Whether password was accepted
      */
     public Password getPassword(User user) {

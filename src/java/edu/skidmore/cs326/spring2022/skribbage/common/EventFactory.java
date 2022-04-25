@@ -1,4 +1,4 @@
- package edu.skidmore.cs326.spring2022.skribbage.common;
+package edu.skidmore.cs326.spring2022.skribbage.common;
 
 import java.beans.PropertyChangeEvent;
 
@@ -56,7 +56,7 @@ public final class EventFactory implements EventDispatcher {
         templates = Arrays.asList(
             new LogicFactoryTemplate(), new GamificationFactoryTemplate(),
             new FrontEndFactoryTemplate(), new PersistanceFactoryTemplate());
-        
+
     }
 
     /**

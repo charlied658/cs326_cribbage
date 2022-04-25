@@ -1,0 +1,177 @@
+<html>
+<head><title>FractalColorScheme Source Code</title></head>
+<body>
+<h1>FractalColorScheme</h1><h2>Screenshot</h2><img src="FractalColorScheme.png" alt="Screenshot" style="border:1px solid #000000"/>
+<br clear="all"/>
+<hr>
+<h2>Source Code</h2>
+<pre>
+package us.daveread.edu.graphics.test;
+
+import java.awt.Color;
+
+/**
+ * Color schemes for rendering fractal plots. The coloring is done using three
+ * groups of colors. Each pair is used to interpolate a range of colors for a
+ * &quot;zone&quot; of the fractal. The three groups (zones) represent the outside
+ * (clearly not a member of the set), border (close to being a member), and
+ * member (many iterations before diverging).
+ * 
+ * &lt;p&gt;
+ * Here is a link to the &lt;a href=&quot;doc-files/FractalColorScheme.html&quot;&gt;Source
+ * Code&lt;/a&gt;.
+ * &lt;/p&gt;
+ * 
+ * @author readda
+ */
+public enum FractalColorScheme {
+
+  /**
+   * Blue outside, yellow border, red member
+   */
+  BLUE_YELLOW_RED(&quot;Blue-Yellow-Red&quot;,
+    new Color[] { Color.blue.darker(), Color.blue.brighter() },
+    new Color[] { Color.blue.brighter(), Color.yellow.brighter() },
+    new Color[] { Color.yellow.brighter(), Color.red.darker() }),
+
+  /**
+   * Blue outside, green border, yellow member
+   */
+  BLUE_GREEN_YELLOW(&quot;Blue-Green-Yellow&quot;,
+    new Color[] { Color.blue.darker(), Color.blue.brighter() },
+    new Color[] { Color.blue.brighter(), Color.green.darker() },
+    new Color[] { Color.green.darker(), Color.yellow.brighter() }),
+  
+  /**
+   * Blue outside, green-yellow border, orange member
+   */
+  BLUE_GREENYELLOW_ORANGE(&quot;Blue-Green/Yellow-Orange&quot;,
+    new Color[] { Color.blue.darker(), Color.green.darker() },
+    new Color[] { Color.green.darker(), Color.yellow.brighter() },
+    new Color[] { Color.yellow.brighter(), Color.orange }),
+
+  /**
+   * Blue outside, green-yellow border, brown member
+   */
+  BLUE_GREENYELLOW_BROWN(&quot;Blue-Green/Yellow-Brown&quot;,
+    new Color[] { Color.blue.darker(), Color.green.darker() },
+    new Color[] { Color.green.darker(), Color.yellow.brighter() },
+    new Color[] { Color.yellow.brighter(), new Color(123, 63, 0) }),
+  
+  /**
+   * Blue outside, green-yellow border, black member
+   */
+  BLUE_GREENYELLOW_BLACK(&quot;Blue-Green/Yellow-Black&quot;,
+    new Color[] { Color.blue, Color.green },
+    new Color[] { Color.green, Color.yellow },
+    new Color[] { Color.yellow, Color.black });
+
+
+  /**
+   * The array index for the starting color of each interpolated group
+   */
+  private static final int BEGIN_COLOR_INDEX = 0;
+
+  /**
+   * The array index for the ending color of each interpolated group
+   */
+  private static final int END_COLOR_INDEX = 1;
+
+  /**
+   * Setup the enum
+   * @param schemeName
+   *          A human-readable description
+   * @param outside
+   *          The outside group colors
+   * @param border
+   *          The border group colors
+   * @param member
+   *          The member group colors
+   */
+  FractalColorScheme(String schemeName, Color[] outside, Color[] border,
+    Color[] member) {
+    this.schemeName = schemeName;
+    this.outside = outside;
+    this.border = border;
+    this.member = member;
+  }
+
+  /**
+   * The name of the scheme
+   */
+  private String schemeName;
+
+  /**
+   * The outside color pair
+   */
+  private Color[] outside;
+
+  /**
+   * The border color pair
+   */
+  private Color[] border;
+
+  /**
+   * The member color pair
+   */
+  private Color[] member;
+
+  /**
+   * @return the schemeName
+   */
+  public String getSchemeName() {
+    return schemeName;
+  }
+
+  /**
+   * Get the outside pair starting color.
+   * @return the outside starting color
+   */
+  public Color getOutsideStart() {
+    return outside[BEGIN_COLOR_INDEX];
+  }
+
+  /**
+   * Get the outside pair ending color.
+   * @return the outside ending color
+   */
+  public Color getOutsideEnd() {
+    return outside[END_COLOR_INDEX];
+  }
+
+  /**
+   * Get the border pair starting color.
+   * @return the border starting color
+   */
+  public Color getBorderStart() {
+    return border[BEGIN_COLOR_INDEX];
+  }
+
+  /**
+   * Get the border pair ending color.
+   * @return the border ending color
+   */
+  public Color getBorderEnd() {
+    return border[END_COLOR_INDEX];
+  }
+
+  /**
+   * Get the member pair starting color.
+   * @return the member starting color
+   */
+  public Color getMemberStart() {
+    return member[BEGIN_COLOR_INDEX];
+  }
+
+  /**
+   * Get the member pair ending color.
+   * @return the member ending color
+   */
+  public Color getMemberEnd() {
+    return member[END_COLOR_INDEX];
+  }
+}
+</pre>
+<p>Wed Apr 06 16:33:05 EDT 2022</p>
+</body>
+</head>
