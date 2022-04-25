@@ -118,9 +118,7 @@ public class HomeScreen extends DrawingSurface implements Page {
                     .forName("us.daveread.edu.graphics.surface.MainFrame");
             Field version = mf.getDeclaredField("VERSION");
             version.setAccessible(true);
-            System.out
-                .println("Min met? " + MINIMUM_REQUIRED_GUI_LIBRARY_VERSION
-                    .compareTo((String) version.get(mf)));
+
             if (MINIMUM_REQUIRED_GUI_LIBRARY_VERSION
                 .compareTo((String) version.get(mf)) > 0) {
                 System.out.println("Min not met!");
@@ -145,8 +143,7 @@ public class HomeScreen extends DrawingSurface implements Page {
                     20, null, Color.white);
                 add(versionWarn);
             }
-            System.out.println("version value? " + version.get(mf));
-
+            LOG.debug("Version of GUI library found: " + version.getByte(mf));
         }
         catch (Throwable t) {
             LOG.warn("Unable to verify GUI Library version", t);
