@@ -1,6 +1,7 @@
 package edu.skidmore.cs326.spring2022.skribbage.common;
 
-import java.util.*;
+import java.util.List;
+import java.util.ArrayList;
 
 
 //import org.apache.log4j.Logger;
@@ -47,32 +48,32 @@ public class Game implements GameInterface {
     /**
      * Arraylist of card images.
      */
-    private ArrayList<Card> standardDeck;
+    private List<Card> standardDeck;
 
     /**
      * Cards currently displayed in the deck.
      */
-    private ArrayList<Card> cardsInDeck;
+    private List<Card> cardsInDeck;
 
     /**
      * Cards currently displayed in center of board.
      */
-    private ArrayList<Card> cardsInPlay;
+    private List<Card> cardsInPlay;
 
     /**
      * Cards currently displayed in the player's hand.
      */
-    private ArrayList<Card> cardsInHand;
+    private List<Card> cardsInHand;
 
     /**
      * Cards currently displayed in the crib.
      */
-    private ArrayList<Card> cardsInCrib;
+    private List<Card> cardsInCrib;
 
     /**
      * Cards currently displayed in the opponent's hand.
      */
-    private ArrayList<Card> cardsInOpponentHand;
+    private List<Card> cardsInOpponentHand;
 
     /**
      * Game constructor. It initializes the list of players,
@@ -224,7 +225,7 @@ public class Game implements GameInterface {
      *
      * @return standardDeck
      */
-    public ArrayList<Card> getStandardDeck() {
+    public List<Card> getStandardDeck() {
         return this.standardDeck;
     }
 
@@ -233,7 +234,7 @@ public class Game implements GameInterface {
      *
      * @return cardsInDeck
      */
-    public ArrayList<Card> getCardsInDeck() {
+    public List<Card> getCardsInDeck() {
         return this.cardsInDeck;
     }
 
@@ -242,7 +243,7 @@ public class Game implements GameInterface {
      *
      * @return cardsInPlay
      */
-    public ArrayList<Card> getCardsInPlay() {
+    public List<Card> getCardsInPlay() {
         return this.cardsInPlay;
     }
 
@@ -251,7 +252,7 @@ public class Game implements GameInterface {
      *
      * @return cardsInHand
      */
-    public ArrayList<Card> getCardsInHand() {
+    public List<Card> getCardsInHand() {
         return this.cardsInHand;
     }
 
@@ -260,7 +261,7 @@ public class Game implements GameInterface {
      *
      * @return cardsInCrib
      */
-    public ArrayList<Card> getCardsInCrib() {
+    public List<Card> getCardsInCrib() {
         return this.cardsInCrib;
     }
 
@@ -269,7 +270,7 @@ public class Game implements GameInterface {
      *
      * @return cardsInOpponentHand
      */
-    public ArrayList<Card> getCardsInOpponentHand() {
+    public List<Card> getCardsInOpponentHand() {
         return this.cardsInOpponentHand;
     }
 
