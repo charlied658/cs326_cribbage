@@ -50,7 +50,7 @@ public class DatabaseManager {
     /**
      * Query String.
      */
-    static final String QUERY = "SELECT * FROM prototype_table";
+    // static final String QUERY = "SELECT * FROM prototype_table";
 
     /**
      * Logger for the class.
@@ -68,18 +68,6 @@ public class DatabaseManager {
     // * Database Connection.
     // */
     // private static Connection dbConnection;
-
-    /**
-     * This is a function to check the database for a specific user and check
-     * whether the password functions.
-     * 
-     * @author Tinaye Mawocha
-     * @param username
-     *            : the username of the desired user
-     * @param password
-     *            : the inputted password
-     * @return Whether password was accepted
-     */
 
     /**
      * This is a method to change a value on the player_account table.
@@ -257,7 +245,8 @@ public class DatabaseManager {
     /**
      * This is a function to access the database.
      *
-     * @author Tinaye Mawocha
+     * @author Nikoleta Chantzi
+     * @return dbConnection
      */
     public static Connection getDbConnection() {
         Connection dbConnection = null;
@@ -267,19 +256,12 @@ public class DatabaseManager {
 
         }
         catch (SQLException e) {
-            // System.out.println("Failed to establish connection with
-            // database");
-            e.printStackTrace();
+            LOG.error("Cannot create connection to database", e);
         }
 
         return dbConnection;
 
     }
-
-    /**
-     * String array containing the column names.
-     */
-    // static final String[] COLUMN_NAMES = ;
 
     /**
      * This is a function to check the database for a specific user and check
@@ -299,22 +281,24 @@ public class DatabaseManager {
             "SELECT * FROM player_account WHERE username='" + username + "'";
         // Connection conn = dbConnect();
         String storedPassword = "";
+        Connection conn = null;
 
         try {
-            Connection conn = getDbConnection();
+            conn = getDbConnection();
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(tempQuery);
 
             rs.next();
             storedPassword = rs.getString("Password");
 
-            dbDisconnect(conn);
-
         }
         catch (SQLException e) {
             LOG.trace("Account not found: " + e);
             // e.printStackTrace();
 
+        }
+        finally {
+            dbDisconnect(conn);
         }
 
         if (storedPassword.compareTo(password.getBase64PasswordHash()) == 0) {
@@ -361,8 +345,10 @@ public class DatabaseManager {
             return "Account not found";
 
         }
+        finally {
+            dbDisconnect(conn);
+        }
 
-        dbDisconnect(conn);
         return "player coin value: " + netWorth;
 
     }
@@ -463,7 +449,6 @@ public class DatabaseManager {
             ps.setString(1, userName);
 
             ps.executeUpdate();
-           
 
         }
         catch (SQLException sqle) {
@@ -491,7 +476,7 @@ public class DatabaseManager {
                     LOG.error("Failed to close prepared statement", sqle);
                 }
             }
-            
+
             dbDisconnect(conn);
         }
     }
@@ -505,13 +490,16 @@ public class DatabaseManager {
      * @author Tinaye Mawocha
      */
     public void dbDisconnect(Connection theConnection) {
+        if (theConnection != null) {
+            try {
+                theConnection.close();
+            }
+            catch (SQLException e) {
+                LOG.error("Failed to close connection", e);
+            }
+        } else {
+            LOG.error("Attempting to close null connection");
 
-        try {
-            theConnection.close();
-        }
-        catch (SQLException e) {
-            LOG.error("Failed to close connection", e);
-            e.printStackTrace();
         }
 
     }
@@ -549,9 +537,10 @@ public class DatabaseManager {
             "SELECT * FROM player_account WHERE username='" + username + "'";
         // Connection conn = dbConnect();
         String storedPassword = "";
+        Connection conn = null;
 
         try {
-            Connection conn = getDbConnection();
+            conn = getDbConnection();
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(tempQuery);
 
@@ -565,6 +554,9 @@ public class DatabaseManager {
             LOG.error("Account not found");
             e.printStackTrace();
 
+        }
+        finally {
+            dbDisconnect(conn);
         }
 
         if (storedPassword.compareTo(password.getBase64PasswordHash()) == 0) {
@@ -608,8 +600,6 @@ public class DatabaseManager {
 
             rs = ps.executeQuery();
 
-            dbDisconnect(conn);
-
             // if result contains player's username, this will return true
             // (account found)
             // if result is empty, this will return false (account not found)
@@ -628,6 +618,11 @@ public class DatabaseManager {
             catch (SQLException sqle) {
 
             }
+            finally {
+                dbDisconnect(conn);
+            }
+
+            
         }
 
         // if we reach this line, we run into a SQLException
