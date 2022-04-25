@@ -169,11 +169,18 @@ public class DatabaseManagerTest {
      * Testing when asking the inventoryQuery for coin count is successful.
      */
     @Test
+<<<<<<< HEAD
     public void walletQuerysuccess() {
         String cointest = databaseinstance.walletQuery(9952);
         System.out.println("cointest: " + cointest);
         assertEquals("Coin count ashould be successful", cointest,
             "player coin value: 10000");
+=======
+    public void inventoryQuerysuccess() {
+        String cointest = databaseinstance.walletQuery(325);
+        assertEquals("Coin count should be successful", cointest,
+            "player coin value: 100000");
+>>>>>>> f1bab5c9f58e98e37472e92b06fa59b8a366db96
     }
 
     /**

@@ -1,0 +1,117 @@
+<html>
+<head><title>FractalMandelbrot Source Code</title></head>
+<body>
+<h1>FractalMandelbrot</h1><h2>Screenshot</h2><img src="FractalMandelbrot.png" alt="Screenshot" style="border:1px solid #000000"/>
+<br clear="all"/>
+<hr>
+<h2>Source Code</h2>
+<pre>
+package us.daveread.edu.graphics.test;
+
+import org.apache.commons.math3.complex.Complex;
+
+/**
+ * &lt;a href=&quot;doc-files/FractalMandelbrot.html&quot;&gt;&lt;img src=
+ * &quot;doc-files/FractalMandelbrot.png&quot; alt=&quot;Screenshot&quot; style=
+ * &quot;float:right;width:100px;height:auto;border:1px solid #000000&quot;&gt;&lt;/a&gt;
+ * Calculate and display portions of the Mandelbrot set. To use, create an
+ * instance and run it on a thread.
+ * 
+ * &lt;pre&gt;
+ * 
+ * public static void main(String[] args) {
+ *   new Thread(new FractalMandelbrot()).start();
+ * }
+ * &lt;/pre&gt;
+ * &lt;p&gt;
+ * Here is a link to the &lt;a href=&quot;doc-files/FractalMandelbrot.html&quot;&gt;Source
+ * Code&lt;/a&gt;.
+ * &lt;/p&gt;
+ * @author readda
+ */
+public class FractalMandelbrot extends Fractal {
+
+  /**
+   * Serial version id
+   */
+  private static final long serialVersionUID = 1L;
+
+  /**
+   * Which area of the Mandelbrot set to plot at startup
+   */
+  private static final FractalArea AREA_TO_PLOT = FractalArea.COMPLETE_ZOOM;
+
+  /**
+   * Create and setup the display
+   */
+  public FractalMandelbrot() {
+    super(&quot;Mandelbrot Set Plot&quot;, AREA_TO_PLOT);
+  }
+
+  /**
+   * Apply the Mandelbrot function until either diverging or reaching the
+   * iteration limit.
+   * @param mandelPoint
+   *          The point being evaluated
+   * @param maxIterations
+   *          The maximum number of iterations to apply the function
+   * @return The number of iterations reached (a value less than the maximum
+   *         means that the value was determined to be diverging)
+   */
+  private int mandelCalc(Complex mandelPoint, int maxIterations) {
+    Complex z = new Complex(0, 0);
+    int iterationCount;
+
+    for (iterationCount = 0; iterationCount &lt; maxIterations; ++iterationCount) {
+      z = z.multiply(z).add(mandelPoint);
+      if (z.abs() &gt; LIMIT) {
+        break;
+      }
+    }
+
+    return iterationCount;
+  }
+
+  /**
+   * Plot the requested portion of the Mandelbrot set
+   */
+  public void plot() {
+    int smallerDim = Math.min(getWidth(), getHeight());
+    double xEnd = getxStart() + getDistance();
+    setxIncrement((getxStart() - xEnd) / smallerDim * -1);
+    addMessage(&quot;X: &quot; + getxStart() + &quot;, &quot; + xEnd + &quot;, &quot; + getxIncrement());
+    double yEnd = getyStart() - getDistance();
+    setyIncrement((getyStart() - yEnd) / smallerDim * -1);
+    addMessage(&quot;Y: &quot; + getyStart() + &quot;, &quot; + yEnd + &quot;, &quot; + getyIncrement());
+
+    int row;
+    int col;
+    double x = 0;
+    double y = 0;
+    for (row = 0, y = getyStart(); row &lt; getHeight(); row++, y +=
+      getyIncrement()) {
+      for (col = 0, x = getxStart(); col &lt; getWidth(); col++, x +=
+        getxIncrement()) {
+        Complex c = new Complex(x, y);
+        plot(row, col, mandelCalc(c, getMaxIterations()));
+      }
+    }
+    addMessage(
+      &quot;Resulting x, y: &quot; + x + &quot;, &quot; + y + &quot; distance:&quot; + getDistance());
+    addMessage(&quot;Upper left x, y, distance: &quot; + getxStart() + &quot;, &quot; + getyStart()
+      + &quot;, &quot; + getDistance());
+  }
+
+  /**
+   * Setup the display and plot the set.
+   * @param args
+   *          Command line arguments - not used
+   */
+  public static void main(String[] args) {
+    new Thread(new FractalMandelbrot()).start();
+  }
+}
+</pre>
+<p>Wed Apr 06 16:33:05 EDT 2022</p>
+</body>
+</head>

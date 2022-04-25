@@ -1,0 +1,155 @@
+<html>
+<head><title>FractalArea Source Code</title></head>
+<body>
+<h1>FractalArea</h1><h2>Screenshot</h2><img src="FractalArea.png" alt="Screenshot" style="border:1px solid #000000"/>
+<br clear="all"/>
+<hr>
+<h2>Source Code</h2>
+<pre>
+package us.daveread.edu.graphics.test;
+
+/**
+ * Define common portions of Fractal sets (Mandelbrot and Julia).
+ * 
+ * &lt;p&gt;
+ * Here is a link to the &lt;a href=&quot;doc-files/FractalArea.html&quot;&gt;Source
+ * Code&lt;/a&gt;.
+ * &lt;/p&gt;
+ * 
+ * 
+ * @author readda
+ */
+public enum FractalArea {
+  /**
+   * broader space - useful with Julia sets
+   */
+  BROAD_SET(-2, 2, 4, 512, 25),
+
+  /**
+   * The classic Mandelbrot set area
+   */
+  COMPLETE(-2.25, 1.5, 3.0, 2048, 40), // 40, 10),
+
+  /**
+   * Zooming into the Mandelbrot set, with most of it still within the defined
+   * area
+   */
+  COMPLETE_ZOOM(-1.9, 1.2, 2.4, 2048, 40), // 40, 10),
+
+  /**
+   * A small portion of the Mandlebrot set located to the lower-right of center.
+   */
+  SECTION_0(-.21, -.675, .02, 2048, 40),
+
+  /**
+   * A small portion of the Mandlebrot set located to the lower-right of center.
+   */
+  SECTION_1_FARTHER(-.27, -.3, .4, 2048, 40),
+
+  /**
+   * A small portion of the Mandlebrot set located to the lower-right of center.
+   */
+  SECTION_1_FAR(-.27, -.69, .1, 2048, 40),
+
+  /**
+   * A small portion of the Mandlebrot set located to the lower-right of center.
+   */
+  SECTION_1(-.22, -.68, .01, 2048, 40),
+
+  /**
+   * A small portion of the Mandlebrot set located to the lower-right of center.
+   */
+  SECTION_2(-.229, -.691, .01, 2048, 40);
+
+  /**
+   * Create an area definition for exploring the Mandlebrot set.
+   * @param xStart
+   *          The upper-left x value (real portion of the Complex number)
+   * @param yStart
+   *          The upper-left y value (imaginary portion of the Complex number)
+   * @param distance
+   *          The distance to move in the x and y directions
+   * @param maxIterations
+   *          The maximum number of iterations to test each value for membership
+   * @param colorInterpolateSwitchPoint
+   *          The breakpoint for color interpolation
+   */
+  FractalArea(double xStart, double yStart, double distance,
+    int maxIterations, int colorInterpolateSwitchPoint) {
+    this.xStart = xStart;
+    this.yStart = yStart;
+    this.distance = distance;
+    this.maxIterations = maxIterations;
+    this.colorInterpolateSwitchPoint = colorInterpolateSwitchPoint;
+  }
+
+  /**
+   * The upper-left x value (real portion of the Complex number).
+   */
+  private double xStart;
+
+  /**
+   * The upper-left y value (imaginary portion of the Complex number).
+   */
+  private double yStart;
+
+  /**
+   * The distance to move in the x and y directions.
+   */
+  private double distance;
+
+  /**
+   * The maximum number of iterations to test each value for membership.
+   */
+  private int maxIterations;
+
+  /**
+   * The breakpoint for color interpolation.
+   */
+  private int colorInterpolateSwitchPoint;
+
+  /**
+   * The upper-left x value (real portion of the Complex number).
+   * @return Upper-left x value
+   */
+  public double xStart() {
+    return xStart;
+  }
+
+  /**
+   * The upper-left y value (imaginary portion of the Complex number).
+   * @return Upper-left y value
+   */
+  public double yStart() {
+    return yStart;
+  }
+
+  /**
+   * The distance to move in the x and y directions.
+   * @return Distance to represent
+   */
+  public double distance() {
+    return distance;
+  }
+
+  /**
+   * The maximum number of iterations to test each value for membership.
+   * @return Maximum iterations
+   */
+  public int maxIterations() {
+    return maxIterations;
+  }
+
+  /**
+   * The breakpoint for color interpolation.
+   * @return Breakpoint value
+   */
+  public int colorInterpolateSwitchPoint() {
+    return colorInterpolateSwitchPoint;
+  }
+
+}
+</pre>
+<p>Wed Apr 06 16:33:05 EDT 2022</p>
+</body>
+</head>

@@ -162,11 +162,14 @@ public class StartGamePage extends DrawingSurface implements Page {
     /**
      * Cards currently selected in the player's hand.
      */
+    @SuppressWarnings("unused")
+
     private ArrayList<CardImage> cardsInHandSelected;
     
     /**
      * Cards currently displayed in the crib.
      */
+    @SuppressWarnings("unused")
     private ArrayList<CardImage> cardsInCrib;
     
     /**
