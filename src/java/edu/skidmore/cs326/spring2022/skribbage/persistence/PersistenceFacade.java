@@ -17,7 +17,7 @@ import edu.skidmore.cs326.spring2022.skribbage.common.User;
  */
 
 public final class PersistenceFacade
-    implements UserManagement , GameManagement , InventoryManagement {
+    implements UserManagement, GameManagement, InventoryManagement {
 
     /**
      * Singleton instance of PersistenceFacade. Instance can be accessed through
@@ -104,9 +104,6 @@ public final class PersistenceFacade
      * 
      * @param userToUpdate
      *            This is the user that want to change their password
-     * @param currentPassword
-     *            This is the current password that they have in their
-     *            account
      * @param newPassword
      *            This is the new password that they want to change
      * @return boolean true or false depending if the method worked or failed.

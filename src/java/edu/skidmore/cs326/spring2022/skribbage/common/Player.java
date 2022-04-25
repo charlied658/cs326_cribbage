@@ -1,7 +1,5 @@
 package edu.skidmore.cs326.spring2022.skribbage.common;
 
-import java.util.HashMap;
-
 import edu.skidmore.cs326.spring2022.skribbage.gamification.Avatar;
 import edu.skidmore.cs326.spring2022.skribbage.gamification.InventoryPrototype;
 
