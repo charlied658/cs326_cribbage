@@ -177,10 +177,10 @@ public class DatabaseManagerTest {
     /**
      * Testing when asking the inventoryQuery for coin count fails.
      */
-//    @Test
-//    public void inventoryQueryfails() {
-//        String cointest = databaseinstance.walletQuery(420);
-//        assertEquals("Coin count should fail", cointest, "Account not found");
-//    }
+    @Test
+    public void inventoryQueryfails() {
+        String cointest = databaseinstance.walletQuery(420);
+        assertEquals("Coin count should fail", cointest, "Account not found");
+    }
 
 }
