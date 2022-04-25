@@ -101,8 +101,7 @@ public class PasswordHasher {
             return md.digest(saltAndPassword);
         }
         catch (Throwable throwable) {
-            // System.out.println("Unable to create SHA-256 digest for data");
-            // throwable.printStackTrace();
+            
             LOG.error("Unable to create SHA-256 digest for data", throwable);
         }
 
