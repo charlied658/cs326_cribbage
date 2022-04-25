@@ -1,0 +1,586 @@
+<html>
+<head><title>GameOfLife Source Code</title></head>
+<body>
+<h1>GameOfLife</h1><h2>Screenshot</h2><img src="GameOfLife.png" alt="Screenshot" style="border:1px solid #000000"/>
+<br clear="all"/>
+<hr>
+<h2>Source Code</h2>
+<pre>
+package us.daveread.edu.graphics.test;
+
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Point;
+import java.awt.event.KeyEvent;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.PrintWriter;
+import java.util.Random;
+
+import us.daveread.edu.graphics.shape.VisibleObject;
+import us.daveread.edu.graphics.shape.impl.Circle;
+import us.daveread.edu.graphics.shape.impl.Rectangle;
+import us.daveread.edu.graphics.shape.impl.Text;
+import us.daveread.edu.graphics.surface.DrawingSurface;
+import us.daveread.edu.graphics.surface.MainFrame;
+import us.daveread.edu.graphics.surface.WindowMode;
+import us.daveread.edu.utilities.Utility;
+
+/**
+ * &lt;a href=&quot;doc-files/GameOfLife.html&quot;&gt;&lt;img src=&quot;doc-files/GameOfLife.png&quot; alt=
+ * &quot;Screenshot&quot; style=&quot;float:right;width:100px;height:auto;border:1px solid
+ * #000000&quot;&gt;&lt;/a&gt;
+ * John Conway's Game of Life
+ * http://ddi.cs.uni-potsdam.de/HyFISCH/Produzieren/lis_projekt/proj_gamelife/
+ * ConwayScientificAmerican.htm
+ * To use, create an instance and run it on a thread.
+ * 
+ * &lt;pre&gt;
+ * 
+ * public static void main(String[] args) {
+ *   new Thread(new GameOfLife()).start();
+ * }
+ * &lt;/pre&gt;
+ * 
+ * &lt;p&gt;
+ * Here is a link to the &lt;a href=&quot;doc-files/GameOfLife.html&quot;&gt;Source Code&lt;/a&gt;.
+ * &lt;/p&gt;
+ * 
+ * @author readda
+ */
+public class GameOfLife extends DrawingSurface implements Runnable {
+
+  /**
+   * Serial version id
+   */
+  private static final long serialVersionUID = 1L;
+
+  /**
+   * Width of the window
+   */
+  private static final int WIDTH = 400;
+
+  /**
+   * Height of the window
+   */
+  private static final int HEIGHT = 400;
+
+  /**
+   * Pixel size of the life square
+   */
+  private static final int SQUARE_SIDE_LENGTH = 10;
+
+  /**
+   * The number of rows
+   */
+  private static final int ROWS = HEIGHT / SQUARE_SIDE_LENGTH;
+
+  /**
+   * The number of columns
+   */
+  private static final int COLS = WIDTH / SQUARE_SIDE_LENGTH;
+
+  /**
+   * Name of file to house stats from program
+   */
+  private static final String STATS_FILE_NAME = &quot;Conway-GoL.csv&quot;;
+
+  /**
+   * Color used for newly born organisms
+   */
+  private static final Color BIRTH_COLOR = Color.green;
+
+  /**
+   * Color used for 2nd generation organisms
+   */
+  private static final Color MIDLIFE_COLOR = Color.blue;
+
+  /**
+   * Color used for old organisms (more then 2 generations old)
+   */
+  private static final Color OLD_COLOR = Color.black;
+
+  /**
+   * A unique identifier for each time the game is run
+   */
+  private int gameSequenceNumber;
+
+  /**
+   * Counts of organisms around each cell
+   */
+  private int[][] adjacencyCount;
+
+  /**
+   * Whether a location contains an organism
+   */
+  private VisibleObject[][] organism;
+
+  /**
+   * Number of generations
+   */
+  private int numGenerations;
+
+  /**
+   * Current number of organisms
+   */
+  private int numOrganisms;
+
+  /**
+   * Number of births during the previous generation
+   */
+  private int numBirths;
+
+  /**
+   * Signal that the set of organisms should be regenerated
+   */
+  private boolean restart;
+
+  /**
+   * Construct the instance
+   */
+  public GameOfLife() {
+    int width;
+    int height;
+
+    new MainFrame(this, &quot;Conway's Game of Life&quot;, WIDTH, HEIGHT,
+      WindowMode.MAXIMIZED);
+
+    addMessage(&quot;Game of life surface size: &quot; + getSize());
+    height = getSize().height;
+    width = getSize().width;
+
+    int rows = height / SQUARE_SIDE_LENGTH;
+    int cols = width / SQUARE_SIDE_LENGTH;
+
+    rows = rows &gt; ROWS ? rows : ROWS;
+    cols = cols &gt; COLS ? cols : COLS;
+
+    addMessage(&quot;Grid dimensions: &quot; + cols + &quot; x &quot; + rows);
+
+    // Background
+    add(new Rectangle(new Point(0, 0), new Dimension(width, height),
+      Color.BLACK, Color.LIGHT_GRAY));
+
+    adjacencyCount = new int[rows][cols];
+    organism = new VisibleObject[rows][cols];
+
+    for (int row = 0; row &lt; rows; ++row) {
+      for (int col = 0; col &lt; cols; ++col) {
+        // organism[row][col] = new Rectangle(
+        // new Point(col * SQUARE_SIDE_LENGTH, row *
+        // SQUARE_SIDE_LENGTH),
+        // new Dimension(SQUARE_SIDE_LENGTH, SQUARE_SIDE_LENGTH), null,
+        // null);
+        organism[row][col] = new Circle(new Point(col
+          * SQUARE_SIDE_LENGTH, row * SQUARE_SIDE_LENGTH),
+          SQUARE_SIDE_LENGTH, null, null);
+        add(organism[row][col]);
+      }
+    }
+
+    setupStatsFile();
+  }
+
+  /**
+   * Setup the initial layout of organisms
+   */
+  private void setup() {
+    Random rand = new Random();
+    numGenerations = 0;
+    numOrganisms = 0;
+    numBirths = 0;
+
+    gameSequenceNumber = getGameSequenceNumber();
+    addMessage(&quot;Starting game sequence number: &quot;
+      + gameSequenceNumber);
+
+    for (int row = 0; row &lt; organism.length; ++row) {
+      for (int col = 0; col &lt; organism[0].length; ++col) {
+        // Skip populating lower left part of screen
+        if (row &gt; organism.length / 2 &amp;&amp; col &lt; organism[0].length / 2) {
+          continue;
+        }
+
+        // Skip populating upper right part of screen
+        if (row &lt; organism.length / 2 &amp;&amp; col &gt; organism[0].length / 2) {
+          continue;
+        }
+
+        // 20% chance of a location containing life at the start
+        if (rand.nextInt(5) == 0) {
+          organism[row][col].setFillColor(BIRTH_COLOR);
+          ++numOrganisms;
+          ++numBirths;
+        }
+      }
+    }
+
+    addMessage(&quot;Setup - num organisms: &quot; + numOrganisms);
+    outputStats();
+  }
+
+  /**
+   * Configure a set of known test cases to check the encoding of the rules
+   */
+  protected void setupTestCases() {
+    for (int row = 0; row &lt; organism.length; ++row) {
+      for (int col = 0; col &lt; organism[0].length; ++col) {
+        organism[row][col].setFillColor(null);
+      }
+    }
+
+    numOrganisms = 0;
+
+    // Test case (line of 3) -&gt; blinker
+    for (int row = 0; row &lt; 3; ++row) {
+      organism[row + 1][3].setFillColor(BIRTH_COLOR);
+      numOrganisms++;
+    }
+
+    // Test case (line of 4) -&gt; beehive
+    for (int row = 0; row &lt; 4; ++row) {
+      organism[row + 10][3].setFillColor(BIRTH_COLOR);
+      numOrganisms++;
+    }
+
+    // Test case (two set of two shifted by one) -&gt; beehive
+    for (int row = 0; row &lt; 2; ++row) {
+      organism[row + 2][23].setFillColor(BIRTH_COLOR);
+      organism[row + 3][24].setFillColor(BIRTH_COLOR);
+      numOrganisms += 2;
+    }
+
+    // Test case (L shape) -&gt; beehive
+    for (int row = 0; row &lt; 3; ++row) {
+      organism[row + 10][23].setFillColor(BIRTH_COLOR);
+      numOrganisms++;
+    }
+    organism[10][24].setFillColor(BIRTH_COLOR);
+
+    // Test case (T shape - with short center line) -&gt; four blinkers
+    for (int row = 0; row &lt; 3; ++row) {
+      organism[row + 20][12].setFillColor(BIRTH_COLOR);
+      numOrganisms++;
+    }
+    organism[21][13].setFillColor(BIRTH_COLOR);
+
+    // Test case (odd shape) -&gt; glider
+    for (int row = 0; row &lt; 3; ++row) {
+      organism[row + 30][26].setFillColor(BIRTH_COLOR);
+      numOrganisms++;
+    }
+    organism[30][25].setFillColor(BIRTH_COLOR);
+    organism[31][24].setFillColor(BIRTH_COLOR);
+
+    // Test case (odd space - 2 sets of 3 shifted) -&gt; pulsar
+    for (int row = 0; row &lt; 3; ++row) {
+      organism[row + 60][20].setFillColor(BIRTH_COLOR);
+      organism[row + 61][21].setFillColor(BIRTH_COLOR);
+    }
+
+    numBirths = numOrganisms;
+  }
+
+  /**
+   * Draw the current set of organisms
+   */
+  private void calculateGeneration() {
+    // Get the adjacency counts
+    for (int row = 0; row &lt; organism.length; ++row) {
+      for (int col = 0; col &lt; organism[0].length; ++col) {
+        adjacencyCount[row][col] = countPerimeter(row, col);
+      }
+    }
+
+    // Enforce the rules for organism birth and death
+    numOrganisms = 0;
+    numBirths = 0;
+    for (int row = 0; row &lt; organism.length; ++row) {
+      for (int col = 0; col &lt; organism[0].length; ++col) {
+        if (organism[row][col].getFillColor() == null
+          &amp;&amp; adjacencyCount[row][col] == 3) {
+          // Birth
+          organism[row][col].setFillColor(BIRTH_COLOR);
+          ++numOrganisms;
+          ++numBirths;
+        } else if (organism[row][col].getFillColor() != null
+          &amp;&amp; adjacencyCount[row][col] &gt; 1
+          &amp;&amp; adjacencyCount[row][col] &lt; 4) {
+          numOrganisms++;
+          // check generation
+          if (organism[row][col].getFillColor() == BIRTH_COLOR) {
+            organism[row][col].setFillColor(MIDLIFE_COLOR);
+          } else {
+            // ongoing life
+            organism[row][col].setFillColor(OLD_COLOR);
+          }
+        } else {
+          // Death (or remains empty)
+          if (organism[row][col].getFillColor() != null) {
+            organism[row][col].setFillColor(null);
+          }
+        }
+      }
+    }
+
+    ++numGenerations;
+
+    addMessage(&quot;Calculate Generation &quot; + numGenerations
+      + &quot;: births:&quot; + numBirths + &quot;  num organisms:&quot; + numOrganisms);
+
+    outputStats();
+  }
+
+  /**
+   * Count the number of organisms surrounding the supplied cell location
+   * @param row
+   *          The row of the cell
+   * @param col
+   *          The column of the cell
+   * @return The number of organism surrounding the cell at the row and column
+   *         location
+   */
+  private int countPerimeter(int row, int col) {
+    int counter = 0;
+
+    for (int pRow = row - 1; pRow &lt;= row + 1; ++pRow) {
+      for (int pCol = col - 1; pCol &lt;= col + 1; ++pCol) {
+        // Don't have a cell count itself
+        if (pRow == row &amp;&amp; pCol == col) {
+          continue;
+        }
+
+        // Deal with wrap-around (e.g. counting cells on the edge)
+        if (pRow &lt; 0 || pCol &lt; 0
+          || pRow &gt;= organism.length
+          || pCol &gt;= organism[0].length) {
+          int tempRow =
+            pRow &lt; 0 ? organism.length + pRow
+                     : pRow &gt;= organism.length ? pRow - organism.length : pRow;
+          int tempCol =
+            pCol &lt; 0 ? organism[0].length + pCol
+                     : pCol &gt;= organism[0].length ? pCol - organism[0].length
+                                                  : pCol;
+          if (organism[tempRow][tempCol].getFillColor() != null) {
+            ++counter;
+          }
+          continue;
+        }
+        if (organism[pRow][pCol].getFillColor() != null) {
+          ++counter;
+        }
+      }
+    }
+
+    return counter;
+  }
+
+  /**
+   * Run the life process
+   */
+  public void run() {
+    int lastNumOrganisms;
+    int numGenerationsSameCount;
+
+    int delayTimeMs;
+
+    do {
+      String delayTimeTemp =
+        getUserInput(&quot;Set Generation Delay Timing&quot;,
+          &quot;Enter the delay time between generations in milliseconds (10 to 60000)&quot;);
+      if (delayTimeTemp == null) {
+        System.exit(0);
+      }
+      try {
+        delayTimeMs = Integer.parseInt(delayTimeTemp);
+      } catch (Throwable throwable) {
+        showErrorMessage(&quot;Bad Value&quot;,
+          &quot;You must enter a number between 10 and 60000&quot;);
+        delayTimeMs = -1;
+      }
+    } while (delayTimeMs &lt; 10 || delayTimeMs &gt; 1000 * 60);
+
+    while (true) {
+      setup();
+      // setupTestCases();
+
+      lastNumOrganisms = numOrganisms;
+      numGenerationsSameCount = 0;
+
+      restart = false;
+
+      do {
+        Utility.pause(delayTimeMs);
+
+        calculateGeneration();
+
+        if (lastNumOrganisms == numOrganisms) {
+          ++numGenerationsSameCount;
+        } else {
+          lastNumOrganisms = numOrganisms;
+          numGenerationsSameCount = 0;
+        }
+      } while (!restart &amp;&amp; numGenerationsSameCount &lt; 5);
+
+      addMessage(&quot;Life has &quot;
+        + (numOrganisms &gt; 0 ? &quot;stagnated&quot; : &quot;become extinct&quot;)
+        + &quot; - time for a new big bang&quot;);
+
+      for (int row = 0; row &lt; organism.length
+        &amp;&amp; row &lt; 90 / SQUARE_SIDE_LENGTH; ++row) {
+        for (int col = 0; col &lt; organism[0].length; ++col) {
+          organism[row][col].setFillColor(null);
+        }
+      }
+
+      Text text = new Text(&quot;Life has &quot;
+        + (numOrganisms &gt; 0 ? &quot;stagnated&quot; : &quot;become extinct&quot;),
+        new Point(15, 30), 30, null, Color.BLACK);
+      Text text2 = new Text(&quot;Time for a new big bang!&quot;,
+        new Point(15, 60), 30, null, Color.BLACK);
+      add(text);
+      add(text2);
+      try {
+        Thread.sleep(5000);
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
+      remove(text);
+      remove(text2);
+    }
+  }
+
+  /**
+   * Output the current generation's statistics to a file
+   */
+  private void outputStats() {
+    PrintWriter out = null;
+
+    try {
+      out = new PrintWriter(new FileWriter(STATS_FILE_NAME, true));
+
+      int numMidlife = 0;
+      int numOld = 0;
+      for (int row = 0; row &lt; organism.length; ++row) {
+        for (int col = 0; col &lt; organism[0].length; ++col) {
+          if (organism[row][col].getFillColor() == MIDLIFE_COLOR) {
+            ++numMidlife;
+          } else if (organism[row][col].getFillColor() == OLD_COLOR) {
+            ++numOld;
+          }
+        }
+      }
+
+      out.println(gameSequenceNumber + &quot;,&quot; + numGenerations + &quot;,&quot;
+        + numOrganisms + &quot;,&quot; + numBirths + &quot;,&quot; + numMidlife + &quot;,&quot;
+        + numOld);
+
+    } catch (Throwable t) {
+      System.err.println(&quot;Unable to write file: &quot; + STATS_FILE_NAME);
+      t.printStackTrace();
+    } finally {
+      if (out != null) {
+        try {
+          out.close();
+        } catch (Throwable t) {
+          System.err.println(&quot;Unable to close output file: &quot;
+            + STATS_FILE_NAME);
+          t.printStackTrace();
+        }
+      }
+    }
+
+  }
+
+  /**
+   * Setup the statistics file
+   */
+  private void setupStatsFile() {
+    if (!new File(STATS_FILE_NAME).exists()) {
+      PrintWriter out = null;
+
+      try {
+        out = new PrintWriter(new FileWriter(STATS_FILE_NAME, true));
+
+        out.println(&quot;GameSeq,Generation,Lives,Births,Midlife,Old&quot;);
+
+      } catch (Throwable t) {
+        System.err.println(&quot;Unable to write file: &quot; + STATS_FILE_NAME);
+        t.printStackTrace();
+      } finally {
+        if (out != null) {
+          try {
+            out.close();
+          } catch (Throwable t) {
+            System.err.println(&quot;Unable to close output file: &quot;
+              + STATS_FILE_NAME);
+            t.printStackTrace();
+          }
+        }
+      }
+    }
+  }
+
+  /**
+   * Determine the next generation number
+   * @return The generation number
+   */
+  private int getGameSequenceNumber() {
+    BufferedReader in = null;
+    int seq = 0;
+    String lastData = null;
+
+    try {
+      in = new BufferedReader(new FileReader(STATS_FILE_NAME));
+      String data;
+      while ((data = in.readLine()) != null) {
+        lastData = data;
+      }
+      String[] parse = lastData.split(&quot;,&quot;);
+      seq = Integer.parseInt(parse[0]) + 1;
+    } catch (Throwable t) {
+      System.err.println(&quot;Unable to read file: &quot; + STATS_FILE_NAME
+        + &quot; - default seq to &quot; + seq);
+      t.printStackTrace();
+    } finally {
+      if (in != null) {
+        try {
+          in.close();
+        } catch (Throwable t) {
+          System.err.println(&quot;Unable to close input file: &quot;
+            + STATS_FILE_NAME);
+          t.printStackTrace();
+        }
+      }
+    }
+
+    return seq;
+  }
+
+  @Override
+  public void handleKeyCode(int keyCode) {
+    switch (keyCode) {
+      case KeyEvent.VK_F2:
+        restart = true;
+        break;
+      case KeyEvent.VK_F10:
+        System.exit(0);
+        break;
+    }
+  }
+
+  /**
+   * Start the program
+   * @param args
+   *          Command line arguments - not used
+   */
+  public static void main(String[] args) {
+    new Thread(new GameOfLife()).start();
+  }
+}
+</pre>
+<p>Wed Apr 06 16:33:05 EDT 2022</p>
+</body>
+</head>

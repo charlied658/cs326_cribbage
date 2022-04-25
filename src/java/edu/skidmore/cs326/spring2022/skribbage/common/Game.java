@@ -1,9 +1,8 @@
 package edu.skidmore.cs326.spring2022.skribbage.common;
 
-import edu.skidmore.cs326.spring2022.skribbage.common.Deck;
-import edu.skidmore.cs326.spring2022.skribbage.common.Hand;
-import java.util.*;
-import edu.skidmore.cs326.spring2022.skribbage.logic.GameManager;
+import java.util.ArrayList;
+
+
 //import org.apache.log4j.Logger;
 
 /**
@@ -14,7 +13,7 @@ import edu.skidmore.cs326.spring2022.skribbage.logic.GameManager;
  * players.
  *
  * @author Michael Shriner
- * Last edited by Charlie Davidson
+ *         Last edited by Charlie Davidson
  */
 public class Game implements GameInterface {
 
@@ -22,7 +21,7 @@ public class Game implements GameInterface {
     private Deck theDeck = new Deck();
 
     /** The list of players who are playing this game of Cribbage. */
-    private List <Player> playerList = new ArrayList<Player>();
+    private ArrayList<Player> playerList = new ArrayList<Player>();
 
     /**
      * The total score among the players during the pegging phase of
@@ -34,7 +33,7 @@ public class Game implements GameInterface {
     private Hand cribCards;
 
     /** The set of cards played by the pone during the pegging phase. */
-    //private List <Card> ponePeggingCards;
+    // private List <Card> ponePeggingCards;
     private Hand ponePeggingCards;
 
     /** The set of cards played by the dealer during the pegging phase. */
@@ -87,7 +86,7 @@ public class Game implements GameInterface {
      */
     public Game(int numPlayers) {
 
-        //ponePeggingCards = new ArrayList<Card>();
+        // ponePeggingCards = new ArrayList<Card>();
         ponePeggingCards = new Hand();
         dealerPeggingCards = new Hand();
         cribCards = new Hand();
@@ -108,7 +107,8 @@ public class Game implements GameInterface {
      * the assumption, for now, that the number of players
      * is 2.
      *
-     * @param numPlayers is the number of players.
+     * @param numPlayers
+     *            is the number of players.
      */
     public void initPlayers(int numPlayers) {
 
@@ -188,7 +188,7 @@ public class Game implements GameInterface {
      *
      * @return an ArrayList of players.
      */
-    public List <Player> getPlayerList() {
+    public ArrayList<Player> getPlayerList() {
         return playerList;
     }
 
@@ -203,6 +203,7 @@ public class Game implements GameInterface {
 
     /**
      * Get the state of the game.
+     * 
      * @return state
      */
     public GameState getState() {
@@ -211,6 +212,7 @@ public class Game implements GameInterface {
 
     /**
      * Set the state of the game.
+     * 
      * @param state
      */
     public void setState(GameState state) {
@@ -219,6 +221,7 @@ public class Game implements GameInterface {
 
     /**
      * Get the standard deck.
+     * 
      * @return standardDeck
      */
     public ArrayList<Card> getStandardDeck() {
@@ -227,6 +230,7 @@ public class Game implements GameInterface {
 
     /**
      * Get the cards in the deck.
+     * 
      * @return cardsInDeck
      */
     public ArrayList<Card> getCardsInDeck() {
@@ -235,6 +239,7 @@ public class Game implements GameInterface {
 
     /**
      * Get the cards currently in play.
+     * 
      * @return cardsInPlay
      */
     public ArrayList<Card> getCardsInPlay() {
@@ -243,6 +248,7 @@ public class Game implements GameInterface {
 
     /**
      * Get the cards in the player's hand.
+     * 
      * @return cardsInHand
      */
     public ArrayList<Card> getCardsInHand() {
@@ -251,6 +257,7 @@ public class Game implements GameInterface {
 
     /**
      * Get the cards in the crib.
+     * 
      * @return cardsInCrib
      */
     public ArrayList<Card> getCardsInCrib() {
@@ -259,6 +266,7 @@ public class Game implements GameInterface {
 
     /**
      * Get the cards in the opponent's hand.
+     * 
      * @return cardsInOpponentHand
      */
     public ArrayList<Card> getCardsInOpponentHand() {

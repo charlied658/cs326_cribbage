@@ -1,17 +1,21 @@
 package edu.skidmore.cs326.spring2022.skribbage.logic;
 
+import edu.skidmore.cs326.spring2022.skribbage.common.Player;
+
 /**
  * @author lappiaha
  */
 public class PlayerManager {
 
     /**
-     * player object to utilize player class.
+     * player object to utilize player class. 
      */
+    @SuppressWarnings("unused")
     private Player p;
-    
+
     /**
      * method to add player points.
+     * 
      * @param p
      * @param pointsToAdd
      */
@@ -21,6 +25,7 @@ public class PlayerManager {
 
     /**
      * method to subtract player points.
+     * 
      * @param p
      * @param pointsToSubtract
      */
@@ -30,8 +35,10 @@ public class PlayerManager {
 
     /**
      * method to set player points.
+     * 
      * @param p
      */
+    @SuppressWarnings("unused")
     public void setPlayerPoints(Player p) {
         int playerpoints = p.getPoints();
     }
