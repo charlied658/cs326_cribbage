@@ -96,11 +96,11 @@ public class GameManager implements GameManagerInterface {
      * @param c
      *            is the Card to add to the list of the pone's pegging cards.
      */
-    public void addPonePeggingCard(Card c) {
-        Hand ponePegCards = g.getPonePeggingCards();
-        handManager.addCardToHand(ponePegCards, c);
-        g.setPonePeggingCards(ponePegCards);
-    }
+    // public void addPonePeggingCard(Card c) {
+    //     Hand ponePegCards = g.getPonePeggingCards();
+    //     handManager.addCardToHand(ponePegCards, c);
+    //     g.setPonePeggingCards(ponePegCards);
+    // }
 
     /**
      * Add the parameter Card to the dealer's pegging cards.
@@ -109,11 +109,11 @@ public class GameManager implements GameManagerInterface {
      *            is the Card to add to the list of the dealer's
      *            pegging cards.
      */
-    public void addDealerPeggingCard(Card c) {
-        Hand dealerPegCards = g.getDealerPeggingCards();
-        handManager.addCardToHand(dealerPegCards, c);
-        g.setDealerPeggingCards(dealerPegCards);
-    }
+    // public void addDealerPeggingCard(Card c) {
+    //     Hand dealerPegCards = g.getDealerPeggingCards();
+    //     handManager.addCardToHand(dealerPegCards, c);
+    //     g.setDealerPeggingCards(dealerPegCards);
+    // }
 
     /**
      * Initializes the pegging total to 0.
