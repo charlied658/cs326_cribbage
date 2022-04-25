@@ -4,10 +4,12 @@
 //
 //import edu.skidmore.cs326.spring2022.skribbage.logic.Player;
 //import static org.junit.Assert.assertEquals;
-//import org.apache.log4j.Logger;
+//import static org.junit.Assert.assertNotNull;
 //import org.junit.Before;
-//import edu.skidmore.cs326.spring2022.skribbage.common.Card;
+//import org.junit.Test;
+//import edu.skidmore.cs326.spring2022.skribbage.Card;
 //import edu.skidmore.cs326.spring2022.skribbage.common.Hand;
+//import edu.skidmore.cs326.spring2022.skribbage.common.Suit;
 //
 ///**
 // * Test class for player.
@@ -18,7 +20,6 @@
 //    /**
 //     * Tests instance for the player class.
 //     */
-//    @SuppressWarnings("unused")
 //    private Player testInstance;
 //
 //    /**
@@ -36,7 +37,6 @@
 //     */
 //    @Before
 //    public void setup() {
-//<<<<<<< HEAD
 //        /**
 //         * test instance for set name.
 //         */
@@ -44,11 +44,11 @@
 //        /**
 //         * card instance to test.
 //         */
-//        c = new Card('J', Suit.HEARTS);
+//        c = new Card(2, Suit.HEARTS);
 //        /**
 //         * add card to hand for player hand.
 //         */
-//        h.addCardToHand(c);
+//        h.setCardsInHand(c);
 //        /**
 //         * set the player hand.
 //         */
@@ -74,24 +74,14 @@
 //    public void testSetHand() {
 //        assertEquals(h, testInstance.setHand());
 //    }
+//
 //    /**
 //     * Test getPoints method.
 //     */
 //    @Test
 //    public void testGetPoints() {
 //        assertEquals(2, testInstance.getPoints());
-//=======
-//        LOG.debug("Testing setup");
-//        testInstance = new Player();
-//    }
 //
-//    /**
-//     * 
-//     */
-//    @Test
-//    public void testAddPoints() {
-//        
-//>>>>>>> db1aba2708e981006c231e897ad1dc1127fb61a3
 //    }
 //
 //}
