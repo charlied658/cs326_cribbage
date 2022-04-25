@@ -20,8 +20,9 @@ import us.daveread.edu.graphics.surface.MainFrame;
  * between Rules, Past Games, and New Game pages.
  *
  * @author Zoe Beals
- * Code reviewed by Sten Leinasaar 04/20/22
+ *         Code reviewed by Sten Leinasaar 04/20/22
  */
+@SuppressWarnings("serial")
 public class NavigationPage extends DrawingSurface implements Page {
 
     /**
@@ -32,7 +33,6 @@ public class NavigationPage extends DrawingSurface implements Page {
     /**
      * user - Text variable to hold user.
      */
-    @SuppressWarnings("unused")
     private Text user;
 
     /**
@@ -179,8 +179,8 @@ public class NavigationPage extends DrawingSurface implements Page {
         } else if (e == lobbyPageButton) {
             lobbyPage = (LobbyPage) pageManager.createPage(PageType.LOBBY_PAGE);
             closeWindow();
-            //Fire an event to start a new lobby
-            //Lobby lobby = new Lobby()
+            // Fire an event to start a new lobby
+            // Lobby lobby = new Lobby()
             if (pageManager.getLoggedInUser() != null) {
                 LOG.trace(
                     "Starting a new lobby from Nav page with user "
