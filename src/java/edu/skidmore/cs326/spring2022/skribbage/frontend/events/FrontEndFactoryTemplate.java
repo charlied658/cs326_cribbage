@@ -46,6 +46,8 @@ public class FrontEndFactoryTemplate extends FactoryTemplate {
                 return new UserChangePasswordEvent(source, args);
             case VALIDATE_USERNAME:
                 return new ValidateUsernameEvent(source, args);
+            case LOBBY_CREATE_LOBBY:
+                return new LobbyCreateEvent(source, args);
             default:
                 LOG.warn("Event passed was not one of Front End events");
                 return null;
