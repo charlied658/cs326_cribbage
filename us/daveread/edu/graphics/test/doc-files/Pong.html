@@ -1,0 +1,694 @@
+<html>
+<head><title>Pong Source Code</title></head>
+<body>
+<h1>Pong</h1><h2>Screenshot</h2><img src="Pong.png" alt="Screenshot" style="border:1px solid #000000"/>
+<br clear="all"/>
+<hr>
+<h2>Source Code</h2>
+<pre>
+package us.daveread.edu.graphics.test;
+
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Point;
+import java.awt.event.KeyEvent;
+import java.util.Random;
+
+import org.apache.log4j.Logger;
+
+import us.daveread.edu.graphics.shape.impl.Circle;
+import us.daveread.edu.graphics.shape.impl.LineSegment;
+import us.daveread.edu.graphics.shape.impl.Rectangle;
+import us.daveread.edu.graphics.shape.impl.Text;
+import us.daveread.edu.graphics.surface.DrawingSurface;
+import us.daveread.edu.graphics.surface.GuiMode;
+import us.daveread.edu.graphics.surface.MainFrame;
+
+/**
+ * &lt;a href=&quot;doc-files/Pong.html&quot;&gt;&lt;img src=&quot;doc-files/Pong.png&quot; alt=&quot;Screenshot&quot;
+ * style=&quot;float:right;width:100px;height:auto;border:1px solid #000000&quot;&gt;&lt;/a&gt;
+ * Classic game of Pong. Used to demonstrate the animation features of the
+ * graphics library. Sounds from
+ * http://opengameart.org/content/3-ping-pong-sounds-8-bit-style
+ * To use, create an instance and run it on a thread.
+ * 
+ * &lt;pre&gt;
+ * 
+ * public static void main(String[] args) {
+ *   new Thread(new Pong()).start();
+ * }
+ * &lt;/pre&gt;
+ * 
+ * &lt;p&gt;
+ * Here is a link to the &lt;a href=&quot;doc-files/Pong.html&quot;&gt;Source Code&lt;/a&gt;.
+ * &lt;/p&gt;
+ * 
+ * @author readda
+ */
+public class Pong extends DrawingSurface implements Runnable {
+  /**
+   * Serial version id
+   */
+  private static final long serialVersionUID = 1L;
+
+  /**
+   * The logger
+   */
+  private static final Logger LOG = Logger.getLogger(Pong.class);
+
+  /**
+   * Pixel width of the court
+   */
+  private static final int COURT_WIDTH = 380;
+
+  /**
+   * Pixel height of the court
+   */
+  private static final int COURT_HEIGHT = 280;
+
+  /**
+   * Pixel height of a player's paddle
+   */
+  private static final int PADDLE_HEIGHT = 40;
+
+  /**
+   * Pixel width of a player's paddle
+   */
+  private static final int PADDLE_WIDTH = 4;
+
+  /**
+   * Pixel diameter of the ball
+   */
+  private static final int BALL_DIAMETER = 10;
+
+  /**
+   * Random number generator
+   */
+  private Random random = new Random();
+
+  /**
+   * Track whether a game is in play
+   */
+  private boolean playGame;
+
+  /**
+   * Track if player 1 is serving (otherwise player 2 is)
+   */
+  private boolean player1Serves;
+
+  /**
+   * The ball graphic
+   */
+  private Circle ball;
+
+  /**
+   * Player 1's paddle graphic
+   */
+  private Rectangle paddlePlayer1;
+
+  /**
+   * Player 2's paddle graphic
+   */
+  private Rectangle paddlePlayer2;
+
+  /**
+   * The current X-direction vector for the ball
+   */
+  private int xVector;
+
+  /**
+   * The current Y-direction vector for the ball
+   */
+  private int yVector;
+
+  /**
+   * Player 1's current score
+   */
+  private int player1Score;
+
+  /**
+   * Player 2's current score
+   */
+  private int player2Score;
+
+  /**
+   * The line demarking the &quot;net&quot; in the center of the court
+   */
+  private LineSegment centerCourtLine;
+
+  /**
+   * The on-screen display of player 1's score
+   */
+  private Text player1ScoreRender;
+
+  /**
+   * The on-screen display of player 2's score
+   */
+  private Text player2ScoreRender;
+
+  /**
+   * The on-screen display of a countdown for serving
+   */
+  private Text[] countdownRender;
+
+  /**
+   * The current paddle Y direction value. Positive values are up, negative
+   * indicates down and 0 means stopped.
+   */
+  private int[] paddleDirection;
+
+  /**
+   * The players names
+   */
+  private String[] playerNames;
+
+  /**
+   * Create the drawing surface instance and setup the frame
+   */
+  public Pong() {
+    super(GuiMode.ANIMATION);
+    new MainFrame(this, COURT_WIDTH, COURT_HEIGHT);
+    paddleDirection = new int[2];
+  }
+
+  /**
+   * Setup the playing board (court)
+   */
+  public void setupBoard() {
+    // add(new Rectangle(0, 0, getWidth(), getHeight() - 1, Color.black));
+    add(
+      new Rectangle(new Point(0, 0), new Dimension(COURT_WIDTH, COURT_HEIGHT),
+        Color.black, Color.green));
+    centerCourtLine = new LineSegment(new Point(COURT_WIDTH / 2, 0),
+      new Point(COURT_WIDTH / 2,
+        COURT_HEIGHT),
+      Color.black);
+    add(centerCourtLine);
+    player1ScoreRender =
+      new Text(&quot;&quot;, new Point(COURT_WIDTH / 5, 100), 60, Color.white);
+    add(player1ScoreRender);
+    player2ScoreRender =
+      new Text(&quot;&quot;, new Point((int) (COURT_WIDTH / 5 * 3.5), 100), 60,
+        Color.white);
+    add(player2ScoreRender);
+    ball =
+      new Circle(new Point(0, 0), BALL_DIAMETER, Color.black, Color.yellow);
+    add(ball);
+    paddlePlayer1 =
+      new Rectangle(new Point(0, 0), new Dimension(PADDLE_WIDTH, PADDLE_HEIGHT),
+        Color.blue, Color.blue);
+    paddlePlayer2 = new Rectangle(new Point(COURT_WIDTH - PADDLE_WIDTH, 0),
+      new Dimension(PADDLE_WIDTH,
+        PADDLE_HEIGHT),
+      Color.blue,
+      Color.blue);
+
+    countdownRender = new Text[2];
+    countdownRender[0] = new Text(&quot;&quot;, new Point(COURT_WIDTH / 4 + 15,
+      (int) (COURT_HEIGHT / 4 * 2.0) + 20), 40, 0, null,
+      Color.black);
+    countdownRender[1] = new Text(&quot;&quot;, new Point(COURT_WIDTH / 2 - 15,
+      (int) (COURT_HEIGHT / 4 * 3.0) + 20), 40, 0, Color.gray,
+      Color.black);
+  }
+
+  /**
+   * Setup a game.
+   */
+  private void setupGame() {
+    player1Score = 0;
+    player2Score = 0;
+
+    player1Serves = random.nextBoolean();
+
+    displayScores();
+  }
+
+  /**
+   * Display the scores
+   */
+  private void displayScores() {
+    player1ScoreRender.setMessage(&quot;&quot; + player1Score);
+    player1ScoreRender
+      .setX(COURT_WIDTH / 4 - player1ScoreRender.getTextDimension().width / 2);
+    player2ScoreRender.setMessage(&quot;&quot; + player2Score);
+    player2ScoreRender.setX((int) (COURT_WIDTH / 4 * 3)
+      - player2ScoreRender.getTextDimension().width / 2);
+  }
+
+  /**
+   * Add a point to the supplied player's score
+   * @param player
+   *          The player to be awarded the point
+   */
+  private void addPoint(int player) {
+    switch (player) {
+      case 1:
+        player1Score++;
+        break;
+      case 2:
+        player2Score++;
+        break;
+    }
+
+    displayScores();
+  }
+
+  /**
+   * Announce the winner on the playing board.
+   * @param player
+   *          The winning player
+   */
+  private void announceWinner(String player) {
+    Text winnerDisplay =
+      new Text(player + &quot; Wins!&quot;, new Point(0, COURT_HEIGHT / 2), 40, 0,
+        Color.blue, Color.red);
+    winnerDisplay
+      .setX(COURT_WIDTH / 2 - winnerDisplay.getTextDimension().width / 2);
+    add(winnerDisplay);
+
+    try {
+      Thread.sleep(5000);
+    } catch (InterruptedException e) {
+      LOG.warn(&quot;Error during sleep&quot;, e);
+    }
+
+    remove(winnerDisplay);
+  }
+
+  /**
+   * Handle moving a paddle up and down
+   * @param player
+   *          The player whose paddle is being moved
+   * @param direction
+   *          The direction of motion (positive is down, negative is up)
+   */
+  public void movePaddle(int player, int direction) {
+    int pY = 0;
+
+    switch (player) {
+      case 1:
+        pY = paddlePlayer1.getLocation().y;
+        break;
+      case 2:
+        pY = paddlePlayer2.getLocation().y;
+        break;
+    }
+
+    LOG.trace(&quot;pY was: &quot; + pY);
+    pY += direction * 2;
+
+    pY = pY &lt; 0 ? 0 : pY;
+    pY = pY &gt; COURT_HEIGHT - PADDLE_HEIGHT ? COURT_HEIGHT - PADDLE_HEIGHT : pY;
+
+    LOG.trace(&quot;pY is: &quot; + pY);
+
+    switch (player) {
+      case 1:
+        paddlePlayer1.setY(pY);
+        break;
+      case 2:
+        paddlePlayer2.setY(pY);
+        break;
+    }
+  }
+
+  /**
+   * Animate the ball on the playing field while no game is in play.
+   */
+  private void bounceAround() {
+    remove(paddlePlayer1);
+    remove(paddlePlayer2);
+
+    xVector = 1;
+    yVector = 1;
+
+    while (!playGame) {
+      ball.setX(ball.getLocation().x + xVector);
+      ball.setY(ball.getLocation().y + yVector);
+
+      if ((yVector &lt; 0 &amp;&amp; ball.getLocation().y &lt;= 0)
+        || (yVector &gt; 0
+          &amp;&amp; ball.getLocation().y + ball.getDiameter() &gt;= COURT_HEIGHT)) {
+        playSound(&quot;assets/sounds/ball-hit-wall.ping_pong_8bit_plop.wav&quot;);
+        yVector *= -1;
+      }
+
+      if ((xVector &lt; 0 &amp;&amp; ball.getLocation().x &lt;= 0)
+        || (xVector &gt; 0
+          &amp;&amp; ball.getLocation().x + ball.getDiameter() &gt;= COURT_WIDTH)) {
+        playSound(&quot;assets/sounds/ball-hit-wall.ping_pong_8bit_plop.wav&quot;);
+        xVector *= -1;
+      }
+
+      try {
+        Thread.sleep(10);
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
+    }
+
+    add(paddlePlayer1);
+    add(paddlePlayer2);
+  }
+
+  /**
+   * Play one volley (e.g. play until a player misses the ball)
+   */
+  public void playVolley() {
+    int countdown = 3;
+    countdownRender[0]
+      .setMessage((player1Serves ? playerNames[0] : playerNames[1]));
+    countdownRender[1].setMessage(&quot;&quot;);
+    remove(centerCourtLine);
+    remove(ball);
+    countdownRender[0]
+      .setX(COURT_WIDTH / 2 - countdownRender[0].getTextDimension().width / 2);
+    LOG.debug(
+      &quot;Player countdown render location (&quot; + countdownRender[0].getLocation().x
+        + &quot;,&quot; + countdownRender[0].getLocation().y
+        + &quot;)&quot;);
+    countdownRender[1]
+      .setX(COURT_WIDTH / 2 - countdownRender[1].getTextDimension().width / 2);
+    add(countdownRender[0]);
+    add(countdownRender[1]);
+    while (countdown &gt; 0) {
+      countdownRender[1].setMessage(&quot;&quot; + countdown);
+      countdownRender[1].setX(
+        COURT_WIDTH / 2 - countdownRender[1].getTextDimension().width / 2);
+      try {
+        Thread.sleep(1000);
+      } catch (InterruptedException e) {
+        LOG.warn(&quot;Error during sleep&quot;, e);
+      }
+      --countdown;
+    }
+    remove(countdownRender[0]);
+    remove(countdownRender[1]);
+    add(centerCourtLine);
+
+    float speedDelay = 19;
+
+    if (player1Serves) {
+      ball.setY(paddlePlayer1.getLocation().y
+        + paddlePlayer1.getDimension().height / 2);
+      ball.setX(
+        paddlePlayer1.getLocation().x + paddlePlayer1.getDimension().width);
+      xVector = 1;
+      if (paddlePlayer1.getLocation().y &lt; COURT_HEIGHT / 2) {
+        yVector = 2;
+      } else {
+        yVector = -2;
+      }
+    } else {
+      ball.setY(paddlePlayer2.getLocation().y
+        + paddlePlayer2.getDimension().height / 2);
+      ball.setX(paddlePlayer2.getLocation().x - ball.getDiameter());
+      xVector = -1;
+      if (paddlePlayer2.getLocation().y &lt; COURT_HEIGHT / 2) {
+        yVector = 2;
+      } else {
+        yVector = -2;
+      }
+    }
+
+    add(ball);
+    playSound(&quot;assets/sounds/ball-hit-paddle.ping_pong_8bit_beeep.wav&quot;);
+
+    while (ball.getLocation().x &gt; 0 - ball.getDiameter()
+      &amp;&amp; ball.getLocation().x &lt; COURT_WIDTH) {
+      ball.setX(ball.getLocation().x + xVector);
+      ball.setY(ball.getLocation().y + yVector);
+
+      if (ball.getLocation().y &lt;= 0
+        || ball.getLocation().y + ball.getDiameter() &gt;= COURT_HEIGHT) {
+        playSound(&quot;assets/sounds/ball-hit-wall.ping_pong_8bit_plop.wav&quot;);
+        yVector *= -1;
+      }
+
+      if (xVector &lt; 0
+        &amp;&amp; ball.getLocation().x == paddlePlayer1.getLocation().x
+          + paddlePlayer1.getDimension().width
+        &amp;&amp; ball.getLocation().y + BALL_DIAMETER &gt;= paddlePlayer1.getLocation().y
+        &amp;&amp; ball.getLocation().y &lt;= paddlePlayer1.getLocation().y
+          + paddlePlayer1.getDimension().height) {
+        playSound(&quot;assets/sounds/ball-hit-paddle.ping_pong_8bit_beeep.wav&quot;);
+
+        // Speed up play as game progresses
+        if (speedDelay &gt; 8) {
+          speedDelay -= .4;
+          addMessage(&quot;Delay: &quot; + speedDelay);
+        }
+
+        switch (ballPaddleLocation(ball.getLocation().y,
+          paddlePlayer1.getLocation().y)) {
+          case BOTTOM:
+            yVector = 2;
+            break;
+          case LOWER:
+            yVector = 1;
+            break;
+          case MIDDLE:
+            yVector = 0;
+            break;
+          case TOP:
+            yVector = -2;
+            break;
+          case UPPER:
+            yVector = -1;
+            break;
+          default:
+            yVector = 0;
+            break;
+        }
+        xVector *= -1;
+        LOG.debug(&quot;yVector:&quot; + yVector + &quot; xVector:&quot; + xVector);
+      }
+
+      if (xVector &gt; 0
+        &amp;&amp; ball.getLocation().x
+          + ball.getDiameter() &gt;= paddlePlayer2.getLocation().x
+        &amp;&amp; ball.getLocation().y + BALL_DIAMETER &gt;= paddlePlayer2.getLocation().y
+        &amp;&amp; ball.getLocation().y &lt;= paddlePlayer2.getLocation().y
+          + paddlePlayer2.getDimension().height) {
+        playSound(&quot;assets/sounds/ball-hit-paddle.ping_pong_8bit_beeep.wav&quot;);
+        // Speed up play as game progresses
+        if (speedDelay &gt; 8) {
+          speedDelay -= .4;
+          addMessage(&quot;Delay: &quot; + speedDelay);
+        }
+        switch (ballPaddleLocation(ball.getLocation().y,
+          paddlePlayer2.getLocation().y)) {
+          case BOTTOM:
+            yVector = 2;
+            break;
+          case LOWER:
+            yVector = 1;
+            break;
+          case MIDDLE:
+            yVector = 0;
+            break;
+          case TOP:
+            yVector = -2;
+            break;
+          case UPPER:
+            yVector = -1;
+            break;
+          default:
+            yVector = 0;
+            break;
+        }
+        xVector *= -1;
+        LOG.debug(&quot;yVector:&quot; + yVector + &quot; xVector:&quot; + xVector);
+      }
+
+      try {
+        Thread.sleep((int) speedDelay);
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
+    }
+
+    playSound(&quot;assets/sounds/player-miss.ping_pong_8bit_peeeeeep.wav&quot;);
+
+    if (ball.getLocation().x &gt; COURT_WIDTH / 2) {
+      addPoint(1);
+      player1Serves = true;
+    } else {
+      addPoint(2);
+      player1Serves = false;
+    }
+
+    LOG.debug(&quot;Final locations. Ball(&quot; + ball.getLocation() + &quot;) Paddle1(&quot;
+      + paddlePlayer1.getLocation() + &quot;) Paddle2(&quot; + paddlePlayer2.getLocation()
+      + &quot;)&quot;);
+
+  }
+
+  /**
+   * Determine the location in the paddle where the ball has hit. Return the
+   * appropriate paddle location enum value.
+   * @param ballY
+   *          The Y pixel location of the ball
+   * @param paddleY
+   *          The Y pixel location of the paddle
+   * @return The zone of the paddle that was hit with by the ball
+   */
+  private PaddleLocation ballPaddleLocation(int ballY, int paddleY) {
+    int segmentLength = PADDLE_HEIGHT / 5;
+    ballY += BALL_DIAMETER / 2;
+
+    LOG.debug(&quot;ballY: &quot; + ballY + &quot; paddleY:&quot; + paddleY);
+
+    if (ballY &lt; paddleY + segmentLength) {
+      return PaddleLocation.TOP;
+    } else if (ballY &lt; paddleY + segmentLength * 2) {
+      return PaddleLocation.UPPER;
+    } else if (ballY &lt; paddleY + segmentLength * 3) {
+      return PaddleLocation.MIDDLE;
+    } else if (ballY &lt; paddleY + segmentLength * 4) {
+      return PaddleLocation.LOWER;
+    }
+
+    return PaddleLocation.BOTTOM;
+  }
+
+  @Override
+  public void prepareForGuiUpdate() {
+    movePaddle(1, paddleDirection[0]);
+    movePaddle(2, paddleDirection[1]);
+  }
+
+  @Override
+  public void handleKeyDown(int keyCode) {
+    switch (keyCode) {
+      case KeyEvent.VK_A:
+        paddleDirection[0] = -1;
+        break;
+      case KeyEvent.VK_Z:
+        paddleDirection[0] = 1;
+        break;
+      case KeyEvent.VK_K:
+        paddleDirection[1] = -1;
+        break;
+      case KeyEvent.VK_M:
+        paddleDirection[1] = 1;
+        break;
+    }
+    LOG.debug(&quot;KeyDown(&quot; + keyCode + &quot;) paddleDir[0]=&quot; + paddleDirection[0]
+      + &quot; paddleDir[1]=&quot; + paddleDirection[1]);
+  }
+
+  @Override
+  public void handleKeyUp(int keyCode) {
+    synchronized (this) {
+      int currentValueToMatch = 0;
+      int paddleNum = 0;
+      switch (keyCode) {
+        case KeyEvent.VK_A:
+          currentValueToMatch = -1;
+          paddleNum = 0;
+          break;
+        case KeyEvent.VK_Z:
+          currentValueToMatch = 1;
+          paddleNum = 0;
+          break;
+        case KeyEvent.VK_K:
+          currentValueToMatch = -1;
+          paddleNum = 1;
+          break;
+        case KeyEvent.VK_M:
+          currentValueToMatch = 1;
+          paddleNum = 1;
+          break;
+      }
+
+      if (paddleDirection[paddleNum] == currentValueToMatch) {
+        paddleDirection[paddleNum] = 0;
+      }
+    }
+    LOG.debug(&quot;KeyUp(&quot; + keyCode + &quot;) paddleDir[0]=&quot; + paddleDirection[0]
+      + &quot; paddleDir[1]=&quot; + paddleDirection[1]);
+
+  }
+
+  /**
+   * Detect the player's paddle keys being pressed and call the movePaddle
+   * method as appropriate.
+   * @see #movePaddle(int, int)
+   */
+  @Override
+  public void handleKeyCode(int keyCode) {
+    switch (keyCode) {
+      case KeyEvent.VK_A:
+        // movePaddle(1, -1);
+        break;
+      case KeyEvent.VK_Z:
+        // movePaddle(1, 1);
+        break;
+      case KeyEvent.VK_K:
+        // movePaddle(2, -1);
+        break;
+      case KeyEvent.VK_M:
+        // movePaddle(2, 1);
+        break;
+      case KeyEvent.VK_F2:
+        playGame = true;
+        break;
+      case KeyEvent.VK_F10:
+        System.exit(0);
+        break;
+    }
+  }
+
+  /**
+   * Run the game
+   */
+  public void run() {
+    setupBoard();
+
+    addMessage(&quot;Welcome to Pong!&quot;);
+
+    playerNames = new String[2];
+
+    playerNames[0] = getUserInput(&quot;Player 1 Name&quot;, &quot;Enter player 1's name&quot;);
+    playerNames[1] = getUserInput(&quot;Player 2 Name&quot;, &quot;Enter player 2's Name&quot;);
+
+    for (int index = 0; index &lt; playerNames.length; ++index) {
+      if (playerNames[index] == null
+        || playerNames[index].trim().length() == 0) {
+        playerNames[index] = &quot;Player &quot; + (index + 1);
+      }
+    }
+
+    while (true) {
+      if (!playGame) {
+        bounceAround();
+      }
+
+      setupGame();
+
+      while (player1Score &lt; 5 &amp;&amp; player2Score &lt; 5) {
+        playVolley();
+      }
+
+      announceWinner(
+        player1Score &gt; player2Score ? playerNames[0] : playerNames[1]);
+
+      playGame = false;
+    }
+  }
+
+  /**
+   * Create the instance and call the run method.
+   * @param args
+   *          Command line arguments (not used)
+   */
+  public static void main(String[] args) {
+    new Thread(new Pong()).start();
+  }
+}
+</pre>
+<p>Wed Apr 06 16:33:05 EDT 2022</p>
+</body>
+</head>
