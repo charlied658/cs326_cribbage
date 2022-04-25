@@ -392,8 +392,7 @@ public class LoginPage extends DrawingSurface implements Page {
     public void validateLoginCallback(UserLoginResponseEvent event) {
         LOG.trace("validateLoginCallback called with event " + event);
         LOG.trace("validateLoginCallback has response "
-            +
-            event.getAccountResponse());
+            + event.getAccountResponse());
         if (!event.getAccountResponse().isRejectionStatus()) {
             showMessage("User: " + username, "Successful Log In",
                 DialogType.INFORMATION);
