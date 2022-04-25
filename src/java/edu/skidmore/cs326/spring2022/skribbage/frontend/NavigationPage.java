@@ -4,6 +4,9 @@ package edu.skidmore.cs326.spring2022.skribbage.frontend;
 import java.awt.Color;
 import java.awt.Point;
 
+import edu.skidmore.cs326.spring2022.skribbage.common.EventFactory;
+import edu.skidmore.cs326.spring2022.skribbage.common.EventType;
+import edu.skidmore.cs326.spring2022.skribbage.common.Lobby;
 import org.apache.log4j.Logger;
 
 import us.daveread.edu.graphics.shape.Drawable;
@@ -19,7 +22,6 @@ import us.daveread.edu.graphics.surface.MainFrame;
  * @author Zoe Beals
  *         Code reviewed by Sten Leinasaar 04/20/22
  */
-@SuppressWarnings("serial")
 public class NavigationPage extends DrawingSurface implements Page {
 
     /**
@@ -93,6 +95,11 @@ public class NavigationPage extends DrawingSurface implements Page {
     private PageManager pageManager;
 
     /**
+     * EventManager instance for event management.
+     */
+    private final EventFactory eventFactory;
+
+    /**
      * Logger.
      */
     private static final Logger LOG;
@@ -107,6 +114,7 @@ public class NavigationPage extends DrawingSurface implements Page {
     public NavigationPage() {
         LOG.trace("Entered NavigationPage Constructor.");
         pageManager = PageManager.getInstance();
+        eventFactory = EventFactory.getInstance();
         navPage = new MainFrame(this, "Skribbage Battle Royale Navigation",
             900, 900, false);
         setup();
@@ -167,6 +175,10 @@ public class NavigationPage extends DrawingSurface implements Page {
         } else if (e == lobbyPageButton) {
             lobbyPage = (LobbyPage) pageManager.createPage(PageType.LOBBY_PAGE);
             closeWindow();
+            //Fire an event to start a new lobby
+            //Lobby lobby = new Lobby()
+            eventFactory.createEvent(EventType.LOBBY_CREATE_LOBBY, this);
+
         } else if (e == pastGamesPageButton) {
             pastGamesPage = (PastGamesPage) pageManager
                 .createPage(PageType.PAST_GAMES_PAGE);
