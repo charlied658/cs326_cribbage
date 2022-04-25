@@ -1,6 +1,6 @@
 package edu.skidmore.cs326.spring2022.skribbage.common;
 
-import java.util.ArrayList;
+import java.util.*;
 
 /**
  * Interface for Game.
@@ -15,7 +15,7 @@ interface GameInterface {
     Deck theDeck = new Deck();
 
     /** The list of players who are playing this game of Cribbage. */
-    ArrayList<Player> playerList = new ArrayList<Player>();
+    List<Player> playerList = new ArrayList<Player>();
 
     /**
      * The total score among the players during the pegging phase of
@@ -34,7 +34,7 @@ interface GameInterface {
 
     /**
      * initPlayers method.
-     * 
+     *
      * @param numPlayers
      */
     void initPlayers(int numPlayers);
@@ -98,7 +98,7 @@ interface GameInterface {
      *
      * @return the list of Player objects for this Game.
      */
-    ArrayList<Player> getPlayerList();
+    List<Player> getPlayerList();
 
     /**
      * Returns the crib for this Game.
