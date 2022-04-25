@@ -91,8 +91,8 @@ public class InventoryPage extends DrawingSurface implements Page {
 
         closeWindow = new Text("Close",
             new Point(20, 40), 25, Color.BLUE, Color.BLACK);
-        lobbyButton = new Text("Back to Lobby", new Point(20, 60), 25,
-            Color.BLUE, Color.BLACK);
+        lobbyButton = new Text("Back to Lobby", new Point(20, 50), 25,
+            Color.BLACK, Color.BLUE);
         add(new Text("Inventory:", new Point(30, 90), 20, Color.BLACK));
 
         // Placeholder cards
@@ -119,21 +119,21 @@ public class InventoryPage extends DrawingSurface implements Page {
             initYPosition += 25;
         }
 
-        add(closeWindow);
+        //add(closeWindow);
         add(lobbyButton);
         add(logo);
     }
 
     @Override
     public void drawableMouseClick(Drawable e) {
-        LOG.trace("DrawableMosuceClick in InventoryPage.java");
+        LOG.trace("DrawableMouseClick in InventoryPage.java");
         if (e == closeWindow) {
             closeWindow.setBorderColor(Color.CYAN);
             Utility.pause(100);
             closeWindow.setBorderColor(Color.BLACK);
             closeWindow();
         } else if (e == lobbyButton) {
-            new LobbyPage();
+            PageManager.getInstance().createPage(PageType.LOBBY_PAGE);
             closeWindow();
         }
 
@@ -144,5 +144,13 @@ public class InventoryPage extends DrawingSurface implements Page {
     public void closeWindow() {
         mf.dispose();
     }
+     /**
+     * @param args
+     */
+    /*
+    public static void main(String[] args) {
+        new InventoryPage();
+    }
+    */
 
 }
