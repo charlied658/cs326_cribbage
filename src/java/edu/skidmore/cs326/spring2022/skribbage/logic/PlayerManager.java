@@ -8,7 +8,7 @@ import edu.skidmore.cs326.spring2022.skribbage.common.Player;
 public class PlayerManager {
 
     /**
-     * player object to utilize player class.
+     * player object to utilize player class. 
      */
     private Player p;
     
