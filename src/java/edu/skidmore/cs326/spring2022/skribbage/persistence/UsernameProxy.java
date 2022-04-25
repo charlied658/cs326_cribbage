@@ -33,6 +33,10 @@ public class UsernameProxy {
     /**
      * banned words.
      */
+<<<<<<< HEAD
+=======
+    @SuppressWarnings("unused")
+>>>>>>> 6fe32f857ae5344a2b390adab0619d58f4984ff8
     private static final int AMOUNT_OF_BANNED_WORDS = 451;
 
     /**
