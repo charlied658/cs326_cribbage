@@ -9,6 +9,7 @@ import edu.skidmore.cs326.spring2022.skribbage.common.EventType;
 import edu.skidmore.cs326.spring2022.skribbage.common.Lobby;
 import org.apache.log4j.Logger;
 
+import org.checkerframework.checker.units.qual.C;
 import us.daveread.edu.graphics.shape.Drawable;
 import us.daveread.edu.graphics.shape.impl.Image;
 import us.daveread.edu.graphics.shape.impl.Text;
@@ -18,9 +19,9 @@ import us.daveread.edu.graphics.surface.MainFrame;
 /**
  * Navigation Page - holds the functionality to peruse
  * between Rules, Past Games, and New Game pages.
- * 
+ *
  * @author Zoe Beals
- *         Code reviewed by Sten Leinasaar 04/20/22
+ * Code reviewed by Sten Leinasaar 04/20/22
  */
 public class NavigationPage extends DrawingSurface implements Page {
 
@@ -164,6 +165,10 @@ public class NavigationPage extends DrawingSurface implements Page {
         // "" + LoginPageManager.getInstance().getLoginPage().getUsername(),
         // new Point(20, 60), 20, Color.black, Color.blue);
         // add(user);
+        user = new Text(
+            "" + pageManager.getLoggedInUser().getUserName(),
+            new Point(20, 60), 20, Color.black, Color.blue);
+        add(user);
         add(welcomeMessage);
     }
 
@@ -177,7 +182,16 @@ public class NavigationPage extends DrawingSurface implements Page {
             closeWindow();
             //Fire an event to start a new lobby
             //Lobby lobby = new Lobby()
-            eventFactory.createEvent(EventType.LOBBY_CREATE_LOBBY, this);
+            if (pageManager.getLoggedInUser() != null) {
+                LOG.trace(
+                    "Starting a new lobby from Nav page with user "
+                        + pageManager.getLoggedInUser());
+                Lobby lobby = new Lobby(pageManager.getLoggedInUser());
+                eventFactory.createEvent(EventType.LOBBY_CREATE_LOBBY, this,
+                    lobby);
+            } else {
+                LOG.error("A user started a lobby without being logged in");
+            }
 
         } else if (e == pastGamesPageButton) {
             pastGamesPage = (PastGamesPage) pageManager
