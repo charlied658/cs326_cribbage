@@ -421,6 +421,12 @@ public class LoginPage extends DrawingSurface implements Page {
             userCreatedCallback();
         } else {
             LOG.error("Failed to create an user.");
+            showMessage(
+                "Failed to create an account "
+                    + "Please try again",
+                "Unsucessful user creation",
+                DialogType.ERROR);
+            
         }
 
     }
