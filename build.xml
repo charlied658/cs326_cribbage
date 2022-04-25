@@ -157,8 +157,11 @@
 		</javadoc>
 	</target>
 
-	<!-- Unit test the codebase - with coverage -->
-	<target name="test" depends="test-compile">
+	<!-- Unit test the codebase after opening DB pinhole - with coverage -->
+	<target name="test" depends="db-pinhole, test-compile, test-nodb"/>
+
+	<!-- Unit test the codebase without opening the DB pinhole - with coverage -->
+	<target name="test-nodb" depends="test-compile">
 		<!-- Clean-out all unit test and coverage directories -->
 
 		<!-- delete JUnit XML output directory -->
@@ -335,10 +338,20 @@
 		</fail>
 	</target>
 
-	<target name="run" depends="dist">
+	<!-- Run program after opening DB pinhole -->
+	<target name="run" depends="db-pinhole, run-nodb"/>
+	
+	<!-- Run program without attempting to open DB pinhole -->
+	<target name="run-nodb" description="Run without creating DB pinhole" depends="dist">
 		<java classname="${mainJavaClass}" fork="true">
 			<classpath path="${distDir}/${jarFile}"/>
 			<classpath refid="runtime.class.path" />
 		</java>
+	</target>
+	
+	<target name="db-pinhole">
+		<exec executable="ssh">
+			<arg value="cs326mysql@bits.monead.com"/>
+		</exec>
 	</target>
 </project>

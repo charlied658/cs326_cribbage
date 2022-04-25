@@ -3,6 +3,10 @@ import java.security.SecureRandom;
 import java.util.Arrays;
 import java.util.Base64;
 
+import org.apache.log4j.Logger;
+
+import edu.skidmore.cs326.spring2022.skribbage.frontend.PastGamesPage;
+
 /**
  * These examples demonstrate basic salting and hashing of a password. This
  * class is not intended as a drop-in for integrating hashing into a
@@ -15,6 +19,7 @@ import java.util.Base64;
  *
 >>>>>>> 485058935004f9f20512f4f6529c92172d8c79ce
  * @author readda
+ *     Edited by Jonah Marcus on 20 April 2022 to address Bug #48.
  */
 public class DemoPasswordHashing {
     /**
@@ -27,6 +32,15 @@ public class DemoPasswordHashing {
      * value. This should be a character that is not used in Base64 encoding.
      */
     private static final String SALT_AND_PASSWORD_BASE64_SEPARATOR = "~";
+    
+    /**
+     * Logger instance for logging.
+     */
+    private static final Logger LOG;
+
+    static {
+        LOG = Logger.getLogger(DemoPasswordHashing.class);
+    }
 
     /**
      * Demo class, no instances should be created outside the demo.
@@ -79,8 +93,10 @@ public class DemoPasswordHashing {
             return md.digest(saltAndPassword);
         }
         catch (Throwable throwable) {
-            System.out.println("Unable to create SHA-256 digest for data");
-            throwable.printStackTrace();
+            //System.out.println("Unable to create SHA-256 digest for data");
+            //throwable.printStackTrace();
+            LOG.error("Unable to create SHA-256 digest for data", throwable);
+
         }
 
         return null;

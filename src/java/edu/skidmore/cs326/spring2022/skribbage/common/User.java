@@ -6,7 +6,6 @@ import java.util.Objects;
 
 /**
  * A simple bean representing data associated with a User.
- * TODO (DSR): manage password separately (not part of general interactions)
  *
  * @author Alex Carney
  */
@@ -14,15 +13,16 @@ public class User implements Payload {
     /**
      * Private string attribute to store the email of a user.
      */
-    private String email;
+    private final String email;
 
     /**
      * Private string attribute to store a username of a user.
      * 
      * @reviewed Tinaye Mawocha removed keyword final as username may need to
      *           change
+     * @reviewed Alex Carney added it back because it should be there
      */
-    private String userName;
+    private final String userName;
 
     /**
      * Private string attribute to store a userId of a user.
@@ -46,13 +46,8 @@ public class User implements Payload {
      *            new role.
      */
     public void setUserId(int id) {
-        this.userId = id;
+        userId = id;
     }
-
-    /**
-     * Password.
-     */
-    private Password password;
 
     /**
      * Private boolean attribute to store if user is authorized. Mutable.
@@ -76,32 +71,21 @@ public class User implements Payload {
      *            User's email
      * @param userName
      *            userName of user
-     * @param password
-     *            Password submitted
      * @param userRole
      *            Determines whether or not the user is logged in.
      * @see UserRole
      */
-    public User(String email, String userName, Password password,
+    public User(String email, String userName,
         UserRole userRole) {
         this.email = email;
         LOG.debug("Email value set to:" + email);
         this.userName = userName;
         LOG.debug("userName value set to: " + userName);
-        this.password = password;
         this.userRole = userRole;
         LOG.debug("isAuthorized value was set to: " + userRole);
         LOG.info(
             "The parameters of User constructor were assigned"
                 + " to private variable attributes");
-    }
-    /**
-     * 
-     * @param userName user
-     * 
-     */
-    public User(String userName) {
-        this.userName = userName;
     }
 
     /**
@@ -120,13 +104,6 @@ public class User implements Payload {
         return userName;
     }
 
-    /**
-     * @return the user password.
-     */
-    public Password getPassword() {
-        LOG.debug("Returning the password of a user");
-        return password;
-    }
 
     /**
      * @return The authorization status of this user.
@@ -134,16 +111,6 @@ public class User implements Payload {
     public UserRole getUserRole() {
         LOG.debug("Returning a user role");
         return userRole;
-    }
-
-    /**
-     * setUserName method.
-     * 
-     * @param username
-     *            to set.
-     */
-    public void setUserName(String username) {
-        this.userName = username;
     }
 
     /**

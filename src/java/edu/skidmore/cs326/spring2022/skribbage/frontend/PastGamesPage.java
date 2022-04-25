@@ -8,6 +8,7 @@ import java.util.Calendar;
 import javax.swing.JButton;
 
 import org.apache.log4j.Logger;
+
 import us.daveread.edu.graphics.shape.Drawable;
 import us.daveread.edu.graphics.shape.impl.Image;
 import us.daveread.edu.graphics.shape.impl.Text;
@@ -17,21 +18,17 @@ import us.daveread.edu.utilities.Utility;
 
 /***
  * This is the page that allows the player to load old games.
+ * URGENT: NEEDS FUNCTIONALITY FROM PERSISTENCE BEFORE END OF THIS SPRINT!
  * 
  * @author Jonah Marcus
  *         Last Update: March 11 2022
  *         lOGGING added by Sten Leinasaar March 22, 2022.
  *         This is the page that allows the player to view and load old games.
- * @author Jonah Marcus
- *         Last Update: March 11 2022
- *         This is the page that allows the player to load old games.
- * @author Jonah Marcus
- *         Last Update: March 10 2022
- *         Code reviewed by Zoe Beals 3/24/2022
+ * 
  */
 
 @SuppressWarnings("serial")
-public class PastGamesPage extends DrawingSurface {
+public class PastGamesPage extends DrawingSurface implements Page {
     /**
      * mainFrameWidth - int variable that holds mainframe width.
      */
@@ -88,6 +85,10 @@ public class PastGamesPage extends DrawingSurface {
      */
     @SuppressWarnings("unused")
     private NavigationPage navPage;
+    /**
+     * PageManager instance for page handling.
+     */
+    private PageManager pageManager;
 
     /**
      * Logger instance for logging.
@@ -102,6 +103,7 @@ public class PastGamesPage extends DrawingSurface {
      * PastGamesPage constructor.
      */
     public PastGamesPage() {
+        pageManager = PageManager.getInstance();
         mf = new MainFrame(this, "Past Games Page", mainframeWidth,
             mainframeHeight, false);
         addGamesToList();
@@ -259,14 +261,9 @@ public class PastGamesPage extends DrawingSurface {
             Utility.pause(100);
             returnToMainMenu.setBorderColor(Color.BLACK);
             mf.dispose();
-            navPage = NavigationPageManager.getInstance().getNavPage();
+            navPage =
+                (NavigationPage) pageManager
+                    .createPage(PageType.NAVIGATION_PAGE);
         }
-    }
-
-    /**
-     * @param args
-     */
-    public static void main(String[] args) {
-        new PastGamesPage();
     }
 }

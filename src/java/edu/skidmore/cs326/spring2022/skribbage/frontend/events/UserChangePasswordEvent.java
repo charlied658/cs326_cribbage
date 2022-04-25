@@ -1,5 +1,6 @@
 package edu.skidmore.cs326.spring2022.skribbage.frontend.events;
 
+import edu.skidmore.cs326.spring2022.skribbage.common.Password;
 import org.apache.log4j.Logger;
 
 import edu.skidmore.cs326.spring2022.skribbage.common.EventType;
@@ -32,7 +33,7 @@ public class UserChangePasswordEvent extends AccountEvent {
     /**
      * Attribute of type string to store the newPassword of a user.
      */
-    private final String newPassword;
+    private final Password newPassword;
 
     /**
      * Constructs a new {@code PropertyChangeEvent}.
@@ -46,7 +47,7 @@ public class UserChangePasswordEvent extends AccountEvent {
      */
     public UserChangePasswordEvent(Object source, Object... args) {
         super(source, EventType.USER_CHANGE_PASSWORD, (User) args[0]);
-        this.newPassword = (String) args[1];
+        newPassword = (Password) args[1];
         LOG.trace("Constructor method reached");
 
     }
@@ -54,7 +55,7 @@ public class UserChangePasswordEvent extends AccountEvent {
     /**
      * @return string type of a user's new password.
      */
-    public String getNewPassword() {
+    public Password getNewPassword() {
         LOG.trace("Get newPassword method reached. New password returned.");
         return newPassword;
     }

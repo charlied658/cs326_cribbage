@@ -1,7 +1,11 @@
 package edu.skidmore.cs326.spring2022.skribbage.gamification;
 
+import edu.skidmore.cs326.spring2022.skribbage.common.Location;
 //import java.util.Random;
 import edu.skidmore.cs326.spring2022.skribbage.common.Player;
+import edu.skidmore.cs326.spring2022.skribbage.common.Spot;
+import edu.skidmore.cs326.spring2022.skribbage.common.SpotType;
+
 import org.apache.log4j.Logger;
 
 /**
@@ -14,7 +18,9 @@ import org.apache.log4j.Logger;
  * @author Henry Wilson
  *         Last edited by Muaded Almheiri
  */
-public class BattleSpot {
+public class BattleSpot extends Spot {
+
+    
 
     /**
      * Logger for the class.
@@ -32,7 +38,32 @@ public class BattleSpot {
      * Die to be rolled in the battle spot class.
      */
     private Die die = new Die();
-
+    
+    /**
+     * Type of spot.
+     */
+    private SpotType spotType;
+    
+    
+    /**
+     * Constructor for battle spot.
+     * @param location
+     */
+    public BattleSpot(Location location) {
+        super(location);
+        this.spotType = SpotType.BATTLE;
+        
+    }
+  
+    /**
+     * Returns type of spot.
+     * @return type of spot
+     */
+    public SpotType getType() {
+        return this.spotType;
+    }
+    
+    
     /**
      * Randomly decides the winner when two players land on a battle spot.
      * 
