@@ -1,6 +1,6 @@
 package edu.skidmore.cs326.spring2022.skribbage.logic;
 
-import java.util.ArrayList;
+import java.util.*;
 import java.util.Random;
 
 import edu.skidmore.cs326.spring2022.skribbage.common.Hand;
@@ -131,7 +131,7 @@ public class GameManager implements GameManagerInterface {
      * @return the index in playerList where the dealer is or
      *         -1 if there is no dealer.
      */
-    public int getDealerIdx(ArrayList<Player> playerList) {
+    public int getDealerIdx(List<Player> playerList) {
         for (int i = 0; i < playerList.size(); i++) {
             if (playerList.get(i).isDealer()) {
                 return i;
@@ -159,7 +159,7 @@ public class GameManager implements GameManagerInterface {
 
     /**
      * Return whether the deck is sorted.
-     * 
+     *
      * @return boolean
      */
     public boolean deckIsSorted() {
@@ -212,7 +212,7 @@ public class GameManager implements GameManagerInterface {
 
     /**
      * Deal cards to the player.
-     * 
+     *
      * @param num
      */
     public void dealPlayerCards(int num) {
@@ -226,7 +226,7 @@ public class GameManager implements GameManagerInterface {
 
     /**
      * Deal cards to opponent.
-     * 
+     *
      * @param num
      */
     public void dealOpponentCards(int num) {
@@ -240,7 +240,7 @@ public class GameManager implements GameManagerInterface {
 
     /**
      * Deal cards to the center of the board.
-     * 
+     *
      * @param num
      */
     public void dealPlayCards(int num) {
@@ -255,7 +255,7 @@ public class GameManager implements GameManagerInterface {
     /**
      * Add card from the play field to your hand.
      * This should not be used in the final game.
-     * 
+     *
      * @param index
      */
     public void addCardToHand(int index) {
@@ -267,7 +267,7 @@ public class GameManager implements GameManagerInterface {
 
     /**
      * Play a card from your hand to the center of the board.
-     * 
+     *
      * @param index
      */
     public void playCard(int index) {

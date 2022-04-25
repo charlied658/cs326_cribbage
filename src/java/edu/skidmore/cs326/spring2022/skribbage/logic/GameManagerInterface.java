@@ -1,6 +1,6 @@
 package edu.skidmore.cs326.spring2022.skribbage.logic;
 
-import java.util.ArrayList;
+import java.util.*;
 import edu.skidmore.cs326.spring2022.skribbage.common.Game;
 import edu.skidmore.cs326.spring2022.skribbage.common.Card;
 import edu.skidmore.cs326.spring2022.skribbage.common.Player;
@@ -14,14 +14,14 @@ interface GameManagerInterface {
 
     /**
      * getGame.
-     * 
+     *
      * @return game
      */
     Game getGame();
 
     /**
      * setGame.
-     * 
+     *
      * @param game
      */
     void setGame(Game game);
@@ -81,6 +81,6 @@ interface GameManagerInterface {
      *            is the list of players.
      * @return the index in the player list where the dealer is at.
      */
-    int getDealerIdx(ArrayList<Player> playerList);
+    int getDealerIdx(List <Player> playerList);
 
 }
