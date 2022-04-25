@@ -41,7 +41,7 @@ public enum EventType {
      * Fired when user needs to be verified to change password.
      */
     USER_CHANGE_PASSWORD_VALIDATION("User Change Password Validation",
-        User.class),
+        User.class, String.class),
     /**
      * Fired when user is successfully verified for password change.
      */
