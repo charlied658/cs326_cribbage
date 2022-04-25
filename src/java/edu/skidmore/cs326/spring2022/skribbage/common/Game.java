@@ -1,6 +1,6 @@
 package edu.skidmore.cs326.spring2022.skribbage.common;
 
-import java.util.ArrayList;
+import java.util.*;
 
 
 //import org.apache.log4j.Logger;
@@ -21,7 +21,7 @@ public class Game implements GameInterface {
     private Deck theDeck = new Deck();
 
     /** The list of players who are playing this game of Cribbage. */
-    private ArrayList<Player> playerList = new ArrayList<Player>();
+    private List<Player> playerList = new ArrayList<Player>();
 
     /**
      * The total score among the players during the pegging phase of
@@ -188,7 +188,7 @@ public class Game implements GameInterface {
      *
      * @return an ArrayList of players.
      */
-    public ArrayList<Player> getPlayerList() {
+    public List<Player> getPlayerList() {
         return playerList;
     }
 
@@ -203,7 +203,7 @@ public class Game implements GameInterface {
 
     /**
      * Get the state of the game.
-     * 
+     *
      * @return state
      */
     public GameState getState() {
@@ -212,7 +212,7 @@ public class Game implements GameInterface {
 
     /**
      * Set the state of the game.
-     * 
+     *
      * @param state
      */
     public void setState(GameState state) {
@@ -221,7 +221,7 @@ public class Game implements GameInterface {
 
     /**
      * Get the standard deck.
-     * 
+     *
      * @return standardDeck
      */
     public ArrayList<Card> getStandardDeck() {
@@ -230,7 +230,7 @@ public class Game implements GameInterface {
 
     /**
      * Get the cards in the deck.
-     * 
+     *
      * @return cardsInDeck
      */
     public ArrayList<Card> getCardsInDeck() {
@@ -239,7 +239,7 @@ public class Game implements GameInterface {
 
     /**
      * Get the cards currently in play.
-     * 
+     *
      * @return cardsInPlay
      */
     public ArrayList<Card> getCardsInPlay() {
@@ -248,7 +248,7 @@ public class Game implements GameInterface {
 
     /**
      * Get the cards in the player's hand.
-     * 
+     *
      * @return cardsInHand
      */
     public ArrayList<Card> getCardsInHand() {
@@ -257,7 +257,7 @@ public class Game implements GameInterface {
 
     /**
      * Get the cards in the crib.
-     * 
+     *
      * @return cardsInCrib
      */
     public ArrayList<Card> getCardsInCrib() {
@@ -266,7 +266,7 @@ public class Game implements GameInterface {
 
     /**
      * Get the cards in the opponent's hand.
-     * 
+     *
      * @return cardsInOpponentHand
      */
     public ArrayList<Card> getCardsInOpponentHand() {
