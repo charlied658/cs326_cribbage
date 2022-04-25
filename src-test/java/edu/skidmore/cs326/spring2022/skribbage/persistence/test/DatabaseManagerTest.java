@@ -68,8 +68,8 @@ public class DatabaseManagerTest {
     @Before
     public void setUp() throws Exception {
         databaseinstance = new DatabaseManager();
-        existentUsername = new String("Rick");
-        nonExistentUsername = new String("jbrunsta");
+        existentUsername = "Rick";
+        nonExistentUsername = "jbrunsta";
         wrongTestUser =
             new User("DJKhaled@hotmail.com", "Khaled", UserRole.UNAUTHORIZED);
         wrongTestPassword = new Password("salt~AnotherOne");
@@ -169,18 +169,21 @@ public class DatabaseManagerTest {
      * Testing when asking the inventoryQuery for coin count is successful.
      */
     @Test
-<<<<<<< HEAD
     public void walletQuerysuccess() {
         String cointest = databaseinstance.walletQuery(9952);
         System.out.println("cointest: " + cointest);
         assertEquals("Coin count ashould be successful", cointest,
             "player coin value: 10000");
-=======
+    }
+
+    /**
+     * Another test.
+     */
+    @Test
     public void inventoryQuerysuccess() {
         String cointest = databaseinstance.walletQuery(325);
         assertEquals("Coin count should be successful", cointest,
             "player coin value: 100000");
->>>>>>> f1bab5c9f58e98e37472e92b06fa59b8a366db96
     }
 
     /**
