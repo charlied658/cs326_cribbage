@@ -46,34 +46,29 @@ public class Game implements GameInterface {
     private GameState state;
 
     /**
-     * Arraylist of card images.
+     * Copy of the standard sorted deck. Should never be modified.
      */
-    private List<Card> standardDeck;
+    private Deck standardDeck;
 
     /**
-     * Cards currently displayed in the deck.
+     * Cards currently in the deck.
      */
-    private List<Card> cardsInDeck;
+    private Deck cardsInDeck;
 
     /**
-     * Cards currently displayed in center of board.
+     * Cards currently in play in center of board.
      */
-    private List<Card> cardsInPlay;
+    private Hand cardsInPlay;
 
     /**
-     * Cards currently displayed in the player's hand.
+     * Cards currently in the player's hand.
      */
-    private List<Card> cardsInHand;
+    private Hand cardsInHand;
 
     /**
-     * Cards currently displayed in the crib.
+     * Cards currently in the opponent's hand.
      */
-    private List<Card> cardsInCrib;
-
-    /**
-     * Cards currently displayed in the opponent's hand.
-     */
-    private List<Card> cardsInOpponentHand;
+    private Hand cardsInOpponentHand;
 
     /**
      * Game constructor. It initializes the list of players,
@@ -93,12 +88,11 @@ public class Game implements GameInterface {
         cribCards = new Hand();
         peggingTotal = 0;
         state = GameState.START_GAME;
-        standardDeck = new ArrayList<Card>();
-        cardsInDeck = new ArrayList<Card>();
-        cardsInPlay = new ArrayList<Card>();
-        cardsInHand = new ArrayList<Card>();
-        cardsInCrib = new ArrayList<Card>();
-        cardsInOpponentHand = new ArrayList<Card>();
+        standardDeck = new Deck();
+        cardsInDeck = new Deck();
+        cardsInPlay = new Hand();
+        cardsInHand = new Hand();
+        cardsInOpponentHand = new Hand();
         initPlayers(numPlayers);
     }
 
@@ -225,7 +219,7 @@ public class Game implements GameInterface {
      *
      * @return standardDeck
      */
-    public List<Card> getStandardDeck() {
+    public Deck getStandardDeck() {
         return this.standardDeck;
     }
 
@@ -234,7 +228,7 @@ public class Game implements GameInterface {
      *
      * @return cardsInDeck
      */
-    public List<Card> getCardsInDeck() {
+    public Deck getCardsInDeck() {
         return this.cardsInDeck;
     }
 
@@ -243,7 +237,7 @@ public class Game implements GameInterface {
      *
      * @return cardsInPlay
      */
-    public List<Card> getCardsInPlay() {
+    public Hand getCardsInPlay() {
         return this.cardsInPlay;
     }
 
@@ -252,7 +246,7 @@ public class Game implements GameInterface {
      *
      * @return cardsInHand
      */
-    public List<Card> getCardsInHand() {
+    public Hand getCardsInHand() {
         return this.cardsInHand;
     }
 
@@ -261,8 +255,8 @@ public class Game implements GameInterface {
      *
      * @return cardsInCrib
      */
-    public List<Card> getCardsInCrib() {
-        return this.cardsInCrib;
+    public Hand getCardsInCrib() {
+        return this.cribCards;
     }
 
     /**
@@ -270,7 +264,7 @@ public class Game implements GameInterface {
      *
      * @return cardsInOpponentHand
      */
-    public List<Card> getCardsInOpponentHand() {
+    public Hand getCardsInOpponentHand() {
         return this.cardsInOpponentHand;
     }
 

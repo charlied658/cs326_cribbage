@@ -164,7 +164,6 @@ public class StartGamePage extends DrawingSurface implements Page {
      * Cards currently selected in the player's hand.
      */
     @SuppressWarnings("unused")
-
     private ArrayList<CardImage> cardsInHandSelected;
     
     /**
@@ -445,13 +444,13 @@ public class StartGamePage extends DrawingSurface implements Page {
         cardsInOpponentHand.clear();
         
         List<Card> gameCardsInDeck = 
-            gameManager.getGame().getCardsInDeck();
+            gameManager.getGame().getCardsInDeck().getDeck();
         List<Card> gameCardsInPlay = 
-            gameManager.getGame().getCardsInPlay();
+            gameManager.getGame().getCardsInPlay().getCardsInHand();
         List<Card> gameCardsInHand = 
-            gameManager.getGame().getCardsInHand();
+            gameManager.getGame().getCardsInHand().getCardsInHand();
         List<Card> gameCardsInOpponentHand = 
-            gameManager.getGame().getCardsInOpponentHand();
+            gameManager.getGame().getCardsInOpponentHand().getCardsInHand();
         
         for (int i = 0; i < gameCardsInDeck.size(); i++) {
             cardsInDeck.add(
@@ -843,7 +842,8 @@ public class StartGamePage extends DrawingSurface implements Page {
                 updateCardPositions();
                 moveCards(50);
                 
-                if (gameManager.getGame().getCardsInPlay().size() == 12) {
+                if (gameManager.getGame().getCardsInPlay()
+                    .getCardsInHand().size() == 12) {
                     movePeg(0, 5);
                     movePeg(1, 5);
                     if (pegLocations[0] == 120) {
