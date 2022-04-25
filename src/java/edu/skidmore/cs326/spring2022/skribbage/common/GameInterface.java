@@ -40,6 +40,13 @@ interface GameInterface {
     void initPlayers(int numPlayers);
 
     /**
+    *
+    * Initializes the list of Hand objects where each Hand is a
+    * list of cards played during the pegging play phase.
+    */
+    void initPeggingCardsPlayed (int numPlayers);
+
+    /**
      * Sets the pegging total to the parameter points.
      *
      * @param pts
@@ -54,7 +61,7 @@ interface GameInterface {
      *            is a list of Cards to assign to the pone's pegging
      *            cards.
      */
-    void setPonePeggingCards(Hand ponePegCards);
+    //void setPonePeggingCards(Hand ponePegCards);
 
     /**
      * Sets the dealer's pegging cards.
@@ -63,7 +70,7 @@ interface GameInterface {
      *            is a list of Cards to assign to the dealer's
      *            pegging cards.
      */
-    void setDealerPeggingCards(Hand dealerPegCards);
+    //void setDealerPeggingCards(Hand dealerPegCards);
 
     /**
      * Returns the Game's Deck.
@@ -84,14 +91,14 @@ interface GameInterface {
      *
      * @return this Game's pone's pegging cards.
      */
-    Hand getPonePeggingCards();
+    //Hand getPonePeggingCards();
 
     /**
      * Returns the dealer's pegging cards for this Game.
      *
      * @return this Game's dealer's pegging cards.
      */
-    Hand getDealerPeggingCards();
+    //Hand getDealerPeggingCards();
 
     /**
      * Returns the list of Player objects for this Game.
