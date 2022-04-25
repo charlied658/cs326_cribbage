@@ -4,26 +4,11 @@ import edu.skidmore.cs326.spring2022.skribbage.common.EventType;
 import edu.skidmore.cs326.spring2022.skribbage.common.Lobby;
 
 /**
-<<<<<<< HEAD
- * 
- * @author ?
+ * Represents the data transfer object associated with the creation
+ * of a lobby for the first time.
  *
- */
-//@SuppressWarnings("serial")
-//=======
-// * Represents the data transfer object associated with the creation
-// * of a lobby for the first time.
-// *
-// * @author Alex Carney
-// */
-=======
- * @author ?
- *         Represents the data transfer object associated with the creation
- *         of a lobby for the first time.
  * @author Alex Carney
  */
-@SuppressWarnings("serial")
->>>>>>> 1fc39acf54e77139868e872d420885dfd05beadc
 public class LobbyCreateEvent extends LobbyEvent {
 
     /**
