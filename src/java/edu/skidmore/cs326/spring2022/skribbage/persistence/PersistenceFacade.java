@@ -17,7 +17,7 @@ import edu.skidmore.cs326.spring2022.skribbage.common.User;
  */
 
 public final class PersistenceFacade
-    implements UserManagement, GameManagement, InventoryManagement {
+    implements UserManagement , GameManagement , InventoryManagement {
 
     /**
      * Singleton instance of PersistenceFacade. Instance can be accessed through

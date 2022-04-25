@@ -5,6 +5,16 @@
 // //import edu.skidmore.cs326.spring2022.skribbage.common.Rank;
 // import java.util.ArrayList;
 //
+// //there are a few parts to PeggingPlay
+// //1) there is checking claims made by the player
+// //2) there is the flow of the game between players during pegging play
+//
+// //what is the flow of the game?
+// //each player places a card down and makes or doesn't make a claim
+// //until both players are out of cards
+// //the pegging total resets every time it reaches 31 or neither player
+// //can play a card because it goes over 31
+//
 // /**
 // * PeggingPlay contains methods to run the pegging play phase of the game.
 // * This class is incomplete. It contains methods to check some player claims

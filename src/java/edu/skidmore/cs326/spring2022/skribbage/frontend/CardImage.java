@@ -5,8 +5,9 @@ import java.awt.Point;
 import us.daveread.edu.graphics.shape.impl.Image;
 
 /**
- * Card Image object to be rendered on the screen. 
+ * Card Image object to be rendered on the screen.
  * @author Charlie Davidson
+ *         Code review by Jonah Marcus on 22 April 2022
  *
  */
 public class CardImage {
@@ -27,6 +28,11 @@ public class CardImage {
     private int cardID;
     
     /**
+     * Stores whether the card face is showing or not.
+     */
+    private boolean showing;
+    
+    /**
      * Constructor method.
      * @param image
      * @param cardID
@@ -34,6 +40,7 @@ public class CardImage {
     public CardImage(Image image, int cardID) {
         this.image = image;
         this.cardID = cardID;
+        this.showing = false;
     }
     
     /**
@@ -61,6 +68,14 @@ public class CardImage {
     }
     
     /**
+     * Get whether the card is showing.
+     * @return boolean
+     */
+    public boolean isShowing() {
+        return this.showing;
+    }
+    
+    /**
      * Set the image.
      * @param image
      */
@@ -82,6 +97,14 @@ public class CardImage {
      */
     public void setCardID(int cardID) {
         this.cardID = cardID;
+    }
+    
+    /**
+     * Set whether the card is showing.
+     * @param showing
+     */
+    public void setShowing(boolean showing) {
+        this.showing = showing;
     }
     
 }

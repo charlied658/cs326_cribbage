@@ -125,7 +125,7 @@ public class PasswordHasher {
      *         salted
      *         password
      */
-    protected boolean doesPasswordMatch(String attemptedPassword,
+    public boolean doesPasswordMatch(String attemptedPassword,
         byte[] hashedSaltedPassword, byte[] salt) {
 
         byte[] attemptedSaltedPasswordHash =
@@ -141,7 +141,7 @@ public class PasswordHasher {
      *            The byte array to encode
      * @return The Base64 encoded string
      */
-    protected String base64Encode(byte[] data) {
+    public String base64Encode(byte[] data) {
         return Base64.getEncoder().encodeToString(data);
     }
 
@@ -152,7 +152,7 @@ public class PasswordHasher {
      *            The Base64 encoded string
      * @return The resulting byte array
      */
-    protected byte[] base64Decode(String data) {
+    public byte[] base64Decode(String data) {
         return Base64.getDecoder().decode(data);
     }
 

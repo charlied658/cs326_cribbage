@@ -1,86 +1,87 @@
-
+//package edu.skidmore.cs326.spring2022.skribbage.logic.test;
+//
 //import org.junit.Test;
+//
+//import edu.skidmore.cs326.spring2022.skribbage.logic.Player;
 //import static org.junit.Assert.assertEquals;
-//import org.apache.log4j.Logger;
+//import static org.junit.Assert.assertNotNull;
 //import org.junit.Before;
+//import org.junit.Test;
+//import edu.skidmore.cs326.spring2022.skribbage.Card;
+//import edu.skidmore.cs326.spring2022.skribbage.common.Hand;
+//import edu.skidmore.cs326.spring2022.skribbage.common.Suit;
 //
+///**
+// * Test class for player.
+// * 
+// * @author lappiaha
+// */
 //public class TestPlayer {
-//	/**
-//	 * Tests for the player class instance for the
-//	 */
-//	private Player testInstance;
-//	/**
-//	 * 	Logger for the class
-//	 */
-//	private static final Logger LOG;
-//	/**
-//	 * Create static resources.
-//	 */
-//	static {
-//		LOG = Logger.getLogger(HandTest.class);
-//	}
-//	/**
-//	 * 
-//	 */
-//	@Before
-//	public void setup(){
-//		testInstance = new Player();
-//	}
+//    /**
+//     * Tests instance for the player class.
+//     */
+//    private Player testInstance;
 //
-//	@Test
-//	public void testAddPoints() {
-//		int points = 2;
-//		int pointstoadd = 5;
-//		points += pointstoadd;
-//	}
+//    /**
+//     * Card instance to refer to methods in the card class.
+//     */
+//    private Card c;
+//
+//    /**
+//     * Hand instance to refer to methods in the hand class.
+//     */
+//    private Hand h;
+//
+//    /**
+//     * Setup for the Player testing.
+//     */
+//    @Before
+//    public void setup() {
+//        /**
+//         * test instance for set name.
+//         */
+//        testInstance.setName("abby");
+//        /**
+//         * card instance to test.
+//         */
+//        c = new Card(2, Suit.HEARTS);
+//        /**
+//         * add card to hand for player hand.
+//         */
+//        h.setCardsInHand(c);
+//        /**
+//         * set the player hand.
+//         */
+//        testInstance.setHand(h);
+//        /**
+//         * test instance to get point. 
+//         */
+//        testInstance.getPoints(2);
+//    }
+//
+//    /**
+//     * Test getName method.
+//     */
+//    @Test
+//    public void testGetName() {
+//        assertEquals("abby", testInstance.getName());
+//    }
+//
+//    /**
+//     * Test setHand method.
+//     */
+//    @Test
+//    public void testSetHand() {
+//        assertEquals(h, testInstance.setHand());
+//    }
+//
+//    /**
+//     * Test getPoints method.
+//     */
+//    @Test
+//    public void testGetPoints() {
+//        assertEquals(2, testInstance.getPoints());
+//
+//    }
+//
 //}
-package edu.skidmore.cs326.spring2022.skribbage.logic.test;
-
-import org.junit.Test;
-
-import edu.skidmore.cs326.spring2022.skribbage.common.Player;
-
-
-import org.apache.log4j.Logger;
-import org.junit.Before;
-
-/**
- * TEst player.
- * 
- * @author
- */
-public class TestPlayer {
-    /**
-     * Tests for the player class instance for the.
-     */
-    @SuppressWarnings("unused")
-    private Player testInstance;
-
-    /**
-     * Logger for the class.
-     */
-    private static final Logger LOG;
-    /**
-     * Create static resources.
-     */
-    static {
-        LOG = Logger.getLogger(TestPlayer.class);
-    }
-
-    /**
-     * 
-     */
-    @Before
-    public void setup() {
-        LOG.debug("Testing setup");
-        testInstance = new Player();
-    }
-
-    /**
-     * 
-     */
-    @Test
-    public void testAddPoints() {
-        
-    }
-}

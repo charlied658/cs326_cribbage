@@ -392,8 +392,7 @@ public class LoginPage extends DrawingSurface implements Page {
     public void validateLoginCallback(UserLoginResponseEvent event) {
         LOG.trace("validateLoginCallback called with event " + event);
         LOG.trace("validateLoginCallback has response "
-            +
-            event.getAccountResponse());
+            + event.getAccountResponse());
         if (!event.getAccountResponse().isRejectionStatus()) {
             showMessage("User: " + username, "Successful Log In",
                 DialogType.INFORMATION);
@@ -422,6 +421,12 @@ public class LoginPage extends DrawingSurface implements Page {
             userCreatedCallback();
         } else {
             LOG.error("Failed to create an user.");
+            showMessage(
+                "Failed to create an account "
+                    + "Please try again",
+                "Unsucessful user creation",
+                DialogType.ERROR);
+            
         }
 
     }
