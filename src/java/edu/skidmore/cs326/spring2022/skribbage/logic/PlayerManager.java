@@ -1,12 +1,14 @@
 package edu.skidmore.cs326.spring2022.skribbage.logic;
 
+import edu.skidmore.cs326.spring2022.skribbage.common.Player;
+
 /**
  * @author lappiaha
  */
 public class PlayerManager {
 
     /**
-     * player object to utilize player class.
+     * player object to utilize player class. 
      */
     @SuppressWarnings("unused")
     private Player p;

@@ -15,7 +15,10 @@ import org.apache.log4j.Logger;
 /**
  * username proxy.
  * 
+ * @author Tinaye Mawocha
+=======
  * @author Edited by Jonah Marcus on 20 April 2022 to address Bug #48.
+
  */
 public class UsernameProxy {
 
@@ -33,7 +36,6 @@ public class UsernameProxy {
     /**
      * banned words.
      */
-    @SuppressWarnings("unused")
     private static final int AMOUNT_OF_BANNED_WORDS = 451;
 
     /**

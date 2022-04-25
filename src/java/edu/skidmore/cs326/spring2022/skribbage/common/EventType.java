@@ -50,7 +50,7 @@ public enum EventType {
     /**
      * Fired when password change was succesful.
      */
-    USER_CHANGE_PASSWORD_RESPONSE("User Change Password Response"),
+    USER_CHANGE_PASSWORD_RESPONSE("User Change Password Response", User.class),
     /**
      * Fired when a user attempts to create an account via login page.
      */
@@ -75,22 +75,22 @@ public enum EventType {
      * Fired when the host of a lobby clicks 'start game', and all players
      * are added to a new game.
      */
-    LOBBY_START_GAME("Lobby Start Game Event"),
+    LOBBY_START_GAME("Lobby Start Game Event", Lobby.class),
     
     /**
      * Fired when a user clicks 'leave lobby' and is removed from the lobby.
      */
-    LOBBY_REMOVE_USER("Lobby Remove User Event", User.class),
+    LOBBY_REMOVE_USER("Lobby Remove User Event", Lobby.class, User.class),
     
     /**
      * Fired when a User enters the proper lobby id and is entering said lobby.
      */
-    LOBBY_ADD_USER("Lobby Add User Event", User.class),
+    LOBBY_ADD_USER("Lobby Add User Event", Lobby.class, User.class),
 
     /**
      * Fired when a logged in user attempts to start a new lobby.
      */
-    LOBBY_CREATE_GAME("Lobby Create Game Event", User.class);
+    LOBBY_CREATE_LOBBY("Lobby Create Game Event", Lobby.class);
 
 
     /**

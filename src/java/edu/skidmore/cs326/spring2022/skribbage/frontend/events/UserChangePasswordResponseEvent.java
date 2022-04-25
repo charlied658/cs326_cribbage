@@ -11,23 +11,22 @@ import edu.skidmore.cs326.spring2022.skribbage.logic.events.AccountResponseEvent
  * @author Sten Leinasaar
  */
 @SuppressWarnings("serial")
-public class UserChangePasswordResponseController extends AccountResponseEvent {
+public class UserChangePasswordResponseEvent extends AccountResponseEvent {
 
     /**
      * Constructor of UserChangePasswordController. Responsible for calling the
      * super method.
      * 
      * @param source
-     * @param eventType
      * @param args
      *            A list of arguments.
      *            A list of arguments.
      *            Object at args[0] --> User object.
-     *            Object at args[1] -->
+     *            Object at args[1] --> account response
      */
-    public UserChangePasswordResponseController(Object source,
-        EventType eventType, Object... args) {
-        super(source, eventType, (User) args[0], (AccountResponse) args[1]);
+    public UserChangePasswordResponseEvent(Object source, Object... args) {
+        super(source, EventType.USER_CHANGE_PASSWORD_RESPONSE, (User) args[0],
+            (AccountResponse) args[1]);
 
     }
 
@@ -36,7 +35,7 @@ public class UserChangePasswordResponseController extends AccountResponseEvent {
      */
     @Override
     public EventType getEventType() {
-        return EventType.USER_CHANGE_PASSWORD;
+        return EventType.USER_CHANGE_PASSWORD_RESPONSE;
     }
 
     /**

@@ -112,10 +112,8 @@ public final class PersistenceFacade
      * @return boolean true or false depending if the method worked or failed.
      */
     @Override
-    public boolean passwordChange(User userToUpdate, Password currentPassword,
-        Password newPassword) {
-        System.out.println("UserID: " + userToUpdate.getUserId());
-        DM.update("Password", newPassword.getBase64PasswordHash(), 1);
+    public boolean passwordChange(User userToUpdate, Password newPassword) {
+        DM.update("Password", newPassword.getBase64SaltAndPasswordHash(), 1);
 
         return true;
     }

@@ -19,7 +19,7 @@ import edu.skidmore.cs326.spring2022.skribbage.common.PasswordHasher;
 import edu.skidmore.cs326.spring2022.skribbage.common.User;
 import edu.skidmore.cs326.spring2022.skribbage.common.UserRole;
 import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserChangePasswordEvent;
-import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserChangePasswordResponseController;
+import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserChangePasswordResponseEvent;
 import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserCreateAccountEvent;
 import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserLoginEvent;
 import edu.skidmore.cs326.spring2022.skribbage.frontend.events.ValidateForChangePassword;
@@ -397,6 +397,7 @@ public class LoginPage extends DrawingSurface implements Page {
             showMessage("User: " + username, "Successful Log In",
                 DialogType.INFORMATION);
             // navPage = NavigationPageManager.getInstance().getNavPage();
+            pageManager.setLoggedInUser(event.getUser());
             navPage = (NavigationPage) pageManager
                 .createPage(PageType.NAVIGATION_PAGE);
             closeWindow();
@@ -438,7 +439,7 @@ public class LoginPage extends DrawingSurface implements Page {
      *            --> Incoming event containing information.
      */
     public void validateChangePasswordCallback(
-        UserChangePasswordResponseController evt) {
+        UserChangePasswordResponseEvent evt) {
         if (!evt.getAccountResponse().isRejectionStatus()) {
             showMessage("Password change was succesful.", "You are beautiful!",
                 DialogType.INFORMATION);
