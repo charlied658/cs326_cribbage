@@ -24,6 +24,11 @@ public class LobbyTest {
      * Variable to house extra user to be added to test instance.
      */
     private User user2;
+    
+    /**
+     * Hardcoded id assigned to Lobby for testing.
+     */
+    private int lobbyId;
 
     /**
      * Initialize variables necessary for testing.
@@ -32,7 +37,8 @@ public class LobbyTest {
     public void setup() {
         User host = new User(null, "MrTestUser", null);
         user2 = new User(null, "2ndUser", null);
-        testInstance = new Lobby(host);
+        lobbyId = 3;
+        testInstance = new Lobby(host, lobbyId);
     }
 
     /**
