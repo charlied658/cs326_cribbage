@@ -77,4 +77,24 @@ public class Card {
         this.cardID = cardID;
     }
 
+    /**
+     * Compares the rank and suit of two cards.
+     * 
+     * @return boolean
+     * @param tempCard
+     */
+    @Override
+    public boolean equals(Object tempCard) {
+        if (tempCard instanceof Card) {
+            return this.getRank() == ((Card) tempCard).getRank()
+                && this.getSuit() == ((Card) tempCard).getSuit();
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        return (this.getRank() + " " + this.getSuit()).hashCode();
+    }
 }

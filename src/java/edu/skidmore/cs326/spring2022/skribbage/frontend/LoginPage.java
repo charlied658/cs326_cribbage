@@ -397,6 +397,7 @@ public class LoginPage extends DrawingSurface implements Page {
             showMessage("User: " + username, "Successful Log In",
                 DialogType.INFORMATION);
             // navPage = NavigationPageManager.getInstance().getNavPage();
+            pageManager.setLoggedInUser(event.getUser());
             navPage = (NavigationPage) pageManager
                 .createPage(PageType.NAVIGATION_PAGE);
             closeWindow();

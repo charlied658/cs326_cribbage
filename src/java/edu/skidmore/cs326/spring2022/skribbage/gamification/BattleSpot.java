@@ -19,9 +19,7 @@ import org.apache.log4j.Logger;
  *         Last edited by Muaded Almheiri
  */
 public class BattleSpot extends Spot {
-
     
-
     /**
      * Logger for the class.
      */
@@ -74,16 +72,12 @@ public class BattleSpot extends Spot {
 
         int diceRoll = die.rollDie(2, 0, true);
         LOG.info("decideWinner: Dice roll is " + diceRoll);
-        System.out.println(diceRoll);
 
         if (diceRoll == 1) {
             LOG.info("decideWinner: " + p1.getName() + " is the winner");
-            System.out.println("Player one wins");
-
             rewardPenalty(p1, p2);
         } else {
             LOG.info("decideWinner: " + p2.getName() + " is the winner");
-            System.out.println("Player two wins");
             rewardPenalty(p2, p1);
         }
 

@@ -1,6 +1,5 @@
 package edu.skidmore.cs326.spring2022.skribbage.common.test;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
 import org.junit.Before;
@@ -27,6 +26,7 @@ public class LoginAuthenticatorTest {
     /**
      * Dummy user used for testing.
      */
+    @SuppressWarnings("unused")
     private User testUser;
 
     /**
@@ -44,12 +44,14 @@ public class LoginAuthenticatorTest {
      * String containing correct password entered by a user attempting to log
      * in.
      */
+    @SuppressWarnings("unused")
     private String mockEnteredCorrectPassword;
 
     /**
      * String containing incorrect password entered by a user attempting to log
      * in.
      */
+    @SuppressWarnings("unused")
     private String mockEnteredIncorrectPassword;
 
     /**
