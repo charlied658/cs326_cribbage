@@ -3,7 +3,6 @@ package edu.skidmore.cs326.spring2022.skribbage.common;
 import java.util.List;
 import java.util.ArrayList;
 
-
 //import org.apache.log4j.Logger;
 
 /**
@@ -35,10 +34,17 @@ public class Game implements GameInterface {
 
     /** The set of cards played by the pone during the pegging phase. */
     // private List <Card> ponePeggingCards;
-    private Hand ponePeggingCards;
+    // private Hand ponePeggingCards;
 
     /** The set of cards played by the dealer during the pegging phase. */
-    private Hand dealerPeggingCards;
+    // private Hand dealerPeggingCards;
+
+    /**
+     * A list of Hand objects where each Hand is a list of cards played during
+     * the pegging play phase. The Hand at index i in peggingCardsPlayed
+     * belongs to the Player at index i in playerList.
+     */
+    private List<Hand> peggingCardsPlayed = new ArrayList<Hand>();
 
     /**
      * State of the game.
@@ -83,8 +89,8 @@ public class Game implements GameInterface {
     public Game(int numPlayers) {
 
         // ponePeggingCards = new ArrayList<Card>();
-        ponePeggingCards = new Hand();
-        dealerPeggingCards = new Hand();
+        // ponePeggingCards = new Hand();
+        // dealerPeggingCards = new Hand();
         cribCards = new Hand();
         peggingTotal = 0;
         state = GameState.START_GAME;
@@ -94,6 +100,17 @@ public class Game implements GameInterface {
         cardsInHand = new Hand();
         cardsInOpponentHand = new Hand();
         initPlayers(numPlayers);
+        initPeggingCardsPlayed(numPlayers);
+    }
+
+    /**
+     * Initialize pegging cards.
+     * @param numPlayers
+     */
+    public void initPeggingCardsPlayed(int numPlayers) {
+        for (int i = 0; i < numPlayers; i++) {
+            peggingCardsPlayed.add(new Hand());
+        }
     }
 
     /**
@@ -123,24 +140,41 @@ public class Game implements GameInterface {
     }
 
     /**
-     * Sets the pone's pegging cards to the parameter.
-     *
-     * @param ponePegCards
-     *            is an ArrayList of Card objects.
+     * Get list of played pegging cards.
+     * @return peggingCardsPlayed
      */
-    public void setPonePeggingCards(Hand ponePegCards) {
-        ponePeggingCards = ponePegCards;
+    public List<Hand> getListOfPeggingCardsPlayed() {
+        return peggingCardsPlayed;
     }
 
     /**
-     * Sets the dealer's pegging cards to the parameter.
-     *
-     * @param dealerPegCards
-     *            is an ArrayList of Card objects.
+     * Get pegging cards.
+     * @param index
+     * @return pegging card at that index
      */
-    public void setDealerPeggingCards(Hand dealerPegCards) {
-        dealerPeggingCards = dealerPegCards;
+    public Hand getPeggingCards(int index) {
+        return peggingCardsPlayed.get(index);
     }
+
+    // /**
+    // * Sets the pone's pegging cards to the parameter.
+    // *
+    // * @param ponePegCards
+    // * is an ArrayList of Card objects.
+    // */
+    // public void setPonePeggingCards(Hand ponePegCards) {
+    // ponePeggingCards = ponePegCards;
+    // }
+
+    // /**
+    // * Sets the dealer's pegging cards to the parameter.
+    // *
+    // * @param dealerPegCards
+    // * is an ArrayList of Card objects.
+    // */
+    // public void setDealerPeggingCards(Hand dealerPegCards) {
+    // dealerPeggingCards = dealerPegCards;
+    // }
 
     /**
      * Returns the deck for this game.
@@ -160,23 +194,23 @@ public class Game implements GameInterface {
         return peggingTotal;
     }
 
-    /**
-     * Returns the pone's pegging cards as an ArrayList of Card objects.
-     *
-     * @return the pone's pegging cards.
-     */
-    public Hand getPonePeggingCards() {
-        return ponePeggingCards;
-    }
+    // /**
+    // * Returns the pone's pegging cards as an ArrayList of Card objects.
+    // *
+    // * @return the pone's pegging cards.
+    // */
+    // public Hand getPonePeggingCards() {
+    // return ponePeggingCards;
+    // }
 
-    /**
-     * Returns the dealers's pegging cards as an ArrayList of Card objects.
-     *
-     * @return the dealer's pegging cards.
-     */
-    public Hand getDealerPeggingCards() {
-        return dealerPeggingCards;
-    }
+    // /**
+    // * Returns the dealers's pegging cards as an ArrayList of Card objects.
+    // *
+    // * @return the dealer's pegging cards.
+    // */
+    // public Hand getDealerPeggingCards() {
+    // return dealerPeggingCards;
+    // }
 
     /**
      * Returns the list of players.

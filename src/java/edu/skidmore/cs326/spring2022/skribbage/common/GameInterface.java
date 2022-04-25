@@ -1,6 +1,7 @@
 package edu.skidmore.cs326.spring2022.skribbage.common;
 
-import java.util.*;
+import java.util.List;
+import java.util.ArrayList;
 
 /**
  * Interface for Game.
@@ -12,25 +13,25 @@ interface GameInterface {
     /**
      * theDeck.
      */
-    Deck theDeck = new Deck();
+    Deck THE_DECK = new Deck();
 
     /** The list of players who are playing this game of Cribbage. */
-    List<Player> playerList = new ArrayList<Player>();
+    List<Player> PLAYER_LIST = new ArrayList<Player>();
 
     /**
      * The total score among the players during the pegging phase of
      * the game (0 <= peggingTotal <= 31).
      */
-    int peggingTotal = 0;
+    int PEGGING_TOTAL = 0;
 
     /** The crib for the game. */
-    Hand cribCards = new Hand();
+    Hand CRIB_CARDS = new Hand();
 
     /** The set of cards played by the pone during the pegging phase. */
-    Hand ponePeggingCards = new Hand();
+    Hand PONE_PEGGING_CARDS = new Hand();
 
     /** The set of cards played by the dealer during the pegging phase. */
-    Hand dealerPeggingCards = new Hand();
+    Hand DEALER_PEGGING_CARDS = new Hand();
 
     /**
      * initPlayers method.
@@ -38,6 +39,13 @@ interface GameInterface {
      * @param numPlayers
      */
     void initPlayers(int numPlayers);
+
+    /**
+     * Initializes the list of Hand objects where each Hand is a
+     * list of cards played during the pegging play phase.
+     * @param numPlayers
+     */
+    void initPeggingCardsPlayed(int numPlayers);
 
     /**
      * Sets the pegging total to the parameter points.
@@ -54,7 +62,7 @@ interface GameInterface {
      *            is a list of Cards to assign to the pone's pegging
      *            cards.
      */
-    void setPonePeggingCards(Hand ponePegCards);
+    // void setPonePeggingCards(Hand ponePegCards);
 
     /**
      * Sets the dealer's pegging cards.
@@ -63,7 +71,7 @@ interface GameInterface {
      *            is a list of Cards to assign to the dealer's
      *            pegging cards.
      */
-    void setDealerPeggingCards(Hand dealerPegCards);
+    // void setDealerPeggingCards(Hand dealerPegCards);
 
     /**
      * Returns the Game's Deck.
@@ -84,14 +92,14 @@ interface GameInterface {
      *
      * @return this Game's pone's pegging cards.
      */
-    Hand getPonePeggingCards();
+    // Hand getPonePeggingCards();
 
     /**
      * Returns the dealer's pegging cards for this Game.
      *
      * @return this Game's dealer's pegging cards.
      */
-    Hand getDealerPeggingCards();
+    // Hand getDealerPeggingCards();
 
     /**
      * Returns the list of Player objects for this Game.
