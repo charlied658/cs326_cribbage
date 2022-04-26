@@ -67,6 +67,8 @@ public class Card {
     public Card(Rank c, Suit suit) {
         this.suit = suit;
         this.rank = c;
+        //Num_rank x suit + rank = cardID
+        this.cardID = (13 * this.suit.ordinal()) + this.rank.ordinal();
     }
     
     /**

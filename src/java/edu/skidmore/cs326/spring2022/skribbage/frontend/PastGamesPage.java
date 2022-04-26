@@ -26,7 +26,6 @@ import us.daveread.edu.utilities.Utility;
  *         This is the page that allows the player to view and load old games.
  * 
  */
-
 @SuppressWarnings("serial")
 public class PastGamesPage extends DrawingSurface implements Page {
     /**
