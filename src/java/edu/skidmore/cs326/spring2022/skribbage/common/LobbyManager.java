@@ -67,6 +67,7 @@ public class LobbyManager implements LobbyManagement {
 
     @Override
     public Game startGame(Lobby lobby) {
+        deleteLobby(lobby);
         return null;
     }
 
@@ -75,6 +76,16 @@ public class LobbyManager implements LobbyManagement {
 
         lobbies[lobby.getId()] = null;
 
+    }
+    
+    /**
+     * Calls addUser method from Lobby class to add
+     * a user to the users array attribute in lobby instance.
+     * @param user
+     * @param lobby
+     */
+    public void addUser(User user, Lobby lobby) {
+        lobby.addUser(user);
     }
 
 }

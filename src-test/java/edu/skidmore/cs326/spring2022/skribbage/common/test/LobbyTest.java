@@ -24,7 +24,7 @@ public class LobbyTest {
      * Variable to house extra user to be added to test instance.
      */
     private User user2;
-    
+
     /**
      * Hardcoded id assigned to Lobby for testing.
      */
@@ -58,6 +58,25 @@ public class LobbyTest {
     public void testAddUser() {
         testInstance.addUser(user2);
         assertEquals(2, testInstance.getUsers().length);
+        assertEquals("2ndUser", testInstance.getUsers()[1]);
+    }
+
+    /**
+     * Test that host was set properly in constructor and
+     * that getHost() is returning correct value.
+     */
+    @Test
+    public void testGetHost() {
+        assertEquals("MrTestUser", testInstance.getHost().getUserName());
+    }
+
+    /**
+     * Test that id was set properly in constructor and
+     * that getId() is returning correct value.
+     */
+    @Test
+    public void testGetId() {
+        assertEquals(3, testInstance.getId());
     }
 
 }
