@@ -108,16 +108,16 @@ public class FacadeTest {
      * Testing when the user wants to log in with the correct username and
      * password.
      */
-//     @Test
-//     public void createUserCorrect() {
-//     facadeinstanace.userCreate(newTestUser, newTestPassword);
-//     boolean iscorrect1 = facadeinstanace.userNameExists(newTestUser);
-//     assertEquals("Checking if the new user was creating", true, iscorrect1);
-//     String pass = facadeinstanace.getPassword(newTestUser)
-//     .getBase64SaltAndPasswordHash();
-//     assertEquals("Checking if the new user cotains the correct password",
-//     pass, newTestPassword.getBase64SaltAndPasswordHash());
-//     }
+    // @Test
+    // public void createUserCorrect() {
+    // facadeinstanace.userCreate(newTestUser, newTestPassword);
+    // boolean iscorrect1 = facadeinstanace.userNameExists(newTestUser);
+    // assertEquals("Checking if the new user was creating", true, iscorrect1);
+    // String pass = facadeinstanace.getPassword(newTestUser)
+    // .getBase64SaltAndPasswordHash();
+    // assertEquals("Checking if the new user cotains the correct password",
+    // pass, newTestPassword.getBase64SaltAndPasswordHash());
+    // }
 
     /**
      * Testing when the user wants to change their password Passing in the user,
@@ -137,10 +137,10 @@ public class FacadeTest {
      * the
      * current pass and the new password however it fails
      */
-//     @Test
-//     public void passwordChangeFail() {
-//         
-//     }
+    // @Test
+    // public void passwordChangeFail() {
+    //
+    // }
 
     /**
      * Testing when logic wants to log in a user and wants to obtain a password
@@ -153,24 +153,24 @@ public class FacadeTest {
             correctTestPassword.getBase64SaltAndPasswordHash(),
             pass.getBase64SaltAndPasswordHash());
     }
-    
+
     /**
      * Testing to see if the username exists already
      */
-     @Test
-     public void accountExistsSuccess() {
-     Boolean verification = facadeinstanace.userNameExists(correctTestUser);
-     assertEquals("User should exist", true, verification);
-     }
-     
-     /**
-      * Testing validating username to see if it doesn't have bad words
-      */
-     @Test
-     public void validateUsernameCuss(){
-         
-         facadeinstanace.validateUsername(correctTestUser);
-     }
+    @Test
+    public void accountExistsSuccess() {
+        Boolean verification = facadeinstanace.userNameExists(correctTestUser);
+        assertEquals("User should exist", true, verification);
+    }
+
+    /**
+     * Testing validating username to see if it doesn't have bad words
+     */
+    @Test
+    public void validateUsernameCuss() {
+
+        facadeinstanace.validateUsername(correctTestUser);
+    }
 
     /**
      * Testing the capability to display inventory values.
@@ -219,7 +219,5 @@ public class FacadeTest {
     // assertEquals(facadeinstanace.displayWallet(walletUser),
     // "player coin value: 100000");
     // }
-
-
 
 }

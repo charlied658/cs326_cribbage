@@ -59,7 +59,6 @@ public class UsernameProxy {
         return INSTANCE;
     }
 
-
     /**
      * username check.
      * 
