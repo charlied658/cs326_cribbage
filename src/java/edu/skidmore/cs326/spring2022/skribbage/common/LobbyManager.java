@@ -101,13 +101,7 @@ public class LobbyManager implements LobbyManagement {
 
     }
 
-    /**
-     * Calls addUser method from Lobby class to add
-     * a user to the users array attribute in lobby instance.
-     * 
-     * @param user
-     * @param lobby
-     */
+    @Override
     public void addUser(User user, Lobby lobby) {
         lobby.addUser(user);
     }
