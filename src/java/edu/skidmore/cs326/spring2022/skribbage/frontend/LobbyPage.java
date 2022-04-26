@@ -8,6 +8,7 @@ import java.awt.Point;
 //import javax.swing.*;
 import java.util.ArrayList;
 
+import edu.skidmore.cs326.spring2022.skribbage.common.LobbyManager;
 import org.apache.log4j.Logger;
 
 import edu.skidmore.cs326.spring2022.skribbage.common.User;
@@ -60,7 +61,7 @@ public class LobbyPage extends DrawingSurface implements Page {
     /**
      * players - Holds instances of players in lobby.
      */
-    private ArrayList<User> players = new ArrayList<User>();
+    private ArrayList<User> players = new ArrayList<>();
 
     /**
      * playerNotLoggedIn - Up to three players can be logged into a single
@@ -127,6 +128,11 @@ public class LobbyPage extends DrawingSurface implements Page {
     private PageManager pageManager;
 
     /**
+     * Lobby manager instance for managing the lobby.
+     */
+    private LobbyManager lobbyManager;
+
+    /**
      * Logger instance for logging.
      */
     private static final Logger LOG;
@@ -143,6 +149,7 @@ public class LobbyPage extends DrawingSurface implements Page {
         pageManager = PageManager.getInstance();
         mf = new MainFrame(this, "Pre-Game Lobby", mainframeWidth,
             mainframeHeight, false);
+        //players.add(lobbyManager.)
         setup();
     }
 
@@ -185,8 +192,8 @@ public class LobbyPage extends DrawingSurface implements Page {
         add(new Text("Players in Lobby (Max " + MAX_PLAYERS + ")",
             new Point(25, 75), 20, Color.BLACK));
 
-        for (int i = 0; i < players.size(); i++) {
-            add(new Text(players.get(i).getUserName(), new Point(35,
+        for (User player : players) {
+            add(new Text(player.getUserName(), new Point(35,
                 textStartingY), 16, Color.BLACK));
             textStartingY += 20;
         }
