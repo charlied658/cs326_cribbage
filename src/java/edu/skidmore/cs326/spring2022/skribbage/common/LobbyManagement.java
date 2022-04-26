@@ -11,8 +11,9 @@ public interface LobbyManagement {
      * Create a new lobby and set host to passed User.
      * 
      * @param host
+     * @return Lobby
      */
-    void createLobby(User host);
+    Lobby createLobby(User host);
 
     /**
      * Create a new game object from a lobby and destroy it.
