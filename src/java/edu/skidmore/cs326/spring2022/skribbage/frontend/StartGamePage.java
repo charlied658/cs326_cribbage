@@ -466,38 +466,38 @@ public class StartGamePage extends DrawingSurface implements Page {
         cardsInHand.clear();
         cardsInOpponentHand.clear();
 
-        ArrayList<Card> gameCardsInDeck =
-            gameManager.getGame().getCardsInDeck();
-        ArrayList<Card> gameCardsInPlay =
-            gameManager.getGame().getCardsInPlay();
-        ArrayList<Card> gameCardsInHand =
-            gameManager.getGame().getCardsInHand();
-        ArrayList<Card> gameCardsInOpponentHand =
-            gameManager.getGame().getCardsInOpponentHand();
+//        ArrayList<Card> gameCardsInDeck =
+//            gameManager.getGame().getCardsInDeck();
+//        ArrayList<Card> gameCardsInPlay =
+//            gameManager.getGame().getCardsInPlay();
+//        ArrayList<Card> gameCardsInHand =
+//            gameManager.getGame().getCardsInHand();
+//        ArrayList<Card> gameCardsInOpponentHand =
+//            gameManager.getGame().getCardsInOpponentHand();
 
-        for (int i = 0; i < gameCardsInDeck.size(); i++) {
-            cardsInDeck.add(
-                standardDeck.get(
-                    gameCardsInDeck.get(i).getCardID()));
-        }
-
-        for (int i = 0; i < gameCardsInPlay.size(); i++) {
-            cardsInPlay.add(
-                standardDeck.get(
-                    gameCardsInPlay.get(i).getCardID()));
-        }
-
-        for (int i = 0; i < gameCardsInHand.size(); i++) {
-            cardsInHand.add(
-                standardDeck.get(
-                    gameCardsInHand.get(i).getCardID()));
-        }
-
-        for (int i = 0; i < gameCardsInOpponentHand.size(); i++) {
-            cardsInOpponentHand.add(
-                standardDeck.get(
-                    gameCardsInOpponentHand.get(i).getCardID()));
-        }
+//        for (int i = 0; i < gameCardsInDeck.size(); i++) {
+//            cardsInDeck.add(
+//                standardDeck.get(
+//                    gameCardsInDeck.get(i).getCardID()));
+//        }
+//
+//        for (int i = 0; i < gameCardsInPlay.size(); i++) {
+//            cardsInPlay.add(
+//                standardDeck.get(
+//                    gameCardsInPlay.get(i).getCardID()));
+//        }
+//
+//        for (int i = 0; i < gameCardsInHand.size(); i++) {
+//            cardsInHand.add(
+//                standardDeck.get(
+//                    gameCardsInHand.get(i).getCardID()));
+//        }
+//
+//        for (int i = 0; i < gameCardsInOpponentHand.size(); i++) {
+//            cardsInOpponentHand.add(
+//                standardDeck.get(
+//                    gameCardsInOpponentHand.get(i).getCardID()));
+//        }
 
     }
 
@@ -872,20 +872,20 @@ public class StartGamePage extends DrawingSurface implements Page {
                 gameManager.opponentPlayCard();
                 updateCardPositions();
                 moveCards(50);
-                if (gameManager.getGame().getCardsInPlay().size() == 12) {
-
-                    if (gameManager.getGame().getCardsInPlay()
-                        .getCardsInHand().size() == 12) {
-                        movePeg(0, 5);
-                        movePeg(1, 5);
-                        if (pegLocations[0] == 120) {
-                            closeWindow();
-                        }
-                        dealCards();
-                    }
-                    setCardsClickable(true);
-                    return;
-                }
+//                if (gameManager.getGame().getCardsInPlay().size() == 12) {
+//
+//                    if (gameManager.getGame().getCardsInPlay()
+//                        .getCardsInHand().size() == 12) {
+//                        movePeg(0, 5);
+//                        movePeg(1, 5);
+//                        if (pegLocations[0] == 120) {
+//                            closeWindow();
+//                        }
+//                        dealCards();
+//                    }
+//                    setCardsClickable(true);
+//                    return;
+//                }
             }
         }
     }
