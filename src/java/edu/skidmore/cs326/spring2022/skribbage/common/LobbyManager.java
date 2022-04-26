@@ -49,7 +49,7 @@ public class LobbyManager implements LobbyManagement {
      * The one activeLobby used until multi-game/multi-lobby implementation is
      * added.
      */
-    private static Lobby activeLobby;
+    private Lobby activeLobby;
 
     /**
      * logger.
@@ -70,7 +70,6 @@ public class LobbyManager implements LobbyManagement {
         if (instance == null) {
             instance = new LobbyManager();
             Arrays.fill(lobbies, null);
-            activeLobby = null;
         }
         return instance;
     }
@@ -81,7 +80,7 @@ public class LobbyManager implements LobbyManagement {
         int newIndex = nextEmptyIndex();
         Lobby lobbyToCreate = new Lobby(host, newIndex);
         lobbies[newIndex] = lobbyToCreate;
-        setActiveLobby(lobbyToCreate);
+        this.activeLobby = lobbyToCreate;
         LOG.trace(this.getActiveLobby().toString());
 
         return lobbies[newIndex];
@@ -98,6 +97,7 @@ public class LobbyManager implements LobbyManagement {
     public void deleteLobby(Lobby lobby) {
 
         lobbies[lobby.getId()] = null;
+        this.activeLobby = null;
 
     }
 
