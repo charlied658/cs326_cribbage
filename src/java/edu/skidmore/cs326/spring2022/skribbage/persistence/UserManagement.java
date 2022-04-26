@@ -32,7 +32,6 @@ public interface UserManagement {
      * password change.
      * 
      * @param userToUpdate
-     * @param currentPassword
      * @param newPassword
      * @return the password.
      */
