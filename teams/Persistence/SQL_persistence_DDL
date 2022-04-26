@@ -27,18 +27,6 @@ FOREIGN KEY(ItemID) References item_table(itemID)
 );
 
 
-//Nikoleta's basic information for populating the player_account table:
-
-INSERT INTO player_account 
-VALUES (
-	1, 
-	"chantzi", 
-	"nikoleta", 
-	"nchantzi", 
-	"ILoveSQL", 
-	"nchantzi@skidmore.edu", 
-	"placeholder_url"
-);
 
 //item table:
 CREATE TABLE item_table ( 
@@ -48,6 +36,3 @@ CREATE TABLE item_table (
 	PRIMARY KEY(item_id) 
 	UNIQUE(item_id), 
 );
-//some basic info for populating item_table
-INSERT INTO item_table (1, "mirror", 100);
-INSERT INTO item_table (2, "skip", 150);
