@@ -16,9 +16,8 @@ import org.apache.log4j.Logger;
  * username proxy.
  * 
  * @author Tinaye Mawocha
-=======
+ *         =======
  * @author Edited by Jonah Marcus on 20 April 2022 to address Bug #48.
-
  */
 public class UsernameProxy {
 
@@ -134,12 +133,13 @@ public class UsernameProxy {
      * @return bool.
      */
     public boolean usernameCheck(String username) {
+        String currentDir = System.getProperty("user.dir");
 
         Boolean usernameIsGood = true;
         FileInputStream file = null;
         Properties prop = null;
         String filePath =
-            "/SkribbageBattleRoyale/src/java/edu/skidmore/cs326/spring2022/"
+            currentDir + "/src/java/edu/skidmore/cs326/spring2022/"
                 + "skribbage/persistence/BadNicknames";
         try {
 

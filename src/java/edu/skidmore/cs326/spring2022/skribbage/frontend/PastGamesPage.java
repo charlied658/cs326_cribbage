@@ -24,7 +24,6 @@ import us.daveread.edu.utilities.Utility;
  *         Last Update: March 11 2022
  *         lOGGING added by Sten Leinasaar March 22, 2022.
  *         This is the page that allows the player to view and load old games.
- * 
  */
 @SuppressWarnings("serial")
 public class PastGamesPage extends DrawingSurface implements Page {
@@ -47,6 +46,11 @@ public class PastGamesPage extends DrawingSurface implements Page {
      * returnToMainMenu - button to return to homepage.
      */
     private Text returnToMainMenu;
+
+    /**
+     * For proof of concept. Past Game button that opens up a game page.
+     */
+    private Text pastGame;
 
     /**
      * allGames - array list of playable games.
@@ -84,6 +88,7 @@ public class PastGamesPage extends DrawingSurface implements Page {
      */
     @SuppressWarnings("unused")
     private NavigationPage navPage;
+
     /**
      * PageManager instance for page handling.
      */
@@ -102,12 +107,13 @@ public class PastGamesPage extends DrawingSurface implements Page {
      * PastGamesPage constructor.
      */
     public PastGamesPage() {
+        LOG.debug("Constructor reached");
         pageManager = PageManager.getInstance();
         mf = new MainFrame(this, "Past Games Page", mainframeWidth,
             mainframeHeight, false);
         addGamesToList();
         setup();
-        LOG.trace("Constructor reached");
+
     }
 
     /**
@@ -147,9 +153,12 @@ public class PastGamesPage extends DrawingSurface implements Page {
             new Text("Load Previous Game", new Point(50, 60), 36, Color.BLACK);
         returnToMainMenu = new Text("Main Menu", new Point(160, 115), 25,
             Color.BLACK, Color.BLUE);
+        pastGame = new Text("Load Last Game", new Point(160, 140), 25,
+            Color.black, Color.BLUE);
 
         add(header);
         add(returnToMainMenu);
+        add(pastGame);
 
         Image logo = new Image("logo.png", new Point(435, 0), 0.48, null);
         add(logo);
@@ -263,6 +272,10 @@ public class PastGamesPage extends DrawingSurface implements Page {
             navPage =
                 (NavigationPage) pageManager
                     .createPage(PageType.NAVIGATION_PAGE);
+        } else if (e == pastGame) {
+            pageManager.createPage(PageType.START_GAME_PAGE);
+
         }
+
     }
 }

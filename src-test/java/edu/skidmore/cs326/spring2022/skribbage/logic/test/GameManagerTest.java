@@ -26,8 +26,7 @@ public class GameManagerTest {
     private Game game;
 
     /**
-     * Initializes Game object.
-     * Passes.
+     * Initializes Game and GameManager objects.
      */
     @Before
     public void setup() {
@@ -63,34 +62,6 @@ public class GameManagerTest {
     }
 
     /**
-     * Test addPonePeggingCard method.
-     * Passes.
-     */
-    @Test
-    public void testAddPonePeggingCard() {
-
-        Card c = new Card(Rank.JACK, Suit.HEARTS);
-
-        gameManager.addPonePeggingCard(c);
-
-        assertTrue(game.getPonePeggingCards().getCardsInHand().get(0).equals(c));
-    }
-
-    /**
-     * Test addDealerPeggingCard method.
-     * Passes.
-     */
-    @Test
-    public void testAddDealerPeggingCard() {
-
-        Card c = new Card(Rank.JACK, Suit.HEARTS);
-
-        gameManager.addDealerPeggingCard(c);
-
-        assertTrue(game.getDealerPeggingCards().getCardsInHand().get(0).equals(c));
-    }
-
-    /**
      * Test the initialize pegging total method.
      * Passes.
      */
@@ -104,13 +75,11 @@ public class GameManagerTest {
     }
 
     /**
-     * Test the initialize pegging total method.
+     * Test getDealerIdx method.
      * Passes.
      */
     @Test
     public void testGetDealerIdx() {
-        // initialize player list
-        //gameManager.initPlayers(2, game.getPlayerList());
 
         // set the dealer
         List<Player> playerList = game.getPlayerList();
@@ -123,4 +92,8 @@ public class GameManagerTest {
         assertEquals(idxOfDealer, 0);
     }
 
-} // end of class
+
+
+
+
+} 
