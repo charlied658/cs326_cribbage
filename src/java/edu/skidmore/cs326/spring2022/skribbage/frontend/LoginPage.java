@@ -282,7 +282,7 @@ public class LoginPage extends DrawingSurface implements Page {
                 ValidateForChangePassword eventLogin =
                     (ValidateForChangePassword) evtFactory.createEvent(
                         EventType.USER_CHANGE_PASSWORD_VALIDATION, this,
-                        currentUser, currentPassword);
+                        currentUser, password);
                 evtFactory.fireEvent(eventLogin);
 
                 break;
