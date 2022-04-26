@@ -57,23 +57,19 @@ public class InventoryPrototypeTest {
         assertTrue("Inventory is still empty",
             testInstance.searchForItem("Mirror") == 1);
         assertTrue("Inventory is still empty",
-            testInstance.searchForItem("Re-Battle") == 0);
+            testInstance.searchForItem("Re-Battle Card") == 0);
         assertTrue("Inventory is still empty",
-            testInstance.searchForItem("LastPlayerShowCard") == 0);
+            testInstance.searchForItem("Last-Player-Show Card") == 0);
         assertTrue("Inventory is still empty",
-            testInstance.searchForItem("autoPilot") == 0);
+            testInstance.searchForItem("Auto Pilot") == 0);
         assertTrue("Inventory is still empty",
-            testInstance.searchForItem("copyCat") == 0);
+            testInstance.searchForItem("Copycat") == 0);
         assertTrue("Inventory is still empty",
-            testInstance.searchForItem("Copy") == 0);
-        assertTrue("Inventory is still empty",
-            testInstance.searchForItem("PickPocket") == 0);
+            testInstance.searchForItem("Pick Pocket") == 0);
         assertTrue("Inventory is still empty",
             testInstance.searchForItem("Disarm") == 0);
         assertTrue("Inventory is still empty",
-            testInstance.searchForItem("ThrowAwayPickUp") == 0);
-        assertTrue("Inventory is still empty",
-            testInstance.searchForItem("Swap-Card") == 0);
+            testInstance.searchForItem("Throw-Away-Pickup Card") == 0);
     }
 
     /**
