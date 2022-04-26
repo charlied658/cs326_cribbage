@@ -50,7 +50,7 @@ public class DatabaseManager {
     /**
      * Query String.
      */
-    static final String QUERY = "SELECT * FROM prototype_table";
+    // static final String QUERY = "SELECT * FROM prototype_table";
 
     /**
      * Logger for the class.
@@ -64,27 +64,10 @@ public class DatabaseManager {
         LOG = Logger.getLogger(DatabaseManager.class);
     }
 
-    /**
-     * Database Connection.
-     */
-    private static Connection dbConnection;
-
-    /**
-     * String array containing the column names.
-     */
-    // static final String[] COLUMN_NAMES = ;
-
-    /**
-     * This is a function to check the database for a specific user and check
-     * whether the password functions.
-     * 
-     * @author Tinaye Mawocha
-     * @param username
-     *            : the username of the desired user
-     * @param password
-     *            : the inputted password
-     * @return Whether password was accepted
-     */
+    // /**
+    // * Database Connection.
+    // */
+    // private static Connection dbConnection;
 
     /**
      * This is a method to change a value on the player_account table.
@@ -109,7 +92,7 @@ public class DatabaseManager {
         try {
             // System.out.println("Run a prepared database query");
             // Class.forName("com.mysql.jdbc.Driver");
-            conn = getDB();
+            conn = getDbConnection();
 
             String script = "UPDATE player_account SET " + toChange
                 + "= ?  WHERE PersonID = ?";
@@ -118,7 +101,7 @@ public class DatabaseManager {
             ps.setString(1, changeTo);
             ps.setInt(2, userId);
 
-            System.out.println(ps.executeUpdate());
+            ps.executeUpdate();
 
         }
         catch (SQLException sqle) {
@@ -146,14 +129,9 @@ public class DatabaseManager {
                     // LOGGER.error("Failed to close prepared statement", sqle);
                 }
             }
-            if (conn != null) {
-                try {
-                    conn.close();
-                }
-                catch (SQLException sqle) {
-                    // LOGGER.error("Failed to close connection", sqle);
-                }
-            }
+
+            dbDisconnect(conn);
+
         }
     }
 
@@ -164,8 +142,6 @@ public class DatabaseManager {
      * @author Tinaye Mawocha
      * @param user
      *            : the username of the desired user
-     * @param password
-     *            : the inputted password
      * @return Whether password was accepted
      */
     public Password getPassword(User user) {
@@ -179,12 +155,14 @@ public class DatabaseManager {
         String storedPassword = "";
 
         try {
-            Connection conn = getDB();
+            Connection conn = getDbConnection();
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(tempQuery);
 
             rs.next();
             storedPassword = rs.getString("Password");
+
+            dbDisconnect(conn);
 
         }
         catch (SQLException e) {
@@ -194,8 +172,6 @@ public class DatabaseManager {
         }
 
         returningPassword = new Password(storedPassword);
-        System.out.println("Stored Pass: " + storedPassword);
-
         return returningPassword;
 
     }
@@ -220,8 +196,8 @@ public class DatabaseManager {
 
         try {
 
-            conn = getDB();
-            ps = dbConnection.prepareStatement(tokenQuery);
+            conn = getDbConnection();
+            ps = conn.prepareStatement(tokenQuery);
             ps.setInt(1, playerID);
 
             ResultSet rs = ps.executeQuery();
@@ -265,37 +241,25 @@ public class DatabaseManager {
     }
 
     /**
-     * This is a function to access the connection singleton.
+     * This is a function to access the database.
      *
-     * @return Connection
-     * @author Tinaye Mawocha
+     * @author Nikoleta Chantzi
+     * @return dbConnection
      */
-    public static Connection getDB() {
+    public static Connection getDbConnection() {
+        Connection dbConnection = null;
+        try {
+            dbConnection =
+                DriverManager.getConnection(DB_URL, USER, PASS);
 
-        if (dbConnection == null) {
-            try {
-                dbConnection = DriverManager.getConnection(DB_URL, USER, PASS);
-
-            }
-            catch (SQLException e) {
-                // System.out.println("Failed to establish connection with
-                // database");
-                e.printStackTrace();
-            }
-            System.out.println("Connected");
-            System.out.println("Testing");
-            return dbConnection;
-        } else {
-            // System.out.println("Already Connected");
-            return dbConnection;
+        }
+        catch (SQLException e) {
+            LOG.error("Cannot create connection to database", e);
         }
 
-    }
+        return dbConnection;
 
-    /**
-     * String array containing the column names.
-     */
-    // static final String[] COLUMN_NAMES = ;
+    }
 
     /**
      * This is a function to check the database for a specific user and check
@@ -315,9 +279,10 @@ public class DatabaseManager {
             "SELECT * FROM player_account WHERE username='" + username + "'";
         // Connection conn = dbConnect();
         String storedPassword = "";
+        Connection conn = null;
 
         try {
-            Connection conn = getDB();
+            conn = getDbConnection();
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(tempQuery);
 
@@ -329,6 +294,9 @@ public class DatabaseManager {
             LOG.trace("Account not found: " + e);
             // e.printStackTrace();
 
+        }
+        finally {
+            dbDisconnect(conn);
         }
 
         if (storedPassword.compareTo(password.getBase64PasswordHash()) == 0) {
@@ -359,8 +327,8 @@ public class DatabaseManager {
 
         try {
 
-            conn = getDB();
-            ps = dbConnection.prepareStatement(tokenQuery);
+            conn = getDbConnection();
+            ps = conn.prepareStatement(tokenQuery);
             ps.setInt(1, playerID);
 
             ResultSet rs = ps.executeQuery();
@@ -375,8 +343,10 @@ public class DatabaseManager {
             return "Account not found";
 
         }
+        finally {
+            dbDisconnect(conn);
+        }
 
-        dbDisconnect(conn);
         return "player coin value: " + netWorth;
 
     }
@@ -404,7 +374,7 @@ public class DatabaseManager {
 
         try {
 
-            conn = getDB();
+            conn = getDbConnection();
 
             String script = "INSERT INTO player_account (Username, Password) "
                 + "VALUES (?, ?)";
@@ -440,14 +410,8 @@ public class DatabaseManager {
                     // LOGGER.error("Failed to close prepared statement", sqle);
                 }
             }
-            if (conn != null) {
-                try {
-                    conn.close();
-                }
-                catch (SQLException sqle) {
-                    // LOGGER.error("Failed to close connection", sqle);
-                }
-            }
+
+            dbDisconnect(conn);
         }
     }
 
@@ -474,7 +438,7 @@ public class DatabaseManager {
         ResultSet rs = null;
 
         try {
-            conn = getDB();
+            conn = getDbConnection();
 
             String script = "DELETE FROM player_account WHERE Username = ?";
 
@@ -510,14 +474,8 @@ public class DatabaseManager {
                     LOG.error("Failed to close prepared statement", sqle);
                 }
             }
-            if (conn != null) {
-                try {
-                    conn.close();
-                }
-                catch (SQLException sqle) {
-                    LOG.error("Failed to close connection", sqle);
-                }
-            }
+
+            dbDisconnect(conn);
         }
     }
 
@@ -530,13 +488,16 @@ public class DatabaseManager {
      * @author Tinaye Mawocha
      */
     public void dbDisconnect(Connection theConnection) {
+        if (theConnection != null) {
+            try {
+                theConnection.close();
+            }
+            catch (SQLException e) {
+                LOG.error("Failed to close connection", e);
+            }
+        } else {
+            LOG.error("Attempting to close null connection");
 
-        try {
-            theConnection.close();
-        }
-        catch (SQLException e) {
-            LOG.error("Failed to close connection", e);
-            e.printStackTrace();
         }
 
     }
@@ -574,20 +535,26 @@ public class DatabaseManager {
             "SELECT * FROM player_account WHERE username='" + username + "'";
         // Connection conn = dbConnect();
         String storedPassword = "";
+        Connection conn = null;
 
         try {
-            Connection conn = getDB();
+            conn = getDbConnection();
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(tempQuery);
 
             rs.next();
             storedPassword = rs.getString("Password");
 
+            dbDisconnect(conn);
+
         }
         catch (SQLException e) {
             LOG.error("Account not found");
             e.printStackTrace();
 
+        }
+        finally {
+            dbDisconnect(conn);
         }
 
         if (storedPassword.compareTo(password.getBase64PasswordHash()) == 0) {
@@ -621,7 +588,7 @@ public class DatabaseManager {
         boolean exists = false;
 
         try {
-            conn = getDB();
+            conn = getDbConnection();
 
             String tempQuery = "SELECT * FROM player_account WHERE username= ?";
 
@@ -649,6 +616,11 @@ public class DatabaseManager {
             catch (SQLException sqle) {
 
             }
+            finally {
+                dbDisconnect(conn);
+            }
+
+            
         }
 
         // if we reach this line, we run into a SQLException
@@ -671,7 +643,7 @@ public class DatabaseManager {
         String salt = null;
 
         try {
-            conn = getDB();
+            conn = getDbConnection();
 
             String tempQuery =
                 "SELECT Password FROM player_account WHERE username= ?";
@@ -736,7 +708,7 @@ public class DatabaseManager {
 
             String script = "INSERT INTO player_account (ItemID, PersonID, "
                 + "ItemType, Quantity, LastModified ) VALUES (?,?,?,?,?)";
-            conn = getDB();
+            conn = getDbConnection();
             ps = conn.prepareStatement(script);
 
             ps.setInt(1, itemType.getItemId());
@@ -776,14 +748,7 @@ public class DatabaseManager {
                     // LOGGER.error("Failed to close prepared statement", sqle);
                 }
             }
-            if (conn != null) {
-                try {
-                    conn.close();
-                }
-                catch (SQLException sqle) {
-                    // LOGGER.error("Failed to close connection", sqle);
-                }
-            }
+            dbDisconnect(conn);
         }
     }
 }

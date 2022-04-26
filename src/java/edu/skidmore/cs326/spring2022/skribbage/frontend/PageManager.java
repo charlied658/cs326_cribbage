@@ -1,5 +1,6 @@
 package edu.skidmore.cs326.spring2022.skribbage.frontend;
 
+import edu.skidmore.cs326.spring2022.skribbage.common.User;
 import org.apache.log4j.Logger;
 
 /**
@@ -25,6 +26,11 @@ public final class PageManager {
      * Single active page open at a time.
      */
     private Page activePage;
+
+    /**
+     * Single active user at a time.
+     */
+    private User loggedInUser;
 
     static {
         LOG = Logger.getLogger(PageManager.class);
@@ -56,6 +62,23 @@ public final class PageManager {
      */
     public Page getActivePage() {
         return activePage;
+    }
+
+    /**
+     * Get logged in user.
+     * @return A user object.
+     */
+    public User getLoggedInUser() {
+        return loggedInUser;
+    }
+
+    /**
+     * Set logged in user.
+     * @param loggedInUser User that is now logged in.
+     */
+    public void setLoggedInUser(
+        User loggedInUser) {
+        this.loggedInUser = loggedInUser;
     }
 
     /**

@@ -3,7 +3,7 @@ package edu.skidmore.cs326.spring2022.skribbage.frontend;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserChangePasswordResponseController;
+import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserChangePasswordResponseEvent;
 import edu.skidmore.cs326.spring2022.skribbage.logic.events.AccountResponseEvent;
 import edu.skidmore.cs326.spring2022.skribbage.logic.events.CreateAccountResponseEvent;
 import edu.skidmore.cs326.spring2022.skribbage.logic.events.UserLoginResponseEvent;
@@ -74,7 +74,7 @@ public class AccountResponseController implements PropertyChangeListener {
             case USER_CHANGE_PASSWORD_RESPONSE:
                 LOG.debug("Caught user change password response.");
                 ((LoginPage) activePage).validateChangePasswordCallback(
-                    (UserChangePasswordResponseController) evt);
+                    (UserChangePasswordResponseEvent) evt);
                 break;
             case USER_CREATE_ACCOUNT_RESPONSE:
                 LOG.debug("Caught user create account response.");
