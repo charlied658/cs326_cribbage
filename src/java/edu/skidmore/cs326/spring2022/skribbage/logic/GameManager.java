@@ -8,12 +8,7 @@ import edu.skidmore.cs326.spring2022.skribbage.common.Card;
 import edu.skidmore.cs326.spring2022.skribbage.common.Player;
 
 /**
- * GameManager contains methods to manipulate the data in Game. It includes
- * methods to initialize a list of players, add a player to the player list,
- * add a value to the pegging total, add a card to the pone's pegging cards,
- * add a card to the dealer's pegging cards, initialize the pegging total, and
- * determines the index in the player list where the dealer is. A key
- * assumption for this class is that there are only two players.
+ * GameManager contains methods to manipulate the data in Game.
  *
  * @author Michael Shriner
  *         Last edited by Charlie Davidson
@@ -25,17 +20,17 @@ public class GameManager implements GameManagerInterface {
      */
     private Game g;
 
-    /**
-     * handManager.
-     */
-    @SuppressWarnings("unused")
-    private HandManager handManager = new HandManager();
+    // /**
+    //  * handManager.
+    //  */
+    // @SuppressWarnings("unused")
+    // private HandManager handManager = new HandManager();
 
     /**
      * Deck manager.
      */
     private DeckManipulator deckManager = new DeckManipulator();
-    
+
     /**
      * Number of cards in the deck.
      */
@@ -44,8 +39,7 @@ public class GameManager implements GameManagerInterface {
     /**
      * GameManager constructor that initializes a Game.
      *
-     * @param game
-     *            is the Game to set the class Game to.
+     * @param game is the Game to set the class Game to.
      */
     public GameManager(Game game) {
         this.g = game;
@@ -63,8 +57,7 @@ public class GameManager implements GameManagerInterface {
     /**
      * Sets the Game used for this class.
      *
-     * @param game
-     *            is a Game object.
+     * @param game is a Game object.
      */
     public void setGame(Game game) {
         g = game;
@@ -94,31 +87,6 @@ public class GameManager implements GameManagerInterface {
             return true;
         }
     }
-
-    /**
-     * Add the parameter Card to the pone's pegging cards.
-     *
-     * @param c
-     *            is the Card to add to the list of the pone's pegging cards.
-     */
-    // public void addPonePeggingCard(Card c) {
-    //     Hand ponePegCards = g.getPonePeggingCards();
-    //     handManager.addCardToHand(ponePegCards, c);
-    //     g.setPonePeggingCards(ponePegCards);
-    // }
-
-    /**
-     * Add the parameter Card to the dealer's pegging cards.
-     *
-     * @param c
-     *            is the Card to add to the list of the dealer's
-     *            pegging cards.
-     */
-    // public void addDealerPeggingCard(Card c) {
-    //     Hand dealerPegCards = g.getDealerPeggingCards();
-    //     handManager.addCardToHand(dealerPegCards, c);
-    //     g.setDealerPeggingCards(dealerPegCards);
-    // }
 
     /**
      * Initializes the pegging total to 0.
@@ -169,13 +137,13 @@ public class GameManager implements GameManagerInterface {
      * @return boolean
      */
     public boolean deckIsSorted() {
-        if (g.getCardsInDeck().getDeck().size() 
+        if (g.getCardsInDeck().getDeck().size()
             != g.getStandardDeck().getDeck().size()) {
             return false;
         }
 
         for (int i = 0; i < g.getCardsInDeck().getDeck().size(); i++) {
-            if (g.getCardsInDeck().getDeck().get(i) 
+            if (g.getCardsInDeck().getDeck().get(i)
                 != g.getStandardDeck().getDeck().get(i)) {
                 return false;
             }

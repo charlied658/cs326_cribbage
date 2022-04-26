@@ -78,7 +78,8 @@ public final class PersistenceFacade
 
         // TODO (DSR) This code needs to be updated,user does not house password
         DM.createUser(usernamge, passwordtemp);
-        return true;
+        
+        return userNameExists(userToCreate);
     }
 
     /**
