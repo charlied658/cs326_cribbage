@@ -10,6 +10,7 @@ import java.util.HashMap;
 import org.apache.log4j.Logger;
 
 import edu.skidmore.cs326.spring2022.skribbage.common.Card;
+import edu.skidmore.cs326.spring2022.skribbage.common.Player;
 import edu.skidmore.cs326.spring2022.skribbage.common.Rank;
 import edu.skidmore.cs326.spring2022.skribbage.common.Suit;
 
@@ -35,6 +36,11 @@ public class InventoryPage extends DrawingSurface implements Page {
      * mf - Holds reference to the window.
      */
     private MainFrame mf;
+    
+    /**
+     * currentPlayer - Current player whose inventory this is.
+     */
+    private Player currentPlayer;
 
     /**
      * inventory - Holds all items/cards in inventory.
@@ -67,7 +73,7 @@ public class InventoryPage extends DrawingSurface implements Page {
     private static final Logger LOG;
 
     static {
-        LOG = Logger.getLogger(PastGamesPage.class);
+        LOG = Logger.getLogger(InventoryPage.class);
     }
 
     /**
@@ -75,6 +81,8 @@ public class InventoryPage extends DrawingSurface implements Page {
      */
     public InventoryPage() {
         LOG.trace("Entered InventoryPage Constructor.");
+        //PLACEHOLDER - Add way to get player from database
+        currentPlayer = new Player();
         mf = new MainFrame(this, "Inventory", mainframeWidth,
             mainframeHeight, false);
         setup();
