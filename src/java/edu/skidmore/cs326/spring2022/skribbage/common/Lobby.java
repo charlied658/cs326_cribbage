@@ -33,7 +33,8 @@ public class Lobby {
     private int id;
 
     /**
-     * A host is required to start a lobby.
+     * A host and id are required to create a lobby when keeping
+     * track of multiple active lobbies at once.
      * 
      * @param host
      *            The user creating and hosting the lobby.
@@ -45,6 +46,19 @@ public class Lobby {
         users = new User[MAXIMUM_LOBBY_SIZE];
         users[0] = host;
         this.id = id;
+    }
+
+    /**
+     * Constructor for single active lobby implementation.
+     * 
+     * @param host
+     *            The user creating and hosting the lobby.
+     */
+    public Lobby(User host) {
+        this.host = host;
+        users = new User[MAXIMUM_LOBBY_SIZE];
+        users[0] = host;
+        id = -1;
     }
 
     /**

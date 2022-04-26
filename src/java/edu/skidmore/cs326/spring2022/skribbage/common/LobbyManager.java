@@ -43,6 +43,12 @@ public class LobbyManager implements LobbyManagement {
     private static Lobby[] lobbies = new Lobby[100];
 
     /**
+     * The one activeLobby used until multi-game/multi-lobby implementation is
+     * added.
+     */
+    private static Lobby activeLobby;
+
+    /**
      * Lazy initialization of instance in getter method for instance that
      * allows other classes to access.
      * 
@@ -52,6 +58,7 @@ public class LobbyManager implements LobbyManagement {
         if (instance == null) {
             instance = new LobbyManager();
             Arrays.fill(lobbies, null);
+            activeLobby = null;
         }
         return instance;
     }
@@ -62,7 +69,7 @@ public class LobbyManager implements LobbyManagement {
         int newIndex = nextEmptyIndex();
         lobbies[newIndex] = new Lobby(host, newIndex);
         return lobbies[newIndex];
-        
+
     }
 
     @Override
@@ -77,15 +84,28 @@ public class LobbyManager implements LobbyManagement {
         lobbies[lobby.getId()] = null;
 
     }
-    
-    /**
-     * Calls addUser method from Lobby class to add
-     * a user to the users array attribute in lobby instance.
-     * @param user
-     * @param lobby
-     */
+
+    @Override
     public void addUser(User user, Lobby lobby) {
         lobby.addUser(user);
+    }
+
+    /**
+     * Allows other classes to modify activeLobby.
+     * 
+     * @param lobby
+     */
+    public void setActiveLobby(Lobby lobby) {
+        activeLobby = lobby;
+    }
+
+    /**
+     * Allows other classes access to reference activeLobby attribute.
+     * 
+     * @return activeLobby
+     */
+    public Lobby getActiveLobby() {
+        return activeLobby;
     }
 
 }

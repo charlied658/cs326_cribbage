@@ -115,17 +115,17 @@ public class InventoryPrototype {
      * @param map
      *            HashMap used as our inventory
      */
-    public void updateInventory(HashMap<String, Integer> map) {
-        map.put("LastPlayerShowCard", 0);
-        map.put("Re-Battle", 0);
-        map.put("ThrowAwayPickUp", 0);
-        map.put("Mirror", 1);
-        map.put("Swap-Card", 0);
-        map.put("Copy", 0);
-        map.put("Disarm", 0);
-        map.put("PickPocket", 0);
-        map.put("autoPilot", 0);
-        map.put("copyCat", 0);
+    public void updateInventory() {
+        map.put(SpecialCard.LASTPLAYERSHOWCARD.getType(), 0);
+        map.put(SpecialCard.REBATTLECARD.getType(), 0);
+        map.put(SpecialCard.THROWAWAYPICKUPCARD.getType(), 0);
+        map.put(SpecialCard.MIRROR.getType(), 1);
+        //map.put(SpecialCard.SW, 0);
+        //map.put("Copy", 0);
+        map.put(SpecialCard.DISARM.getType(), 0);
+        map.put(SpecialCard.PICKPOCKET.getType(), 0);
+        map.put(SpecialCard.AUTOPILOT.getType(), 0);
+        map.put(SpecialCard.COPYCAT.getType(), 0);
         LOG.info("Players Inventory has been filled with current data");
         // e.printStackTrace();
     }
