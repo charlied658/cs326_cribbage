@@ -62,7 +62,7 @@ public final class PersistenceFacade
 
     /**
      * This will take in a user and a password and create a new user.
-     * 
+     *
      * @param userToCreate
      *            The user that is to be created
      * @param password
@@ -71,14 +71,17 @@ public final class PersistenceFacade
      */
     @Override
     public boolean userCreate(User userToCreate, Password password) {
-        // TODO Auto-generated method stub
-
         String usernamge = userToCreate.getUserName();
         String passwordtemp = password.getBase64SaltAndPasswordHash();
 
-        // TODO (DSR) This code needs to be updated,user does not house password
-        DM.createUser(usernamge, passwordtemp);
-        
+        // username is inappropriate
+        if (!PROXY.usernameCheck(usernamge)) {
+            LOG.error("Password contains inappropriate words");
+        } else {
+            DM.createUser(usernamge, passwordtemp);
+
+        }
+
         return userNameExists(userToCreate);
     }
 
@@ -157,7 +160,6 @@ public final class PersistenceFacade
 
     /**
      * This will saved the users current game that they are playing.
-     * 
      * @param userName
      *            The name of the user that we are saving the game
      * @param currentGame
