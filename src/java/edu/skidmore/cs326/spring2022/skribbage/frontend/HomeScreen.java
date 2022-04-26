@@ -3,9 +3,10 @@ package edu.skidmore.cs326.spring2022.skribbage.frontend;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Point;
-import java.lang.reflect.Field;
 
 import org.apache.log4j.Logger;
+
+import edu.skidmore.cs326.spring2022.skribbage.util.VerifyLibraryVersion;
 import us.daveread.edu.graphics.shape.Drawable;
 import us.daveread.edu.graphics.shape.impl.Image;
 import us.daveread.edu.graphics.shape.impl.Rectangle;
@@ -25,11 +26,6 @@ import us.daveread.edu.graphics.surface.MainFrame;
  */
 @SuppressWarnings("serial")
 public class HomeScreen extends DrawingSurface implements Page {
-    /**
-     * Minimum version of graphics library required for the UI.
-     */
-    private static final String MINIMUM_REQUIRED_GUI_LIBRARY_VERSION =
-        "00.05.06";
 
     /**
      * welcomeMessage - Text variable that holds the welcome message.
@@ -107,49 +103,34 @@ public class HomeScreen extends DrawingSurface implements Page {
     }
 
     /**
-     * Check that the correct version of the graphics libarry is available,
+     * Check that the correct version of the graphics library is available,
      * otherwise place a warning message on the GUI.
      */
     private void checkGraphicsLibrary() {
-        try {
-            @SuppressWarnings("unchecked")
-            Class<MainFrame> mf =
-                (Class<MainFrame>) Class
-                    .forName("us.daveread.edu.graphics.surface.MainFrame");
-            Field version = mf.getDeclaredField("VERSION");
-            version.setAccessible(true);
-
-            if (MINIMUM_REQUIRED_GUI_LIBRARY_VERSION
-                .compareTo((String) version.get(mf)) > 0) {
-                System.out.println("Min not met!");
-                LOG.warn(
-                    "Outdated version of GUI library on path. Found version "
-                        + version.get(mf) + " but need at least version "
-                        + MINIMUM_REQUIRED_GUI_LIBRARY_VERSION);
-                add(new Rectangle(new Point(5, logo.getLocation().y
-                    + logo.getDimension().height + 100),
-                    new Dimension(700, 100), Color.black, Color.red));
-                Text versionWarn = new Text(
-                    "Warning! Outdated version of GUI library on path.",
-                    new Point(100, logo.getLocation().y
-                        + logo.getDimension().height + 140),
-                    20, null, Color.white);
-                add(versionWarn);
-                versionWarn = new Text("Found version " + version.get(mf)
-                    + " but need at least version "
-                    + MINIMUM_REQUIRED_GUI_LIBRARY_VERSION,
-                    new Point(50, logo.getLocation().y
-                        + logo.getDimension().height + 170),
-                    20, null, Color.white);
-                add(versionWarn);
-            } else {
-                LOG.debug(
-                    "Version of GUI library found: " + version.getByte(mf));
-            }
-        }
-        catch (Throwable t) {
-            LOG.warn("Unable to verify GUI Library version", t);
-            t.printStackTrace();
+        String verificationResult =
+            VerifyLibraryVersion.getInstance().checkGraphicsLibraryMinVersion();
+        if (verificationResult != null) {
+            String[] versions = verificationResult.split(",");
+            LOG.warn(
+                "Outdated version of GUI library on path. Found version "
+                    + versions[0] + " but need at least version "
+                    + versions[1]);
+            add(new Rectangle(new Point(5, logo.getLocation().y
+                + logo.getDimension().height + 100),
+                new Dimension(700, 100), Color.black, Color.red));
+            Text versionWarn = new Text(
+                "Warning! Outdated version of GUI library on path.",
+                new Point(100, logo.getLocation().y
+                    + logo.getDimension().height + 140),
+                20, null, Color.white);
+            add(versionWarn);
+            versionWarn = new Text("Found version " + versions[0]
+                + " but need at least version "
+                + versions[1],
+                new Point(50, logo.getLocation().y
+                    + logo.getDimension().height + 170),
+                20, null, Color.white);
+            add(versionWarn);
         }
     }
 
