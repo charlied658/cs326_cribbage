@@ -24,7 +24,6 @@ Quantity int,
 LastModified varchar(255),          
 FOREIGN KEY(PersonID) References player_account(PersonID),
 FOREIGN KEY(ItemID) References item_table(itemID)
- 
 );
 
 

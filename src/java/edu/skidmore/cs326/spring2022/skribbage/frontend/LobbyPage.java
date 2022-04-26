@@ -147,9 +147,10 @@ public class LobbyPage extends DrawingSurface implements Page {
     public LobbyPage() {
         LOG.trace("Entered LobbyPage Constructor.");
         pageManager = PageManager.getInstance();
+        lobbyManager = LobbyManager.getInstance();
         mf = new MainFrame(this, "Pre-Game Lobby", mainframeWidth,
             mainframeHeight, false);
-        //players.add(lobbyManager.)
+        players.add(lobbyManager.getActiveLobby().getHost());
         setup();
     }
 
