@@ -9,6 +9,7 @@ import java.awt.Point;
 import java.util.ArrayList;
 
 import edu.skidmore.cs326.spring2022.skribbage.common.LobbyManager;
+import edu.skidmore.cs326.spring2022.skribbage.common.UserRole;
 import org.apache.log4j.Logger;
 
 import edu.skidmore.cs326.spring2022.skribbage.common.User;
@@ -36,7 +37,6 @@ import us.daveread.edu.graphics.shape.impl.Circle;
  *         Code Reviewed March 27, 2022 - Zoe Beals
  */
 
-@SuppressWarnings("serial")
 public class LobbyPage extends DrawingSurface implements Page {
     /**
      * loggedInPlayer1 - The displayed player 1 name.
@@ -52,6 +52,8 @@ public class LobbyPage extends DrawingSurface implements Page {
      * loggedInPlayer3 - The displayed player 3 name.
      */
     // private String loggedInPlayer3;
+
+    private static final Color CPU_COLOR = Color.CYAN;
 
     /**
      * MAX_PLAYERS - Maximum player count in a given lobby.
@@ -152,13 +154,15 @@ public class LobbyPage extends DrawingSurface implements Page {
         mf = new MainFrame(this, "Pre-Game Lobby", mainframeWidth,
             mainframeHeight, false);
         players.add(lobbyManager.getActiveLobby().getHost());
+        players
+            .add(new User(null, "[CPU] Computer Dealer", UserRole.CPU));
         setup();
     }
 
     /**
      * Takes new player to display on lobby page.
      *
-     * @param player
+     * @param player player to retrieve.
      */
     public void retrievePlayer(User player) {
         LOG.trace("Entered LobbyPage's getPlayer");
@@ -202,8 +206,10 @@ public class LobbyPage extends DrawingSurface implements Page {
             add(new Text(player.getUserName(), new Point(35,
                 textStartingY), 16, Color.BLACK));
             int circleDiameter = 15;
+            boolean cpu = player.getUserRole() == UserRole.CPU;
             add(new Circle(new Point(15, textStartingY - circleDiameter),
-                circleDiameter, Color.RED, Color.RED));
+                circleDiameter, cpu ? CPU_COLOR : Color.RED,
+                cpu ? CPU_COLOR : Color.RED));
             textStartingY += 20;
         }
 
@@ -277,7 +283,11 @@ public class LobbyPage extends DrawingSurface implements Page {
             lobbyManager.deleteLobby(lobbyManager.getActiveLobby());
             closeWindow();
         } else if (e instanceof Circle) {
-            setReadyButtonColor((Circle) e);
+            Circle clickedCircle = (Circle) e;
+            if (!(clickedCircle.getFillColor() == CPU_COLOR)) {
+                setReadyButtonColor((Circle) e);
+            }
+
         } else if (e == startButton) {
 
             // Placeholder - not functional yet
