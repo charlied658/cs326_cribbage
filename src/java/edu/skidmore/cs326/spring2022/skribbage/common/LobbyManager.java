@@ -40,7 +40,7 @@ public class LobbyManager implements LobbyManagement {
     /**
      * The lobbies tracked by LobbyManager.
      */
-    private Lobby[] lobbies = new Lobby[100];
+    private static Lobby[] lobbies = new Lobby[100];
 
     /**
      * Lazy initialization of instance in getter method for instance that
@@ -48,7 +48,7 @@ public class LobbyManager implements LobbyManagement {
      * 
      * @return instance
      */
-    public LobbyManager getInstance() {
+    public static LobbyManager getInstance() {
         if (instance == null) {
             instance = new LobbyManager();
             Arrays.fill(lobbies, null);
@@ -57,10 +57,12 @@ public class LobbyManager implements LobbyManagement {
     }
 
     @Override
-    public void createLobby(User host) {
+    public Lobby createLobby(User host) {
 
         int newIndex = nextEmptyIndex();
         lobbies[newIndex] = new Lobby(host, newIndex);
+        return lobbies[newIndex];
+        
     }
 
     @Override
