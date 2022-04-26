@@ -177,13 +177,23 @@ public class DatabaseManagerTest {
     }
 
     /**
-     * Another test.
+     * Another test. - not sure what the use is
+     */
+//    @Test
+//    public void walle() {
+//        String cointest = databaseinstance.walletQuery(325);
+//        assertEquals("Coin count should be successful", cointest,
+//            "player coin value: 100000");
+//    }
+    
+    /**
+     * Another inventory Test
      */
     @Test
-    public void inventoryQuerysuccess() {
-        String cointest = databaseinstance.walletQuery(325);
-        assertEquals("Coin count should be successful", cointest,
-            "player coin value: 100000");
+    public void TestInventoryQuery() {
+    	String invTest = databaseinstance.inventoryQuery(9943).toString();
+    	System.out.println("hello " + invTest);
+    	
     }
 
     /**
