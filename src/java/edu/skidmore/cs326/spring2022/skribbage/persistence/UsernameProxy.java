@@ -140,7 +140,7 @@ public class UsernameProxy {
         Properties prop = null;
         String filePath =
             currentDir + "/src/java/edu/skidmore/cs326/spring2022/"
-                + "skribbage/persistence/BadNicknames";
+                + "skribbage/persistence/badnicknames.properties";
         try {
 
             file = new FileInputStream(filePath);

@@ -4,6 +4,10 @@
 INSERT INTO player_account (personID, LastName, FirstName, UserName, Password, AvatarURL, Email)
 VALUES (/* comma separated values in the exact order of the above columns*/ ); 
 
+INSERT INTO inventory (ItemID, PersonID, Quantity, LastModified)
+VALUES (/* comma separated values in the exact order of the above columns*/ ); 
+
+
 INSERT INTO player_account //note that columns field is not necessary if you are adding to all columns
 VALUES (value1, value2, value3, ...); 
 //just use NEWID() function for personID when creating new account
