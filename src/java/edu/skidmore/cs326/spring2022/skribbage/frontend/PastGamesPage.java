@@ -25,7 +25,6 @@ import us.daveread.edu.utilities.Utility;
  *         lOGGING added by Sten Leinasaar March 22, 2022.
  *         This is the page that allows the player to view and load old games.
  */
-
 @SuppressWarnings("serial")
 public class PastGamesPage extends DrawingSurface implements Page {
     /**

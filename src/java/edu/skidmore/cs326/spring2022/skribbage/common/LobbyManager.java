@@ -1,5 +1,8 @@
 package edu.skidmore.cs326.spring2022.skribbage.common;
 
+import edu.skidmore.cs326.spring2022.skribbage.frontend.PageManager;
+import org.apache.log4j.Logger;
+
 import java.util.Arrays;
 
 /**
@@ -49,6 +52,15 @@ public class LobbyManager implements LobbyManagement {
     private static Lobby activeLobby;
 
     /**
+     * logger.
+     */
+    private static final Logger LOG;
+
+    static {
+        LOG = Logger.getLogger(PageManager.class);
+    }
+
+    /**
      * Lazy initialization of instance in getter method for instance that
      * allows other classes to access.
      * 
@@ -67,7 +79,11 @@ public class LobbyManager implements LobbyManagement {
     public Lobby createLobby(User host) {
 
         int newIndex = nextEmptyIndex();
-        lobbies[newIndex] = new Lobby(host, newIndex);
+        Lobby lobbyToCreate = new Lobby(host, newIndex);
+        lobbies[newIndex] = lobbyToCreate;
+        setActiveLobby(lobbyToCreate);
+        LOG.trace(this.getActiveLobby().toString());
+
         return lobbies[newIndex];
 
     }
