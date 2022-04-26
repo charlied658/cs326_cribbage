@@ -17,6 +17,7 @@ public class LobbyManager implements LobbyManagement {
 
     /**
      * Finds the first empty element in the array of lobbies.
+     * 
      * @return index
      */
     private int nextEmptyIndex() {
@@ -26,9 +27,9 @@ public class LobbyManager implements LobbyManagement {
             }
         }
         return 0;
-        
+
     }
-    
+
     /**
      * Empty private constructor to allow for singleton functionality.
      */
@@ -39,18 +40,15 @@ public class LobbyManager implements LobbyManagement {
     /**
      * The lobbies tracked by LobbyManager.
      */
-    private Lobby[] lobbies = new Lobby[100];
-    
+    private static Lobby[] lobbies = new Lobby[100];
+
     /**
      * Lazy initialization of instance in getter method for instance that
      * allows other classes to access.
-<<<<<<< HEAD
      * 
-=======
->>>>>>> 19d86ddee8ceded0457410b62340f916cfaadf94
      * @return instance
      */
-    public LobbyManager getInstance() {
+    public static LobbyManager getInstance() {
         if (instance == null) {
             instance = new LobbyManager();
             Arrays.fill(lobbies, null);
@@ -59,21 +57,35 @@ public class LobbyManager implements LobbyManagement {
     }
 
     @Override
-    public void createLobby(User host) {
+    public Lobby createLobby(User host) {
+
         int newIndex = nextEmptyIndex();
-        lobbies[nextEmptyIndex()] = new Lobby(host);
+        lobbies[newIndex] = new Lobby(host, newIndex);
+        return lobbies[newIndex];
+        
     }
 
     @Override
     public Game startGame(Lobby lobby) {
-        // TODO Auto-generated method stub
+        deleteLobby(lobby);
         return null;
     }
 
     @Override
     public void deleteLobby(Lobby lobby) {
-        // TODO Auto-generated method stub
 
+        lobbies[lobby.getId()] = null;
+
+    }
+    
+    /**
+     * Calls addUser method from Lobby class to add
+     * a user to the users array attribute in lobby instance.
+     * @param user
+     * @param lobby
+     */
+    public void addUser(User user, Lobby lobby) {
+        lobby.addUser(user);
     }
 
 }
