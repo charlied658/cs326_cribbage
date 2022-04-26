@@ -28,7 +28,7 @@ import us.daveread.edu.graphics.shape.impl.Circle;
 /***
  * The "lobby," or the page that the player(s) see immediately before starting a
  * new game.
- * 
+ *
  * @author Jonah Marcus
  *         Last Update: April 11, 2022
  *         Last Edited by Jonah Marcus
@@ -122,6 +122,7 @@ public class LobbyPage extends DrawingSurface implements Page {
      */
     @SuppressWarnings("unused")
     private NavigationPage navPage;
+
     /**
      * PageManager instance for managing pages.
      */
@@ -156,7 +157,7 @@ public class LobbyPage extends DrawingSurface implements Page {
 
     /**
      * Takes new player to display on lobby page.
-     * 
+     *
      * @param player
      */
     public void retrievePlayer(User player) {
@@ -182,7 +183,7 @@ public class LobbyPage extends DrawingSurface implements Page {
         inventoryPageButton = new Text("Inventory Page", new Point(20, 300),
             25, Color.BLACK, Color.BLUE);
 
-        int textStartingY = 100;
+        int textStartingY = 125;
 
         // Hardcoded Users into ArrayList
         // retrievePlayer(new User("doinurmom69@sussybaka.net", "Joe Byron",
@@ -192,10 +193,17 @@ public class LobbyPage extends DrawingSurface implements Page {
 
         add(new Text("Players in Lobby (Max " + MAX_PLAYERS + ")",
             new Point(25, 75), 20, Color.BLACK));
+        add(new Text(
+            "Lobby ID: " + lobbyManager.getActiveLobby()
+                .getId(),
+            new Point(25, 100), 20, Color.BLACK));
 
         for (User player : players) {
             add(new Text(player.getUserName(), new Point(35,
                 textStartingY), 16, Color.BLACK));
+            int circleDiameter = 15;
+            add(new Circle(new Point(15, textStartingY - circleDiameter),
+                circleDiameter, Color.RED, Color.RED));
             textStartingY += 20;
         }
 
@@ -243,9 +251,8 @@ public class LobbyPage extends DrawingSurface implements Page {
 
     /**
      * setReadyButtonColor method - sets the color of the ready button.
-     * 
-     * @param c
-     *            - the Circle to set.
+     *
+     * @param c - the Circle to set.
      */
     private void setReadyButtonColor(Circle c) {
         LOG.trace("Entered setReadyButtonColor method.");
@@ -267,13 +274,10 @@ public class LobbyPage extends DrawingSurface implements Page {
             returnToMainMenu.setBorderColor(Color.BLACK);
             navPage = (NavigationPage) pageManager
                 .createPage(PageType.NAVIGATION_PAGE);
+            lobbyManager.deleteLobby(lobbyManager.getActiveLobby());
             closeWindow();
-        } else if (e == player1Ready) {
-            setReadyButtonColor(player1Ready);
-        } else if (e == player2Ready) {
-            setReadyButtonColor(player2Ready);
-        } else if (e == player3Ready) {
-            setReadyButtonColor(player3Ready);
+        } else if (e instanceof Circle) {
+            setReadyButtonColor((Circle) e);
         } else if (e == startButton) {
 
             // Placeholder - not functional yet
