@@ -22,8 +22,8 @@ import us.daveread.edu.graphics.surface.MainFrame;
  * between Rules, Past Games, and New Game pages.
  *
  * @author Zoe Beals
- *         Code reviewed by Sten Leinasaar 04/20/22
- *         Line modified by Declan Morris on 04/26/22
+ * Code reviewed by Sten Leinasaar 04/20/22
+ * Line modified by Declan Morris on 04/26/22
  */
 @SuppressWarnings("serial")
 public class NavigationPage extends DrawingSurface implements Page {
@@ -188,12 +188,8 @@ public class NavigationPage extends DrawingSurface implements Page {
                 LOG.trace(
                     "Starting a new lobby from Nav page with user "
                         + pageManager.getLoggedInUser());
-                // changed line to use LobbyManager instead of directly calling
-                // constructor. -Declan Morris
-                Lobby lobby = LobbyManager.getInstance()
+                LobbyManager.getInstance()
                     .createLobby(pageManager.getLoggedInUser());
-                eventFactory.createEvent(EventType.LOBBY_CREATE_LOBBY, this,
-                    lobby);
             } else {
                 LOG.error("A user started a lobby without being logged in");
             }
