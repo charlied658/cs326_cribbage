@@ -13,25 +13,19 @@ interface GameInterface {
     /**
      * theDeck.
      */
-    Deck THE_DECK = new Deck();
+    Deck theDeck = new Deck();
 
     /** The list of players who are playing this game of Cribbage. */
-    List<Player> PLAYER_LIST = new ArrayList<Player>();
+    List<Player> playerList = new ArrayList<Player>();
 
     /**
      * The total score among the players during the pegging phase of
      * the game (0 <= peggingTotal <= 31).
      */
-    int PEGGING_TOTAL = 0;
+    int peggingTotal = 0;
 
     /** The crib for the game. */
-    Hand CRIB_CARDS = new Hand();
-
-    /** The set of cards played by the pone during the pegging phase. */
-    Hand PONE_PEGGING_CARDS = new Hand();
-
-    /** The set of cards played by the dealer during the pegging phase. */
-    Hand DEALER_PEGGING_CARDS = new Hand();
+    Hand cribCards = new Hand();
 
     /**
      * initPlayers method.
@@ -56,24 +50,6 @@ interface GameInterface {
     void setPeggingTotal(int pts);
 
     /**
-     * Sets the pone's pegging cards.
-     *
-     * @param ponePegCards
-     *            is a list of Cards to assign to the pone's pegging
-     *            cards.
-     */
-    // void setPonePeggingCards(Hand ponePegCards);
-
-    /**
-     * Sets the dealer's pegging cards.
-     *
-     * @param dealerPegCards
-     *            is a list of Cards to assign to the dealer's
-     *            pegging cards.
-     */
-    // void setDealerPeggingCards(Hand dealerPegCards);
-
-    /**
      * Returns the Game's Deck.
      *
      * @return the Game's Deck.
@@ -86,20 +62,6 @@ interface GameInterface {
      * @return the current pegging total of this Game.
      */
     int getPeggingTotal();
-
-    /**
-     * Returns the pone's pegging cards for this Game.
-     *
-     * @return this Game's pone's pegging cards.
-     */
-    // Hand getPonePeggingCards();
-
-    /**
-     * Returns the dealer's pegging cards for this Game.
-     *
-     * @return this Game's dealer's pegging cards.
-     */
-    // Hand getDealerPeggingCards();
 
     /**
      * Returns the list of Player objects for this Game.
