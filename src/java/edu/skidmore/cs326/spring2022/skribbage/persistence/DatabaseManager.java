@@ -134,6 +134,59 @@ public class DatabaseManager {
 
         }
     }
+    
+    public void changepass(String user, String newPassword) {
+
+        Connection conn = null;
+
+        PreparedStatement ps = null;
+
+        ResultSet rs = null;
+
+        try {
+            // System.out.println("Run a prepared database query");
+            // Class.forName("com.mysql.jdbc.Driver");
+            conn = getDbConnection();
+
+            String script = "UPDATE player_account SET Password = ?  WHERE UserName = ?";
+            ps = conn.prepareStatement(script);
+
+            ps.setString(1, newPassword);
+            ps.setString(2, user);
+
+            ps.executeUpdate();
+
+        }
+        catch (SQLException sqle) {
+            sqle.printStackTrace();
+            // LOGGER.error("Database Interaction Failure", sqle);
+
+        }
+        finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                }
+                catch (SQLException sqle) {
+                    // LOGGER.error("Failed to close result set", sqle);
+
+                }
+
+            }
+
+            if (ps != null) {
+                try {
+                    ps.close();
+                }
+                catch (SQLException sqle) {
+                    // LOGGER.error("Failed to close prepared statement", sqle);
+                }
+            }
+
+            dbDisconnect(conn);
+
+        }
+    }
 
     /**
      * This is a function to check the database for a specific user and check
