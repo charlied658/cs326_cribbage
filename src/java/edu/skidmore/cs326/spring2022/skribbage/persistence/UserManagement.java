@@ -51,7 +51,6 @@ public interface UserManagement {
      * login.
      * 
      * @param user
-     * @param password
      * @return the login.
      */
     Password getPassword(User user);

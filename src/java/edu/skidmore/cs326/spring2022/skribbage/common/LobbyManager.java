@@ -58,18 +58,19 @@ public class LobbyManager implements LobbyManagement {
 
     @Override
     public void createLobby(User host) {
+        
         int newIndex = nextEmptyIndex();
         lobbies[newIndex] = new Lobby(host, newIndex);
     }
 
     @Override
     public Game startGame(Lobby lobby) {
-        // TODO Auto-generated method stub
         return null;
     }
 
     @Override
     public void deleteLobby(Lobby lobby) {
+
         lobbies[lobby.getId()] = null;
 
     }

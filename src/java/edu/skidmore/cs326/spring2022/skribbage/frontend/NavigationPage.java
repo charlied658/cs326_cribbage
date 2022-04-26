@@ -18,10 +18,11 @@ import us.daveread.edu.graphics.surface.MainFrame;
 /**
  * Navigation Page - holds the functionality to peruse
  * between Rules, Past Games, and New Game pages.
- * 
+ *
  * @author Zoe Beals
  *         Code reviewed by Sten Leinasaar 04/20/22
  */
+@SuppressWarnings("serial")
 public class NavigationPage extends DrawingSurface implements Page {
 
     /**
@@ -32,7 +33,6 @@ public class NavigationPage extends DrawingSurface implements Page {
     /**
      * user - Text variable to hold user.
      */
-    @SuppressWarnings("unused")
     private Text user;
 
     /**
@@ -164,6 +164,10 @@ public class NavigationPage extends DrawingSurface implements Page {
         // "" + LoginPageManager.getInstance().getLoginPage().getUsername(),
         // new Point(20, 60), 20, Color.black, Color.blue);
         // add(user);
+        user = new Text(
+            "" + pageManager.getLoggedInUser().getUserName(),
+            new Point(20, 60), 20, Color.black, Color.blue);
+        add(user);
         add(welcomeMessage);
     }
 
@@ -175,9 +179,18 @@ public class NavigationPage extends DrawingSurface implements Page {
         } else if (e == lobbyPageButton) {
             lobbyPage = (LobbyPage) pageManager.createPage(PageType.LOBBY_PAGE);
             closeWindow();
-            //Fire an event to start a new lobby
-            //Lobby lobby = new Lobby()
-            eventFactory.createEvent(EventType.LOBBY_CREATE_LOBBY, this);
+            // Fire an event to start a new lobby
+            // Lobby lobby = new Lobby()
+            if (pageManager.getLoggedInUser() != null) {
+                LOG.trace(
+                    "Starting a new lobby from Nav page with user "
+                        + pageManager.getLoggedInUser());
+                Lobby lobby = new Lobby(pageManager.getLoggedInUser());
+                eventFactory.createEvent(EventType.LOBBY_CREATE_LOBBY, this,
+                    lobby);
+            } else {
+                LOG.error("A user started a lobby without being logged in");
+            }
 
         } else if (e == pastGamesPageButton) {
             pastGamesPage = (PastGamesPage) pageManager
