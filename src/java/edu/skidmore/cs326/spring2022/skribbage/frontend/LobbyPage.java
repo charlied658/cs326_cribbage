@@ -9,6 +9,7 @@ import java.awt.Point;
 import java.util.ArrayList;
 
 import edu.skidmore.cs326.spring2022.skribbage.common.LobbyManager;
+import edu.skidmore.cs326.spring2022.skribbage.common.UserRole;
 import org.apache.log4j.Logger;
 
 import edu.skidmore.cs326.spring2022.skribbage.common.User;
@@ -28,7 +29,7 @@ import us.daveread.edu.graphics.shape.impl.Circle;
 /***
  * The "lobby," or the page that the player(s) see immediately before starting a
  * new game.
- * 
+ *
  * @author Jonah Marcus
  *         Last Update: April 11, 2022
  *         Last Edited by Jonah Marcus
@@ -36,7 +37,6 @@ import us.daveread.edu.graphics.shape.impl.Circle;
  *         Code Reviewed March 27, 2022 - Zoe Beals
  */
 
-@SuppressWarnings("serial")
 public class LobbyPage extends DrawingSurface implements Page {
     /**
      * loggedInPlayer1 - The displayed player 1 name.
@@ -52,6 +52,8 @@ public class LobbyPage extends DrawingSurface implements Page {
      * loggedInPlayer3 - The displayed player 3 name.
      */
     // private String loggedInPlayer3;
+
+    private static final Color CPU_COLOR = Color.CYAN;
 
     /**
      * MAX_PLAYERS - Maximum player count in a given lobby.
@@ -122,6 +124,7 @@ public class LobbyPage extends DrawingSurface implements Page {
      */
     @SuppressWarnings("unused")
     private NavigationPage navPage;
+
     /**
      * PageManager instance for managing pages.
      */
@@ -147,16 +150,19 @@ public class LobbyPage extends DrawingSurface implements Page {
     public LobbyPage() {
         LOG.trace("Entered LobbyPage Constructor.");
         pageManager = PageManager.getInstance();
+        lobbyManager = LobbyManager.getInstance();
         mf = new MainFrame(this, "Pre-Game Lobby", mainframeWidth,
             mainframeHeight, false);
-        //players.add(lobbyManager.)
+        players.add(lobbyManager.getActiveLobby().getHost());
+        players
+            .add(new User(null, "[CPU] Computer Dealer", UserRole.CPU));
         setup();
     }
 
     /**
      * Takes new player to display on lobby page.
-     * 
-     * @param player
+     *
+     * @param player player to retrieve.
      */
     public void retrievePlayer(User player) {
         LOG.trace("Entered LobbyPage's getPlayer");
@@ -181,7 +187,7 @@ public class LobbyPage extends DrawingSurface implements Page {
         inventoryPageButton = new Text("Inventory Page", new Point(20, 300),
             25, Color.BLACK, Color.BLUE);
 
-        int textStartingY = 100;
+        int textStartingY = 125;
 
         // Hardcoded Users into ArrayList
         // retrievePlayer(new User("doinurmom69@sussybaka.net", "Joe Byron",
@@ -191,10 +197,19 @@ public class LobbyPage extends DrawingSurface implements Page {
 
         add(new Text("Players in Lobby (Max " + MAX_PLAYERS + ")",
             new Point(25, 75), 20, Color.BLACK));
+        add(new Text(
+            "Lobby ID: " + lobbyManager.getActiveLobby()
+                .getId(),
+            new Point(25, 100), 20, Color.BLACK));
 
         for (User player : players) {
             add(new Text(player.getUserName(), new Point(35,
                 textStartingY), 16, Color.BLACK));
+            int circleDiameter = 15;
+            boolean cpu = player.getUserRole() == UserRole.CPU;
+            add(new Circle(new Point(15, textStartingY - circleDiameter),
+                circleDiameter, cpu ? CPU_COLOR : Color.RED,
+                cpu ? CPU_COLOR : Color.RED));
             textStartingY += 20;
         }
 
@@ -242,9 +257,8 @@ public class LobbyPage extends DrawingSurface implements Page {
 
     /**
      * setReadyButtonColor method - sets the color of the ready button.
-     * 
-     * @param c
-     *            - the Circle to set.
+     *
+     * @param c - the Circle to set.
      */
     private void setReadyButtonColor(Circle c) {
         LOG.trace("Entered setReadyButtonColor method.");
@@ -266,13 +280,14 @@ public class LobbyPage extends DrawingSurface implements Page {
             returnToMainMenu.setBorderColor(Color.BLACK);
             navPage = (NavigationPage) pageManager
                 .createPage(PageType.NAVIGATION_PAGE);
+            lobbyManager.deleteLobby(lobbyManager.getActiveLobby());
             closeWindow();
-        } else if (e == player1Ready) {
-            setReadyButtonColor(player1Ready);
-        } else if (e == player2Ready) {
-            setReadyButtonColor(player2Ready);
-        } else if (e == player3Ready) {
-            setReadyButtonColor(player3Ready);
+        } else if (e instanceof Circle) {
+            Circle clickedCircle = (Circle) e;
+            if (!(clickedCircle.getFillColor() == CPU_COLOR)) {
+                setReadyButtonColor((Circle) e);
+            }
+
         } else if (e == startButton) {
 
             // Placeholder - not functional yet

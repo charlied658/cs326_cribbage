@@ -2,8 +2,11 @@ package edu.skidmore.cs326.spring2022.skribbage.frontend;
 
 import java.awt.Color;
 import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import javax.swing.JButton;
 
@@ -25,9 +28,9 @@ import us.daveread.edu.utilities.Utility;
  *         lOGGING added by Sten Leinasaar March 22, 2022.
  *         This is the page that allows the player to view and load old games.
  */
-
 @SuppressWarnings("serial")
-public class PastGamesPage extends DrawingSurface implements Page {
+public class PastGamesPage extends DrawingSurface
+    implements Page , ActionListener {
     /**
      * mainFrameWidth - int variable that holds mainframe width.
      */
@@ -47,11 +50,6 @@ public class PastGamesPage extends DrawingSurface implements Page {
      * returnToMainMenu - button to return to homepage.
      */
     private Text returnToMainMenu;
-
-    /**
-     * For proof of concept. Past Game button that opens up a game page.
-     */
-    private Text pastGame;
 
     /**
      * allGames - array list of playable games.
@@ -85,6 +83,11 @@ public class PastGamesPage extends DrawingSurface implements Page {
     private PlayableGame three;
 
     /**
+     * ArrayList of JButtons to store pastGames.
+     */
+    private List<JButton> pastGameButtons;
+
+    /**
      * navPage - NavigationPage window.
      */
     @SuppressWarnings("unused")
@@ -109,6 +112,7 @@ public class PastGamesPage extends DrawingSurface implements Page {
      */
     public PastGamesPage() {
         LOG.debug("Constructor reached");
+        pastGameButtons = new ArrayList<JButton>();
         pageManager = PageManager.getInstance();
         mf = new MainFrame(this, "Past Games Page", mainframeWidth,
             mainframeHeight, false);
@@ -154,12 +158,9 @@ public class PastGamesPage extends DrawingSurface implements Page {
             new Text("Load Previous Game", new Point(50, 60), 36, Color.BLACK);
         returnToMainMenu = new Text("Main Menu", new Point(160, 115), 25,
             Color.BLACK, Color.BLUE);
-        pastGame = new Text("Load Last Game", new Point(160, 140), 25,
-            Color.black, Color.BLUE);
 
         add(header);
         add(returnToMainMenu);
-        add(pastGame);
 
         Image logo = new Image("logo.png", new Point(435, 0), 0.48, null);
         add(logo);
@@ -226,7 +227,9 @@ public class PastGamesPage extends DrawingSurface implements Page {
             JButton gameButton = new JButton(g.getName() + " - "
                 + year + " " + formatDateOrMonth(month) + " "
                 + formatDateOrMonth(date) + " " + g.getPlayers().toString());
-
+            gameButton.addActionListener(this);
+            pastGameButtons.add(gameButton);
+            
             /*
              * String[] gameInfo = completeGames.get(i).getGameInfo();
              * String timestamp = gameInfo[0];
@@ -273,10 +276,40 @@ public class PastGamesPage extends DrawingSurface implements Page {
             navPage =
                 (NavigationPage) pageManager
                     .createPage(PageType.NAVIGATION_PAGE);
-        } else if (e == pastGame) {
-            pageManager.createPage(PageType.START_GAME_PAGE);
-
         }
 
+    }
+
+    /**
+     * Method for proof of concept that a button can be clicked.
+     * 
+     * @param i
+     */
+    private void openPage(int i) {
+        // Get game data from the button number being passed.
+        // create a page using that object info. TODO must be added this
+        // functionality.
+        pageManager.createPage(PageType.START_GAME_PAGE);
+        closeWindow();
+    }
+    //TODO NOT WORKING YET.
+    //TODO update, it works for finished games.
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        
+
+        for (int i = 0; i < pastGameButtons.size(); i++) {
+
+            if (e.getSource().equals(pastGameButtons.get(i))) {
+                openPage(i);
+            }
+
+        }
+    }
+    /**
+     * Inherited method from Page interface.
+     */
+    public void closeWindowm() {
+        mf.dispose();
     }
 }

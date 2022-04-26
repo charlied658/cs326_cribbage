@@ -244,7 +244,7 @@ public class LoginPage extends DrawingSurface implements Page {
         add(loginButton);
         add(changePasswordButton);
         add(createAccountButton);
-        add(startGameButton);
+        //add(startGameButton);
 
     }
 

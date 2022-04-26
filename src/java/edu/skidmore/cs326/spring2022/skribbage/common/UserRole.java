@@ -16,9 +16,15 @@ public enum UserRole {
      */
     AUTHORIZED,
     /**
+     * A computer player.
+     */
+    CPU,
+    /**
      * A user that is logged in and has extra admin permissions.
      */
     ADMIN;
+
+
 
     /**
      * Empty constructor, in case extra metadata is added in the future.
