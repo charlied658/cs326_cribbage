@@ -7,6 +7,8 @@ import java.awt.Point;
 import edu.skidmore.cs326.spring2022.skribbage.common.EventFactory;
 import edu.skidmore.cs326.spring2022.skribbage.common.EventType;
 import edu.skidmore.cs326.spring2022.skribbage.common.Lobby;
+import edu.skidmore.cs326.spring2022.skribbage.common.LobbyManager;
+
 import org.apache.log4j.Logger;
 
 import us.daveread.edu.graphics.shape.Drawable;
@@ -21,6 +23,7 @@ import us.daveread.edu.graphics.surface.MainFrame;
  *
  * @author Zoe Beals
  *         Code reviewed by Sten Leinasaar 04/20/22
+ *         Line modified by Declan Morris on 04/26/22
  */
 @SuppressWarnings("serial")
 public class NavigationPage extends DrawingSurface implements Page {
@@ -185,7 +188,10 @@ public class NavigationPage extends DrawingSurface implements Page {
                 LOG.trace(
                     "Starting a new lobby from Nav page with user "
                         + pageManager.getLoggedInUser());
-                Lobby lobby = new Lobby(pageManager.getLoggedInUser());
+                // changed line to use LobbyManager instead of directly calling
+                // constructor. -Declan Morris
+                Lobby lobby = LobbyManager.getInstance()
+                    .createLobby(pageManager.getLoggedInUser());
                 eventFactory.createEvent(EventType.LOBBY_CREATE_LOBBY, this,
                     lobby);
             } else {
