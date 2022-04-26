@@ -66,29 +66,31 @@ public class GameManagerTest {
      * Test addPonePeggingCard method.
      * Passes.
      */
-    @Test
-    public void testAddPonePeggingCard() {
-
-        Card c = new Card(Rank.JACK, Suit.HEARTS);
-
-        gameManager.addPonePeggingCard(c);
-
-        assertTrue(game.getPonePeggingCards().getCardsInHand().get(0).equals(c));
-    }
+//    @Test
+//    public void testAddPonePeggingCard() {
+//
+//        Card c = new Card(Rank.JACK, Suit.HEARTS);
+//
+//        gameManager.addPonePeggingCard(c);
+//
+//        assertTrue(game.getPonePeggingCards()
+//          .getCardsInHand().get(0).equals(c));
+//    }
 
     /**
      * Test addDealerPeggingCard method.
      * Passes.
      */
-    @Test
-    public void testAddDealerPeggingCard() {
-
-        Card c = new Card(Rank.JACK, Suit.HEARTS);
-
-        gameManager.addDealerPeggingCard(c);
-
-        assertTrue(game.getDealerPeggingCards().getCardsInHand().get(0).equals(c));
-    }
+//    @Test
+//    public void testAddDealerPeggingCard() {
+//
+//        Card c = new Card(Rank.JACK, Suit.HEARTS);
+//
+//        gameManager.addDealerPeggingCard(c);
+//
+//        assertTrue(game.getDealerPeggingCards()
+//          .getCardsInHand().get(0).equals(c));
+//    }
 
     /**
      * Test the initialize pegging total method.

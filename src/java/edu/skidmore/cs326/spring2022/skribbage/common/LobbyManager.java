@@ -1,5 +1,7 @@
 package edu.skidmore.cs326.spring2022.skribbage.common;
 
+import java.util.Arrays;
+
 /**
  * Singleton class for creating, destroying, and creating Games from lobbies.
  * Keeps track of existing lobbies in Lobby[] attribute.
@@ -49,16 +51,14 @@ public class LobbyManager implements LobbyManagement {
     public LobbyManager getInstance() {
         if (instance == null) {
             instance = new LobbyManager();
-            for (int i = 0; i < lobbies.length; i++) {
-                lobbies[i] = null;
-            }
+            Arrays.fill(lobbies, null);
         }
         return instance;
     }
 
     @Override
     public void createLobby(User host) {
-        
+
         int newIndex = nextEmptyIndex();
         lobbies[newIndex] = new Lobby(host, newIndex);
     }

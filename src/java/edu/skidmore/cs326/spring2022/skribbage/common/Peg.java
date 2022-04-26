@@ -7,6 +7,9 @@ import org.apache.log4j.Logger;
  * 
  * @author Jonah Marcus
  *         Last Updated April 11 2022
+ *         Code updated by Lois on April 25, 2022
+ *         Comment by Lois: "Needed to add override for equals and hashcode to 
+ *         fix assigned bug."
  */
 public class Peg {
     /**
@@ -79,6 +82,26 @@ public class Peg {
         Location current = this.spot.getLocation();
         this.spot = new Spot(new Location(current.getRow() + numSpaces,
             current.getColumn()));
+    }
+
+    /**
+     * Compares the owner of two pegs.
+     * 
+     * @return boolean
+     * @param tempPeg
+     */
+    @Override
+    public boolean equals(Object tempPeg) {
+        if (tempPeg instanceof Peg) {
+            return this.getOwner() == ((Peg) tempPeg).getOwner();
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        return (this.getOwner() + " " + this.getOwner()).hashCode();
     }
 
 }
