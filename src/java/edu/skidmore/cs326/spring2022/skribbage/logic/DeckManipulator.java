@@ -29,12 +29,12 @@ public class DeckManipulator implements DeckManipulation {
         ArrayList<Card> tempDeck = new ArrayList<Card>();
         Random randNumGen = new Random();
 
-        for (int i = 0; i < 52; i++) {
+        for (int i = 51; i >= 0; i--) {
             int randomInt = randNumGen.nextInt(deckInstance.getDeck().size());
             tempDeck.add(deckInstance.getDeck().get(randomInt));
             deckInstance.getDeck().remove(randomInt);
         } // end for loop
-
+        
         deckInstance.setDeck(tempDeck);
 
     } // end shuffle
