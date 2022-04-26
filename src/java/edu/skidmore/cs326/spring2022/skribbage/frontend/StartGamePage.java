@@ -852,6 +852,7 @@ public class StartGamePage extends DrawingSurface implements Page {
     public void setCardsClickable(boolean clickable) {
         for (int k = 0; k < standardDeck.size(); k++) {
             standardDeck.get(k).getImage().setClickable(clickable);
+            
         }
     }
 
@@ -865,7 +866,7 @@ public class StartGamePage extends DrawingSurface implements Page {
             if (e == cardsInHand.get(i).getImage()) {
                 setCardsClickable(false);
                 gameManager.playCard(i);
-                updateCardPositions();
+                gameManager.getGame();
                 moveCards(50);
                 System.out.println(cardsInHand.get(i).getCardID());
                 gameManager.opponentPlayCard();
