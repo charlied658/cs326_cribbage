@@ -110,14 +110,10 @@ public class AccountController implements PropertyChangeListener {
             case USER_LOGIN:
                 LOG.debug("caught a login event");
                 ule = ((UserLoginEvent) evt);
-
                 UserLoginResponseEvent responseEvent;
-
                 if (isPasswordCorrect(associatedUser, ule.getPassword())) {
-
                     accountResponse =
                         new AccountResponse("Login successful!", false);
-
                 } else {
                     accountResponse =
                         new AccountResponse("Login unsuccessful...", true);
@@ -128,7 +124,6 @@ public class AccountController implements PropertyChangeListener {
                             associatedUser, accountResponse);
                 eventFactory.fireEvent(responseEvent);
                 break;
-
             case USER_CREATE_ACCOUNT:
                 UserCreateAccountEvent ucae = ((UserCreateAccountEvent) evt);
                 LOG.debug("caught a create account event");
@@ -142,10 +137,8 @@ public class AccountController implements PropertyChangeListener {
                     accountResponse =
                         new AccountResponse("Account not created...", true);
                 }
-
                 // when succesful, then return response event as rejectionStatus
                 // being false.
-
                 CreateAccountResponseEvent responseEventUCA =
                     (CreateAccountResponseEvent) eventFactory.createEvent(
                         EventType.USER_CREATE_ACCOUNT_RESPONSE, this,
@@ -175,16 +168,13 @@ public class AccountController implements PropertyChangeListener {
                         new AccountResponse("Password change unsuccesful!",
                             true);
                 }
-
                 UserChangePasswordResponseEvent response =
                     (UserChangePasswordResponseEvent) eventFactory.createEvent(
                         EventType.USER_CHANGE_PASSWORD_RESPONSE, this,
                         associatedUser, accountResponse);
                 eventFactory.fireEvent(response);
-
                 break;
             // To do: rename to clarify event's purpose
-            // (check_username_existence)
             case VALIDATE_USERNAME:
                 LOG.debug("caught a user validation event " + evt);
                 if (PersistenceFacade.getInstance()
@@ -213,23 +203,24 @@ public class AccountController implements PropertyChangeListener {
             case USER_CHANGE_PASSWORD_VALIDATION:
                 LOG.debug(
                     "Caught a user validated before change password method.");
-                // Validation is same as logging in validation.
-                ValidateForChangePassword call =
-                    ((ValidateForChangePassword) evt);
-                if (isPasswordCorrect(associatedUser, call.getPassword())) {
-                    ValidateChangeResponseEvent responseEventPV =
-                        (ValidateChangeResponseEvent) eventFactory.createEvent(
-                            EventType.USER_CHANGE_PASSWORD_VALIDATION_RESPONSE,
-                            this);
-                    // eventFactory.fireEvent(responseEvent);
-                    eventFactory.fireEvent(responseEventPV);
-
+                ule = ((UserLoginEvent) evt);
+                if (isPasswordCorrect(associatedUser, ule.getPassword())) {
+                    // Validation is same as logging in validation.
+                    ValidateForChangePassword call =
+                        ((ValidateForChangePassword) evt);
+                    if (isPasswordCorrect(associatedUser, call.getPassword())) {
+                        ValidateChangeResponseEvent responseEventPV =
+                            (ValidateChangeResponseEvent) eventFactory
+                                .createEvent(
+                                    EventType.USER_CHANGE_PASSWORD_VALIDATION_RESPONSE,
+                                    this);
+                        eventFactory.fireEvent(responseEventPV);
+                    }
+                    break;
+                    // default:
+                    // LOG.warn("caught unhandled event");
                 }
 
-                break;
-            default:
-                LOG.warn("caught unhandled event");
         }
-
     }
 }
