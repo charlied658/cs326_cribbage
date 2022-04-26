@@ -17,7 +17,7 @@ import edu.skidmore.cs326.spring2022.skribbage.common.User;
  */
 
 public final class PersistenceFacade
-    implements UserManagement, GameManagement, InventoryManagement {
+    implements UserManagement , GameManagement , InventoryManagement {
 
     /**
      * Singleton instance of PersistenceFacade. Instance can be accessed through
@@ -78,7 +78,8 @@ public final class PersistenceFacade
 
         // TODO (DSR) This code needs to be updated,user does not house password
         DM.createUser(usernamge, passwordtemp);
-        return true;
+        
+        return userNameExists(userToCreate);
     }
 
     /**
@@ -110,9 +111,17 @@ public final class PersistenceFacade
      */
     @Override
     public boolean passwordChange(User userToUpdate, Password newPassword) {
-        DM.update("Password", newPassword.getBase64SaltAndPasswordHash(), 1);
 
-        return true;
+        DM.changepass(userToUpdate.getUserName(),
+            newPassword.getBase64SaltAndPasswordHash());
+
+        String pass = getPassword(userToUpdate).getBase64SaltAndPasswordHash();
+
+        if (pass.equals(newPassword.getBase64SaltAndPasswordHash())) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -167,14 +176,15 @@ public final class PersistenceFacade
         return PROXY.usernameCheck(username);
     }
 
+    /**
+     * Obtain the password of a user
+     * 
+     * @param User
+     *            the user whose password we want to retrieve
+     * @return Password the password of the user we selected
+     */
     @Override
     public Password getPassword(User user) {
-
-        // note password is currently deprecated and retrieving password from
-        // user will have to be
-        // handled by the front end team in the password prompt method in this
-        // class
-        // PRha74NgJISBMA==~mvIwoqOH1VA2AzrxLvxTXyGgJLr0jyS09bHhi4G9tZ4=
 
         Password accepted = DM.getPassword(user);
 

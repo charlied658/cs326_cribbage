@@ -3,6 +3,7 @@ package edu.skidmore.cs326.spring2022.skribbage.frontend;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Point;
+import java.util.List;
 import java.util.ArrayList;
 
 import org.apache.log4j.Logger;
@@ -163,7 +164,6 @@ public class StartGamePage extends DrawingSurface implements Page {
      * Cards currently selected in the player's hand.
      */
     @SuppressWarnings("unused")
-
     private ArrayList<CardImage> cardsInHandSelected;
 
     /**
@@ -872,15 +872,19 @@ public class StartGamePage extends DrawingSurface implements Page {
                 updateCardPositions();
                 moveCards(50);
                 if (gameManager.getGame().getCardsInPlay().size() == 12) {
-                    movePeg(0, 5);
-                    movePeg(1, 5);
-                    if (pegLocations[0] == 120) {
-                        closeWindow();
+
+                    if (gameManager.getGame().getCardsInPlay()
+                        .getCardsInHand().size() == 12) {
+                        movePeg(0, 5);
+                        movePeg(1, 5);
+                        if (pegLocations[0] == 120) {
+                            closeWindow();
+                        }
+                        dealCards();
                     }
-                    dealCards();
+                    setCardsClickable(true);
+                    return;
                 }
-                setCardsClickable(true);
-                return;
             }
         }
     }

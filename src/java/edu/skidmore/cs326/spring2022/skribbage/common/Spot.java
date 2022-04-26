@@ -14,6 +14,9 @@ import org.apache.log4j.Logger;
  *         be a bad idea to implement in those classes. Unless I'm just
  *         completely
  *         wrong here in which case just ignore this lmao."
+ *         Code updated by Lois on April 25, 2022
+ *         Comment by Lois: "Needed to add override for equals and hashcode to 
+ *         fix assigned bug." 
  */
 public class Spot {
     /**
@@ -73,10 +76,27 @@ public class Spot {
         LOG.trace("getLocation method in Spot class");
         return location;
     }
-
+    
     @Override
     public String toString() {
         return "Spot: " + this.spotType + ", " + this.location;
+    }
+    /**
+     * Compares the location of two Spots.
+     * @return boolean
+     * @param tempSpot
+     */
+    @Override
+    public boolean equals(Object tempSpot) {
+        if (tempSpot instanceof Spot) {
+            return this.getLocation() == ((Spot) tempSpot).getLocation(); 
+        } else {
+            return false;
+        }
+    }
+    @Override
+    public int hashCode() {
+        return (this.getLocation() + " " + this.getLocation()).hashCode();
     }
 
 }

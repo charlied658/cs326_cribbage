@@ -1,5 +1,7 @@
 package edu.skidmore.cs326.spring2022.skribbage.common;
 
+import java.util.Arrays;
+
 /**
  * Singleton class for creating, destroying, and creating Games from lobbies.
  * Keeps track of existing lobbies in Lobby[] attribute.
@@ -15,6 +17,7 @@ public class LobbyManager implements LobbyManagement {
 
     /**
      * Finds the first empty element in the array of lobbies.
+     * 
      * @return index
      */
     private int nextEmptyIndex() {
@@ -24,9 +27,9 @@ public class LobbyManager implements LobbyManagement {
             }
         }
         return 0;
-        
+
     }
-    
+
     /**
      * Empty private constructor to allow for singleton functionality.
      */
@@ -37,45 +40,72 @@ public class LobbyManager implements LobbyManagement {
     /**
      * The lobbies tracked by LobbyManager.
      */
-    private Lobby[] lobbies = new Lobby[100];
-    
+    private static Lobby[] lobbies = new Lobby[100];
+
+    /**
+     * The one activeLobby used until multi-game/multi-lobby implementation is
+     * added.
+     */
+    private static Lobby activeLobby;
+
     /**
      * Lazy initialization of instance in getter method for instance that
      * allows other classes to access.
-<<<<<<< HEAD
      * 
-=======
->>>>>>> 19d86ddee8ceded0457410b62340f916cfaadf94
      * @return instance
      */
-    public LobbyManager getInstance() {
+    public static LobbyManager getInstance() {
         if (instance == null) {
             instance = new LobbyManager();
-            for (int i = 0; i < lobbies.length; i++) {
-                lobbies[i] = null;
-            }
+            Arrays.fill(lobbies, null);
+            activeLobby = null;
         }
         return instance;
     }
 
     @Override
-    public void createLobby(User host) {
-        // TODO Auto-generated method stub
-        @SuppressWarnings("unused")
+    public Lobby createLobby(User host) {
+
         int newIndex = nextEmptyIndex();
-        lobbies[nextEmptyIndex()] = new Lobby(host);
+        lobbies[newIndex] = new Lobby(host, newIndex);
+        return lobbies[newIndex];
+
     }
 
     @Override
     public Game startGame(Lobby lobby) {
-        // TODO Auto-generated method stub
+        deleteLobby(lobby);
         return null;
     }
 
     @Override
     public void deleteLobby(Lobby lobby) {
-        // TODO Auto-generated method stub
 
+        lobbies[lobby.getId()] = null;
+
+    }
+
+    @Override
+    public void addUser(User user, Lobby lobby) {
+        lobby.addUser(user);
+    }
+
+    /**
+     * Allows other classes to modify activeLobby.
+     * 
+     * @param lobby
+     */
+    public void setActiveLobby(Lobby lobby) {
+        activeLobby = lobby;
+    }
+
+    /**
+     * Allows other classes access to reference activeLobby attribute.
+     * 
+     * @return activeLobby
+     */
+    public Lobby getActiveLobby() {
+        return activeLobby;
     }
 
 }
