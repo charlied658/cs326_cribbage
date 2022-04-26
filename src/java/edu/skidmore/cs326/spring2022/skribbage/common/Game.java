@@ -156,26 +156,6 @@ public class Game implements GameInterface {
         return peggingCardsPlayed.get(index);
     }
 
-    // /**
-    // * Sets the pone's pegging cards to the parameter.
-    // *
-    // * @param ponePegCards
-    // * is an ArrayList of Card objects.
-    // */
-    // public void setPonePeggingCards(Hand ponePegCards) {
-    // ponePeggingCards = ponePegCards;
-    // }
-
-    // /**
-    // * Sets the dealer's pegging cards to the parameter.
-    // *
-    // * @param dealerPegCards
-    // * is an ArrayList of Card objects.
-    // */
-    // public void setDealerPeggingCards(Hand dealerPegCards) {
-    // dealerPeggingCards = dealerPegCards;
-    // }
-
     /**
      * Returns the deck for this game.
      *
@@ -193,24 +173,6 @@ public class Game implements GameInterface {
     public int getPeggingTotal() {
         return peggingTotal;
     }
-
-    // /**
-    // * Returns the pone's pegging cards as an ArrayList of Card objects.
-    // *
-    // * @return the pone's pegging cards.
-    // */
-    // public Hand getPonePeggingCards() {
-    // return ponePeggingCards;
-    // }
-
-    // /**
-    // * Returns the dealers's pegging cards as an ArrayList of Card objects.
-    // *
-    // * @return the dealer's pegging cards.
-    // */
-    // public Hand getDealerPeggingCards() {
-    // return dealerPeggingCards;
-    // }
 
     /**
      * Returns the list of players.
@@ -284,14 +246,16 @@ public class Game implements GameInterface {
         return this.cardsInHand;
     }
 
-    /**
-     * Get the cards in the crib.
-     *
-     * @return cardsInCrib
-     */
-    public Hand getCardsInCrib() {
-        return this.cribCards;
-    }
+    //Charlie, I commented this out because a method already exists
+    //for this purpose. Let me know if you want to talk about it.
+    // /**
+    //  * Get the cards in the crib.
+    //  *
+    //  * @return cardsInCrib
+    //  */
+    // public Hand getCardsInCrib() {
+    //     return this.cribCards;
+    // }
 
     /**
      * Get the cards in the opponent's hand.

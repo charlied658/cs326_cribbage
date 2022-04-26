@@ -29,7 +29,7 @@ public class GameManager implements GameManagerInterface {
     /**
      * Deck manager.
      */
-    private DeckManipulator deckManager = new DeckManipulator();
+    //private DeckManipulator deckManager = new DeckManipulator();
 
     /**
      * Number of cards in the deck.
@@ -113,23 +113,25 @@ public class GameManager implements GameManagerInterface {
         return -1;
     }
 
-    /**
-     * Initialize the state of the cards.
-     */
-    public void initializeDeck() {
-        g.getStandardDeck().getDeck().clear();
-        g.getCardsInDeck().getDeck().clear();
-        g.getCardsInPlay().getCardsInHand().clear();
-        g.getCardsInHand().getCardsInHand().clear();
-        g.getCardsInCrib().getCardsInHand().clear();
-        g.getCardsInOpponentHand().getCardsInHand().clear();
-
-        for (int i = 0; i < numcards; i++) {
-            g.getStandardDeck().getDeck().add(new Card(i));
-            g.getCardsInDeck().getDeck()
-            .add(g.getStandardDeck().getDeck().get(i));
-        }
-    }
+    //Charlie, when you create a Deck, the Deck is initialized. What is the
+    //purpose of this method?
+    // /**
+    //  * Initialize the state of the cards.
+    //  */
+    // public void initializeDeck() {
+    //     g.getStandardDeck().getDeck().clear();
+    //     g.getCardsInDeck().getDeck().clear();
+    //     g.getCardsInPlay().getCardsInHand().clear();
+    //     g.getCardsInHand().getCardsInHand().clear();
+    //     g.getCardsInCrib().getCardsInHand().clear();
+    //     g.getCardsInOpponentHand().getCardsInHand().clear();
+    //
+    //     for (int i = 0; i < numcards; i++) {
+    //         g.getStandardDeck().getDeck().add(new Card(i));
+    //         g.getCardsInDeck().getDeck()
+    //         .add(g.getStandardDeck().getDeck().get(i));
+    //     }
+    // }
 
     /**
      * Return whether the deck is sorted.
@@ -158,7 +160,7 @@ public class GameManager implements GameManagerInterface {
         g.getCardsInDeck().getDeck().clear();
         g.getCardsInPlay().getCardsInHand().clear();
         g.getCardsInHand().getCardsInHand().clear();
-        g.getCardsInCrib().getCardsInHand().clear();
+        g.getCribCards().getCardsInHand().clear();
         g.getCardsInOpponentHand().getCardsInHand().clear();
         for (int i = 0; i < numcards; i++) {
             g.getCardsInDeck().getDeck()
@@ -166,13 +168,15 @@ public class GameManager implements GameManagerInterface {
         }
     }
 
-    /**
-     * Shuffle the cards.
-     */
-    public void shuffleCards() {
-        resetCards();
-        deckManager.shuffle(g.getCardsInDeck());
-    }
+    //Charlie, I commented this out because a method already exists for
+    //shuffle.
+    // /**
+    //  * Shuffle the cards.
+    //  */
+    // public void shuffleCards() {
+    //     resetCards();
+    //     deckManager.shuffle(g.getCardsInDeck());
+    // }
 
     /**
      * Deal cards to the player.
