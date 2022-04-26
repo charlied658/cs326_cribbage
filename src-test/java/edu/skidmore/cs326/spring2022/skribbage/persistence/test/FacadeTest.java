@@ -137,10 +137,10 @@ public class FacadeTest {
      * the
      * current pass and the new password however it fails
      */
-     @Test
-     public void passwordChangeFail() {
-         
-     }
+//     @Test
+//     public void passwordChangeFail() {
+//         
+//     }
 
     /**
      * Testing when logic wants to log in a user and wants to obtain a password
@@ -161,6 +161,15 @@ public class FacadeTest {
      public void accountExistsSuccess() {
      Boolean verification = facadeinstanace.userNameExists(correctTestUser);
      assertEquals("User should exist", true, verification);
+     }
+     
+     /**
+      * Testing validating username to see if it doesn't have bad words
+      */
+     @Test
+     public void validateUsernameCuss(){
+         
+         facadeinstanace.validateUsername(correctTestUser);
      }
 
     /**
@@ -188,36 +197,6 @@ public class FacadeTest {
     // }
 
     /**
-     * Testing when the userDelete corrects with the correct user.
-     */
-    // @Test
-    // public void userDeleteTestCorrect() {
-    // boolean iscorrect = facadeinstanace.userDelete(wrongTestUser,
-    // wrongTestPassword);
-    // assertEquals(true, iscorrect);
-    // }
-    //
-    // @Test
-    // public void userDeleteTestFail() {
-    // boolean iscorrect = facadeinstanace.userDelete(wrongTestUser,
-    // wrongTestPassword);
-    // assertEquals(false, iscorrect);
-    // }
-
-    /**
-     * Testing when the user wants to change their password Passing in the user,
-     * the
-     * current pass and the new password however it fails
-     */
-    // @Test
-    // public void passwordChangeFail() {
-    // boolean iscorrect = facadeinstanace.passwordChange(correctTestUser,
-    // correctTestPassword, wrongTestPassword);
-    // assertEquals(true, iscorrect);
-    // }
-
-
-    /**
      * Testing the capability to display inventory values.
      */
     // @Test
@@ -241,16 +220,6 @@ public class FacadeTest {
     // "player coin value: 100000");
     // }
 
-
-    /**
-     * Testing when the userDelete corrects with the correct user.
-     */
-    // @Test
-    // public void userDeleteTestCorrect() {
-    // boolean iscorrect = facadeinstanace.userDelete(wrongTestUser,
-    // wrongTestPassword);
-    // assertEquals(true, iscorrect);
-    // }
 
 
 }
