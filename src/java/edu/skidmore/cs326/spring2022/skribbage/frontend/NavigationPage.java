@@ -180,8 +180,8 @@ public class NavigationPage extends DrawingSurface implements Page {
             rulesPage = (RulesPage) pageManager.createPage(PageType.RULES_PAGE);
             closeWindow();
         } else if (e == lobbyPageButton) {
-            lobbyPage = (LobbyPage) pageManager.createPage(PageType.LOBBY_PAGE);
-            closeWindow();
+
+
             // Fire an event to start a new lobby
             // Lobby lobby = new Lobby()
             if (pageManager.getLoggedInUser() != null) {
@@ -193,6 +193,8 @@ public class NavigationPage extends DrawingSurface implements Page {
             } else {
                 LOG.error("A user started a lobby without being logged in");
             }
+            lobbyPage = (LobbyPage) pageManager.createPage(PageType.LOBBY_PAGE);
+            closeWindow();
 
         } else if (e == pastGamesPageButton) {
             pastGamesPage = (PastGamesPage) pageManager
