@@ -116,7 +116,7 @@ public class GameManager implements GameManagerInterface {
         g.getCardsInPlay().getCardsInHand().clear();
         g.getPlayerList().get(0).getHand().getCardsInHand().clear();
         g.getPlayerList().get(1).getHand().getCardsInHand().clear();
-        g.getCardsInCrib().getCardsInHand().clear();
+        g.getCribCards().getCardsInHand().clear();
     }
 
     /**
