@@ -179,7 +179,7 @@ public final class PersistenceFacade
      * Obtain the password of a user
      * 
      * @param User
-     *            who's password we are getting
+     *            the user whose password we want to retrieve
      * @return Password the password of the user we selected
      */
     @Override
