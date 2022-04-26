@@ -448,7 +448,6 @@ public class StartGamePage extends DrawingSurface implements Page {
                 0.6, null), i));
         }
 
-        gameManager.initializeDeck();
         updateCardPositions();
 
         for (int i = cardsInDeck.size() - 1; i >= 0; i--) {
@@ -467,13 +466,13 @@ public class StartGamePage extends DrawingSurface implements Page {
         cardsInOpponentHand.clear();
 
         List<Card> gameCardsInDeck =
-            gameManager.getGame().getCardsInDeck().getDeck();
+            gameManager.getGame().getDeck().getDeck();
         List<Card> gameCardsInPlay =
             gameManager.getGame().getCardsInPlay().getCardsInHand();
-        List<Card> gameCardsInHand =
-            gameManager.getGame().getCardsInHand().getCardsInHand();
-        List<Card> gameCardsInOpponentHand =
-            gameManager.getGame().getCardsInOpponentHand().getCardsInHand();
+        List<Card> gameCardsInHand = gameManager.getGame()
+            .getPlayerList().get(0).getHand().getCardsInHand();
+        List<Card> gameCardsInOpponentHand = gameManager.getGame()
+            .getPlayerList().get(1).getHand().getCardsInHand();
         for (int i = 0; i < gameCardsInDeck.size(); i++) {
             cardsInDeck.add(
                 standardDeck.get(
@@ -787,10 +786,6 @@ public class StartGamePage extends DrawingSurface implements Page {
      * Reset card positions.
      */
     public void resetCards() {
-
-        if (gameManager.deckIsSorted()) {
-            return;
-        }
 
         gameManager.resetCards();
         updateCardPositions();

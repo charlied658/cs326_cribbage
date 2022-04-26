@@ -70,14 +70,6 @@ public class Card {
         //Num_rank x suit + rank = cardID
         this.cardID = (13 * this.suit.ordinal()) + this.rank.ordinal();
     }
-    
-    /**
-     * Constructor.
-     * @param cardID
-     */
-    public Card(int cardID) {
-        this.cardID = cardID;
-    }
 
     /**
      * Compares the rank and suit of two cards.

@@ -18,7 +18,7 @@ import java.util.ArrayList;
 public class Game implements GameInterface {
 
     /** The deck of cards used to play Cribbage. */
-    private Deck theDeck = new Deck();
+    private Deck theDeck;
 
     /** The list of players who are playing this game of Cribbage. */
     private List<Player> playerList = new ArrayList<Player>();
@@ -52,29 +52,9 @@ public class Game implements GameInterface {
     private GameState state;
 
     /**
-     * Copy of the standard sorted deck. Should never be modified.
-     */
-    private Deck standardDeck;
-
-    /**
-     * Cards currently in the deck.
-     */
-    private Deck cardsInDeck;
-
-    /**
      * Cards currently in play in center of board.
      */
     private Hand cardsInPlay;
-
-    /**
-     * Cards currently in the player's hand.
-     */
-    private Hand cardsInHand;
-
-    /**
-     * Cards currently in the opponent's hand.
-     */
-    private Hand cardsInOpponentHand;
 
     /**
      * Game constructor. It initializes the list of players,
@@ -94,11 +74,8 @@ public class Game implements GameInterface {
         cribCards = new Hand();
         peggingTotal = 0;
         state = GameState.START_GAME;
-        standardDeck = new Deck();
-        cardsInDeck = new Deck();
+        theDeck = new Deck();
         cardsInPlay = new Hand();
-        cardsInHand = new Hand();
-        cardsInOpponentHand = new Hand();
         initPlayers(numPlayers);
         initPeggingCardsPlayed(numPlayers);
     }
@@ -184,6 +161,15 @@ public class Game implements GameInterface {
     public Deck getDeck() {
         return theDeck;
     }
+    
+    /**
+     * Set the deck.
+     * 
+     * @param deck
+     */
+    public void setDeck(Deck deck) {
+        this.theDeck = deck;
+    }
 
     /**
      * Returns the pegging total for this game.
@@ -249,24 +235,6 @@ public class Game implements GameInterface {
     }
 
     /**
-     * Get the standard deck.
-     *
-     * @return standardDeck
-     */
-    public Deck getStandardDeck() {
-        return this.standardDeck;
-    }
-
-    /**
-     * Get the cards in the deck.
-     *
-     * @return cardsInDeck
-     */
-    public Deck getCardsInDeck() {
-        return this.cardsInDeck;
-    }
-
-    /**
      * Get the cards currently in play.
      *
      * @return cardsInPlay
@@ -274,16 +242,7 @@ public class Game implements GameInterface {
     public Hand getCardsInPlay() {
         return this.cardsInPlay;
     }
-
-    /**
-     * Get the cards in the player's hand.
-     *
-     * @return cardsInHand
-     */
-    public Hand getCardsInHand() {
-        return this.cardsInHand;
-    }
-
+    
     /**
      * Get the cards in the crib.
      *
@@ -291,15 +250,6 @@ public class Game implements GameInterface {
      */
     public Hand getCardsInCrib() {
         return this.cribCards;
-    }
-
-    /**
-     * Get the cards in the opponent's hand.
-     *
-     * @return cardsInOpponentHand
-     */
-    public Hand getCardsInOpponentHand() {
-        return this.cardsInOpponentHand;
     }
 
 }
