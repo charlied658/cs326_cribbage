@@ -38,7 +38,7 @@ public class InventoryPrototype {
     /**
      * HashMap For inventory.
      */
-    private HashMap<String, Integer> map = new HashMap<String, Integer>();
+    private HashMap<String, Integer> map;
 
     /**
      * Initialize HashMap for Inventory.
@@ -60,10 +60,12 @@ public class InventoryPrototype {
     /**
      * When items are used we go to the HashMap and reduce the amount by 1.
      * 
+     * @param map
+     *            HashMap used as our inventory
      * @param key
      *            name of the item
      */
-    public void useItem(String key) {
+    public void useItem(HashMap<String, Integer> map, String key) {
         int val = map.get(key);
         if (val <= 0) {
             LOG.info("User does not have the specified item");
@@ -78,14 +80,14 @@ public class InventoryPrototype {
      * When an item is added we access the HashMap and increase the number by 1.
      * implementation may change if we want to purchase multiple items
      * 
+     * @param map
+     *            HashMap used as our inventory
      * @param key
      *            name of the item
-     * @param quantity
-     *            number of items to add
      */
-    public void addItem(String key, int quantity) {
+    public void addItem(HashMap<String, Integer> map, String key) {
         int val = map.get(key);
-        map.replace(key, val + quantity);
+        map.replace(key, val + 1);
 
         LOG.info("Using card - Incrementing card quantity by one");
     }
@@ -93,12 +95,14 @@ public class InventoryPrototype {
     /**
      * A quick search for a player to see the number of items they possess.
      * 
+     * @param map
+     *            HashMap used as our inventory
      * @param key
      *            name of the item
      * @return val
      *         number of specified item in an inventory
      */
-    public int searchForItem(String key) {
+    public int searchForItem(HashMap<String, Integer> map, String key) {
         int val = map.get(key);
         LOG.info("Searching HashTable for quantity of " + key);
         return val;
@@ -107,8 +111,11 @@ public class InventoryPrototype {
     /**
      * Update the HashMap with data from our data base.
      * (currently hardcodes values to fill the HashTable.
+     * 
+     * @param map
+     *            HashMap used as our inventory
      */
-    public void updateInventory() {
+    public void updateInventory(HashMap<String, Integer> map) {
         map.put("LastPlayerShowCard", 0);
         map.put("Re-Battle", 0);
         map.put("ThrowAwayPickUp", 0);
