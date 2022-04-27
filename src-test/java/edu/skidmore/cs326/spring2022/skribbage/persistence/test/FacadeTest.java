@@ -90,7 +90,7 @@ public class FacadeTest {
         wrongTestPassword = new Password(PasswordHasher.getInstance()
             .hashNewPassword("AnotherOne"));
 
-        newTestUser = new User("JohnnyDepp@gmail.com", "Jack Sparrow", null);
+        newTestUser = new User("JohnnyDepp1@gmail.com", "Willy Wonka", null);
         newTestPassword = new Password(PasswordHasher.getInstance()
             .hashNewPassword("Captain"));
 
@@ -99,7 +99,7 @@ public class FacadeTest {
         correctTestItem.setQuantityHeld(31);
         inventoryUser = new User("inconsequential", "inconsequential", null);
         inventoryUser.setUserId(236);
-        walletUser = new User("inconsequential", "inconsequential", null);
+        walletUser = new User("inconsequential", "Your", null);
         walletUser.setUserId(325);
         // databasemanagerinstance = new DatabaseManager();
     }
@@ -164,15 +164,36 @@ public class FacadeTest {
     }
 
     /**
-     * Testing validating username to see if it doesn't have bad words
+     * Testing to see that the username doesn't exist
      */
     @Test
-    public void validateUsernameCuss() {
-
-        facadeinstanace.validateUsername(correctTestUser);
+    public void accountDoesntExist() {
+        Boolean verification = facadeinstanace.userNameExists(newTestUser);
+        assertEquals("User should not exist", false, verification);
     }
 
     /**
+     * Testing the capability to display wallet values.
+     */
+    @Test
+    public void displayWalletTest() {
+        walletUser.setUserId(9952);
+
+        assertEquals("Testing to see if displayWallet Works",
+            facadeinstanace.displayWallet(walletUser),
+            "player coin value: 10000");
+    }
+
+    /**
+     * Testing validating username to see if it doesn't have bad words
+     */
+    // @Test
+    // public void validateUsernameCuss() {
+    //
+    // facadeinstanace.validateUsername(correctTestUser);
+    // }
+
+    /**
      * Testing the capability to display inventory values.
      */
     // @Test
@@ -187,16 +208,6 @@ public class FacadeTest {
     // }
 
     /**
-     * Testing the capability to display wallet values.
-     */
-    // @Test
-    // public void displayWalletTest() {
-    //
-    // assertEquals(facadeinstanace.displayWallet(walletUser), "player coin
-    // value: 100000");
-    // }
-
-    /**
      * Testing the capability to display inventory values.
      */
     // @Test
@@ -208,16 +219,6 @@ public class FacadeTest {
     // System.out.println("2 " + hashMap.get("PARTY_HAT").toString());
     // assertEquals(correctTestItem.toString(),
     // hashMap.get("PARTY_HAT").toString());
-    // }
-
-    /**
-     * Testing the capability to display wallet values.
-     */
-    // @Test
-    // public void displayWalletTest() {
-    //
-    // assertEquals(facadeinstanace.displayWallet(walletUser),
-    // "player coin value: 100000");
     // }
 
 }
