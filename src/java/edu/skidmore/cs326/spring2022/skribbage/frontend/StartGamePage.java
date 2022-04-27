@@ -140,6 +140,38 @@ public class StartGamePage extends DrawingSurface implements Page {
             this, "Start Game Page", 1400, 900, false);
         setup();
     }
+    
+    /**
+     * get player points.
+     * @return points.
+     */
+    public int getPlayerPoints() {
+        return playerPoints;
+    }
+    
+    /**
+     * get computer points.
+     * @return points.
+     */
+    public int getComputerPoints() {
+        return computerPoints;
+    }
+    
+    /**
+     * addPlayerPoints.
+     * @param pointsToAdd
+     */
+    public void addPlayerPoints(int pointsToAdd) {
+        playerPoints += pointsToAdd;
+    }
+    
+    /**
+     * addComputerPoints.
+     * @param pointsToAdd
+     */
+    public void addComputerPoints(int pointsToAdd) {
+        computerPoints += pointsToAdd;
+    }
 
     /**
      * Setup method.
@@ -233,6 +265,13 @@ public class StartGamePage extends DrawingSurface implements Page {
         
         animationManager.checkCardClick(e);
 
+    }
+    
+    /**
+     * method to update points for computer and player.
+     */
+    public void updatePoints() {
+        
     }
 
     /**

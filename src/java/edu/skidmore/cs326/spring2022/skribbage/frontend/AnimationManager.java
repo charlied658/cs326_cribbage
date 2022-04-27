@@ -10,6 +10,7 @@ import edu.skidmore.cs326.spring2022.skribbage.common.Board;
 import edu.skidmore.cs326.spring2022.skribbage.common.BoardManager;
 import edu.skidmore.cs326.spring2022.skribbage.common.Card;
 import edu.skidmore.cs326.spring2022.skribbage.common.Game;
+import edu.skidmore.cs326.spring2022.skribbage.common.Rank;
 import edu.skidmore.cs326.spring2022.skribbage.common.SpotType;
 import edu.skidmore.cs326.spring2022.skribbage.logic.GameManager;
 import us.daveread.edu.graphics.shape.Drawable;
@@ -22,21 +23,21 @@ import us.daveread.edu.graphics.shape.impl.Rectangle;
 /**
  * Class to store all the card and peg animations.
  * Edit this file if you need to.
+ * 
  * @author cdavidso
- *
  */
 public class AnimationManager {
-    
+
     /**
      * StartGamePage instance.
      */
     private StartGamePage startGamePage;
-    
+
     /**
      * GameManager instance to manage the game.
      */
     private GameManager gameManager;
-    
+
     /**
      * How many spaces each player moves.
      */
@@ -48,7 +49,7 @@ public class AnimationManager {
      */
     @SuppressWarnings("unused")
     private boolean running;
-    
+
     /**
      * Visual representation of the spots on the board.
      */
@@ -83,7 +84,7 @@ public class AnimationManager {
      * Lines displayed on the board which occur every 5 spaces.
      */
     private LineSegment[] boardLines;
-    
+
     /**
      * Locations of the pegs on the board.
      */
@@ -135,14 +136,25 @@ public class AnimationManager {
      * Number of cards displayed on the deck. This is only for visual purposes.
      */
     private final int numcards = 52;
-    
+
     /**
      * Toggles the screen being resized.
      */
     private boolean resizeWindow;
-    
+
+    /**
+     * player points.
+     */
+    private int pPoints;
+
+    /**
+     * computer points.
+     */
+    private int cPoints;
+
     /**
      * Constructor method.
+     * 
      * @param sgp
      */
     public AnimationManager(StartGamePage sgp) {
@@ -150,10 +162,9 @@ public class AnimationManager {
         gameManager = new GameManager(new Game(2));
         resizeWindow = false;
     }
-    
+
     /**
      * Renders the spots and pegs on the board.
-     * 
      */
     public void renderSpots() {
 
@@ -172,7 +183,7 @@ public class AnimationManager {
             }
             startGamePage.add(boardLines[i]);
         }
-        
+
         initialSpots = new Circle[2][3];
 
         for (int i = 0; i < initialSpots.length; i++) {
@@ -653,10 +664,10 @@ public class AnimationManager {
     public void setCardsClickable(boolean clickable) {
         for (int k = 0; k < standardDeck.size(); k++) {
             standardDeck.get(k).getImage().setClickable(clickable);
-            
+
         }
     }
-    
+
     /**
      * Check if a card has been clicked.
      * 
@@ -667,20 +678,27 @@ public class AnimationManager {
             if (e == cardsInHand.get(i).getImage()) {
                 setCardsClickable(false);
                 gameManager.playCard(i);
+                System.out.println("Points to add: " + calculatePoints(
+                    cardsInHand.get(i).getImage().getImageFileName()));
+                pPoints += calculatePoints(
+                    cardsInHand.get(i).getImage().getImageFileName());
                 updateCardPositions();
                 moveCards(50);
-                gameManager.opponentPlayCard();
+                // Card opponentCard = gameManager.opponentPlayCard();
+                // cPoints += opponentCard.getRank().getPointValue();
                 updateCardPositions();
                 moveCards(50);
-                
-                // Once the players have played all their cards 
+                // Once the players have played all their cards
                 // Each player has 6 cards so 6 + 6 = 12
+                System.out
+                    .println("Player: " + pPoints);
+
                 if (gameManager.getGame().getCardsInPlay()
                     .getCardsInHand().size() == 12) {
                     movePeg(0, 5);
                     movePeg(1, 5);
-                    
-                    // If the location of either peg 
+
+                    // If the location of either peg
                     // is at the final spot, end the game.
                     if (pegLocations[0] == 120 || pegLocations[1] == 120) {
                         startGamePage.closeWindow();
@@ -692,12 +710,46 @@ public class AnimationManager {
             }
         }
     }
-    
+
+    /**
+     * calculatePoints.
+     * 
+     * @param imageName
+     *            card image
+     * @return point value;
+     */
+    public int calculatePoints(String imageName) {
+        if (imageName.contains("ace")) {
+            return 1;
+        } else if (imageName.contains("2")) {
+            return 2;
+        } else if (imageName.contains("3")) {
+            return 3;
+        } else if (imageName.contains("4")) {
+            return 4;
+        } else if (imageName.contains("5")) {
+            return 5;
+        } else if (imageName.contains("6")) {
+            return 6;
+        } else if (imageName.contains("7")) {
+            return 7;
+        } else if (imageName.contains("8")) {
+            return 8;
+        } else if (imageName.contains("9")) {
+            return 9;
+        } else if (imageName.contains("10") || imageName.contains("jack")
+            || imageName.contains("queen") || imageName.contains("king")) {
+            return 10;
+        } else {
+            return 0;
+        }
+    }
+
     /**
      * Resize the window.
      */
     public void resizeWindow() {
         resizeWindow = !resizeWindow;
     }
-    
+
 }
