@@ -177,49 +177,62 @@ public class AccountController implements PropertyChangeListener {
             // To do: rename to clarify event's purpose
             case VALIDATE_USERNAME:
                 LOG.debug("caught a user validation event " + evt);
+                // If the username is appropriate
                 if (PersistenceFacade.getInstance()
-                    .userNameExists(associatedUser)) {
-                    // fire event w rejectionStatus true
-                    LOG.debug("determined username exists in database");
-                    accountResponse =
-                        new AccountResponse("Username already exists!", true);
-                    UserValidationResponseEvent responseEventVU =
-                        (UserValidationResponseEvent) eventFactory.createEvent(
-                            EventType.USER_VALIDATION_RESPONSE, this,
-                            associatedUser, accountResponse);
-                    eventFactory.fireEvent(responseEventVU);
+                    .validateUsername(associatedUser)) {
+                    if (PersistenceFacade.getInstance()
+                        .userNameExists(associatedUser)) {
+                        // fire event w rejectionStatus true
+                        LOG.debug("determined username exists in database");
+                        accountResponse =
+                            new AccountResponse("Username already exists!",
+                                true);
+                    } else {
+                        // fire event w rejectionStatus false.
+                        LOG.debug(
+                            "determined username does not exist in database");
+                        accountResponse =
+                            new AccountResponse("Username is available", false);
+                    }
+
                 } else {
-                    // fire event w rejectionStatus false.
-                    LOG.debug("determined username does not exist in database");
+                    LOG.debug("Username is inapproiate.");
                     accountResponse =
-                        new AccountResponse("Username already exists!", false);
-                    UserValidationResponseEvent responseEventVU =
-                        (UserValidationResponseEvent) eventFactory.createEvent(
-                            EventType.USER_VALIDATION_RESPONSE, this,
-                            associatedUser, accountResponse);
-                    eventFactory.fireEvent(responseEventVU);
+                        new AccountResponse("UserName is inapproiate:", true);
                 }
+
+                UserValidationResponseEvent responseEventVU =
+                    (UserValidationResponseEvent) eventFactory.createEvent(
+                        EventType.USER_VALIDATION_RESPONSE, this,
+                        associatedUser, accountResponse);
+                eventFactory.fireEvent(responseEventVU);
+
                 break;
             case USER_CHANGE_PASSWORD_VALIDATION:
                 LOG.debug(
                     "Caught a user validated before change password method.");
-                ule = ((UserLoginEvent) evt);
-                if (isPasswordCorrect(associatedUser, ule.getPassword())) {
-                    // Validation is same as logging in validation.
-                    ValidateForChangePassword call =
-                        ((ValidateForChangePassword) evt);
-                    if (isPasswordCorrect(associatedUser, call.getPassword())) {
-                        ValidateChangeResponseEvent responseEventPV =
-                            (ValidateChangeResponseEvent) eventFactory
-                                .createEvent(
-                                    EventType.USER_CHANGE_PASSWORD_VALIDATION_RESPONSE,
-                                    this);
-                        eventFactory.fireEvent(responseEventPV);
-                    }
-                    break;
-                    // default:
-                    // LOG.warn("caught unhandled event");
+                ValidateForChangePassword call =
+                    ((ValidateForChangePassword) evt);
+
+                if (isPasswordCorrect(associatedUser, call.getPassword())) {
+                    accountResponse = new AccountResponse(
+                        "User validated for changing password", false);
+                } else {
+                    accountResponse = new AccountResponse(
+                        "User not validated for changing password", true);
                 }
+
+                ValidateChangeResponseEvent responseEventPV =
+                    (ValidateChangeResponseEvent) eventFactory
+                        .createEvent(
+                            EventType.USER_CHANGE_PASSWORD_VALIDATION_RESPONSE,
+                            this, associatedUser, accountResponse);
+                eventFactory.fireEvent(responseEventPV);
+                break;
+
+            default:
+                LOG.warn("caught unhandled event");
+                break;
 
         }
     }
