@@ -21,3 +21,4 @@ VALUES (value1, value2, value3, ...);
 INSERT INTO item_table VALUES (1, "mirror", 100);
 INSERT INTO item_table VALUES  (2, "skip", 150);
 
+
