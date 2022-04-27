@@ -44,6 +44,8 @@ public class FrontEndFactoryTemplate extends FactoryTemplate {
                 return new UserCreateAccountEvent(source, args);
             case USER_CHANGE_PASSWORD:
                 return new UserChangePasswordEvent(source, args);
+            case USER_CHANGE_PASSWORD_VALIDATION:
+                return new ValidateForChangePassword(source, args);
             case VALIDATE_USERNAME:
                 return new ValidateUsernameEvent(source, args);
             case LOBBY_CREATE_LOBBY:
