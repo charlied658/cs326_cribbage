@@ -1,6 +1,8 @@
 package edu.skidmore.cs326.spring2022.skribbage.common.test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -46,7 +48,7 @@ public class LobbyTest {
      */
     @Test
     public void testGetUsers() {
-        assertEquals(1, testInstance.getUsers().length);
+        assertNull(testInstance.getUsers()[1]);
         assertEquals("MrTestUser", testInstance.getUsers()[0].getUserName());
     }
 
@@ -57,8 +59,9 @@ public class LobbyTest {
     @Test
     public void testAddUser() {
         testInstance.addUser(user2);
-        assertEquals(2, testInstance.getUsers().length);
-        assertEquals("2ndUser", testInstance.getUsers()[1]);
+        assertNotNull(testInstance.getUsers()[0]);
+        assertNotNull(testInstance.getUsers()[1]);
+        assertEquals("2ndUser", testInstance.getUsers()[1].getUserName());
     }
 
     /**

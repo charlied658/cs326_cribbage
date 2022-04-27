@@ -14,7 +14,6 @@ public abstract class AccountResponseEvent extends PropertyChangeEvent {
     /**
      * Contains String message and boolean rejection status sent with the event.
      */
-
     protected AccountResponse accountResponse;
 
     /**
