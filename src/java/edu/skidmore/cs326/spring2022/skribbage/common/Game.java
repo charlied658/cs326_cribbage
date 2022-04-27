@@ -74,6 +74,26 @@ public class Game implements GameInterface {
     }
 
     /**
+    * Returns the index where the Hand of pegging cards for
+    * the parameter player can be found.
+    * @param p is a Player. 
+    */
+    public int getIdxPlayerPegCards(Player p){
+        int userId = p.getUser().getUserId();
+        //find userId in playerList
+
+        for (int i = 0; i < playerList.size(); i++){
+          Player p2 = playerList.get(i);
+
+          if (userId == p2.getUser().getUserId()){
+            return i;
+          }
+        }
+
+        return -1;
+    }
+
+    /**
      * Initialize pegging cards.
      * @param numPlayers
      */
