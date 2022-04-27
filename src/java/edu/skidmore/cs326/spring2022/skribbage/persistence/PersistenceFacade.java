@@ -74,13 +74,7 @@ public final class PersistenceFacade
         String usernamge = userToCreate.getUserName();
         String passwordtemp = password.getBase64SaltAndPasswordHash();
 
-        // username is inappropriate
-        if (!PROXY.usernameCheck(usernamge)) {
-            LOG.error("Password contains inappropriate words");
-        } else {
-            DM.createUser(usernamge, passwordtemp);
-
-        }
+        DM.createUser(usernamge, passwordtemp);
 
         return userNameExists(userToCreate);
     }
@@ -160,6 +154,7 @@ public final class PersistenceFacade
 
     /**
      * This will saved the users current game that they are playing.
+     * 
      * @param userName
      *            The name of the user that we are saving the game
      * @param currentGame
@@ -175,6 +170,11 @@ public final class PersistenceFacade
     @Override
     public boolean validateUsername(User user) {
         String username = user.getUserName();
+
+        // username is inappropriate
+        if (!PROXY.usernameCheck(username)) {
+            LOG.error("Password contains inappropriate words");
+        }
         return PROXY.usernameCheck(username);
     }
 
