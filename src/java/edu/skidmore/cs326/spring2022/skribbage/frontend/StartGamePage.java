@@ -313,7 +313,6 @@ public class StartGamePage extends DrawingSurface implements Page {
     /**
      * Renders the spots and pegs on the board.
      * 
-     * @author Charlie Davidson
      */
     public void renderSpots() {
 
@@ -518,9 +517,9 @@ public class StartGamePage extends DrawingSurface implements Page {
     }
 
     /**
-     * Move cards in the deck.
+     * Set the destination location of cards in the deck.
      */
-    public void moveDeck() {
+    public void setDesintationOfDeck() {
         int deckSize = cardsInDeck.size();
         for (int i = 0; i < deckSize; i++) {
             cardsInDeck.get(i).setDestLocation(
@@ -529,9 +528,9 @@ public class StartGamePage extends DrawingSurface implements Page {
     }
 
     /**
-     * Move cards in the play area.
+     * Set the destination location of cards in the play area.
      */
-    public void movePlayCards() {
+    public void setDestinationOfPlayCards() {
         int playSize = cardsInPlay.size();
         for (int i = 0; i < playSize; i++) {
             cardsInPlay.get(i).setDestLocation(
@@ -540,9 +539,9 @@ public class StartGamePage extends DrawingSurface implements Page {
     }
 
     /**
-     * Move cards in the player's hand.
+     * Set the destination location of cards in the player's hand.
      */
-    public void moveHandCards() {
+    public void setDestinationOfHandCards() {
         int handSize = cardsInHand.size();
         for (int i = 0; i < handSize; i++) {
             cardsInHand.get(i).setDestLocation(
@@ -552,9 +551,9 @@ public class StartGamePage extends DrawingSurface implements Page {
     }
 
     /**
-     * Move cards in the opponent's hand.
+     * Set the destination location of cards in the opponent's hand.
      */
-    public void moveOpponentHandCards() {
+    public void setDestinationOfOpponentHandCards() {
         int opponentHandSize = cardsInOpponentHand.size();
         for (int i = 0; i < opponentHandSize; i++) {
             cardsInOpponentHand.get(i).setDestLocation(
@@ -563,16 +562,16 @@ public class StartGamePage extends DrawingSurface implements Page {
     }
 
     /**
-     * Animate the cards.
+     * Move the cards.
      * 
      * @param steps
      */
     public void moveCards(int steps) {
 
-        moveDeck();
-        movePlayCards();
-        moveHandCards();
-        moveOpponentHandCards();
+        setDesintationOfDeck();
+        setDestinationOfPlayCards();
+        setDestinationOfHandCards();
+        setDestinationOfOpponentHandCards();
 
         double[] x = new double[numcards];
         double[] y = new double[numcards];
@@ -849,7 +848,7 @@ public class StartGamePage extends DrawingSurface implements Page {
             
         }
     }
-
+    
     /**
      * Check if a card has been clicked.
      * 
@@ -865,22 +864,22 @@ public class StartGamePage extends DrawingSurface implements Page {
                 gameManager.opponentPlayCard();
                 updateCardPositions();
                 moveCards(50);
+                
+                // Once the players have played all their cards (6+6=12)
                 if (gameManager.getGame().getCardsInPlay()
                     .getCardsInHand().size() == 12) {
-
-                    if (gameManager.getGame().getCardsInPlay()
-                        .getCardsInHand().size() == 12) {
-                        movePeg(0, 5);
-                        movePeg(1, 5);
-                        if (pegLocations[0] == 120) {
-                            closeWindow();
-                        }
-                        dealCards();
+                    movePeg(0, 5);
+                    movePeg(1, 5);
+                    
+                    // If the location of either peg 
+                    // is at the final spot, end the game.
+                    if (pegLocations[0] == 120 || pegLocations[1] == 120) {
+                        closeWindow();
                     }
-                    setCardsClickable(true);
-                    return;
+                    dealCards();
                 }
                 setCardsClickable(true);
+                return;
             }
         }
     }
