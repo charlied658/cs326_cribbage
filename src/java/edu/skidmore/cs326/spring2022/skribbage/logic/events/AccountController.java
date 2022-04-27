@@ -10,6 +10,7 @@ import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserLoginEvent;
 import edu.skidmore.cs326.spring2022.skribbage.frontend.events.ValidateForChangePassword;
 
 import org.apache.log4j.Logger;
+import org.mortbay.log.Log;
 
 import edu.skidmore.cs326.spring2022.skribbage.common.EventFactory;
 import edu.skidmore.cs326.spring2022.skribbage.common.EventType;
@@ -215,9 +216,11 @@ public class AccountController implements PropertyChangeListener {
                     ((ValidateForChangePassword) evt);
 
                 if (isPasswordCorrect(associatedUser, call.getPassword())) {
+                    LOG.debug("User Password validated");
                     accountResponse = new AccountResponse(
                         "User validated for changing password", false);
                 } else {
+                    LOG.debug("User Password not validated");
                     accountResponse = new AccountResponse(
                         "User not validated for changing password", true);
                 }
