@@ -1,6 +1,7 @@
 package edu.skidmore.cs326.spring2022.skribbage.frontend;
 
 import java.awt.Point;
+import java.util.Objects;
 
 import us.daveread.edu.graphics.shape.impl.Image;
 
@@ -31,6 +32,12 @@ public class CardImage {
      * Stores whether the card face is showing or not.
      */
     private boolean showing;
+
+    /**
+     * Where the card is on the board (not pixel location)
+     * corresponds to ArrayList of other cards in the same position.
+     */
+    private CardPosition cardPosition;
     
     /**
      * Constructor method.
@@ -106,5 +113,38 @@ public class CardImage {
     public void setShowing(boolean showing) {
         this.showing = showing;
     }
-    
+
+    /**
+     * Move card to a different position.
+     * @param cardPosition new position.
+     */
+    public void setCardPosition(
+        CardPosition cardPosition) {
+        this.cardPosition = cardPosition;
+    }
+
+    /**
+     * Get current card position.
+     * @return CardPosition type.
+     */
+    public CardPosition getCardPosition() {
+        return cardPosition;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        CardImage cardImage = (CardImage) o;
+        return cardID == cardImage.cardID;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(cardID);
+    }
 }

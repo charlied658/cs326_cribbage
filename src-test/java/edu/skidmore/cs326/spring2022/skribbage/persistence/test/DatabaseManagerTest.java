@@ -107,10 +107,10 @@ public class DatabaseManagerTest {
      */
     @Test
     public void updateUsername() {
-        databaseinstance.update("Username", "RickTwin", 9943);
+        databaseinstance.update("Username", "RickTwin", 5);
         Boolean isUpdated = databaseinstance.accountExists("RickTwin");
         assertEquals("Testing when updating the username", isUpdated, true);
-        databaseinstance.update("Username", "Rick", 9943);
+        databaseinstance.update("Username", "Rick", 5);
     }
     
     /**
