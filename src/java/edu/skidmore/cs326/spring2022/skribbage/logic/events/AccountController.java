@@ -6,15 +6,17 @@ import java.beans.PropertyChangeListener;
 import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserChangePasswordEvent;
 import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserChangePasswordResponseEvent;
 import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserCreateAccountEvent;
+import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserDeleteAccountEvent;
+import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserDeleteAccountResponseEvent;
 import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserLoginEvent;
 import edu.skidmore.cs326.spring2022.skribbage.frontend.events.ValidateForChangePassword;
 
 import org.apache.log4j.Logger;
 
-
 import edu.skidmore.cs326.spring2022.skribbage.common.EventFactory;
 import edu.skidmore.cs326.spring2022.skribbage.common.EventType;
 import edu.skidmore.cs326.spring2022.skribbage.common.LoginAuthenticator;
+import edu.skidmore.cs326.spring2022.skribbage.common.Password;
 import edu.skidmore.cs326.spring2022.skribbage.common.User;
 import edu.skidmore.cs326.spring2022.skribbage.common.events.AccountEvent;
 import edu.skidmore.cs326.spring2022.skribbage.persistence.PersistenceFacade;
@@ -148,12 +150,32 @@ public class AccountController implements PropertyChangeListener {
 
                 break;
             case USER_DELETE_ACCOUNT:
-                LOG.debug("caught a delete account event");
+                LOG.debug("Caught a delete account event");
+                UserDeleteAccountEvent del = ((UserDeleteAccountEvent) evt);
+                // if correct password.
+                
+                if (isPasswordCorrect(associatedUser, del.getPassword())) {
+                    Password toDelete = LoginAuthenticator.getInstance()
+                        .hashNewPassword(del.getPassword());
+                    
+                    if (PersistenceFacade.getInstance().userDelete(
+                        associatedUser, toDelete)) {
+                        accountResponse =
+                            new AccountResponse("Account deleted!", false);
+                    } else {
+                        accountResponse =
+                            new AccountResponse("Account not deleted", true);
+                    }
+                } else {
+                    accountResponse = new AccountResponse(
+                        "Account not deleted. User not verified", true);
+                }
 
-                accountResponse =
-                    new AccountResponse("Attempting to delete user",
-                        PersistenceFacade.getInstance()
-                            .userDelete(associatedUser, null));
+                UserDeleteAccountResponseEvent res =
+                    (UserDeleteAccountResponseEvent) eventFactory.createEvent(
+                        EventType.USER_DELETE_ACCOUNT_RESPONSE, this,
+                        associatedUser, accountResponse);
+                eventFactory.fireEvent(res);
                 break;
             case USER_CHANGE_PASSWORD:
                 LOG.debug("caught a change password event");

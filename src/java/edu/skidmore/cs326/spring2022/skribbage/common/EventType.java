@@ -70,18 +70,24 @@ public enum EventType {
     /**
      * Fired when a user attempts to delete their account.
      */
-    USER_DELETE_ACCOUNT("User Delete Account Event", User.class),
+    USER_DELETE_ACCOUNT("User Delete Account Event", User.class,
+        String.class),
+    /**
+     * Fired when delete account has been handled by AccountController.
+     */
+    USER_DELETE_ACCOUNT_RESPONSE("User Delete Account Event Response",
+        User.class),
     /**
      * Fired when the host of a lobby clicks 'start game', and all players
      * are added to a new game.
      */
     LOBBY_START_GAME("Lobby Start Game Event", Lobby.class),
-    
+
     /**
      * Fired when a user clicks 'leave lobby' and is removed from the lobby.
      */
     LOBBY_REMOVE_USER("Lobby Remove User Event", Lobby.class, User.class),
-    
+
     /**
      * Fired when a User enters the proper lobby id and is entering said lobby.
      */
@@ -91,7 +97,6 @@ public enum EventType {
      * Fired when a logged in user attempts to start a new lobby.
      */
     LOBBY_CREATE_LOBBY("Lobby Create Game Event", Lobby.class);
-
 
     /**
      * The name of the event.
@@ -144,7 +149,5 @@ public enum EventType {
         LOG.debug("Returning arguments list of an event");
         return args;
     }
-    
-    
 
 }
