@@ -22,8 +22,8 @@ CREATE TABLE item_table (
 	item_id int, 
 	item_type varchar(255), 
 	item_cost int, 
-	PRIMARY KEY(item_id) 
-	UNIQUE(item_id), 
+	PRIMARY KEY(item_id),
+	UNIQUE(item_id)
 );
 
 //create the inventory 
