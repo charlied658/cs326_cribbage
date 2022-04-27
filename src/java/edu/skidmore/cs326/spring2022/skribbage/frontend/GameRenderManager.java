@@ -99,10 +99,8 @@ public class GameRenderManager {
                     return getStandardDeck().get(i).getCard();
                 }
             }
-            return null;
-        } else {
-            return null;
         }
+        return null;
     }
 
     /**
