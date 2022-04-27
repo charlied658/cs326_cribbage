@@ -7,6 +7,7 @@ import java.awt.Point;
 import org.apache.log4j.Logger;
 
 import edu.skidmore.cs326.spring2022.skribbage.common.BoardManager;
+import edu.skidmore.cs326.spring2022.skribbage.common.Card;
 import edu.skidmore.cs326.spring2022.skribbage.common.Game;
 import edu.skidmore.cs326.spring2022.skribbage.logic.GameManager;
 import us.daveread.edu.graphics.shape.Drawable;
@@ -35,17 +36,12 @@ public class StartGamePage extends DrawingSurface implements Page {
      */
     @SuppressWarnings("unused")
     private GameManager gameManager;
-    
+
     /**
      * PageManager instance for page management.
      */
     private PageManager pageManager;
 
-    /**
-     * AnimationManager instance to manage animations.
-     */
-    private AnimationManager animationManager;
-    
     /**
      * navPage - NavigationPage window.
      */
@@ -101,7 +97,7 @@ public class StartGamePage extends DrawingSurface implements Page {
      * label for computer points.
      */
     private Text computerPointsLabel;
-    
+
     /**
      * How many spaces each player moves.
      */
@@ -113,7 +109,7 @@ public class StartGamePage extends DrawingSurface implements Page {
      */
     @SuppressWarnings("unused")
     private boolean running;
-    
+
     /**
      * Toggles the screen being resized.
      */
@@ -134,7 +130,9 @@ public class StartGamePage extends DrawingSurface implements Page {
     public StartGamePage() {
         pageManager = PageManager.getInstance();
         gameManager = new GameManager(new Game(2));
-        animationManager = new AnimationManager(this);
+        AnimationManager.getInstance().setStartGamePage(this);
+        GameRenderManager.getInstance()
+            .setGameManager(AnimationManager.getInstance().getGameManager());
         LOG.trace("StartGamePage constructor");
         startGamePage = new MainFrame(
             this, "Start Game Page", 1400, 900, false);
@@ -183,8 +181,8 @@ public class StartGamePage extends DrawingSurface implements Page {
 
         createGrid();
         assignSpots();
-        animationManager.renderSpots();
-        animationManager.createCards();
+        AnimationManager.getInstance().renderSpots();
+        AnimationManager.getInstance().createCards();
     }
 
     /**
@@ -214,7 +212,7 @@ public class StartGamePage extends DrawingSurface implements Page {
         if (e == startButton) {
             LOG.trace("Starting game");
             remove(startButton);
-            animationManager.dealCards();
+            AnimationManager.getInstance().dealCards();
 
         } else if (e == returnHomeButton) {
             LOG.trace("Return to previous screen");
@@ -227,11 +225,23 @@ public class StartGamePage extends DrawingSurface implements Page {
                 new Dimension(1350, resizeWindow ? 800 : 720));
             startGamePage.setSize(1400, resizeWindow ? 940 : 860);
             resizeWindow = !resizeWindow;
-            animationManager.resizeWindow();
-            animationManager.moveCards(10);
+            AnimationManager.getInstance().resizeWindow();
+            AnimationManager.getInstance().moveCards(10);
         }
-        
-        animationManager.checkCardClick(e);
+
+        // Gets the card that has been clicked on
+        Card clickedCard = GameRenderManager.getInstance().getClickedCard(e);
+        if (clickedCard != null) {
+            System.out.println("Click on card: " + clickedCard.getCardID());
+            System.out.println("Rank: " + clickedCard.getRank().getName());
+            System.out.println("Suit: " + clickedCard.getSuit().getName());
+            System.out
+                .println("Value: " + clickedCard.getRank().getPointValue());
+        }
+
+        // If the card that has been clicked is in the player's hand, move that
+        // card to the center of the board and update game state.
+        GameRenderManager.getInstance().manageClickedCard(e);
 
     }
 
