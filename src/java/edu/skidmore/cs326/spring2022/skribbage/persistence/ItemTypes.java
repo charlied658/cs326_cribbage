@@ -10,7 +10,7 @@ public enum ItemTypes {
     /**
      * list of item types with id numbers passed in as parameters to .
      */
-    PARTY_HAT(001), BIRTHDAY_CAKE(002), MAGNIFYING_GLASS(003);
+    MIRROR(001), SKIP(002), MAGNIFYING_GLASS(003);
 
     /**
      * item ID.
