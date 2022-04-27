@@ -240,7 +240,7 @@ public class DatabaseManager {
     @SuppressWarnings("unused")
     public HashMap<String, Item> inventoryQuery(int playerID) {
 
-        String tokenQuery = "SELECT * FROM inventory INNER JOIN player_account ON player_account.PersonID=inventory.PersonID WHERE player_account.PersonID = ? ";
+        String tokenQuery = "SELECT * FROM inventory INNER JOIN player_account ON player_account.PersonID=inventory.PersonID WHERE player_account.PersonID = 9943 INNER JOIN inventory ON inventory.ItemID=item_table.itemID";
 
         
         
