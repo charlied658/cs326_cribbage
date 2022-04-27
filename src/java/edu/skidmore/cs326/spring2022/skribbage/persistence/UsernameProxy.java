@@ -89,6 +89,7 @@ public class UsernameProxy {
                 tempban = tempban.trim();
                 tempban = tempban.toLowerCase();
                 username = username.toLowerCase();
+               
 
                 if (username.contains(tempban)) {
                     usernameIsGood = false;
