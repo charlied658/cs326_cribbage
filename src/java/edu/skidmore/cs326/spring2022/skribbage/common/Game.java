@@ -32,13 +32,6 @@ public class Game implements GameInterface {
     /** The crib for the game. */
     private Hand cribCards;
 
-    /** The set of cards played by the pone during the pegging phase. */
-    // private List <Card> ponePeggingCards;
-    // private Hand ponePeggingCards;
-
-    /** The set of cards played by the dealer during the pegging phase. */
-    // private Hand dealerPeggingCards;
-
     /**
      * A list of Hand objects where each Hand is a list of cards played during
      * the pegging play phase. The Hand at index i in peggingCardsPlayed
@@ -141,10 +134,10 @@ public class Game implements GameInterface {
     public Deck getDeck() {
         return theDeck;
     }
-    
+
     /**
      * Set the deck.
-     * 
+     *
      * @param deck
      */
     public void setDeck(Deck deck) {
