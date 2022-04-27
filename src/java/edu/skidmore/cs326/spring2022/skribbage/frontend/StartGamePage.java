@@ -212,7 +212,7 @@ public class StartGamePage extends DrawingSurface implements Page {
         if (e == startButton) {
             LOG.trace("Starting game");
             remove(startButton);
-            AnimationManager.getInstance().dealCards();
+            //AnimationManager.getInstance().dealCards();
 
         } else if (e == returnHomeButton) {
             LOG.trace("Return to previous screen");

@@ -117,6 +117,11 @@ public enum EventType {
     PLAYER_SEND_CARDS_TO_CRIB("", Player.class),
 
     /**
+     * Player selects starting card to play.
+     */
+    PLAYER_SELECT_START_CARD("", Player.class),
+
+    /**
      * Fired whenever a player clicks a card from their hand to play.
      */
     PLAYER_PLAY_CARD("", Player.class),
