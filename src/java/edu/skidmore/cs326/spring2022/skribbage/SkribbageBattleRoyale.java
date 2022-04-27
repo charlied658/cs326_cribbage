@@ -63,12 +63,17 @@ public class SkribbageBattleRoyale implements Runnable {
         eventManager
             .addPropertyChangeListener(new AccountResponseController(),
                 EventType.USER_LOGIN_RESPONSE,
-                EventType.USER_VALIDATION_RESPONSE);
+                EventType.USER_VALIDATION_RESPONSE,
+                EventType.USER_CHANGE_PASSWORD_VALIDATION_RESPONSE,
+                EventType.USER_CHANGE_PASSWORD_RESPONSE,
+                EventType.USER_CREATE_ACCOUNT_RESPONSE);
 
         eventManager
             .addPropertyChangeListener(new AccountController(),
                 EventType.USER_LOGIN, EventType.USER_CREATE_ACCOUNT,
-                EventType.VALIDATE_USERNAME);
+                EventType.VALIDATE_USERNAME,
+                EventType.USER_CHANGE_PASSWORD_VALIDATION,
+                EventType.USER_CHANGE_PASSWORD);
 
         eventManager
             .addPropertyChangeListener(new GameStartedResponseController(),
