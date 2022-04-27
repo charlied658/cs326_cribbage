@@ -96,7 +96,36 @@ public enum EventType {
     /**
      * Fired when a logged in user attempts to start a new lobby.
      */
-    LOBBY_CREATE_LOBBY("Lobby Create Game Event", Lobby.class);
+    LOBBY_CREATE_LOBBY("Lobby Create Game Event", Lobby.class),
+
+    // GAME EVENTS
+
+    /**
+     * Fired when the user sees the blank start game page, then clicks
+     * start game.
+     */
+    PLAYER_CLICK_START_GAME("", Player.class),
+
+    /**
+     * Fired when the player clicks on the deck to 'cut' it.
+     */
+    PLAYER_CLICK_DECK("", Player.class),
+
+    /**
+     * Fired when player has selected two cards to send to the crib.
+     */
+    PLAYER_SEND_CARDS_TO_CRIB("", Player.class),
+
+    /**
+     * Fired whenever a player clicks a card from their hand to play.
+     */
+    PLAYER_PLAY_CARD("", Player.class),
+
+    /**
+     * Fired when the front end detects that the round is over (may not
+     * be required).
+     */
+    ROUND_END("", Game.class);
 
     /**
      * The name of the event.
