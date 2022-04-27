@@ -8,12 +8,20 @@ import edu.skidmore.cs326.spring2022.skribbage.common.EventFactory;
 import edu.skidmore.cs326.spring2022.skribbage.common.EventType;
 import edu.skidmore.cs326.spring2022.skribbage.common.Lobby;
 import edu.skidmore.cs326.spring2022.skribbage.common.LobbyManager;
+import edu.skidmore.cs326.spring2022.skribbage.common.LoginAuthenticator;
+import edu.skidmore.cs326.spring2022.skribbage.common.User;
+import edu.skidmore.cs326.spring2022.skribbage.common.UserRole;
+import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserCreateAccountEvent;
+import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserDeleteAccountEvent;
+import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserDeleteAccountResponseEvent;
 
 import org.apache.log4j.Logger;
 
 import us.daveread.edu.graphics.shape.Drawable;
 import us.daveread.edu.graphics.shape.impl.Image;
 import us.daveread.edu.graphics.shape.impl.Text;
+import us.daveread.edu.graphics.surface.DialogPosition;
+import us.daveread.edu.graphics.surface.DialogType;
 import us.daveread.edu.graphics.surface.DrawingSurface;
 import us.daveread.edu.graphics.surface.MainFrame;
 
@@ -22,8 +30,8 @@ import us.daveread.edu.graphics.surface.MainFrame;
  * between Rules, Past Games, and New Game pages.
  *
  * @author Zoe Beals
- * Code reviewed by Sten Leinasaar 04/20/22
- * Line modified by Declan Morris on 04/26/22
+ *         Code reviewed by Sten Leinasaar 04/20/22
+ *         Line modified by Declan Morris on 04/26/22
  */
 @SuppressWarnings("serial")
 public class NavigationPage extends DrawingSurface implements Page {
@@ -85,6 +93,11 @@ public class NavigationPage extends DrawingSurface implements Page {
      * pastGamesPageButton - Text variable to hold link to past games page.
      */
     private Text pastGamesPageButton;
+
+    /**
+     * DeleteAccountPageButton = Button for delete account.
+     */
+    private Text deleteAccountButton;
 
     /**
      * pastGamesPage - PastGamesPage window.
@@ -161,6 +174,13 @@ public class NavigationPage extends DrawingSurface implements Page {
             Color.black, Color.blue);
         add(logOut);
 
+        LOG.trace("Creating a delete account button.");
+        deleteAccountButton = new Text("Delete Account",
+            new Point(pastGamesPageButton.getLocation().x,
+                pastGamesPageButton.getLocation().y + 40),
+            20,
+            Color.black, Color.blue);
+        add(deleteAccountButton);
         welcomeMessage =
             new Text("Welcome", new Point(20, 30), 20, Color.black, Color.blue);
         // user = new Text(
@@ -180,7 +200,6 @@ public class NavigationPage extends DrawingSurface implements Page {
             rulesPage = (RulesPage) pageManager.createPage(PageType.RULES_PAGE);
             closeWindow();
         } else if (e == lobbyPageButton) {
-
 
             // Fire an event to start a new lobby
             // Lobby lobby = new Lobby()
@@ -203,6 +222,43 @@ public class NavigationPage extends DrawingSurface implements Page {
         } else if (e == logOut) {
             loginPage = (LoginPage) pageManager.createPage(PageType.LOGIN_PAGE);
             closeWindow();
+        } else if (e == deleteAccountButton) {
+            String userName = getUserInput("UserName", "Enter your username",
+                DialogPosition.CENTER_ALL);
+            String password = getUserInput("New User", "Enter password",
+                DialogPosition.CENTER_ALL, true);
+            String verifyPassword = getUserInput("New User",
+                "Enter password again", DialogPosition.CENTER_ALL, true);
+
+            if (password.equals(verifyPassword)) {
+                User currentUser = new User(null, userName,
+                    UserRole.UNAUTHORIZED);
+                UserDeleteAccountEvent evt =
+                    (UserDeleteAccountEvent) EventFactory.getInstance()
+                        .createEvent(
+                            EventType.USER_DELETE_ACCOUNT, this, currentUser,
+                            password);
+                EventFactory.getInstance().fireEvent(evt);
+            }
+        }
+    }
+
+    /**
+     * Called by AccountResponse Controller. After deleting account is done.
+     * 
+     * @param evt
+     */
+    public void userDeleteAccountResponseCallBack(
+        UserDeleteAccountResponseEvent evt) {
+        if (!evt.getAccountResponse().isRejectionStatus()) {
+            showMessage("Account Deleted", "Successful deleteing",
+                DialogType.INFORMATION);
+            loginPage = (LoginPage) pageManager.createPage(PageType.LOGIN_PAGE);
+            closeWindow();
+        } else {
+            showMessage("Account Not Deleted",
+                "Probs your password not correct sir.",
+                DialogType.ERROR);
         }
     }
 
