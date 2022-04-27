@@ -15,16 +15,7 @@ VALUES (value1, value2, value3, ...);
 
 //Nikoleta's basic information for populating the player_account table:
 
-INSERT INTO player_account 
-VALUES (
-	1, 
-	"chantzi", 
-	"nikoleta", 
-	"nchantzi", 
-	"ILoveSQL", 
-	"nchantzi@skidmore.edu", 
-	"placeholder_url"
-);
+
 
 //some basic info for populating item_table
 INSERT INTO item_table VALUES (1, "mirror", 100);
