@@ -73,6 +73,11 @@ public class FacadeTest {
      * newTestPassword
      */
     private Password newTestPassword;
+    
+    /**
+     * accountshouldn't exists
+     */
+    private User doesNotExists;
 
     /**
      * Sets up the default testing setting before everytest.
@@ -93,12 +98,15 @@ public class FacadeTest {
         newTestUser = new User("JohnnyDepp1@gmail.com", "Willy Wonka", null);
         newTestPassword = new Password(PasswordHasher.getInstance()
             .hashNewPassword("Captain"));
+        
+        doesNotExists = new User("doesntexists@gmai.com", "ThisNameShouldntExist;D", null);
+        
 
         correctTestItem = new Item();
-        correctTestItem.setItemType(ItemTypes.PARTY_HAT);
+        correctTestItem.setItemType(ItemTypes.MIRROR);
         correctTestItem.setQuantityHeld(31);
-        inventoryUser = new User("inconsequential", "inconsequential", null);
-        inventoryUser.setUserId(236);
+        inventoryUser = new User("inconsequential", "TestingUser", null);
+        inventoryUser.setUserId(3);
         walletUser = new User("inconsequential", "Your", null);
         walletUser.setUserId(325);
         // databasemanagerinstance = new DatabaseManager();
@@ -108,16 +116,16 @@ public class FacadeTest {
      * Testing when the user wants to log in with the correct username and
      * password.
      */
-    // @Test
-    // public void createUserCorrect() {
-    // facadeinstanace.userCreate(newTestUser, newTestPassword);
-    // boolean iscorrect1 = facadeinstanace.userNameExists(newTestUser);
-    // assertEquals("Checking if the new user was creating", true, iscorrect1);
-    // String pass = facadeinstanace.getPassword(newTestUser)
-    // .getBase64SaltAndPasswordHash();
-    // assertEquals("Checking if the new user cotains the correct password",
-    // pass, newTestPassword.getBase64SaltAndPasswordHash());
-    // }
+     @Test
+     public void createUserCorrect() {
+     facadeinstanace.userCreate(newTestUser, newTestPassword);
+     boolean iscorrect1 = facadeinstanace.userNameExists(newTestUser);
+     assertEquals("Checking if the new user was creating", true, iscorrect1);
+     String pass = facadeinstanace.getPassword(newTestUser)
+     .getBase64SaltAndPasswordHash();
+     assertEquals("Checking if the new user cotains the correct password",
+     pass, newTestPassword.getBase64SaltAndPasswordHash());
+     }
 
     /**
      * Testing when the user wants to change their password Passing in the user,
@@ -164,25 +172,33 @@ public class FacadeTest {
     }
 
     /**
+     * 
+     */
+    @Test
+    public void deleteaccount() {
+        facadeinstanace.userDelete(newTestUser, newTestPassword);
+    }
+    
+    /**
      * Testing to see that the username doesn't exist
      */
     @Test
     public void accountDoesntExist() {
-        Boolean verification = facadeinstanace.userNameExists(newTestUser);
+        Boolean verification = facadeinstanace.userNameExists(doesNotExists);
         assertEquals("User should not exist", false, verification);
     }
 
     /**
      * Testing the capability to display wallet values.
      */
-    @Test
-    public void displayWalletTest() {
-        walletUser.setUserId(9952);
-
-        assertEquals("Testing to see if displayWallet Works",
-            facadeinstanace.displayWallet(walletUser),
-            "player coin value: 10000");
-    }
+//    @Test
+//    public void displayWalletTest() {
+//        walletUser.setUserId(9952);
+//
+//        assertEquals("Testing to see if displayWallet Works",
+//            facadeinstanace.displayWallet(walletUser),
+//            "player coin value: 10000");
+//    }
 
     /**
      * Testing validating username to see if it doesn't have bad words
@@ -196,16 +212,16 @@ public class FacadeTest {
     /**
      * Testing the capability to display inventory values.
      */
-    // @Test
-    // public void displayInventoryTest() {
-    //
-    // HashMap<String, Item> hashMap =
-    // facadeinstanace.displayInventory(inventoryUser);
-    // System.out.println("1 " + correctTestItem.toString());
-    // System.out.println("2 " + hashMap.get("PARTY_HAT").toString());
-    // assertEquals(correctTestItem.toString(),
-    // hashMap.get("PARTY_HAT").toString());
-    // }
+     @Test
+     public void displayInventoryTest() {
+    
+     HashMap<String, Item> hashMap =
+     facadeinstanace.displayInventory(inventoryUser);
+     System.out.println("1 " + correctTestItem.toString());
+     System.out.println("2 " + hashMap.get("MIRROR").toString());
+     assertEquals(correctTestItem.toString(),
+     hashMap.get("MIRROR").toString());
+     }
 
     /**
      * Testing the capability to display inventory values.

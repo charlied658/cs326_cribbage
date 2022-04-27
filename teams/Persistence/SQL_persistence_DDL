@@ -3,6 +3,7 @@ Data definition language for tables:
 //clean house: 
 DROP TABLE player_account
 DROP TABLE inventory
+DROP TABLE item_table
 
 //create the table for storing player information:
 CREATE TABLE player_account (     
@@ -14,6 +15,15 @@ Password varchar(255),
 Email varchar(255),     
 AvatarUrl varchar(255),     
 PRIMARY KEY(PersonID), UNIQUE(Email), UNIQUE(Username)  
+);
+
+//item table:
+CREATE TABLE item_table ( 
+	item_id int, 
+	item_type varchar(255), 
+	item_cost int, 
+	PRIMARY KEY(item_id),
+	UNIQUE(item_id)
 );
 
 //create the inventory 
@@ -28,6 +38,7 @@ FOREIGN KEY(ItemID) References item_table(itemID)
 
  
 
+
 //item table:
 CREATE TABLE item_table ( 
 	item_id int, 
@@ -36,3 +47,4 @@ CREATE TABLE item_table (
 	PRIMARY KEY(item_id), 
 	UNIQUE(item_id) 
 );
+
