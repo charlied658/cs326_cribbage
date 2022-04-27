@@ -74,34 +74,9 @@ public class AccountController implements PropertyChangeListener {
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        /*
-         * Step 1: Perform actions that are shared among events that this
-         * controller
-         * manages
-         * For example, every single Account management action requires
-         * validation
-         * that the user exists (including CreateAccountEvent, can't make an
-         * account
-         * if it already exists!)
-         * So instead of writing 4 separate listeners for each Account event,
-         * we can write a single Controller and have it subscribe to a list of
-         * account-related events, handling each one accordingly after
-         * executing shared logic.
-         */
 
-        /*
-         * Requires downcasting from PropertyChangeEvent,this is where usingan
-         * AccountEvent abstract class is helpful --We can share functionality
-         * between all account events to do similar tasks like these ones.
-         * (hashing
-         * and validating)
-         */
         LOG.trace("AccountController Event: " + evt);
 
-        /*
-         * Step 2: Handle each type of account event accordingly. There is
-         * likely
-         */
         AccountEvent accountEvent = (AccountEvent) evt;
         User associatedUser = accountEvent.getUser();
         AccountResponse accountResponse = null;
@@ -211,15 +186,17 @@ public class AccountController implements PropertyChangeListener {
                     if (isPasswordCorrect(associatedUser, call.getPassword())) {
                         ValidateChangeResponseEvent responseEventPV =
                             (ValidateChangeResponseEvent) eventFactory
-                                .createEvent(
-                                    EventType.USER_CHANGE_PASSWORD_VALIDATION_RESPONSE,
+                                .createEvent(EventType.
+                                    USER_CHANGE_PASSWORD_VALIDATION_RESPONSE,
                                     this);
                         eventFactory.fireEvent(responseEventPV);
                     }
                     break;
-                    // default:
-                    // LOG.warn("caught unhandled event");
+
                 }
+            default:
+                LOG.warn("caught unhandled event");
+                break;
 
         }
     }
