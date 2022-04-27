@@ -3,6 +3,7 @@ package edu.skidmore.cs326.spring2022.skribbage.frontend;
 import java.awt.Point;
 import java.util.Objects;
 
+import edu.skidmore.cs326.spring2022.skribbage.common.Card;
 import us.daveread.edu.graphics.shape.impl.Image;
 
 /**
@@ -24,6 +25,11 @@ public class CardImage {
     private Point destLocation;
     
     /**
+     * Card object which is represented by the CardImage.
+     */
+    private Card card;
+    
+    /**
      * Unique ID of card, ranging from 0 to 51.
      */
     private int cardID;
@@ -43,10 +49,12 @@ public class CardImage {
      * Constructor method.
      * @param image
      * @param cardID
+     * @param card
      */
-    public CardImage(Image image, int cardID) {
+    public CardImage(Image image, int cardID, Card card) {
         this.image = image;
         this.cardID = cardID;
+        this.setCard(card);
         this.showing = false;
     }
     
@@ -129,6 +137,22 @@ public class CardImage {
      */
     public CardPosition getCardPosition() {
         return cardPosition;
+    }
+
+    /**
+     * Get card object.
+     * @return card
+     */
+    public Card getCard() {
+        return card;
+    }
+
+    /**
+     * Set card object.
+     * @param card
+     */
+    public void setCard(Card card) {
+        this.card = card;
     }
 
     @Override
