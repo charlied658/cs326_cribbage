@@ -95,10 +95,10 @@ public class FacadeTest {
             .hashNewPassword("Captain"));
 
         correctTestItem = new Item();
-        correctTestItem.setItemType(ItemTypes.PARTY_HAT);
+        correctTestItem.setItemType(ItemTypes.MIRROR);
         correctTestItem.setQuantityHeld(31);
-        inventoryUser = new User("inconsequential", "inconsequential", null);
-        inventoryUser.setUserId(236);
+        inventoryUser = new User("inconsequential", "TestingUser", null);
+        inventoryUser.setUserId(3);
         walletUser = new User("inconsequential", "Your", null);
         walletUser.setUserId(325);
         // databasemanagerinstance = new DatabaseManager();
@@ -196,16 +196,16 @@ public class FacadeTest {
     /**
      * Testing the capability to display inventory values.
      */
-    // @Test
-    // public void displayInventoryTest() {
-    //
-    // HashMap<String, Item> hashMap =
-    // facadeinstanace.displayInventory(inventoryUser);
-    // System.out.println("1 " + correctTestItem.toString());
-    // System.out.println("2 " + hashMap.get("PARTY_HAT").toString());
-    // assertEquals(correctTestItem.toString(),
-    // hashMap.get("PARTY_HAT").toString());
-    // }
+     @Test
+     public void displayInventoryTest() {
+    
+     HashMap<String, Item> hashMap =
+     facadeinstanace.displayInventory(inventoryUser);
+     System.out.println("1 " + correctTestItem.toString());
+     System.out.println("2 " + hashMap.get("MIRROR").toString());
+     assertEquals(correctTestItem.toString(),
+     hashMap.get("MIRROR").toString());
+     }
 
     /**
      * Testing the capability to display inventory values.
