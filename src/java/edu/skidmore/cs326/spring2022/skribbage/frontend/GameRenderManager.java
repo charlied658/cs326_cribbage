@@ -3,9 +3,13 @@ package edu.skidmore.cs326.spring2022.skribbage.frontend;
 import java.util.ArrayList;
 
 import edu.skidmore.cs326.spring2022.skribbage.common.Player;
+import edu.skidmore.cs326.spring2022.skribbage.frontend.events.game.PlayerClickDeckEvent;
+
 import org.apache.log4j.Logger;
 
 import edu.skidmore.cs326.spring2022.skribbage.common.Card;
+import edu.skidmore.cs326.spring2022.skribbage.common.EventFactory;
+import edu.skidmore.cs326.spring2022.skribbage.common.EventType;
 import edu.skidmore.cs326.spring2022.skribbage.logic.GameManager;
 import us.daveread.edu.graphics.shape.Drawable;
 import us.daveread.edu.graphics.shape.impl.Image;
@@ -100,7 +104,8 @@ public class GameRenderManager {
     /**
      * Get the Card object associated with the CardImage that has been clicked.
      * 
-     * @param e drawable image
+     * @param e
+     *            drawable image
      * @return card
      */
     public Card getClickedCard(Drawable e) {
@@ -122,6 +127,23 @@ public class GameRenderManager {
      *            Drawable that has been passed in
      */
     public void manageClickedCard(Drawable e) {
+
+        for (int i = 0; i < GameRenderManager.getInstance()
+            .getCardsInDeck().size(); i++) {
+
+            if (e == GameRenderManager.getInstance()
+                .getCardsInDeck().get(i)) {
+
+                PlayerClickDeckEvent playerClickDeckEvent =
+                    (PlayerClickDeckEvent) EventFactory.getInstance()
+                        .createEvent(
+                            EventType.PLAYER_CLICK_DECK, this,
+                            GameRenderManager.getInstance().getActivePlayer());
+                EventFactory.getInstance().fireEvent(playerClickDeckEvent);
+
+            }
+
+        }
 
         // Loop through the entire player's hand
         for (int i = 0; i < GameRenderManager.getInstance()
@@ -181,12 +203,14 @@ public class GameRenderManager {
 
     /**
      * Set the game manager instance.
-     * @param gameManager game manager to set
+     * 
+     * @param gameManager
+     *            game manager to set
      */
     public void setGameManager(GameManager gameManager) {
         this.gameManager = gameManager;
     }
-    
+
     /**
      * Get the standard deck.
      * 
@@ -199,7 +223,8 @@ public class GameRenderManager {
     /**
      * Set the standard deck.
      * 
-     * @param standardDeck standard deck
+     * @param standardDeck
+     *            standard deck
      */
     public void setStandardDeck(ArrayList<CardImage> standardDeck) {
         this.standardDeck = standardDeck;
@@ -207,7 +232,9 @@ public class GameRenderManager {
 
     /**
      * Sets an array of selected cards for discarding.
-     * @param selectedCardsForDiscarding array to add
+     * 
+     * @param selectedCardsForDiscarding
+     *            array to add
      */
     public void setSelectedCardsForDiscarding(
         ArrayList<CardImage> selectedCardsForDiscarding) {
@@ -216,6 +243,7 @@ public class GameRenderManager {
 
     /**
      * Gets the array of selected cards for discarding.
+     * 
      * @return SelectedCardsForDiscarding
      */
     public ArrayList<CardImage> getSelectedCardsForDiscarding() {
@@ -234,7 +262,8 @@ public class GameRenderManager {
     /**
      * Set cards in the deck.
      * 
-     * @param cardsInDeck cards in deck
+     * @param cardsInDeck
+     *            cards in deck
      */
     public void setCardsInDeck(ArrayList<CardImage> cardsInDeck) {
         this.cardsInDeck = cardsInDeck;
@@ -252,7 +281,8 @@ public class GameRenderManager {
     /**
      * Set cards in play.
      * 
-     * @param cardsInPlay cards in play
+     * @param cardsInPlay
+     *            cards in play
      */
     public void setCardsInPlay(ArrayList<CardImage> cardsInPlay) {
         this.cardsInPlay = cardsInPlay;
@@ -270,7 +300,8 @@ public class GameRenderManager {
     /**
      * Set cards in player's hand.
      * 
-     * @param cardsInHand cards in hand
+     * @param cardsInHand
+     *            cards in hand
      */
     public void setCardsInHand(ArrayList<CardImage> cardsInHand) {
         this.cardsInHand = cardsInHand;
@@ -288,7 +319,8 @@ public class GameRenderManager {
     /**
      * Set cards in the crib.
      * 
-     * @param cardsInCrib cards in crib
+     * @param cardsInCrib
+     *            cards in crib
      */
     public void setCardsInCrib(ArrayList<CardImage> cardsInCrib) {
         this.cardsInCrib = cardsInCrib;
@@ -296,6 +328,7 @@ public class GameRenderManager {
 
     /**
      * Gets active player.
+     * 
      * @return Player object
      */
     public Player getActivePlayer() {
@@ -304,7 +337,9 @@ public class GameRenderManager {
 
     /**
      * Sets active player.
-     * @param activePlayer new player object to set
+     * 
+     * @param activePlayer
+     *            new player object to set
      */
     public void setActivePlayer(
         Player activePlayer) {
@@ -323,7 +358,8 @@ public class GameRenderManager {
     /**
      * Set cards in opponent's hand.
      * 
-     * @param cardsInOpponentHand cards in opponent hand
+     * @param cardsInOpponentHand
+     *            cards in opponent hand
      */
     public void setCardsInOpponentHand(
         ArrayList<CardImage> cardsInOpponentHand) {

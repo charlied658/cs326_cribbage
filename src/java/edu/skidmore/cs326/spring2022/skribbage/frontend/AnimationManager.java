@@ -381,44 +381,37 @@ public class AnimationManager {
             .getPlayerList().get(0).getHand().getCardsInHand();
         List<Card> gameCardsInOpponentHand = gameManager.getGame()
             .getPlayerList().get(1).getHand().getCardsInHand();
+
         for (Card card : gameCardsInDeck) {
+            CardImage cardImage = GameRenderManager.getInstance()
+                .getStandardDeck().get(card.getCardID());
             GameRenderManager.getInstance()
-                .getCardsInDeck().add(
-                    GameRenderManager.getInstance()
-                        .getStandardDeck().get(
-                            card.getCardID()));
-            GameRenderManager.getInstance().getCardsInDeck()
-                .get(card.getCardID()).setCardPosition(CardPosition.DECK);
+                .getCardsInDeck().add(cardImage);
+            cardImage.setCardPosition(CardPosition.DECK);
         }
 
         for (Card card : gameCardsInPlay) {
+            CardImage cardImage = GameRenderManager.getInstance()
+                .getStandardDeck().get(card.getCardID());
             GameRenderManager.getInstance()
-                .getCardsInPlay().add(
-                    GameRenderManager.getInstance()
-                        .getStandardDeck().get(
-                            card.getCardID()));
-            GameRenderManager.getInstance().getCardsInDeck()
-            .get(card.getCardID()).setCardPosition(CardPosition.IN_PLAY);
+                .getCardsInPlay().add(cardImage);
+            cardImage.setCardPosition(CardPosition.IN_PLAY);
         }
 
         for (Card card : gameCardsInHand) {
+            CardImage cardImage = GameRenderManager.getInstance()
+                .getStandardDeck().get(card.getCardID());
             GameRenderManager.getInstance()
-                .getCardsInHand().add(
-                    GameRenderManager.getInstance()
-                        .getStandardDeck().get(
-                            card.getCardID()));
-            GameRenderManager.getInstance().getCardsInDeck()
-            .get(card.getCardID()).setCardPosition(CardPosition.PLAYER_HAND);
+                .getCardsInHand().add(cardImage);
+            cardImage.setCardPosition(CardPosition.PLAYER_HAND);
         }
 
         for (Card card : gameCardsInOpponentHand) {
+            CardImage cardImage = GameRenderManager.getInstance()
+                .getStandardDeck().get(card.getCardID());
             GameRenderManager.getInstance()
-                .getCardsInOpponentHand().add(
-                    GameRenderManager.getInstance()
-                        .getStandardDeck().get(
-                            card.getCardID()));
-            GameRenderManager.getInstance().getCardsInDeck()
-            .get(card.getCardID()).setCardPosition(CardPosition.OPPONENT_HAND);
+                .getCardsInOpponentHand().add(cardImage);
+            cardImage.setCardPosition(CardPosition.OPPONENT_HAND);
         }
 
     }
