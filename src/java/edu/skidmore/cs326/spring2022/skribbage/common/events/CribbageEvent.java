@@ -14,6 +14,7 @@ import java.beans.PropertyChangeEvent;
  * @author Alex Carney
  *         Reviewed
  */
+@SuppressWarnings("serial")
 public abstract class CribbageEvent extends PropertyChangeEvent {
 
     /**
@@ -28,7 +29,8 @@ public abstract class CribbageEvent extends PropertyChangeEvent {
      *            the bean that fired the event
      * @param eventType
      *            event type of subclass
-     * @param player Player who fired the event
+     * @param player
+     *            Player who fired the event
      * @throws IllegalArgumentException
      *             if {@code source} is {@code null}
      */
@@ -39,6 +41,7 @@ public abstract class CribbageEvent extends PropertyChangeEvent {
 
     /**
      * Return player associated with event.
+     * 
      * @return player
      */
     public Player getPlayer() {

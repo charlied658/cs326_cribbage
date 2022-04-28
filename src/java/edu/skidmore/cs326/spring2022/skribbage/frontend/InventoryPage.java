@@ -36,10 +36,11 @@ public class InventoryPage extends DrawingSurface implements Page {
      * mf - Holds reference to the window.
      */
     private MainFrame mf;
-    
+
     /**
      * currentPlayer - Current player whose inventory this is.
      */
+    @SuppressWarnings("unused")
     private Player currentPlayer;
 
     /**
@@ -81,7 +82,7 @@ public class InventoryPage extends DrawingSurface implements Page {
      */
     public InventoryPage() {
         LOG.trace("Entered InventoryPage Constructor.");
-        //PLACEHOLDER - Add way to get player from database
+        // PLACEHOLDER - Add way to get player from database
         currentPlayer = new Player();
         mf = new MainFrame(this, "Inventory", mainframeWidth,
             mainframeHeight, false);
@@ -127,7 +128,7 @@ public class InventoryPage extends DrawingSurface implements Page {
             initYPosition += 25;
         }
 
-        //add(closeWindow);
+        // add(closeWindow);
         add(lobbyButton);
         add(logo);
     }
@@ -146,19 +147,20 @@ public class InventoryPage extends DrawingSurface implements Page {
         }
 
     }
+
     /**
      * Method from Page interface, to close the window.
      */
     public void closeWindow() {
         mf.dispose();
     }
-     /**
+    /**
      * @param args
      */
     /*
-    public static void main(String[] args) {
-        new InventoryPage();
-    }
-    */
+     * public static void main(String[] args) {
+     * new InventoryPage();
+     * }
+     */
 
 }

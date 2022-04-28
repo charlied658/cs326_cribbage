@@ -5,7 +5,6 @@ import edu.skidmore.cs326.spring2022.skribbage.common.events.AccountEvent;
 import org.apache.log4j.Logger;
 
 import edu.skidmore.cs326.spring2022.skribbage.common.EventType;
-import edu.skidmore.cs326.spring2022.skribbage.common.Password;
 import edu.skidmore.cs326.spring2022.skribbage.common.User;
 
 /**

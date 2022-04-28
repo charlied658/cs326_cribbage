@@ -6,15 +6,12 @@ import java.awt.Point;
 
 import edu.skidmore.cs326.spring2022.skribbage.common.EventFactory;
 import edu.skidmore.cs326.spring2022.skribbage.common.EventType;
-import edu.skidmore.cs326.spring2022.skribbage.common.Lobby;
 import edu.skidmore.cs326.spring2022.skribbage.common.LobbyManager;
 import edu.skidmore.cs326.spring2022.skribbage.common.LoginAuthenticator;
 import edu.skidmore.cs326.spring2022.skribbage.common.Password;
 import edu.skidmore.cs326.spring2022.skribbage.common.User;
-import edu.skidmore.cs326.spring2022.skribbage.common.UserRole;
 import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserChangePasswordEvent;
 import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserChangePasswordResponseEvent;
-import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserCreateAccountEvent;
 import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserDeleteAccountEvent;
 import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserDeleteAccountResponseEvent;
 import edu.skidmore.cs326.spring2022.skribbage.frontend.events.ValidateForChangePassword;
@@ -146,7 +143,7 @@ public class NavigationPage extends DrawingSurface implements Page {
     private User currentUser;
 
     /**
-     * Username to verify
+     * Username to verify.
      */
     private String userName;
 
@@ -303,7 +300,7 @@ public class NavigationPage extends DrawingSurface implements Page {
                 // prompty again.
                 showMessage("HOLD ON!",
                     "That is not your USENAME you entered! "
-                    + "I am mad...Try again.",
+                        + "I am mad...Try again.",
                     DialogType.ERROR);
                 drawableMouseClick(e);
             }
@@ -361,7 +358,7 @@ public class NavigationPage extends DrawingSurface implements Page {
         }
 
     }
-    
+
     /**
      * Called by AccountResponseController.
      * 
@@ -371,7 +368,8 @@ public class NavigationPage extends DrawingSurface implements Page {
     public void validateChangePasswordCallback(
         UserChangePasswordResponseEvent evt) {
         if (!evt.getAccountResponse().isRejectionStatus()) {
-            showMessage("Password change succesful.", "You are beautiful! You Rock!",
+            showMessage("Password change succesful.",
+                "You are beautiful! You Rock!",
                 DialogType.INFORMATION);
         } else {
             LOG.error("FAILED to change password");
