@@ -22,7 +22,7 @@ public class PlayerClickStartGameEvent extends CribbageEvent {
      * @param args   Player object
      * @author Alex Carney
      */
-    protected PlayerClickStartGameEvent(Object source, Object... args) {
+    public PlayerClickStartGameEvent(Object source, Object... args) {
         super(source, EVENT_TYPE, (Player) args[0]);
     }
 
