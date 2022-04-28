@@ -6,6 +6,8 @@ import edu.skidmore.cs326.spring2022.skribbage.common.Card;
 import edu.skidmore.cs326.spring2022.skribbage.common.SpotType;
 import edu.skidmore.cs326.spring2022.skribbage.logic.GameManager;
 import org.apache.log4j.Logger;
+
+import us.daveread.edu.graphics.shape.Drawable;
 import us.daveread.edu.graphics.shape.VisibleObject;
 import us.daveread.edu.graphics.shape.impl.Circle;
 import us.daveread.edu.graphics.shape.impl.LineSegment;
@@ -20,7 +22,10 @@ import java.util.List;
 /**
  * Class to store all the card and peg animations.
  * Edit this file if you need to.
- *
+ * <<<<<<< HEAD
+ * =======
+ * >>>>>>> 92a128e0e4870f3bcf7bae306e1ca395cd72431b
+ * 
  * @author cdavidso
  */
 public class AnimationManager {
@@ -56,6 +61,17 @@ public class AnimationManager {
      */
     @SuppressWarnings("unused")
     private boolean running;
+
+    /**
+     * standard Deck.
+     */
+    @SuppressWarnings("unused")
+    private ArrayList<CardImage> standardDeck;
+
+    /**
+     * cardsInHand.
+     */
+    private ArrayList<CardImage> cardsInHand;
 
     /**
      * Visual representation of the spots on the board.
@@ -166,18 +182,28 @@ public class AnimationManager {
     }
 
     /**
-     * Set the gameManager instace.
-     *
-     * @param gameManager
-     *            game manager to set
+     * player points.
      */
+    private int pPoints;
+
+    /**
+     * computer points.
+     */
+    @SuppressWarnings("unused")
+    private int cPoints;
+
+    /**
+     * setGameManager.
+     * 
+     * @param gameManager
+     **/
     public void setGameManager(GameManager gameManager) {
         this.gameManager = gameManager;
     }
 
     /**
      * Get the peg locations.
-     *
+     * 
      * @return pegLocations
      */
     public int[] getPegLocations() {
@@ -780,11 +806,88 @@ public class AnimationManager {
      *            clickable or not
      */
     public void setCardsClickable(boolean clickable) {
-        for (int k = 0; k < GameRenderManager.getInstance()
-            .getStandardDeck().size(); k++) {
-            GameRenderManager.getInstance()
-                .getStandardDeck().get(k).setClickable(clickable);
+        for (int k = 0;
+            k < GameRenderManager.getInstance().getStandardDeck().size(); k++) {
+            GameRenderManager.getInstance().getStandardDeck().get(k)
+                .setClickable(clickable);
 
+        }
+    }
+
+    /**
+     * Check if a card has been clicked.
+     * 
+     * @param e
+     */
+    public void checkCardClick(Drawable e) {
+        for (int i = 0; i < cardsInHand.size(); i++) {
+            if (e == cardsInHand.get(i)) {
+                setCardsClickable(false);
+                gameManager.playCard(i);
+                System.out.println("Points to add: " + calculatePoints(
+                    cardsInHand.get(i).getImageFileName()));
+                pPoints += calculatePoints(
+                    cardsInHand.get(i).getImageFileName());
+                updateCardPositions();
+                moveCardsToStandardPositions(50);
+                // Card opponentCard = gameManager.opponentPlayCard();
+                // cPoints += opponentCard.getRank().getPointValue();
+                updateCardPositions();
+                moveCardsToStandardPositions(50);
+                // Once the players have played all their cards
+                // Each player has 6 cards so 6 + 6 = 12
+                System.out
+                    .println("Player: " + pPoints);
+
+                if (gameManager.getGame().getCardsInPlay()
+                    .getCardsInHand().size() == 12) {
+                    movePeg(0, 5);
+                    movePeg(1, 5);
+
+                    // If the location of either peg
+                    // is at the final spot, end the game.
+                    if (pegLocations[0] == 120 || pegLocations[1] == 120) {
+                        startGamePage.closeWindow();
+                    }
+                    dealCards();
+                }
+                setCardsClickable(true);
+                return;
+            }
+        }
+    }
+
+    /**
+     * calculatePoints.
+     * 
+     * @param imageName
+     *            card image
+     * @return point value;
+     */
+    public int calculatePoints(String imageName) {
+        if (imageName.contains("ace")) {
+            return 1;
+        } else if (imageName.contains("2")) {
+            return 2;
+        } else if (imageName.contains("3")) {
+            return 3;
+        } else if (imageName.contains("4")) {
+            return 4;
+        } else if (imageName.contains("5")) {
+            return 5;
+        } else if (imageName.contains("6")) {
+            return 6;
+        } else if (imageName.contains("7")) {
+            return 7;
+        } else if (imageName.contains("8")) {
+            return 8;
+        } else if (imageName.contains("9")) {
+            return 9;
+        } else if (imageName.contains("10") || imageName.contains("jack")
+            || imageName.contains("queen") || imageName.contains("king")) {
+            return 10;
+        } else {
+            return 0;
         }
     }
 

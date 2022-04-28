@@ -7,6 +7,7 @@ import edu.skidmore.cs326.spring2022.skribbage.common.events.CribbageEvent;
 /**
  * Event fired when the user clicks 'start game' for the first time.
  */
+@SuppressWarnings("serial")
 public class PlayerClickStartGameEvent extends CribbageEvent {
 
     /**
@@ -18,8 +19,10 @@ public class PlayerClickStartGameEvent extends CribbageEvent {
     /**
      * Event associated with a user attempting to start a game.
      *
-     * @param source bean that fired the event.
-     * @param args   Player object
+     * @param source
+     *            bean that fired the event.
+     * @param args
+     *            Player object
      * @author Alex Carney
      */
     public PlayerClickStartGameEvent(Object source, Object... args) {
