@@ -90,7 +90,6 @@ public class DatabaseManager {
         ResultSet rs = null;
 
         try {
-            // System.out.println("Run a prepared database query");
             // Class.forName("com.mysql.jdbc.Driver");
             conn = getDbConnection();
 
@@ -105,8 +104,8 @@ public class DatabaseManager {
 
         }
         catch (SQLException sqle) {
-            sqle.printStackTrace();
-            // LOGGER.error("Database Interaction Failure", sqle);
+            // sqle.printStackTrace();
+            LOG.error("Database Interaction Failure" + sqle);
 
         }
         finally {
@@ -134,7 +133,7 @@ public class DatabaseManager {
 
         }
     }
-    
+
     public void changepass(String user, String newPassword) {
 
         Connection conn = null;
@@ -144,11 +143,11 @@ public class DatabaseManager {
         ResultSet rs = null;
 
         try {
-            // System.out.println("Run a prepared database query");
             // Class.forName("com.mysql.jdbc.Driver");
             conn = getDbConnection();
 
-            String script = "UPDATE player_account SET Password = ?  WHERE UserName = ?";
+            String script =
+                "UPDATE player_account SET Password = ?  WHERE UserName = ?";
             ps = conn.prepareStatement(script);
 
             ps.setString(1, newPassword);
@@ -158,8 +157,8 @@ public class DatabaseManager {
 
         }
         catch (SQLException sqle) {
-            sqle.printStackTrace();
-            // LOGGER.error("Database Interaction Failure", sqle);
+            // sqle.printStackTrace();
+            LOG.error("Database Interaction Failure: " + sqle);
 
         }
         finally {
@@ -219,17 +218,17 @@ public class DatabaseManager {
 
         }
         catch (SQLException e) {
-            // System.out.println("Account not found");
-            e.printStackTrace();
+            LOG.error("Getting passwork didn't work: " + e);
+            // e.printStackTrace();
 
         }
-        
-        if(storedPassword.equals("")) {
+
+        if (storedPassword.equals("")) {
             return null;
-        }else {
+        } else {
             returningPassword = new Password(storedPassword);
             return returningPassword;
-        } 
+        }
     }
 
     /**
@@ -243,11 +242,9 @@ public class DatabaseManager {
     @SuppressWarnings("unused")
     public HashMap<String, Item> inventoryQuery(int playerID) {
 
-        String tokenQuery = "SELECT * FROM inventory INNER JOIN player_account ON player_account.PersonID=inventory.PersonID INNER JOIN item_table ON inventory.ItemID=item_table.item_ID WHERE player_account.PersonID = 3";
+        String tokenQuery =
+            "SELECT * FROM inventory INNER JOIN player_account ON player_account.PersonID=inventory.PersonID INNER JOIN item_table ON inventory.ItemID=item_table.item_ID WHERE player_account.PersonID = 3";
 
-        
-        
-        
         PreparedStatement ps = null;
         Connection conn = null;
         int netWorth = 0;
@@ -290,8 +287,7 @@ public class DatabaseManager {
 
         }
         catch (SQLException e) {
-            // System.out.println("AccountinventoryQuery not found");
-            e.printStackTrace();
+            //e.printStackTrace();
             dbDisconnect(conn);
             LOG.error("Account not found");
             return playerInventory;
@@ -351,7 +347,7 @@ public class DatabaseManager {
         }
         catch (SQLException e) {
             e.printStackTrace();
-           
+
             return "Account not found";
 
         }
@@ -618,7 +614,6 @@ public class DatabaseManager {
                 dbDisconnect(conn);
             }
 
-            
         }
 
         // if we reach this line, we run into a SQLException

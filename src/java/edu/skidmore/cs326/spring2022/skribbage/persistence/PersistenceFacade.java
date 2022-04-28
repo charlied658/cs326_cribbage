@@ -71,10 +71,10 @@ public final class PersistenceFacade
      */
     @Override
     public boolean userCreate(User userToCreate, Password password) {
-        String usernamge = userToCreate.getUserName();
+        String username = userToCreate.getUserName();
         String passwordtemp = password.getBase64SaltAndPasswordHash();
 
-        DM.createUser(usernamge, passwordtemp);
+        DM.createUser(username, passwordtemp);
 
         return userNameExists(userToCreate);
     }
@@ -189,8 +189,6 @@ public final class PersistenceFacade
     public Password getPassword(User user) {
 
         if (DM.getPassword(user) == null) {
-            System.out
-                .println("HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH");
             return null;
         } else {
             Password accepted = DM.getPassword(user);
