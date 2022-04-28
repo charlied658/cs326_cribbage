@@ -124,4 +124,12 @@ public final class GameController implements PropertyChangeListener {
     public GameState getCurrentGameState() {
         return currentGameState;
     }
+
+    /**
+     * Get instance of singleton.
+     * @return Instance
+     */
+    public static GameController getInstance() {
+        return INSTANCE;
+    }
 }

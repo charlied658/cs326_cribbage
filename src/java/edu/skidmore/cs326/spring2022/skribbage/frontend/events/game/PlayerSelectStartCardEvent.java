@@ -22,7 +22,7 @@ public class PlayerSelectStartCardEvent extends CribbageEvent {
      * @param args   Player object
      * @author Alex Carney
      */
-    protected PlayerSelectStartCardEvent(Object source, Object... args) {
+    public PlayerSelectStartCardEvent(Object source, Object... args) {
         super(source, EVENT_TYPE, (Player) args[0]);
     }
 

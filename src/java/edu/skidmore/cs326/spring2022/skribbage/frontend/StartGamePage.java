@@ -4,11 +4,10 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Point;
 
+import edu.skidmore.cs326.spring2022.skribbage.common.*;
+import edu.skidmore.cs326.spring2022.skribbage.frontend.events.game.PlayerClickStartGameEvent;
 import org.apache.log4j.Logger;
 
-import edu.skidmore.cs326.spring2022.skribbage.common.BoardManager;
-import edu.skidmore.cs326.spring2022.skribbage.common.Card;
-import edu.skidmore.cs326.spring2022.skribbage.common.Game;
 import edu.skidmore.cs326.spring2022.skribbage.logic.GameManager;
 import us.daveread.edu.graphics.shape.Drawable;
 import us.daveread.edu.graphics.shape.impl.Image;
@@ -19,11 +18,10 @@ import us.daveread.edu.graphics.surface.MainFrame;
 
 /**
  * Class to represent the start game state.
- * 
+ *
  * @author Zoe Beals
- *         Code review by Jonah Marcus on 17 April 2022
+ * Code review by Jonah Marcus on 17 April 2022
  */
-@SuppressWarnings("serial")
 public class StartGamePage extends DrawingSurface implements Page {
 
     /**
@@ -116,6 +114,11 @@ public class StartGamePage extends DrawingSurface implements Page {
     private boolean resizeWindow;
 
     /**
+     * Event factory instance for handling events.
+     */
+    private final EventFactory eventFactory;
+
+    /**
      * Logger.
      */
     private static final Logger LOG;
@@ -130,6 +133,7 @@ public class StartGamePage extends DrawingSurface implements Page {
     public StartGamePage() {
         pageManager = PageManager.getInstance();
         gameManager = new GameManager(new Game(2));
+        eventFactory = EventFactory.getInstance();
         AnimationManager.getInstance().setStartGamePage(this);
         GameRenderManager.getInstance()
             .setGameManager(AnimationManager.getInstance().getGameManager());
@@ -210,9 +214,14 @@ public class StartGamePage extends DrawingSurface implements Page {
         LOG.trace("drawableMouseClick method in StartGamepage.java");
 
         if (e == startButton) {
-            LOG.trace("Starting game");
+            LOG.trace("Clicked start button");
             remove(startButton);
-            //AnimationManager.getInstance().dealCards();
+            Player newGamePlayer = new Player(pageManager.getLoggedInUser());
+            PlayerClickStartGameEvent event =
+                (PlayerClickStartGameEvent) eventFactory
+                    .createEvent(EventType.PLAYER_CLICK_START_GAME,
+                        this, newGamePlayer);
+            eventFactory.fireEvent(event);
 
         } else if (e == returnHomeButton) {
             LOG.trace("Return to previous screen");
