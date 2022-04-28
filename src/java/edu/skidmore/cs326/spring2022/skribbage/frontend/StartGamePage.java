@@ -239,14 +239,22 @@ public class StartGamePage extends DrawingSurface implements Page {
         }
 
         // Gets the card that has been clicked on
-        Card clickedCard = GameRenderManager.getInstance().getClickedCard(e);
-        if (clickedCard != null) {
-            System.out.println("Click on card: " + clickedCard.getCardID());
-            System.out.println("Rank: " + clickedCard.getRank().getName());
-            System.out.println("Suit: " + clickedCard.getSuit().getName());
-            System.out
-                .println("Value: " + clickedCard.getRank().getPointValue());
+        if (e instanceof CardImage) {
+            LOG.debug("YES I WANT TO BE HERE WOOO");
+            //Card clickedCard = GameRenderManager.getInstance().getClickedCard(e);
+            Card clickedCard4Real = ((CardImage) e).getCard();
+            LOG.debug("BIG MONEY " + clickedCard4Real);
         }
+
+
+
+//        if (clickedCard != null) {
+//            System.out.println("Click on card: " + clickedCard.getCardID());
+//            System.out.println("Rank: " + clickedCard.getRank().getName());
+//            System.out.println("Suit: " + clickedCard.getSuit().getName());
+//            System.out
+//                .println("Value: " + clickedCard.getRank().getPointValue());
+//        }
 
         // If the card that has been clicked is in the player's hand, move that
         // card to the center of the board and update game state.
