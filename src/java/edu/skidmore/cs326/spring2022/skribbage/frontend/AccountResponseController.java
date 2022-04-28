@@ -73,13 +73,13 @@ public class AccountResponseController implements PropertyChangeListener {
                 break;
             case USER_CHANGE_PASSWORD_VALIDATION_RESPONSE:
                 LOG.debug("Caught user change password validation response");
-                ((LoginPage) activePage)
+                ((NavigationPage) activePage)
                     .validateForChangePassword(
                         (ValidateChangeResponseEvent) evt);
                 break;
             case USER_CHANGE_PASSWORD_RESPONSE:
                 LOG.debug("Caught user change password response.");
-                ((LoginPage) activePage).validateChangePasswordCallback(
+                ((NavigationPage) activePage).validateChangePasswordCallback(
                     (UserChangePasswordResponseEvent) evt);
                 break;
             case USER_CREATE_ACCOUNT_RESPONSE:
