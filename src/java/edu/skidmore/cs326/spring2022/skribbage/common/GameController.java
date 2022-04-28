@@ -81,6 +81,7 @@ public final class GameController implements PropertyChangeListener {
                 LOG.debug("caught a player click start game event " + evt);
                 if (currentGameState == GameState.CUT_DECK) {
                     currentGameState = GameState.DISCARD_TO_CRIB;
+
                     //TODO: response
                 }
                 break;

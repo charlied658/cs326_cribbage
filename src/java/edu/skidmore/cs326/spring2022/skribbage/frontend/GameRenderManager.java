@@ -89,13 +89,13 @@ public class GameRenderManager {
     /**
      * Get the Card object associated with the CardImage that has been clicked.
      * 
-     * @param e
+     * @param e drawable image
      * @return card
      */
     public Card getClickedCard(Drawable e) {
         if (e instanceof Image) {
             for (int i = 0; i < getStandardDeck().size(); i++) {
-                if (e == getStandardDeck().get(i).getImage()) {
+                if (e == getStandardDeck().get(i)) {
                     return getStandardDeck().get(i).getCard();
                 }
             }
@@ -120,7 +120,7 @@ public class GameRenderManager {
             // hand. We don't want the player to be able to click on cards not
             // in the player's hand.
             if (e == GameRenderManager.getInstance()
-                .getCardsInHand().get(i).getImage()) {
+                .getCardsInHand().get(i)) {
 
                 // Set the cards to not be clickable
                 AnimationManager.getInstance().setCardsClickable(false);
@@ -172,7 +172,7 @@ public class GameRenderManager {
 
     /**
      * Set the game manager instance.
-     * @param gameManager
+     * @param gameManager game manager to set
      */
     public void setGameManager(GameManager gameManager) {
         this.gameManager = gameManager;
@@ -190,7 +190,7 @@ public class GameRenderManager {
     /**
      * Set the standard deck.
      * 
-     * @param standardDeck
+     * @param standardDeck standard deck
      */
     public void setStandardDeck(ArrayList<CardImage> standardDeck) {
         this.standardDeck = standardDeck;
@@ -208,7 +208,7 @@ public class GameRenderManager {
     /**
      * Set cards in the deck.
      * 
-     * @param cardsInDeck
+     * @param cardsInDeck cards in deck
      */
     public void setCardsInDeck(ArrayList<CardImage> cardsInDeck) {
         this.cardsInDeck = cardsInDeck;
@@ -226,7 +226,7 @@ public class GameRenderManager {
     /**
      * Set cards in play.
      * 
-     * @param cardsInPlay
+     * @param cardsInPlay cards in play
      */
     public void setCardsInPlay(ArrayList<CardImage> cardsInPlay) {
         this.cardsInPlay = cardsInPlay;
@@ -244,7 +244,7 @@ public class GameRenderManager {
     /**
      * Set cards in player's hand.
      * 
-     * @param cardsInHand
+     * @param cardsInHand cards in hand
      */
     public void setCardsInHand(ArrayList<CardImage> cardsInHand) {
         this.cardsInHand = cardsInHand;
@@ -262,7 +262,7 @@ public class GameRenderManager {
     /**
      * Set cards in the crib.
      * 
-     * @param cardsInCrib
+     * @param cardsInCrib cards in crib
      */
     public void setCardsInCrib(ArrayList<CardImage> cardsInCrib) {
         this.cardsInCrib = cardsInCrib;
@@ -280,7 +280,7 @@ public class GameRenderManager {
     /**
      * Set cards in opponent's hand.
      * 
-     * @param cardsInOpponentHand
+     * @param cardsInOpponentHand cards in opponent hand
      */
     public void setCardsInOpponentHand(
         ArrayList<CardImage> cardsInOpponentHand) {
