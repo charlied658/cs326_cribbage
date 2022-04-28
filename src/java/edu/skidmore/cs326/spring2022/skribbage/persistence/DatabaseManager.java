@@ -223,10 +223,13 @@ public class DatabaseManager {
             e.printStackTrace();
 
         }
-
-        returningPassword = new Password(storedPassword);
-        return returningPassword;
-
+        
+        if(storedPassword.equals("")) {
+            return null;
+        }else {
+            returningPassword = new Password(storedPassword);
+            return returningPassword;
+        } 
     }
 
     /**
@@ -314,54 +317,6 @@ public class DatabaseManager {
         }
 
         return dbConnection;
-
-    }
-
-    /**
-     * This is a function to check the database for a specific user and check
-     * whether the password functions.
-     * 
-     * @author Tinaye Mawocha
-     * @param username
-     *            : the username of the desired user
-     * @param password
-     *            : the inputted password
-     * @return Whether password was accepted
-     */
-
-    public boolean userAuthenticate(String username, Password password) {
-
-        String tempQuery =
-            "SELECT * FROM player_account WHERE username='" + username + "'";
-        // Connection conn = dbConnect();
-        String storedPassword = "";
-        Connection conn = null;
-
-        try {
-            conn = getDbConnection();
-            Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery(tempQuery);
-
-            rs.next();
-            storedPassword = rs.getString("Password");
-
-        }
-        catch (SQLException e) {
-            LOG.trace("Account not found: " + e);
-            // e.printStackTrace();
-
-        }
-        finally {
-            dbDisconnect(conn);
-        }
-
-        if (storedPassword.compareTo(password.getBase64PasswordHash()) == 0) {
-            LOG.info("Password Accepted");
-            return true;
-        } else {
-            LOG.info("Incorrect Password");
-            return false;
-        }
 
     }
 
@@ -557,20 +512,6 @@ public class DatabaseManager {
 
         }
 
-    }
-
-    /**
-     * main method.
-     * 
-     * @param args
-     */
-    @SuppressWarnings("unused")
-    public static void main(String[] args) {
-        // dm.inventoryQuery(236);
-
-        DatabaseManager test = new DatabaseManager();
-
-        // test.userAuthenticate("tmawocha", "0000f");
     }
 
     /**
