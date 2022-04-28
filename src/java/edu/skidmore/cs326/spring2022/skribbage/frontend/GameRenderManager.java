@@ -139,13 +139,11 @@ public class GameRenderManager {
                 // Play the card that has been clicked to the center of the
                 // board and play an animation
                 gameManager.playCard(i);
-                AnimationManager.getInstance().updateCardPositions();
-                AnimationManager.getInstance().moveCards(50);
+                AnimationManager.getInstance().moveCardsToStandardPositions(50);
 
                 // Opponent plays a random card, then play an animation
                 gameManager.opponentPlayCard();
-                AnimationManager.getInstance().updateCardPositions();
-                AnimationManager.getInstance().moveCards(50);
+                AnimationManager.getInstance().moveCardsToStandardPositions(50);
 
                 // Once the players have played all their cards, count the
                 // points and move the pegs. Each player has 6 cards so this

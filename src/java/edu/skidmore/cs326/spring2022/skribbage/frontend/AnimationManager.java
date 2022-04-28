@@ -3,7 +3,6 @@ package edu.skidmore.cs326.spring2022.skribbage.frontend;
 import edu.skidmore.cs326.spring2022.skribbage.common.Board;
 import edu.skidmore.cs326.spring2022.skribbage.common.BoardManager;
 import edu.skidmore.cs326.spring2022.skribbage.common.Card;
-import edu.skidmore.cs326.spring2022.skribbage.common.Game;
 import edu.skidmore.cs326.spring2022.skribbage.common.SpotType;
 import edu.skidmore.cs326.spring2022.skribbage.logic.GameManager;
 import org.apache.log4j.Logger;
@@ -126,7 +125,6 @@ public class AnimationManager {
      */
     private AnimationManager() {
         LOG.debug("Instance created");
-        gameManager = new GameManager(new Game(2));
         resizeWindow = false;
     }
 
@@ -190,6 +188,8 @@ public class AnimationManager {
      * Renders the spots and pegs on the board.
      */
     public void renderSpots() {
+
+        LOG.trace("Render spots on board");
 
         boardLines = new LineSegment[24];
         for (int i = 0; i < 24; i++) {
@@ -294,6 +294,8 @@ public class AnimationManager {
      * Initialize the cards.
      */
     public void createCards() {
+
+        LOG.trace("Initialize and render cards on board");
 
         fileNames = new String[52];
         for (int i = 0; i < 4; i++) {
@@ -414,72 +416,84 @@ public class AnimationManager {
     }
 
     /**
-     * Set the destination location of cards in the deck.
+     * Sets the destination location of cards within the given list along a
+     * linear spread. This ensures that the cards will be spaced evenly along
+     * the line defined by the x and y variables.
+     * 
+     * @param cardList
+     *            List of cards that will have its destination locations updated
+     * @param x
+     *            Starting x position of the linear spread
+     * @param y
+     *            Starting y position of the linear spread
+     * @param xDist
+     *            Length of the linear spread in the x direction
+     * @param yDist
+     *            Length of the linear spread in the y direction
      */
-    public void setDesintationOfDeck() {
-        int deckSize = GameRenderManager.getInstance()
-            .getCardsInDeck().size();
-        for (int i = 0; i < deckSize; i++) {
-            GameRenderManager.getInstance()
-                .getCardsInDeck().get(i).setDestLocation(
-                    new Point(1150 + i * 25 / deckSize,
-                        315 + i * 25 / deckSize));
+    public void setDestinationOfCards(ArrayList<CardImage> cardList, int x,
+        int y, int xDist, int yDist) {
+        for (int i = 0; i < cardList.size(); i++) {
+            cardList.get(i).setDestLocation(
+                // When i = 0, the destination location will be (x,y)
+                // When i = cardList.size() the destination location will be
+                // (x + xDist, y + yDist)
+                // All the cards in between will span this distance
+                new Point(x + (i * xDist) / cardList.size(),
+                    y + (i * yDist) / cardList.size()));
         }
     }
 
     /**
-     * Set the destination location of cards in the play area.
+     * Animation to fan the deck out.
      */
-    public void setDestinationOfPlayCards() {
-        int playSize = GameRenderManager.getInstance()
-            .getCardsInPlay().size();
-        for (int i = 0; i < playSize; i++) {
-            GameRenderManager.getInstance()
-                .getCardsInPlay().get(i).setDestLocation(
-                    new Point(550 + (i * 350) / playSize, 330));
-        }
+    public void fanCards() {
+        setDestinationOfCards(GameRenderManager.getInstance().getCardsInDeck(),
+            550, 330, 350, 0);
+        cardGlideAnimation(50);
+    }
+    
+    /**
+     * Moves the cards to the positions that they should be at on the board. For
+     * example, cards in the hand should move the the bottom of the screen,
+     * cards in the deck should move to the right, etc.
+     * 
+     * @param steps
+     *            steps to pass in to moveCards
+     */
+    public void moveCardsToStandardPositions(int steps) {
+        
+        updateCardPositions();
+        
+        // These methods set the destination point of each card. The destination
+        // point is the point that each card will glide to on the screen
+        setDestinationOfCards(GameRenderManager.getInstance().getCardsInDeck(),
+            1150, 315, 25, 25);
+        setDestinationOfCards(GameRenderManager.getInstance().getCardsInPlay(),
+            550, 330, 350, 0);
+        setDestinationOfCards(GameRenderManager.getInstance().getCardsInHand(),
+            550, resizeWindow ? 550 : 630, 350, 0);
+        setDestinationOfCards(
+            GameRenderManager.getInstance().getCardsInOpponentHand(), 550, 80,
+            350, 0);
+
+        // cardGlideAnimation actually performs the glide animation
+        cardGlideAnimation(steps);
     }
 
     /**
-     * Set the destination location of cards in the player's hand.
-     */
-    public void setDestinationOfHandCards() {
-        int handSize = GameRenderManager.getInstance()
-            .getCardsInHand().size();
-        for (int i = 0; i < handSize; i++) {
-            GameRenderManager.getInstance()
-                .getCardsInHand().get(i).setDestLocation(
-                    new Point(550 + (i * 350) / handSize,
-                        resizeWindow ? 550 : 630));
-        }
-    }
-
-    /**
-     * Set the destination location of cards in the opponent's hand.
-     */
-    public void setDestinationOfOpponentHandCards() {
-        int opponentHandSize = GameRenderManager.getInstance()
-            .getCardsInOpponentHand().size();
-        for (int i = 0; i < opponentHandSize; i++) {
-            GameRenderManager.getInstance()
-                .getCardsInOpponentHand().get(i).setDestLocation(
-                    new Point(550 + (i * 350) / opponentHandSize, 80));
-        }
-    }
-
-    /**
-     * Move the cards.
+     * Moves the cards on the screen in a smooth animation. Before you call this
+     * method you need to update the destination locations of all the cards you
+     * want to move.
      *
      * @param steps
-     *            number of steps to move
+     *            number of steps that the glide animation should take. For
+     *            example, 50 takes about 0.5 seconds, 10 takes 0.1 seconds, 200
+     *            takes 2 seconds. Animation time = steps * 10 milliseconds
      */
-    public void moveCards(int steps) {
+    public void cardGlideAnimation(int steps) {
 
-        setDesintationOfDeck();
-        setDestinationOfPlayCards();
-        setDestinationOfHandCards();
-        setDestinationOfOpponentHandCards();
-
+        // Declare variables
         double[] x = new double[numcards];
         double[] y = new double[numcards];
 
@@ -489,38 +503,55 @@ public class AnimationManager {
         double[] xDist = new double[numcards];
         double[] yDist = new double[numcards];
 
+        // For every card, initialize the variables
         for (int i = 0; i < numcards; i++) {
 
+            // The initial point is the point that the card is currently at
             Point initialPoint = GameRenderManager.getInstance()
                 .getStandardDeck().get(i).getLocation();
+
+            // The destination point is defined in the CardImage object
             Point destPoint = GameRenderManager.getInstance()
                 .getStandardDeck().get(i).getDestLocation();
 
+            // x and y represent the current x and y values
             x[i] = initialPoint.getX();
             y[i] = initialPoint.getY();
 
+            // destX and destY represent the x and y values that the card will
+            // glide to
             destX[i] = destPoint.getX();
             destY[i] = destPoint.getY();
 
+            // xDist and yDist represent the x and y distance between the
+            // initial point and the destination point
             xDist[i] = destX[i] - x[i];
             yDist[i] = destY[i] - y[i];
         }
 
+        // Perform the animation according to the number of steps
         for (int i = 0; i < steps; i++) {
 
+            // Halfway between the glide animation, update the layering of cards
             if (i == steps / 2) {
                 updateLayers();
             }
 
+            // Update each card position by one step
             for (int j = 0; j < numcards; j++) {
+
+                // Iterate the x and y position
                 x[j] += xDist[j] / steps;
                 y[j] += yDist[j] / steps;
 
+                // Move the CardImage object to the new x and y position
                 GameRenderManager.getInstance()
                     .getStandardDeck().get(j).setX((int) x[j]);
                 GameRenderManager.getInstance()
                     .getStandardDeck().get(j).setY((int) y[j]);
             }
+
+            // Wait for 10 milliseconds to ensure smooth animation
             try {
                 Thread.sleep(10);
             }
@@ -580,10 +611,9 @@ public class AnimationManager {
      * Move peg a certain number of spaces.
      *
      * @param peg
-     *            : peg to move
+     *            peg to move
      * @param spaces
-     *            : number of spaces to move
-     * @author Charlie Davidson
+     *            number of spaces to move
      */
     public void movePeg(int peg, int spaces) {
 
@@ -703,11 +733,10 @@ public class AnimationManager {
      * Reset card positions.
      */
     public void resetCards() {
-
-        gameManager.resetCards();
-        updateCardPositions();
-
-        moveCards(50);
+        if (!gameManager.deckIsReset()) {
+            gameManager.resetCards();
+            moveCardsToStandardPositions(50);
+        }
     }
 
     /**
@@ -719,9 +748,8 @@ public class AnimationManager {
         resetCards();
 
         gameManager.shuffleCards();
-        updateCardPositions();
 
-        moveCards(50);
+        moveCardsToStandardPositions(50);
     }
 
     /**
@@ -734,14 +762,12 @@ public class AnimationManager {
             if (GameRenderManager.getInstance()
                 .getCardsInDeck().size() > 0) {
                 gameManager.dealPlayerCards(1);
-                updateCardPositions();
-                moveCards(20);
+                moveCardsToStandardPositions(20);
             }
             if (GameRenderManager.getInstance()
                 .getCardsInDeck().size() > 0) {
                 gameManager.dealOpponentCards(1);
-                updateCardPositions();
-                moveCards(20);
+                moveCardsToStandardPositions(20);
             }
         }
     }

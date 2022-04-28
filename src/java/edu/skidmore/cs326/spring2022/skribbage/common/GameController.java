@@ -74,8 +74,10 @@ public final class GameController implements PropertyChangeListener {
      * Should always be a CribbageEvent game, otherwise a ClassCastException
      * will be thrown
      *
-     * @param evt The caught event.
-     * @throws ClassCastException Caught event is not of type CribbageEvent
+     * @param evt
+     *            The caught event.
+     * @throws ClassCastException
+     *             Caught event is not of type CribbageEvent
      */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
@@ -89,8 +91,9 @@ public final class GameController implements PropertyChangeListener {
                 if (currentGameState == GameState.START_GAME) {
                     currentGameState = GameState.CUT_DECK;
                     // When the game starts, cards are fanned out to click on
-                    //TODO: this
-//                    animationManager.fanCards();
+                    // TODO this
+                    animationManager.fanCards();
+                    // animationManager.dealCards();
 
                 }
                 break;
@@ -102,51 +105,55 @@ public final class GameController implements PropertyChangeListener {
                         animationManager.dealCards();
                     case STARTER_CARD:
                         currentGameState = GameState.PLAY_CARD;
-                        // Put the cards back on the deck, with the top card flipped
-                        //TODO: this
-//                        animationManager
-//                            .moveCardsBackToTopOfDeckWithTopShowing();
+                        // Put the cards back on the deck, with the top card
+                        // flipped
+                        // TODO this
+                        // animationManager
+                        // .moveCardsBackToTopOfDeckWithTopShowing();
+                    default:
+                        break;
 
                 }
 
-                //                if (currentGameState == GameState.CUT_DECK) {
-                //                    currentGameState = GameState.DISCARD_TO_CRIB;
-                //                    animationManager.dealCards();
-                //                }
+                // if (currentGameState == GameState.CUT_DECK) {
+                // currentGameState = GameState.DISCARD_TO_CRIB;
+                // animationManager.dealCards();
+                // }
                 break;
-            //            case PLAYER_SEND_CARD_TO_CRIB:
-            //                LOG.debug("caught a player send cards to crib event " + evt);
-            //                if (currentGameState == GameState.CUT_DECK) {
-            //                    currentGameState = GameState.STARTER_CARD;
-            //                }
-            //                break;
-            //            case PLAYER_SELECT_START_CARD:
-            //                LOG.debug("player played their starting card event " + evt);
-            //                if (currentGameState == GameState.DISCARD_TO_CRIB) {
-            //                    currentGameState = GameState.PLAY_CARD;
-            //                }
-            //                break;
+            // case PLAYER_SEND_CARD_TO_CRIB:
+            // LOG.debug("caught a player send cards to crib event " + evt);
+            // if (currentGameState == GameState.CUT_DECK) {
+            // currentGameState = GameState.STARTER_CARD;
+            // }
+            // break;
+            // case PLAYER_SELECT_START_CARD:
+            // LOG.debug("player played their starting card event " + evt);
+            // if (currentGameState == GameState.DISCARD_TO_CRIB) {
+            // currentGameState = GameState.PLAY_CARD;
+            // }
+            // break;
             case PLAYER_PLAY_CARD:
                 LOG.debug("player played card to game " + evt);
                 // A nicer way to compare multiple things for equality, rather
                 // than doing state == a or state == b or ...
                 switch (currentGameState) {
                     case DISCARD_TO_CRIB:
-                        //downcast CribbageEvent to PlayerPlayCardEvent
+                        // downcast CribbageEvent to PlayerPlayCardEvent
                         PlayerPlayCardEvent playerPlayCardEvent =
                             (PlayerPlayCardEvent) cribbageEvent;
-                        //add the card
-                        //either stay in this state or continue, based on size of card list (2)
+                        // add the card
+                        // either stay in this state or continue, based on size
+                        // of card list (2)
                         gameRenderManager.getSelectedCardsForDiscarding()
                             .add(playerPlayCardEvent.getCardImage());
 
                         if (gameRenderManager.getSelectedCardsForDiscarding()
                             .size() == MAX_DISCARD_TO_CRIB_SIZE) {
-                            //TODO: here
-//                            animationManager.discardCards();
+                            // TODO here
+                            // animationManager.discardCards();
                             currentGameState = GameState.STARTER_CARD;
-                            //TODO: here
-//                            animationManager.fanCards();
+                            // TODO here
+                            // animationManager.fanCards();
                         } else {
                             currentGameState = GameState.DISCARD_TO_CRIB;
                         }
@@ -156,7 +163,9 @@ public final class GameController implements PropertyChangeListener {
                             (PlayerPlayCardEvent) cribbageEvent;
                         animationManager.getGameManager()
                             .playCard(playCardEvent.getCardImage().getCardID());
-                        animationManager.moveCards(50);
+                        animationManager.cardGlideAnimation(50);
+                        break;
+                    default:
                         break;
 
                 }
@@ -164,13 +173,15 @@ public final class GameController implements PropertyChangeListener {
                 if (Arrays.asList(GameState.STARTER_CARD, GameState.PLAY_CARD)
                     .contains(currentGameState)) {
                     currentGameState = GameState.PLAY_CARD;
-                    //TODO: response
+                    // TODO response
                 }
 
                 break;
             default:
                 LOG.error(
-                    "Caught an event that could not be handled. Reached default statement " + evt);
+                    "Caught an event that could not be handled."
+                        + " Reached default statement "
+                        + evt);
                 break;
         }
     }

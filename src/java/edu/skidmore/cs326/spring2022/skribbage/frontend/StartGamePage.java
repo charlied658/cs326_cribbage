@@ -37,7 +37,6 @@ public class StartGamePage extends DrawingSurface implements Page {
     /**
      * GameManager instance to manage the game.
      */
-    @SuppressWarnings("unused")
     private GameManager gameManager;
 
     /**
@@ -145,6 +144,7 @@ public class StartGamePage extends DrawingSurface implements Page {
         gameManager = new GameManager(new Game(2));
         eventFactory = EventFactory.getInstance();
         AnimationManager.getInstance().setStartGamePage(this);
+        AnimationManager.getInstance().setGameManager(gameManager);
         gameRenderManager = GameRenderManager.getInstance();
         gameRenderManager
             .setGameManager(AnimationManager.getInstance().getGameManager());
@@ -248,7 +248,7 @@ public class StartGamePage extends DrawingSurface implements Page {
             startGamePage.setSize(1400, resizeWindow ? 940 : 860);
             resizeWindow = !resizeWindow;
             AnimationManager.getInstance().resizeWindow();
-            AnimationManager.getInstance().moveCards(10);
+            AnimationManager.getInstance().moveCardsToStandardPositions(10);
         }
 
         // Gets the card that has been clicked on
