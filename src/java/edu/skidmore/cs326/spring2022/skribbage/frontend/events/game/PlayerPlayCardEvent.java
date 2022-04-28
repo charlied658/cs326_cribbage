@@ -8,6 +8,7 @@ import edu.skidmore.cs326.spring2022.skribbage.frontend.CardImage;
 /**
  * Event fired when the user clicks 'start game' for the first time.
  */
+@SuppressWarnings("serial")
 public class PlayerPlayCardEvent extends CribbageEvent {
 
     /**
@@ -24,8 +25,10 @@ public class PlayerPlayCardEvent extends CribbageEvent {
     /**
      * Event associated with a user attempting to start a game.
      *
-     * @param source bean that fired the event.
-     * @param args   Player object
+     * @param source
+     *            bean that fired the event.
+     * @param args
+     *            Player object
      * @author Alex Carney
      */
     public PlayerPlayCardEvent(Object source, Object... args) {
@@ -43,6 +46,7 @@ public class PlayerPlayCardEvent extends CribbageEvent {
 
     /**
      * Returns card image.
+     * 
      * @return card image.
      */
     public CardImage getCardImage() {

@@ -9,6 +9,7 @@ import edu.skidmore.cs326.spring2022.skribbage.common.Lobby;
  *
  * @author Alex Carney
  */
+@SuppressWarnings("serial")
 public class LobbyCreateEvent extends LobbyEvent {
 
     /**

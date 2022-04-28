@@ -2,11 +2,15 @@ package edu.skidmore.cs326.spring2022.skribbage.frontend.events;
 
 import java.beans.PropertyChangeEvent;
 
-import edu.skidmore.cs326.spring2022.skribbage.frontend.events.game.*;
 import org.apache.log4j.Logger;
 
 import edu.skidmore.cs326.spring2022.skribbage.common.EventType;
 import edu.skidmore.cs326.spring2022.skribbage.common.FactoryTemplate;
+import edu.skidmore.cs326.spring2022.skribbage.frontend.events.game.PlayerClickDeckEvent;
+import edu.skidmore.cs326.spring2022.skribbage.frontend.events.game.PlayerClickStartGameEvent;
+import edu.skidmore.cs326.spring2022.skribbage.frontend.events.game.PlayerPlayCardEvent;
+import edu.skidmore.cs326.spring2022.skribbage.frontend.events.game.PlayerSelectStartCardEvent;
+import edu.skidmore.cs326.spring2022.skribbage.frontend.events.game.PlayerSendCardsToCribEvent;
 
 /**
  * Subclass of FactoryTemplate that overwrites the eventCreation method to

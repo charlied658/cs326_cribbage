@@ -179,24 +179,24 @@ public final class PersistenceFacade
     }
 
     /**
-     * Obtain the password of a user
+     * Obtain the password of a user.
      * 
-     * @param User
+     * @param user
      *            the user whose password we want to retrieve
      * @return Password the password of the user we selected
      */
     @Override
     public Password getPassword(User user) {
 
-        if(DM.getPassword(user) == null) {
-            System.out.println("HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH");
+        if (DM.getPassword(user) == null) {
+            System.out
+                .println("HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH");
             return null;
-        }else{
+        } else {
             Password accepted = DM.getPassword(user);
             return accepted;
         }
 
-        
     }
 
     /**

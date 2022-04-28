@@ -7,7 +7,6 @@ import edu.skidmore.cs326.spring2022.skribbage.frontend.events.ValidateUsernameE
 import edu.skidmore.cs326.spring2022.skribbage.logic.events.CreateAccountResponseEvent;
 import edu.skidmore.cs326.spring2022.skribbage.logic.events.UserLoginResponseEvent;
 import edu.skidmore.cs326.spring2022.skribbage.logic.events.UserValidationResponseEvent;
-import edu.skidmore.cs326.spring2022.skribbage.logic.events.ValidateChangeResponseEvent;
 
 import org.apache.log4j.Logger;
 
@@ -15,11 +14,8 @@ import edu.skidmore.cs326.spring2022.skribbage.common.EventFactory;
 import edu.skidmore.cs326.spring2022.skribbage.common.EventType;
 import edu.skidmore.cs326.spring2022.skribbage.common.LoginAuthenticator;
 import edu.skidmore.cs326.spring2022.skribbage.common.Password;
-import edu.skidmore.cs326.spring2022.skribbage.common.PasswordHasher;
 import edu.skidmore.cs326.spring2022.skribbage.common.User;
 import edu.skidmore.cs326.spring2022.skribbage.common.UserRole;
-import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserChangePasswordEvent;
-import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserChangePasswordResponseEvent;
 import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserCreateAccountEvent;
 import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserLoginEvent;
 import edu.skidmore.cs326.spring2022.skribbage.frontend.events.ValidateForChangePassword;
@@ -100,6 +96,7 @@ public class LoginPage extends DrawingSurface implements Page {
      * Object of type Password that represents the new password when password is
      * being changed.
      */
+    @SuppressWarnings("unused")
     private Password newPassword;
 
     /**
@@ -156,6 +153,7 @@ public class LoginPage extends DrawingSurface implements Page {
      * password - String variable that holds the user inputted password.
      */
     private String password;
+
     /**
      * Variable of type Image to hold the temporary game logo.
      */
