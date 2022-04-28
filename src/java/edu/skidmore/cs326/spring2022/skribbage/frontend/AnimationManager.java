@@ -327,6 +327,8 @@ public class AnimationManager {
             .setCardsInHand(new ArrayList<>());
         GameRenderManager.getInstance()
             .setCardsInOpponentHand(new ArrayList<>());
+        GameRenderManager.getInstance()
+            .setSelectedCardsForDiscarding(new ArrayList<>());
 
         for (int i = 0; i < numcards; i++) {
             fileNames[i] = "Playing Cards/" + fileNames[i];
