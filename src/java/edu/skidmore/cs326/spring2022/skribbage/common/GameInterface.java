@@ -37,6 +37,7 @@ interface GameInterface {
     /**
      * Initializes the list of Hand objects where each Hand is a
      * list of cards played during the pegging play phase.
+     * 
      * @param numPlayers
      */
     void initPeggingCardsPlayed(int numPlayers);

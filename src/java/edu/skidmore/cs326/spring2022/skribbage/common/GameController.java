@@ -4,7 +4,6 @@ import edu.skidmore.cs326.spring2022.skribbage.common.events.CribbageEvent;
 import edu.skidmore.cs326.spring2022.skribbage.frontend.AnimationManager;
 import edu.skidmore.cs326.spring2022.skribbage.frontend.GameRenderManager;
 import edu.skidmore.cs326.spring2022.skribbage.frontend.events.game.PlayerPlayCardEvent;
-import edu.skidmore.cs326.spring2022.skribbage.frontend.events.game.PlayerSelectStartCardEvent;
 import org.apache.log4j.Logger;
 
 import java.beans.PropertyChangeEvent;
@@ -47,6 +46,7 @@ public final class GameController implements PropertyChangeListener {
     /**
      * Event factory for firing events.
      */
+    @SuppressWarnings("unused")
     private final EventFactory eventFactory;
 
     /**
