@@ -13,7 +13,7 @@ public class PlayerSendCardsToCribEvent extends CribbageEvent {
      * This event type.
      */
     private static final EventType EVENT_TYPE =
-        EventType.PLAYER_SEND_CARDS_TO_CRIB;
+        EventType.PLAYER_SEND_CARD_TO_CRIB;
 
     /**
      * Event associated with a user attempting to start a game.

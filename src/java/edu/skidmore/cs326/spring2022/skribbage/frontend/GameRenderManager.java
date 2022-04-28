@@ -2,6 +2,7 @@ package edu.skidmore.cs326.spring2022.skribbage.frontend;
 
 import java.util.ArrayList;
 
+import edu.skidmore.cs326.spring2022.skribbage.common.Player;
 import org.apache.log4j.Logger;
 
 import edu.skidmore.cs326.spring2022.skribbage.common.Card;
@@ -63,6 +64,16 @@ public class GameRenderManager {
     private ArrayList<CardImage> cardsInOpponentHand;
 
     /**
+     * Cards (up to 2) that will be discarded to the crib.
+     */
+    private ArrayList<CardImage> selectedCardsForDiscarding;
+
+    /**
+     * The current human player to be rendered.
+     */
+    private Player activePlayer;
+
+    /*
      * Initialize the static instance.
      */
     static {
@@ -197,6 +208,23 @@ public class GameRenderManager {
     }
 
     /**
+     * Sets an array of selected cards for discarding.
+     * @param selectedCardsForDiscarding array to add
+     */
+    public void setSelectedCardsForDiscarding(
+        ArrayList<CardImage> selectedCardsForDiscarding) {
+        this.selectedCardsForDiscarding = selectedCardsForDiscarding;
+    }
+
+    /**
+     * Gets the array of selected cards for discarding.
+     * @return SelectedCardsForDiscarding
+     */
+    public ArrayList<CardImage> getSelectedCardsForDiscarding() {
+        return selectedCardsForDiscarding;
+    }
+
+    /**
      * Get cards in the deck.
      * 
      * @return cardsInDeck
@@ -266,6 +294,23 @@ public class GameRenderManager {
      */
     public void setCardsInCrib(ArrayList<CardImage> cardsInCrib) {
         this.cardsInCrib = cardsInCrib;
+    }
+
+    /**
+     * Gets active player.
+     * @return Player object
+     */
+    public Player getActivePlayer() {
+        return activePlayer;
+    }
+
+    /**
+     * Sets active player.
+     * @param activePlayer new player object to set
+     */
+    public void setActivePlayer(
+        Player activePlayer) {
+        this.activePlayer = activePlayer;
     }
 
     /**

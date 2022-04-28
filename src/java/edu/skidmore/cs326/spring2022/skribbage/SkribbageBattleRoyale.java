@@ -6,7 +6,6 @@ import edu.skidmore.cs326.spring2022.skribbage.common.EventType;
 import edu.skidmore.cs326.spring2022.skribbage.common.GameController;
 import edu.skidmore.cs326.spring2022.skribbage.frontend.AccountResponseController;
 import edu.skidmore.cs326.spring2022.skribbage.frontend.GameStartedResponseController;
-import edu.skidmore.cs326.spring2022.skribbage.logic.GameManager;
 import org.apache.log4j.Logger;
 
 import edu.skidmore.cs326.spring2022.skribbage.frontend.HomeScreen;
@@ -87,7 +86,7 @@ public class SkribbageBattleRoyale implements Runnable {
                 GameController.getInstance(),
                 EventType.PLAYER_CLICK_DECK,
                 EventType.PLAYER_CLICK_START_GAME,
-                EventType.PLAYER_SEND_CARDS_TO_CRIB,
+                EventType.PLAYER_SEND_CARD_TO_CRIB,
                 EventType.PLAYER_PLAY_CARD,
                 EventType.PLAYER_SELECT_START_CARD);
 

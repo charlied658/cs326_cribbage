@@ -170,4 +170,15 @@ public class CardImage extends Image {
     public int hashCode() {
         return Objects.hash(cardID);
     }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb =
+            new StringBuilder("CardImage{");
+        sb.append("card=").append(card);
+        sb.append(", showing=").append(showing);
+        sb.append(", cardPosition=").append(cardPosition);
+        sb.append('}');
+        return sb.toString();
+    }
 }

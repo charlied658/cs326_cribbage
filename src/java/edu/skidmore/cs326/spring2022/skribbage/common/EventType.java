@@ -1,5 +1,6 @@
 package edu.skidmore.cs326.spring2022.skribbage.common;
 
+import edu.skidmore.cs326.spring2022.skribbage.frontend.CardImage;
 import org.apache.log4j.Logger;
 
 import edu.skidmore.cs326.spring2022.skribbage.logic.events.AccountResponse;
@@ -114,7 +115,7 @@ public enum EventType {
     /**
      * Fired when player has selected two cards to send to the crib.
      */
-    PLAYER_SEND_CARDS_TO_CRIB("", Player.class),
+    PLAYER_SEND_CARD_TO_CRIB("", Player.class, CardImage.class),
 
     /**
      * Player selects starting card to play.
@@ -124,7 +125,7 @@ public enum EventType {
     /**
      * Fired whenever a player clicks a card from their hand to play.
      */
-    PLAYER_PLAY_CARD("", Player.class),
+    PLAYER_PLAY_CARD("", Player.class, CardImage.class),
 
     /**
      * Fired when the front end detects that the round is over (may not

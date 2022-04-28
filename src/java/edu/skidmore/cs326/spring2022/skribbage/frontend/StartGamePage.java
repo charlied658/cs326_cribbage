@@ -119,6 +119,11 @@ public class StartGamePage extends DrawingSurface implements Page {
     private final EventFactory eventFactory;
 
     /**
+     * Game Render Manager instance.
+     */
+    private final GameRenderManager gameRenderManager;
+
+    /**
      * Logger.
      */
     private static final Logger LOG;
@@ -135,8 +140,10 @@ public class StartGamePage extends DrawingSurface implements Page {
         gameManager = new GameManager(new Game(2));
         eventFactory = EventFactory.getInstance();
         AnimationManager.getInstance().setStartGamePage(this);
-        GameRenderManager.getInstance()
+        gameRenderManager = GameRenderManager.getInstance();
+        gameRenderManager
             .setGameManager(AnimationManager.getInstance().getGameManager());
+
         LOG.trace("StartGamePage constructor");
         startGamePage = new MainFrame(
             this, "Start Game Page", 1400, 900, false);
@@ -222,6 +229,7 @@ public class StartGamePage extends DrawingSurface implements Page {
                     .createEvent(EventType.PLAYER_CLICK_START_GAME,
                         this, newGamePlayer);
             eventFactory.fireEvent(event);
+            GameRenderManager.getInstance().setActivePlayer(newGamePlayer);
 
         } else if (e == returnHomeButton) {
             LOG.trace("Return to previous screen");
@@ -240,21 +248,33 @@ public class StartGamePage extends DrawingSurface implements Page {
 
         // Gets the card that has been clicked on
         if (e instanceof CardImage) {
-            LOG.debug("YES I WANT TO BE HERE WOOO");
-            //Card clickedCard = GameRenderManager.getInstance().getClickedCard(e);
-            Card clickedCard4Real = ((CardImage) e).getCard();
-            LOG.debug("BIG MONEY " + clickedCard4Real);
+
+            CardImage cardImage = (CardImage) e;
+            LOG.debug("Clicked on a card image " + cardImage);
+
+            CardPosition currentPosition = cardImage.getCardPosition();
+
+            switch (currentPosition) {
+                case DECK:
+                    eventFactory.createEvent(EventType.PLAYER_CLICK_DECK, this,
+                        gameRenderManager.getActivePlayer());
+                    break;
+                case PLAYER_HAND:
+                    eventFactory.createEvent(EventType.PLAYER_PLAY_CARD, this,
+                        gameRenderManager.getActivePlayer(), cardImage);
+
+
+            }
+
         }
 
-
-
-//        if (clickedCard != null) {
-//            System.out.println("Click on card: " + clickedCard.getCardID());
-//            System.out.println("Rank: " + clickedCard.getRank().getName());
-//            System.out.println("Suit: " + clickedCard.getSuit().getName());
-//            System.out
-//                .println("Value: " + clickedCard.getRank().getPointValue());
-//        }
+        //        if (clickedCard != null) {
+        //            System.out.println("Click on card: " + clickedCard.getCardID());
+        //            System.out.println("Rank: " + clickedCard.getRank().getName());
+        //            System.out.println("Suit: " + clickedCard.getSuit().getName());
+        //            System.out
+        //                .println("Value: " + clickedCard.getRank().getPointValue());
+        //        }
 
         // If the card that has been clicked is in the player's hand, move that
         // card to the center of the board and update game state.
