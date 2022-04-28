@@ -387,22 +387,28 @@ public class AnimationManager {
                     GameRenderManager.getInstance()
                         .getStandardDeck().get(
                             card.getCardID()));
+            GameRenderManager.getInstance().getCardsInDeck()
+                .get(card.getCardID()).setCardPosition(CardPosition.DECK);
         }
 
-        for (Card item : gameCardsInPlay) {
+        for (Card card : gameCardsInPlay) {
             GameRenderManager.getInstance()
                 .getCardsInPlay().add(
                     GameRenderManager.getInstance()
                         .getStandardDeck().get(
-                            item.getCardID()));
+                            card.getCardID()));
+            GameRenderManager.getInstance().getCardsInDeck()
+            .get(card.getCardID()).setCardPosition(CardPosition.IN_PLAY);
         }
 
-        for (Card value : gameCardsInHand) {
+        for (Card card : gameCardsInHand) {
             GameRenderManager.getInstance()
                 .getCardsInHand().add(
                     GameRenderManager.getInstance()
                         .getStandardDeck().get(
-                            value.getCardID()));
+                            card.getCardID()));
+            GameRenderManager.getInstance().getCardsInDeck()
+            .get(card.getCardID()).setCardPosition(CardPosition.PLAYER_HAND);
         }
 
         for (Card card : gameCardsInOpponentHand) {
@@ -411,6 +417,8 @@ public class AnimationManager {
                     GameRenderManager.getInstance()
                         .getStandardDeck().get(
                             card.getCardID()));
+            GameRenderManager.getInstance().getCardsInDeck()
+            .get(card.getCardID()).setCardPosition(CardPosition.OPPONENT_HAND);
         }
 
     }
@@ -452,7 +460,7 @@ public class AnimationManager {
             550, 330, 350, 0);
         cardGlideAnimation(50);
     }
-    
+
     /**
      * Moves the cards to the positions that they should be at on the board. For
      * example, cards in the hand should move the the bottom of the screen,
@@ -462,9 +470,9 @@ public class AnimationManager {
      *            steps to pass in to moveCards
      */
     public void moveCardsToStandardPositions(int steps) {
-        
+
         updateCardPositions();
-        
+
         // These methods set the destination point of each card. The destination
         // point is the point that each card will glide to on the screen
         setDestinationOfCards(GameRenderManager.getInstance().getCardsInDeck(),
