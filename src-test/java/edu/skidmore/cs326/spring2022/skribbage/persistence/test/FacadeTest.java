@@ -161,6 +161,15 @@ public class FacadeTest {
             correctTestPassword.getBase64SaltAndPasswordHash(),
             pass.getBase64SaltAndPasswordHash());
     }
+    
+    /**
+     * Testing when getting password of a user that doesn't exists
+     */
+    @Test
+    public void getPassNoUser() {
+        
+        System.out.println("Testing" + facadeinstanace.getPassword(doesNotExists));
+    }
 
     /**
      * Testing to see if the username exists already
@@ -212,16 +221,16 @@ public class FacadeTest {
     /**
      * Testing the capability to display inventory values.
      */
-     @Test
-     public void displayInventoryTest() {
-    
-     HashMap<String, Item> hashMap =
-     facadeinstanace.displayInventory(inventoryUser);
-     System.out.println("1 " + correctTestItem.toString());
-     System.out.println("2 " + hashMap.get("MIRROR").toString());
-     assertEquals(correctTestItem.toString(),
-     hashMap.get("MIRROR").toString());
-     }
+//     @Test
+//     public void displayInventoryTest() {
+//    
+//     HashMap<String, Item> hashMap =
+//     facadeinstanace.displayInventory(inventoryUser);
+//     System.out.println("1 " + correctTestItem.toString());
+//     System.out.println("2 " + hashMap.get("MIRROR").toString());
+//     assertEquals(correctTestItem.toString(),
+//     hashMap.get("MIRROR").toString());
+//     }
 
     /**
      * Testing the capability to display inventory values.

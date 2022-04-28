@@ -1,5 +1,6 @@
 package edu.skidmore.cs326.spring2022.skribbage.common;
 
+import edu.skidmore.cs326.spring2022.skribbage.frontend.CardImage;
 import org.apache.log4j.Logger;
 
 import edu.skidmore.cs326.spring2022.skribbage.logic.events.AccountResponse;
@@ -70,18 +71,24 @@ public enum EventType {
     /**
      * Fired when a user attempts to delete their account.
      */
-    USER_DELETE_ACCOUNT("User Delete Account Event", User.class),
+    USER_DELETE_ACCOUNT("User Delete Account Event", User.class,
+        String.class),
+    /**
+     * Fired when delete account has been handled by AccountController.
+     */
+    USER_DELETE_ACCOUNT_RESPONSE("User Delete Account Event Response",
+        User.class),
     /**
      * Fired when the host of a lobby clicks 'start game', and all players
      * are added to a new game.
      */
     LOBBY_START_GAME("Lobby Start Game Event", Lobby.class),
-    
+
     /**
      * Fired when a user clicks 'leave lobby' and is removed from the lobby.
      */
     LOBBY_REMOVE_USER("Lobby Remove User Event", Lobby.class, User.class),
-    
+
     /**
      * Fired when a User enters the proper lobby id and is entering said lobby.
      */
@@ -90,8 +97,41 @@ public enum EventType {
     /**
      * Fired when a logged in user attempts to start a new lobby.
      */
-    LOBBY_CREATE_LOBBY("Lobby Create Game Event", Lobby.class);
+    LOBBY_CREATE_LOBBY("Lobby Create Game Event", Lobby.class),
 
+    // GAME EVENTS
+
+    /**
+     * Fired when the user sees the blank start game page, then clicks
+     * start game.
+     */
+    PLAYER_CLICK_START_GAME("", Player.class),
+
+    /**
+     * Fired when the player clicks on the deck to 'cut' it.
+     */
+    PLAYER_CLICK_DECK("", Player.class),
+
+    /**
+     * Fired when player has selected two cards to send to the crib.
+     */
+    PLAYER_SEND_CARD_TO_CRIB("", Player.class, CardImage.class),
+
+    /**
+     * Player selects starting card to play.
+     */
+    PLAYER_SELECT_START_CARD("", Player.class),
+
+    /**
+     * Fired whenever a player clicks a card from their hand to play.
+     */
+    PLAYER_PLAY_CARD("", Player.class, CardImage.class),
+
+    /**
+     * Fired when the front end detects that the round is over (may not
+     * be required).
+     */
+    ROUND_END("", Game.class);
 
     /**
      * The name of the event.
@@ -144,7 +184,5 @@ public enum EventType {
         LOG.debug("Returning arguments list of an event");
         return args;
     }
-    
-    
 
 }

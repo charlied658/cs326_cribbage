@@ -60,7 +60,7 @@ public class SkribbagePropertiesManager implements PropertyAccess {
      * 
      * @return The instance
      */
-    public static SkribbagePropertiesManager getInstance() {
+    public static PropertyAccess getInstance() {
         return INSTANCE;
     }
 
