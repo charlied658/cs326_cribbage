@@ -113,15 +113,19 @@ public class InventoryPage extends DrawingSurface implements Page {
         inventory.put("six", new Card(Rank.NINE, Suit.CLUBS));
         inventory.put("seven", new Card(Rank.QUEEN, Suit.SPADES));
 
-        Card[] allItems =
-            inventory.values().toArray(new Card[inventory.size()]);
+//        Card[] allItems =
+//            inventory.values().toArray(new Card[inventory.size()]);
 
         int initXPosition = 30;
         int initYPosition = 115;
 
-        for (Card item : allItems) {
-            add(new Text(item.getSuit().getName() + " - "
-                + item.getRank().getName(),
+        currentPlayer.getInventoryManager().updateInventory();
+
+        Object[] objectArray = currentPlayer.getInventoryManager()
+            .createInventory().entrySet().toArray();
+
+        for (int i = 0; i < objectArray.length; i++) {
+            add(new Text(objectArray[i] + "  ",
                 new Point(initXPosition,
                     initYPosition),
                 16, Color.BLACK));
