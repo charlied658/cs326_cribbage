@@ -4,7 +4,11 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Point;
 
-import edu.skidmore.cs326.spring2022.skribbage.common.*;
+import edu.skidmore.cs326.spring2022.skribbage.common.BoardManager;
+import edu.skidmore.cs326.spring2022.skribbage.common.EventFactory;
+import edu.skidmore.cs326.spring2022.skribbage.common.EventType;
+import edu.skidmore.cs326.spring2022.skribbage.common.Game;
+import edu.skidmore.cs326.spring2022.skribbage.common.Player;
 import edu.skidmore.cs326.spring2022.skribbage.frontend.events.game.PlayerClickStartGameEvent;
 import org.apache.log4j.Logger;
 
@@ -20,8 +24,9 @@ import us.daveread.edu.graphics.surface.MainFrame;
  * Class to represent the start game state.
  *
  * @author Zoe Beals
- * Code review by Jonah Marcus on 17 April 2022
+ *         Code review by Jonah Marcus on 17 April 2022
  */
+@SuppressWarnings("serial")
 public class StartGamePage extends DrawingSurface implements Page {
 
     /**
@@ -262,19 +267,20 @@ public class StartGamePage extends DrawingSurface implements Page {
                 case PLAYER_HAND:
                     eventFactory.createEvent(EventType.PLAYER_PLAY_CARD, this,
                         gameRenderManager.getActivePlayer(), cardImage);
-
+                default:
+                    break;
 
             }
 
         }
 
-        //        if (clickedCard != null) {
-        //            System.out.println("Click on card: " + clickedCard.getCardID());
-        //            System.out.println("Rank: " + clickedCard.getRank().getName());
-        //            System.out.println("Suit: " + clickedCard.getSuit().getName());
-        //            System.out
-        //                .println("Value: " + clickedCard.getRank().getPointValue());
-        //        }
+        // if (clickedCard != null) {
+        // System.out.println("Click on card: " + clickedCard.getCardID());
+        // System.out.println("Rank: " + clickedCard.getRank().getName());
+        // System.out.println("Suit: " + clickedCard.getSuit().getName());
+        // System.out
+        // .println("Value: " + clickedCard.getRank().getPointValue());
+        // }
 
         // If the card that has been clicked is in the player's hand, move that
         // card to the center of the board and update game state.

@@ -1,6 +1,10 @@
 package edu.skidmore.cs326.spring2022.skribbage.frontend;
 
-import edu.skidmore.cs326.spring2022.skribbage.common.*;
+import edu.skidmore.cs326.spring2022.skribbage.common.Board;
+import edu.skidmore.cs326.spring2022.skribbage.common.BoardManager;
+import edu.skidmore.cs326.spring2022.skribbage.common.Card;
+import edu.skidmore.cs326.spring2022.skribbage.common.Game;
+import edu.skidmore.cs326.spring2022.skribbage.common.SpotType;
 import edu.skidmore.cs326.spring2022.skribbage.logic.GameManager;
 import org.apache.log4j.Logger;
 import us.daveread.edu.graphics.shape.VisibleObject;
@@ -8,7 +12,9 @@ import us.daveread.edu.graphics.shape.impl.Circle;
 import us.daveread.edu.graphics.shape.impl.LineSegment;
 import us.daveread.edu.graphics.shape.impl.Rectangle;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -145,7 +151,8 @@ public class AnimationManager {
     /**
      * Set StartGamePage instance.
      *
-     * @param startGamePage start game page to set
+     * @param startGamePage
+     *            start game page to set
      */
     public void setStartGamePage(StartGamePage startGamePage) {
         this.startGamePage = startGamePage;
@@ -163,7 +170,8 @@ public class AnimationManager {
     /**
      * Set the gameManager instace.
      *
-     * @param gameManager game manager to set
+     * @param gameManager
+     *            game manager to set
      */
     public void setGameManager(GameManager gameManager) {
         this.gameManager = gameManager;
@@ -334,10 +342,10 @@ public class AnimationManager {
             fileNames[i] = "Playing Cards/" + fileNames[i];
             GameRenderManager.getInstance()
                 .getStandardDeck().add(new CardImage(
-                "card.png", new Point(
-                1150 + (i * 25) / numcards,
-                315 + (i * 25) / numcards),
-                0.6, null, i, cardDeck.get(i), CardPosition.DECK));
+                    "card.png", new Point(
+                        1150 + (i * 25) / numcards,
+                        315 + (i * 25) / numcards),
+                    0.6, null, i, cardDeck.get(i), CardPosition.DECK));
         }
 
         updateCardPositions();
@@ -374,33 +382,33 @@ public class AnimationManager {
         for (Card card : gameCardsInDeck) {
             GameRenderManager.getInstance()
                 .getCardsInDeck().add(
-                GameRenderManager.getInstance()
-                    .getStandardDeck().get(
-                    card.getCardID()));
+                    GameRenderManager.getInstance()
+                        .getStandardDeck().get(
+                            card.getCardID()));
         }
 
         for (Card item : gameCardsInPlay) {
             GameRenderManager.getInstance()
                 .getCardsInPlay().add(
-                GameRenderManager.getInstance()
-                    .getStandardDeck().get(
-                    item.getCardID()));
+                    GameRenderManager.getInstance()
+                        .getStandardDeck().get(
+                            item.getCardID()));
         }
 
         for (Card value : gameCardsInHand) {
             GameRenderManager.getInstance()
                 .getCardsInHand().add(
-                GameRenderManager.getInstance()
-                    .getStandardDeck().get(
-                    value.getCardID()));
+                    GameRenderManager.getInstance()
+                        .getStandardDeck().get(
+                            value.getCardID()));
         }
 
         for (Card card : gameCardsInOpponentHand) {
             GameRenderManager.getInstance()
                 .getCardsInOpponentHand().add(
-                GameRenderManager.getInstance()
-                    .getStandardDeck().get(
-                    card.getCardID()));
+                    GameRenderManager.getInstance()
+                        .getStandardDeck().get(
+                            card.getCardID()));
         }
 
     }
@@ -414,8 +422,8 @@ public class AnimationManager {
         for (int i = 0; i < deckSize; i++) {
             GameRenderManager.getInstance()
                 .getCardsInDeck().get(i).setDestLocation(
-                new Point(1150 + i * 25 / deckSize,
-                    315 + i * 25 / deckSize));
+                    new Point(1150 + i * 25 / deckSize,
+                        315 + i * 25 / deckSize));
         }
     }
 
@@ -428,7 +436,7 @@ public class AnimationManager {
         for (int i = 0; i < playSize; i++) {
             GameRenderManager.getInstance()
                 .getCardsInPlay().get(i).setDestLocation(
-                new Point(550 + (i * 350) / playSize, 330));
+                    new Point(550 + (i * 350) / playSize, 330));
         }
     }
 
@@ -441,8 +449,8 @@ public class AnimationManager {
         for (int i = 0; i < handSize; i++) {
             GameRenderManager.getInstance()
                 .getCardsInHand().get(i).setDestLocation(
-                new Point(550 + (i * 350) / handSize,
-                    resizeWindow ? 550 : 630));
+                    new Point(550 + (i * 350) / handSize,
+                        resizeWindow ? 550 : 630));
         }
     }
 
@@ -455,14 +463,15 @@ public class AnimationManager {
         for (int i = 0; i < opponentHandSize; i++) {
             GameRenderManager.getInstance()
                 .getCardsInOpponentHand().get(i).setDestLocation(
-                new Point(550 + (i * 350) / opponentHandSize, 80));
+                    new Point(550 + (i * 350) / opponentHandSize, 80));
         }
     }
 
     /**
      * Move the cards.
      *
-     * @param steps number of steps to move
+     * @param steps
+     *            number of steps to move
      */
     public void moveCards(int steps) {
 
@@ -570,8 +579,10 @@ public class AnimationManager {
     /**
      * Move peg a certain number of spaces.
      *
-     * @param peg    : peg to move
-     * @param spaces : number of spaces to move
+     * @param peg
+     *            : peg to move
+     * @param spaces
+     *            : number of spaces to move
      * @author Charlie Davidson
      */
     public void movePeg(int peg, int spaces) {
@@ -633,8 +644,10 @@ public class AnimationManager {
     /**
      * Show or hide one card.
      *
-     * @param card card to animate
-     * @param showing face up or not
+     * @param card
+     *            card to animate
+     * @param showing
+     *            face up or not
      */
     public void showCard(CardImage card, boolean showing) {
 
@@ -656,7 +669,8 @@ public class AnimationManager {
     /**
      * Method to show or hide the cards.
      *
-     * @param showing face up or not
+     * @param showing
+     *            face up or not
      */
     public void showCards(boolean showing) {
 
@@ -735,7 +749,8 @@ public class AnimationManager {
     /**
      * Set whether the cards are clickable to avoid conflicts.
      *
-     * @param clickable clickable or not
+     * @param clickable
+     *            clickable or not
      */
     public void setCardsClickable(boolean clickable) {
         for (int k = 0; k < GameRenderManager.getInstance()
