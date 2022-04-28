@@ -88,7 +88,7 @@ public class FacadeTest {
     public void setUp() throws Exception {
         facadeinstanace = new PersistenceFacade();
 
-        correctTestUser = new User("Ricardo@skidmore.edu", "Rick", null);
+        correctTestUser = new User("Ricardo@skidmore.edu", "RickTwin", null);
         correctTestPassword = facadeinstanace.getPassword(correctTestUser);
 
         wrongTestUser = new User("DJKhaled.com", "Khaled", null);
@@ -113,8 +113,7 @@ public class FacadeTest {
     }
 
     /**
-     * Testing when the user wants to log in with the correct username and
-     * password.
+     * Testing when the user wants to create and account
      */
      @Test
      public void createUserCorrect() {
@@ -126,6 +125,17 @@ public class FacadeTest {
      assertEquals("Checking if the new user cotains the correct password",
      pass, newTestPassword.getBase64SaltAndPasswordHash());
      }
+     
+     /**
+      * Testing when the user wants to log in with the correct username and
+      * password.
+      */
+      @Test
+      public void createUserCorrectSQLinjection() {
+          User sql = new User("sql@gmail.com", "SELECT * FROM", null);
+          Password sqlpass = new Password(PasswordHasher.getInstance().hashNewPassword("SELECT"));
+          facadeinstanace.userCreate(sql, sqlpass);
+      }
 
     /**
      * Testing when the user wants to change their password Passing in the user,
@@ -179,14 +189,6 @@ public class FacadeTest {
         Boolean verification = facadeinstanace.userNameExists(correctTestUser);
         assertEquals("User should exist", true, verification);
     }
-
-    /**
-     * 
-     */
-    @Test
-    public void deleteaccount() {
-        facadeinstanace.userDelete(newTestUser, newTestPassword);
-    }
     
     /**
      * Testing to see that the username doesn't exist
@@ -195,6 +197,14 @@ public class FacadeTest {
     public void accountDoesntExist() {
         Boolean verification = facadeinstanace.userNameExists(doesNotExists);
         assertEquals("User should not exist", false, verification);
+    }
+    
+    /**
+     * 
+     */
+    @Test
+    public void deleteaccount() {
+        facadeinstanace.userDelete(newTestUser, newTestPassword);
     }
 
     /**
