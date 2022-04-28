@@ -98,7 +98,7 @@ public final class GameController implements PropertyChangeListener {
                 }
                 break;
             case PLAYER_CLICK_DECK:
-                LOG.debug("caught a player click start game event " + evt);
+                LOG.debug("caught a player click deck game event " + evt);
                 switch (currentGameState) {
                     case CUT_DECK:
                         currentGameState = GameState.DISCARD_TO_CRIB;
