@@ -109,6 +109,25 @@ public class GameManager implements GameManagerInterface {
     }
 
     /**
+     * Test whether the deck is reset.
+     * @return if the deck is reset or not
+     */
+    public boolean deckIsReset() {
+        if (g.getDeck().getDeck().size() != 52) {
+            return false;
+        }
+        
+        for (int i = 0; i < g.getDeck().getDeck().size(); i++) {
+            if (g.getDeck().getDeck().get(i).getCardID() != i) {
+                return false;
+            }
+        }
+        
+        return true;
+        
+    }
+    
+    /**
      * Reset the cards to their starting positions.
      */
     public void resetCards() {

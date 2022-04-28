@@ -1,6 +1,7 @@
 package edu.skidmore.cs326.spring2022.skribbage.frontend;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Point;
 import java.util.Objects;
 
 import edu.skidmore.cs326.spring2022.skribbage.common.Card;
