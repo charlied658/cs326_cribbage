@@ -188,9 +188,15 @@ public final class PersistenceFacade
     @Override
     public Password getPassword(User user) {
 
-        Password accepted = DM.getPassword(user);
+        if(DM.getPassword(user) == null) {
+            System.out.println("HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH");
+            return null;
+        }else{
+            Password accepted = DM.getPassword(user);
+            return accepted;
+        }
 
-        return accepted;
+        
     }
 
     /**
