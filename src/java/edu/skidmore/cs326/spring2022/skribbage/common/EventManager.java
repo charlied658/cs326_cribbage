@@ -24,9 +24,7 @@ public final class EventManager {
      * Private static final instance of a Logger for this class.
      */
     private static final Logger LOG;
-    /**
-     * Static block.
-     */
+
     static {
 
         LOG = Logger.getLogger(EventManager.class);

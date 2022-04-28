@@ -6,6 +6,8 @@ import java.beans.PropertyChangeListener;
 import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserChangePasswordEvent;
 import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserChangePasswordResponseEvent;
 import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserCreateAccountEvent;
+import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserDeleteAccountEvent;
+import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserDeleteAccountResponseEvent;
 import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserLoginEvent;
 import edu.skidmore.cs326.spring2022.skribbage.frontend.events.ValidateForChangePassword;
 
@@ -14,6 +16,7 @@ import org.apache.log4j.Logger;
 import edu.skidmore.cs326.spring2022.skribbage.common.EventFactory;
 import edu.skidmore.cs326.spring2022.skribbage.common.EventType;
 import edu.skidmore.cs326.spring2022.skribbage.common.LoginAuthenticator;
+import edu.skidmore.cs326.spring2022.skribbage.common.Password;
 import edu.skidmore.cs326.spring2022.skribbage.common.User;
 import edu.skidmore.cs326.spring2022.skribbage.common.events.AccountEvent;
 import edu.skidmore.cs326.spring2022.skribbage.persistence.PersistenceFacade;
@@ -147,12 +150,32 @@ public class AccountController implements PropertyChangeListener {
 
                 break;
             case USER_DELETE_ACCOUNT:
-                LOG.debug("caught a delete account event");
+                LOG.debug("Caught a delete account event");
+                UserDeleteAccountEvent del = ((UserDeleteAccountEvent) evt);
+                // if correct password.
+                
+                if (isPasswordCorrect(associatedUser, del.getPassword())) {
+                    Password toDelete = LoginAuthenticator.getInstance()
+                        .hashNewPassword(del.getPassword());
+                    
+                    if (PersistenceFacade.getInstance().userDelete(
+                        associatedUser, toDelete)) {
+                        accountResponse =
+                            new AccountResponse("Account deleted!", false);
+                    } else {
+                        accountResponse =
+                            new AccountResponse("Account not deleted", true);
+                    }
+                } else {
+                    accountResponse = new AccountResponse(
+                        "Account not deleted. User not verified", true);
+                }
 
-                accountResponse =
-                    new AccountResponse("Attempting to delete user",
-                        PersistenceFacade.getInstance()
-                            .userDelete(associatedUser, null));
+                UserDeleteAccountResponseEvent res =
+                    (UserDeleteAccountResponseEvent) eventFactory.createEvent(
+                        EventType.USER_DELETE_ACCOUNT_RESPONSE, this,
+                        associatedUser, accountResponse);
+                eventFactory.fireEvent(res);
                 break;
             case USER_CHANGE_PASSWORD:
                 LOG.debug("caught a change password event");
@@ -177,49 +200,64 @@ public class AccountController implements PropertyChangeListener {
             // To do: rename to clarify event's purpose
             case VALIDATE_USERNAME:
                 LOG.debug("caught a user validation event " + evt);
+                // If the username is appropriate
                 if (PersistenceFacade.getInstance()
-                    .userNameExists(associatedUser)) {
-                    // fire event w rejectionStatus true
-                    LOG.debug("determined username exists in database");
-                    accountResponse =
-                        new AccountResponse("Username already exists!", true);
-                    UserValidationResponseEvent responseEventVU =
-                        (UserValidationResponseEvent) eventFactory.createEvent(
-                            EventType.USER_VALIDATION_RESPONSE, this,
-                            associatedUser, accountResponse);
-                    eventFactory.fireEvent(responseEventVU);
+                    .validateUsername(associatedUser)) {
+                    if (PersistenceFacade.getInstance()
+                        .userNameExists(associatedUser)) {
+                        // fire event w rejectionStatus true
+                        LOG.debug("determined username exists in database");
+                        accountResponse =
+                            new AccountResponse("Username already exists!",
+                                true);
+                    } else {
+                        // fire event w rejectionStatus false.
+                        LOG.debug(
+                            "determined username does not exist in database");
+                        accountResponse =
+                            new AccountResponse("Username is available", false);
+                    }
+
                 } else {
-                    // fire event w rejectionStatus false.
-                    LOG.debug("determined username does not exist in database");
+                    LOG.debug("Username is inapproiate.");
                     accountResponse =
-                        new AccountResponse("Username already exists!", false);
-                    UserValidationResponseEvent responseEventVU =
-                        (UserValidationResponseEvent) eventFactory.createEvent(
-                            EventType.USER_VALIDATION_RESPONSE, this,
-                            associatedUser, accountResponse);
-                    eventFactory.fireEvent(responseEventVU);
+                        new AccountResponse("UserName is inapproiate:", true);
                 }
+
+                UserValidationResponseEvent responseEventVU =
+                    (UserValidationResponseEvent) eventFactory.createEvent(
+                        EventType.USER_VALIDATION_RESPONSE, this,
+                        associatedUser, accountResponse);
+                eventFactory.fireEvent(responseEventVU);
+
                 break;
             case USER_CHANGE_PASSWORD_VALIDATION:
                 LOG.debug(
                     "Caught a user validated before change password method.");
-                ule = ((UserLoginEvent) evt);
-                if (isPasswordCorrect(associatedUser, ule.getPassword())) {
-                    // Validation is same as logging in validation.
-                    ValidateForChangePassword call =
-                        ((ValidateForChangePassword) evt);
-                    if (isPasswordCorrect(associatedUser, call.getPassword())) {
-                        ValidateChangeResponseEvent responseEventPV =
-                            (ValidateChangeResponseEvent) eventFactory
-                                .createEvent(
-                                    EventType.USER_CHANGE_PASSWORD_VALIDATION_RESPONSE,
-                                    this);
-                        eventFactory.fireEvent(responseEventPV);
-                    }
-                    break;
-                    // default:
-                    // LOG.warn("caught unhandled event");
+                ValidateForChangePassword call =
+                    ((ValidateForChangePassword) evt);
+
+                if (isPasswordCorrect(associatedUser, call.getPassword())) {
+                    LOG.debug("User Password validated");
+                    accountResponse = new AccountResponse(
+                        "User validated for changing password", false);
+                } else {
+                    LOG.debug("User Password not validated");
+                    accountResponse = new AccountResponse(
+                        "User not validated for changing password", true);
                 }
+
+                ValidateChangeResponseEvent responseEventPV =
+                    (ValidateChangeResponseEvent) eventFactory
+                        .createEvent(
+                            EventType.USER_CHANGE_PASSWORD_VALIDATION_RESPONSE,
+                            this, associatedUser, accountResponse);
+                eventFactory.fireEvent(responseEventPV);
+                break;
+
+            default:
+                LOG.warn("caught unhandled event");
+                break;
 
         }
     }

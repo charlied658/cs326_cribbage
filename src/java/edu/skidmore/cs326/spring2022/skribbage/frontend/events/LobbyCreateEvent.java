@@ -19,7 +19,7 @@ public class LobbyCreateEvent extends LobbyEvent {
      * @param args
      *            args[0] is the lobby
      */
-    protected LobbyCreateEvent(Object source, Object... args) {
+    public LobbyCreateEvent(Object source, Object... args) {
         super(source, EventType.LOBBY_CREATE_LOBBY, (Lobby) args[0]);
     }
 

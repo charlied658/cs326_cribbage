@@ -8,12 +8,25 @@ import edu.skidmore.cs326.spring2022.skribbage.common.EventFactory;
 import edu.skidmore.cs326.spring2022.skribbage.common.EventType;
 import edu.skidmore.cs326.spring2022.skribbage.common.Lobby;
 import edu.skidmore.cs326.spring2022.skribbage.common.LobbyManager;
+import edu.skidmore.cs326.spring2022.skribbage.common.LoginAuthenticator;
+import edu.skidmore.cs326.spring2022.skribbage.common.Password;
+import edu.skidmore.cs326.spring2022.skribbage.common.User;
+import edu.skidmore.cs326.spring2022.skribbage.common.UserRole;
+import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserChangePasswordEvent;
+import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserChangePasswordResponseEvent;
+import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserCreateAccountEvent;
+import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserDeleteAccountEvent;
+import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserDeleteAccountResponseEvent;
+import edu.skidmore.cs326.spring2022.skribbage.frontend.events.ValidateForChangePassword;
+import edu.skidmore.cs326.spring2022.skribbage.logic.events.ValidateChangeResponseEvent;
 
 import org.apache.log4j.Logger;
 
 import us.daveread.edu.graphics.shape.Drawable;
 import us.daveread.edu.graphics.shape.impl.Image;
 import us.daveread.edu.graphics.shape.impl.Text;
+import us.daveread.edu.graphics.surface.DialogPosition;
+import us.daveread.edu.graphics.surface.DialogType;
 import us.daveread.edu.graphics.surface.DrawingSurface;
 import us.daveread.edu.graphics.surface.MainFrame;
 
@@ -22,8 +35,8 @@ import us.daveread.edu.graphics.surface.MainFrame;
  * between Rules, Past Games, and New Game pages.
  *
  * @author Zoe Beals
- * Code reviewed by Sten Leinasaar 04/20/22
- * Line modified by Declan Morris on 04/26/22
+ *         Code reviewed by Sten Leinasaar 04/20/22
+ *         Line modified by Declan Morris on 04/26/22
  */
 @SuppressWarnings("serial")
 public class NavigationPage extends DrawingSurface implements Page {
@@ -87,6 +100,11 @@ public class NavigationPage extends DrawingSurface implements Page {
     private Text pastGamesPageButton;
 
     /**
+     * DeleteAccountPageButton = Button for delete account.
+     */
+    private Text deleteAccountButton;
+
+    /**
      * pastGamesPage - PastGamesPage window.
      */
     @SuppressWarnings("unused")
@@ -101,6 +119,36 @@ public class NavigationPage extends DrawingSurface implements Page {
      * EventManager instance for event management.
      */
     private final EventFactory eventFactory;
+
+    /**
+     * Object of type Text that represents the change password button.
+     */
+    private Text changePasswordButton;
+
+    /**
+     * Change password passwordToChange.
+     */
+    private String password;
+
+    /**
+     * Second input of change password.
+     */
+    private String verifyPassword;
+
+    /**
+     * UserChangePasswordEvent instance.
+     */
+    private UserChangePasswordEvent evt;
+
+    /**
+     * User that is logged in.
+     */
+    private User currentUser;
+
+    /**
+     * Username to verify
+     */
+    private String userName;
 
     /**
      * Logger.
@@ -120,6 +168,7 @@ public class NavigationPage extends DrawingSurface implements Page {
         eventFactory = EventFactory.getInstance();
         navPage = new MainFrame(this, "Skribbage Battle Royale Navigation",
             900, 900, false);
+        currentUser = PageManager.getInstance().getLoggedInUser();
         setup();
     }
 
@@ -161,6 +210,21 @@ public class NavigationPage extends DrawingSurface implements Page {
             Color.black, Color.blue);
         add(logOut);
 
+        LOG.trace("Creating a delete account button.");
+        deleteAccountButton = new Text("Delete Account",
+            new Point(pastGamesPageButton.getLocation().x,
+                pastGamesPageButton.getLocation().y + 40),
+            20,
+            Color.black, Color.blue);
+        add(deleteAccountButton);
+
+        changePasswordButton =
+            new Text("Change Password",
+                new Point(deleteAccountButton.getLocation().x,
+                    deleteAccountButton.getLocation().y + 40),
+                20,
+                Color.black, Color.blue);
+        add(changePasswordButton);
         welcomeMessage =
             new Text("Welcome", new Point(20, 30), 20, Color.black, Color.blue);
         // user = new Text(
@@ -180,7 +244,6 @@ public class NavigationPage extends DrawingSurface implements Page {
             rulesPage = (RulesPage) pageManager.createPage(PageType.RULES_PAGE);
             closeWindow();
         } else if (e == lobbyPageButton) {
-
 
             // Fire an event to start a new lobby
             // Lobby lobby = new Lobby()
@@ -203,6 +266,117 @@ public class NavigationPage extends DrawingSurface implements Page {
         } else if (e == logOut) {
             loginPage = (LoginPage) pageManager.createPage(PageType.LOGIN_PAGE);
             closeWindow();
+        } else if (e == deleteAccountButton) {
+            userName = getUserInput("UserName", "Enter your username",
+                DialogPosition.CENTER_ALL);
+            String password = getUserInput("New User", "Enter password",
+                DialogPosition.CENTER_ALL, true);
+            String verifyPassword = getUserInput("New User",
+                "Enter password again", DialogPosition.CENTER_ALL, true);
+
+            if (password.equals(verifyPassword)
+                && currentUser.getUserName().equals(userName)) {
+
+                UserDeleteAccountEvent evt =
+                    (UserDeleteAccountEvent) EventFactory.getInstance()
+                        .createEvent(
+                            EventType.USER_DELETE_ACCOUNT, this, currentUser,
+                            password);
+                EventFactory.getInstance().fireEvent(evt);
+            } else {
+                drawableMouseClick(e);
+            }
+        } else if (e == changePasswordButton) {
+            userName = getUserInput("Change Password", "Enter username",
+                DialogPosition.CENTER_ALL);
+            password = getUserInput("Change Password",
+                "Enter your current password", DialogPosition.CENTER_ALL,
+                true);
+            // username is a match
+            if (currentUser.getUserName().equals(userName)) {
+                ValidateForChangePassword eventLogin =
+                    (ValidateForChangePassword) eventFactory.createEvent(
+                        EventType.USER_CHANGE_PASSWORD_VALIDATION, this,
+                        currentUser, password);
+                eventFactory.fireEvent(eventLogin);
+            } else {
+                // prompty again.
+                showMessage("HOLD ON!",
+                    "That is not your USENAME you entered! "
+                    + "I am mad...Try again.",
+                    DialogType.ERROR);
+                drawableMouseClick(e);
+            }
+
+        }
+    }
+
+    /**
+     * Called by AccountResponse Controller. After deleting account is done.
+     * 
+     * @param evt
+     */
+    public void userDeleteAccountResponseCallBack(
+        UserDeleteAccountResponseEvent evt) {
+        if (!evt.getAccountResponse().isRejectionStatus()) {
+            showMessage("Account Deleted", "Successful deleteing",
+                DialogType.INFORMATION);
+            loginPage = (LoginPage) pageManager.createPage(PageType.LOGIN_PAGE);
+            closeWindow();
+        } else {
+            showMessage("Account Not Deleted",
+                "Probs your password not correct sir.",
+                DialogType.ERROR);
+        }
+    }
+
+    /**
+     * Called by AccountResponseController to verify user for password change.
+     * 
+     * @param event
+     */
+    public void validateForChangePassword(ValidateChangeResponseEvent event) {
+        if (!event.getAccountResponse().isRejectionStatus()) {
+            password =
+                getUserInput("Change Password", "Enter new password",
+                    DialogPosition.CENTER_ALL, true);
+            verifyPassword = getUserInput("Change Password",
+                "Enter new password again", DialogPosition.CENTER_ALL,
+                true);
+
+            if (password.equals(verifyPassword)) {
+                Password newPassword = LoginAuthenticator.getInstance()
+                    .hashNewPassword(password);
+                evt = (UserChangePasswordEvent) eventFactory.createEvent(
+                    EventType.USER_CHANGE_PASSWORD, this, currentUser,
+                    newPassword);
+                eventFactory.fireEvent(evt);
+
+            } else {
+                showMessage("Passwords did not match",
+                    "Unsuccessful password change",
+                    DialogType.ERROR);
+                validateForChangePassword(event);
+            }
+        }
+
+    }
+    
+    /**
+     * Called by AccountResponseController.
+     * 
+     * @param evt
+     *            --> Incoming event containing information.
+     */
+    public void validateChangePasswordCallback(
+        UserChangePasswordResponseEvent evt) {
+        if (!evt.getAccountResponse().isRejectionStatus()) {
+            showMessage("Password change succesful.", "You are beautiful! You Rock!",
+                DialogType.INFORMATION);
+        } else {
+            LOG.error("FAILED to change password");
+            showMessage(" Couldn't change your password!",
+                "I am so sorry.....", DialogType.ERROR);
         }
     }
 

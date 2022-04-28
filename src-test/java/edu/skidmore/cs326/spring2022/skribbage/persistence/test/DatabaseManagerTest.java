@@ -68,7 +68,7 @@ public class DatabaseManagerTest {
     @Before
     public void setUp() throws Exception {
         databaseinstance = new DatabaseManager();
-        existentUsername = "Rick";
+        existentUsername = "RickTwin";
         nonExistentUsername = "ThisNameShouldntExist;D";
         wrongTestUser =
             new User("DJKhaled@hotmail.com", "Khaled", UserRole.UNAUTHORIZED);
@@ -107,10 +107,10 @@ public class DatabaseManagerTest {
      */
     @Test
     public void updateUsername() {
-        databaseinstance.update("Username", "RickTwin", 9943);
+        databaseinstance.update("Username", "RickTwin", 5);
         Boolean isUpdated = databaseinstance.accountExists("RickTwin");
         assertEquals("Testing when updating the username", isUpdated, true);
-        databaseinstance.update("Username", "Rick", 9943);
+        databaseinstance.update("Username", "Rick", 5);
     }
     
     /**
