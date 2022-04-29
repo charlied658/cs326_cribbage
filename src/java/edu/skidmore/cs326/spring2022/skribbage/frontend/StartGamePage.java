@@ -19,6 +19,8 @@ import us.daveread.edu.graphics.shape.Drawable;
 import us.daveread.edu.graphics.shape.impl.Image;
 import us.daveread.edu.graphics.shape.impl.Rectangle;
 import us.daveread.edu.graphics.shape.impl.Text;
+import us.daveread.edu.graphics.surface.DialogPosition;
+import us.daveread.edu.graphics.surface.DialogType;
 import us.daveread.edu.graphics.surface.DrawingSurface;
 import us.daveread.edu.graphics.surface.MainFrame;
 
@@ -120,6 +122,16 @@ public class StartGamePage extends DrawingSurface implements Page {
     private boolean resizeWindow;
 
     /**
+     * label for total points.
+     */
+    private Text totalPointsLabel;
+
+    /**
+     * total points.
+     */
+    private int totalPoints;
+
+    /**
      * Event factory instance for handling events.
      */
     private final EventFactory eventFactory;
@@ -157,33 +169,37 @@ public class StartGamePage extends DrawingSurface implements Page {
             this, "Start Game Page", 1400, 900, false);
         setup();
     }
-    
+
     /**
      * get player points.
+     * 
      * @return points.
      */
     public int getPlayerPoints() {
         return playerPoints;
     }
-    
+
     /**
      * get computer points.
+     * 
      * @return points.
      */
     public int getComputerPoints() {
         return computerPoints;
     }
-    
+
     /**
      * addPlayerPoints.
+     * 
      * @param pointsToAdd
      */
     public void addPlayerPoints(int pointsToAdd) {
         playerPoints += pointsToAdd;
     }
-    
+
     /**
      * addComputerPoints.
+     * 
      * @param pointsToAdd
      */
     public void addComputerPoints(int pointsToAdd) {
@@ -214,6 +230,8 @@ public class StartGamePage extends DrawingSurface implements Page {
             new Point(30, 800), 20, Color.black, Color.blue);
         computerPointsLabel = new Text("Computer Points: " + computerPoints,
             new Point(30, 830), 20, Color.black, Color.blue);
+        totalPointsLabel = new Text("Total Points: " + totalPoints,
+            new Point(250, 815), 20, Color.black, Color.blue);
         add(gameArea);
         add(board);
         add(returnHomeButton);
@@ -221,6 +239,7 @@ public class StartGamePage extends DrawingSurface implements Page {
         add(startButton);
         add(playerPointsLabel);
         add(computerPointsLabel);
+        add(totalPointsLabel);
 
         add(arrows[0]);
         add(arrows[1]);
@@ -292,7 +311,8 @@ public class StartGamePage extends DrawingSurface implements Page {
             AnimationManager.getInstance().moveCardsToStandardPositions(10);
         }
 
-        // Gets the card that has been clicked on
+        // Gets the card that has been clicked on 
+        //(commented out for now because it doesn't work)
 //        if (e instanceof CardImage) {
 //
 //            CardImage cardImage = (CardImage) e;
@@ -318,14 +338,33 @@ public class StartGamePage extends DrawingSurface implements Page {
 
         // Manage what happens when you click a card
         GameRenderManager.getInstance().manageClickedCard(e);
-
+        
+        playerPoints = GameRenderManager.getInstance().getPlayerPoints();
+        computerPoints = GameRenderManager.getInstance().getComputerPoints();
+        if (GameRenderManager.getInstance().checkForTotalScore(playerPoints,
+            computerPoints)) {
+            updatePoints(playerPoints, computerPoints);
+        } else {
+            showMessage("New Round", "Total points exceeds 31",
+                DialogPosition.CENTER_ALL, DialogType.INFORMATION);
+            GameRenderManager.getInstance().setPlayerPoints(0);
+            GameRenderManager.getInstance().setComputerPoints(0);
+            updatePoints(GameRenderManager.getInstance().getPlayerPoints(), 
+                GameRenderManager.getInstance().getComputerPoints());
+        }
+            
     }
-    
+
     /**
      * method to update points for computer and player.
+     * 
+     * @param pPoints
+     * @param cPoints
      */
-    public void updatePoints() {
-        
+    public void updatePoints(int pPoints, int cPoints) {
+        playerPointsLabel.setMessage("Player points: " + pPoints);
+        computerPointsLabel.setMessage("Computer points: " + cPoints);
+        totalPointsLabel.setMessage("Total points: " + (pPoints + cPoints));
     }
 
     /**

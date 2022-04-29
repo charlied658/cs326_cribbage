@@ -78,6 +78,16 @@ public class GameRenderManager {
      */
     private Player activePlayer;
 
+    /**
+     * computer points.
+     */
+    private int cPoints;
+
+    /**
+     * player points.
+     */
+    private int pPoints;
+
     /*
      * Initialize the static instance.
      */
@@ -121,6 +131,40 @@ public class GameRenderManager {
     }
 
     /**
+     * getPlayerPoints.
+     * 
+     * @return the points.
+     */
+    public int getPlayerPoints() {
+        return pPoints;
+    }
+    
+    /**
+     * setplayerpoints.
+     * @param points
+     */
+    public void setPlayerPoints(int points) {
+        this.pPoints = points;
+    }
+    
+    /**
+     * setcomputerpoints.
+     * @param points
+     */
+    public void setComputerPoints(int points) {
+        this.cPoints = points;
+    }
+
+    /**
+     * getComputerPoints.
+     *
+     * @return computer points.
+     */
+    public int getComputerPoints() {
+        return cPoints;
+    }
+
+    /**
      * When a card has been clicked, update the game state and animate the card
      * movement.
      * 
@@ -155,7 +199,6 @@ public class GameRenderManager {
             // in the player's hand.
             if (e == GameRenderManager.getInstance()
                 .getCardsInHand().get(i)) {
-
                 PlayerPlayCardEvent playerPlayCardEvent =
                     (PlayerPlayCardEvent) EventFactory.getInstance()
                         .createEvent(
@@ -165,6 +208,53 @@ public class GameRenderManager {
                 EventFactory.getInstance().fireEvent(playerPlayCardEvent);
 
             }
+        }
+    }
+
+    /**
+     * calculates the points.
+     * 
+     * @param player
+     *            - true if the player chose it, false, if computer
+     * @param cardChosen
+     *            - the chosen card
+     */
+    public void calculatePoints(boolean player, Card cardChosen) {
+        if (player) {
+            System.out.println("Player chose: " + cardChosen.getRank() + " of "
+                + cardChosen.getSuit());
+            System.out.println("Points before: " + pPoints);
+            pPoints += cardChosen.getRank().getPointValue();
+            System.out.println("Points after: " + pPoints);
+        } else {
+            System.out
+                .println("Computer chose: " + cardChosen.getRank() + " of "
+                    + cardChosen.getSuit());
+            System.out.println("Points before: " + cPoints);
+            cPoints += cardChosen.getRank().getPointValue();
+            System.out.println("Points after: " + cPoints);
+        }
+    }
+
+    /**
+     * checks for total score to ensure that 31 has not been met.
+     * 
+     * @param player
+     *            - player score.
+     * @param cpu
+     *            - cpu score.
+     * @return true if a hand can continue, false if 31 has been reached.
+     */
+    public boolean checkForTotalScore(int player, int cpu) {
+        if (player + cpu < 31) {
+            /**
+             * @TODO create functionality to check if a user has a card that
+             *       will add up to less than 31, or if an opponent does
+             */
+            // return true for now.
+            return true;
+        } else {
+            return false;
         }
     }
 
