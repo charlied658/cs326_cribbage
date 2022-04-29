@@ -1,21 +1,14 @@
-<<<<<<< HEAD
+
 package edu.skidmore.cs326.spring2022.skribbage.logic;
 
 import edu.skidmore.cs326.spring2022.skribbage.common.Game;
 import edu.skidmore.cs326.spring2022.skribbage.common.Card;
 import edu.skidmore.cs326.spring2022.skribbage.common.Hand;
+import edu.skidmore.cs326.spring2022.skribbage.common.Claim;
+import edu.skidmore.cs326.spring2022.skribbage.common.Player;
 //import edu.skidmore.cs326.spring2022.skribbage.common.Rank;
 import java.util.ArrayList;
-
-//there are a few parts to PeggingPlay
-//1) there is checking claims made by the player
-//2) there is the flow of the game between players during pegging play
-
-//what is the flow of the game?
-//each player places a card down and makes or doesn't make a claim
-//until both players are out of cards
-//the pegging total resets every time it reaches 31 or neither player
-//can play a card because it goes over 31
+import java.util.List;
 
 /**
 * PeggingPlay contains methods to run the pegging play phase of the game.
@@ -30,11 +23,13 @@ public class PeggingPlay implements PeggingPlayInterface {
     /** a Game object to access the state of the game. */
     private Game game;
 
-    /** Object used to manipulate the Game data. */
+    /** Object used to manage the Game data. */
     private GameManager gameManager;
 
+    /** Object used to manage a Hand. */
     private HandManager handManager;
 
+    /** the cards played during PeggingPlay so far. */
     private List <Card> cardsPlayedSoFar;
 
     /**
@@ -44,7 +39,7 @@ public class PeggingPlay implements PeggingPlayInterface {
     */
     public PeggingPlay(Game g) {
 
-        cardsPlayedSoFar = new ArrayList <Card> ();
+        cardsPlayedSoFar = new ArrayList <Card>();
 
         //initialize the game manager
         gameManager = new GameManager(g);
@@ -78,8 +73,8 @@ public class PeggingPlay implements PeggingPlayInterface {
 
             // save the card removed in the appropriate Hand in
             // peggingCardsPlayed
-            int idxOfPlayerPeggingCards = getIdxPlayerPegCards(p);
-            Hand pegHand = getPeggingCards(idxOfPlayerPeggingCards);
+            int idxOfPlayerPeggingCards = game.getIdxPlayerPegCards(p);
+            Hand pegHand = game.getPeggingCards(idxOfPlayerPeggingCards);
             handManager.addCardToHand(pegHand, cardToAdd);
 
             //add the card to cardsPlayedSoFar
@@ -87,9 +82,8 @@ public class PeggingPlay implements PeggingPlayInterface {
 
             return true;
 
-        }
-        else{
-          return false;
+        } else {
+            return false;
         }
     }
 
@@ -104,7 +98,7 @@ public class PeggingPlay implements PeggingPlayInterface {
     * "3 pair"
     * "4 pair".
     *
-    * @param claim is the claim the player makes.
+    * @param c is the claim the player makes.
     * @param p is the player who made the claim.
     * @return true iff the claim made was valid
     */
@@ -187,67 +181,67 @@ public class PeggingPlay implements PeggingPlayInterface {
         }
     }
 
-        /**
-        * If the player passed as a parameter placed a card that immediately
-        * followed a card with the same numerical value, the player is awarded
-        * 2 points. Otherwise, the player is awarded no points.
-        *
-        * assumption: Card c from checkClaim() has been added to peggingCards
-        * already
-        *
-        * assumption: checkPair() is called before the next player plays a card
-        *
-        * @param p is the player who made the claim of having a pair
-        * during the pegging phase.
-        * @return true iff the player has a pair
-        */
-        public boolean checkPair(Player p) {
+    /**
+    * If the player passed as a parameter placed a card that immediately
+    * followed a card with the same numerical value, the player is awarded
+    * 2 points. Otherwise, the player is awarded no points.
+    *
+    * assumption: Card c from checkClaim() has been added to peggingCards
+    * already
+    *
+    * assumption: checkPair() is called before the next player plays a card
+    *
+    * @param p is the player who made the claim of having a pair
+    * during the pegging phase.
+    * @return true iff the player has a pair
+    */
+    public boolean checkPair(Player p) {
 
-          //need record of the last two cards played
+      //need record of the last two cards played
 
-            if (cardsPlayedSoFar.size() < 2){
-              //if there are fewer than two cards played during
-              //the pegging phase, then there isn't a valid claim to a pair
-              return false;
-            }
+        if (cardsPlayedSoFar.size() < 2) {
+          //if there are fewer than two cards played during
+          //the pegging phase, then there isn't a valid claim to a pair
+            return false;
+        }
 
 
-            Card firstCard = cardsPlayedSoFar.get(cardsPlayedSoFar.size() - 2);
-            Card secondCard = cardsPlayedSoFar.get(cardsPlayedSoFar.size() - 1);
+        Card firstCard = cardsPlayedSoFar.get(cardsPlayedSoFar.size() - 2);
+        Card secondCard = cardsPlayedSoFar.get(cardsPlayedSoFar.size() - 1);
 
-            ArrayList<Card> checkIfPair = new ArrayList<Card>();
-            checkIfPair.add(firstCard);
-            checkIfPair.add(secondCard);
+        ArrayList<Card> checkIfPair = new ArrayList<Card>();
+        checkIfPair.add(firstCard);
+        checkIfPair.add(secondCard);
 
-            if (isPair(checkIfPair)) {
-                p.addPoints(2);
-                return true;
-            } else {
+        if (isPair(checkIfPair)) {
+            p.addPoints(2);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+    * Checks if the cards in the list have the same identifier and returns
+    * true if they do. Otherwise, it returns false.
+    *
+    * @param cards is the list of cards to check.
+    * @return true if the cards in the list have the same identifier;
+    * otherwise, return false.
+    */
+    public boolean isPair(List<Card> cards) {
+
+        String id = cards.get(0).getRank().getSymbol();
+
+        for (int i = 1; i < cards.size(); i++) {
+            String idToCompare = cards.get(i).getRank().getSymbol();
+            if (!id.equals(idToCompare)) {
                 return false;
             }
         }
 
-        /**
-        * Checks if the cards in the list have the same identifier and returns
-        * true if they do. Otherwise, it returns false.
-        *
-        * @param cards is the list of cards to check.
-        * @return true if the cards in the list have the same identifier;
-        * otherwise, return false.
-        */
-        public boolean isPair(List<Card> cards) {
-
-            String id = cards.get(0).getRank().getSymbol();
-
-            for (int i = 1; i < cards.size(); i++) {
-                String idToCompare = cards.get(i).getRank().getSymbol();
-                if (!id.equals(idToCompare)) {
-                    return false;
-                }
-            }
-
-            return true;
-        }
+        return true;
+    }
 
 
     /**
@@ -264,9 +258,9 @@ public class PeggingPlay implements PeggingPlayInterface {
     // already
     // assumption: check15() is called before the next player plays a card
 
-        if (cardsPlayedSoFar.size() < 3){
+        if (cardsPlayedSoFar.size() < 3) {
           //we need at least 3 cards to have a 3 pair
-          return false;
+            return false;
         }
 
         Card firstCard = cardsPlayedSoFar.get(cardsPlayedSoFar.size() - 3);
@@ -302,9 +296,9 @@ public class PeggingPlay implements PeggingPlayInterface {
     //already
     //assumption: check15() is called before the dealer plays a card
 
-        if (cardsPlayedSoFar.size() < 4){
+        if (cardsPlayedSoFar.size() < 4) {
           //we need at least 3 cards to have a 3 pair
-          return false;
+            return false;
         }
 
         Card firstCard = cardsPlayedSoFar.get(cardsPlayedSoFar.size() - 4);
@@ -326,77 +320,6 @@ public class PeggingPlay implements PeggingPlayInterface {
         }
 
     }
-
-    // /**
-    // If the player passed as a parameter has a run of 3, the player is awarded 3 points.
-    // Otherwise, the player isn't awarded any points.
-    // @param p is the player who claims to have a run of 3
-    // **/
-    // private void checkRunOf3 (Player p){
-    //
-    //   if (peggingCards.size() < 3){
-    //     //let front end know that there isn't a run of three
-    //     return;
-    //   }
-    //   //note, they do not have to be played in sequential order
-    //   //if the order is 5,3,4, there is a run of three
-    //   Card firstInRun = peggingCards.get(peggingCards.size() - 3);
-    //   Card secondInRun = peggingCards.get(peggingCards.size() - 2);
-    //   Card thirdInRun = peggingCards.get(peggingCards.size() - 1);
-    //
-    //   char firstCardId = firstInRun.getIdentifier();
-    //   char secondCardId = secondInRun.getIdentifier();
-    //   char thirdCardId = thirdInRun.getIdentifier();
-    //
-    //   //make sure there are no cards with the same identifiers
-    //   if (firstCardId == secondCardId || firstCardId == thirdCardId){
-    //     //send information to front end that there isn't a run of 3
-    //     return;
-    //   }
-    //
-    //   if (secondCardId == thirdCardId){
-    //     //send information to front end that there isn't a run of 3
-    //     return;
-    //   }
-    //
-    //   //once here, we know that none of the cards have the same identifier
-    //
-    //   //get the next identifier for each card
-    //   char firstInRunNextId = firstInRun.getNextIdentifier();
-    //   char secondInRunNextId = secondInRun.getNextIdentifier();
-    //   char thirdInRunNextId = thirdInRun.getNextIdentifier();
-    //
-    //   //two of the three next identifiers must be equal to exactly one of the
-    //   //identifiers of the other cards
-    //
-    //   int numEqual = 0;
-    //
-    //   //check the first next identifier
-    //   if (firstInRunNextId == secondCardId || firstInRunNextId == thirdCardId){
-    //     numEqual++;
-    //
-    //   }
-    //
-    //   if (secondInRunNextId == firstCardId || secondInRunNextId == thirdCardId){
-    //     numEqual++;
-    //   }
-    //
-    //   if (thirdInRunNextId == firstCardId || thirdInRunNextId == secondCardId){
-    //     numEqual++;
-    //   }
-    //
-    //   if (numEqual == 2){
-    //     //we have a run of 3
-    //     //give the points to player p
-    //     p.addPoints(3);
-    //
-    //   }
-    //   else{
-    //     //we don't have a run of 3
-    //     //notify front end
-    //   }
-    //
-    // }
 
 //
 // see PeggingPlay.java in my local downloads folder for the methods I wrote
