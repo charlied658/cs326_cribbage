@@ -9,7 +9,6 @@ import org.apache.log4j.Logger;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * The finite state machine implementation for the Skribbage game loop.
@@ -197,7 +196,10 @@ public final class GameController implements PropertyChangeListener {
                             .moveCardsToStandardPositions(50);
 
                         // Opponent plays a random card, then play an animation
-                        animationManager.getGameManager().opponentPlayCard();
+                        Card temp = animationManager.getGameManager()
+                            .opponentPlayCard();
+                        GameRenderManager.getInstance().calculatePoints(false,
+                            temp);
                         AnimationManager.getInstance()
                             .moveCardsToStandardPositions(50);
 
@@ -227,6 +229,7 @@ public final class GameController implements PropertyChangeListener {
                             // Move to discard to crib state again
                             currentGameState = GameState.DISCARD_TO_CRIB;
                             animationManager.dealCards();
+                            
                             animationManager.getStartGamePage()
                                 .add(animationManager
                                     .getStartGamePage()
