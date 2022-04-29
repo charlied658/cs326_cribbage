@@ -4,21 +4,29 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Point;
 
+import edu.skidmore.cs326.spring2022.skribbage.common.BoardManager;
+import edu.skidmore.cs326.spring2022.skribbage.common.EventFactory;
+import edu.skidmore.cs326.spring2022.skribbage.common.EventType;
+import edu.skidmore.cs326.spring2022.skribbage.common.Game;
+import edu.skidmore.cs326.spring2022.skribbage.common.GameController;
+import edu.skidmore.cs326.spring2022.skribbage.common.GameState;
+import edu.skidmore.cs326.spring2022.skribbage.common.Player;
+import edu.skidmore.cs326.spring2022.skribbage.frontend.events.game.PlayerClickStartGameEvent;
 import org.apache.log4j.Logger;
 
-import edu.skidmore.cs326.spring2022.skribbage.common.BoardManager;
-import edu.skidmore.cs326.spring2022.skribbage.common.Game;
 import edu.skidmore.cs326.spring2022.skribbage.logic.GameManager;
 import us.daveread.edu.graphics.shape.Drawable;
 import us.daveread.edu.graphics.shape.impl.Image;
 import us.daveread.edu.graphics.shape.impl.Rectangle;
 import us.daveread.edu.graphics.shape.impl.Text;
+import us.daveread.edu.graphics.surface.DialogPosition;
+import us.daveread.edu.graphics.surface.DialogType;
 import us.daveread.edu.graphics.surface.DrawingSurface;
 import us.daveread.edu.graphics.surface.MainFrame;
 
 /**
  * Class to represent the start game state.
- * 
+ *
  * @author Zoe Beals
  *         Code review by Jonah Marcus on 17 April 2022
  */
@@ -33,19 +41,13 @@ public class StartGamePage extends DrawingSurface implements Page {
     /**
      * GameManager instance to manage the game.
      */
-    @SuppressWarnings("unused")
     private GameManager gameManager;
-    
+
     /**
      * PageManager instance for page management.
      */
     private PageManager pageManager;
 
-    /**
-     * AnimationManager instance to manage animations.
-     */
-    private AnimationManager animationManager;
-    
     /**
      * navPage - NavigationPage window.
      */
@@ -101,7 +103,7 @@ public class StartGamePage extends DrawingSurface implements Page {
      * label for computer points.
      */
     private Text computerPointsLabel;
-    
+
     /**
      * How many spaces each player moves.
      */
@@ -113,11 +115,31 @@ public class StartGamePage extends DrawingSurface implements Page {
      */
     @SuppressWarnings("unused")
     private boolean running;
-    
+
     /**
      * Toggles the screen being resized.
      */
     private boolean resizeWindow;
+
+    /**
+     * label for total points.
+     */
+    private Text totalPointsLabel;
+
+    /**
+     * total points.
+     */
+    private int totalPoints;
+
+    /**
+     * Event factory instance for handling events.
+     */
+    private final EventFactory eventFactory;
+
+    /**
+     * Game Render Manager instance.
+     */
+    private final GameRenderManager gameRenderManager;
 
     /**
      * Logger.
@@ -134,11 +156,54 @@ public class StartGamePage extends DrawingSurface implements Page {
     public StartGamePage() {
         pageManager = PageManager.getInstance();
         gameManager = new GameManager(new Game(2));
-        animationManager = new AnimationManager(this);
+        eventFactory = EventFactory.getInstance();
+        AnimationManager.getInstance().setStartGamePage(this);
+        AnimationManager.getInstance().setGameManager(gameManager);
+        GameController.getInstance().setCurrentGameState(GameState.START_GAME);
+        gameRenderManager = GameRenderManager.getInstance();
+        gameRenderManager
+            .setGameManager(AnimationManager.getInstance().getGameManager());
+
         LOG.trace("StartGamePage constructor");
         startGamePage = new MainFrame(
             this, "Start Game Page", 1400, 900, false);
         setup();
+    }
+
+    /**
+     * get player points.
+     * 
+     * @return points.
+     */
+    public int getPlayerPoints() {
+        return playerPoints;
+    }
+
+    /**
+     * get computer points.
+     * 
+     * @return points.
+     */
+    public int getComputerPoints() {
+        return computerPoints;
+    }
+
+    /**
+     * addPlayerPoints.
+     * 
+     * @param pointsToAdd
+     */
+    public void addPlayerPoints(int pointsToAdd) {
+        playerPoints += pointsToAdd;
+    }
+
+    /**
+     * addComputerPoints.
+     * 
+     * @param pointsToAdd
+     */
+    public void addComputerPoints(int pointsToAdd) {
+        computerPoints += pointsToAdd;
     }
 
     /**
@@ -165,6 +230,8 @@ public class StartGamePage extends DrawingSurface implements Page {
             new Point(30, 800), 20, Color.black, Color.blue);
         computerPointsLabel = new Text("Computer Points: " + computerPoints,
             new Point(30, 830), 20, Color.black, Color.blue);
+        totalPointsLabel = new Text("Total Points: " + totalPoints,
+            new Point(250, 815), 20, Color.black, Color.blue);
         add(gameArea);
         add(board);
         add(returnHomeButton);
@@ -172,6 +239,7 @@ public class StartGamePage extends DrawingSurface implements Page {
         add(startButton);
         add(playerPointsLabel);
         add(computerPointsLabel);
+        add(totalPointsLabel);
 
         add(arrows[0]);
         add(arrows[1]);
@@ -181,10 +249,16 @@ public class StartGamePage extends DrawingSurface implements Page {
         running = false;
         resizeWindow = false;
 
+        startButton.setClickable(false);
+        startButton.setOpacity(0.5f);
+        
         createGrid();
         assignSpots();
-        animationManager.renderSpots();
-        animationManager.createCards();
+        AnimationManager.getInstance().renderSpots();
+        AnimationManager.getInstance().createCards();
+        
+        startButton.setClickable(true);
+        startButton.setOpacity(1);
     }
 
     /**
@@ -212,9 +286,15 @@ public class StartGamePage extends DrawingSurface implements Page {
         LOG.trace("drawableMouseClick method in StartGamepage.java");
 
         if (e == startButton) {
-            LOG.trace("Starting game");
+            LOG.trace("Clicked start button");
             remove(startButton);
-            animationManager.dealCards();
+            Player newGamePlayer = new Player(pageManager.getLoggedInUser());
+            PlayerClickStartGameEvent event =
+                (PlayerClickStartGameEvent) eventFactory
+                    .createEvent(EventType.PLAYER_CLICK_START_GAME,
+                        this, newGamePlayer);
+            eventFactory.fireEvent(event);
+            GameRenderManager.getInstance().setActivePlayer(newGamePlayer);
 
         } else if (e == returnHomeButton) {
             LOG.trace("Return to previous screen");
@@ -227,12 +307,64 @@ public class StartGamePage extends DrawingSurface implements Page {
                 new Dimension(1350, resizeWindow ? 800 : 720));
             startGamePage.setSize(1400, resizeWindow ? 940 : 860);
             resizeWindow = !resizeWindow;
-            animationManager.resizeWindow();
-            animationManager.moveCards(10);
+            AnimationManager.getInstance().resizeWindow();
+            AnimationManager.getInstance().moveCardsToStandardPositions(10);
         }
-        
-        animationManager.checkCardClick(e);
 
+        // Gets the card that has been clicked on 
+        //(commented out for now because it doesn't work)
+//        if (e instanceof CardImage) {
+//
+//            CardImage cardImage = (CardImage) e;
+//            LOG.debug("Clicked on a card image " + cardImage);
+//
+//            CardPosition currentPosition = cardImage.getCardPosition();
+//
+//            switch (currentPosition) {
+//                case DECK:
+//                    eventFactory.createEvent(
+//                        EventType.PLAYER_CLICK_DECK, this,
+//                        gameRenderManager.getActivePlayer());
+//                    break;
+//                case PLAYER_HAND:
+//                    eventFactory.createEvent(EventType.PLAYER_PLAY_CARD, this,
+//                        gameRenderManager.getActivePlayer(), cardImage);
+//                default:
+//                    break;
+//
+//            }
+//
+//        }
+
+        // Manage what happens when you click a card
+        GameRenderManager.getInstance().manageClickedCard(e);
+        
+        playerPoints = GameRenderManager.getInstance().getPlayerPoints();
+        computerPoints = GameRenderManager.getInstance().getComputerPoints();
+        if (GameRenderManager.getInstance().checkForTotalScore(playerPoints,
+            computerPoints)) {
+            updatePoints(playerPoints, computerPoints);
+        } else {
+            showMessage("New Round", "Total points exceeds 31",
+                DialogPosition.CENTER_ALL, DialogType.INFORMATION);
+            GameRenderManager.getInstance().setPlayerPoints(0);
+            GameRenderManager.getInstance().setComputerPoints(0);
+            updatePoints(GameRenderManager.getInstance().getPlayerPoints(), 
+                GameRenderManager.getInstance().getComputerPoints());
+        }
+            
+    }
+
+    /**
+     * method to update points for computer and player.
+     * 
+     * @param pPoints
+     * @param cPoints
+     */
+    public void updatePoints(int pPoints, int cPoints) {
+        playerPointsLabel.setMessage("Player points: " + pPoints);
+        computerPointsLabel.setMessage("Computer points: " + cPoints);
+        totalPointsLabel.setMessage("Total points: " + (pPoints + cPoints));
     }
 
     /**

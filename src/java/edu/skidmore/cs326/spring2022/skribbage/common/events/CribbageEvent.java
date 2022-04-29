@@ -1,7 +1,7 @@
 package edu.skidmore.cs326.spring2022.skribbage.common.events;
 
 import edu.skidmore.cs326.spring2022.skribbage.common.EventType;
-import edu.skidmore.cs326.spring2022.skribbage.common.Game;
+import edu.skidmore.cs326.spring2022.skribbage.common.Player;
 
 import java.beans.PropertyChangeEvent;
 
@@ -10,7 +10,6 @@ import java.beans.PropertyChangeEvent;
  * modules.
  * Extends the built in PropertyChangeEvent, hiding some of its unused
  * functionality
- * Yes this is what it does
  *
  * @author Alex Carney
  *         Reviewed
@@ -19,9 +18,9 @@ import java.beans.PropertyChangeEvent;
 public abstract class CribbageEvent extends PropertyChangeEvent {
 
     /**
-     * Game object, all subclasses of cribbage event contain one.
+     * All cribbage events require a player.
      */
-    private final Game game;
+    private final Player player;
 
     /**
      * Constructs a new {@code PropertyChangeEvent}.
@@ -30,23 +29,23 @@ public abstract class CribbageEvent extends PropertyChangeEvent {
      *            the bean that fired the event
      * @param eventType
      *            event type of subclass
-     * @param game
-     *            a game object, all cribbage events have access to
+     * @param player
+     *            Player who fired the event
      * @throws IllegalArgumentException
      *             if {@code source} is {@code null}
      */
-    protected CribbageEvent(Object source, EventType eventType, Game game) {
+    protected CribbageEvent(Object source, EventType eventType, Player player) {
         super(source, eventType.toString(), null, null);
-        this.game = game;
+        this.player = player;
     }
 
     /**
-     * Returns game object associated with event.
+     * Return player associated with event.
      * 
-     * @return game object stored with this event
+     * @return player
      */
-    public Game getGame() {
-        return game;
+    public Player getPlayer() {
+        return player;
     }
 
     /**

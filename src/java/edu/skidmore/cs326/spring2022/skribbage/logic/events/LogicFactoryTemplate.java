@@ -5,6 +5,7 @@ import java.beans.PropertyChangeEvent;
 import edu.skidmore.cs326.spring2022.skribbage.common.EventType;
 import edu.skidmore.cs326.spring2022.skribbage.common.FactoryTemplate;
 import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserChangePasswordResponseEvent;
+import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserDeleteAccountResponseEvent;
 
 import org.apache.log4j.Logger;
 
@@ -42,6 +43,8 @@ public class LogicFactoryTemplate extends FactoryTemplate {
                 return new UserChangePasswordResponseEvent(source, args);
             case USER_CHANGE_PASSWORD_VALIDATION_RESPONSE:
                 return new ValidateChangeResponseEvent(source, args);
+            case USER_DELETE_ACCOUNT_RESPONSE:
+                return new UserDeleteAccountResponseEvent(source, args);
             default:
                 LOG.warn("Event passed + " + event.toString()
                     + " was not one of logic events ");
