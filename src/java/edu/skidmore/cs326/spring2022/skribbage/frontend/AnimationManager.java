@@ -475,18 +475,22 @@ public class AnimationManager {
             resizeWindow ? 550 : 630, 350, 0);
         setDestinationOfCards(gameRenderManager.getCardsInOpponentHand(), 550,
             80, 350, 0);
+        setDestinationOfCards(gameRenderManager.getCardsInCrib(), 1100,
+            100, 80, 0);
 
         // Set the default layering of each card
         setLayeringOfCards(gameRenderManager.getCardsInDeck(), true);
         setLayeringOfCards(gameRenderManager.getCardsInPlay(), false);
         setLayeringOfCards(gameRenderManager.getCardsInHand(), false);
         setLayeringOfCards(gameRenderManager.getCardsInOpponentHand(), true);
+        setLayeringOfCards(gameRenderManager.getCardsInCrib(), false);
 
         // Set whether each card list should be showing or not
         setCardsShowing(gameRenderManager.getCardsInDeck(), false);
         setCardsShowing(gameRenderManager.getCardsInPlay(), true);
         setCardsShowing(gameRenderManager.getCardsInHand(), true);
         setCardsShowing(gameRenderManager.getCardsInOpponentHand(), false);
+        setCardsShowing(gameRenderManager.getCardsInCrib(), true);
 
     }
 
@@ -651,6 +655,8 @@ public class AnimationManager {
             return;
         }
 
+        setCardsClickable(false);
+        
         // Declare variables
         Point initialPoint = pegRenderer[peg].getLocation();
         Point destPoint;
@@ -699,6 +705,8 @@ public class AnimationManager {
                 Thread.currentThread().interrupt();
             }
         }
+        
+        setCardsClickable(true);
 
         // Update the locations of the pegs
         pegLocations[peg] = pegLocations[peg] + spaces;

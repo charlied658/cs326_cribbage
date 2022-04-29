@@ -218,17 +218,17 @@ public class GameManager implements GameManagerInterface {
      * @return card the opponent played.
      */
     public Card opponentPlayCard() {
-        Random rand = new Random();
-        int index = rand.nextInt(
-            g.getPlayerList().get(1).getHand().getCardsInHand().length);
         if (g.getPlayerList().get(1).getHand().getCardsInHand().length > 0) {
+            Random rand = new Random();
+            int index = rand.nextInt(
+                g.getPlayerList().get(1).getHand().getCardsInHand().length);
             Card temp = handManager.removeCardFromHand(
                 g.getPlayerList().get(1).getHand(),
                 g.getPlayerList().get(1).getHand().getCardsInHand()[index]);
             handManager.addCardToHand(g.getCardsInPlay(), temp);
             return temp;
         } else {
-            return new Card(null, null);
+            return null;
         }
     }
 }

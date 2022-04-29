@@ -154,41 +154,15 @@ public final class GameController implements PropertyChangeListener {
                         int numCardsInPlay =
                             gameRenderManager.playerPlayCard(clickedCardIndex);
 
-                        // Check if there are no more cards to play. Each player
-                        // is initially dealt 6 cards so this occurs when the
-                        // number of cards in play is 12.
-                        if (numCardsInPlay == 12) {
-
-                            // Move each peg 5 spaces. This is a temporary test.
-                            // In the real game the pegs should more according
-                            // to the number of points earned during the play
-                            // phase.
-                            animationManager.movePegGlideAnimation(0, 5);
-                            animationManager.movePegGlideAnimation(1, 5);
-
-                            // If either peg is at the final space, end the
-                            // game.
-                            if (animationManager.getPegLocations()[0] == 120
-                                || animationManager
-                                    .getPegLocations()[1] == 120) {
-                                animationManager.getStartGamePage()
-                                    .closeWindow();
-                            }
-
+                        // Check if all cards have been played
+                        if (numCardsInPlay == 8) {
+                            
+                            // Calculate score and move pegs
+                            gameRenderManager.movePegs();
+                            
                             // Move to discard to crib state again
                             currentGameState = GameState.DISCARD_TO_CRIB;
-                            gameRenderManager.dealCards();
-                            animationManager.getStartGamePage()
-                                .add(animationManager
-                                    .getStartGamePage()
-                                    .getSendCardsToCribButton());
-                            animationManager.setButtonClickable(animationManager
-                                .getStartGamePage().getSendCardsToCribButton(),
-                                false);
                         }
-
-                        // Set the cards to be clickable again
-                        animationManager.setCardsClickable(true);
                         break;
                     default:
                         break;
@@ -199,8 +173,10 @@ public final class GameController implements PropertyChangeListener {
             case PLAYER_SEND_CARD_TO_CRIB:
                 if (gameRenderManager.getSelectedCardsForDiscarding()
                     .size() == MAX_DISCARD_TO_CRIB_SIZE) {
-                    // TODO here
-                    // animationManager.discardCards();
+                    // TODO send selected cards to the crib
+                    
+                    gameRenderManager.discardCards();
+                    
                     animationManager.getStartGamePage().remove(animationManager
                         .getStartGamePage().getSendCardsToCribButton());
                     currentGameState = GameState.STARTER_CARD;
