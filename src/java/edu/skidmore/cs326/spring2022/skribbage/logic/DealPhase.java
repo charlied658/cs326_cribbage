@@ -131,79 +131,15 @@
 //    }
 //
 //    /**
-//     * Searches for a given card in a specified player's hand and removes it.
-//     *
-//     * @param cardToRemove
-//     *            is the card to remove from the player's hand
-//     * @param p
-//     *            is the player
-//     */
-//    public void removeCardFromHand(Card cardToRemove, Player p) {
-//
-//        Hand theHand = p.getHand(); // need player phase
-//
-//        for (int i = 0; i < theHand.getHand().size(); i++) {
-//            Card c = theHand.getHand().get(i);
-//
-//            // if (c.getSuit() == cardToRemove.getSuit() &&
-//            // Character.compare(c.getCardIdentifier(),
-//            // cardToRemove.getCardIdentifier())){
-//            // theHand.remove(i);
-//            // return;
-//            // }
-//
-//            if (c.getSuit() == cardToRemove.getSuit()
-//                && c.getIdentifier() == cardToRemove.getIdentifier()) {
-//                theHand.getHand().remove(i);
-//                return;
-//            }
-//
-//        }
-//    }
-//
-//    /**
-//     * Deal cards to the players, assuming that there are two players. Each
-//     * player
-//     * will be dealt 6 cards.
-//     */
-//    public void dealCards() {
-//
-//        int idxOfDealer = 0;
-//        /// game.getDealerIdx();
-//
-//        if (idxOfDealer == -1) {
-//            return;
-//        }
-//
-//        Hand dealerHand = new Hand();
-//        Hand poneHand = new Hand();
-//
-//        for (int i = 0; i < 6; i++) {
-//            poneHand.addCardToHand(game.getDeck().removeTopCard());
-//            dealerHand.addCardToHand(game.getDeck().removeTopCard());
-//        }
-//
-//        game.getPlayerList().get(idxOfDealer).setHand(dealerHand);
-//
-//        if (idxOfDealer == 1) {
-//            game.getPlayerList().get(0).setHand(poneHand);
-//        } else {
-//            game.getPlayerList().get(1).setHand(poneHand);
-//        }
-//
-//    }
-//
-//    /**
 //     * Shuffles the deck, cuts the deck, and determines the dealer.
-//     *
-//     * @param amountToCutP1
-//     *            is the amount that player 1 wants to cut
-//     * @param amountToCutP2
-//     *            is the amount that player 2 wants to cut
 //     */
-//    public void determineDealer(int amountToCutP1, int amountToCutP2) {
+//    public void determineDealer() {
 //
 //        game.getDeck().shuffle();
+//
+//        // Need to get number from Front End:
+//        int amountToCutP1 = 1;
+//        int amountToCutP2 = 3;
 //
 //        Card cardP1 = game.getDeck().cut(amountToCutP1);
 //        Card cardP2 = game.getDeck().cut(amountToCutP2);
@@ -230,10 +166,10 @@
 //            } else if (p2Id == 'Q' && p1Id == 'K') {
 //                game.getPlayerList().get(1).setDealer(true);
 //            } else {
-//                determineDealer(amountToCutP1, amountToCutP2);
+//                determineDealer();
 //            }
 //        } else {
-//            determineDealer(amountToCutP1, amountToCutP2);
+//            determineDealer();
 //        }
 //
 //    }
