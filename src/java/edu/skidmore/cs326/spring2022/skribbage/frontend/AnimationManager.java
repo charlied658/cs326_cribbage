@@ -406,11 +406,11 @@ public class AnimationManager {
 
         List<Card> gameCardsInDeck =
             gameManager.getGame().getDeck().getDeck();
-        List<Card> gameCardsInPlay =
+        Card[] gameCardsInPlay =
             gameManager.getGame().getCardsInPlay().getCardsInHand();
-        List<Card> gameCardsInHand = gameManager.getGame()
+        Card[] gameCardsInHand = gameManager.getGame()
             .getPlayerList().get(0).getHand().getCardsInHand();
-        List<Card> gameCardsInOpponentHand = gameManager.getGame()
+        Card[] gameCardsInOpponentHand = gameManager.getGame()
             .getPlayerList().get(1).getHand().getCardsInHand();
 
         for (Card card : gameCardsInDeck) {

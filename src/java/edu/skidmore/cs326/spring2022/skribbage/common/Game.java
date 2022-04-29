@@ -196,6 +196,14 @@ public class Game implements GameInterface {
     public Hand getCribCards() {
         return cribCards;
     }
+    
+    /**
+     * Set tthe crib cards.
+     * @param cribCards
+     */
+    public void setCribCards(Hand cribCards) {
+        this.cribCards = cribCards;
+    }
 
     /**
      * Get the state of the game.
@@ -222,5 +230,13 @@ public class Game implements GameInterface {
      */
     public Hand getCardsInPlay() {
         return this.cardsInPlay;
+    }
+    
+    /**
+     * Set the cards in play.
+     * @param cardsInPlay
+     */
+    public void setCardsInPlay(Hand cardsInPlay) {
+        this.cardsInPlay = cardsInPlay;
     }
 }
