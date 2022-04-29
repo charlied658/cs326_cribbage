@@ -266,31 +266,45 @@ public class NavigationPage extends DrawingSurface implements Page {
         } else if (e == deleteAccountButton) {
             userName = getUserInput("UserName", "Enter your username",
                 DialogPosition.CENTER_ALL);
-            String password = getUserInput("New User", "Enter password",
-                DialogPosition.CENTER_ALL, true);
-            String verifyPassword = getUserInput("New User",
-                "Enter password again", DialogPosition.CENTER_ALL, true);
+            if (!currentUser.getUserName().equals(userName)) {
+                showMessage("HOLD ON!",
+                    "What do you think you are doing???"
+                        + "You cannot delete other people's account..",
+                    DialogType.ERROR);
+                LOG.warn("Dude tried to delete someone else's account.");
 
-            if (password.equals(verifyPassword)
-                && currentUser.getUserName().equals(userName)) {
+            } else {
+                password = getUserInput("New User", "Enter password",
+                    DialogPosition.CENTER_ALL, true);
+                verifyPassword = getUserInput("New User",
+                    "Enter password again", DialogPosition.CENTER_ALL, true);
+            }
+
+            if (password.equals(verifyPassword)) {
 
                 UserDeleteAccountEvent evt =
                     (UserDeleteAccountEvent) EventFactory.getInstance()
                         .createEvent(
-                            EventType.USER_DELETE_ACCOUNT, this, currentUser,
+                            EventType.USER_DELETE_ACCOUNT, this,
+                            currentUser,
                             password);
                 EventFactory.getInstance().fireEvent(evt);
             } else {
+                showMessage("HOLD ON!",
+                    "You typed this password "
+                        + "thingy wrong..they don't match",
+                    DialogType.ERROR);
                 drawableMouseClick(e);
             }
+
         } else if (e == changePasswordButton) {
             userName = getUserInput("Change Password", "Enter username",
                 DialogPosition.CENTER_ALL);
-            password = getUserInput("Change Password",
-                "Enter your current password", DialogPosition.CENTER_ALL,
-                true);
             // username is a match
             if (currentUser.getUserName().equals(userName)) {
+                password = getUserInput("Change Password",
+                    "Enter your current password", DialogPosition.CENTER_ALL,
+                    true);
                 ValidateForChangePassword eventLogin =
                     (ValidateForChangePassword) eventFactory.createEvent(
                         EventType.USER_CHANGE_PASSWORD_VALIDATION, this,
@@ -304,6 +318,9 @@ public class NavigationPage extends DrawingSurface implements Page {
                     DialogType.ERROR);
                 drawableMouseClick(e);
             }
+            
+           
+            
 
         }
     }
@@ -355,6 +372,10 @@ public class NavigationPage extends DrawingSurface implements Page {
                     DialogType.ERROR);
                 validateForChangePassword(event);
             }
+        } else {
+            showMessage("Error!",
+                "Password you entered is wrong??",
+                DialogType.ERROR);
         }
 
     }
