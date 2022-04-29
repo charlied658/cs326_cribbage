@@ -11,7 +11,17 @@ public enum SkribbageProperty {
     /**
      * GUI library minimum version property.
      */
-    GUI_LIBRARY_MIN_VERSION("GUILibraryMinVersion");
+    GUI_LIBRARY_MIN_VERSION("GUILibraryMinVersion"),
+
+    /**
+     * Latest X location of upper-right corner of window.
+     */
+    GUI_WINDOW_X("WindowLocationX"),
+
+    /**
+     * Latest Y location of upper-right corner of window.
+     */
+    GUI_WINDOW_Y("WindowLocationY");
 
     /**
      * The name of the property used in the properties file.
@@ -49,7 +59,7 @@ public enum SkribbageProperty {
     }
 
     /**
-     * Get the value associated with this property. Return the defaul value if
+     * Get the value associated with this property. Return the default value if
      * the property is undefined.
      * 
      * @see SkribbagePropertiesManager#getProperty(String, String)
@@ -62,5 +72,17 @@ public enum SkribbageProperty {
         return SkribbagePropertiesManager.getInstance().getProperty(
             propertyName,
             defaultValue);
+    }
+
+    /**
+     * Set the value for the property.
+     * 
+     * @see SkribbagePropertiesManager#setProperty(String, String)
+     * @param value
+     *            The value to be associated with the property
+     */
+    public void setPropertyValue(String value) {
+        SkribbagePropertiesManager.getInstance().setProperty(getPropertyName(),
+            value);
     }
 }
