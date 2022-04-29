@@ -39,7 +39,7 @@ import us.daveread.edu.graphics.shape.impl.Circle;
  */
 
 @SuppressWarnings("serial")
-public class LobbyPage extends DrawingSurface implements Page {
+public class LobbyPage extends SkribbageDrawingSurface implements Page {
     
     /**
      * CPU_COLOR - CPU's "ready up" button should always be this color.
@@ -141,13 +141,14 @@ public class LobbyPage extends DrawingSurface implements Page {
         LOG.trace("Entered LobbyPage Constructor.");
         pageManager = PageManager.getInstance();
         lobbyManager = LobbyManager.getInstance();
-        mf = new MainFrame(this, "Pre-Game Lobby", mainframeWidth,
+        new MainFrame(this, "Pre-Game Lobby", mainframeWidth,
             mainframeHeight, false);
         host = lobbyManager.getActiveLobby().getHost();
         addPlayer(host);
         playerCPU = new User(null, "[CPU] Computer Dealer", UserRole.CPU);
         addPlayer(playerCPU);
         setup();
+        positionWindow();
     }
     
     /**
@@ -301,10 +302,11 @@ public class LobbyPage extends DrawingSurface implements Page {
             returnToMainMenu.setBorderColor(Color.CYAN);
             Utility.pause(100);
             returnToMainMenu.setBorderColor(Color.BLACK);
+            closeWindow();
             navPage = (NavigationPage) pageManager
                 .createPage(PageType.NAVIGATION_PAGE);
             lobbyManager.deleteLobby(lobbyManager.getActiveLobby());
-            closeWindow();
+            
         } else if (e instanceof Circle) {
             Circle clickedCircle = (Circle) e;
             if (!(clickedCircle.getFillColor() == CPU_COLOR)) {
@@ -322,15 +324,17 @@ public class LobbyPage extends DrawingSurface implements Page {
             startButton.setBorderColor(Color.CYAN);
             Utility.pause(100);
             startButton.setBorderColor(Color.BLACK);
-            pageManager.createPage(PageType.START_GAME_PAGE);
             closeWindow();
+            pageManager.createPage(PageType.START_GAME_PAGE);
+            
 
         } else if (e == inventoryPageButton) {
             inventoryPageButton.setBorderColor(Color.CYAN);
             Utility.pause(100);
             inventoryPageButton.setBorderColor(Color.BLACK);
-            pageManager.createPage(PageType.INVENTORY_PAGE);
             closeWindow();
+            pageManager.createPage(PageType.INVENTORY_PAGE);
+            
         }
 
     }
@@ -358,13 +362,6 @@ public class LobbyPage extends DrawingSurface implements Page {
      */
     public User getCPU() {
         return playerCPU;
-    }
-
-    /**
-     * Close current window method.
-     */
-    public void closeWindow() {
-        mf.dispose();
     }
 
 }
