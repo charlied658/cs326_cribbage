@@ -233,7 +233,8 @@ public class MarketPlaceManager implements MarketPlaceManagement {
     public void addSpecialCard() {
 
         Player playerInstance = new Player();
-        InventoryPrototype instance = playerInstance.getInventoryManager(); 
+        InventoryPrototype instance = playerInstance.getInventoryManager();
+        instance.updateInventory();
         instance.addItem(getName(), 1);
 
     }
