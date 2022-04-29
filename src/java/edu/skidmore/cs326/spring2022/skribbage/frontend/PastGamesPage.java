@@ -88,6 +88,16 @@ public class PastGamesPage extends DrawingSurface
     private List<JButton> pastGameButtons;
 
     /**
+     * Previous game button.
+     */
+    private JButton gameButton;
+
+    /**
+     * StartGamePage - gamepage window.
+     */
+    private StartGamePage gamePage;
+
+    /**
      * navPage - NavigationPage window.
      */
     @SuppressWarnings("unused")
@@ -200,9 +210,11 @@ public class PastGamesPage extends DrawingSurface
                 g.setName(year + formatDateOrMonth(month)
                     + formatDateOrMonth(date));
             }
-            JButton gameButton = new JButton(g.getName() + " - "
+            gameButton = new JButton(g.getName() + " - "
                 + year + " " + formatDateOrMonth(month) + " "
                 + formatDateOrMonth(date) + " " + g.getPlayers().toString());
+            pastGameButtons.add(gameButton);
+            gameButton.addActionListener(this);
             /*
              * String[] gameInfo = incompleteGames.get(i).getGameInfo();
              * String timestamp = gameInfo[0];
@@ -224,12 +236,12 @@ public class PastGamesPage extends DrawingSurface
             int year = g.getDate().get(Calendar.YEAR);
             int month = g.getDate().get(Calendar.MONTH);
             int date = g.getDate().get(Calendar.DATE);
-            JButton gameButton = new JButton(g.getName() + " - "
+            gameButton = new JButton(g.getName() + " - "
                 + year + " " + formatDateOrMonth(month) + " "
                 + formatDateOrMonth(date) + " " + g.getPlayers().toString());
             gameButton.addActionListener(this);
             pastGameButtons.add(gameButton);
-            
+
             /*
              * String[] gameInfo = completeGames.get(i).getGameInfo();
              * String timestamp = gameInfo[0];
@@ -289,14 +301,23 @@ public class PastGamesPage extends DrawingSurface
         // Get game data from the button number being passed.
         // create a page using that object info. TODO must be added this
         // functionality.
-        pageManager.createPage(PageType.START_GAME_PAGE);
+        gamePage =
+            (StartGamePage) pageManager.createPage(PageType.START_GAME_PAGE);
         closeWindow();
     }
-    //TODO NOT WORKING YET.
-    //TODO update, it works for finished games.
+
+    // TODO NOT WORKING YET.
+    // TODO update, it works for finished games.
     @Override
     public void actionPerformed(ActionEvent e) {
-        
+        /**
+         * TODO When user click, the method to open a page is called. The method
+         * parameter
+         * will be edited and it will then take in the game object that opens
+         * the
+         * game page with the data that is stored.
+         * Persistence does not have functionality for this yet.
+         */
 
         for (int i = 0; i < pastGameButtons.size(); i++) {
 
@@ -306,10 +327,11 @@ public class PastGamesPage extends DrawingSurface
 
         }
     }
+
     /**
      * Inherited method from Page interface.
      */
-    public void closeWindowm() {
+    public void closeWindow() {
         mf.dispose();
     }
 }

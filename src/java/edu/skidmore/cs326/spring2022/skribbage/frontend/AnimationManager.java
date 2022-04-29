@@ -159,7 +159,7 @@ public class AnimationManager {
 
         boardLines = new LineSegment[24];
         for (int i = 0; i < 24; i++) {
-            if ((i >= 0 && i < 6) || (i >= 12 && i < 18)) {
+            if (i < 6 || i >= 12 && i < 18) {
                 boardLines[i] = new LineSegment(
                     new Point(60 + (i / 6) * 80, 590 - (i % 6) * 100 - 2),
                     new Point(120 + (i / 6) * 80 - 4, 590 - (i % 6) * 100 - 2),
@@ -191,7 +191,7 @@ public class AnimationManager {
         spotLocations = new Point[120][3];
         for (int i = 0; i < spotLocations.length; i++) {
             for (int j = 0; j < spotLocations[0].length; j++) {
-                if ((i >= 0 && i < 30) || (i >= 60 && i < 90)) {
+                if (i < 30 || i >= 60 && i < 90) {
                     spotLocations[i][j] = new Point(60 + j * 20 + (i / 30) * 80,
                         670 - (i % 30) * 20);
                 } else {
@@ -329,10 +329,10 @@ public class AnimationManager {
             .getPlayerList().get(0).getHand().getCardsInHand();
         List<Card> gameCardsInOpponentHand = gameManager.getGame()
             .getPlayerList().get(1).getHand().getCardsInHand();
-        for (int i = 0; i < gameCardsInDeck.size(); i++) {
+        for (Card card : gameCardsInDeck) {
             cardsInDeck.add(
                 standardDeck.get(
-                    gameCardsInDeck.get(i).getCardID()));
+                    card.getCardID()));
         }
 
         for (int i = 0; i < gameCardsInPlay.size(); i++) {

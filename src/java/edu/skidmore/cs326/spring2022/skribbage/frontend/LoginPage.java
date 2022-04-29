@@ -346,7 +346,6 @@ public class LoginPage extends DrawingSurface implements Page {
             showMessage("Invalid Username",
                 "Username is taken or is a bad word, try again",
                 DialogType.ERROR);
-            // createNewUser();
         }
 
     }
@@ -419,7 +418,8 @@ public class LoginPage extends DrawingSurface implements Page {
     public void validateCreateAccountCallback(
         CreateAccountResponseEvent event) {
         if (!event.getAccountResponse().isRejectionStatus()) {
-            userCreatedCallback();
+            showMessage("User: " + createdUsername + " created.",
+                "New account created.", DialogType.INFORMATION);
         } else {
             LOG.error("Failed to create an user.");
             showMessage(
@@ -479,16 +479,7 @@ public class LoginPage extends DrawingSurface implements Page {
 
         }
     }
-
-    /**
-     * userCreatedCallback - method to verify a new user is created.
-     */
-    public void userCreatedCallback() {
-        LOG.trace("userCreatedCallback method in Loginpage.java");
-        showMessage("User: " + createdUsername + " created.",
-            "New account created.", DialogType.INFORMATION);
-    }
-
+    
     /**
     *
     */
