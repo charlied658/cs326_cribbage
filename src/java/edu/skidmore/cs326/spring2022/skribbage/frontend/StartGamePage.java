@@ -23,7 +23,6 @@ import us.daveread.edu.graphics.shape.impl.Rectangle;
 import us.daveread.edu.graphics.shape.impl.Text;
 import us.daveread.edu.graphics.surface.DialogPosition;
 import us.daveread.edu.graphics.surface.DialogType;
-import us.daveread.edu.graphics.surface.DrawingSurface;
 import us.daveread.edu.graphics.surface.MainFrame;
 
 /**
@@ -147,6 +146,11 @@ public class StartGamePage extends SkribbageDrawingSurface implements Page {
      * Game Render Manager instance.
      */
     private final GameRenderManager gameRenderManager;
+
+    /**
+     * checks if the cards have been sent to crib.
+     */
+    private boolean cardsSentToCrib = false;
 
     /**
      * Logger.
@@ -319,7 +323,7 @@ public class StartGamePage extends SkribbageDrawingSurface implements Page {
             closeWindow();
             navPage = (NavigationPage) pageManager
                 .createPage(PageType.NAVIGATION_PAGE);
-            
+
         } else if (e == resizeButton) {
             LOG.trace("Resize window");
             gameArea.setDimension(
@@ -329,6 +333,7 @@ public class StartGamePage extends SkribbageDrawingSurface implements Page {
             AnimationManager.getInstance().resizeWindow();
             AnimationManager.getInstance().moveCardsToStandardPositions(10);
         } else if (e == sendCardsToCribButton) {
+            cardsSentToCrib = true;
             Player newGamePlayer = new Player(pageManager.getLoggedInUser());
             PlayerSendCardsToCribEvent event =
                 (PlayerSendCardsToCribEvent) eventFactory
@@ -340,19 +345,29 @@ public class StartGamePage extends SkribbageDrawingSurface implements Page {
 
         // Manage what happens when you click a card
         GameRenderManager.getInstance().manageClickedCard(e);
-
-        playerPoints = GameRenderManager.getInstance().getPlayerPoints();
-        computerPoints = GameRenderManager.getInstance().getComputerPoints();
-        if (GameRenderManager.getInstance().checkForTotalScore(playerPoints,
-            computerPoints)) {
-            updatePoints(playerPoints, computerPoints);
-        } else {
-            showMessage("New Round", "Total points exceeds 31",
-                DialogPosition.CENTER_ALL, DialogType.INFORMATION);
-            GameRenderManager.getInstance().setPlayerPoints(0);
-            GameRenderManager.getInstance().setComputerPoints(0);
-            updatePoints(GameRenderManager.getInstance().getPlayerPoints(),
-                GameRenderManager.getInstance().getComputerPoints());
+        GameRenderManager.getInstance().setCribClick(cardsSentToCrib);
+        if (cardsSentToCrib) {
+            playerPoints = GameRenderManager.getInstance().getPlayerPoints();
+            computerPoints =
+                GameRenderManager.getInstance().getComputerPoints();
+            if (GameRenderManager.getInstance().checkForTotalScore(playerPoints,
+                computerPoints)) {
+                System.out
+                    .println("points: " + playerPoints + ", " + computerPoints);
+                updatePoints(playerPoints, computerPoints);
+            } else {
+                showMessage("New Round", "Total points exceeds 31",
+                    DialogPosition.CENTER_ALL, DialogType.INFORMATION);
+                GameRenderManager.getInstance().setPlayerPoints(0);
+                GameRenderManager.getInstance().setComputerPoints(0);
+                updatePoints(GameRenderManager.getInstance().getPlayerPoints(),
+                    GameRenderManager.getInstance().getComputerPoints());
+            }
+            if (GameRenderManager.getInstance().getCardsInHand().isEmpty()
+                && GameRenderManager.getInstance().getCardsInOpponentHand()
+                    .isEmpty()) {
+                updatePoints(0, 0);
+            }
         }
 
     }

@@ -797,7 +797,6 @@ public class AnimationManager {
      */
     public void dealCards() {
         shuffleCards();
-
         for (int i = 0; i < 6; i++) {
             if (gameRenderManager.getCardsInDeck().size() > 0) {
                 gameManager.dealPlayerCards(1);
