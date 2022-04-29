@@ -60,6 +60,14 @@ public class Peg {
         LOG.trace("Peg.java getSpot()");
         return spot;
     }
+    /**
+     * sets the peg's spot.
+     * @param spot
+     */
+    public void setSpot(Spot spot) {
+        this.spot = spot;
+        
+    }
 
     /**
      * @return owner
@@ -67,6 +75,14 @@ public class Peg {
     public Player getOwner() {
         LOG.trace("Peg.java getOwner()");
         return owner;
+    }
+    
+    /**
+     * sets the peg's owner.
+     * @param owner
+     */
+    public void setOwner(Player owner) {
+        this.owner = owner;
     }
 
     /**
