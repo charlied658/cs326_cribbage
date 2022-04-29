@@ -55,6 +55,8 @@ public class FrontEndFactoryTemplate extends FactoryTemplate {
                 return new ValidateUsernameEvent(source, args);
             case LOBBY_CREATE_LOBBY:
                 return new LobbyCreateEvent(source, args);
+            case LOBBY_START_GAME:
+                return new LobbyStartGameEvent(source, args);
             case PLAYER_SEND_CARD_TO_CRIB:
                 return new PlayerSendCardsToCribEvent(source, args);
             case PLAYER_CLICK_DECK:
