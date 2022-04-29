@@ -162,8 +162,7 @@ public final class PersistenceFacade
      * @return boolean True or false depending if the method worked
      */
     @Override
-    public boolean saveGame(User userName, Game currentGame) {
-
+    public boolean saveGame(Game currentGame) {
         return true;
     }
 
