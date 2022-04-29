@@ -8,6 +8,8 @@ import edu.skidmore.cs326.spring2022.skribbage.common.BoardManager;
 import edu.skidmore.cs326.spring2022.skribbage.common.EventFactory;
 import edu.skidmore.cs326.spring2022.skribbage.common.EventType;
 import edu.skidmore.cs326.spring2022.skribbage.common.Game;
+import edu.skidmore.cs326.spring2022.skribbage.common.GameController;
+import edu.skidmore.cs326.spring2022.skribbage.common.GameState;
 import edu.skidmore.cs326.spring2022.skribbage.common.Player;
 import edu.skidmore.cs326.spring2022.skribbage.frontend.events.game.PlayerClickStartGameEvent;
 import org.apache.log4j.Logger;
@@ -145,6 +147,7 @@ public class StartGamePage extends DrawingSurface implements Page {
         eventFactory = EventFactory.getInstance();
         AnimationManager.getInstance().setStartGamePage(this);
         AnimationManager.getInstance().setGameManager(gameManager);
+        GameController.getInstance().setCurrentGameState(GameState.START_GAME);
         gameRenderManager = GameRenderManager.getInstance();
         gameRenderManager
             .setGameManager(AnimationManager.getInstance().getGameManager());
@@ -227,10 +230,16 @@ public class StartGamePage extends DrawingSurface implements Page {
         running = false;
         resizeWindow = false;
 
+        startButton.setClickable(false);
+        startButton.setOpacity(0.5f);
+        
         createGrid();
         assignSpots();
         AnimationManager.getInstance().renderSpots();
         AnimationManager.getInstance().createCards();
+        
+        startButton.setClickable(true);
+        startButton.setOpacity(1);
     }
 
     /**
@@ -284,38 +293,30 @@ public class StartGamePage extends DrawingSurface implements Page {
         }
 
         // Gets the card that has been clicked on
-        if (e instanceof CardImage) {
+//        if (e instanceof CardImage) {
+//
+//            CardImage cardImage = (CardImage) e;
+//            LOG.debug("Clicked on a card image " + cardImage);
+//
+//            CardPosition currentPosition = cardImage.getCardPosition();
+//
+//            switch (currentPosition) {
+//                case DECK:
+//                    eventFactory.createEvent(
+//                        EventType.PLAYER_CLICK_DECK, this,
+//                        gameRenderManager.getActivePlayer());
+//                    break;
+//                case PLAYER_HAND:
+//                    eventFactory.createEvent(EventType.PLAYER_PLAY_CARD, this,
+//                        gameRenderManager.getActivePlayer(), cardImage);
+//                default:
+//                    break;
+//
+//            }
+//
+//        }
 
-            CardImage cardImage = (CardImage) e;
-            LOG.debug("Clicked on a card image " + cardImage);
-
-            CardPosition currentPosition = cardImage.getCardPosition();
-
-            switch (currentPosition) {
-                case DECK:
-                    eventFactory.createEvent(EventType.PLAYER_CLICK_DECK, this,
-                        gameRenderManager.getActivePlayer());
-                    break;
-                case PLAYER_HAND:
-                    eventFactory.createEvent(EventType.PLAYER_PLAY_CARD, this,
-                        gameRenderManager.getActivePlayer(), cardImage);
-                default:
-                    break;
-
-            }
-
-        }
-
-        // if (clickedCard != null) {
-        // System.out.println("Click on card: " + clickedCard.getCardID());
-        // System.out.println("Rank: " + clickedCard.getRank().getName());
-        // System.out.println("Suit: " + clickedCard.getSuit().getName());
-        // System.out
-        // .println("Value: " + clickedCard.getRank().getPointValue());
-        // }
-
-        // If the card that has been clicked is in the player's hand, move that
-        // card to the center of the board and update game state.
+        // Manage what happens when you click a card
         GameRenderManager.getInstance().manageClickedCard(e);
 
     }

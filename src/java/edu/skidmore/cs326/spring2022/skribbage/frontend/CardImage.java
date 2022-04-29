@@ -36,6 +36,11 @@ public class CardImage extends Image {
     private boolean showing;
 
     /**
+     * Stores whether the card should be updated to be showing or not.
+     */
+    private boolean updateShowing;
+    
+    /**
      * Where the card is on the board (not pixel location)
      * corresponds to ArrayList of other cards in the same position.
      */
@@ -181,5 +186,22 @@ public class CardImage extends Image {
         sb.append(", cardPosition=").append(cardPosition);
         sb.append('}');
         return sb.toString();
+    }
+
+
+    /**
+     * Check if card should be updated to be showing.
+     * @return updateShowing
+     */
+    public boolean getUpdateShowing() {
+        return updateShowing;
+    }
+
+    /**
+     * Update whether the card should be showing or not.
+     * @param updateShowing
+     */
+    public void setUpdateShowing(boolean updateShowing) {
+        this.updateShowing = updateShowing;
     }
 }

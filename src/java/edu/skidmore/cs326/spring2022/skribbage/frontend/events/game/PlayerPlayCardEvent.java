@@ -21,6 +21,11 @@ public class PlayerPlayCardEvent extends CribbageEvent {
      * Associated card image.
      */
     private final CardImage cardImage;
+    
+    /**
+     * Index of card that has been clicked.
+     */
+    private final int clickedCardIndex;
 
     /**
      * Event associated with a user attempting to start a game.
@@ -34,6 +39,7 @@ public class PlayerPlayCardEvent extends CribbageEvent {
     public PlayerPlayCardEvent(Object source, Object... args) {
         super(source, EVENT_TYPE, (Player) args[0]);
         this.cardImage = (CardImage) args[1];
+        this.clickedCardIndex = (Integer) args[2];
     }
 
     /**
@@ -52,4 +58,13 @@ public class PlayerPlayCardEvent extends CribbageEvent {
     public CardImage getCardImage() {
         return cardImage;
     }
+    
+    /**
+     * Get index of clicked card.
+     * @return clickedCardIndex
+     */
+    public int getClickedCardIndex() {
+        return this.clickedCardIndex;
+    }
+    
 }
