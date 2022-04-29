@@ -32,12 +32,10 @@ public interface UserManagement {
      * password change.
      * 
      * @param userToUpdate
-     * @param currentPassword
      * @param newPassword
      * @return the password.
      */
-    boolean passwordChange(User userToUpdate, Password currentPassword,
-        Password newPassword);
+    boolean passwordChange(User userToUpdate, Password newPassword);
 
     /**
      * userChange.
@@ -52,7 +50,6 @@ public interface UserManagement {
      * login.
      * 
      * @param user
-     * @param password
      * @return the login.
      */
     Password getPassword(User user);
@@ -73,11 +70,12 @@ public interface UserManagement {
      * @return boolean depending if the user name exists
      */
     boolean userNameExists(User user);
-    
+
     /**
      * Get the user's password Base64-encoded salt.
      * 
-     * @param user The user's whose password salt is to be obtained
+     * @param user
+     *            The user's whose password salt is to be obtained
      * @return The password salt or null if the user's account is not found
      */
     String getUserSaltBase64(User user);

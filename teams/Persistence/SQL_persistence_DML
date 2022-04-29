@@ -4,9 +4,21 @@
 INSERT INTO player_account (personID, LastName, FirstName, UserName, Password, AvatarURL, Email)
 VALUES (/* comma separated values in the exact order of the above columns*/ ); 
 
+INSERT INTO inventory (ItemID, PersonID, Quantity, LastModified)
+VALUES (/* comma separated values in the exact order of the above columns*/ ); 
+
+INSERT INTO inventory (ItemID, PersonID, Quantity, LastModified) VALUES (1,9943,50,4/26/22);
+
 INSERT INTO player_account //note that columns field is not necessary if you are adding to all columns
 VALUES (value1, value2, value3, ...); 
 //just use NEWID() function for personID when creating new account
 
+//Nikoleta's basic information for populating the player_account table:
+
+
+
+//some basic info for populating item_table
+INSERT INTO item_table VALUES (1, "mirror", 100);
+INSERT INTO item_table VALUES  (2, "skip", 150);
 
 

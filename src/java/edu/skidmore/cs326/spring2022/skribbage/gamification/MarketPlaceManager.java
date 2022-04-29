@@ -1,5 +1,7 @@
 package edu.skidmore.cs326.spring2022.skribbage.gamification;
 
+import edu.skidmore.cs326.spring2022.skribbage.common.Player;
+
 import java.util.HashMap;
 
 import org.apache.log4j.Logger;
@@ -20,13 +22,8 @@ public class MarketPlaceManager implements MarketPlaceManagement {
      * Create static resources.
      */
     static {
-        LOG = Logger.getLogger(ReBattleCard.class);
+        LOG = Logger.getLogger(MarketPlaceManager.class);
     }
-
-    /**
-     * Hash map to hold items bought before being updated to inventory.
-     */
-    private HashMap<String, Integer> cart = new HashMap<String, Integer>();
 
     /**
      * Special Card's name.
@@ -45,6 +42,7 @@ public class MarketPlaceManager implements MarketPlaceManagement {
 
     /**
      * MarketPlaceManager constructor.
+     * 
      * @param specialCardType
      */
     public MarketPlaceManager(SpecialCard specialCardType) {
@@ -119,6 +117,7 @@ public class MarketPlaceManager implements MarketPlaceManagement {
         /*
          * Loop through Hash map to check if card already exists in market
          * place.
+         * TODO change hashmap
          */
         for (HashMap.Entry<String, Integer> entry : STORE_ITEMS.entrySet()) {
 
@@ -149,7 +148,7 @@ public class MarketPlaceManager implements MarketPlaceManagement {
             LOG.info(getPrice() + " Tokens subtracted from player's wallet.");
             LOG.info(getName() + " bought at price " + getPrice()
                 + ". Player now holds " + playerTokens);
-            addSpecialCard(cart);
+            addSpecialCard();
         } else {
             LOG.info("Not enough tokens to buy a " + getName());
         }
@@ -230,16 +229,14 @@ public class MarketPlaceManager implements MarketPlaceManagement {
 
     /**
      * Method to update player inventory with item bought.
-     * 
-     * @param cart
-     *            HashMap holding items bought.
      */
-    public void addSpecialCard(HashMap<String, Integer> cart) {
+    public void addSpecialCard() {
 
-        InventoryPrototype inventoryObj = new InventoryPrototype();
-        cart.put(getName(), getPrice());
-        inventoryObj.addItem(cart, getName());
+        Player playerInstance = new Player();
+        InventoryPrototype instance = playerInstance.getInventoryManager(); 
+        instance.addItem(getName(), 1);
 
     }
 
 }
+

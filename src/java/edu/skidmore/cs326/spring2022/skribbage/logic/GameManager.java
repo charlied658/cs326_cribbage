@@ -1,24 +1,18 @@
 package edu.skidmore.cs326.spring2022.skribbage.logic;
 
-import edu.skidmore.cs326.spring2022.skribbage.common.Game;
-import edu.skidmore.cs326.spring2022.skribbage.common.Player;
-import edu.skidmore.cs326.spring2022.skribbage.common.Card;
-import edu.skidmore.cs326.spring2022.skribbage.common.Hand;
-import edu.skidmore.cs326.spring2022.skribbage.logic.HandManager;
-import java.util.*;
-//import org.apache.log4j.Logger;
+import java.util.List;
 import java.util.Random;
 
+import edu.skidmore.cs326.spring2022.skribbage.common.Game;
+import edu.skidmore.cs326.spring2022.skribbage.common.Card;
+import edu.skidmore.cs326.spring2022.skribbage.common.Deck;
+import edu.skidmore.cs326.spring2022.skribbage.common.Player;
+
 /**
- * GameManager contains methods to manipulate the data in Game. It includes
- * methods to initialize a list of players, add a player to the player list,
- * add a value to the pegging total, add a card to the pone's pegging cards,
- * add a card to the dealer's pegging cards, initialize the pegging total, and
- * determines the index in the player list where the dealer is. A key
- * assumption for this class is that there are only two players.
+ * GameManager contains methods to manipulate the data in Game.
  *
  * @author Michael Shriner
- * Last edited by Charlie Davidson
+ *         Last edited by Charlie Davidson
  */
 public class GameManager implements GameManagerInterface {
 
@@ -27,12 +21,15 @@ public class GameManager implements GameManagerInterface {
      */
     private Game g;
 
+    /**
+     * Hand manager.
+     */
     private HandManager handManager = new HandManager();
 
     /**
-     * Number of cards in the deck.
+     * Deck manager.
      */
-    private final int numcards = 52;
+    private DeckManipulator deckManager = new DeckManipulator();
 
     /**
      * GameManager constructor that initializes a Game.
@@ -43,7 +40,6 @@ public class GameManager implements GameManagerInterface {
     public GameManager(Game game) {
         this.g = game;
     }
-
 
     /**
      * Returns the Game used for this class.
@@ -90,31 +86,6 @@ public class GameManager implements GameManagerInterface {
     }
 
     /**
-     * Add the parameter Card to the pone's pegging cards.
-     *
-     * @param c
-     *            is the Card to add to the list of the pone's pegging cards.
-     */
-    public void addPonePeggingCard(Card c) {
-        Hand ponePegCards = g.getPonePeggingCards();
-        handManager.addCardToHand(ponePegCards, c);
-        g.setPonePeggingCards(ponePegCards);
-    }
-
-    /**
-     * Add the parameter Card to the dealer's pegging cards.
-     *
-     * @param c
-     *            is the Card to add to the list of the dealer's
-     *            pegging cards.
-     */
-    public void addDealerPeggingCard(Card c) {
-        Hand dealerPegCards = g.getDealerPeggingCards();
-        handManager.addCardToHand(dealerPegCards, c);
-        g.setDealerPeggingCards(dealerPegCards);
-    }
-
-    /**
      * Initializes the pegging total to 0.
      */
     public void initPeggingTotal() {
@@ -130,7 +101,7 @@ public class GameManager implements GameManagerInterface {
      * @return the index in playerList where the dealer is or
      *         -1 if there is no dealer.
      */
-    public int getDealerIdx(List <Player> playerList) {
+    public int getDealerIdx(List<Player> playerList) {
         for (int i = 0; i < playerList.size(); i++) {
             if (playerList.get(i).isDealer()) {
                 return i;
@@ -140,51 +111,34 @@ public class GameManager implements GameManagerInterface {
     }
 
     /**
-     * Initialize the state of the cards.
+     * Test whether the deck is reset.
+     * 
+     * @return if the deck is reset or not
      */
-    public void initializeDeck() {
-        g.getStandardDeck().clear();
-        g.getCardsInDeck().clear();
-        g.getCardsInPlay().clear();
-        g.getCardsInHand().clear();
-        g.getCardsInCrib().clear();
-        g.getCardsInOpponentHand().clear();
-
-        for (int i = 0; i < numcards; i++) {
-            g.getStandardDeck().add(new Card(i));
-            g.getCardsInDeck().add(g.getStandardDeck().get(i));
-        }
-    }
-
-    /**
-     * Return whether the deck is sorted.
-     * @return boolean
-     */
-    public boolean deckIsSorted() {
-        if (g.getCardsInDeck().size() != g.getStandardDeck().size()) {
+    public boolean deckIsReset() {
+        if (g.getDeck().getDeck().size() != 52) {
             return false;
         }
 
-        for (int i = 0; i < g.getCardsInDeck().size(); i++) {
-            if (g.getCardsInDeck().get(i) != g.getStandardDeck().get(i)) {
+        for (int i = 0; i < g.getDeck().getDeck().size(); i++) {
+            if (g.getDeck().getDeck().get(i).getCardID() != i) {
                 return false;
             }
         }
+
         return true;
+
     }
 
     /**
      * Reset the cards to their starting positions.
      */
     public void resetCards() {
-        g.getCardsInDeck().clear();
-        g.getCardsInPlay().clear();
-        g.getCardsInHand().clear();
-        g.getCardsInCrib().clear();
-        g.getCardsInOpponentHand().clear();
-        for (int i = 0; i < numcards; i++) {
-            g.getCardsInDeck().add(g.getStandardDeck().get(i));
-        }
+        g.setDeck(new Deck());
+        g.getCardsInPlay().getCardsInHand().clear();
+        g.getPlayerList().get(0).getHand().getCardsInHand().clear();
+        g.getPlayerList().get(1).getHand().getCardsInHand().clear();
+        g.getCribCards().getCardsInHand().clear();
     }
 
     /**
@@ -192,94 +146,85 @@ public class GameManager implements GameManagerInterface {
      */
     public void shuffleCards() {
         resetCards();
-
-        Random rand = new Random();
-        Card temp;
-        int index1;
-        int index2;
-
-        for (int i = 0; i < 100; i++) {
-            index1 = rand.nextInt(numcards);
-            index2 = rand.nextInt(numcards);
-            temp = g.getCardsInDeck().get(index1);
-            g.getCardsInDeck().set(
-                index1, g.getCardsInDeck().get(index2));
-            g.getCardsInDeck().set(index2, temp);
-        }
+        deckManager.shuffle(g.getDeck());
     }
 
     /**
      * Deal cards to the player.
+     *
      * @param num
      */
     public void dealPlayerCards(int num) {
         for (int i = 0; i < num; i++) {
-            if (g.getCardsInDeck().size() > 0) {
-                Card temp = g.getCardsInDeck().remove(0);
-                g.getCardsInHand().add(temp);
+            if (g.getDeck().getDeck().size() > 0) {
+                Card temp = deckManager.removeTopCard(g.getDeck());
+                handManager.addCardToHand(
+                    g.getPlayerList().get(0).getHand(), temp);
             }
         }
     }
 
     /**
      * Deal cards to opponent.
+     *
      * @param num
      */
     public void dealOpponentCards(int num) {
         for (int i = 0; i < num; i++) {
-            if (g.getCardsInDeck().size() > 0) {
-                Card temp = g.getCardsInDeck().remove(0);
-                g.getCardsInOpponentHand().add(temp);
+            if (g.getDeck().getDeck().size() > 0) {
+                Card temp = deckManager.removeTopCard(g.getDeck());
+                handManager.addCardToHand(
+                    g.getPlayerList().get(1).getHand(), temp);
             }
         }
     }
 
     /**
      * Deal cards to the center of the board.
+     *
      * @param num
      */
     public void dealPlayCards(int num) {
         for (int i = 0; i < num; i++) {
-            if (g.getCardsInDeck().size() > 0) {
-                Card temp = g.getCardsInDeck().remove(0);
-                g.getCardsInPlay().add(temp);
+            if (g.getDeck().getDeck().size() > 0) {
+                Card temp = deckManager.removeTopCard(g.getDeck());
+                handManager.addCardToHand(g.getCardsInPlay(), temp);
             }
         }
     }
 
     /**
-     * Add card from the play field to your hand.
-     * This should not be used in the final game.
-     * @param index
-     */
-    public void addCardToHand(int index) {
-        if (g.getCardsInPlay().size() > 0) {
-            Card temp = g.getCardsInPlay().remove(index);
-            g.getCardsInHand().add(temp);
-        }
-    }
-
-    /**
      * Play a card from your hand to the center of the board.
+     *
      * @param index
+     * @return Card that was played
      */
-    public void playCard(int index) {
-        if (g.getCardsInHand().size() > 0) {
-            Card temp = g.getCardsInHand().remove(index);
-            g.getCardsInPlay().add(temp);
+    public Card playCard(int index) {
+        if (g.getPlayerList().get(0).getHand().getCardsInHand().size() > 0) {
+            Card temp = handManager.removeCardFromHand(
+                g.getPlayerList().get(0).getHand(), index);
+            handManager.addCardToHand(g.getCardsInPlay(), temp);
+            return temp;
+        } else {
+            return new Card(null, null);
         }
     }
 
     /**
      * Have the opponent pick a random card to play.
+     * @return card the opponent played.
      */
-    public void opponentPlayCard() {
+    public Card opponentPlayCard() {
         Random rand = new Random();
-        int index = rand.nextInt(g.getCardsInOpponentHand().size());
-        if (g.getCardsInOpponentHand().size() > 0) {
-            Card temp = g.getCardsInOpponentHand().remove(index);
-            g.getCardsInPlay().add(temp);
+        int index = rand.nextInt(
+            g.getPlayerList().get(1).getHand().getCardsInHand().size());
+        if (g.getPlayerList().get(1).getHand().getCardsInHand().size() > 0) {
+            Card temp = handManager.removeCardFromHand(
+                g.getPlayerList().get(1).getHand(), index);
+            handManager.addCardToHand(g.getCardsInPlay(), temp);
+            return temp;
+        } else {
+            return new Card(null, null);
         }
     }
-
 }

@@ -2,8 +2,11 @@ package edu.skidmore.cs326.spring2022.skribbage.frontend;
 
 import java.awt.Color;
 import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import javax.swing.JButton;
 
@@ -24,11 +27,10 @@ import us.daveread.edu.utilities.Utility;
  *         Last Update: March 11 2022
  *         lOGGING added by Sten Leinasaar March 22, 2022.
  *         This is the page that allows the player to view and load old games.
- * 
  */
-
 @SuppressWarnings("serial")
-public class PastGamesPage extends DrawingSurface implements Page {
+public class PastGamesPage extends DrawingSurface
+    implements Page, ActionListener {
     /**
      * mainFrameWidth - int variable that holds mainframe width.
      */
@@ -81,10 +83,27 @@ public class PastGamesPage extends DrawingSurface implements Page {
     private PlayableGame three;
 
     /**
+     * ArrayList of JButtons to store pastGames.
+     */
+    private List<JButton> pastGameButtons;
+
+    /**
+     * Previous game button.
+     */
+    private JButton gameButton;
+
+    /**
+     * StartGamePage - gamepage window.
+     */
+    @SuppressWarnings("unused")
+    private StartGamePage gamePage;
+
+    /**
      * navPage - NavigationPage window.
      */
     @SuppressWarnings("unused")
     private NavigationPage navPage;
+
     /**
      * PageManager instance for page handling.
      */
@@ -103,12 +122,14 @@ public class PastGamesPage extends DrawingSurface implements Page {
      * PastGamesPage constructor.
      */
     public PastGamesPage() {
+        LOG.debug("Constructor reached");
+        pastGameButtons = new ArrayList<JButton>();
         pageManager = PageManager.getInstance();
         mf = new MainFrame(this, "Past Games Page", mainframeWidth,
             mainframeHeight, false);
         addGamesToList();
         setup();
-        LOG.trace("Constructor reached");
+
     }
 
     /**
@@ -190,9 +211,11 @@ public class PastGamesPage extends DrawingSurface implements Page {
                 g.setName(year + formatDateOrMonth(month)
                     + formatDateOrMonth(date));
             }
-            JButton gameButton = new JButton(g.getName() + " - "
+            gameButton = new JButton(g.getName() + " - "
                 + year + " " + formatDateOrMonth(month) + " "
                 + formatDateOrMonth(date) + " " + g.getPlayers().toString());
+            pastGameButtons.add(gameButton);
+            gameButton.addActionListener(this);
             /*
              * String[] gameInfo = incompleteGames.get(i).getGameInfo();
              * String timestamp = gameInfo[0];
@@ -214,9 +237,11 @@ public class PastGamesPage extends DrawingSurface implements Page {
             int year = g.getDate().get(Calendar.YEAR);
             int month = g.getDate().get(Calendar.MONTH);
             int date = g.getDate().get(Calendar.DATE);
-            JButton gameButton = new JButton(g.getName() + " - "
+            gameButton = new JButton(g.getName() + " - "
                 + year + " " + formatDateOrMonth(month) + " "
                 + formatDateOrMonth(date) + " " + g.getPlayers().toString());
+            gameButton.addActionListener(this);
+            pastGameButtons.add(gameButton);
 
             /*
              * String[] gameInfo = completeGames.get(i).getGameInfo();
@@ -265,5 +290,49 @@ public class PastGamesPage extends DrawingSurface implements Page {
                 (NavigationPage) pageManager
                     .createPage(PageType.NAVIGATION_PAGE);
         }
+
+    }
+
+    /**
+     * Method for proof of concept that a button can be clicked.
+     * 
+     * @param i
+     */
+    private void openPage(int i) {
+        // Get game data from the button number being passed.
+        // create a page using that object info. TODO must be added this
+        // functionality.
+        gamePage =
+            (StartGamePage) pageManager.createPage(PageType.START_GAME_PAGE);
+        closeWindow();
+    }
+
+    // TODO NOT WORKING YET.
+    // TODO update, it works for finished games.
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        /**
+         * TODO When user click, the method to open a page is called. The method
+         * parameter
+         * will be edited and it will then take in the game object that opens
+         * the
+         * game page with the data that is stored.
+         * Persistence does not have functionality for this yet.
+         */
+
+        for (int i = 0; i < pastGameButtons.size(); i++) {
+
+            if (e.getSource().equals(pastGameButtons.get(i))) {
+                openPage(i);
+            }
+
+        }
+    }
+
+    /**
+     * Inherited method from Page interface.
+     */
+    public void closeWindow() {
+        mf.dispose();
     }
 }

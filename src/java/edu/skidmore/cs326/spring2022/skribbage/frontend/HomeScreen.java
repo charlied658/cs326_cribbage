@@ -1,10 +1,15 @@
 package edu.skidmore.cs326.spring2022.skribbage.frontend;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Point;
+
 import org.apache.log4j.Logger;
+
+import edu.skidmore.cs326.spring2022.skribbage.util.VerifyLibraryVersion;
 import us.daveread.edu.graphics.shape.Drawable;
 import us.daveread.edu.graphics.shape.impl.Image;
+import us.daveread.edu.graphics.shape.impl.Rectangle;
 import us.daveread.edu.graphics.shape.impl.Text;
 import us.daveread.edu.graphics.surface.DrawingSurface;
 import us.daveread.edu.graphics.surface.MainFrame;
@@ -49,7 +54,6 @@ public class HomeScreen extends DrawingSurface implements Page {
      */
     private Text loginPageButton;
 
-
     /**
      * Logger instance for logging.
      */
@@ -68,6 +72,7 @@ public class HomeScreen extends DrawingSurface implements Page {
         homeScreen =
             new MainFrame(this, "Skribbage Battle Royale Home", 900, 900, true);
         setup();
+        checkGraphicsLibrary();
     }
 
     /**
@@ -95,6 +100,38 @@ public class HomeScreen extends DrawingSurface implements Page {
             20, Color.black, Color.blue);
         add(loginPageButton);
         add(welcomeMessage);
+    }
+
+    /**
+     * Check that the correct version of the graphics library is available,
+     * otherwise place a warning message on the GUI.
+     */
+    private void checkGraphicsLibrary() {
+        String verificationResult =
+            VerifyLibraryVersion.getInstance().checkGraphicsLibraryMinVersion();
+        if (verificationResult != null) {
+            String[] versions = verificationResult.split(",");
+            LOG.warn(
+                "Outdated version of GUI library on path. Found version "
+                    + versions[0] + " but need at least version "
+                    + versions[1]);
+            add(new Rectangle(new Point(5, logo.getLocation().y
+                + logo.getDimension().height + 100),
+                new Dimension(700, 100), Color.black, Color.red));
+            Text versionWarn = new Text(
+                "Warning! Outdated version of GUI library on path.",
+                new Point(100, logo.getLocation().y
+                    + logo.getDimension().height + 140),
+                20, null, Color.white);
+            add(versionWarn);
+            versionWarn = new Text("Found version " + versions[0]
+                + " but need at least version "
+                + versions[1],
+                new Point(50, logo.getLocation().y
+                    + logo.getDimension().height + 170),
+                20, null, Color.white);
+            add(versionWarn);
+        }
     }
 
     /**

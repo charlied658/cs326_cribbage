@@ -79,9 +79,7 @@ public class PlayingCardsDisplayDEMO extends DrawingSurface {
         for (int i = 0; i < cardList.length; i++) {
             cards[i] = new Image("Playing Cards/" + cardList[i],
                 new Point(0, 0), 0.5, null);
-            // add(new Image(cardList[i], new Point(0, 0), 0.5, null));
         }
-        printCardsArray();
         setup();
     }
 
@@ -94,17 +92,7 @@ public class PlayingCardsDisplayDEMO extends DrawingSurface {
 
         refreshButton = new Text("Refresh", new Point(375, 450), 40,
             Color.PINK, Color.BLACK);
-        /*
-         * for (int i = 0; i < 5; i++) {
-         * Image card = cards[(int) Math.random() * (cards.length - 1)];
-         * System.out.println("Made new card");
-         * //card.setX(30 + (20 * i));
-         * //card.setY(40);
-         * add(card);
-         * }
-         */
-        // add(new Image("Playing Cards/ace_of_spades.png",
-        // new Point(0, 0), 0.75, null));
+
         for (int i = 0; i < cards.length; i++) {
             add(cards[i]);
             Utility.pause(500);
@@ -112,22 +100,6 @@ public class PlayingCardsDisplayDEMO extends DrawingSurface {
         add(new Text("Those are all the cards!", new Point(265, 500), 30,
             Color.BLACK));
 
-        // add(refreshButton);
-        // System.out.println("\n" + cards[39].toString());
-        // add(new Image("ungovernable.jpg", new Point(0, 0), 0.75, null));
-
-    }
-
-    /**
-     * Does what it says on the tin: prints the cards[] array
-     * to view its contents and make sure its correct and
-     * consistent.
-     */
-    private static void printCardsArray() {
-        LOG.trace("Entered printCardsArray");
-        for (Image card : cards) {
-            System.out.println(card.toString());
-        }
     }
 
     @Override
@@ -141,8 +113,6 @@ public class PlayingCardsDisplayDEMO extends DrawingSurface {
     }
 
     /**
-     * This is the main method. I'm sure you can figure it out.
-     * 
      * @param args
      */
     public static void main(String[] args) {

@@ -68,8 +68,8 @@ public class DatabaseManagerTest {
     @Before
     public void setUp() throws Exception {
         databaseinstance = new DatabaseManager();
-        existentUsername = new String("Rick");
-        nonExistentUsername = new String("jbrunsta");
+        existentUsername = "RickTwin";
+        nonExistentUsername = "ThisNameShouldntExist;D";
         wrongTestUser =
             new User("DJKhaled@hotmail.com", "Khaled", UserRole.UNAUTHORIZED);
         wrongTestPassword = new Password("salt~AnotherOne");
@@ -78,54 +78,41 @@ public class DatabaseManagerTest {
         correctTestPassword = new Password("salt~ILoveSQL");
     }
 
+//    /**
+//     * Testing the inventory deposit method
+//     */
+//    @Test
+//    public void inventoryDeposit() {
+//
+//        System.out.println("entered test");
+//        ItemTypes testType = ItemTypes.BIRTHDAY_CAKE;
+//        int testQuantity = 55;
+//        databaseinstance.inventoryDeposit(testType, testQuantity,
+//            correctTestUser);
+//
+//        HashMap<String, Item> resultSet =
+//            databaseinstance.inventoryQuery(correctTestUser.getUserId());
+//        Item finalItem = resultSet.get(testType.toString());
+//
+//        System.out.println("assert identical: " + finalItem.getQuantityHeld() + testQuantity);
+//        assertEquals("Inventory deposit should work",
+//            finalItem.getQuantityHeld(), testQuantity);
+//        assertEquals("Inventory deposit should work", finalItem.getItemType(),
+//            testType);
+//
+//    }
+
     /**
-     * Testing the inventory deposit method
+     * Testing when updating the username in the database
      */
     @Test
-    public void inventoryDeposit() {
-
-        System.out.println("entered test");
-        ItemTypes testType = ItemTypes.BIRTHDAY_CAKE;
-        int testQuantity = 55;
-        databaseinstance.inventoryDeposit(testType, testQuantity,
-            correctTestUser);
-
-        HashMap<String, Item> resultSet =
-            databaseinstance.inventoryQuery(correctTestUser.getUserId());
-        Item finalItem = resultSet.get(testType.toString());
-
-        assertEquals("Inventory deposit should work",
-            finalItem.getQuantityHeld(), testQuantity);
-        assertEquals("Inventory deposit should work", finalItem.getItemType(),
-            testType);
-
+    public void updateUsername() {
+        databaseinstance.update("Username", "RickTwin", 5);
+        Boolean isUpdated = databaseinstance.accountExists("RickTwin");
+        assertEquals("Testing when updating the username", isUpdated, true);
+        databaseinstance.update("Username", "Rick", 5);
     }
-
-    /**
-     * Testing when the userAuthenticate fails with wrong username and password.
-     */
-    // @Test
-    // public void userAuthenticatefail() {
-    // boolean verification =
-    // databaseinstance.userAuthenticate(wrongTestUser, wrongTestPassword);
-    // assertEquals(
-    // "Wrong usernname or password, user should not be authenticated",
-    // false, verification);
-    // }
-
-    /**
-     * Testing when the userAuthenticate works with correct username and
-     * password.
-     */
-    // @Test
-    // public void userAuthenticateSuccess() {
-    // Boolean verification = databaseinstance
-    // .userAuthenticate(correctTestUser, correctTestPassword);
-    // assertEquals(
-    // "Correct usernname and password, user should be authenticated",
-    // true, verification);
-    // }
-
+    
     /**
      * Testing when the accountExists works with existent username
      */
@@ -144,6 +131,16 @@ public class DatabaseManagerTest {
             databaseinstance.accountExists(nonExistentUsername);
         assertEquals("User should not exist", false, verification);
 
+    }
+    
+    /**
+     * Testing when creating a new user
+     */
+    @Test
+    public void createNewAccount() {
+        databaseinstance.createUser("TestingUser", "Testingpassword");
+        Boolean isExists = databaseinstance.accountExists("TestingUser");
+        assertEquals("Testing when creating a new user", true, isExists);
     }
 
     /**
@@ -167,20 +164,41 @@ public class DatabaseManagerTest {
     /**
      * Testing when asking the inventoryQuery for coin count is successful.
      */
-    @Test
-    public void inventoryQuerysuccess() {
-        String cointest = databaseinstance.walletQuery(325);
-        assertEquals("Coin count ashould be successful", cointest,
-            "player coin value: 100000");
-    }
+//    @Test
+//    public void walletQuerysuccess() {
+//        String cointest = databaseinstance.walletQuery(9952);
+//        System.out.println("cointest: " + cointest);
+//        assertEquals("Coin count ashould be successful", cointest,
+//            "player coin value: 10000");
+//    }
+
+    /**
+     * Another test. - not sure what the use is
+     */
+//    @Test
+//    public void walle() {
+//        String cointest = databaseinstance.walletQuery(325);
+//        assertEquals("Coin count should be successful", cointest,
+//            "player coin value: 100000");
+//    }
+    
+    /**
+     * Another inventory Test
+     */
+//    @Test
+//    public void TestInventoryQuery() {
+//    	String invTest = databaseinstance.inventoryQuery(9943).toString();
+//    	System.out.println("hello " + invTest);
+//    	
+//    }
 
     /**
      * Testing when asking the inventoryQuery for coin count fails.
      */
-    @Test
-    public void inventoryQueryfails() {
-        String cointest = databaseinstance.walletQuery(420);
-        assertEquals("Coin count should fail", cointest, "Account not found");
-    }
+//    @Test
+//    public void walletQueryfails() {
+//        String cointest = databaseinstance.walletQuery(420);
+//        assertEquals("Coin count should fail", cointest, "Account not found");
+//    }
 
 }
