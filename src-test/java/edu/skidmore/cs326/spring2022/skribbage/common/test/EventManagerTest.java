@@ -184,13 +184,14 @@ public class EventManagerTest {
         // Now removing. Show it doesn't listen anymore.
         LOG.trace("Removing property changeListener.");
         testInstance
-            .removePropertyChangeListener(accountResponseControllerMOCK);
+            .removePropertyChangeListener(EventType.USER_LOGIN.toString(),
+                controller);
         LOG.trace(
             "Firing event that should not be listened for."
                 + testEventInstanceTwo.getEventType().getName());
         testEventFactory.fireEvent(testEventInstanceTwo);
         assertNotEquals(
-            accountResponseControllerMOCK.getUser(),
+            controller.getUser(),
             userInstanceTwo);
 
     }

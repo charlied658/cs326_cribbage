@@ -17,7 +17,7 @@ import edu.skidmore.cs326.spring2022.skribbage.logic.events.LogicFactoryTemplate
  * from the metadata given in EventType enum.
  *
  * @author Sten Leinasaar
- *         Last Edit: April 19, 2022
+ * Last Edit: April 19, 2022
  */
 public final class EventFactory implements EventDispatcher {
 
@@ -72,15 +72,11 @@ public final class EventFactory implements EventDispatcher {
      * Creates an event of type PropertyChangeEvent based on the
      * EventType enum value being passed.
      *
-     * @param event
-     *            Type of an event as specified from the ENUM.
-     * @param source
-     *            Source that fired the update.
-     * @param args
-     *            Vararg of Object type.
+     * @param event  Type of an event as specified from the ENUM.
+     * @param source Source that fired the update.
+     * @param args   Vararg of Object type.
      * @return An event of type that was specified.
-     * @throws Exception
-     *             Event Not Found when EventType cannot be created.
+     * @throws Exception Event Not Found when EventType cannot be created.
      */
     public PropertyChangeEvent createEvent(EventType event, Object source,
         Object... args) {
@@ -92,7 +88,8 @@ public final class EventFactory implements EventDispatcher {
                 LOG.error(
                     "Illegal argument: Argument data types do not match enum");
                 throw new IllegalArgumentException(
-                    "Argument data types do not match enum");
+                    "Argument data types do not match enum. "
+                        + clazz + " does not match " + eventArgumentList[i]);
             }
             if (!Arrays.asList(clazz.getInterfaces()).contains(Payload.class)) {
                 LOG.error("Warning: Using non payload, argument type " + clazz);
@@ -129,10 +126,9 @@ public final class EventFactory implements EventDispatcher {
      * Instead, create an instance of the event somewhere outside, then use
      * fireEvent(event)
      *
-     * @param event
-     *            The event to be fired. Can be any subclass of
-     *            PropertyChangeEvent,
-     *            using Upcasting
+     * @param event The event to be fired. Can be any subclass of
+     *              PropertyChangeEvent,
+     *              using Upcasting
      */
     @Override
     public void fireEvent(PropertyChangeEvent event) {

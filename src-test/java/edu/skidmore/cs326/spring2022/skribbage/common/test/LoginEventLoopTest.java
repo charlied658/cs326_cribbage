@@ -1,13 +1,10 @@
 package edu.skidmore.cs326.spring2022.skribbage.common.test;
-import edu.skidmore.cs326.spring2022.skribbage.common.EventFactory;
-import edu.skidmore.cs326.spring2022.skribbage.common.EventManager;
-import edu.skidmore.cs326.spring2022.skribbage.common.EventType;
-import edu.skidmore.cs326.spring2022.skribbage.common.Password;
-import edu.skidmore.cs326.spring2022.skribbage.common.PasswordHasher;
-import edu.skidmore.cs326.spring2022.skribbage.common.User;
-import edu.skidmore.cs326.spring2022.skribbage.common.UserRole;
+
+import edu.skidmore.cs326.spring2022.skribbage.common.*;
+import edu.skidmore.cs326.spring2022.skribbage.frontend.events.LobbyStartGameEvent;
 import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserCreateAccountEvent;
 import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserLoginEvent;
+import edu.skidmore.cs326.spring2022.skribbage.logic.events.UserValidationResponseEvent;
 import org.apache.log4j.Logger;
 import org.junit.Before;
 import org.junit.Test;
@@ -20,7 +17,7 @@ import static org.junit.Assert.assertNull;
  * Full test of event functionality. Mocks an interaction between
  * a user logging in on the front end, and being authenticated and
  * returned by the back end.
- * 
+ *
  * @author Alex Carney
  */
 public class LoginEventLoopTest {
@@ -70,7 +67,7 @@ public class LoginEventLoopTest {
     /**
      * Mock Password object for mock user.
      */
-    private Password testPassword;
+    private String testPassword;
 
     /**
      * Mock login event.
@@ -80,7 +77,7 @@ public class LoginEventLoopTest {
     /**
      * Mock create account event.
      */
-    private UserCreateAccountEvent testFalseEventInstance;
+    private LobbyStartGameEvent testFalseEventInstance;
 
     /**
      * Logger.
@@ -116,23 +113,24 @@ public class LoginEventLoopTest {
             accountResponseControllerMOCK,
             EventType.USER_LOGIN_RESPONSE);
 
-        testPassword = new Password(TEST_PASSWORD);
+        testPassword = TEST_PASSWORD;
         testUser = new User(TEST_EMAIL, TEST_USERNAME,
             UserRole.UNAUTHORIZED);
 
         // Actually fire the event
         testEventInstance = (UserLoginEvent) testFactoryInstance
             .createEvent(EventType.USER_LOGIN, this, testUser,
-                testPassword);
+                (testPassword));
         assertNotNull(testEventInstance);
         LOG.trace("created event " + testEventInstance);
         testFactoryInstance.fireEvent(testEventInstance);
         LOG.trace("fired said event");
 
         // Fire an event that should be ignored
-        testFalseEventInstance = ((UserCreateAccountEvent) testFactoryInstance
-            .createEvent(EventType.USER_CREATE_ACCOUNT, this, testUser,
-                testPassword));
+        testFalseEventInstance =
+            ((LobbyStartGameEvent) testFactoryInstance
+                .createEvent(EventType.LOBBY_START_GAME, this,
+                    new Lobby(null, 0)));
         assertNotNull(testFalseEventInstance);
         LOG.trace("Created false event " + testEventInstance);
         testFactoryInstance.fireEvent(testFalseEventInstance);
@@ -150,17 +148,6 @@ public class LoginEventLoopTest {
         assertEquals(caughtUser, testUser);
     }
 
-    /**
-     * Determines whether the mock controller ignored an event
-     * not subscribed to. There should be no User object since
-     * the event was ignored.
-     */
-    @Test
-    public void testListenerIgnoresIncorrectEvent() {
-        User nullUser =
-            accountControllerMOCK.getUser();
-        assertNull(nullUser);
-    }
 
     /**
      * Determines if the response controller obtained the User from

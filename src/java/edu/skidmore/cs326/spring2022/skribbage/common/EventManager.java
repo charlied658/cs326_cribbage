@@ -50,11 +50,9 @@ public final class EventManager {
      * Registers a new property change listener, mapped to a specific event
      * type.
      *
-     * @param eventType
-     *            From the EventType enum.
-     * @param pcl
-     *            A new instance of an event listener, which implements
-     *            PropertyChangeListener
+     * @param eventType From the EventType enum.
+     * @param pcl       A new instance of an event listener, which implements
+     *                  PropertyChangeListener
      */
     public void addPropertyChangeListener(PropertyChangeListener pcl,
         EventType... eventType) {
@@ -66,20 +64,23 @@ public final class EventManager {
     /**
      * Unregisters a property change listener.
      *
-     * @param pcl
-     *            The event listener (implementing PropertyChangeListener) to
-     *            unregister
+     * @param eventTypeAsString Requires a key lookup, must supply one of the
+     *                          events that this listener is listening for,
+     *                          as a STRING
+     * @param pcl               The event listener
+     *                          (implementing PropertyChangeListener) to
+     *                          unregister
      */
-    public void removePropertyChangeListener(PropertyChangeListener pcl) {
+    public void removePropertyChangeListener(String eventTypeAsString,
+        PropertyChangeListener pcl) {
         LOG.debug("Removing a listener: " + pcl.toString());
-        support.removePropertyChangeListener(pcl);
+        support.removePropertyChangeListener(eventTypeAsString, pcl);
     }
 
     /**
      * Fires the input event, for all registered listeners to handle.
      *
-     * @param evt
-     *            Event to fire - Any subtype of CribbageEvent (or
+     * @param evt Event to fire - Any subtype of CribbageEvent (or
      *            PropertyChangeEvent)
      */
     public void notify(PropertyChangeEvent evt) {
