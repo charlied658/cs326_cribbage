@@ -33,7 +33,7 @@ import us.daveread.edu.graphics.surface.MainFrame;
  *         Code review by Jonah Marcus on 17 April 2022
  */
 @SuppressWarnings("serial")
-public class StartGamePage extends DrawingSurface implements Page {
+public class StartGamePage extends SkribbageDrawingSurface implements Page {
 
     /**
      * startGamePage - Mainframe window.
@@ -175,6 +175,7 @@ public class StartGamePage extends DrawingSurface implements Page {
         startGamePage = new MainFrame(
             this, "Start Game Page", 1400, 900, false);
         setup();
+        positionWindow();
     }
 
     /**
@@ -315,9 +316,10 @@ public class StartGamePage extends DrawingSurface implements Page {
 
         } else if (e == returnHomeButton) {
             LOG.trace("Return to previous screen");
+            closeWindow();
             navPage = (NavigationPage) pageManager
                 .createPage(PageType.NAVIGATION_PAGE);
-            closeWindow();
+            
         } else if (e == resizeButton) {
             LOG.trace("Resize window");
             gameArea.setDimension(
@@ -365,13 +367,6 @@ public class StartGamePage extends DrawingSurface implements Page {
         playerPointsLabel.setMessage("Player points: " + pPoints);
         computerPointsLabel.setMessage("Computer points: " + cPoints);
         totalPointsLabel.setMessage("Total points: " + (pPoints + cPoints));
-    }
-
-    /**
-     * Close window method from Page interface.
-     */
-    public void closeWindow() {
-        startGamePage.dispose();
     }
 
 }

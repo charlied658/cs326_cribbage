@@ -36,7 +36,7 @@ import us.daveread.edu.graphics.surface.MainFrame;
  *         Line modified by Declan Morris on 04/26/22
  */
 @SuppressWarnings("serial")
-public class NavigationPage extends DrawingSurface implements Page {
+public class NavigationPage extends SkribbageDrawingSurface implements Page {
 
     /**
      * welcomeMessage - Text variable to hold welcome message.
@@ -163,10 +163,11 @@ public class NavigationPage extends DrawingSurface implements Page {
         LOG.trace("Entered NavigationPage Constructor.");
         pageManager = PageManager.getInstance();
         eventFactory = EventFactory.getInstance();
-        navPage = new MainFrame(this, "Skribbage Battle Royale Navigation",
+        new MainFrame(this, "Skribbage Battle Royale Navigation",
             900, 900, false);
         currentUser = PageManager.getInstance().getLoggedInUser();
         setup();
+        positionWindow();
     }
 
     /**
@@ -238,8 +239,9 @@ public class NavigationPage extends DrawingSurface implements Page {
     @Override
     public void drawableMouseClick(Drawable e) {
         if (e == rulesPageButton) {
-            rulesPage = (RulesPage) pageManager.createPage(PageType.RULES_PAGE);
             closeWindow();
+            rulesPage = (RulesPage) pageManager.createPage(PageType.RULES_PAGE);
+            
         } else if (e == lobbyPageButton) {
 
             // Fire an event to start a new lobby
@@ -253,16 +255,19 @@ public class NavigationPage extends DrawingSurface implements Page {
             } else {
                 LOG.error("A user started a lobby without being logged in");
             }
-            lobbyPage = (LobbyPage) pageManager.createPage(PageType.LOBBY_PAGE);
             closeWindow();
+            lobbyPage = (LobbyPage) pageManager.createPage(PageType.LOBBY_PAGE);
+            
 
         } else if (e == pastGamesPageButton) {
+            closeWindow();
             pastGamesPage = (PastGamesPage) pageManager
                 .createPage(PageType.PAST_GAMES_PAGE);
-            closeWindow();
+            
         } else if (e == logOut) {
-            loginPage = (LoginPage) pageManager.createPage(PageType.LOGIN_PAGE);
             closeWindow();
+            loginPage = (LoginPage) pageManager.createPage(PageType.LOGIN_PAGE);
+            
         } else if (e == deleteAccountButton) {
             userName = getUserInput("UserName", "Enter your username",
                 DialogPosition.CENTER_ALL);
@@ -335,8 +340,9 @@ public class NavigationPage extends DrawingSurface implements Page {
         if (!evt.getAccountResponse().isRejectionStatus()) {
             showMessage("Account Deleted", "Successful deleteing",
                 DialogType.INFORMATION);
-            loginPage = (LoginPage) pageManager.createPage(PageType.LOGIN_PAGE);
             closeWindow();
+            loginPage = (LoginPage) pageManager.createPage(PageType.LOGIN_PAGE);
+            
         } else {
             showMessage("Account Not Deleted",
                 "Probs your password not correct sir.",
@@ -399,11 +405,5 @@ public class NavigationPage extends DrawingSurface implements Page {
         }
     }
 
-    /**
-     * closing the navigation page.
-     */
-    public void closeWindow() {
-        navPage.dispose();
-    }
 
 }
