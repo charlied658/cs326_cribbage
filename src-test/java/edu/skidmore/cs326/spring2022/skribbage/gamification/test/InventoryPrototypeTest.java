@@ -89,10 +89,10 @@ public class InventoryPrototypeTest {
     @Test
     public void testUsingItem() {
         //HashMap<String, Integer> inventory = new HashMap<String, Integer>();
-        testInstance.updateInventory();
-        testInstance.useItem("Mirror");
+        player.getInventoryManager().updateInventory();
+        player.getInventoryManager().useItem("Mirror");
         assertTrue("Item was not used",
-            testInstance.searchForItem("Mirror") == 0);
+            player.getInventoryManager().searchForItem("Mirror") == 0);
     }
 
     /**

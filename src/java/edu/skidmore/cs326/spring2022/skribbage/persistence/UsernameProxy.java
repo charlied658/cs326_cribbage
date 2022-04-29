@@ -1,14 +1,8 @@
 package edu.skidmore.cs326.spring2022.skribbage.persistence;
 
-import java.util.ArrayList;
 import java.util.Properties;
-import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Scanner;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.apache.log4j.Logger;
 
@@ -40,6 +34,7 @@ public class UsernameProxy {
     /**
      * Logger instance for logging.
      */
+    @SuppressWarnings("unused")
     private static final Logger LOG;
 
     static {

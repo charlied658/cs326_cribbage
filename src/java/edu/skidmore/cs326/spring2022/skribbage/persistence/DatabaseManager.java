@@ -90,7 +90,6 @@ public class DatabaseManager {
         ResultSet rs = null;
 
         try {
-            // System.out.println("Run a prepared database query");
             // Class.forName("com.mysql.jdbc.Driver");
             conn = getDbConnection();
 
@@ -105,8 +104,8 @@ public class DatabaseManager {
 
         }
         catch (SQLException sqle) {
-            sqle.printStackTrace();
-            // LOGGER.error("Database Interaction Failure", sqle);
+            // sqle.printStackTrace();
+            LOG.error("Database Interaction Failure" + sqle);
 
         }
         finally {
@@ -134,7 +133,7 @@ public class DatabaseManager {
 
         }
     }
-    
+
     public void changepass(String user, String newPassword) {
 
         Connection conn = null;
@@ -144,11 +143,11 @@ public class DatabaseManager {
         ResultSet rs = null;
 
         try {
-            // System.out.println("Run a prepared database query");
             // Class.forName("com.mysql.jdbc.Driver");
             conn = getDbConnection();
 
-            String script = "UPDATE player_account SET Password = ?  WHERE UserName = ?";
+            String script =
+                "UPDATE player_account SET Password = ?  WHERE UserName = ?";
             ps = conn.prepareStatement(script);
 
             ps.setString(1, newPassword);
@@ -158,8 +157,8 @@ public class DatabaseManager {
 
         }
         catch (SQLException sqle) {
-            sqle.printStackTrace();
-            // LOGGER.error("Database Interaction Failure", sqle);
+            // sqle.printStackTrace();
+            LOG.error("Database Interaction Failure: " + sqle);
 
         }
         finally {
@@ -219,14 +218,17 @@ public class DatabaseManager {
 
         }
         catch (SQLException e) {
-            // System.out.println("Account not found");
-            e.printStackTrace();
+            LOG.error("Getting passwork didn't work: " + e);
+            // e.printStackTrace();
 
         }
 
-        returningPassword = new Password(storedPassword);
-        return returningPassword;
-
+        if (storedPassword.equals("")) {
+            return null;
+        } else {
+            returningPassword = new Password(storedPassword);
+            return returningPassword;
+        }
     }
 
     /**
@@ -240,11 +242,9 @@ public class DatabaseManager {
     @SuppressWarnings("unused")
     public HashMap<String, Item> inventoryQuery(int playerID) {
 
-        String tokenQuery = "SELECT * FROM inventory INNER JOIN player_account ON player_account.PersonID=inventory.PersonID WHERE player_account.PersonID = 9943 INNER JOIN inventory ON inventory.ItemID=item_table.itemID";
+        String tokenQuery =
+            "SELECT * FROM inventory INNER JOIN player_account ON player_account.PersonID=inventory.PersonID INNER JOIN item_table ON inventory.ItemID=item_table.item_ID WHERE player_account.PersonID = 3";
 
-        
-        
-        
         PreparedStatement ps = null;
         Connection conn = null;
         int netWorth = 0;
@@ -287,8 +287,7 @@ public class DatabaseManager {
 
         }
         catch (SQLException e) {
-            // System.out.println("AccountinventoryQuery not found");
-            e.printStackTrace();
+            //e.printStackTrace();
             dbDisconnect(conn);
             LOG.error("Account not found");
             return playerInventory;
@@ -314,54 +313,6 @@ public class DatabaseManager {
         }
 
         return dbConnection;
-
-    }
-
-    /**
-     * This is a function to check the database for a specific user and check
-     * whether the password functions.
-     * 
-     * @author Tinaye Mawocha
-     * @param username
-     *            : the username of the desired user
-     * @param password
-     *            : the inputted password
-     * @return Whether password was accepted
-     */
-
-    public boolean userAuthenticate(String username, Password password) {
-
-        String tempQuery =
-            "SELECT * FROM player_account WHERE username='" + username + "'";
-        // Connection conn = dbConnect();
-        String storedPassword = "";
-        Connection conn = null;
-
-        try {
-            conn = getDbConnection();
-            Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery(tempQuery);
-
-            rs.next();
-            storedPassword = rs.getString("Password");
-
-        }
-        catch (SQLException e) {
-            LOG.trace("Account not found: " + e);
-            // e.printStackTrace();
-
-        }
-        finally {
-            dbDisconnect(conn);
-        }
-
-        if (storedPassword.compareTo(password.getBase64PasswordHash()) == 0) {
-            LOG.info("Password Accepted");
-            return true;
-        } else {
-            LOG.info("Incorrect Password");
-            return false;
-        }
 
     }
 
@@ -396,7 +347,7 @@ public class DatabaseManager {
         }
         catch (SQLException e) {
             e.printStackTrace();
-           
+
             return "Account not found";
 
         }
@@ -560,20 +511,6 @@ public class DatabaseManager {
     }
 
     /**
-     * main method.
-     * 
-     * @param args
-     */
-    @SuppressWarnings("unused")
-    public static void main(String[] args) {
-        // dm.inventoryQuery(236);
-
-        DatabaseManager test = new DatabaseManager();
-
-        // test.userAuthenticate("tmawocha", "0000f");
-    }
-
-    /**
      * This is a function to check the database for a specific user and check
      * whether the password functions.
      * 
@@ -677,7 +614,6 @@ public class DatabaseManager {
                 dbDisconnect(conn);
             }
 
-            
         }
 
         // if we reach this line, we run into a SQLException

@@ -16,6 +16,10 @@ public class UserDeleteAccountEvent extends AccountEvent {
      * Private static final instance of a logger.
      */
     private static final Logger LOG;
+    /**
+     * Password to verify.
+     */
+    private String password;
 
     static {
         LOG = Logger.getLogger(UserDeleteAccountEvent.class);
@@ -34,6 +38,7 @@ public class UserDeleteAccountEvent extends AccountEvent {
     public UserDeleteAccountEvent(Object source, Object... args) {
         super(source, EventType.USER_DELETE_ACCOUNT, (User) args[0]);
         LOG.trace("Constructor method reached");
+        password = (String) args[1];
     }
 
     /**
@@ -43,5 +48,12 @@ public class UserDeleteAccountEvent extends AccountEvent {
     public EventType getEventType() {
         LOG.trace("Returning an event name of type String");
         return EventType.USER_DELETE_ACCOUNT;
+    }
+    /**
+     * Returns password of object String.
+     * @return password
+     */
+    public String getPassword() {
+        return password;
     }
 }
