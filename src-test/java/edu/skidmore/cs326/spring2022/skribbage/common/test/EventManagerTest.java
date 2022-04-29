@@ -54,6 +54,11 @@ public class EventManagerTest {
     private AccountResponseControllerMOCK accountResponseControllerMOCK;
 
     /**
+     * Private MOCK Controller instance.
+     */
+    private AccountControllerMOCK controller;
+
+    /**
      * Mock user.
      */
     private User userInstance;
@@ -107,14 +112,21 @@ public class EventManagerTest {
         testInstance = EventManager.getInstance();
         hasher = LoginAuthenticator.getInstance();
         accountResponseControllerMOCK = new AccountResponseControllerMOCK();
+        controller = new AccountControllerMOCK();
         testPassword = hasher.hashNewPassword("password");
         password = "password";
         userInstance =
             new User("acarney@skidmore.edu", "acarney", UserRole.UNAUTHORIZED);
         userInstanceTwo =
             new User("sleinasa@skidmore.edu", "user", UserRole.UNAUTHORIZED);
-        testInstance.addPropertyChangeListener(new AccountControllerMOCK(),
+
+        testInstance.addPropertyChangeListener(controller,
             EventType.USER_LOGIN);
+        LOG.trace("added account response controller mock to listeners");
+        testInstance.addPropertyChangeListener(
+            accountResponseControllerMOCK,
+            EventType.USER_LOGIN_RESPONSE);
+
         testEventInstance = (UserLoginEvent) testEventFactory
             .createEvent(EventType.USER_LOGIN, this, userInstance, password);
         testEventInstanceTwo =
@@ -148,11 +160,6 @@ public class EventManagerTest {
     public void testAddPropertyChangeListener() {
         LOG.info("Beginning to test addPropertyChangeListener");
 
-        LOG.trace("added account response controller mock to listeners");
-        testInstance.addPropertyChangeListener(
-            accountResponseControllerMOCK,
-            EventType.USER_LOGIN_RESPONSE);
-
         testEventFactory.fireEvent(testEventInstance);
 
         assertEquals(userInstance,
@@ -172,22 +179,20 @@ public class EventManagerTest {
     @Test
     public void testRemovePropertyChangeListener() throws Exception {
         LOG.info("Beginning to test removePropertyChangeListener");
-        // add the listener to the list to listen to the loginEvent.
-        testInstance.addPropertyChangeListener(accountResponseControllerMOCK,
-            EventType.USER_LOGIN_RESPONSE);
+        // Show that is still listens.
         testEventFactory.fireEvent(testEventInstance);
         assertEquals(accountResponseControllerMOCK.getReceivedUserFromLogin(),
             userInstance);
-        // Now removing.
+        // Now removing. Show it doesn't listen anymore.
         testInstance
             .removePropertyChangeListener(accountResponseControllerMOCK);
-
+        LOG.debug(
+            "firing testEventInstanceTwo. "
+            + "should not be listening for response.");
         testEventFactory.fireEvent(testEventInstanceTwo);
         assertNotEquals(
             accountResponseControllerMOCK.getReceivedUserFromLogin(),
             userInstanceTwo);
-
-        LOG.trace("fired said event");
 
     }
 
@@ -220,44 +225,3 @@ public class EventManagerTest {
     }
 
 }
-
-// /**
-// * Determines whether the mock controller received the mock event.
-// * Additionally, ensures User object is the same
-// */
-// @Test
-// public void testListenerCaughtCorrectUser() {
-// User caughtUser = accountControllerMOCK.getReceivedUserFromLogin();
-// assertNotNull(caughtUser);
-// assertEquals(caughtUser, testUser);
-// }
-//
-// /**
-// * Determines whether the mock controller ignored an event
-// * not subscribed to. There should be no User object since
-// * the event was ignored.
-// */
-// @Test
-// public void testListenerIgnoresIncorrectEvent() {
-// User nullUser =
-// accountControllerMOCK.getReceivedUserFromCreateAccount();
-// assertNull(nullUser);
-// }
-//
-// /**
-// * Determines if the response controller obtained the User from
-// * the logic end. Additionally, ensures that permissions were
-// * updated accordingly.
-// */
-// @Test
-// public void testresponseControllerCaughtCorrectUserAndIsAuthorized() {
-// User caughtUserResponse =
-// accountResponseControllerMOCK.getReceivedUserFromLogin();
-// LOG.trace(caughtUserResponse);
-// assertEquals(caughtUserResponse, testUser);
-// assertEquals(caughtUserResponse.getUserRole(), UserRole.AUTHORIZED);
-// }
-//
-// }
-//
-// }
