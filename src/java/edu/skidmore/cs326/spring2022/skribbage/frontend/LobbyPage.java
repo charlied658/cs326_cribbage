@@ -180,7 +180,7 @@ public class LobbyPage extends DrawingSurface implements Page {
      * @throws Error - When attempting to add a new player when the
      * lobby is full.
      */
-    private void addPlayer(User player) throws Error {
+    public void addPlayer(User player) throws Error {
         LOG.trace("Entered LobbyPage's addPlayer");
         if (players.size() < MAX_PLAYERS) {
             players.add(player);
@@ -195,7 +195,7 @@ public class LobbyPage extends DrawingSurface implements Page {
      * @param player
      * @throws Error - When lobby is empty.
      */
-    private void removePlayer(User player) throws Error {
+    public void removePlayer(User player) throws Error {
         LOG.trace("Entered LobbyPage's removePlayer");
         if (players.size() > 0) {
             players.remove(player);
@@ -209,7 +209,7 @@ public class LobbyPage extends DrawingSurface implements Page {
      * Updates the lobby's displayed players whenever
      * a player is added or removed.
      */
-    private void updatePage() {
+    public void updatePage() {
         for (Text player : playersDisplay) {
             remove(player);
         }
@@ -224,7 +224,7 @@ public class LobbyPage extends DrawingSurface implements Page {
     /**
      * Takes players from ArrayList and displays them in lobby.
      */
-    private void displayPlayers() {
+    public void displayPlayers() {
         int textStartingY = 125;
         
         for (User player : players) {
@@ -283,7 +283,7 @@ public class LobbyPage extends DrawingSurface implements Page {
      *
      * @param c - the Circle to set.
      */
-    private void setReadyButtonColor(Circle c) {
+    public void setReadyButtonColor(Circle c) {
         LOG.trace("Entered setReadyButtonColor method.");
         if (c.getBorderColor().equals(Color.RED)) {
             c.setBorderColor(Color.GREEN);
@@ -333,6 +333,31 @@ public class LobbyPage extends DrawingSurface implements Page {
             closeWindow();
         }
 
+    }
+    
+    /**
+     * Returns reference to players ArrayList for unit testing
+     * purposes.
+     * @return players
+     */
+    public ArrayList<User> getPlayers() {
+        return players;
+    }
+    
+    /**
+     * Returns reference to host for unit testing purposes.
+     * @return host
+     */
+    public User getHost() {
+        return host;
+    }
+    
+    /**
+     * Returns reference to playerCPU for unit testing purposes.
+     * @return playerCPU;
+     */
+    public User getCPU() {
+        return playerCPU;
     }
 
     /**
