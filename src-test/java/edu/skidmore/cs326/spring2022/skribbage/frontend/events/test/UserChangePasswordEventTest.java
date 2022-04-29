@@ -9,7 +9,10 @@ import org.junit.Before;
 import org.junit.After;
 import org.junit.Test;
 
+import edu.skidmore.cs326.spring2022.skribbage.common.LoginAuthenticator;
+import edu.skidmore.cs326.spring2022.skribbage.common.Password;
 import edu.skidmore.cs326.spring2022.skribbage.common.User;
+import edu.skidmore.cs326.spring2022.skribbage.common.UserRole;
 import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserChangePasswordEvent;
 
 /**
@@ -26,6 +29,11 @@ public class UserChangePasswordEventTest {
      * User test instance to be passed.
      */
     private User userInstance;
+
+    /**
+     * Password of the user.
+     */
+    private Password password;
 
     /**
      * Source object that fired the event change.
@@ -47,14 +55,12 @@ public class UserChangePasswordEventTest {
     public void setUp() {
         LOG.trace("Started the setup method");
         source = new Object();
-        // userInstance =
-        // // Email, username, password, isauthorized?
-        // new User("sleinasa@skidmore.edu", "sleinasa", "passwd", true);
-        // Creating testInstance with the parameter of newPassword to be equal
-        // to oldpassword.
-        // Will change this value when testing.
+        userInstance = new User("sleinasa@skidmore.edu", "sleinasa",
+            UserRole.UNAUTHORIZED);
+        password = LoginAuthenticator.getInstance().hashNewPassword("password");
+
         testInstance =
-            new UserChangePasswordEvent(source, userInstance, "passwd");
+            new UserChangePasswordEvent(source, userInstance, password);
 
         LOG.info("SetUp method completed");
     }
@@ -91,27 +97,19 @@ public class UserChangePasswordEventTest {
     @Test
     public void testGetEventName() {
         LOG.trace("Testing getEventName");
-        assertEquals(testInstance.getEventType(), "User Change Password Event");
+        assertEquals(testInstance.getEventType().getName(),
+            "User Change Password Event");
         LOG.trace("Completed testing the getEventName method");
     }
-
+    
     /**
-     * Sets all initialized variables to null.
+     * Test to check if new Password is returned properly.
      */
-    @After
-    public void tearDown() {
-        LOG.trace("Starting the teardown");
-        testInstance = null;
-        source = null;
-        userInstance = null;
-
-        LOG.trace("Assert that teardown was succesful");
-        assertNull(testInstance);
-        assertNull(source);
-        assertNull(userInstance);
-
-        LOG.trace("Teardown completed");
-
+    @Test
+    public void testGetNewPassword() {
+        LOG.trace("Testing getNewPassword method");
+        assertEquals(testInstance.getNewPassword(), password);
+        LOG.trace("Test getNewPassword completed.");
     }
 
 }

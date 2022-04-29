@@ -145,7 +145,7 @@ public class LoginEventLoopTest {
      */
     @Test
     public void testListenerCaughtCorrectUser() {
-        User caughtUser = accountControllerMOCK.getReceivedUserFromLogin();
+        User caughtUser = accountControllerMOCK.getUser();
         assertNotNull(caughtUser);
         assertEquals(caughtUser, testUser);
     }
@@ -158,7 +158,7 @@ public class LoginEventLoopTest {
     @Test
     public void testListenerIgnoresIncorrectEvent() {
         User nullUser =
-            accountControllerMOCK.getReceivedUserFromCreateAccount();
+            accountControllerMOCK.getUser();
         assertNull(nullUser);
     }
 
@@ -170,7 +170,7 @@ public class LoginEventLoopTest {
     @Test
     public void testresponseControllerCaughtCorrectUserAndIsAuthorized() {
         User caughtUserResponse =
-            accountResponseControllerMOCK.getReceivedUserFromLogin();
+            accountResponseControllerMOCK.getUser();
         LOG.trace(caughtUserResponse);
         assertEquals(caughtUserResponse, testUser);
         assertEquals(caughtUserResponse.getUserRole(), UserRole.AUTHORIZED);

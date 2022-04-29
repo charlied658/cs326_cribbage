@@ -21,7 +21,7 @@ public enum EventType {
      */
     USER_LOGIN("User Login Event", User.class, String.class),
     /**
-     * Fired when.
+     * Fired when. 
      */
     USER_LOGIN_HASHED("User Login Hashed Event", User.class, Password.class),
     /**
