@@ -17,12 +17,13 @@ import org.apache.log4j.Logger;
 public class PrizeSpot extends Spot {
     /**
      * Constructor for prize spot.
+     * 
      * @param location
      */
     public PrizeSpot(Location location) {
         super(location);
         this.spotType = SpotType.PRIZE;
-        
+
     }
 
     /**
@@ -36,15 +37,16 @@ public class PrizeSpot extends Spot {
     static {
         LOG = Logger.getLogger(PrizeSpot.class);
     }
+
     /**
      * Type of spot.
      */
     private SpotType spotType;
-    
+
     /**
      * Die.
      */
-    private Die die;
+    private Die die = new Die();
 
     /**
      * Gives the player a prize when they land on the prize spot.
@@ -53,13 +55,47 @@ public class PrizeSpot extends Spot {
      */
     public void rewardPlayer(Player player) {
 
-        int diceRoll = die.rollDie(6, 0, true);
-        LOG.info("rewardPenalty: Dice roll is " + diceRoll);
+        int diceRoll = die.rollDie(8, 0, true);
+        LOG.info("rewardPlayer: Dice roll is " + diceRoll);
+        switch (diceRoll) {
+            case 0:
+                player.getInventoryManager().addItem("Mirror", 1);
+                break;
+            case 1:
+                player.getInventoryManager().addItem("Re-Battle Card", 1);
+                break;
+            case 2:
+                player.getInventoryManager().addItem("Last-Player-Show Card",
+                    1);
+                break;
+            case 3:
+                player.getInventoryManager().addItem("Throw-Away-Pickup Card",
+                    1);
+                break;
+            case 4:
+                player.getInventoryManager().addItem("Disarm", 1);
+                break;
+            case 5:
+                player.getInventoryManager().addItem("Pick Pocket", 1);
+                break;
+            case 6:
+                player.getInventoryManager().addItem("Auto Pilot", 1);
+                break;
+            case 7:
+                player.getInventoryManager().addItem("Copycat", 1);
+                break;
+            case 8:
+                player.getInventoryManager().addItem("Skip-Player-Turn Card",
+                    1);
+            default:
+                LOG.info("Error with prize spot");
+        }
 
     }
-    
+
     /**
      * Returns type of spot.
+     * 
      * @return type of spot
      */
     public SpotType getType() {
