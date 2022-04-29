@@ -45,7 +45,7 @@ public class TestHandManager {
     public void testAddCardToHand() {
         Card c = new Card(Rank.JACK, Suit.HEARTS);
         handManager.addCardToHand(hand, c);
-        assertEquals(hand.getCardsInHand().size(), 1);
+        assertEquals(hand.getCardsInHand().length, 1);
 
     }
     /**
@@ -55,7 +55,7 @@ public class TestHandManager {
     public void testRemoveCardFromHand() {
         Card c = new Card(Rank.JACK, Suit.HEARTS);
         handManager.addCardToHand(hand, c);
-        Card cardRemoved = handManager.removeCardFromHand(hand, 0);
+        Card cardRemoved = handManager.removeCardFromHand(hand, c);
         assertEquals(c, cardRemoved);
 
 
