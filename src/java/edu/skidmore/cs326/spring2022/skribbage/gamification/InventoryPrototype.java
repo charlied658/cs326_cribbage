@@ -119,6 +119,7 @@ public class InventoryPrototype {
         map.put(SpecialCard.PICKPOCKET.getType(), 0);
         map.put(SpecialCard.AUTOPILOT.getType(), 0);
         map.put(SpecialCard.COPYCAT.getType(), 0);
+        map.put(SpecialCard.SKIPPLAYERTURNCARD.getType(), 0);
         LOG.info("Players Inventory has been filled with current data");
         // e.printStackTrace();
     }
