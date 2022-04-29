@@ -1,9 +1,8 @@
 package edu.skidmore.cs326.spring2022.skribbage.common;
 
-import edu.skidmore.cs326.spring2022.skribbage.common.Deck;
-import edu.skidmore.cs326.spring2022.skribbage.common.Hand;
-import java.util.*;
-import edu.skidmore.cs326.spring2022.skribbage.logic.GameManager;
+import java.util.List;
+import java.util.ArrayList;
+
 //import org.apache.log4j.Logger;
 
 /**
@@ -14,15 +13,15 @@ import edu.skidmore.cs326.spring2022.skribbage.logic.GameManager;
  * players.
  *
  * @author Michael Shriner
- * Last edited by Charlie Davidson
+ *         Last edited by Charlie Davidson
  */
 public class Game implements GameInterface {
 
     /** The deck of cards used to play Cribbage. */
-    private Deck theDeck = new Deck();
+    private Deck theDeck;
 
     /** The list of players who are playing this game of Cribbage. */
-    private List <Player> playerList = new ArrayList<Player>();
+    private List<Player> playerList = new ArrayList<Player>();
 
     /**
      * The total score among the players during the pegging phase of
@@ -33,12 +32,12 @@ public class Game implements GameInterface {
     /** The crib for the game. */
     private Hand cribCards;
 
-    /** The set of cards played by the pone during the pegging phase. */
-    //private List <Card> ponePeggingCards;
-    private Hand ponePeggingCards;
-
-    /** The set of cards played by the dealer during the pegging phase. */
-    private Hand dealerPeggingCards;
+    /**
+     * A list of Hand objects where each Hand is a list of cards played during
+     * the pegging play phase. The Hand at index i in peggingCardsPlayed
+     * belongs to the Player at index i in playerList.
+     */
+    private List<Hand> peggingCardsPlayed = new ArrayList<Hand>();
 
     /**
      * State of the game.
@@ -46,34 +45,9 @@ public class Game implements GameInterface {
     private GameState state;
 
     /**
-     * Arraylist of card images.
+     * Cards currently in play in center of board.
      */
-    private ArrayList<Card> standardDeck;
-
-    /**
-     * Cards currently displayed in the deck.
-     */
-    private ArrayList<Card> cardsInDeck;
-
-    /**
-     * Cards currently displayed in center of board.
-     */
-    private ArrayList<Card> cardsInPlay;
-
-    /**
-     * Cards currently displayed in the player's hand.
-     */
-    private ArrayList<Card> cardsInHand;
-
-    /**
-     * Cards currently displayed in the crib.
-     */
-    private ArrayList<Card> cardsInCrib;
-
-    /**
-     * Cards currently displayed in the opponent's hand.
-     */
-    private ArrayList<Card> cardsInOpponentHand;
+    private Hand cardsInPlay;
 
     /**
      * Game constructor. It initializes the list of players,
@@ -87,19 +61,50 @@ public class Game implements GameInterface {
      */
     public Game(int numPlayers) {
 
-        //ponePeggingCards = new ArrayList<Card>();
-        ponePeggingCards = new Hand();
-        dealerPeggingCards = new Hand();
+        // ponePeggingCards = new ArrayList<Card>();
+        // ponePeggingCards = new Hand();
+        // dealerPeggingCards = new Hand();
         cribCards = new Hand();
         peggingTotal = 0;
         state = GameState.START_GAME;
-        standardDeck = new ArrayList<Card>();
-        cardsInDeck = new ArrayList<Card>();
-        cardsInPlay = new ArrayList<Card>();
-        cardsInHand = new ArrayList<Card>();
-        cardsInCrib = new ArrayList<Card>();
-        cardsInOpponentHand = new ArrayList<Card>();
+        theDeck = new Deck();
+        cardsInPlay = new Hand();
         initPlayers(numPlayers);
+        initPeggingCardsPlayed(numPlayers);
+    }
+
+    /**
+     * Returns the index where the Hand of pegging cards for
+     * the parameter player can be found.
+     * 
+     * @param p
+     *            is a Player.
+     * @return index.
+     */
+    public int getIdxPlayerPegCards(Player p) {
+        int userId = p.getUser().getUserId();
+        // find userId in playerList
+
+        for (int i = 0; i < playerList.size(); i++) {
+            Player p2 = playerList.get(i);
+
+            if (userId == p2.getUser().getUserId()) {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
+    /**
+     * Initialize pegging cards.
+     * 
+     * @param numPlayers
+     */
+    public void initPeggingCardsPlayed(int numPlayers) {
+        for (int i = 0; i < numPlayers; i++) {
+            peggingCardsPlayed.add(new Hand());
+        }
     }
 
     /**
@@ -108,7 +113,8 @@ public class Game implements GameInterface {
      * the assumption, for now, that the number of players
      * is 2.
      *
-     * @param numPlayers is the number of players.
+     * @param numPlayers
+     *            is the number of players.
      */
     public void initPlayers(int numPlayers) {
 
@@ -128,23 +134,22 @@ public class Game implements GameInterface {
     }
 
     /**
-     * Sets the pone's pegging cards to the parameter.
-     *
-     * @param ponePegCards
-     *            is an ArrayList of Card objects.
+     * Get list of played pegging cards.
+     * 
+     * @return peggingCardsPlayed
      */
-    public void setPonePeggingCards(Hand ponePegCards) {
-        ponePeggingCards = ponePegCards;
+    public List<Hand> getListOfPeggingCardsPlayed() {
+        return peggingCardsPlayed;
     }
 
     /**
-     * Sets the dealer's pegging cards to the parameter.
-     *
-     * @param dealerPegCards
-     *            is an ArrayList of Card objects.
+     * Get pegging cards.
+     * 
+     * @param index
+     * @return pegging card at that index
      */
-    public void setDealerPeggingCards(Hand dealerPegCards) {
-        dealerPeggingCards = dealerPegCards;
+    public Hand getPeggingCards(int index) {
+        return peggingCardsPlayed.get(index);
     }
 
     /**
@@ -157,6 +162,15 @@ public class Game implements GameInterface {
     }
 
     /**
+     * Set the deck.
+     *
+     * @param deck
+     */
+    public void setDeck(Deck deck) {
+        this.theDeck = deck;
+    }
+
+    /**
      * Returns the pegging total for this game.
      *
      * @return the pegging total.
@@ -166,29 +180,11 @@ public class Game implements GameInterface {
     }
 
     /**
-     * Returns the pone's pegging cards as an ArrayList of Card objects.
-     *
-     * @return the pone's pegging cards.
-     */
-    public Hand getPonePeggingCards() {
-        return ponePeggingCards;
-    }
-
-    /**
-     * Returns the dealers's pegging cards as an ArrayList of Card objects.
-     *
-     * @return the dealer's pegging cards.
-     */
-    public Hand getDealerPeggingCards() {
-        return dealerPeggingCards;
-    }
-
-    /**
      * Returns the list of players.
      *
      * @return an ArrayList of players.
      */
-    public List <Player> getPlayerList() {
+    public List<Player> getPlayerList() {
         return playerList;
     }
 
@@ -203,6 +199,7 @@ public class Game implements GameInterface {
 
     /**
      * Get the state of the game.
+     *
      * @return state
      */
     public GameState getState() {
@@ -211,6 +208,7 @@ public class Game implements GameInterface {
 
     /**
      * Set the state of the game.
+     *
      * @param state
      */
     public void setState(GameState state) {
@@ -218,51 +216,11 @@ public class Game implements GameInterface {
     }
 
     /**
-     * Get the standard deck.
-     * @return standardDeck
-     */
-    public ArrayList<Card> getStandardDeck() {
-        return this.standardDeck;
-    }
-
-    /**
-     * Get the cards in the deck.
-     * @return cardsInDeck
-     */
-    public ArrayList<Card> getCardsInDeck() {
-        return this.cardsInDeck;
-    }
-
-    /**
      * Get the cards currently in play.
+     *
      * @return cardsInPlay
      */
-    public ArrayList<Card> getCardsInPlay() {
+    public Hand getCardsInPlay() {
         return this.cardsInPlay;
     }
-
-    /**
-     * Get the cards in the player's hand.
-     * @return cardsInHand
-     */
-    public ArrayList<Card> getCardsInHand() {
-        return this.cardsInHand;
-    }
-
-    /**
-     * Get the cards in the crib.
-     * @return cardsInCrib
-     */
-    public ArrayList<Card> getCardsInCrib() {
-        return this.cardsInCrib;
-    }
-
-    /**
-     * Get the cards in the opponent's hand.
-     * @return cardsInOpponentHand
-     */
-    public ArrayList<Card> getCardsInOpponentHand() {
-        return this.cardsInOpponentHand;
-    }
-
 }

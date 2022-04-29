@@ -7,7 +7,10 @@ import java.awt.Point;
 //import java.awt.Graphics2D;
 //import javax.swing.*;
 import java.util.ArrayList;
+//import java.util.HashMap;
 
+import edu.skidmore.cs326.spring2022.skribbage.common.LobbyManager;
+import edu.skidmore.cs326.spring2022.skribbage.common.UserRole;
 import org.apache.log4j.Logger;
 
 import edu.skidmore.cs326.spring2022.skribbage.common.User;
@@ -27,9 +30,9 @@ import us.daveread.edu.graphics.shape.impl.Circle;
 /***
  * The "lobby," or the page that the player(s) see immediately before starting a
  * new game.
- * 
+ *
  * @author Jonah Marcus
- *         Last Update: April 11, 2022
+ *         Last Update: April 27, 2022
  *         Last Edited by Jonah Marcus
  *         Code Reviewed March 27, 2022 - Zoe Beals
  *         Code Reviewed March 27, 2022 - Zoe Beals
@@ -37,20 +40,21 @@ import us.daveread.edu.graphics.shape.impl.Circle;
 
 @SuppressWarnings("serial")
 public class LobbyPage extends DrawingSurface implements Page {
+    
     /**
-     * loggedInPlayer1 - The displayed player 1 name.
+     * CPU_COLOR - CPU's "ready up" button should always be this color.
      */
-    // private String loggedInPlayer1;
-
+    private static final Color CPU_COLOR = Color.CYAN;
+    
     /**
-     * loggedInPlayer2 - The displayed player 2 name.
+     * The host of the lobby retrieved from the lobby manager.
      */
-    // private String loggedInPlayer2;
-
+    private User host;
+    
     /**
-     * loggedInPlayer3 - The displayed player 3 name.
+     * Instance of Computer Dealer.
      */
-    // private String loggedInPlayer3;
+    private User playerCPU;
 
     /**
      * MAX_PLAYERS - Maximum player count in a given lobby.
@@ -60,15 +64,19 @@ public class LobbyPage extends DrawingSurface implements Page {
     /**
      * players - Holds instances of players in lobby.
      */
-    private ArrayList<User> players = new ArrayList<User>();
-
+    private ArrayList<User> players = new ArrayList<>();
+    
     /**
-     * playerNotLoggedIn - Up to three players can be logged into a single
-     * instance of the program at once. This is the message that is displayed
-     * when any one or more of the three potential spots is not filled by
-     * a logged in player
+     * playersDisplay - Holds instances of Text that are
+     * used to display players in lobby.
      */
-    // private String playerNotLoggedIn = "*PLAYER NOT LOGGED IN*";
+    private ArrayList<Text> playersDisplay = new ArrayList<>();
+    
+    /**
+     * readyUpButtons - Holds instances of clickable buttons
+     * that are used to ready up.
+     */
+    private ArrayList<Circle> readyUpButtons = new ArrayList<>();
 
     /**
      * mainframeWidth - int variable to hold main frame width.
@@ -97,21 +105,6 @@ public class LobbyPage extends DrawingSurface implements Page {
     private Text startButton;
 
     /**
-     * player1Ready - Player 1 ready-up button.
-     */
-    private Circle player1Ready;
-
-    /**
-     * player2Ready - Player 2 ready-up button.
-     */
-    private Circle player2Ready;
-
-    /**
-     * player3Ready - Player 3 ready-up button.
-     */
-    private Circle player3Ready;
-
-    /**
      * inventoryPage - Text object to be button to open the InventoryPage.
      */
     private Text inventoryPageButton;
@@ -121,10 +114,16 @@ public class LobbyPage extends DrawingSurface implements Page {
      */
     @SuppressWarnings("unused")
     private NavigationPage navPage;
+
     /**
      * PageManager instance for managing pages.
      */
     private PageManager pageManager;
+
+    /**
+     * Lobby manager instance for managing the lobby.
+     */
+    private LobbyManager lobbyManager;
 
     /**
      * Logger instance for logging.
@@ -141,20 +140,109 @@ public class LobbyPage extends DrawingSurface implements Page {
     public LobbyPage() {
         LOG.trace("Entered LobbyPage Constructor.");
         pageManager = PageManager.getInstance();
+        lobbyManager = LobbyManager.getInstance();
         mf = new MainFrame(this, "Pre-Game Lobby", mainframeWidth,
             mainframeHeight, false);
+        host = lobbyManager.getActiveLobby().getHost();
+        addPlayer(host);
+        playerCPU = new User(null, "[CPU] Computer Dealer", UserRole.CPU);
+        addPlayer(playerCPU);
         setup();
+        
+        //unitTest1();
+    }
+    
+    /**
+     * Tests functionality of adding and removing players from lobby. (Test 1)
+     */
+    @SuppressWarnings("unused")
+    private void unitTest1() {
+        LOG.trace("Entered LobbyPage unitTest1");
+        Utility.pause(1000);
+        addPlayer(new User(null, "Dummy User (Test)", UserRole.AUTHORIZED));
+        Utility.pause(1000);
+        removePlayer(players.get(0));
+        Utility.pause(1000);
+        removePlayer(players.get(0));
+        Utility.pause(1000);
+        removePlayer(players.get(0));
+        Utility.pause(1000);
+        addPlayer(host);
+        Utility.pause(1000);
+        addPlayer(playerCPU);
+        Utility.pause(1000);
+        addPlayer(new User(null, "I̴͂͜ ̵̨́L̴̡͋I̴̽͜V̴͔͐E̸͕̾ ̶͙͒I̴͕͝N̴̨̊ ̸̹͝"
+            + "Y̷̞̿O̴̧̚U̸̖̔R̶͎̋ ̶̩̎W̷̠̎A̷͈͆L̶͚̃L̷̗͆S̸̘̽", UserRole.AUTHORIZED));
     }
 
+
     /**
-     * Takes new player to display on lobby page.
-     * 
+     * Adds player to ArrayList of Users.
      * @param player
+     * @throws Error - When attempting to add a new player when the
+     * lobby is full.
      */
-    public void retrievePlayer(User player) {
-        LOG.trace("Entered LobbyPage's getPlayer");
+    private void addPlayer(User player) throws Error {
+        LOG.trace("Entered LobbyPage's addPlayer");
         if (players.size() < MAX_PLAYERS) {
             players.add(player);
+            updatePage();
+        } else {
+            throw new Error("Maximum number of players already in lobby.");
+        }
+    }
+    
+    /**
+     * Removes player from ArrayList of Users.
+     * @param player
+     * @throws Error - When lobby is empty.
+     */
+    private void removePlayer(User player) throws Error {
+        LOG.trace("Entered LobbyPage's removePlayer");
+        if (players.size() > 0) {
+            players.remove(player);
+            updatePage();
+        } else {
+            throw new Error("Lobby is empty.");  
+        }
+    }
+    
+    /**
+     * Updates the lobby's displayed players whenever
+     * a player is added or removed.
+     */
+    private void updatePage() {
+        for (Text player : playersDisplay) {
+            remove(player);
+        }
+        for (Circle button : readyUpButtons) {
+            remove(button);
+        }
+        playersDisplay.clear();
+        readyUpButtons.clear();
+        displayPlayers();
+    }
+    
+    /**
+     * Takes players from ArrayList and displays them in lobby.
+     */
+    private void displayPlayers() {
+        int textStartingY = 125;
+        
+        for (User player : players) {
+            Text playerText = new Text(player.getUserName(), new Point(35,
+                textStartingY), 16, Color.BLACK); 
+            playersDisplay.add(playerText);
+            add(playerText);
+            int circleDiameter = 15;
+            boolean cpu = player.getUserRole() == UserRole.CPU;
+            Circle readyUp = new Circle(new Point(15, textStartingY 
+                - circleDiameter),
+                circleDiameter, cpu ? CPU_COLOR : Color.RED,
+                                    cpu ? CPU_COLOR : Color.RED);
+            readyUpButtons.add(readyUp);
+            add(readyUp);
+            textStartingY += 20;
         }
     }
 
@@ -174,70 +262,28 @@ public class LobbyPage extends DrawingSurface implements Page {
         inventoryPageButton = new Text("Inventory Page", new Point(20, 300),
             25, Color.BLACK, Color.BLUE);
 
-        int textStartingY = 100;
-
-        // Hardcoded Users into ArrayList
-        // retrievePlayer(new User("doinurmom69@sussybaka.net", "Joe Byron",
-        // "h0rr1bL3p@$$w0rd", UserRole.AUTHORIZED));
-        // retrievePlayer(new User("sexhaver@reddit.com", "Obama Lastname",
-        // "07Sept18kx83+&_4ajfS", UserRole.AUTHORIZED));
+        
 
         add(new Text("Players in Lobby (Max " + MAX_PLAYERS + ")",
             new Point(25, 75), 20, Color.BLACK));
+        add(new Text(
+            "Lobby ID: " + lobbyManager.getActiveLobby()
+                .getId(),
+            new Point(25, 100), 20, Color.BLACK));
 
-        for (int i = 0; i < players.size(); i++) {
-            add(new Text(players.get(i).getUserName(), new Point(35,
-                textStartingY), 16, Color.BLACK));
-            textStartingY += 20;
-        }
+        displayPlayers();
 
-        /*
-         * Text player1LoginSection = new Text(loggedInPlayer1,
-         * new Point(35, 100), 16, Color.BLACK);
-         * Text player2LoginSection = new Text(loggedInPlayer2,
-         * new Point(35, 120), 16, Color.BLACK);
-         * Text player3LoginSection = new Text(loggedInPlayer3,
-         * new Point(35, 140), 16, Color.BLACK);
-         */
-
-        player1Ready = new Circle(new Point(10, 87), 15, Color.RED, Color.RED);
-        player2Ready = new Circle(new Point(10, 107), 15, Color.RED, Color.RED);
-        player3Ready = new Circle(new Point(10, 127), 15, Color.RED, Color.RED);
-
-        // add(background);
         add(logo);
         add(returnToMainMenu);
         add(startButton);
         add(inventoryPageButton);
 
-        // add(player1Ready);
-        // add(player2Ready);
-        // add(player3Ready);
     }
-
-    /**
-     * getPlayerNames method - placeholder. Will eventually work with the
-     * event listeners to receive the names of the players logged into
-     * an instance of the program. For now, the names are hardcoded.
-     */
-    /*
-     * private void getPlayerNames() {
-     * LOG.trace("Entered getPlayerNames");
-     * // All three will read playerNotLoggedIn message until a new name is
-     * // received.
-     * loggedInPlayer1 = playerNotLoggedIn;
-     * loggedInPlayer2 = playerNotLoggedIn;
-     * loggedInPlayer3 = playerNotLoggedIn;
-     * loggedInPlayer1 = "[Redacted] \"Crypto\" [Redacted]";
-     * loggedInPlayer2 = "Caleb \"Revenant\" Cross";
-     * }
-     */
-
+    
     /**
      * setReadyButtonColor method - sets the color of the ready button.
-     * 
-     * @param c
-     *            - the Circle to set.
+     *
+     * @param c - the Circle to set.
      */
     private void setReadyButtonColor(Circle c) {
         LOG.trace("Entered setReadyButtonColor method.");
@@ -259,13 +305,14 @@ public class LobbyPage extends DrawingSurface implements Page {
             returnToMainMenu.setBorderColor(Color.BLACK);
             navPage = (NavigationPage) pageManager
                 .createPage(PageType.NAVIGATION_PAGE);
+            lobbyManager.deleteLobby(lobbyManager.getActiveLobby());
             closeWindow();
-        } else if (e == player1Ready) {
-            setReadyButtonColor(player1Ready);
-        } else if (e == player2Ready) {
-            setReadyButtonColor(player2Ready);
-        } else if (e == player3Ready) {
-            setReadyButtonColor(player3Ready);
+        } else if (e instanceof Circle) {
+            Circle clickedCircle = (Circle) e;
+            if (!(clickedCircle.getFillColor() == CPU_COLOR)) {
+                setReadyButtonColor((Circle) e);
+            }
+
         } else if (e == startButton) {
 
             // Placeholder - not functional yet

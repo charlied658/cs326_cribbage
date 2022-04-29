@@ -2,6 +2,7 @@
 //
 // import edu.skidmore.cs326.spring2022.skribbage.common.Game;
 // import edu.skidmore.cs326.spring2022.skribbage.common.Card;
+// import edu.skidmore.cs326.spring2022.skribbage.common.Hand;
 // //import edu.skidmore.cs326.spring2022.skribbage.common.Rank;
 // import java.util.ArrayList;
 //
@@ -20,7 +21,7 @@
 // * This class is incomplete. It contains methods to check some player claims
 // * for points (e.g., a play may claim to have a pair of cards) and play a card
 // * during the pegging phase.
-// * It assumes there are only two players.
+// * It assumes there are only two players (for now).
 // * @author Michael Shriner
 // */
 // public class PeggingPlay implements PeggingPlayInterface {
@@ -40,7 +41,7 @@
 // //initialize the game manager
 // gameManager = new GameManager(g);
 // //initialize game
-// game = gameManager.getGame();
+// game = g;
 // }
 //
 // /**
@@ -131,11 +132,9 @@
 // * @return true iff the player has 15
 // */
 // public boolean check15(Player p) {
-//
 // // assumption: Card c from checkClaim() has been added to peggingCards
 // // already
 // // assumption: check15() is called before the next player plays a card
-//
 // if (game.getPeggingTotal() == 15) {
 // p.addPoints(2);
 // return true;
@@ -151,26 +150,6 @@
 // // }
 //
 // }
-//
-// // public int sumTotalPeggingCards() {
-// //
-// // int sum = 0;
-// // ArrayList<Card> dealerPeggingCards = game.getDealerPeggingCards();
-// // ArrayList<Card> ponePeggingCards = game.getPonePeggingCards();
-// //
-// // for (int i = 0; i < dealerPeggingCards.size(); i++) {
-// // Card tempCard = dealerPeggingCards.get(i);
-// // sum += tempCard.getPointValue();
-// // }
-// //
-// // for (int i = 0; i < ponePeggingCards.size(); i++) {
-// // Card tempCard = ponePeggingCards.get(i);
-// // sum += tempCard.getPointValue();
-// // }
-// //
-// // return sum;
-// //
-// // }
 //
 // /**
 // * If the player passed as a parameter placed a card during the pegging
@@ -292,6 +271,7 @@
 // checkIfPair
 // .add(ponePeggingCards.get(ponePeggingCards.size() - 1));
 // }
+//
 // } else {
 // if (ponePeggingCards.size() >= 2) {
 // checkIfPair
@@ -343,8 +323,8 @@
 // }
 //
 // }
-//
-// //see PeggingPlay.java in my local downloads folder for the methods I wrote
-// //but have not added to this class yet
-//
+
+// see PeggingPlay.java in my local downloads folder for the methods I wrote
+// but have not added to this class yet
+
 // }

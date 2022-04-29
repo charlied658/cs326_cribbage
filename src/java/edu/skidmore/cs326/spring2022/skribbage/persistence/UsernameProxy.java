@@ -1,14 +1,8 @@
 package edu.skidmore.cs326.spring2022.skribbage.persistence;
 
-import java.util.ArrayList;
 import java.util.Properties;
-import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Scanner;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.apache.log4j.Logger;
 
@@ -16,9 +10,8 @@ import org.apache.log4j.Logger;
  * username proxy.
  * 
  * @author Tinaye Mawocha
-=======
+ *         =======
  * @author Edited by Jonah Marcus on 20 April 2022 to address Bug #48.
-
  */
 public class UsernameProxy {
 
@@ -41,6 +34,7 @@ public class UsernameProxy {
     /**
      * Logger instance for logging.
      */
+    @SuppressWarnings("unused")
     private static final Logger LOG;
 
     static {
@@ -61,86 +55,20 @@ public class UsernameProxy {
     }
 
     /**
-     * parseString.
-     * 
-     * @return string.
-     */
-    @SuppressWarnings("unused")
-    private ArrayList<String> parseString() {
-        String path = "/students/home/tmawocha/eclipse-workspace/"
-            + "SkribbageBattleRoyale/src/java/edu/skidmore"
-            + "/cs326/spring2022/skribbage/persistence/BadNicknames";
-
-        File file = new File(path);
-        Scanner sc = null;
-        String tempbadname = "";
-        int lastUsed = 0;
-
-        String pattern = "(\\$)(\\d+).*";
-        String emptySpace = "^\\s+(.*)";
-
-        Pattern p = Pattern.compile(pattern, Pattern.CASE_INSENSITIVE);
-        Pattern emp = Pattern.compile(emptySpace, Pattern.CASE_INSENSITIVE);
-
-        ArrayList<String> toPrint = new ArrayList<String>();
-
-        try {
-
-            sc = new Scanner(file);
-        }
-        catch (FileNotFoundException e) {
-
-            // e.printStackTrace();
-            LOG.error(e);
-        }
-
-        toPrint.clear();
-
-        while (sc.hasNextLine()) {
-
-            tempbadname = sc.nextLine();
-
-            if (tempbadname.contains("$")) {
-
-                System.out.println(tempbadname);
-                Matcher matcher = p.matcher(tempbadname);
-                matcher.find();
-                lastUsed = Integer.parseInt(matcher.group(2));
-                toPrint.add(tempbadname);
-
-            } else {
-
-                Matcher matcher = emp.matcher(tempbadname);
-
-                if (matcher.find()) {
-                    tempbadname = matcher.group(1);
-                }
-
-                lastUsed += 1;
-                String process = "$" + lastUsed + " = " + tempbadname;
-                toPrint.add(process);
-
-            }
-
-        }
-
-        return toPrint;
-    }
-
-    /**
      * username check.
      * 
      * @param username
      * @return bool.
      */
     public boolean usernameCheck(String username) {
+        String currentDir = System.getProperty("user.dir");
 
         Boolean usernameIsGood = true;
         FileInputStream file = null;
         Properties prop = null;
         String filePath =
-            "/SkribbageBattleRoyale/src/java/edu/skidmore/cs326/spring2022/"
-                + "skribbage/persistence/BadNicknames";
+            currentDir + "/src/java/edu/skidmore/cs326/spring2022/"
+                + "skribbage/persistence/badnicknames.properties";
         try {
 
             file = new FileInputStream(filePath);
@@ -154,6 +82,8 @@ public class UsernameProxy {
 
                 String tempban = prop.getProperty(altProp);
                 tempban = tempban.trim();
+                tempban = tempban.toLowerCase();
+                username = username.toLowerCase();
 
                 if (username.contains(tempban)) {
                     usernameIsGood = false;
@@ -167,19 +97,5 @@ public class UsernameProxy {
 
         return usernameIsGood;
         // return true;
-    }
-
-    /**
-     * main.
-     * 
-     * @param args
-     */
-    public static void main(String[] args) {
-
-        UsernameProxy instance = new UsernameProxy();
-
-        System.out.println(instance.usernameCheck("naughtynicknam"));
-        System.out.println(instance.usernameCheck("fuck"));
-
     }
 }

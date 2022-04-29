@@ -62,7 +62,7 @@ public final class PersistenceFacade
 
     /**
      * This will take in a user and a password and create a new user.
-     * 
+     *
      * @param userToCreate
      *            The user that is to be created
      * @param password
@@ -71,14 +71,12 @@ public final class PersistenceFacade
      */
     @Override
     public boolean userCreate(User userToCreate, Password password) {
-        // TODO Auto-generated method stub
-
-        String usernamge = userToCreate.getUserName();
+        String username = userToCreate.getUserName();
         String passwordtemp = password.getBase64SaltAndPasswordHash();
 
-        // TODO (DSR) This code needs to be updated,user does not house password
-        DM.createUser(usernamge, passwordtemp);
-        return true;
+        DM.createUser(username, passwordtemp);
+
+        return userNameExists(userToCreate);
     }
 
     /**
@@ -104,20 +102,23 @@ public final class PersistenceFacade
      * 
      * @param userToUpdate
      *            This is the user that want to change their password
-     * @param currentPassword
-     *            This is the current password that they have in their
-     *            account
      * @param newPassword
      *            This is the new password that they want to change
      * @return boolean true or false depending if the method worked or failed.
      */
     @Override
-    public boolean passwordChange(User userToUpdate, Password currentPassword,
-        Password newPassword) {
-        System.out.println("UserID: " + userToUpdate.getUserId());
-        DM.update("Password", newPassword.getBase64PasswordHash(), 1);
+    public boolean passwordChange(User userToUpdate, Password newPassword) {
 
-        return true;
+        DM.changepass(userToUpdate.getUserName(),
+            newPassword.getBase64SaltAndPasswordHash());
+
+        String pass = getPassword(userToUpdate).getBase64SaltAndPasswordHash();
+
+        if (pass.equals(newPassword.getBase64SaltAndPasswordHash())) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -169,21 +170,31 @@ public final class PersistenceFacade
     @Override
     public boolean validateUsername(User user) {
         String username = user.getUserName();
+
+        // username is inappropriate
+        if (!PROXY.usernameCheck(username)) {
+            LOG.error("Password contains inappropriate words");
+        }
         return PROXY.usernameCheck(username);
     }
 
+    /**
+     * Obtain the password of a user.
+     * 
+     * @param user
+     *            the user whose password we want to retrieve
+     * @return Password the password of the user we selected
+     */
     @Override
     public Password getPassword(User user) {
 
-        // note password is currently deprecated and retrieving password from
-        // user will have to be
-        // handled by the front end team in the password prompt method in this
-        // class
-        // PRha74NgJISBMA==~mvIwoqOH1VA2AzrxLvxTXyGgJLr0jyS09bHhi4G9tZ4=
+        if (DM.getPassword(user) == null) {
+            return null;
+        } else {
+            Password accepted = DM.getPassword(user);
+            return accepted;
+        }
 
-        Password accepted = DM.getPassword(user);
-
-        return accepted;
     }
 
     /**

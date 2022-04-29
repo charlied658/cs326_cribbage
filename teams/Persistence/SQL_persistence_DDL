@@ -2,6 +2,8 @@ Data definition language for tables:
 
 //clean house: 
 DROP TABLE player_account
+DROP TABLE inventory
+DROP TABLE item_table
 
 //create the table for storing player information:
 CREATE TABLE player_account (     
@@ -15,27 +17,34 @@ AvatarUrl varchar(255),
 PRIMARY KEY(PersonID), UNIQUE(Email), UNIQUE(Username)  
 );
 
-
-//Nikoleta's basic information for populating the player_account table:
-
-INSERT INTO player_account 
-VALUES (
-	1, 
-	"chantzi", 
-	"nikoleta", 
-	"nchantzi", 
-	"ILoveSQL", 
-	"nchantzi@skidmore.edu", 
-	"placeholder_url"
+//item table:
+CREATE TABLE item_table ( 
+	item_id int, 
+	item_type varchar(255), 
+	item_cost int, 
+	PRIMARY KEY(item_id),
+	UNIQUE(item_id)
 );
+
+//create the inventory 
+CREATE TABLE inventory (     
+ItemID int,     
+PersonID int,     
+Quantity int,         
+LastModified varchar(255),          
+FOREIGN KEY(PersonID) References player_account(PersonID),
+FOREIGN KEY(ItemID) References item_table(itemID)
+);
+
+ 
+
 
 //item table:
 CREATE TABLE item_table ( 
 	item_id int, 
 	item_type varchar(255), 
 	item_cost int, 
-	PRIMARY KEY(item_id) 
+	PRIMARY KEY(item_id), 
+	UNIQUE(item_id) 
 );
-//some basic info for populating item_table
-INSERT INTO item_table (1, "mirror", 100);
-INSERT INTO item_table (2, "skip", 150);
+

@@ -1,5 +1,6 @@
 package edu.skidmore.cs326.spring2022.skribbage.common;
 
+import java.util.List;
 import java.util.ArrayList;
 
 /**
@@ -16,7 +17,7 @@ public class Deck {
      *         ArrayList<Card> getDeck()
      *         void setDeck()
      */
-    private ArrayList<Card> packOfCards;
+    private List<Card> packOfCards;
 
     /**
      * Array of Suits to use in adding card loop.
@@ -54,7 +55,7 @@ public class Deck {
      * 
      * @return ArrayList<Card>
      */
-    public ArrayList<Card> getDeck() {
+    public List<Card> getDeck() {
         return packOfCards;
     } // end getDeck
 
@@ -62,7 +63,7 @@ public class Deck {
      * Sets the deck to a specified ArrayList of cards. 
      * @param deckToSet
      */
-    public void setDeck(ArrayList<Card> deckToSet) {
+    public void setDeck(List<Card> deckToSet) {
         packOfCards = deckToSet;
     } // end getDeck
 

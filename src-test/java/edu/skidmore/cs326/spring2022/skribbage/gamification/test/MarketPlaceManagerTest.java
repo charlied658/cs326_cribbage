@@ -1,6 +1,5 @@
 package edu.skidmore.cs326.spring2022.skribbage.gamification.test;
 
-import java.util.HashMap;
 
 import org.apache.log4j.Logger;
 
@@ -10,6 +9,7 @@ import static org.junit.Assert.assertNotNull;
 import org.junit.Before;
 import org.junit.Test;
 
+import edu.skidmore.cs326.spring2022.skribbage.common.Player;
 import edu.skidmore.cs326.spring2022.skribbage.gamification.InventoryPrototype;
 import edu.skidmore.cs326.spring2022.skribbage.gamification.MarketPlaceManager;
 import edu.skidmore.cs326.spring2022.skribbage.gamification.SpecialCard;
@@ -32,7 +32,17 @@ public class MarketPlaceManagerTest {
     static {
         LOG = Logger.getLogger(MarketPlaceManagerTest.class);
     }
-
+    
+    /**
+     * Attribute to house the test instance.
+     */
+    private InventoryPrototype testInventoryInstance;
+    
+    /**
+     * Instance for a player.
+     */
+    private Player player = new Player();
+    
     /**
      * Attribute to house the test instance.
      */
@@ -45,6 +55,7 @@ public class MarketPlaceManagerTest {
     public void setup() {
         LOG.info("Setup for test");
         testInstance = new MarketPlaceManager(SpecialCard.REBATTLECARD);
+        testInventoryInstance = player.getInventoryManager();
     }
 
     /**
@@ -143,12 +154,9 @@ public class MarketPlaceManagerTest {
     @Test
     public void testAddSpecialCard() {
 
-        HashMap<String, Integer> testMap = new HashMap<String, Integer>();
-        InventoryPrototype testInv = new InventoryPrototype();
-        testMap.put("testItem", 100);
-        testInstance.addSpecialCard(testMap);
-        assertEquals(100,
-            testInv.searchForItem(testMap, "testItem"));
+        testInstance.addSpecialCard();
+        assertEquals(2,
+            testInventoryInstance.searchForItem(testInstance.getName()));
 
     }
 

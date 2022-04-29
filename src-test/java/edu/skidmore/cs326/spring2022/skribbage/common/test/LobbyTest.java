@@ -1,6 +1,8 @@
 package edu.skidmore.cs326.spring2022.skribbage.common.test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -26,13 +28,19 @@ public class LobbyTest {
     private User user2;
 
     /**
+     * Hardcoded id assigned to Lobby for testing.
+     */
+    private int lobbyId;
+
+    /**
      * Initialize variables necessary for testing.
      */
     @Before
     public void setup() {
         User host = new User(null, "MrTestUser", null);
         user2 = new User(null, "2ndUser", null);
-        testInstance = new Lobby(host);
+        lobbyId = 3;
+        testInstance = new Lobby(host, lobbyId);
     }
 
     /**
@@ -40,7 +48,7 @@ public class LobbyTest {
      */
     @Test
     public void testGetUsers() {
-        assertEquals(1, testInstance.getUsers().length);
+        assertNull(testInstance.getUsers()[1]);
         assertEquals("MrTestUser", testInstance.getUsers()[0].getUserName());
     }
 
@@ -51,7 +59,27 @@ public class LobbyTest {
     @Test
     public void testAddUser() {
         testInstance.addUser(user2);
-        assertEquals(2, testInstance.getUsers().length);
+        assertNotNull(testInstance.getUsers()[0]);
+        assertNotNull(testInstance.getUsers()[1]);
+        assertEquals("2ndUser", testInstance.getUsers()[1].getUserName());
+    }
+
+    /**
+     * Test that host was set properly in constructor and
+     * that getHost() is returning correct value.
+     */
+    @Test
+    public void testGetHost() {
+        assertEquals("MrTestUser", testInstance.getHost().getUserName());
+    }
+
+    /**
+     * Test that id was set properly in constructor and
+     * that getId() is returning correct value.
+     */
+    @Test
+    public void testGetId() {
+        assertEquals(3, testInstance.getId());
     }
 
 }

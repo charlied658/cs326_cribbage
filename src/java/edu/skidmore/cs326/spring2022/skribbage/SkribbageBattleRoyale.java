@@ -3,6 +3,7 @@ package edu.skidmore.cs326.spring2022.skribbage;
 import edu.skidmore.cs326.spring2022.skribbage.common.EventFactory;
 import edu.skidmore.cs326.spring2022.skribbage.common.EventManager;
 import edu.skidmore.cs326.spring2022.skribbage.common.EventType;
+import edu.skidmore.cs326.spring2022.skribbage.common.GameController;
 import edu.skidmore.cs326.spring2022.skribbage.frontend.AccountResponseController;
 import edu.skidmore.cs326.spring2022.skribbage.frontend.GameStartedResponseController;
 import org.apache.log4j.Logger;
@@ -37,7 +38,7 @@ public class SkribbageBattleRoyale implements Runnable {
     @SuppressWarnings("unused")
     private EventFactory eventFactory;
 
-    /**
+    /*
      * Create static resources.
      */
     static {
@@ -63,16 +64,31 @@ public class SkribbageBattleRoyale implements Runnable {
         eventManager
             .addPropertyChangeListener(new AccountResponseController(),
                 EventType.USER_LOGIN_RESPONSE,
-                EventType.USER_VALIDATION_RESPONSE);
+                EventType.USER_VALIDATION_RESPONSE,
+                EventType.USER_CHANGE_PASSWORD_VALIDATION_RESPONSE,
+                EventType.USER_CHANGE_PASSWORD_RESPONSE,
+                EventType.USER_CREATE_ACCOUNT_RESPONSE,
+                EventType.USER_DELETE_ACCOUNT_RESPONSE);
 
         eventManager
             .addPropertyChangeListener(new AccountController(),
                 EventType.USER_LOGIN, EventType.USER_CREATE_ACCOUNT,
-                EventType.VALIDATE_USERNAME);
+                EventType.VALIDATE_USERNAME,
+                EventType.USER_CHANGE_PASSWORD_VALIDATION,
+                EventType.USER_CHANGE_PASSWORD, EventType.USER_DELETE_ACCOUNT);
 
         eventManager
             .addPropertyChangeListener(new GameStartedResponseController(),
                 EventType.LOBBY_START_GAME);
+
+        eventManager
+            .addPropertyChangeListener(
+                GameController.getInstance(),
+                EventType.PLAYER_CLICK_DECK,
+                EventType.PLAYER_CLICK_START_GAME,
+                EventType.PLAYER_SEND_CARD_TO_CRIB,
+                EventType.PLAYER_PLAY_CARD,
+                EventType.PLAYER_SELECT_START_CARD);
 
     }
 

@@ -3,7 +3,8 @@ package edu.skidmore.cs326.spring2022.skribbage.frontend;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserChangePasswordResponseController;
+import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserChangePasswordResponseEvent;
+import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserDeleteAccountResponseEvent;
 import edu.skidmore.cs326.spring2022.skribbage.logic.events.AccountResponseEvent;
 import edu.skidmore.cs326.spring2022.skribbage.logic.events.CreateAccountResponseEvent;
 import edu.skidmore.cs326.spring2022.skribbage.logic.events.UserLoginResponseEvent;
@@ -59,6 +60,11 @@ public class AccountResponseController implements PropertyChangeListener {
                 ((LoginPage) activePage)
                     .validateLoginCallback((UserLoginResponseEvent) evt);
                 break;
+            case USER_DELETE_ACCOUNT_RESPONSE:
+                LOG.debug("caught a user delete response event");
+                ((NavigationPage) activePage).userDeleteAccountResponseCallBack(
+                    (UserDeleteAccountResponseEvent) evt);
+                break;
             case USER_VALIDATION_RESPONSE:
                 LOG.debug("caught user validation response "
                     + responseEvent.getAccountResponse());
@@ -67,14 +73,14 @@ public class AccountResponseController implements PropertyChangeListener {
                 break;
             case USER_CHANGE_PASSWORD_VALIDATION_RESPONSE:
                 LOG.debug("Caught user change password validation response");
-                ((LoginPage) activePage)
+                ((NavigationPage) activePage)
                     .validateForChangePassword(
                         (ValidateChangeResponseEvent) evt);
                 break;
             case USER_CHANGE_PASSWORD_RESPONSE:
                 LOG.debug("Caught user change password response.");
-                ((LoginPage) activePage).validateChangePasswordCallback(
-                    (UserChangePasswordResponseController) evt);
+                ((NavigationPage) activePage).validateChangePasswordCallback(
+                    (UserChangePasswordResponseEvent) evt);
                 break;
             case USER_CREATE_ACCOUNT_RESPONSE:
                 LOG.debug("Caught user create account response.");

@@ -6,6 +6,11 @@ import org.apache.log4j.Logger;
 
 import edu.skidmore.cs326.spring2022.skribbage.common.EventType;
 import edu.skidmore.cs326.spring2022.skribbage.common.FactoryTemplate;
+import edu.skidmore.cs326.spring2022.skribbage.frontend.events.game.PlayerClickDeckEvent;
+import edu.skidmore.cs326.spring2022.skribbage.frontend.events.game.PlayerClickStartGameEvent;
+import edu.skidmore.cs326.spring2022.skribbage.frontend.events.game.PlayerPlayCardEvent;
+import edu.skidmore.cs326.spring2022.skribbage.frontend.events.game.PlayerSelectStartCardEvent;
+import edu.skidmore.cs326.spring2022.skribbage.frontend.events.game.PlayerSendCardsToCribEvent;
 
 /**
  * Subclass of FactoryTemplate that overwrites the eventCreation method to
@@ -44,8 +49,22 @@ public class FrontEndFactoryTemplate extends FactoryTemplate {
                 return new UserCreateAccountEvent(source, args);
             case USER_CHANGE_PASSWORD:
                 return new UserChangePasswordEvent(source, args);
+            case USER_CHANGE_PASSWORD_VALIDATION:
+                return new ValidateForChangePassword(source, args);
             case VALIDATE_USERNAME:
                 return new ValidateUsernameEvent(source, args);
+            case LOBBY_CREATE_LOBBY:
+                return new LobbyCreateEvent(source, args);
+            case PLAYER_SEND_CARD_TO_CRIB:
+                return new PlayerSendCardsToCribEvent(source, args);
+            case PLAYER_CLICK_DECK:
+                return new PlayerClickDeckEvent(source, args);
+            case PLAYER_CLICK_START_GAME:
+                return new PlayerClickStartGameEvent(source, args);
+            case PLAYER_PLAY_CARD:
+                return new PlayerPlayCardEvent(source, args);
+            case PLAYER_SELECT_START_CARD:
+                return new PlayerSelectStartCardEvent(source, args);
             default:
                 LOG.warn("Event passed was not one of Front End events");
                 return null;

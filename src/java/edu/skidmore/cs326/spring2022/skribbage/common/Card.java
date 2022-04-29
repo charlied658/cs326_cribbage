@@ -52,7 +52,7 @@ public class Card {
     
     /**
      * Set the cardID.
-     * @param cardID
+     * @param cardID card ID integer
      */
     public void setCardID(int cardID) {
         this.cardID = cardID;
@@ -61,20 +61,43 @@ public class Card {
     /**
      * Constructor sets appropriate values for a new card.
      * 
-     * @param suit
-     * @param c
+     * @param suit suit enum
+     * @param c rank of the card
      */
     public Card(Rank c, Suit suit) {
         this.suit = suit;
         this.rank = c;
-    }
-    
-    /**
-     * Constructor.
-     * @param cardID
-     */
-    public Card(int cardID) {
-        this.cardID = cardID;
+        //Num_rank x suit + rank = cardID
+        this.cardID = (13 * this.suit.ordinal()) + this.rank.ordinal();
     }
 
+    /**
+     * Compares the rank and suit of two cards.
+     * 
+     * @return boolean
+     * @param tempCard card to compare for equality
+     */
+    @Override
+    public boolean equals(Object tempCard) {
+        if (tempCard instanceof Card) {
+            return this.getRank() == ((Card) tempCard).getRank()
+                && this.getSuit() == ((Card) tempCard).getSuit();
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        return (this.getRank() + " " + this.getSuit()).hashCode();
+    }
+
+    @Override public String toString() {
+        final StringBuilder sb = new StringBuilder("Card{");
+        sb.append("suit=").append(suit);
+        sb.append(", rank=").append(rank);
+        sb.append(", cardID=").append(cardID);
+        sb.append('}');
+        return sb.toString();
+    }
 }
