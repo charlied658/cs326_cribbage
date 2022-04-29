@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 
 import org.apache.log4j.Logger;
 
+import edu.skidmore.cs326.spring2022.skribbage.common.Game;
 import edu.skidmore.cs326.spring2022.skribbage.common.Password;
 import edu.skidmore.cs326.spring2022.skribbage.common.User;
 import edu.skidmore.cs326.spring2022.skribbage.common.UserRole;
@@ -287,7 +288,7 @@ public class DatabaseManager {
 
         }
         catch (SQLException e) {
-            //e.printStackTrace();
+            // e.printStackTrace();
             dbDisconnect(conn);
             LOG.error("Account not found");
             return playerInventory;
@@ -381,11 +382,11 @@ public class DatabaseManager {
         ResultSet rs = null;
 
         try {
-
+            // set account to active when creating a user
             conn = getDbConnection();
 
-            String script = "INSERT INTO player_account (Username, Password) "
-                + "VALUES (?, ?)";
+            String script = "INSERT INTO player_account (Username, Password, account_status) "
+                + "VALUES (?, ?, 1)";
             ps = conn.prepareStatement(script);
 
             ps.setString(1, userName);
@@ -444,12 +445,14 @@ public class DatabaseManager {
         PreparedStatement ps = null;
 
         ResultSet rs = null;
-
+        
+        // set account to inactive when deleting a user
         try {
+            // set flag to inactive
             conn = getDbConnection();
 
-            String script = "DELETE FROM player_account WHERE Username = ?";
-
+            String script =
+                "UPDATE player_account SET account_status = 0 WHERE Username = ?";
             ps = conn.prepareStatement(script);
 
             ps.setString(1, userName);

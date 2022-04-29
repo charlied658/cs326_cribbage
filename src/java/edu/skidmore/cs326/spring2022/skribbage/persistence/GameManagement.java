@@ -25,6 +25,6 @@ public interface GameManagement {
      * @param currentGame
      * @return the game.
      */
-    boolean saveGame(User userName, Game currentGame);
+    boolean saveGame(Game currentGame);
 
 }
