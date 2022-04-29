@@ -2,6 +2,8 @@ package edu.skidmore.cs326.spring2022.skribbage.common;
 
 import org.apache.log4j.Logger;
 
+import edu.skidmore.cs326.spring2022.skribbage.gamification.InventoryPrototype;
+
 import java.util.Objects;
 
 /**
@@ -31,6 +33,11 @@ public class User implements Payload {
      *           change
      */
     private int userId;
+    
+    /**
+     * Inventory object to manage a users inventory.
+     */
+    private InventoryPrototype inventoryManager = new InventoryPrototype();
 
     /**
      * @return the user's ID
@@ -161,4 +168,14 @@ public class User implements Payload {
             + ", userRole=" + userRole
             + '}';
     }
+    
+    /**
+     * Getter for inventory.
+     * @return
+     *      returns inventoryManager
+     */
+    public InventoryPrototype getInventoryManager() {
+        return inventoryManager;
+    }
+
 }

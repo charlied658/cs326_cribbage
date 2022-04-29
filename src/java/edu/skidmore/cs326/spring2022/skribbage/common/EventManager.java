@@ -71,6 +71,7 @@ public final class EventManager {
      *            unregister
      */
     public void removePropertyChangeListener(PropertyChangeListener pcl) {
+        LOG.debug("Removing a listener: " + pcl.toString());
         support.removePropertyChangeListener(pcl);
     }
 
