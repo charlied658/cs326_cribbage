@@ -1,14 +1,15 @@
 package edu.skidmore.cs326.spring2022.skribbage.logic;
 
-//import edu.skidmore.cs326.spring2022.skribbage.common.Game;
+import edu.skidmore.cs326.spring2022.skribbage.common.Game;
 import edu.skidmore.cs326.spring2022.skribbage.common.Card;
 import edu.skidmore.cs326.spring2022.skribbage.common.Player;
+import edu.skidmore.cs326.spring2022.skribbage.common.Claim;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Interface for PeggingPlay.
- * 
+ *
  * @author Michael Shriner
  */
 interface PeggingPlayInterface {
@@ -25,7 +26,7 @@ interface PeggingPlayInterface {
      * @param p
      *            is the player who is trying to play the card
      */
-    void addCardToPeggingTotal(Card cardToAdd, Player p);
+    boolean addCardToPeggingTotal(Card cardToAdd, Player p);
 
     /**
      * Takes a claim and awards the player who made the claim the points earned
@@ -43,7 +44,7 @@ interface PeggingPlayInterface {
      *            is the player who made the claim.
      * @return true iff the claim made was valid
      */
-    boolean checkClaim(String claim, Player p);
+    boolean checkClaim(Claim claim, Player p);
 
     /**
      * If the player passed as a parameter placed a card during
@@ -79,7 +80,7 @@ interface PeggingPlayInterface {
      * @return true if the cards in the list have the same identifier;
      *         otherwise, return false.
      */
-    boolean isPair(ArrayList<Card> cards);
+    boolean isPair(List<Card> cards);
 
     /**
      * If the player passed as a parameter placed a card that immediately
