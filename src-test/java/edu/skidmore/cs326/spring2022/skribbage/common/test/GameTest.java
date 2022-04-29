@@ -29,20 +29,23 @@ public class GameTest {
 
     /** Deck used to check the getDeck method in Game. */
     // @SuppressWarnings("unused")
-    //private Deck testDeck;
+    // private Deck testDeck;
 
     /**
      * ArrayList of cards in crib to check the getCrib
      * method in Game.
      */
     private Hand testCrib;
-
-    private List <Hand> testListOfPeggingCards;
-
+    /**
+     * test instance of pegging cards.
+     */
+    private List<Hand> testListOfPeggingCards;
+    /**
+     * test instance of cards in play.
+     */
     private Hand testCardsInPlay;
 
-
-    //private HandManager handManager;
+    // private HandManager handManager;
 
     /**
      * Initializes fields.
@@ -50,17 +53,17 @@ public class GameTest {
     @Before
     public void setup() {
 
-        //testDeck = new Deck();
-        //handManager = new HandManager();
+        // testDeck = new Deck();
+        // handManager = new HandManager();
 
         int numPlayers = 2;
 
         testCardsInPlay = new Hand();
 
-        testListOfPeggingCards = new ArrayList <Hand>();
+        testListOfPeggingCards = new ArrayList<Hand>();
 
-        for (int i = 0; i < numPlayers; i++){
-          testListOfPeggingCards.add(new Hand());
+        for (int i = 0; i < numPlayers; i++) {
+            testListOfPeggingCards.add(new Hand());
         }
 
         testCrib = new Hand();
@@ -68,9 +71,7 @@ public class GameTest {
         game = new Game(numPlayers);
     }
 
-
-
-    //============== below line = pass ==================
+    // ============== below line = pass ==================
 
     /**
      * Tests getListOfPeggingCardsPlayed method for second set of Cards in
@@ -80,14 +81,14 @@ public class GameTest {
     @Test
     public void testGetListOfPeggingCardsPlayedV2() {
 
-        List <Hand> toComparePegList = game.getListOfPeggingCardsPlayed();
-        List <Card> toComparePegCards = toComparePegList.get(1).getCardsInHand();
-        List <Card> testPegCards = testListOfPeggingCards.get(1).getCardsInHand();
+        List<Hand> toComparePegList = game.getListOfPeggingCardsPlayed();
+        Card[] toComparePegCards = toComparePegList.get(1).getCardsInHand();
+        Card[] testPegCards =
+            testListOfPeggingCards.get(1).getCardsInHand();
 
         assertTrue(toComparePegCards.equals(testPegCards));
 
     }
-
 
     /**
      * Tests getListOfPeggingCardsPlayed method for first set of Cards in
@@ -97,103 +98,100 @@ public class GameTest {
     @Test
     public void testGetListOfPeggingCardsPlayedV1() {
 
-        List <Hand> toComparePegList = game.getListOfPeggingCardsPlayed();
-        List <Card> toComparePegCards = toComparePegList.get(0).getCardsInHand();
-        List <Card> testPegCards = testListOfPeggingCards.get(0).getCardsInHand();
+        List<Hand> toComparePegList = game.getListOfPeggingCardsPlayed();
+        Card[] toComparePegCards = toComparePegList.get(0).getCardsInHand();
+        Card[] testPegCards =
+            testListOfPeggingCards.get(0).getCardsInHand();
 
         assertTrue(toComparePegCards.equals(testPegCards));
 
     }
 
     // /**
-    //  * Tests getCardsInPlay method.
-    //  * Passes.
-    //  */
+    // * Tests getCardsInPlay method.
+    // * Passes.
+    // */
     // @Test
     // public void testGetCardsInPlay() {
     //
-    //     List <Card> retrievedCardsPlay = game.getCardsInPlay().getCardsInHand();
+    // List <Card> retrievedCardsPlay = game.getCardsInPlay().getCardsInHand();
     //
-    //     List <Card> toCompareCardsInPlay = testCardsInPlay.getCardsInHand();
+    // List <Card> toCompareCardsInPlay = testCardsInPlay.getCardsInHand();
     //
-    //     assertTrue(retrievedCardsPlay.equals(toCompareCardsInPlay));
+    // assertTrue(retrievedCardsPlay.equals(toCompareCardsInPlay));
     //
     // }
 
-
     // /**
-    //  * Tests the getPeggingTotal method.
-    //  * Passes.
-    //  */
+    // * Tests the getPeggingTotal method.
+    // * Passes.
+    // */
     // @Test
     // public void testGetPeggingTotal() {
     //
-    //     game.setPeggingTotal(5);
+    // game.setPeggingTotal(5);
     //
-    //     int peggingTotal = game.getPeggingTotal();
+    // int peggingTotal = game.getPeggingTotal();
     //
-    //     assertEquals(5, peggingTotal);
+    // assertEquals(5, peggingTotal);
     //
     // }
 
     // /**
-    //  * Tests testInitPeggingCardsPlayed method.
-    //  * Passes.
-    //  */
+    // * Tests testInitPeggingCardsPlayed method.
+    // * Passes.
+    // */
     // @Test
     // public void testInitPeggingCardsPlayed() {
     //
-    //     assertEquals(game.getListOfPeggingCardsPlayed().size(), 2);
+    // assertEquals(game.getListOfPeggingCardsPlayed().size(), 2);
     //
     // }
 
-
     // /**
-    //  * Test the initialize players method.
-    //  * Passes.
-    //  */
+    // * Test the initialize players method.
+    // * Passes.
+    // */
     // @Test
     // public void testInitPlayers() {
-    //     game.initPlayers(2);
-    //     assertEquals(game.getPlayerList().size(), 4);
-    //     //it should be 4 because the player list was already initialized
-    //     //for 2 players
+    // game.initPlayers(2);
+    // assertEquals(game.getPlayerList().size(), 4);
+    // //it should be 4 because the player list was already initialized
+    // //for 2 players
     // }
     //
     // /**
-    //  * Tests the setPeggingTotal method.
-    //  * Passes.
-    //  */
+    // * Tests the setPeggingTotal method.
+    // * Passes.
+    // */
     // @Test
     // public void testSetPeggingTotal() {
     //
-    //     game.setPeggingTotal(5);
+    // game.setPeggingTotal(5);
     //
-    //     assertEquals(game.getPeggingTotal(), 5);
+    // assertEquals(game.getPeggingTotal(), 5);
     // }
 
-
     // /**
-    //  * Tests the getCrib method.
-    //  * Passes.
-    //  */
+    // * Tests the getCrib method.
+    // * Passes.
+    // */
     // @Test
     // public void testGetCrib() {
     //
-    //     Hand returnedCrib = game.getCribCards();
+    // Hand returnedCrib = game.getCribCards();
     //
-    //     List <Card> returnedCribList = returnedCrib.getCardsInHand();
+    // List <Card> returnedCribList = returnedCrib.getCardsInHand();
     //
-    //     List <Card> testCribList = testCrib.getCardsInHand();
+    // List <Card> testCribList = testCrib.getCardsInHand();
     //
-    //     assertTrue(returnedCribList.equals(testCribList));
+    // assertTrue(returnedCribList.equals(testCribList));
     //
     // }
 
-
     /**
-    * Test the setPeggingTotal method.
-    */
+     * Test the setPeggingTotal method.
+     */
     // @Test
     // public void testGetDeck() {
     //
