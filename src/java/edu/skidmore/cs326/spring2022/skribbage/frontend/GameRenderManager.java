@@ -1,6 +1,7 @@
 package edu.skidmore.cs326.spring2022.skribbage.frontend;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import edu.skidmore.cs326.spring2022.skribbage.common.Player;
 import edu.skidmore.cs326.spring2022.skribbage.frontend.events.game.PlayerClickDeckEvent;
@@ -36,7 +37,6 @@ public class GameRenderManager {
     /**
      * GameManager instance.
      */
-    @SuppressWarnings("unused")
     private GameManager gameManager;
 
     /**
@@ -89,6 +89,11 @@ public class GameRenderManager {
      */
     private int pPoints;
 
+    /**
+     * Only discard 2 cards to the crib at once.
+     */
+    private static final int MAX_DISCARD_TO_CRIB_SIZE = 2;
+
     /*
      * Initialize the static instance.
      */
@@ -139,17 +144,19 @@ public class GameRenderManager {
     public int getPlayerPoints() {
         return pPoints;
     }
-    
+
     /**
      * setplayerpoints.
+     * 
      * @param points
      */
     public void setPlayerPoints(int points) {
         this.pPoints = points;
     }
-    
+
     /**
      * setcomputerpoints.
+     * 
      * @param points
      */
     public void setComputerPoints(int points) {
@@ -174,6 +181,7 @@ public class GameRenderManager {
      */
     public void manageClickedCard(Drawable e) {
 
+        // If card clicked is in the deck, fite a PlayerClickDeckEvent
         for (int i = 0; i < GameRenderManager.getInstance()
             .getCardsInDeck().size(); i++) {
 
@@ -186,18 +194,16 @@ public class GameRenderManager {
                             EventType.PLAYER_CLICK_DECK, this,
                             GameRenderManager.getInstance().getActivePlayer());
                 EventFactory.getInstance().fireEvent(playerClickDeckEvent);
+                return;
 
             }
 
         }
 
-        // Loop through the entire player's hand
+        // If card clicked is in player hand, fire a PlayerPlayCardEvent
         for (int i = 0; i < GameRenderManager.getInstance()
             .getCardsInHand().size(); i++) {
 
-            // Check that the card that has been clicked is within the player's
-            // hand. We don't want the player to be able to click on cards not
-            // in the player's hand.
             if (e == GameRenderManager.getInstance()
                 .getCardsInHand().get(i)) {
                 PlayerPlayCardEvent playerPlayCardEvent =
@@ -207,6 +213,7 @@ public class GameRenderManager {
                             GameRenderManager.getInstance().getActivePlayer(),
                             (CardImage) e, (Integer) i);
                 EventFactory.getInstance().fireEvent(playerPlayCardEvent);
+                return;
 
             }
         }
@@ -261,6 +268,168 @@ public class GameRenderManager {
     }
 
     /**
+     * Initialize the cards.
+     */
+    public void initializeCards() {
+
+        standardDeck = new ArrayList<>();
+        cardsInDeck = new ArrayList<>();
+        cardsInPlay = new ArrayList<>();
+        cardsInHand = new ArrayList<>();
+        cardsInOpponentHand = new ArrayList<>();
+        cardsInCrib = new ArrayList<>();
+        selectedCardsForDiscarding = new ArrayList<>();
+
+    }
+
+    /**
+     * Update the card positions based on the data in the Game object.
+     */
+    public void updateCardPositions() {
+        cardsInDeck.clear();
+        cardsInPlay.clear();
+        cardsInHand.clear();
+        cardsInOpponentHand.clear();
+
+        List<Card> gameCardsInDeck =
+            gameManager.getGame().getDeck().getDeck();
+        Card[] gameCardsInPlay =
+            gameManager.getGame().getCardsInPlay().getCardsInHand();
+        Card[] gameCardsInHand = gameManager.getGame()
+            .getPlayerList().get(0).getHand().getCardsInHand();
+        Card[] gameCardsInOpponentHand = gameManager.getGame()
+            .getPlayerList().get(1).getHand().getCardsInHand();
+
+        for (Card card : gameCardsInDeck) {
+            CardImage cardImage = standardDeck.get(card.getCardID());
+            cardsInDeck.add(cardImage);
+            cardImage.setCardPosition(CardPosition.DECK);
+        }
+
+        for (Card card : gameCardsInPlay) {
+            CardImage cardImage = standardDeck.get(card.getCardID());
+            cardsInPlay.add(cardImage);
+            cardImage.setCardPosition(CardPosition.IN_PLAY);
+        }
+
+        for (Card card : gameCardsInHand) {
+            CardImage cardImage = standardDeck.get(card.getCardID());
+            cardsInHand.add(cardImage);
+            cardImage.setCardPosition(CardPosition.PLAYER_HAND);
+        }
+
+        for (Card card : gameCardsInOpponentHand) {
+            CardImage cardImage = standardDeck.get(card.getCardID());
+            cardsInOpponentHand.add(cardImage);
+            cardImage.setCardPosition(CardPosition.OPPONENT_HAND);
+        }
+
+    }
+
+    /**
+     * Reset card positions.
+     */
+    public void resetCards() {
+        if (!gameManager.deckIsReset()) {
+            gameManager.resetCards();
+            AnimationManager.getInstance().moveCardsToStandardPositions(50);
+        }
+    }
+
+    /**
+     * Shuffle the deck.
+     */
+    public void shuffleCards() {
+        resetCards();
+        gameManager.shuffleCards();
+        AnimationManager.getInstance().moveCardsToStandardPositions(50);
+    }
+
+    /**
+     * Deal the cards.
+     */
+    public void dealCards() {
+        shuffleCards();
+
+        for (int i = 0; i < 6; i++) {
+            if (cardsInDeck.size() > 0) {
+                gameManager.dealPlayerCards(1);
+                AnimationManager.getInstance().moveCardsToStandardPositions(20);
+            }
+            if (cardsInDeck.size() > 0) {
+                gameManager.dealOpponentCards(1);
+                AnimationManager.getInstance().moveCardsToStandardPositions(20);
+            }
+        }
+    }
+
+    /**
+     * Select a card to discard to the crib.
+     * 
+     * @param card
+     */
+    public void selectCardToDiscardToCrib(CardImage card) {
+        // If the card is already selected, unselect it
+        if (selectedCardsForDiscarding.contains(card)) {
+
+            // Set the button to not be clickable
+            AnimationManager.getInstance().setButtonClickable(AnimationManager
+                .getInstance().getStartGamePage().getSendCardsToCribButton(),
+                false);
+
+            // Remove card from selected cards
+            selectedCardsForDiscarding.remove(card);
+
+            // Play animation
+            AnimationManager.getInstance().selectCards();
+
+            return;
+        }
+
+        // Add the card to be selected
+        selectedCardsForDiscarding.add(card);
+
+        // If more than 2 cards are selected, remove the other selected cards
+        if (selectedCardsForDiscarding.size() > MAX_DISCARD_TO_CRIB_SIZE) {
+            selectedCardsForDiscarding.remove(0);
+            selectedCardsForDiscarding.remove(0);
+        }
+
+        // Set the send cards to crib button to be clickable
+        AnimationManager.getInstance().setButtonClickable(
+            AnimationManager.getInstance().getStartGamePage()
+                .getSendCardsToCribButton(),
+            selectedCardsForDiscarding.size() == MAX_DISCARD_TO_CRIB_SIZE);
+
+        // Play animation to select cards
+        AnimationManager.getInstance().selectCards();
+    }
+
+    /**
+     * Play the card that the player clicked on.
+     * 
+     * @param clickedCardIndex
+     * @return number of cards in play
+     */
+    public int playerPlayCard(int clickedCardIndex) {
+
+        // Play the card that has been clicked to the center of
+        // the board and play an animation
+        AnimationManager.getInstance().getGameManager()
+            .playCard(clickedCardIndex);
+        AnimationManager.getInstance()
+            .moveCardsToStandardPositions(50);
+
+        // Opponent plays a random card, then play an animation
+        AnimationManager.getInstance().getGameManager().opponentPlayCard();
+        AnimationManager.getInstance()
+            .moveCardsToStandardPositions(50);
+
+        return AnimationManager.getInstance().getGameManager().getGame()
+            .getCardsInPlay().getCardsInHand().length;
+    }
+
+    /**
      * Set the game manager instance.
      * 
      * @param gameManager
@@ -277,27 +446,6 @@ public class GameRenderManager {
      */
     public ArrayList<CardImage> getStandardDeck() {
         return standardDeck;
-    }
-
-    /**
-     * Set the standard deck.
-     * 
-     * @param standardDeck
-     *            standard deck
-     */
-    public void setStandardDeck(ArrayList<CardImage> standardDeck) {
-        this.standardDeck = standardDeck;
-    }
-
-    /**
-     * Sets an array of selected cards for discarding.
-     * 
-     * @param selectedCardsForDiscarding
-     *            array to add
-     */
-    public void setSelectedCardsForDiscarding(
-        ArrayList<CardImage> selectedCardsForDiscarding) {
-        this.selectedCardsForDiscarding = selectedCardsForDiscarding;
     }
 
     /**
@@ -319,32 +467,12 @@ public class GameRenderManager {
     }
 
     /**
-     * Set cards in the deck.
-     * 
-     * @param cardsInDeck
-     *            cards in deck
-     */
-    public void setCardsInDeck(ArrayList<CardImage> cardsInDeck) {
-        this.cardsInDeck = cardsInDeck;
-    }
-
-    /**
      * Get cards in play.
      * 
      * @return cardsInPlay
      */
     public ArrayList<CardImage> getCardsInPlay() {
         return cardsInPlay;
-    }
-
-    /**
-     * Set cards in play.
-     * 
-     * @param cardsInPlay
-     *            cards in play
-     */
-    public void setCardsInPlay(ArrayList<CardImage> cardsInPlay) {
-        this.cardsInPlay = cardsInPlay;
     }
 
     /**
@@ -357,32 +485,12 @@ public class GameRenderManager {
     }
 
     /**
-     * Set cards in player's hand.
-     * 
-     * @param cardsInHand
-     *            cards in hand
-     */
-    public void setCardsInHand(ArrayList<CardImage> cardsInHand) {
-        this.cardsInHand = cardsInHand;
-    }
-
-    /**
      * Get cards in the crib.
      * 
      * @return cardsInCrib
      */
     public ArrayList<CardImage> getCardsInCrib() {
         return cardsInCrib;
-    }
-
-    /**
-     * Set cards in the crib.
-     * 
-     * @param cardsInCrib
-     *            cards in crib
-     */
-    public void setCardsInCrib(ArrayList<CardImage> cardsInCrib) {
-        this.cardsInCrib = cardsInCrib;
     }
 
     /**
@@ -413,16 +521,4 @@ public class GameRenderManager {
     public ArrayList<CardImage> getCardsInOpponentHand() {
         return cardsInOpponentHand;
     }
-
-    /**
-     * Set cards in opponent's hand.
-     * 
-     * @param cardsInOpponentHand
-     *            cards in opponent hand
-     */
-    public void setCardsInOpponentHand(
-        ArrayList<CardImage> cardsInOpponentHand) {
-        this.cardsInOpponentHand = cardsInOpponentHand;
-    }
-
 }

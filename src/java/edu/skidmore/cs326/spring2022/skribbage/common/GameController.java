@@ -8,8 +8,6 @@ import org.apache.log4j.Logger;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * The finite state machine implementation for the Skribbage game loop.
@@ -89,10 +87,9 @@ public final class GameController implements PropertyChangeListener {
                 LOG.debug("caught a player click start game event " + evt);
                 if (currentGameState == GameState.START_GAME) {
                     currentGameState = GameState.CUT_DECK;
+
                     // When the game starts, cards are fanned out to click on
-                    // TODO this
                     animationManager.fanCards();
-                    // animationManager.dealCards();
 
                 }
                 break;
@@ -101,9 +98,14 @@ public final class GameController implements PropertyChangeListener {
                 switch (currentGameState) {
                     case CUT_DECK:
                         currentGameState = GameState.DISCARD_TO_CRIB;
-                        GameRenderManager.getInstance()
-                            .setSelectedCardsForDiscarding(new ArrayList<>());
-                        animationManager.dealCards();
+
+                        // TODO decide dealer based on who picked the lower card
+
+                        // Deal cards and wait for player to discard cards to
+                        // crib
+                        gameRenderManager.getSelectedCardsForDiscarding()
+                            .clear();
+                        gameRenderManager.dealCards();
                         animationManager.getStartGamePage().add(animationManager
                             .getStartGamePage().getSendCardsToCribButton());
                         animationManager.setButtonClickable(animationManager
@@ -135,85 +137,34 @@ public final class GameController implements PropertyChangeListener {
                         PlayerPlayCardEvent playerPlayCardEvent =
                             (PlayerPlayCardEvent) cribbageEvent;
 
-                        // If the card is already selected, unselect it
-                        if (gameRenderManager.getSelectedCardsForDiscarding()
-                            .contains(playerPlayCardEvent.getCardImage())) {
-
-                            // Set the button to not be clickable
-                            animationManager.setButtonClickable(
-                                animationManager.getStartGamePage()
-                                    .getSendCardsToCribButton(),
-                                false);
-
-                            // Remove card from selected cards
-                            gameRenderManager.getSelectedCardsForDiscarding()
-                                .remove(playerPlayCardEvent.getCardImage());
-
-                            // Play animation
-                            animationManager.selectCards();
-
-                            break;
-                        }
-
-                        // Add the card to be selected
-                        gameRenderManager.getSelectedCardsForDiscarding()
-                            .add(playerPlayCardEvent.getCardImage());
-
-                        // If more than 2 cards are selected, remove one of the
-                        // other selected cards
-                        if (gameRenderManager.getSelectedCardsForDiscarding()
-                            .size() > MAX_DISCARD_TO_CRIB_SIZE) {
-                            gameRenderManager.getSelectedCardsForDiscarding()
-                                .remove(0);
-                            gameRenderManager.getSelectedCardsForDiscarding()
-                                .remove(0);
-                        }
-
-                        // Set the send cards to crib button to be clickable
-                        animationManager.setButtonClickable(animationManager
-                            .getStartGamePage().getSendCardsToCribButton(),
-                            gameRenderManager.getSelectedCardsForDiscarding()
-                                .size() == MAX_DISCARD_TO_CRIB_SIZE);
-
-                        // Play animation to select cards
-                        animationManager.selectCards();
+                        // Select card to discard to the crib
+                        gameRenderManager.selectCardToDiscardToCrib(
+                            playerPlayCardEvent.getCardImage());
 
                         break;
                     case PLAY_CARD:
                         PlayerPlayCardEvent playCardEvent =
                             (PlayerPlayCardEvent) cribbageEvent;
 
-                        int cardClickedIndex =
+                        int clickedCardIndex =
                             playCardEvent.getClickedCardIndex();
 
-                        // Set the cards to not be clickable
-                        AnimationManager.getInstance().setCardsClickable(false);
-
-                        // Play the card that has been clicked to the center of
-                        // the board and play an animation
-                        animationManager.getGameManager()
-                            .playCard(cardClickedIndex);
-                        AnimationManager.getInstance()
-                            .moveCardsToStandardPositions(50);
-
-                        // Opponent plays a random card, then play an animation
-                        animationManager.getGameManager().opponentPlayCard();
-                        AnimationManager.getInstance()
-                            .moveCardsToStandardPositions(50);
+                        // Play card to center of board then have opponent play
+                        // a random card
+                        int numCardsInPlay =
+                            gameRenderManager.playerPlayCard(clickedCardIndex);
 
                         // Check if there are no more cards to play. Each player
                         // is initially dealt 6 cards so this occurs when the
                         // number of cards in play is 12.
-                        if (animationManager.getGameManager().getGame()
-                            .getCardsInPlay()
-                            .getCardsInHand().length == 12) {
+                        if (numCardsInPlay == 12) {
 
                             // Move each peg 5 spaces. This is a temporary test.
                             // In the real game the pegs should more according
                             // to the number of points earned during the play
                             // phase.
-                            animationManager.movePeg(0, 5);
-                            animationManager.movePeg(1, 5);
+                            animationManager.movePegGlideAnimation(0, 5);
+                            animationManager.movePegGlideAnimation(1, 5);
 
                             // If either peg is at the final space, end the
                             // game.
@@ -226,7 +177,7 @@ public final class GameController implements PropertyChangeListener {
 
                             // Move to discard to crib state again
                             currentGameState = GameState.DISCARD_TO_CRIB;
-                            animationManager.dealCards();
+                            gameRenderManager.dealCards();
                             animationManager.getStartGamePage()
                                 .add(animationManager
                                     .getStartGamePage()
@@ -254,8 +205,7 @@ public final class GameController implements PropertyChangeListener {
                         .getStartGamePage().getSendCardsToCribButton());
                     currentGameState = GameState.STARTER_CARD;
                     GameRenderManager.getInstance()
-                        .setSelectedCardsForDiscarding(
-                            new ArrayList<>());
+                        .getSelectedCardsForDiscarding().clear();
                     animationManager.fanCards();
 
                 }
