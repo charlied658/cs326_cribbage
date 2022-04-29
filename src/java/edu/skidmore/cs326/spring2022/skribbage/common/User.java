@@ -85,11 +85,11 @@ public class User implements Payload {
     public User(String email, String userName,
         UserRole userRole) {
         this.email = email;
-        LOG.debug("Email value set to:" + email);
+        LOG.trace("Email value set to:" + email);
         this.userName = userName;
-        LOG.debug("userName value set to: " + userName);
+        LOG.trace("userName value set to: " + userName);
         this.userRole = userRole;
-        LOG.debug("isAuthorized value was set to: " + userRole);
+        LOG.trace("isAuthorized value was set to: " + userRole);
         LOG.info(
             "The parameters of User constructor were assigned"
                 + " to private variable attributes");
@@ -128,6 +128,7 @@ public class User implements Payload {
      */
     public void setUserRole(
         UserRole userRole) {
+        LOG.info("Assigning a user role.");
         this.userRole = userRole;
     }
 
@@ -141,6 +142,7 @@ public class User implements Payload {
      */
     @Override
     public boolean equals(Object o) {
+        LOG.debug("Comparing two users for equality.");
         if (this == o) {
             return true;
         }
@@ -158,6 +160,7 @@ public class User implements Payload {
      */
     @Override
     public int hashCode() {
+        LOG.info("Generating hashcode for this object");
         return Objects.hash(email, userName);
     }
 

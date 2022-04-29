@@ -100,7 +100,7 @@ public final class EventFactory implements EventDispatcher {
         }
 
         PropertyChangeEvent temp;
-        LOG.trace(
+        LOG.debug(
             "Calling createEvent from each subclass "
                 + "with their overWritten hook method.");
         for (FactoryTemplate subclass : templates) {
@@ -136,7 +136,7 @@ public final class EventFactory implements EventDispatcher {
      */
     @Override
     public void fireEvent(PropertyChangeEvent event) {
-        LOG.trace("Firing event = " + event);
+        LOG.info("Firing event = " + event);
         if (event != null) {
             eventManager.notify(event);
         } else {
