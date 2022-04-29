@@ -2,14 +2,15 @@ package edu.skidmore.cs326.spring2022.skribbage.frontend.events.test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 
 import org.apache.log4j.Logger;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import edu.skidmore.cs326.spring2022.skribbage.common.LoginAuthenticator;
+import edu.skidmore.cs326.spring2022.skribbage.common.Password;
 import edu.skidmore.cs326.spring2022.skribbage.common.User;
+import edu.skidmore.cs326.spring2022.skribbage.common.UserRole;
 import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserCreateAccountEvent;
 
 /**
@@ -28,9 +29,9 @@ public class UserCreateAccountEventTest {
     private User userInstance;
 
     /**
-     * Source object that fired the event change.
+     * Password instance.
      */
-    private Object source;
+    private Password password;
 
     /**
      * Logger instance for logging.
@@ -46,11 +47,10 @@ public class UserCreateAccountEventTest {
     @Before
     public void setUp() {
         LOG.trace("Started the setup method");
-        source = new Object();
-        // userInstance =
-        // // Email, username, password, isauthorized?
-        // new User("sleinasa@skidmore.edu", "sleinasa", "passwd", true);
-        testInstance = new UserCreateAccountEvent(source, userInstance);
+        userInstance = new User("sleinasa@skidmore.edu", "username",
+            UserRole.UNAUTHORIZED);
+        password = LoginAuthenticator.getInstance().hashNewPassword("password");
+        testInstance = new UserCreateAccountEvent(this, userInstance, password);
 
         LOG.info("SetUp method completed");
     }
@@ -79,6 +79,15 @@ public class UserCreateAccountEventTest {
         LOG.trace("Testing getUser finished.");
 
     }
+    /**
+     * Tests that the password object passed back is the same as passed in. 
+     */
+    @Test
+    public void testGetPassword() {
+        LOG.info("Get password test started.");
+        assertEquals(testInstance.getPassword(), password);
+        LOG.info("Get Password test finished.");
+    }
 
     /**
      * Tests if the event name passed to the constructor will be returned
@@ -87,26 +96,9 @@ public class UserCreateAccountEventTest {
     @Test
     public void testGetEventName() {
         LOG.trace("Testing getEventName");
-        assertEquals(testInstance.getEventType(), "User Create Account Event");
+        assertEquals(testInstance.getEventType().getName(),
+            "User Create Account Event");
         LOG.trace("Completed testing the getEventName method");
     }
 
-    /**
-     * Sets all initialized variables to null.
-     */
-    @After
-    public void tearDown() {
-        LOG.trace("Starting the teardown");
-        testInstance = null;
-        source = null;
-        userInstance = null;
-
-        LOG.trace("Assert that teardown was succesful");
-        assertNull(testInstance);
-        assertNull(source);
-        assertNull(userInstance);
-
-        LOG.trace("Teardown completed");
-
-    }
 }

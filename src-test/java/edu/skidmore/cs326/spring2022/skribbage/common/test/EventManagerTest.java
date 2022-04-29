@@ -8,8 +8,6 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
-import static org.junit.Assert.assertNull;
-
 import edu.skidmore.cs326.spring2022.skribbage.common.EventManager;
 import edu.skidmore.cs326.spring2022.skribbage.common.EventType;
 import edu.skidmore.cs326.spring2022.skribbage.common.LoginAuthenticator;
@@ -19,7 +17,6 @@ import edu.skidmore.cs326.spring2022.skribbage.common.UserRole;
 import edu.skidmore.cs326.spring2022.skribbage.common.EventFactory;
 import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserCreateAccountEvent;
 import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserLoginEvent;
-import edu.skidmore.cs326.spring2022.skribbage.logic.events.AccountController;
 
 /**
  * Testing for Event manager API testing.
@@ -107,7 +104,7 @@ public class EventManagerTest {
      */
     @Before
     public void setUp() {
-        LOG.info("SetUp Method for EventManager");
+        LOG.info("Setup method reached.");
         testEventFactory = EventFactory.getInstance();
         testInstance = EventManager.getInstance();
         hasher = LoginAuthenticator.getInstance();
@@ -145,9 +142,9 @@ public class EventManagerTest {
      */
     @Test
     public void testGetInstance() {
-        LOG.info("Beginning the testGetInstance");
+        LOG.info("Testing get instance.");
         assertEquals(testInstance, EventManager.getInstance());
-        LOG.info("testGetInstance completed");
+        LOG.info("Get instance testing completed.");
     }
 
     /**
@@ -159,11 +156,12 @@ public class EventManagerTest {
     @Test
     public void testAddPropertyChangeListener() {
         LOG.info("Beginning to test addPropertyChangeListener");
-
+        LOG.debug(
+            "Firing an event:" + testEventInstance.getEventType().getName());
         testEventFactory.fireEvent(testEventInstance);
 
         assertEquals(userInstance,
-            accountResponseControllerMOCK.getReceivedUserFromLogin());
+            accountResponseControllerMOCK.getUser());
 
         LOG.info("AddPropertyChangeListener test finished.");
 
@@ -181,17 +179,18 @@ public class EventManagerTest {
         LOG.info("Beginning to test removePropertyChangeListener");
         // Show that is still listens.
         testEventFactory.fireEvent(testEventInstance);
-        assertEquals(accountResponseControllerMOCK.getReceivedUserFromLogin(),
+        assertEquals(accountResponseControllerMOCK.getUser(),
             userInstance);
         // Now removing. Show it doesn't listen anymore.
+        LOG.trace("Removing property changeListener.");
         testInstance
             .removePropertyChangeListener(accountResponseControllerMOCK);
-        LOG.debug(
-            "firing testEventInstanceTwo. "
-            + "should not be listening for response.");
+        LOG.trace(
+            "Firing event that should not be listened for."
+                + testEventInstanceTwo.getEventType().getName());
         testEventFactory.fireEvent(testEventInstanceTwo);
         assertNotEquals(
-            accountResponseControllerMOCK.getReceivedUserFromLogin(),
+            accountResponseControllerMOCK.getUser(),
             userInstanceTwo);
 
     }
@@ -201,27 +200,14 @@ public class EventManagerTest {
      */
     @Test
     public void testNotify() {
-        LOG.info("Began testing notify method");
+        LOG.info("Began testing notify method.");
         testInstance.addPropertyChangeListener(accountResponseControllerMOCK,
             EventType.USER_LOGIN_RESPONSE);
         testEventFactory.fireEvent(testEventInstance);
-        assertEquals(accountResponseControllerMOCK.getReceivedUserFromLogin(),
+        assertEquals(accountResponseControllerMOCK.getUser(),
             userInstance);
+        LOG.info("Notify method testing completed.");
     }
 
-    /**
-     * @AFTER method that runs after each test case.
-     */
-    @After
-    public void tearDown() {
-        LOG.trace("Running: tearDown");
-        testInstance = null;
-        userInstance = null;
-        testEventInstance = null;
-
-        assertNull(testInstance);
-        assertNull(userInstance);
-
-    }
 
 }

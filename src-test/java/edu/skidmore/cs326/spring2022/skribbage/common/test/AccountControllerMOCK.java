@@ -27,13 +27,7 @@ public class AccountControllerMOCK implements PropertyChangeListener {
     /**
      * Mock user received from login event.
      */
-    private User receivedUserFromLogin;
-
-    /**
-     * Mock user (SHOULD ALWAYS BE NULL) from event not subscribed to.
-     */
-    private User receivedUserFromCreateAccount;
-
+    private User receivedUser;
     /**
      * Incoming event, upcasted to AccountEvent.
      */
@@ -70,46 +64,27 @@ public class AccountControllerMOCK implements PropertyChangeListener {
     public void propertyChange(PropertyChangeEvent evt) {
 
         incomingEvent = (AccountEvent) evt;
-        LOG.warn("Caught incoming event in AccountController MOCK" + evt);
+        LOG.debug("Caught incoming event in AccountController MOCK" + evt);
 
         switch (incomingEvent.getEventType()) {
             case USER_LOGIN:
-                LOG.trace("handling user login event");
-                receivedUserFromLogin = incomingEvent.getUser();
-                receivedUserFromLogin.setUserRole(UserRole.AUTHORIZED);
+                LOG.info("Handling user login event");
+                receivedUser = incomingEvent.getUser();
+                receivedUser.setUserRole(UserRole.AUTHORIZED);
                 outgoingEvent =
                     (UserLoginResponseEvent) eventFactoryTestInstance
                         .createEvent(
                             EventType.USER_LOGIN_RESPONSE,
                             this,
-                            receivedUserFromLogin,
+                            receivedUser,
                             new AccountResponse("Success Login", false));
-                LOG.trace("outgoingEvent = " + outgoingEvent);
+                LOG.debug("OutgoingEvent being fired  is:  "
+                    + outgoingEvent.getEventType().getName());
                 eventFactoryTestInstance.fireEvent(outgoingEvent);
                 break;
             case USER_CREATE_ACCOUNT:
-                LOG.error("Handled impossible event " + evt);
-                receivedUserFromCreateAccount = incomingEvent.getUser();
-                break;
-            case VALIDATE_USERNAME:
-                receivedUserFromLogin = incomingEvent.getUser();
-
-                /*
-                 *PersistenceFacade.getInstance()
-                 *.validateUsername(receivedUserFromLogin);
-                 *
-                 * must remain commented until DB works.
-                 */
-
-
-                outgoingEvent =
-                    (UserValidationResponseEvent) eventFactoryTestInstance
-                    .createEvent(
-                        EventType.USER_VALIDATION_RESPONSE,
-                        this,
-                        receivedUserFromLogin,
-                        new AccountResponse("Good username", false));
-                eventFactoryTestInstance.fireEvent(outgoingEvent);
+                LOG.debug("Handled create account event.");
+                receivedUser = incomingEvent.getUser();
                 break;
             default:
                 LOG.error("Illegal logical flow from event: " + evt);
@@ -122,16 +97,10 @@ public class AccountControllerMOCK implements PropertyChangeListener {
      * 
      * @return User object
      */
-    public User getReceivedUserFromLogin() {
-        return receivedUserFromLogin;
+    public User getUser() {
+        LOG.debug("Returning user attribute");
+        return receivedUser;
     }
 
-    /**
-     * Return null user.
-     * 
-     * @return null.
-     */
-    public User getReceivedUserFromCreateAccount() {
-        return receivedUserFromCreateAccount;
-    }
+  
 }

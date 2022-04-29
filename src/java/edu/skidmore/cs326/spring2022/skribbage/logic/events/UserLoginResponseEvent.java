@@ -1,5 +1,7 @@
 package edu.skidmore.cs326.spring2022.skribbage.logic.events;
 
+import org.apache.log4j.Logger;
+
 import edu.skidmore.cs326.spring2022.skribbage.common.EventType;
 import edu.skidmore.cs326.spring2022.skribbage.common.User;
 
@@ -15,6 +17,15 @@ public class UserLoginResponseEvent extends AccountResponseEvent {
     private static final EventType EVENTTYPE = EventType.USER_LOGIN_RESPONSE;
 
     /**
+     * Logger Instance for logging.
+     */
+    private static final Logger LOG;
+
+    static {
+        LOG = Logger.getLogger(UserLoginResponseEvent.class);
+    }
+
+    /**
      * Default constructor.
      * 
      * @param source
@@ -26,6 +37,7 @@ public class UserLoginResponseEvent extends AccountResponseEvent {
     public UserLoginResponseEvent(Object source, Object... args) {
         super(source, EVENTTYPE, (User) args[0],
             (AccountResponse) args[1]);
+        LOG.info("Constructor reached. Calling super");
     }
 
     /**
@@ -33,6 +45,7 @@ public class UserLoginResponseEvent extends AccountResponseEvent {
      */
     @Override
     public EventType getEventType() {
+        LOG.info("Returning an event type.");
         return EVENTTYPE;
     }
 
@@ -41,6 +54,7 @@ public class UserLoginResponseEvent extends AccountResponseEvent {
      */
     @Override
     public AccountResponse getAccountResponse() {
+        LOG.info(" Returning an accountResponse.");
         return accountResponse;
     }
 }
