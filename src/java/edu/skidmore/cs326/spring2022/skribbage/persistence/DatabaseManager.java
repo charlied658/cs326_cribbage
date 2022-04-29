@@ -393,6 +393,7 @@ public class DatabaseManager {
 
             ps.executeUpdate();
 
+
         }
         catch (SQLException sqle) {
             LOG.error("Database Interaction Failure", sqle);
@@ -422,6 +423,7 @@ public class DatabaseManager {
             dbDisconnect(conn);
         }
     }
+   
 
     /**
      * This is a method to delete an existent player from the player_account

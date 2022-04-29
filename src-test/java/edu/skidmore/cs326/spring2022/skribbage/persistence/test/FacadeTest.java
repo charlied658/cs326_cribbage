@@ -100,6 +100,7 @@ public class FacadeTest {
             .hashNewPassword("Captain"));
         
         doesNotExists = new User("doesntexists@gmai.com", "ThisNameShouldntExist;D", null);
+       
         
 
         correctTestItem = new Item();
@@ -155,10 +156,10 @@ public class FacadeTest {
      * the
      * current pass and the new password however it fails
      */
-    // @Test
-    // public void passwordChangeFail() {
-    //
-    // }
+//     @Test
+//     public void passwordChangeFail() {
+//         User tempuser = new User(null, "abcdefg", null);
+//     }
 
     /**
      * Testing when logic wants to log in a user and wants to obtain a password
