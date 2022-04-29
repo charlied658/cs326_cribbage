@@ -160,6 +160,7 @@ public class DatabaseManagerTest {
         assertNotNull("Salt for existing account should be found",
             databaseinstance.getUserSaltBase64(existentUsername));
     }
+    
 
     /**
      * Testing when asking the inventoryQuery for coin count is successful.
