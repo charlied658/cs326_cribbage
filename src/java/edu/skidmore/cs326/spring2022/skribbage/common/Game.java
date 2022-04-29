@@ -74,20 +74,23 @@ public class Game implements GameInterface {
     }
 
     /**
-    * Returns the index where the Hand of pegging cards for
-    * the parameter player can be found.
-    * @param p is a Player. 
-    */
-    public int getIdxPlayerPegCards(Player p){
+     * Returns the index where the Hand of pegging cards for
+     * the parameter player can be found.
+     * 
+     * @param p
+     *            is a Player.
+     * @return index.
+     */
+    public int getIdxPlayerPegCards(Player p) {
         int userId = p.getUser().getUserId();
-        //find userId in playerList
+        // find userId in playerList
 
-        for (int i = 0; i < playerList.size(); i++){
-          Player p2 = playerList.get(i);
+        for (int i = 0; i < playerList.size(); i++) {
+            Player p2 = playerList.get(i);
 
-          if (userId == p2.getUser().getUserId()){
-            return i;
-          }
+            if (userId == p2.getUser().getUserId()) {
+                return i;
+            }
         }
 
         return -1;
@@ -95,6 +98,7 @@ public class Game implements GameInterface {
 
     /**
      * Initialize pegging cards.
+     * 
      * @param numPlayers
      */
     public void initPeggingCardsPlayed(int numPlayers) {
@@ -131,6 +135,7 @@ public class Game implements GameInterface {
 
     /**
      * Get list of played pegging cards.
+     * 
      * @return peggingCardsPlayed
      */
     public List<Hand> getListOfPeggingCardsPlayed() {
@@ -139,6 +144,7 @@ public class Game implements GameInterface {
 
     /**
      * Get pegging cards.
+     * 
      * @param index
      * @return pegging card at that index
      */

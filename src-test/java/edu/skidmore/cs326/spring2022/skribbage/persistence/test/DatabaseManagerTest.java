@@ -68,7 +68,7 @@ public class DatabaseManagerTest {
     @Before
     public void setUp() throws Exception {
         databaseinstance = new DatabaseManager();
-        existentUsername = "Rick";
+        existentUsername = "RickTwin";
         nonExistentUsername = "ThisNameShouldntExist;D";
         wrongTestUser =
             new User("DJKhaled@hotmail.com", "Khaled", UserRole.UNAUTHORIZED);
