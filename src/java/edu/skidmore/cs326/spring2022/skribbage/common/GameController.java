@@ -3,7 +3,11 @@ package edu.skidmore.cs326.spring2022.skribbage.common;
 import edu.skidmore.cs326.spring2022.skribbage.common.events.CribbageEvent;
 import edu.skidmore.cs326.spring2022.skribbage.frontend.AnimationManager;
 import edu.skidmore.cs326.spring2022.skribbage.frontend.GameRenderManager;
+import edu.skidmore.cs326.spring2022.skribbage.frontend.events.game.PlayerClickDeckEvent;
 import edu.skidmore.cs326.spring2022.skribbage.frontend.events.game.PlayerPlayCardEvent;
+import us.daveread.edu.graphics.surface.DialogPosition;
+import us.daveread.edu.graphics.surface.DialogType;
+
 import org.apache.log4j.Logger;
 
 import java.beans.PropertyChangeEvent;
@@ -99,7 +103,12 @@ public final class GameController implements PropertyChangeListener {
                     case CUT_DECK:
                         currentGameState = GameState.DISCARD_TO_CRIB;
 
+                        PlayerClickDeckEvent playerClickDeckEvent =
+                            (PlayerClickDeckEvent) cribbageEvent;
+
                         // TODO decide dealer based on who picked the lower card
+                        gameRenderManager.determineDealer(
+                            playerClickDeckEvent.getClickedCardIndex());
 
                         // Deal cards and wait for player to discard cards to
                         // crib
@@ -113,13 +122,20 @@ public final class GameController implements PropertyChangeListener {
                             false);
                         break;
                     case STARTER_CARD:
+                        AnimationManager.getInstance().getStartGamePage()
+                            .remove(AnimationManager.getInstance()
+                                .getStartGamePage()
+                                .getGameInformation());
                         currentGameState = GameState.PLAY_CARD;
-                        animationManager.moveCardsToStandardPositions(50);
+
+                        playerClickDeckEvent =
+                            (PlayerClickDeckEvent) cribbageEvent;
+
                         // Put the cards back on the deck, with the top card
                         // flipped
-                        // TODO this
-                        // animationManager
-                        // .moveCardsBackToTopOfDeckWithTopShowing();
+                        gameRenderManager.selectStarterCard(
+                            playerClickDeckEvent.getClickedCardIndex());
+
                         break;
                     default:
                         break;
@@ -156,10 +172,10 @@ public final class GameController implements PropertyChangeListener {
 
                         // Check if all cards have been played
                         if (numCardsInPlay == 8) {
-                            
+
                             // Calculate score and move pegs
                             gameRenderManager.movePegs();
-                            
+
                             // Move to discard to crib state again
                             currentGameState = GameState.DISCARD_TO_CRIB;
                         }
@@ -174,15 +190,21 @@ public final class GameController implements PropertyChangeListener {
                 if (gameRenderManager.getSelectedCardsForDiscarding()
                     .size() == MAX_DISCARD_TO_CRIB_SIZE) {
                     // TODO send selected cards to the crib
-                    
+
                     gameRenderManager.discardCards();
-                    
+
                     animationManager.getStartGamePage().remove(animationManager
                         .getStartGamePage().getSendCardsToCribButton());
                     currentGameState = GameState.STARTER_CARD;
                     GameRenderManager.getInstance()
                         .getSelectedCardsForDiscarding().clear();
                     animationManager.fanCards();
+                    AnimationManager.getInstance().getStartGamePage()
+                        .getGameInformation()
+                        .setMessage("Select a starter card");
+                    AnimationManager.getInstance().getStartGamePage()
+                        .add(AnimationManager.getInstance().getStartGamePage()
+                            .getGameInformation());
 
                 }
 

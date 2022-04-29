@@ -86,6 +86,11 @@ public class StartGamePage extends SkribbageDrawingSurface implements Page {
     private Text sendCardsToCribButton;
 
     /**
+     * Text to tell the player what to do.
+     */
+    private Text gameInformation;
+    
+    /**
      * Arrows displayed on board.
      */
     private Image[] arrows;
@@ -210,6 +215,15 @@ public class StartGamePage extends SkribbageDrawingSurface implements Page {
     }
 
     /**
+     * Get the game information text.
+     * 
+     * @return gameInformation
+     */
+    public Text getGameInformation() {
+        return gameInformation;
+    }
+    
+    /**
      * addPlayerPoints.
      * 
      * @param pointsToAdd
@@ -245,6 +259,9 @@ public class StartGamePage extends SkribbageDrawingSurface implements Page {
             Color.black, Color.blue);
         sendCardsToCribButton = new Text("Send Cards to Crib",
             new Point(700, 520), 20, Color.black, Color.blue);
+        gameInformation = new Text("Sample text",
+            new Point(650, 560), 20, Color.black, Color.black);
+        gameInformation.setOpacity(0.5f);
         arrows = new Image[3];
         arrows[0] = new Image("arrow.png", new Point(100, 70), 1, null);
         arrows[1] = new Image("arrow.png", new Point(260, 70), 1, null);

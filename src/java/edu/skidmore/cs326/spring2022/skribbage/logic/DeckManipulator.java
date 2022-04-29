@@ -71,7 +71,7 @@ public class DeckManipulator implements DeckManipulation {
      *            index of which card to move to the top.
      */
     public void moveToTop(Deck deckInstance, int whatCardToMove) {
-        Card tempCard = deckInstance.getDeck().get(whatCardToMove + 1);
+        Card tempCard = deckInstance.getDeck().get(whatCardToMove);
         deckInstance.getDeck().remove(whatCardToMove);
         deckInstance.getDeck().add(0, tempCard);
     }

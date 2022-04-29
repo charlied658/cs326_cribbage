@@ -13,9 +13,12 @@ import org.apache.log4j.Logger;
 import edu.skidmore.cs326.spring2022.skribbage.common.Card;
 import edu.skidmore.cs326.spring2022.skribbage.common.EventFactory;
 import edu.skidmore.cs326.spring2022.skribbage.common.EventType;
+import edu.skidmore.cs326.spring2022.skribbage.logic.DeckManipulator;
 import edu.skidmore.cs326.spring2022.skribbage.logic.GameManager;
 import us.daveread.edu.graphics.shape.Drawable;
 import us.daveread.edu.graphics.shape.impl.Image;
+import us.daveread.edu.graphics.surface.DialogPosition;
+import us.daveread.edu.graphics.surface.DialogType;
 
 /**
  * Class to manage the rendering of objects on the StartGamePage.
@@ -84,6 +87,11 @@ public class GameRenderManager {
      * The current human player to be rendered.
      */
     private Player activePlayer;
+
+    /**
+     * DeckManipulator instance.
+     */
+    private DeckManipulator deckManager = new DeckManipulator();
 
     /**
      * computer points.
@@ -216,7 +224,8 @@ public class GameRenderManager {
                     (PlayerClickDeckEvent) EventFactory.getInstance()
                         .createEvent(
                             EventType.PLAYER_CLICK_DECK, this,
-                            GameRenderManager.getInstance().getActivePlayer());
+                            GameRenderManager.getInstance().getActivePlayer(),
+                            (CardImage) e, (Integer) i);
                 EventFactory.getInstance().fireEvent(playerClickDeckEvent);
                 return;
 
@@ -453,13 +462,18 @@ public class GameRenderManager {
         // the board and play an animation
         AnimationManager.getInstance().getGameManager()
             .playCard(clickedCardIndex);
+        
+        AnimationManager.getInstance().setStandardCardDestinations();
+        cardsInDeck.get(0).setUpdateShowing(true);
         AnimationManager.getInstance()
-            .moveCardsToStandardPositions(50);
+            .cardGlideAnimation(50);
 
         // Opponent plays a random card, then play an animation
         AnimationManager.getInstance().getGameManager().opponentPlayCard();
+        AnimationManager.getInstance().setStandardCardDestinations();
+        cardsInDeck.get(0).setUpdateShowing(true);
         AnimationManager.getInstance()
-            .moveCardsToStandardPositions(50);
+            .cardGlideAnimation(50);
 
         return AnimationManager.getInstance().getGameManager().getGame()
             .getCardsInPlay().getCardsInHand().length;
@@ -535,6 +549,72 @@ public class GameRenderManager {
         AnimationManager.getInstance()
             .moveCardsToStandardPositions(50);
 
+    }
+
+    /**
+     * Determine the dealer based on who picked the lower card.
+     * 
+     * @param clickedCardIndex
+     */
+    public void determineDealer(int clickedCardIndex) {
+        Card card1 = AnimationManager.getInstance().getGameManager().getGame()
+            .getDeck().getDeck().remove(clickedCardIndex);
+        AnimationManager.getInstance().getGameManager().getGame()
+            .getPlayerList().get(0).getHand().addCard(card1);
+
+        AnimationManager.getInstance().setStandardCardDestinations();
+        AnimationManager.getInstance().setDestinationOfCards(cardsInDeck, 550,
+            330, 550, 0);
+        AnimationManager.getInstance().cardGlideAnimation(50);
+
+        Random rand = new Random();
+        int index = rand.nextInt(51);
+        Card card2 = AnimationManager.getInstance().getGameManager().getGame()
+            .getDeck().getDeck().remove(index);
+        AnimationManager.getInstance().getGameManager().getGame()
+            .getPlayerList().get(1).getHand().addCard(card2);
+
+        AnimationManager.getInstance().setStandardCardDestinations();
+        AnimationManager.getInstance().setDestinationOfCards(cardsInDeck, 550,
+            330, 550, 0);
+        AnimationManager.getInstance().setCardsShowing(cardsInOpponentHand,
+            true);
+        AnimationManager.getInstance().cardGlideAnimation(50);
+
+        try {
+            Thread.sleep(500);
+        }
+        catch (Exception e) {
+            LOG.trace("Exception " + e);
+        }
+
+        if (card1.getRank().getPointValue() <= card2.getRank()
+            .getPointValue()) {
+            AnimationManager.getInstance().getStartGamePage().showMessage(
+                "Dealer information", "You are the dealer",
+                DialogPosition.CENTER_ALL, DialogType.INFORMATION);
+        } else {
+            AnimationManager.getInstance().getStartGamePage().showMessage(
+                "Dealer information", "Opponent is the dealer",
+                DialogPosition.CENTER_ALL, DialogType.INFORMATION);
+        }
+
+    }
+
+    /**
+     * Select the starter card based on what the player clicked.
+     * 
+     * @param clickedCardIndex
+     */
+    public void selectStarterCard(int clickedCardIndex) {
+        deckManager.moveToTop(
+            AnimationManager.getInstance().getGameManager().getGame().getDeck(),
+            clickedCardIndex);
+        
+        AnimationManager.getInstance().setStandardCardDestinations();
+        cardsInDeck.get(0).setUpdateShowing(true);
+        AnimationManager.getInstance().cardGlideAnimation(50);
+        
     }
 
     /**
