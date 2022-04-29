@@ -34,7 +34,8 @@ public class GameManager implements GameManagerInterface {
     /**
      * GameManager constructor that initializes a Game.
      *
-     * @param game is the Game to set the class Game to.
+     * @param game
+     *            is the Game to set the class Game to.
      */
     public GameManager(Game game) {
         this.g = game;
@@ -52,7 +53,8 @@ public class GameManager implements GameManagerInterface {
     /**
      * Sets the Game used for this class.
      *
-     * @param game is a Game object.
+     * @param game
+     *            is a Game object.
      */
     public void setGame(Game game) {
         g = game;
@@ -110,23 +112,24 @@ public class GameManager implements GameManagerInterface {
 
     /**
      * Test whether the deck is reset.
+     * 
      * @return if the deck is reset or not
      */
     public boolean deckIsReset() {
         if (g.getDeck().getDeck().size() != 52) {
             return false;
         }
-        
+
         for (int i = 0; i < g.getDeck().getDeck().size(); i++) {
             if (g.getDeck().getDeck().get(i).getCardID() != i) {
                 return false;
             }
         }
-        
+
         return true;
-        
+
     }
-    
+
     /**
      * Reset the cards to their starting positions.
      */
@@ -194,19 +197,24 @@ public class GameManager implements GameManagerInterface {
      * Play a card from your hand to the center of the board.
      *
      * @param index
+     * @return Card that was played
      */
-    public void playCard(int index) {
+    public Card playCard(int index) {
         if (g.getPlayerList().get(0).getHand().getCardsInHand().size() > 0) {
             Card temp = handManager.removeCardFromHand(
                 g.getPlayerList().get(0).getHand(), index);
             handManager.addCardToHand(g.getCardsInPlay(), temp);
+            return temp;
+        } else {
+            return new Card(null, null);
         }
     }
 
     /**
      * Have the opponent pick a random card to play.
+     * @return card the opponent played.
      */
-    public void opponentPlayCard() {
+    public Card opponentPlayCard() {
         Random rand = new Random();
         int index = rand.nextInt(
             g.getPlayerList().get(1).getHand().getCardsInHand().size());
@@ -214,6 +222,9 @@ public class GameManager implements GameManagerInterface {
             Card temp = handManager.removeCardFromHand(
                 g.getPlayerList().get(1).getHand(), index);
             handManager.addCardToHand(g.getCardsInPlay(), temp);
+            return temp;
+        } else {
+            return new Card(null, null);
         }
     }
 }
