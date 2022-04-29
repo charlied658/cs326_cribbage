@@ -13,19 +13,19 @@ interface GameInterface {
     /**
      * theDeck.
      */
-    Deck theDeck = new Deck();
+    Deck THE_DECK = new Deck();
 
     /** The list of players who are playing this game of Cribbage. */
-    List<Player> playerList = new ArrayList<Player>();
+    List<Player> PLAYER_LIST = new ArrayList<Player>();
 
     /**
      * The total score among the players during the pegging phase of
      * the game (0 <= peggingTotal <= 31).
      */
-    int peggingTotal = 0;
+    int PEGGING_TOTAL = 0;
 
     /** The crib for the game. */
-    Hand cribCards = new Hand();
+    Hand CRIB_CARDS = new Hand();
 
     /**
      * initPlayers method.
@@ -37,7 +37,7 @@ interface GameInterface {
     /**
      * Initializes the list of Hand objects where each Hand is a
      * list of cards played during the pegging play phase.
-     * 
+     *
      * @param numPlayers
      */
     void initPeggingCardsPlayed(int numPlayers);
