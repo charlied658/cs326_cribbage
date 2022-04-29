@@ -28,7 +28,7 @@ public class UsernameProxyTest {
     @Test
     public void usernameCheckSuccess() {
         Boolean verification = usernameProxyinstance.usernameCheck("nchantzi");
-        assertEquals("Password should get accepted", true, verification);
+        assertEquals("Username should get accepted", true, verification);
     }
 
     /**
@@ -37,8 +37,8 @@ public class UsernameProxyTest {
     @Test
     public void usernameCheckFail() {
         Boolean verification =
-            usernameProxyinstance.usernameCheck("fuck");
-        assertEquals("Password should not get accepted", false, verification);
+            usernameProxyinstance.usernameCheck("nfuckn");
+        assertEquals("Username should not get accepted", false, verification);
 
     }
 

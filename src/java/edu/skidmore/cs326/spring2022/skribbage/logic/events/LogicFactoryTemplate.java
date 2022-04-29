@@ -40,6 +40,8 @@ public class LogicFactoryTemplate extends FactoryTemplate {
                 return new CreateAccountResponseEvent(source, args);
             case USER_CHANGE_PASSWORD_RESPONSE:
                 return new UserChangePasswordResponseEvent(source, args);
+            case USER_CHANGE_PASSWORD_VALIDATION_RESPONSE:
+                return new ValidateChangeResponseEvent(source, args);
             default:
                 LOG.warn("Event passed + " + event.toString()
                     + " was not one of logic events ");

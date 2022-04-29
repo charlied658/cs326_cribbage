@@ -87,6 +87,8 @@ public class UsernameProxy {
 
                 String tempban = prop.getProperty(altProp);
                 tempban = tempban.trim();
+                tempban = tempban.toLowerCase();
+                username = username.toLowerCase();
 
                 if (username.contains(tempban)) {
                     usernameIsGood = false;
