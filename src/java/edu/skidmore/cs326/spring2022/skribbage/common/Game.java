@@ -3,8 +3,6 @@ package edu.skidmore.cs326.spring2022.skribbage.common;
 import java.util.List;
 import java.util.ArrayList;
 
-//import org.apache.log4j.Logger;
-
 /**
  * Game contains the state of the game. It has a deck, a list of players, a
  * pegging total, a list of cards in the crib, and lists of cards played during
@@ -70,6 +68,18 @@ public class Game implements GameInterface {
         theDeck = new Deck();
         cardsInPlay = new Hand();
         initPlayers(numPlayers);
+        initPeggingCardsPlayed(numPlayers);
+    }
+
+
+    public Game(int numPlayers, List <Player> aPlayerList) {
+
+        cribCards = new Hand();
+        peggingTotal = 0;
+        state = GameState.START_GAME;
+        theDeck = new Deck();
+        cardsInPlay = new Hand();
+        setPlayerList(aPlayerList);
         initPeggingCardsPlayed(numPlayers);
     }
 
@@ -193,7 +203,7 @@ public class Game implements GameInterface {
     /**
      * Sets the list of Players.
      *
-     * @param a list of Players.
+     * @param pList is a list of Players.
      */
     public void setPlayerList(List <Player> pList) {
         playerList = pList;

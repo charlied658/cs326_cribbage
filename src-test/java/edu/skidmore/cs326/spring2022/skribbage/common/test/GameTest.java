@@ -74,8 +74,6 @@ public class GameTest {
         game = new Game(numPlayers);
     }
 
-    // ============== below line = pass ==================
-
     /**
      * Tests getListOfPeggingCardsPlayed method for second set of Cards in
      * list.
@@ -118,14 +116,10 @@ public class GameTest {
     @Test
     public void testGetCardsInPlay() {
 
-    //List <Card> retrievedCardsPlay = game.getCardsInPlay().getCardsInHand();
-    Card [] retrievedCardsPlay = game.getCardsInPlay().getCardsInHand();
+        Card [] retrievedCardsPlay = game.getCardsInPlay().getCardsInHand();
+        Card [] toCompareCardsInPlay = testCardsInPlay.getCardsInHand();
 
-    //List <Card> toCompareCardsInPlay = testCardsInPlay.getCardsInHand();
-    Card [] toCompareCardsInPlay = testCardsInPlay.getCardsInHand();
-
-    //assertTrue(retrievedCardsPlay.equals(toCompareCardsInPlay));
-    assertTrue(Arrays.equals(retrievedCardsPlay, toCompareCardsInPlay));
+        assertTrue(Arrays.equals(retrievedCardsPlay, toCompareCardsInPlay));
 
     }
 
@@ -136,11 +130,11 @@ public class GameTest {
     @Test
     public void testGetPeggingTotal() {
 
-    game.setPeggingTotal(5);
+        game.setPeggingTotal(5);
 
-    int peggingTotal = game.getPeggingTotal();
+        int peggingTotal = game.getPeggingTotal();
 
-    assertEquals(5, peggingTotal);
+        assertEquals(5, peggingTotal);
 
     }
 
@@ -151,7 +145,7 @@ public class GameTest {
     @Test
     public void testInitPeggingCardsPlayed() {
 
-    assertEquals(game.getListOfPeggingCardsPlayed().size(), 2);
+        assertEquals(game.getListOfPeggingCardsPlayed().size(), 2);
 
     }
 
@@ -161,10 +155,10 @@ public class GameTest {
     */
     @Test
     public void testInitPlayers() {
-    game.initPlayers(2);
-    assertEquals(game.getPlayerList().size(), 4);
-    //it should be 4 because the player list was already initialized
-    //for 2 players
+        game.initPlayers(2);
+        assertEquals(game.getPlayerList().size(), 4);
+        //it should be 4 because the player list was already initialized
+        //for 2 players
     }
 
     /**
@@ -174,9 +168,9 @@ public class GameTest {
     @Test
     public void testSetPeggingTotal() {
 
-    game.setPeggingTotal(5);
+        game.setPeggingTotal(5);
 
-    assertEquals(game.getPeggingTotal(), 5);
+        assertEquals(game.getPeggingTotal(), 5);
     }
 
     /**
@@ -186,15 +180,15 @@ public class GameTest {
     @Test
     public void testGetCrib() {
 
-    Hand returnedCrib = game.getCribCards();
+        Hand returnedCrib = game.getCribCards();
 
-    //List <Card> returnedCribList = returnedCrib.getCardsInHand();
-    Card [] returnedCribList = returnedCrib.getCardsInHand();
+        //List <Card> returnedCribList = returnedCrib.getCardsInHand();
+        Card [] returnedCribList = returnedCrib.getCardsInHand();
 
-    Card [] testCribList = testCrib.getCardsInHand();
+        Card [] testCribList = testCrib.getCardsInHand();
 
-    //assertTrue(returnedCribList.equals(testCribList));
-    assertTrue(Arrays.equals(returnedCribList, testCribList));
+        //assertTrue(returnedCribList.equals(testCribList));
+        assertTrue(Arrays.equals(returnedCribList, testCribList));
 
     }
 
@@ -205,21 +199,21 @@ public class GameTest {
     @Test
     public void testGetIdxPlayerPegCards() {
 
-      List <Player> playerList = new ArrayList <Player>();
+        List <Player> playerList = new ArrayList <Player>();
 
-      playerList.add(new Player (new User ("johnFreeWill@gmail.com", "jFreeWill",
-          UserRole.AUTHORIZED)));
+        playerList.add(new Player(new User("johnFreeWill@gmail.com",
+            "jFreeWill", UserRole.AUTHORIZED)));
 
-      playerList.add(new Player (new User ("hegel@gmail.com", "phenonmenologySpirit",
-          UserRole.AUTHORIZED)));
+        playerList.add(new Player(new User("hegel@gmail.com", "phenSpirit",
+            UserRole.AUTHORIZED)));
 
-      playerList.get(0).getUser().setUserId(12);
+        playerList.get(0).getUser().setUserId(12);
 
-      playerList.get(1).getUser().setUserId(13);
+        playerList.get(1).getUser().setUserId(13);
 
-      game.setPlayerList(playerList);
+        game.setPlayerList(playerList);
 
-      assertTrue(game.getIdxPlayerPegCards(playerList.get(0)) == 0);
+        assertTrue(game.getIdxPlayerPegCards(playerList.get(0)) == 0);
 
     }
 

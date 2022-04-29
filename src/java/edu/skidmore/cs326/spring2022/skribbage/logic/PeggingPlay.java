@@ -55,6 +55,9 @@ public class PeggingPlay implements PeggingPlayInterface {
     * the card to add. If the card is played during pegging play, the card is
     * temporarily removed from the player's hand who played it.
     *
+    * requires the players in the player list to have an assigned user id  
+    *
+    *
     * @param cardToAdd is the card whose point value will be added to the
     * total if it meets the condition described above.
     * @param p is the player who is trying to play the card.
@@ -104,15 +107,15 @@ public class PeggingPlay implements PeggingPlayInterface {
     */
     public boolean checkClaim(Claim c, Player p) {
 
-        if (c.FIFTEEN == Claim.FIFTEEN) {
+        if (c == Claim.FIFTEEN) {
             return check15(p);
-        } else if (c.THIRTYONE == Claim.THIRTYONE) {
+        } else if (c == Claim.THIRTYONE) {
             return check31(p);
-        } else if (c.PAIR == Claim.PAIR) {
+        } else if (c == Claim.PAIR) {
             return checkPair(p);
-        } else if (c.THREEPAIR == Claim.THREEPAIR) {
+        } else if (c == Claim.THREEPAIR) {
             return check3Pair(p);
-        } else if (c.FOURPAIR == Claim.FOURPAIR) {
+        } else if (c == Claim.FOURPAIR) {
             return check4Pair(p);
         } else {
             return false;

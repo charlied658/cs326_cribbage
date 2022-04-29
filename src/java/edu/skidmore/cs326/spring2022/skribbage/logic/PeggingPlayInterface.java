@@ -1,6 +1,5 @@
 package edu.skidmore.cs326.spring2022.skribbage.logic;
 
-import edu.skidmore.cs326.spring2022.skribbage.common.Game;
 import edu.skidmore.cs326.spring2022.skribbage.common.Card;
 import edu.skidmore.cs326.spring2022.skribbage.common.Player;
 import edu.skidmore.cs326.spring2022.skribbage.common.Claim;
@@ -25,6 +24,7 @@ interface PeggingPlayInterface {
      *            total if it meets the condition described above.
      * @param p
      *            is the player who is trying to play the card
+     * @return true if the card was added; false, otherwise.
      */
     boolean addCardToPeggingTotal(Card cardToAdd, Player p);
 

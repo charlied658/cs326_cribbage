@@ -2,15 +2,20 @@ package edu.skidmore.cs326.spring2022.skribbage.logic.test;
 
 import edu.skidmore.cs326.spring2022.skribbage.logic.PeggingPlay;
 import edu.skidmore.cs326.spring2022.skribbage.common.Player;
+import edu.skidmore.cs326.spring2022.skribbage.common.User;
+import edu.skidmore.cs326.spring2022.skribbage.common.Claim;
+import edu.skidmore.cs326.spring2022.skribbage.common.UserRole;
 import edu.skidmore.cs326.spring2022.skribbage.common.Hand;
 import edu.skidmore.cs326.spring2022.skribbage.common.Suit;
 import edu.skidmore.cs326.spring2022.skribbage.common.Card;
 import edu.skidmore.cs326.spring2022.skribbage.common.Rank;
 import edu.skidmore.cs326.spring2022.skribbage.common.Game;
 import static org.junit.Assert.assertTrue;
+import java.util.ArrayList;
 // import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
+import java.util.List;
 // import java.util.ArrayList;
 
 /**
@@ -48,6 +53,20 @@ public class PeggingTest {
     @Test
     public void testAddCardToPeggingTotalCase1() {
 
+        List <Player> playerList = new ArrayList <Player>();
+
+        playerList.add(new Player(new User("johnFreeWill@gmail.com",
+            "jFreeWill", UserRole.AUTHORIZED)));
+
+        playerList.add(new Player(new User("hegel@gmail.com", "phenSpirit",
+            UserRole.AUTHORIZED)));
+
+        playerList.get(0).getUser().setUserId(12);
+
+        playerList.get(1).getUser().setUserId(13);
+
+        game.setPlayerList(playerList);
+
         Card cardToAdd = new Card(Rank.ACE, Suit.HEARTS);
 
         Player player = game.getPlayerList().get(0);
@@ -63,252 +82,185 @@ public class PeggingTest {
 
     }
 
-    // /**
-    // * Test addCardToPeggingTotal method.
-    // * Case 2: card added successfully and addCardToPeggingTotal returned
-    // * true.
-    // */
-    // @Test
-    // public void testAddCardToPeggingTotalCase2() {
-    //
-    //     Card cardToAdd = new Card(Rank.ACE, Suit.HEARTS);
-    //
-    //     Player player = game.getPlayerList().get(0);
-    //
-    //     boolean wasAdded = pPlay.addCardToPeggingTotal(cardToAdd, player);
-    //
-    //     assertTrue(wasAdded);
-    //
-    // }
+    /**
+    * Test addCardToPeggingTotal method.
+    * Case 2: card added unsuccessfully.
+    */
+    @Test
+    public void testAddCardToPeggingTotalCase2() {
 
-    // /**
-    // * Test addCardToPeggingTotal method.
-    // * Case 3: card not added successfully.
-    // */
-    // @Test
-    // public void testAddCardToPeggingTotalCase3() {
-    //
-    //     game.setPeggingTotal(31);
-    //
-    //     Card cardToAdd = new Card(Rank.ACE, Suit.HEARTS);
-    //
-    //     Player player = game.getPlayerList().get(0);
-    //
-    //     boolean wasAdded = pPlay.addCardToPeggingTotal(cardToAdd, player);
-    //
-    //     assertTrue(!wasAdded);
-    //
-    // }
+        List <Player> playerList = new ArrayList <Player>();
 
-    // /**
-    // * Test the method check15.
-    // * Case 1: player had a valid claim and received points.
-    // */
-    // @Test
-    // public void testCheck15Case1() {
-    //
-    //     game.setPeggingTotal(15);
-    //     Player player = game.getPlayerList().get(0);
-    //
-    //     pPlay.check15(player);
-    //
-    //     int pts = player.getPoints();
-    //
-    //     assertTrue(pts == 2);
-    //
-    // }
+        playerList.add(new Player(new User("johnFreeWill@gmail.com",
+            "jFreeWill", UserRole.AUTHORIZED)));
 
-    // /**
-    // * Test the method check15.
-    // * Case 1: player did not have a valid claim and did not get points.
-    // */
-    // @Test
-    // public void testCheck15Case2() {
-    //
-    //     game.setPeggingTotal(1);
-    //     Player player = game.getPlayerList().get(0);
-    //
-    //     pPlay.check15(player);
-    //
-    //     int pts = player.getPoints();
-    //
-    //     assertTrue(pts == 0);
-    //
-    // }
+        playerList.add(new Player(new User("hegel@gmail.com", "phenSpirit",
+            UserRole.AUTHORIZED)));
 
-    // /**
-    // * Test checkClaim method.
-    // * Case 1: player claims fifteen successfully and checkClaim returns true.
-    // */
-    // @Test
-    // public void testCheckClaimCase1() {
-    //
-    //     game.setPeggingTotal(15);
-    //     Player player = game.getPlayerList().get(0);
-    //
-    //     boolean wasValid = pPlay.checkClaim(Claim.FIFTEEN, player);
-    //
-    //     assertTrue(wasValid);
-    //
-    // }
+        playerList.get(0).getUser().setUserId(12);
 
-    // /**
-    // * Test checkClaim method.
-    // * Case 2: player claims fifteen unsuccessfully and checkClaim returns
-    // * false.
-    // */
-    // @Test
-    // public void testCheckClaimCase2() {
-    //
-    //     game.setPeggingTotal(1);
-    //     Player player = game.getPlayerList().get(0);
-    //
-    //     boolean wasValid = pPlay.checkClaim(Claim.FIFTEEN, player);
-    //
-    //     assertTrue(!wasValid);
-    //
-    // }
+        playerList.get(1).getUser().setUserId(13);
 
-    // /**
-    // * Test the method check31.
-    // * Case 1: player had a valid claim and received points.
-    // */
-    // @Test
-    // public void testCheck31Case1() {
-    //
-    //     game.setPeggingTotal(31);
-    //     Player player = game.getPlayerList().get(0);
-    //
-    //     pPlay.check31(player);
-    //
-    //     int pts = player.getPoints();
-    //
-    //     assertTrue(pts == 2);
-    //
-    // }
+        game.setPlayerList(playerList);
 
-    // /**
-    // * Test the method check31.
-    // * Case 2: player did not have a valid claim and did not get points.
-    // */
-    // @Test
-    // public void testCheck31Case2() {
-    //
-    //     game.setPeggingTotal(1);
-    //     Player player = game.getPlayerList().get(0);
-    //
-    //     pPlay.check31(player);
-    //
-    //     int pts = player.getPoints();
-    //
-    //     assertTrue(pts == 0);
-    //
-    // }
+        Card cardToAdd = new Card(Rank.ACE, Suit.HEARTS);
 
-    // /**
-    // * Test checkClaim method.
-    // * Case 3: player claims thirtyone successfully and checkClaim returns true.
-    // */
-    // @Test
-    // public void testCheckClaimCase3() {
-    //
-    //     game.setPeggingTotal(31);
-    //     Player player = game.getPlayerList().get(0);
-    //
-    //     boolean wasValid = pPlay.checkClaim(Claim.THIRTYONE, player);
-    //
-    //     assertTrue(wasValid);
-    //
-    // }
+        Player player = game.getPlayerList().get(0);
 
-    // /**
-    // * Test checkClaim method.
-    // * Case 4: player claims thirtyone unsuccesfully and checkClaim returns
-    // * false.
-    // */
-    // @Test
-    // public void testCheckClaimCase4() {
-    //
-    //     game.setPeggingTotal(1);
-    //     Player player = game.getPlayerList().get(0);
-    //
-    //     boolean wasValid = pPlay.checkClaim(Claim.THIRTYONE, player);
-    //
-    //     assertTrue(wasValid);
-    //
-    // }
+        game.setPeggingTotal(31);
 
+        boolean wasAdded = pPlay.addCardToPeggingTotal(cardToAdd, player);
 
+        //check that the card was not added to the player's corresponding
+        //hand of pegging cards
 
+        Hand pegCardsPlayed = game.getPeggingCards(0);
 
+        assertTrue(pegCardsPlayed.getCardsInHand().length == 0);
+
+    }
+
+    /**
+    * Test the method check15.
+    * Case 1: player had a valid claim and received points.
+    */
+    @Test
+    public void testCheck15Case1() {
+
+        game.setPeggingTotal(15);
+        Player player = game.getPlayerList().get(0);
+
+        pPlay.check15(player);
+
+        int pts = player.getPoints();
+
+        assertTrue(pts == 2);
+
+    }
+
+    /**
+    * Test the method check15.
+    * Case 1: player did not have a valid claim and did not get points.
+    */
+    @Test
+    public void testCheck15Case2() {
+
+        game.setPeggingTotal(1);
+        Player player = game.getPlayerList().get(0);
+
+        pPlay.check15(player);
+
+        int pts = player.getPoints();
+
+        assertTrue(pts == 0);
+
+    }
+
+    /**
+    * Test checkClaim method.
+    * Case 1: player claims fifteen successfully and checkClaim returns true.
+    */
+    @Test
+    public void testCheckClaimCase1() {
+
+        game.setPeggingTotal(15);
+        Player player = game.getPlayerList().get(0);
+
+        boolean wasValid = pPlay.checkClaim(Claim.FIFTEEN, player);
+
+        assertTrue(wasValid);
+
+    }
+
+    /**
+    * Test checkClaim method.
+    * Case 2: player claims fifteen unsuccessfully and checkClaim returns
+    * false.
+    */
+    @Test
+    public void testCheckClaimCase2() {
+
+        game.setPeggingTotal(1);
+        Player player = game.getPlayerList().get(0);
+
+        boolean wasValid = pPlay.checkClaim(Claim.FIFTEEN, player);
+
+        assertTrue(!wasValid);
+
+    }
+
+    /**
+    * Test the method check31.
+    * Case 1: player had a valid claim and received points.
+    */
+    @Test
+    public void testCheck31Case1() {
+
+        game.setPeggingTotal(31);
+        Player player = game.getPlayerList().get(0);
+
+        pPlay.check31(player);
+
+        int pts = player.getPoints();
+
+        assertTrue(pts == 2);
+
+    }
+
+    /**
+    * Test the method check31.
+    * Case 2: player did not have a valid claim and did not get points.
+    */
+    @Test
+    public void testCheck31Case2() {
+
+        game.setPeggingTotal(1);
+        Player player = game.getPlayerList().get(0);
+
+        pPlay.check31(player);
+
+        int pts = player.getPoints();
+
+        assertTrue(pts == 0);
+
+    }
+
+    /**
+    * Test checkClaim method.
+    * Case 3: player claims thirtyone successfully and checkClaim
+    * returns true.
+    */
+    @Test
+    public void testCheckClaimCase3() {
+
+        game.setPeggingTotal(31);
+        Player player = game.getPlayerList().get(0);
+
+        boolean wasValid = pPlay.checkClaim(Claim.THIRTYONE, player);
+
+        assertTrue(wasValid);
+
+    }
+
+    /**
+    * Test checkClaim method.
+    * Case 4: player claims thirtyone unsuccesfully and checkClaim returns
+    * false.
+    */
+    @Test
+    public void testCheckClaimCase4() {
+
+        game.setPeggingTotal(1);
+        Player player = game.getPlayerList().get(0);
+
+        boolean wasValid = pPlay.checkClaim(Claim.THIRTYONE, player);
+
+        assertTrue(!wasValid);
+
+    }
 
 
-
-
-
-
-    // /**
-    // * Test the method check15.
-    // * If the player passed as a parameter placed a card
-    // * during the pegging
-    // phase that
-    // * brought the pegging total to 15, the player is awarded 2 points.
-    // Otherwise, the
-    // * player is awarded no points.
-    // */
-    // @Test
-    // public void testCheck15() {
-    //
-    // //cases
-    // //the player is a dealer and placed a card that
-    // // brought the pegging total
-    // to 15
-    // //the player is a pone and placed a card that brought
-    // //the pegging total
-    // to 15
-    // //the player did not place a card to bring the pegging total to 15
-    //
-    // //the player is a dealer and placed a card that brought
-    // //the pegging total
-    // to 15
-    // p.isDealer = true;
-    // game.setPeggingTotal(14);
-    // pPlay.addCardToPeggingTotal(c, p);
-    // assertTrue(p.getPoints() == 2);
-    //
-    // //reset player's hand
-    // h.addCardToHand(c);
-    //
-    // //reset peggingCards for dealer and pone
-    // game.setPonePeggingCards(new ArrayList<Card>());
-    // game.setDealerPeggingCards(new ArrayList<Card>());
-    //
-    // //the player is a pone and placed a card that brought
-    // //the pegging total
-    // to 15
-    // //!!!!!!!!! reset player points to 0 again !!!!!!!!!
-    // p.intializePoints();
-    // p.isDealer = false;
-    // game.setPeggingTotal(14);
-    // pPlay.addCardToPeggingTotal(c, p);
-    // assertTrue(p.getPoints() == 2);
-    //
-    // //reset player's hand
-    // h.addCardToHand(c);
-    //
-    // //reset peggingCards for dealer and pone
-    // game.setPonePeggingCards(new ArrayList<Card>());
-    // game.setDealerPeggingCards(new ArrayList<Card>());
-    //
-    // //the player did not place a card to bring the pegging
-    // //total to 15
-    // //!!!!!!!!! reset player points to 0 again !!!!!!!!!
-    // p.intializePoints();
-    // game.setPeggingTotal(0);
-    // pPlay.addCardToPeggingTotal(c, p);
-    // assertTrue(p.getPoints() != 2);
-    // }
-
+    // haven't udpated below tests ============
 
     //
     // /**
