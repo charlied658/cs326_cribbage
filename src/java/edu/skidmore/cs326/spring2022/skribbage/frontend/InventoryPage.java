@@ -102,18 +102,18 @@ public class InventoryPage extends SkribbageDrawingSurface implements Page {
         int initXPosition = 30;
         int initYPosition = 115;
 
-//        currentUser.getInventoryManager().updateInventory();
-//        
-//        Object[] objectArray = currentUser.getInventoryManager()
-//            .createInventory().entrySet().toArray();
-//
-//        for (int i = 0; i < objectArray.length; i++) {
-//            add(new Text(objectArray[i] + "  ",
-//                new Point(initXPosition,
-//                    initYPosition),
-//                16, Color.BLACK));
-//            initYPosition += 25;
-//        }
+        currentUser.getInventoryManager().updateInventory();
+        
+        Object[] objectArray = currentUser.getInventoryManager()
+            .createInventory().entrySet().toArray();
+
+        for (int i = 0; i < objectArray.length; i++) {
+            add(new Text(objectArray[i] + "  ",
+                new Point(initXPosition,
+                    initYPosition),
+                16, Color.BLACK));
+            initYPosition += 25;
+        }
 
         // add(closeWindow);
     
