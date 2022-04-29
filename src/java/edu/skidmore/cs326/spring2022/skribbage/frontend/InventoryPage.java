@@ -3,17 +3,17 @@ package edu.skidmore.cs326.spring2022.skribbage.frontend;
 import java.awt.Color;
 import java.awt.Point;
 //import java.awt.event.WindowEvent;
-import java.util.HashMap;
+//import java.util.HashMap;
 
 //import java.awt.Graphics2D;
 
 import org.apache.log4j.Logger;
 
-import edu.skidmore.cs326.spring2022.skribbage.common.Card;
-import edu.skidmore.cs326.spring2022.skribbage.common.Player;
-import edu.skidmore.cs326.spring2022.skribbage.common.Rank;
-import edu.skidmore.cs326.spring2022.skribbage.common.Suit;
-
+//import edu.skidmore.cs326.spring2022.skribbage.common.Card;
+//import edu.skidmore.cs326.spring2022.skribbage.common.Player;
+//import edu.skidmore.cs326.spring2022.skribbage.common.Rank;
+//import edu.skidmore.cs326.spring2022.skribbage.common.Suit;
+import edu.skidmore.cs326.spring2022.skribbage.common.User;
 import us.daveread.edu.graphics.shape.Drawable;
 import us.daveread.edu.graphics.shape.impl.Image;
 import us.daveread.edu.graphics.shape.impl.Text;
@@ -26,7 +26,7 @@ import us.daveread.edu.utilities.Utility;
  * send and receive tokens and items to and from other players.
  * 
  * @author Jonah Marcus
- *         Last Update: April 11, 2022
+ *         Last Update: April 29, 2022
  *         Last Edited by Jonah Marcus
  */
 @SuppressWarnings("serial")
@@ -38,9 +38,9 @@ public class InventoryPage extends DrawingSurface implements Page {
     private MainFrame mf;
 
     /**
-     * currentPlayer - Current player whose inventory this is.
+     * currentUser - Current player whose inventory this is.
      */
-    private Player currentPlayer;
+    private User currentUser;
 
     /**
      * mainframeHeight - int variable to hold main frame height.
@@ -77,7 +77,7 @@ public class InventoryPage extends DrawingSurface implements Page {
     public InventoryPage() {
         LOG.trace("Entered InventoryPage Constructor.");
         // PLACEHOLDER - Add way to get player from database
-        currentPlayer = new Player();
+        currentUser = PageManager.getInstance().getLoggedInUser();
         mf = new MainFrame(this, "Inventory", mainframeWidth,
             mainframeHeight, false);
         setup();
@@ -101,20 +101,21 @@ public class InventoryPage extends DrawingSurface implements Page {
         int initXPosition = 30;
         int initYPosition = 115;
 
-        currentPlayer.getInventoryManager().updateInventory();
-
-        Object[] objectArray = currentPlayer.getInventoryManager()
-            .createInventory().entrySet().toArray();
-
-        for (int i = 0; i < objectArray.length; i++) {
-            add(new Text(objectArray[i] + "  ",
-                new Point(initXPosition,
-                    initYPosition),
-                16, Color.BLACK));
-            initYPosition += 25;
-        }
+//        currentUser.getInventoryManager().updateInventory();
+//        
+//        Object[] objectArray = currentUser.getInventoryManager()
+//            .createInventory().entrySet().toArray();
+//
+//        for (int i = 0; i < objectArray.length; i++) {
+//            add(new Text(objectArray[i] + "  ",
+//                new Point(initXPosition,
+//                    initYPosition),
+//                16, Color.BLACK));
+//            initYPosition += 25;
+//        }
 
         // add(closeWindow);
+    
         add(lobbyButton);
         add(logo);
     }

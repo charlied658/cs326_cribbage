@@ -108,17 +108,43 @@ public class Peg {
         Location currentLoc = this.spot.getLocation();
         Spot[][] grid = BoardManager.getInstance().getBoard().getGrid();
         
-        int newCol = 0;
+
         int newRow = 0;
-        int spacesRemaining = 0;
+        int newCol = 0;
         
-        for (int i = currentLoc.getColumn(); i < grid.length; i++) {
-            for (int j = currentLoc.getRow(); j < grid[i].length; j++) {
-                newCol = i;
-                newRow = j;
-                spacesRemaining++;
+        // These nested loops run through the grid of spots, and upon each
+        // iteration, checks if it has run through the number of spots
+        // specified in the parameter of this method. I'm not 100% sure if
+        // two if statements are entirely necessary, but I did it just to avoid
+        // a potential off by 1 error. Worst case scenario, it's just slightly 
+        // redundant.
+        outerloop:
+        for (int i = currentLoc.getRow(); i < grid.length; i++) {
+            if ((i + currentLoc.getColumn()) - (currentLoc.getRow() 
+                + currentLoc.getColumn()) == numSpaces) {
+                newRow = i;
+                newCol = currentLoc.getColumn();
+                break outerloop;
+            }
+            for (int j = currentLoc.getColumn(); j < grid[i].length; j++) {
+                if ((i + j) - (currentLoc.getRow() + currentLoc.getColumn()) 
+                    == numSpaces) {
+                    newRow = i;
+                    newCol = j;
+                    break outerloop;
+                }
             }
         }
+        
+        // In this instance, we have exited the loop without updating newRow
+        // or newCol. Unless numSpaces = 0, something went wrong and we were
+        // unable to update the Peg's spot.
+        if (newRow == currentLoc.getRow() && newCol == currentLoc.getColumn() 
+            && numSpaces > 0) {
+            throw new Error("Unable to update Peg's spot.");
+        }
+        
+        this.spot = grid[newRow][newCol];
     }
 
     /**
