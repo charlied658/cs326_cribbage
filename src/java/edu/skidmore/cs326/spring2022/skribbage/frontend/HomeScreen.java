@@ -4,11 +4,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Point;
 
-import javax.swing.SwingUtilities;
-
 import org.apache.log4j.Logger;
 
-import edu.skidmore.cs326.spring2022.skribbage.SkribbageProperty;
 import edu.skidmore.cs326.spring2022.skribbage.util.VerifyLibraryVersion;
 import us.daveread.edu.graphics.shape.Drawable;
 import us.daveread.edu.graphics.shape.impl.Image;
@@ -28,7 +25,7 @@ import us.daveread.edu.graphics.surface.MainFrame;
  *         Code reviewed by Jonah Marcus on 3/29/2022
  */
 @SuppressWarnings("serial")
-public class HomeScreen extends DrawingSurface implements Page {
+public class HomeScreen extends SkribbageDrawingSurface implements Page {
 
     /**
      * welcomeMessage - Text variable that holds the welcome message.
@@ -39,17 +36,6 @@ public class HomeScreen extends DrawingSurface implements Page {
      * logo - Image to hold the temporary game logo.
      */
     private Image logo;
-
-    /**
-     * homeScreen - MainFrame window to hold the UI attributes.
-     */
-    private MainFrame homeScreen;
-
-    /**
-     * loginPage - LoginPage window to be presented upon button click.
-     */
-    @SuppressWarnings("unused")
-    private LoginPage loginPage;
 
     /**
      * loginPageButton - Text variable that represents the button to go to the
@@ -72,9 +58,9 @@ public class HomeScreen extends DrawingSurface implements Page {
      */
     public HomeScreen() {
         LOG.trace("HomeScreen.java constructor");
-        homeScreen =
-            new MainFrame(this, "Skribbage Battle Royale Home", 900, 900, true);
+        new MainFrame(this, "Skribbage Battle Royale Home", 900, 900, true);
         setup();
+        positionWindow();
         checkGraphicsLibrary();
     }
 
@@ -150,30 +136,7 @@ public class HomeScreen extends DrawingSurface implements Page {
         LOG.trace("DrawableMosuceClick in HomeScreen.java");
         if (e == loginPageButton) {
             closeWindow();
-            loginPage = (LoginPage) PageManager.getInstance()
-                .createPage(PageType.LOGIN_PAGE);
+            PageManager.getInstance().createPage(PageType.LOGIN_PAGE);
         }
     }
-
-    /**
-     * Closes current window.
-     */
-    public void closeWindow() {
-        LOG.info(
-            "Save window position: "
-                + SwingUtilities.getWindowAncestor(this).getLocationOnScreen().x
-                + "," + SwingUtilities.getWindowAncestor(this)
-                    .getLocationOnScreen().y);
-        // Store the current X,Y location of the window
-        SkribbageProperty.GUI_WINDOW_X
-            .setPropertyValue(
-                SwingUtilities.getWindowAncestor(this).getLocationOnScreen().x
-                    + "");
-        SkribbageProperty.GUI_WINDOW_Y
-            .setPropertyValue(
-                SwingUtilities.getWindowAncestor(this).getLocationOnScreen().y
-                    + "");
-        homeScreen.dispose();
-    }
-
 }

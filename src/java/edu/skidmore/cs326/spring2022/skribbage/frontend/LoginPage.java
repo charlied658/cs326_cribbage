@@ -3,8 +3,6 @@ package edu.skidmore.cs326.spring2022.skribbage.frontend;
 import java.awt.Color;
 import java.awt.Point;
 
-import javax.swing.SwingUtilities;
-
 import edu.skidmore.cs326.spring2022.skribbage.frontend.events.ValidateUsernameEvent;
 import edu.skidmore.cs326.spring2022.skribbage.logic.events.CreateAccountResponseEvent;
 import edu.skidmore.cs326.spring2022.skribbage.logic.events.UserLoginResponseEvent;
@@ -12,7 +10,6 @@ import edu.skidmore.cs326.spring2022.skribbage.logic.events.UserValidationRespon
 
 import org.apache.log4j.Logger;
 
-import edu.skidmore.cs326.spring2022.skribbage.SkribbageProperty;
 import edu.skidmore.cs326.spring2022.skribbage.common.EventFactory;
 import edu.skidmore.cs326.spring2022.skribbage.common.EventType;
 import edu.skidmore.cs326.spring2022.skribbage.common.LoginAuthenticator;
@@ -44,12 +41,7 @@ import us.daveread.edu.graphics.surface.MainFrame;
  *         case we might need it when we start adding things.
  */
 @SuppressWarnings("serial")
-public class LoginPage extends DrawingSurface implements Page {
-    /**
-     * loginPage - MainFrame window to hold the UI attributes.
-     */
-    private MainFrame loginPage;
-
+public class LoginPage extends SkribbageDrawingSurface implements Page {
     /**
      * Object of type StartGamePage to act as a Backdoor until loggin is
      * functional.
@@ -192,7 +184,7 @@ public class LoginPage extends DrawingSurface implements Page {
 
     @Override
     public void setup() {
-        loginPage = new MainFrame(this, "Skribbage Battle Royale Login", 900,
+        new MainFrame(this, "Skribbage Battle Royale Login", 900,
             900, false);
         createAccountButton =
             new Text("Create Account", new Point(375, 360), 20,
@@ -414,39 +406,5 @@ public class LoginPage extends DrawingSurface implements Page {
         homeScreen =
             (HomeScreen) pageManager.createPage(PageType.HOMESCREEN_PAGE);
         closeWindow();
-    }
-
-    /**
-     * Method to close the window.
-     */
-    public void closeWindow() {
-        // Store the current X,Y location of the window
-        SkribbageProperty.GUI_WINDOW_X
-            .setPropertyValue(this.getLocationOnScreen().x + "");
-        SkribbageProperty.GUI_WINDOW_Y
-            .setPropertyValue(this.getLocationOnScreen().y + "");
-        loginPage.dispose();
-    }
-
-    /**
-     * Set the window position to match that of the previously displayed window.
-     */
-    public void positionWindow() {
-        try {
-            int x = Integer
-                .parseInt(SkribbageProperty.GUI_WINDOW_X.getPropertyValue("0"));
-            int y = Integer
-                .parseInt(SkribbageProperty.GUI_WINDOW_Y.getPropertyValue("0"));
-            LOG.info(
-                "Previous window position: " + x + "," + y);
-            // Dimension screenDim =
-            // Toolkit.getDefaultToolkit().getScreenSize();
-            // if (x < screenDim.width && y < screenDim.height) {
-            SwingUtilities.getWindowAncestor(this).setLocation(x, y);
-            // }
-        }
-        catch (Throwable t) {
-            LOG.warn("Unable to set window position", t);
-        }
     }
 }
