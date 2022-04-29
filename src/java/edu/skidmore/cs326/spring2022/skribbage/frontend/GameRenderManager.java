@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import edu.skidmore.cs326.spring2022.skribbage.common.Player;
 import edu.skidmore.cs326.spring2022.skribbage.frontend.events.game.PlayerClickDeckEvent;
+import edu.skidmore.cs326.spring2022.skribbage.frontend.events.game.PlayerPlayCardEvent;
 
 import org.apache.log4j.Logger;
 
@@ -155,48 +156,14 @@ public class GameRenderManager {
             if (e == GameRenderManager.getInstance()
                 .getCardsInHand().get(i)) {
 
-                // Set the cards to not be clickable
-                AnimationManager.getInstance().setCardsClickable(false);
+                PlayerPlayCardEvent playerPlayCardEvent =
+                    (PlayerPlayCardEvent) EventFactory.getInstance()
+                        .createEvent(
+                            EventType.PLAYER_PLAY_CARD, this,
+                            GameRenderManager.getInstance().getActivePlayer(),
+                            (CardImage) e, (Integer) i);
+                EventFactory.getInstance().fireEvent(playerPlayCardEvent);
 
-                // Play the card that has been clicked to the center of the
-                // board and play an animation
-                gameManager.playCard(i);
-                AnimationManager.getInstance().moveCardsToStandardPositions(50);
-
-                // Opponent plays a random card, then play an animation
-                gameManager.opponentPlayCard();
-                AnimationManager.getInstance().moveCardsToStandardPositions(50);
-
-                // Once the players have played all their cards, count the
-                // points and move the pegs. Each player has 6 cards so this
-                // happens when the number of cards in play equals 12
-                if (gameManager.getGame().getCardsInPlay()
-                    .getCardsInHand().size() == 12) {
-
-                    // Move each peg 5 spaces. This is a temporary test feature.
-                    // In the real game the pegs should move according to the
-                    // number of points earned during the play phase
-                    AnimationManager.getInstance().movePeg(0, 5);
-                    AnimationManager.getInstance().movePeg(1, 5);
-
-                    // If the location of either peg
-                    // is at the final spot, end the game.
-                    if (AnimationManager.getInstance()
-                        .getPegLocations()[0] == 120
-                        || AnimationManager.getInstance()
-                            .getPegLocations()[1] == 120) {
-                        AnimationManager.getInstance().getStartGamePage()
-                            .closeWindow();
-                    }
-
-                    // Deal 6 cards to each player again to start the next
-                    // round.
-                    AnimationManager.getInstance().dealCards();
-                }
-
-                // Set the cards to be clickable again then end the method.
-                AnimationManager.getInstance().setCardsClickable(true);
-                return;
             }
         }
     }

@@ -125,7 +125,7 @@ public enum EventType {
     /**
      * Fired whenever a player clicks a card from their hand to play.
      */
-    PLAYER_PLAY_CARD("", Player.class, CardImage.class),
+    PLAYER_PLAY_CARD("", Player.class, CardImage.class, Integer.class),
 
     /**
      * Fired when the front end detects that the round is over (may not

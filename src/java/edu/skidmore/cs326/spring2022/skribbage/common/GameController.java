@@ -161,9 +161,54 @@ public final class GameController implements PropertyChangeListener {
                     case PLAY_CARD:
                         PlayerPlayCardEvent playCardEvent =
                             (PlayerPlayCardEvent) cribbageEvent;
+
+                        int cardClickedIndex =
+                            playCardEvent.getClickedCardIndex();
+
+                        // Set the cards to not be clickable
+                        AnimationManager.getInstance().setCardsClickable(false);
+
+                        // Play the card that has been clicked to the center of
+                        // the board and play an animation
                         animationManager.getGameManager()
-                            .playCard(playCardEvent.getCardImage().getCardID());
-                        animationManager.cardGlideAnimation(50);
+                            .playCard(cardClickedIndex);
+                        AnimationManager.getInstance()
+                            .moveCardsToStandardPositions(50);
+
+                        // Opponent plays a random card, then play an animation
+                        animationManager.getGameManager().opponentPlayCard();
+                        AnimationManager.getInstance()
+                            .moveCardsToStandardPositions(50);
+
+                        // Check if there are no more cards to play. Each player
+                        // is initially dealt 6 cards so this occurs when the
+                        // number of cards in play is 12.
+                        if (animationManager.getGameManager().getGame()
+                            .getCardsInPlay()
+                            .getCardsInHand().size() == 12) {
+
+                            // Move each peg 5 spaces. This is a temporary test.
+                            // In the real game the pegs should more according
+                            // to the number of points earned during the play
+                            // phase.
+                            animationManager.movePeg(0, 5);
+                            animationManager.movePeg(1, 5);
+
+                            // If either peg is at the final space, end the
+                            // game.
+                            if (animationManager.getPegLocations()[0] == 120
+                                || animationManager
+                                    .getPegLocations()[1] == 120) {
+                                animationManager.getStartGamePage()
+                                    .closeWindow();
+                            }
+
+                            // Deal cards for the next round (temporary)
+                            animationManager.dealCards();
+                        }
+
+                        // Set the cards to be clickable again
+                        animationManager.setCardsClickable(true);
                         break;
                     default:
                         break;
@@ -193,6 +238,16 @@ public final class GameController implements PropertyChangeListener {
      */
     public GameState getCurrentGameState() {
         return currentGameState;
+    }
+
+    /**
+     * Set the current game state.
+     * 
+     * @param gameState
+     *            state of the game
+     */
+    public void setCurrentGameState(GameState gameState) {
+        this.currentGameState = gameState;
     }
 
     /**

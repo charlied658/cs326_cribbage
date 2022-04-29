@@ -7,7 +7,6 @@ import edu.skidmore.cs326.spring2022.skribbage.common.SpotType;
 import edu.skidmore.cs326.spring2022.skribbage.logic.GameManager;
 import org.apache.log4j.Logger;
 
-import us.daveread.edu.graphics.shape.Drawable;
 import us.daveread.edu.graphics.shape.VisibleObject;
 import us.daveread.edu.graphics.shape.impl.Circle;
 import us.daveread.edu.graphics.shape.impl.LineSegment;
@@ -127,6 +126,11 @@ public class AnimationManager {
      * Toggles the screen being resized.
      */
     private boolean resizeWindow;
+    
+    /**
+     * Contains the order in which cards should be added to the screen.
+     */
+    private ArrayList<CardImage> layerStack;
 
     /**
      * Initialize the static instance.
@@ -142,6 +146,7 @@ public class AnimationManager {
     private AnimationManager() {
         LOG.debug("Instance created");
         resizeWindow = false;
+        layerStack = new ArrayList<>();
     }
 
     /**
@@ -472,11 +477,33 @@ public class AnimationManager {
     }
 
     /**
+     * Sets the layering order of cards within the given list by adding them to
+     * a stack. Cards will be added to the screen in the order that they enter.
+     * 
+     * @param cardList
+     *            List of cards
+     * @param reverse
+     *            If the cards should be added in reverse order
+     */
+    public void setLayeringOfCards(ArrayList<CardImage> cardList,
+        boolean reverse) {
+        if (reverse) {
+            for (int i = cardList.size() - 1; i >= 0; i--) {
+                layerStack.add(cardList.get(i));
+            }
+        } else {
+            for (int i = 0; i < cardList.size(); i++) {
+                layerStack.add(cardList.get(i));
+            }
+        }
+    }
+
+    /**
      * Animation to fan the deck out.
      */
     public void fanCards() {
         setDestinationOfCards(GameRenderManager.getInstance().getCardsInDeck(),
-            550, 330, 350, 0);
+            550, 330, 550, 0);
         cardGlideAnimation(50);
     }
 
@@ -486,7 +513,7 @@ public class AnimationManager {
      * cards in the deck should move to the right, etc.
      * 
      * @param steps
-     *            steps to pass in to moveCards
+     *            steps to pass in to cardGlideAnimation
      */
     public void moveCardsToStandardPositions(int steps) {
 
@@ -503,6 +530,24 @@ public class AnimationManager {
         setDestinationOfCards(
             GameRenderManager.getInstance().getCardsInOpponentHand(), 550, 80,
             350, 0);
+
+        // Set the deafult layering of each card
+        setLayeringOfCards(GameRenderManager.getInstance().getCardsInDeck(),
+            true);
+        setLayeringOfCards(GameRenderManager.getInstance().getCardsInPlay(),
+            false);
+        setLayeringOfCards(GameRenderManager.getInstance().getCardsInHand(),
+            false);
+        setLayeringOfCards(
+            GameRenderManager.getInstance().getCardsInOpponentHand(), true);
+
+        // Set whether each card list should be showing or not
+        setCardsShowing(GameRenderManager.getInstance().getCardsInDeck(),
+            false);
+        setCardsShowing(GameRenderManager.getInstance().getCardsInPlay(), true);
+        setCardsShowing(GameRenderManager.getInstance().getCardsInHand(), true);
+        setCardsShowing(
+            GameRenderManager.getInstance().getCardsInOpponentHand(), false);
 
         // cardGlideAnimation actually performs the glide animation
         cardGlideAnimation(steps);
@@ -560,8 +605,10 @@ public class AnimationManager {
         for (int i = 0; i < steps; i++) {
 
             // Halfway between the glide animation, update the layering of cards
+            // and update which cards are showing
             if (i == steps / 2) {
                 updateLayers();
+                showCards();
             }
 
             // Update each card position by one step
@@ -589,49 +636,16 @@ public class AnimationManager {
     }
 
     /**
-     * Bring certain cards to the front.
+     * Add CardImages to the screen in the order they appear in layerStack.
      */
     public void updateLayers() {
 
-        for (int i = GameRenderManager.getInstance()
-            .getCardsInDeck().size() - 1; i >= 0; i--) {
-            startGamePage.remove(GameRenderManager.getInstance()
-                .getCardsInDeck().get(i));
-            startGamePage.add(GameRenderManager.getInstance()
-                .getCardsInDeck().get(i));
-            showCard(GameRenderManager.getInstance()
-                .getCardsInDeck().get(i), false);
+        while (layerStack.size() > 0) {
+            CardImage cardImage = layerStack.remove(0);
+            startGamePage.remove(cardImage);
+            startGamePage.add(cardImage);
         }
 
-        for (int i = 0; i < GameRenderManager.getInstance()
-            .getCardsInPlay().size(); i++) {
-            startGamePage.remove(GameRenderManager.getInstance()
-                .getCardsInPlay().get(i));
-            startGamePage.add(GameRenderManager.getInstance()
-                .getCardsInPlay().get(i));
-            showCard(GameRenderManager.getInstance()
-                .getCardsInPlay().get(i), true);
-        }
-
-        for (int i = 0; i < GameRenderManager.getInstance()
-            .getCardsInHand().size(); i++) {
-            startGamePage.remove(GameRenderManager.getInstance()
-                .getCardsInHand().get(i));
-            startGamePage.add(GameRenderManager.getInstance()
-                .getCardsInHand().get(i));
-            showCard(GameRenderManager.getInstance()
-                .getCardsInHand().get(i), true);
-        }
-
-        for (int i = GameRenderManager.getInstance()
-            .getCardsInOpponentHand().size() - 1; i >= 0; i--) {
-            startGamePage.remove(GameRenderManager.getInstance()
-                .getCardsInOpponentHand().get(i));
-            startGamePage.add(GameRenderManager.getInstance()
-                .getCardsInOpponentHand().get(i));
-            showCard(GameRenderManager.getInstance()
-                .getCardsInOpponentHand().get(i), false);
-        }
     }
 
     /**
@@ -699,60 +713,41 @@ public class AnimationManager {
     }
 
     /**
-     * Show or hide one card.
-     *
-     * @param card
-     *            card to animate
+     * Set whether the given card list should be showing.
+     * 
+     * @param cardList
      * @param showing
-     *            face up or not
      */
-    public void showCard(CardImage card, boolean showing) {
+    public void setCardsShowing(ArrayList<CardImage> cardList,
+        boolean showing) {
 
-        if (showing == card.isShowing()) {
-            return;
+        for (int i = 0; i < cardList.size(); i++) {
+            cardList.get(i).setUpdateShowing(showing);
         }
 
-        if (showing) {
-            card.setImageFileName(fileNames[card.getCardID()]);
-            card.setScaleFactor(0.25);
-            card.setShowing(true);
-        } else {
-            card.setImageFileName("card.png");
-            card.setScaleFactor(0.6);
-            card.setShowing(false);
-        }
     }
 
     /**
-     * Method to show or hide the cards.
-     *
-     * @param showing
-     *            face up or not
+     * Show or hide cards according to the updateShowing variable in each
+     * CardImage.
      */
-    public void showCards(boolean showing) {
-
-        for (int i = 0; i < GameRenderManager.getInstance()
-            .getCardsInHand().size(); i++) {
-            showCard(GameRenderManager.getInstance()
-                .getCardsInHand().get(i), showing);
-        }
-
-        for (int i = 0; i < GameRenderManager.getInstance()
-            .getCardsInOpponentHand().size(); i++) {
-            showCard(GameRenderManager.getInstance()
-                .getCardsInOpponentHand().get(i), showing);
-        }
-
-        for (int i = 0; i < GameRenderManager.getInstance()
-            .getCardsInPlay().size(); i++) {
-            showCard(GameRenderManager.getInstance()
-                .getCardsInPlay().get(i), showing);
-        }
-
-        for (int i = 0; i < GameRenderManager.getInstance()
-            .getCardsInDeck().size(); i++) {
-            showCard(GameRenderManager.getInstance()
-                .getCardsInDeck().get(i), showing);
+    public void showCards() {
+        for (int i = 0;
+            i < GameRenderManager.getInstance().getStandardDeck().size(); i++) {
+            CardImage cardImage =
+                GameRenderManager.getInstance().getStandardDeck().get(i);
+            if (cardImage.getUpdateShowing() != cardImage.isShowing()) {
+                if (cardImage.getUpdateShowing()) {
+                    cardImage
+                        .setImageFileName(fileNames[cardImage.getCardID()]);
+                    cardImage.setScaleFactor(0.25);
+                    cardImage.setShowing(true);
+                } else {
+                    cardImage.setImageFileName("card.png");
+                    cardImage.setScaleFactor(0.6);
+                    cardImage.setShowing(false);
+                }
+            }
         }
     }
 
@@ -770,12 +765,8 @@ public class AnimationManager {
      * Shuffle the deck.
      */
     public void shuffleCards() {
-
-        showCards(false);
         resetCards();
-
         gameManager.shuffleCards();
-
         moveCardsToStandardPositions(50);
     }
 
@@ -811,49 +802,6 @@ public class AnimationManager {
             GameRenderManager.getInstance().getStandardDeck().get(k)
                 .setClickable(clickable);
 
-        }
-    }
-
-    /**
-     * Check if a card has been clicked.
-     * 
-     * @param e
-     */
-    public void checkCardClick(Drawable e) {
-        for (int i = 0; i < cardsInHand.size(); i++) {
-            if (e == cardsInHand.get(i)) {
-                setCardsClickable(false);
-                gameManager.playCard(i);
-                System.out.println("Points to add: " + calculatePoints(
-                    cardsInHand.get(i).getImageFileName()));
-                pPoints += calculatePoints(
-                    cardsInHand.get(i).getImageFileName());
-                updateCardPositions();
-                moveCardsToStandardPositions(50);
-                // Card opponentCard = gameManager.opponentPlayCard();
-                // cPoints += opponentCard.getRank().getPointValue();
-                updateCardPositions();
-                moveCardsToStandardPositions(50);
-                // Once the players have played all their cards
-                // Each player has 6 cards so 6 + 6 = 12
-                System.out
-                    .println("Player: " + pPoints);
-
-                if (gameManager.getGame().getCardsInPlay()
-                    .getCardsInHand().size() == 12) {
-                    movePeg(0, 5);
-                    movePeg(1, 5);
-
-                    // If the location of either peg
-                    // is at the final spot, end the game.
-                    if (pegLocations[0] == 120 || pegLocations[1] == 120) {
-                        startGamePage.closeWindow();
-                    }
-                    dealCards();
-                }
-                setCardsClickable(true);
-                return;
-            }
         }
     }
 
