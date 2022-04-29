@@ -110,7 +110,7 @@ public enum EventType {
     /**
      * Fired when the player clicks on the deck to 'cut' it.
      */
-    PLAYER_CLICK_DECK("", Player.class),
+    PLAYER_CLICK_DECK("", Player.class, CardImage.class, Integer.class),
 
     /**
      * Fired when player has selected two cards to send to the crib.
