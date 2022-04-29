@@ -9,7 +9,7 @@ import edu.skidmore.cs326.spring2022.skribbage.gamification.InventoryPrototype;
  * @author lappiaha
  */
 public class Player {
-    
+
     /**
      * initializes the player's points.
      */
@@ -19,7 +19,7 @@ public class Player {
      * Creates hand object.
      */
     private Hand hand = new Hand();
-    
+
     /**
      * Username of player.
      */
@@ -34,34 +34,34 @@ public class Player {
      * User associated with player.
      */
     private User user;
-    
+
     /**
      * User associated with player.
      */
     private InventoryPrototype inventoryManager = new InventoryPrototype();
-    
+
     /**
     * Avatar of player.
     */
     private Avatar avatar;
-    
+
     /**
      * boolean to help determine the dealer of the game.
      */
     private boolean isDealer;
-    
+
     /**
      * Default constructor.
-     * 
+     *
      */
-    
+
     public Player() {
-        
+
     }
-    
+
     /**
      * Constructor method.
-     * 
+     *
      * @param user
      */
     public Player(User user) {
@@ -74,7 +74,7 @@ public class Player {
 
     /**
      * Get player username.
-     * 
+     *
      * @return username
      */
     public String getUsername() {
@@ -83,7 +83,7 @@ public class Player {
 
     /**
      * Get player name.
-     * 
+     *
      * @return name
      */
     public String getName() {
@@ -92,7 +92,7 @@ public class Player {
 
     /**
      * Get user associated with player.
-     * 
+     *
      * @return user
      */
     public User getUser() {
@@ -101,7 +101,7 @@ public class Player {
 
     /**
      * Set player name.
-     * 
+     *
      * @param name
      *            Player name
      */
@@ -111,7 +111,7 @@ public class Player {
 
     /**
      * Set player username.
-     * 
+     *
      * @param username
      */
     public void setUsername(String username) {
@@ -120,31 +120,31 @@ public class Player {
 
     /**
      * Set player user.
-     * 
+     *
      * @param user
      */
     public void setUser(User user) {
         this.user = user;
     }
-    
+
     /**
      * Get player avatar.
-     * 
+     *
      * @return avatar
      */
     public Avatar getAvatar() {
         return avatar;
     }
-    
+
     /**
      * Set player avatar.
-     * 
+     *
      * @param avatar
      */
     public void setAvatar(Avatar avatar) {
         this.avatar = avatar;
     }
-    
+
     /**
      * Sets the PlayerHand.
      * @param playerHand Player's hand
@@ -156,7 +156,7 @@ public class Player {
 
     /**
      * Get the hand.
-     * 
+     *
      * @return hand
      */
     public Hand getHand() {
@@ -165,30 +165,30 @@ public class Player {
 
     /**
      * Get the player points.
-     * 
+     *
      * @return points
      */
     public int getPoints() {
         return points;
     }
-    
+
     /**
      * Initialize points to 0.
      */
     public void intializePoints() {
         points = 0;
     }
-    
+
     /**
      * Add the player points.
-     * 
+     *
      * @param pointsToAdd
      */
     public void addPoints(int pointsToAdd) {
         points += pointsToAdd;
 
     }
-    
+
     /**
      * Returns true if the player is the dealer.
      * @return boolean
@@ -196,7 +196,7 @@ public class Player {
     public boolean isDealer() {
         return isDealer;
     }
-    
+
     /**
      * Sets the player to be dealer or not dealer.
      * @param dealer
@@ -204,7 +204,7 @@ public class Player {
     public void setDealer(boolean dealer) {
         isDealer = dealer;
     }
-    
+
     /**
      * Getter for inventory.
      * @return
@@ -213,7 +213,7 @@ public class Player {
     public InventoryPrototype getInventoryManager() {
         return inventoryManager;
     }
-    
+
     /**
      * Setter for inventory.
      * @param inventoryManager
@@ -222,6 +222,6 @@ public class Player {
     public void setInventoryManager(InventoryPrototype inventoryManager) {
         this.inventoryManager = inventoryManager;
     }
-    
+
 
 }
