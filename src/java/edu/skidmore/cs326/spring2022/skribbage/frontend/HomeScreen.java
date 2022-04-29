@@ -4,8 +4,11 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Point;
 
+import javax.swing.SwingUtilities;
+
 import org.apache.log4j.Logger;
 
+import edu.skidmore.cs326.spring2022.skribbage.SkribbageProperty;
 import edu.skidmore.cs326.spring2022.skribbage.util.VerifyLibraryVersion;
 import us.daveread.edu.graphics.shape.Drawable;
 import us.daveread.edu.graphics.shape.impl.Image;
@@ -146,9 +149,9 @@ public class HomeScreen extends DrawingSurface implements Page {
     public void drawableMouseClick(Drawable e) {
         LOG.trace("DrawableMosuceClick in HomeScreen.java");
         if (e == loginPageButton) {
+            closeWindow();
             loginPage = (LoginPage) PageManager.getInstance()
                 .createPage(PageType.LOGIN_PAGE);
-            closeWindow();
         }
     }
 
@@ -156,6 +159,20 @@ public class HomeScreen extends DrawingSurface implements Page {
      * Closes current window.
      */
     public void closeWindow() {
+        LOG.info(
+            "Save window position: "
+                + SwingUtilities.getWindowAncestor(this).getLocationOnScreen().x
+                + "," + SwingUtilities.getWindowAncestor(this)
+                    .getLocationOnScreen().y);
+        // Store the current X,Y location of the window
+        SkribbageProperty.GUI_WINDOW_X
+            .setPropertyValue(
+                SwingUtilities.getWindowAncestor(this).getLocationOnScreen().x
+                    + "");
+        SkribbageProperty.GUI_WINDOW_Y
+            .setPropertyValue(
+                SwingUtilities.getWindowAncestor(this).getLocationOnScreen().y
+                    + "");
         homeScreen.dispose();
     }
 
