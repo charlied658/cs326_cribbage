@@ -12,6 +12,8 @@ import edu.skidmore.cs326.spring2022.skribbage.common.GameController;
 import edu.skidmore.cs326.spring2022.skribbage.common.GameState;
 import edu.skidmore.cs326.spring2022.skribbage.common.Player;
 import edu.skidmore.cs326.spring2022.skribbage.frontend.events.game.PlayerClickStartGameEvent;
+import edu.skidmore.cs326.spring2022.skribbage.frontend.events.game.PlayerSendCardsToCribEvent;
+
 import org.apache.log4j.Logger;
 
 import edu.skidmore.cs326.spring2022.skribbage.logic.GameManager;
@@ -78,6 +80,11 @@ public class StartGamePage extends DrawingSurface implements Page {
      * Button to start the game.
      */
     private Text startButton;
+
+    /**
+     * Button to send cards to the crib.
+     */
+    private Text sendCardsToCribButton;
 
     /**
      * Arrows displayed on board.
@@ -189,6 +196,15 @@ public class StartGamePage extends DrawingSurface implements Page {
     }
 
     /**
+     * Get the send cards to crib button.
+     * 
+     * @return sendCardsToCribButton
+     */
+    public Text getSendCardsToCribButton() {
+        return sendCardsToCribButton;
+    }
+
+    /**
      * addPlayerPoints.
      * 
      * @param pointsToAdd
@@ -222,6 +238,8 @@ public class StartGamePage extends DrawingSurface implements Page {
             Color.black, Color.blue);
         startButton = new Text("Start Game", new Point(700, 420), 20,
             Color.black, Color.blue);
+        sendCardsToCribButton = new Text("Send Cards to Crib",
+            new Point(700, 520), 20, Color.black, Color.blue);
         arrows = new Image[3];
         arrows[0] = new Image("arrow.png", new Point(100, 70), 1, null);
         arrows[1] = new Image("arrow.png", new Point(260, 70), 1, null);
@@ -249,16 +267,15 @@ public class StartGamePage extends DrawingSurface implements Page {
         running = false;
         resizeWindow = false;
 
-        startButton.setClickable(false);
-        startButton.setOpacity(0.5f);
-        
+        AnimationManager.getInstance().setButtonClickable(startButton, false);
+
         createGrid();
         assignSpots();
         AnimationManager.getInstance().renderSpots();
         AnimationManager.getInstance().createCards();
-        
-        startButton.setClickable(true);
-        startButton.setOpacity(1);
+
+        AnimationManager.getInstance().setButtonClickable(startButton, true);
+
     }
 
     /**
@@ -309,36 +326,19 @@ public class StartGamePage extends DrawingSurface implements Page {
             resizeWindow = !resizeWindow;
             AnimationManager.getInstance().resizeWindow();
             AnimationManager.getInstance().moveCardsToStandardPositions(10);
+        } else if (e == sendCardsToCribButton) {
+            Player newGamePlayer = new Player(pageManager.getLoggedInUser());
+            PlayerSendCardsToCribEvent event =
+                (PlayerSendCardsToCribEvent) eventFactory
+                    .createEvent(EventType.PLAYER_SEND_CARD_TO_CRIB,
+                        this, newGamePlayer, GameRenderManager.getInstance()
+                            .getStandardDeck().get(0));
+            eventFactory.fireEvent(event);
         }
-
-        // Gets the card that has been clicked on 
-        //(commented out for now because it doesn't work)
-//        if (e instanceof CardImage) {
-//
-//            CardImage cardImage = (CardImage) e;
-//            LOG.debug("Clicked on a card image " + cardImage);
-//
-//            CardPosition currentPosition = cardImage.getCardPosition();
-//
-//            switch (currentPosition) {
-//                case DECK:
-//                    eventFactory.createEvent(
-//                        EventType.PLAYER_CLICK_DECK, this,
-//                        gameRenderManager.getActivePlayer());
-//                    break;
-//                case PLAYER_HAND:
-//                    eventFactory.createEvent(EventType.PLAYER_PLAY_CARD, this,
-//                        gameRenderManager.getActivePlayer(), cardImage);
-//                default:
-//                    break;
-//
-//            }
-//
-//        }
 
         // Manage what happens when you click a card
         GameRenderManager.getInstance().manageClickedCard(e);
-        
+
         playerPoints = GameRenderManager.getInstance().getPlayerPoints();
         computerPoints = GameRenderManager.getInstance().getComputerPoints();
         if (GameRenderManager.getInstance().checkForTotalScore(playerPoints,
@@ -349,10 +349,10 @@ public class StartGamePage extends DrawingSurface implements Page {
                 DialogPosition.CENTER_ALL, DialogType.INFORMATION);
             GameRenderManager.getInstance().setPlayerPoints(0);
             GameRenderManager.getInstance().setComputerPoints(0);
-            updatePoints(GameRenderManager.getInstance().getPlayerPoints(), 
+            updatePoints(GameRenderManager.getInstance().getPlayerPoints(),
                 GameRenderManager.getInstance().getComputerPoints());
         }
-            
+
     }
 
     /**

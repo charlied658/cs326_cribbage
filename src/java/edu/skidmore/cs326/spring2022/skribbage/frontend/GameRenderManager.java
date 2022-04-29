@@ -36,6 +36,7 @@ public class GameRenderManager {
     /**
      * GameManager instance.
      */
+    @SuppressWarnings("unused")
     private GameManager gameManager;
 
     /**
@@ -247,6 +248,7 @@ public class GameRenderManager {
      */
     public boolean checkForTotalScore(int player, int cpu) {
         if (player + cpu < 31) {
+            LOG.trace("Check for total score");
             /**
              * @TODO create functionality to check if a user has a card that
              *       will add up to less than 31, or if an opponent does
