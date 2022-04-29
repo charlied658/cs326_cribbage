@@ -8,6 +8,7 @@ import org.apache.log4j.Logger;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
@@ -82,9 +83,7 @@ public final class GameController implements PropertyChangeListener {
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         LOG.trace("GameController caught event: " + evt);
-
         CribbageEvent cribbageEvent = ((CribbageEvent) evt);
-
         switch (cribbageEvent.getEventType()) {
             case PLAYER_CLICK_START_GAME:
                 LOG.debug("caught a player click start game event " + evt);
@@ -102,36 +101,30 @@ public final class GameController implements PropertyChangeListener {
                 switch (currentGameState) {
                     case CUT_DECK:
                         currentGameState = GameState.DISCARD_TO_CRIB;
+                        GameRenderManager.getInstance()
+                            .setSelectedCardsForDiscarding(new ArrayList<>());
                         animationManager.dealCards();
+                        animationManager.getStartGamePage().add(animationManager
+                            .getStartGamePage().getSendCardsToCribButton());
+                        animationManager.setButtonClickable(animationManager
+                            .getStartGamePage().getSendCardsToCribButton(),
+                            false);
+                        break;
                     case STARTER_CARD:
                         currentGameState = GameState.PLAY_CARD;
+                        animationManager.moveCardsToStandardPositions(50);
                         // Put the cards back on the deck, with the top card
                         // flipped
                         // TODO this
                         // animationManager
                         // .moveCardsBackToTopOfDeckWithTopShowing();
+                        break;
                     default:
                         break;
 
                 }
-
-                // if (currentGameState == GameState.CUT_DECK) {
-                // currentGameState = GameState.DISCARD_TO_CRIB;
-                // animationManager.dealCards();
-                // }
                 break;
-            // case PLAYER_SEND_CARD_TO_CRIB:
-            // LOG.debug("caught a player send cards to crib event " + evt);
-            // if (currentGameState == GameState.CUT_DECK) {
-            // currentGameState = GameState.STARTER_CARD;
-            // }
-            // break;
-            // case PLAYER_SELECT_START_CARD:
-            // LOG.debug("player played their starting card event " + evt);
-            // if (currentGameState == GameState.DISCARD_TO_CRIB) {
-            // currentGameState = GameState.PLAY_CARD;
-            // }
-            // break;
+
             case PLAYER_PLAY_CARD:
                 LOG.debug("player played card to game " + evt);
                 // A nicer way to compare multiple things for equality, rather
@@ -141,22 +134,50 @@ public final class GameController implements PropertyChangeListener {
                         // downcast CribbageEvent to PlayerPlayCardEvent
                         PlayerPlayCardEvent playerPlayCardEvent =
                             (PlayerPlayCardEvent) cribbageEvent;
-                        // add the card
-                        // either stay in this state or continue, based on size
-                        // of card list (2)
+
+                        // If the card is already selected, unselect it
+                        if (gameRenderManager.getSelectedCardsForDiscarding()
+                            .contains(playerPlayCardEvent.getCardImage())) {
+
+                            // Set the button to not be clickable
+                            animationManager.setButtonClickable(
+                                animationManager.getStartGamePage()
+                                    .getSendCardsToCribButton(),
+                                false);
+
+                            // Remove card from selected cards
+                            gameRenderManager.getSelectedCardsForDiscarding()
+                                .remove(playerPlayCardEvent.getCardImage());
+
+                            // Play animation
+                            animationManager.selectCards();
+
+                            break;
+                        }
+
+                        // Add the card to be selected
                         gameRenderManager.getSelectedCardsForDiscarding()
                             .add(playerPlayCardEvent.getCardImage());
 
+                        // If more than 2 cards are selected, remove one of the
+                        // other selected cards
                         if (gameRenderManager.getSelectedCardsForDiscarding()
-                            .size() == MAX_DISCARD_TO_CRIB_SIZE) {
-                            // TODO here
-                            // animationManager.discardCards();
-                            currentGameState = GameState.STARTER_CARD;
-                            // TODO here
-                            // animationManager.fanCards();
-                        } else {
-                            currentGameState = GameState.DISCARD_TO_CRIB;
+                            .size() > MAX_DISCARD_TO_CRIB_SIZE) {
+                            gameRenderManager.getSelectedCardsForDiscarding()
+                                .remove(0);
+                            gameRenderManager.getSelectedCardsForDiscarding()
+                                .remove(0);
                         }
+
+                        // Set the send cards to crib button to be clickable
+                        animationManager.setButtonClickable(animationManager
+                            .getStartGamePage().getSendCardsToCribButton(),
+                            gameRenderManager.getSelectedCardsForDiscarding()
+                                .size() == MAX_DISCARD_TO_CRIB_SIZE);
+
+                        // Play animation to select cards
+                        animationManager.selectCards();
+
                         break;
                     case PLAY_CARD:
                         PlayerPlayCardEvent playCardEvent =
@@ -203,8 +224,16 @@ public final class GameController implements PropertyChangeListener {
                                     .closeWindow();
                             }
 
-                            // Deal cards for the next round (temporary)
+                            // Move to discard to crib state again
+                            currentGameState = GameState.DISCARD_TO_CRIB;
                             animationManager.dealCards();
+                            animationManager.getStartGamePage()
+                                .add(animationManager
+                                    .getStartGamePage()
+                                    .getSendCardsToCribButton());
+                            animationManager.setButtonClickable(animationManager
+                                .getStartGamePage().getSendCardsToCribButton(),
+                                false);
                         }
 
                         // Set the cards to be clickable again
@@ -214,14 +243,23 @@ public final class GameController implements PropertyChangeListener {
                         break;
 
                 }
+                break;
 
-                if (Arrays.asList(GameState.STARTER_CARD, GameState.PLAY_CARD)
-                    .contains(currentGameState)) {
-                    currentGameState = GameState.PLAY_CARD;
-                    // TODO response
+            case PLAYER_SEND_CARD_TO_CRIB:
+                if (gameRenderManager.getSelectedCardsForDiscarding()
+                    .size() == MAX_DISCARD_TO_CRIB_SIZE) {
+                    // TODO here
+                    // animationManager.discardCards();
+                    animationManager.getStartGamePage().remove(animationManager
+                        .getStartGamePage().getSendCardsToCribButton());
+                    currentGameState = GameState.STARTER_CARD;
+                    GameRenderManager.getInstance()
+                        .setSelectedCardsForDiscarding(
+                            new ArrayList<>());
+                    animationManager.fanCards();
+
                 }
 
-                break;
             default:
                 LOG.error(
                     "Caught an event that could not be handled."

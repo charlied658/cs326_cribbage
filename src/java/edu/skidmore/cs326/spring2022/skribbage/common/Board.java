@@ -249,6 +249,8 @@ public class Board {
      * @param peg
      */
     public void landsOnPrizeSpot(Peg peg) {
+        
+        ((PrizeSpot) (peg.getSpot())).rewardPlayer(peg.getOwner());
 
     }
 

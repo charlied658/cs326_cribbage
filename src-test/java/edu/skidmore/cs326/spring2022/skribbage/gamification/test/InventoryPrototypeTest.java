@@ -105,6 +105,28 @@ public class InventoryPrototypeTest {
         testInstance.addItem("Mirror", 1);
         assertTrue("Item was not added",
             testInstance.searchForItem("Mirror") == 2);
+        testInstance.addItem("Re-Battle Card", 1);
+        assertTrue("Item was not added",
+            testInstance.searchForItem("Re-Battle Card") == 1);
+        testInstance.addItem("Last-Player-Show Card", 1);
+        assertTrue("Item was not added",
+            testInstance.searchForItem("Last-Player-Show Card") == 1);
+        testInstance.addItem("Throw-Away-Pickup Card", 1);
+        assertTrue("Item was not added",
+            testInstance.searchForItem("Throw-Away-Pickup Card") == 1);
+        testInstance.addItem("Disarm", 1);
+        assertTrue("Item was not added",
+            testInstance.searchForItem("Disarm") == 1);
+        testInstance.addItem("Pick Pocket", 1);
+        assertTrue("Item was not added",
+            testInstance.searchForItem("Pick Pocket") == 1);
+        testInstance.addItem("Auto Pilot", 1);
+        assertTrue("Item was not added",
+            testInstance.searchForItem("Auto Pilot") == 1);
+        testInstance.addItem("Copycat", 1);
+        assertTrue("Item was not added",
+            testInstance.searchForItem("Copycat") == 1);
+        
     }
 
 }
