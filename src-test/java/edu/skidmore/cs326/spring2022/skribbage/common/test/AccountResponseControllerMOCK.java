@@ -21,7 +21,9 @@ public class AccountResponseControllerMOCK implements PropertyChangeListener {
      */
     private User receivedUserFromLogin;
 
-
+    /**
+     * Instance of accountResponse.
+     */
     private AccountResponse accountResponse;
 
     /**
