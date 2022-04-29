@@ -200,6 +200,23 @@ public class AccountController implements PropertyChangeListener {
             case USER_CHANGE_PASSWORD_VALIDATION:
                 LOG.debug(
                     "Caught a user validated before change password method.");
+
+                ule = ((UserLoginEvent) evt);
+                if (isPasswordCorrect(associatedUser, ule.getPassword())) {
+                    // Validation is same as logging in validation.
+                    ValidateForChangePassword call =
+                        ((ValidateForChangePassword) evt);
+                    if (isPasswordCorrect(associatedUser, call.getPassword())) {
+                        ValidateChangeResponseEvent responseEventPV =
+                            (ValidateChangeResponseEvent) eventFactory
+                                .createEvent(EventType.
+                                    USER_CHANGE_PASSWORD_VALIDATION_RESPONSE,
+                                    this);
+                        eventFactory.fireEvent(responseEventPV);
+                    }
+                    break;
+
+                }
                 ValidateForChangePassword call =
                     ((ValidateForChangePassword) evt);
                 if (isPasswordCorrect(associatedUser, call.getPassword())) {
@@ -218,9 +235,11 @@ public class AccountController implements PropertyChangeListener {
                             this, associatedUser, accountResponse);
                 eventFactory.fireEvent(responseEventPV);
                 break;
+
             default:
                 LOG.warn("caught unhandled event");
                 break;
+
 
         }
     }

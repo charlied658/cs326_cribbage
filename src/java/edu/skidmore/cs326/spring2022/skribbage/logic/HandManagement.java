@@ -27,11 +27,11 @@ interface HandManagement {
      * 
      * @param hand
      *            the hand the card will be removed from.
-     * @param index
-     *            the index of the card to be removed.
+     * @param card
+     *            the card to be removed.
      * @return Card the card that is removed from hand is returned.
      */
 
-    Card removeCardFromHand(Hand hand, int index);
+    Card removeCardFromHand(Hand hand, Card card);
 
 }

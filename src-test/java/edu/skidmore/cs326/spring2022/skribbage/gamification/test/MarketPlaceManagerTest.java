@@ -1,10 +1,10 @@
 package edu.skidmore.cs326.spring2022.skribbage.gamification.test;
 
-
 import org.apache.log4j.Logger;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -32,17 +32,17 @@ public class MarketPlaceManagerTest {
     static {
         LOG = Logger.getLogger(MarketPlaceManagerTest.class);
     }
-    
+
     /**
      * Attribute to house the test instance.
      */
     private InventoryPrototype testInventoryInstance;
-    
+
     /**
      * Instance for a player.
      */
     private Player player = new Player();
-    
+
     /**
      * Attribute to house the test instance.
      */
@@ -56,6 +56,22 @@ public class MarketPlaceManagerTest {
         LOG.info("Setup for test");
         testInstance = new MarketPlaceManager(SpecialCard.REBATTLECARD);
         testInventoryInstance = player.getInventoryManager();
+        MarketPlaceManager testLPSC =
+            new MarketPlaceManager(SpecialCard.LASTPLAYERSHOWCARD);
+        MarketPlaceManager testSPTC =
+            new MarketPlaceManager(SpecialCard.SKIPPLAYERTURNCARD);
+        MarketPlaceManager testTAPC =
+            new MarketPlaceManager(SpecialCard.THROWAWAYPICKUPCARD);
+        MarketPlaceManager testMirror =
+            new MarketPlaceManager(SpecialCard.MIRROR);
+        MarketPlaceManager testDisarm =
+            new MarketPlaceManager(SpecialCard.DISARM);
+        MarketPlaceManager testPP =
+            new MarketPlaceManager(SpecialCard.PICKPOCKET);
+        MarketPlaceManager testAP =
+            new MarketPlaceManager(SpecialCard.AUTOPILOT);
+        MarketPlaceManager testCC = new MarketPlaceManager(SpecialCard.COPYCAT);
+
     }
 
     /**
@@ -153,10 +169,11 @@ public class MarketPlaceManagerTest {
      */
     @Test
     public void testAddSpecialCard() {
-
+        
         testInstance.addSpecialCard();
-        assertEquals(2,
-            testInventoryInstance.searchForItem(testInstance.getName()));
+        testInventoryInstance.updateInventory();
+        assertTrue("Item was not added",
+            testInventoryInstance.searchForItem(testInstance.getName()) == 0);
 
     }
 
