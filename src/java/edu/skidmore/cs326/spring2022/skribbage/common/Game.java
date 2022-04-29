@@ -76,7 +76,8 @@ public class Game implements GameInterface {
     /**
      * Returns the index where the Hand of pegging cards for
      * the parameter player can be found.
-     * 
+     * Only works if Player objects have a user id.
+     *
      * @param p
      *            is a Player.
      * @return index.
@@ -98,7 +99,7 @@ public class Game implements GameInterface {
 
     /**
      * Initialize pegging cards.
-     * 
+     *
      * @param numPlayers
      */
     public void initPeggingCardsPlayed(int numPlayers) {
@@ -106,6 +107,7 @@ public class Game implements GameInterface {
             peggingCardsPlayed.add(new Hand());
         }
     }
+
 
     /**
      * Initializes the ArrayList of Player objects given the
@@ -135,7 +137,7 @@ public class Game implements GameInterface {
 
     /**
      * Get list of played pegging cards.
-     * 
+     *
      * @return peggingCardsPlayed
      */
     public List<Hand> getListOfPeggingCardsPlayed() {
@@ -144,7 +146,7 @@ public class Game implements GameInterface {
 
     /**
      * Get pegging cards.
-     * 
+     *
      * @param index
      * @return pegging card at that index
      */
@@ -189,6 +191,15 @@ public class Game implements GameInterface {
     }
 
     /**
+     * Sets the list of Players.
+     *
+     * @param a list of Players.
+     */
+    public void setPlayerList(List <Player> pList) {
+        playerList = pList;
+    }
+
+    /**
      * Returns the crib.
      *
      * @return the crib as an ArrayList of Card objects.
@@ -196,7 +207,7 @@ public class Game implements GameInterface {
     public Hand getCribCards() {
         return cribCards;
     }
-    
+
     /**
      * Set tthe crib cards.
      * @param cribCards
@@ -231,7 +242,7 @@ public class Game implements GameInterface {
     public Hand getCardsInPlay() {
         return this.cardsInPlay;
     }
-    
+
     /**
      * Set the cards in play.
      * @param cardsInPlay

@@ -25,6 +25,11 @@ import us.daveread.edu.graphics.shape.impl.Image;
 public class GameRenderManager {
 
     /**
+     * check if the crib button has been clicked.
+     */
+    private boolean cribClicked = false;
+
+    /**
      * Logger.
      */
     private static final Logger LOG;
@@ -119,6 +124,24 @@ public class GameRenderManager {
     }
 
     /**
+     * setCribClick.
+     * 
+     * @param clicked
+     */
+    public void setCribClick(boolean clicked) {
+        this.cribClicked = clicked;
+    }
+
+    /**
+     * getCribClick.
+     * 
+     * @return if crib button was clicked.
+     */
+    public boolean getCribClick() {
+        return cribClicked;
+    }
+
+    /**
      * Get the Card object associated with the CardImage that has been clicked.
      * 
      * @param e
@@ -206,6 +229,9 @@ public class GameRenderManager {
 
             if (e == GameRenderManager.getInstance()
                 .getCardsInHand().get(i)) {
+                calculatePoints(true,
+                    GameRenderManager.getInstance().getCardsInHand().get(i)
+                        .getCard());
                 PlayerPlayCardEvent playerPlayCardEvent =
                     (PlayerPlayCardEvent) EventFactory.getInstance()
                         .createEvent(
@@ -228,20 +254,20 @@ public class GameRenderManager {
      *            - the chosen card
      */
     public void calculatePoints(boolean player, Card cardChosen) {
-        if (player) {
+        if (player && getCribClick()) {
             System.out.println("Player chose: " + cardChosen.getRank() + " of "
                 + cardChosen.getSuit());
             System.out.println("Points before: " + pPoints);
             pPoints += cardChosen.getRank().getPointValue();
             System.out.println("Points after: " + pPoints);
-        } else {
+        } else if (!player) {
             System.out
                 .println("Computer chose: " + cardChosen.getRank() + " of "
                     + cardChosen.getSuit());
             System.out.println("Points before: " + cPoints);
             cPoints += cardChosen.getRank().getPointValue();
             System.out.println("Points after: " + cPoints);
-        }
+        } 
     }
 
     /**

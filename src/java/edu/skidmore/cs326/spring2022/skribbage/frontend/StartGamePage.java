@@ -23,7 +23,6 @@ import us.daveread.edu.graphics.shape.impl.Rectangle;
 import us.daveread.edu.graphics.shape.impl.Text;
 import us.daveread.edu.graphics.surface.DialogPosition;
 import us.daveread.edu.graphics.surface.DialogType;
-import us.daveread.edu.graphics.surface.DrawingSurface;
 import us.daveread.edu.graphics.surface.MainFrame;
 
 /**
@@ -33,7 +32,7 @@ import us.daveread.edu.graphics.surface.MainFrame;
  *         Code review by Jonah Marcus on 17 April 2022
  */
 @SuppressWarnings("serial")
-public class StartGamePage extends DrawingSurface implements Page {
+public class StartGamePage extends SkribbageDrawingSurface implements Page {
 
     /**
      * startGamePage - Mainframe window.
@@ -149,6 +148,11 @@ public class StartGamePage extends DrawingSurface implements Page {
     private final GameRenderManager gameRenderManager;
 
     /**
+     * checks if the cards have been sent to crib.
+     */
+    private boolean cardsSentToCrib = false;
+
+    /**
      * Logger.
      */
     private static final Logger LOG;
@@ -175,6 +179,7 @@ public class StartGamePage extends DrawingSurface implements Page {
         startGamePage = new MainFrame(
             this, "Start Game Page", 1400, 900, false);
         setup();
+        positionWindow();
     }
 
     /**
@@ -315,9 +320,10 @@ public class StartGamePage extends DrawingSurface implements Page {
 
         } else if (e == returnHomeButton) {
             LOG.trace("Return to previous screen");
+            closeWindow();
             navPage = (NavigationPage) pageManager
                 .createPage(PageType.NAVIGATION_PAGE);
-            closeWindow();
+
         } else if (e == resizeButton) {
             LOG.trace("Resize window");
             gameArea.setDimension(
@@ -327,6 +333,7 @@ public class StartGamePage extends DrawingSurface implements Page {
             AnimationManager.getInstance().resizeWindow();
             AnimationManager.getInstance().moveCardsToStandardPositions(10);
         } else if (e == sendCardsToCribButton) {
+            cardsSentToCrib = true;
             Player newGamePlayer = new Player(pageManager.getLoggedInUser());
             PlayerSendCardsToCribEvent event =
                 (PlayerSendCardsToCribEvent) eventFactory
@@ -338,19 +345,29 @@ public class StartGamePage extends DrawingSurface implements Page {
 
         // Manage what happens when you click a card
         GameRenderManager.getInstance().manageClickedCard(e);
-
-        playerPoints = GameRenderManager.getInstance().getPlayerPoints();
-        computerPoints = GameRenderManager.getInstance().getComputerPoints();
-        if (GameRenderManager.getInstance().checkForTotalScore(playerPoints,
-            computerPoints)) {
-            updatePoints(playerPoints, computerPoints);
-        } else {
-            showMessage("New Round", "Total points exceeds 31",
-                DialogPosition.CENTER_ALL, DialogType.INFORMATION);
-            GameRenderManager.getInstance().setPlayerPoints(0);
-            GameRenderManager.getInstance().setComputerPoints(0);
-            updatePoints(GameRenderManager.getInstance().getPlayerPoints(),
-                GameRenderManager.getInstance().getComputerPoints());
+        GameRenderManager.getInstance().setCribClick(cardsSentToCrib);
+        if (cardsSentToCrib) {
+            playerPoints = GameRenderManager.getInstance().getPlayerPoints();
+            computerPoints =
+                GameRenderManager.getInstance().getComputerPoints();
+            if (GameRenderManager.getInstance().checkForTotalScore(playerPoints,
+                computerPoints)) {
+                System.out
+                    .println("points: " + playerPoints + ", " + computerPoints);
+                updatePoints(playerPoints, computerPoints);
+            } else {
+                showMessage("New Round", "Total points exceeds 31",
+                    DialogPosition.CENTER_ALL, DialogType.INFORMATION);
+                GameRenderManager.getInstance().setPlayerPoints(0);
+                GameRenderManager.getInstance().setComputerPoints(0);
+                updatePoints(GameRenderManager.getInstance().getPlayerPoints(),
+                    GameRenderManager.getInstance().getComputerPoints());
+            }
+            if (GameRenderManager.getInstance().getCardsInHand().isEmpty()
+                && GameRenderManager.getInstance().getCardsInOpponentHand()
+                    .isEmpty()) {
+                updatePoints(0, 0);
+            }
         }
 
     }
@@ -365,13 +382,6 @@ public class StartGamePage extends DrawingSurface implements Page {
         playerPointsLabel.setMessage("Player points: " + pPoints);
         computerPointsLabel.setMessage("Computer points: " + cPoints);
         totalPointsLabel.setMessage("Total points: " + (pPoints + cPoints));
-    }
-
-    /**
-     * Close window method from Page interface.
-     */
-    public void closeWindow() {
-        startGamePage.dispose();
     }
 
 }

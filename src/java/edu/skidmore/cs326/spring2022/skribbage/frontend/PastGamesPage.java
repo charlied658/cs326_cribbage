@@ -29,7 +29,7 @@ import us.daveread.edu.utilities.Utility;
  *         This is the page that allows the player to view and load old games.
  */
 @SuppressWarnings("serial")
-public class PastGamesPage extends DrawingSurface
+public class PastGamesPage extends SkribbageDrawingSurface
     implements Page, ActionListener {
     /**
      * mainFrameWidth - int variable that holds mainframe width.
@@ -129,6 +129,7 @@ public class PastGamesPage extends DrawingSurface
             mainframeHeight, false);
         addGamesToList();
         setup();
+        positionWindow();
 
     }
 
@@ -285,7 +286,7 @@ public class PastGamesPage extends DrawingSurface
             returnToMainMenu.setBorderColor(Color.CYAN);
             Utility.pause(100);
             returnToMainMenu.setBorderColor(Color.BLACK);
-            mf.dispose();
+            closeWindow();
             navPage =
                 (NavigationPage) pageManager
                     .createPage(PageType.NAVIGATION_PAGE);
@@ -302,9 +303,10 @@ public class PastGamesPage extends DrawingSurface
         // Get game data from the button number being passed.
         // create a page using that object info. TODO must be added this
         // functionality.
+        closeWindow();
         gamePage =
             (StartGamePage) pageManager.createPage(PageType.START_GAME_PAGE);
-        closeWindow();
+        
     }
 
     // TODO NOT WORKING YET.
@@ -327,12 +329,5 @@ public class PastGamesPage extends DrawingSurface
             }
 
         }
-    }
-
-    /**
-     * Inherited method from Page interface.
-     */
-    public void closeWindow() {
-        mf.dispose();
     }
 }
