@@ -21,7 +21,7 @@ public class AccountResponseControllerMOCK implements PropertyChangeListener {
     /**
      * User received from logging in event.
      */
-    private User receivedUserFromLogin;
+    private User receivedUser;
 
     /**
      * Instance of accountResponse.
@@ -47,9 +47,10 @@ public class AccountResponseControllerMOCK implements PropertyChangeListener {
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         AccountResponseEvent eve = ((AccountResponseEvent) evt);
-        LOG.trace("Event in account response controller = " + evt);
-        receivedUserFromLogin = eve.getUser();
-            //evl.getUser();
+        LOG.info(
+            "Event in account response controller = " + evt.getPropertyName());
+        receivedUser = eve.getUser();
+        // evl.getUser();
         accountResponse = eve.getAccountResponse();
     }
 
@@ -58,9 +59,9 @@ public class AccountResponseControllerMOCK implements PropertyChangeListener {
      * 
      * @return User object
      */
-    public User getReceivedUserFromLogin() {
+    public User getUser() {
         LOG.trace("Returning received user from login");
-        return receivedUserFromLogin;
+        return receivedUser;
     }
 
     /**
@@ -69,6 +70,7 @@ public class AccountResponseControllerMOCK implements PropertyChangeListener {
      * @return Account response
      */
     public AccountResponse getAccountResponseMessage() {
+        LOG.info("Returning accountResponse");
         return accountResponse;
     }
 }

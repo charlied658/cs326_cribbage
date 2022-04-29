@@ -162,7 +162,7 @@ public class MarketPlaceManager implements MarketPlaceManagement {
     @Override
     public String getName() {
 
-        LOG.info("Returning special card name.");
+        LOG.trace("Returning special card name.");
         return specialCardType;
     }
 
@@ -174,7 +174,7 @@ public class MarketPlaceManager implements MarketPlaceManagement {
     @Override
     public int getPrice() {
 
-        LOG.info("Returning special card price.");
+        LOG.trace("Returning special card price.");
         return specialCardPrice;
     }
 
@@ -186,7 +186,7 @@ public class MarketPlaceManager implements MarketPlaceManagement {
     @Override
     public String getDescription() {
 
-        LOG.info("Returning special card description.");
+        LOG.trace("Returning special card description.");
         return specialCardDescription;
 
     }
