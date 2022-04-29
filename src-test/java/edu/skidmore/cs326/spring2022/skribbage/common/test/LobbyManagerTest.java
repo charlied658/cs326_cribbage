@@ -23,7 +23,7 @@ public class LobbyManagerTest {
      * Initialize variables for testing.
      */
     @Before
-    private void setup() {
+    public void setup() {
         testInstance = LobbyManager.getInstance();
     }
     
@@ -31,7 +31,7 @@ public class LobbyManagerTest {
      * Test that getInstance initialized the instance from null.
      */
     @Test
-    private void testGetInstance() {
+    public void testGetInstance() {
         assertNotNull(testInstance);
     }
 
