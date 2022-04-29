@@ -185,7 +185,7 @@ public final class GameController implements PropertyChangeListener {
                         // number of cards in play is 12.
                         if (animationManager.getGameManager().getGame()
                             .getCardsInPlay()
-                            .getCardsInHand().size() == 12) {
+                            .getCardsInHand().length == 12) {
 
                             // Move each peg 5 spaces. This is a temporary test.
                             // In the real game the pegs should more according
