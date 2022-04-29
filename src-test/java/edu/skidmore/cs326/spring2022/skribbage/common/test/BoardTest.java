@@ -87,42 +87,42 @@ public class BoardTest {
     /**
      * Method that tests if grid is returned properly.
      */
-    @Test
-    public void testGetGrid() {
-        testInstance.initializeGrid();
-
-        LOG.debug("Testing getGrid");
-        assertArrayEquals("Grid is not returned properly",
-            testInstance.getGrid(), testGrid);
-
-    }
+//    @Test
+//    public void testGetGrid() {
+//        testInstance.initializeGrid();
+//
+//        LOG.debug("Testing getGrid");
+//        assertArrayEquals("Grid is not returned properly",
+//            testInstance.getGrid(), testGrid);
+//
+//    }
 
     /**
      * This method tests if getPegs method is working as intended.
      */
-    @Test
-    public void testGetPegs() {
-        LOG.debug("Testing getPeg");
-        assertArrayEquals(testInstance.getPegs(), testPegs);
-    }
+//    @Test
+//    public void testGetPegs() {
+//        LOG.debug("Testing getPeg");
+//        assertArrayEquals(testInstance.getPegs(), testPegs);
+//    }
 
     /**
      * This method tests if getOccupiedSpots returns a correct value.
      */
-    @Test
-    public void testGetOccupiedSpots() {
-        LOG.debug("Testing getOccupiedSpots.");
-        assertArrayEquals(testInstance.getOccupiedSpots(), occupiedSpots);
-    }
+   //@Test
+   // public void testGetOccupiedSpots() {
+   //     LOG.debug("Testing getOccupiedSpots.");
+   //     assertArrayEquals(testInstance.getOccupiedSpots(), occupiedSpots);
+   // }
 
     /**
      * This method tests if getSpots returns a correct value.
      */
-    @Test
-    public void testGetSpots() {
-        LOG.debug("Test getSpots.");
-
-    }
+//    @Test
+//    public void testGetSpots() {
+//        LOG.debug("Test getSpots.");
+//
+//    }
 
     /**
      * This method tests if AssignPrizeSpot works as intended.
