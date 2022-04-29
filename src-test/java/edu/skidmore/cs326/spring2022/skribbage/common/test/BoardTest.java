@@ -2,6 +2,7 @@ package edu.skidmore.cs326.spring2022.skribbage.common.test;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import org.apache.log4j.Logger;
 import org.junit.Before;
@@ -9,12 +10,16 @@ import org.junit.Test;
 
 import edu.skidmore.cs326.spring2022.skribbage.common.Board;
 import edu.skidmore.cs326.spring2022.skribbage.common.BoardManager;
+import edu.skidmore.cs326.spring2022.skribbage.common.Location;
 import edu.skidmore.cs326.spring2022.skribbage.common.Peg;
+import edu.skidmore.cs326.spring2022.skribbage.common.Player;
 import edu.skidmore.cs326.spring2022.skribbage.common.Spot;
 import edu.skidmore.cs326.spring2022.skribbage.common.SpotType;
+import edu.skidmore.cs326.spring2022.skribbage.gamification.BattleSpot;
 
 /**
  * @author sleinasa
+ *         Last edited by: Henry Wilson
  */
 public class BoardTest {
     /**
@@ -38,6 +43,11 @@ public class BoardTest {
     private Peg[] testPegs;
 
     /**
+     * Test instance of player.
+     */
+    private Player testPlayer;
+
+    /**
      * Logger instance for logging.
      */
     private static final Logger LOG;
@@ -56,6 +66,8 @@ public class BoardTest {
         testGrid = new Spot[Board.NUMROWS][Board.NUMCOL];
         // HARDCODED FOR 3 PLAYERS.
         testPegs = new Peg[Board.NUMCOL * 2];
+        testPegs[0] = new Peg(testGrid[1][0]);
+        testPegs[1] = new Peg(testGrid[1][1]);
         // TODO needs to be changed.
         occupiedSpots = new Spot[10];
     }
@@ -65,6 +77,8 @@ public class BoardTest {
      */
     @Test
     public void testGetGrid() {
+        testInstance.initializeGrid();
+        
         LOG.debug("Testing getGrid");
         assertArrayEquals("Grid is not returned properly",
             testInstance.getGrid(), testGrid);
@@ -140,7 +154,6 @@ public class BoardTest {
         assertEquals(battleSpotCounter, 24);
 
     }
-    
 
     /**
      * This method tests assignJumpSpot.
@@ -165,4 +178,11 @@ public class BoardTest {
 
     }
 
+    /**
+     * Tests landing on a battle spot.
+     */
+    @Test
+    public void testLandsOnBattleSpot() {
+
+    }
 }

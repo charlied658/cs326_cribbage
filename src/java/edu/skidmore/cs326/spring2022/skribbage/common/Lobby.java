@@ -1,11 +1,25 @@
 package edu.skidmore.cs326.spring2022.skribbage.common;
 
+import org.apache.log4j.Logger;
+
 /**
  * Holds data representing users waiting for their game to start.
  * 
  * @author Declan Morris
  */
 public class Lobby {
+    
+    /**
+     * Logger instance.
+     */
+    private static final Logger LOG;
+    
+    /**
+     * Initialize Logger instance.
+     */
+    static {
+        LOG = Logger.getLogger(Lobby.class);
+    }
 
     /**
      * The maximum number of users that can be in one lobby.
@@ -95,8 +109,10 @@ public class Lobby {
      */
     public void addUser(User user) {
         if (numUsers < MAXIMUM_LOBBY_SIZE) {
-            users[numUsers] = user;
             numUsers += 1;
+            users[numUsers] = user;
+        } else {
+            LOG.trace("Tried to add more than 3 users to a lobby.");
         }
     }
 
