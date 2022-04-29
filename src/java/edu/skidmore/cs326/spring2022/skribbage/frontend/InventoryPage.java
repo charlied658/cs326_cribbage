@@ -40,13 +40,7 @@ public class InventoryPage extends DrawingSurface implements Page {
     /**
      * currentPlayer - Current player whose inventory this is.
      */
-    @SuppressWarnings("unused")
     private Player currentPlayer;
-
-    /**
-     * inventory - Holds all items/cards in inventory.
-     */
-    private HashMap<String, Card> inventory = new HashMap<String, Card>();
 
     /**
      * mainframeHeight - int variable to hold main frame height.
@@ -103,18 +97,6 @@ public class InventoryPage extends DrawingSurface implements Page {
         lobbyButton = new Text("Back to Lobby", new Point(20, 50), 25,
             Color.BLACK, Color.BLUE);
         add(new Text("Inventory:", new Point(30, 90), 20, Color.BLACK));
-
-        // Placeholder cards
-        inventory.put("one", new Card(Rank.KING, Suit.CLUBS));
-        inventory.put("two", new Card(Rank.ACE, Suit.SPADES));
-        inventory.put("three", new Card(Rank.SEVEN, Suit.DIAMONDS));
-        inventory.put("four", new Card(Rank.TWO, Suit.HEARTS));
-        inventory.put("five", new Card(Rank.SIX, Suit.DIAMONDS));
-        inventory.put("six", new Card(Rank.NINE, Suit.CLUBS));
-        inventory.put("seven", new Card(Rank.QUEEN, Suit.SPADES));
-
-//        Card[] allItems =
-//            inventory.values().toArray(new Card[inventory.size()]);
 
         int initXPosition = 30;
         int initYPosition = 115;

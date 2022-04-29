@@ -148,8 +148,6 @@ public class LobbyPage extends DrawingSurface implements Page {
         playerCPU = new User(null, "[CPU] Computer Dealer", UserRole.CPU);
         addPlayer(playerCPU);
         setup();
-        
-        //unitTest1();
     }
     
     /**

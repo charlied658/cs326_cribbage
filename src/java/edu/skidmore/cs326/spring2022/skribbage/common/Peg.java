@@ -55,6 +55,14 @@ public class Peg {
         LOG.trace("Peg.java getRole()");
         return role;
     }
+    
+    /**
+     * sets PegType.
+     * @param pt
+     */
+    public void setRole(PegType pt) {
+        this.role = pt;
+    }
 
     /**
      * @return spot
@@ -92,12 +100,25 @@ public class Peg {
      * Moves the peg a specified number of spaces on the board.
      * 
      * @param numSpaces
+     * @throws Errors - Handles errors for the peg's movement
+     * across the board.
      */
-    public void movePeg(int numSpaces) {
+    public void movePeg(int numSpaces) throws Error {
         LOG.trace("Peg.java movePeg()");
-        Location current = this.spot.getLocation();
-        this.spot = new Spot(new Location(current.getRow() + numSpaces,
-            current.getColumn()));
+        Location currentLoc = this.spot.getLocation();
+        Spot[][] grid = BoardManager.getInstance().getBoard().getGrid();
+        
+        int newCol = 0;
+        int newRow = 0;
+        int spacesRemaining = 0;
+        
+        for (int i = currentLoc.getColumn(); i < grid.length; i++) {
+            for (int j = currentLoc.getRow(); j < grid[i].length; j++) {
+                newCol = i;
+                newRow = j;
+                spacesRemaining++;
+            }
+        }
     }
 
     /**
