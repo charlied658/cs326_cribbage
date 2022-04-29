@@ -16,6 +16,7 @@ import edu.skidmore.cs326.spring2022.skribbage.common.Player;
 import edu.skidmore.cs326.spring2022.skribbage.common.Spot;
 import edu.skidmore.cs326.spring2022.skribbage.common.SpotType;
 import edu.skidmore.cs326.spring2022.skribbage.gamification.BattleSpot;
+import edu.skidmore.cs326.spring2022.skribbage.gamification.JumpSpot;
 
 /**
  * @author sleinasa
@@ -45,7 +46,12 @@ public class BoardTest {
     /**
      * Test instance of player.
      */
-    private Player testPlayer;
+    private Player testPlayerOne;
+
+    /**
+     * Second test instance of player.
+     */
+    private Player testPlayerTwo;
 
     /**
      * Logger instance for logging.
@@ -64,12 +70,18 @@ public class BoardTest {
         LOG.debug("Board setup");
         testInstance = BoardManager.getInstance().getBoard();
         testGrid = new Spot[Board.NUMROWS][Board.NUMCOL];
+
         // HARDCODED FOR 3 PLAYERS.
         testPegs = new Peg[Board.NUMCOL * 2];
         testPegs[0] = new Peg(testGrid[1][0]);
         testPegs[1] = new Peg(testGrid[1][1]);
         // TODO needs to be changed.
         occupiedSpots = new Spot[10];
+        testPlayerOne = new Player();
+        testPlayerTwo = new Player();
+        testPegs[0].setOwner(testPlayerOne);
+        testPegs[1].setOwner(testPlayerTwo);
+
     }
 
     /**
@@ -78,7 +90,7 @@ public class BoardTest {
     @Test
     public void testGetGrid() {
         testInstance.initializeGrid();
-        
+
         LOG.debug("Testing getGrid");
         assertArrayEquals("Grid is not returned properly",
             testInstance.getGrid(), testGrid);
@@ -183,6 +195,31 @@ public class BoardTest {
      */
     @Test
     public void testLandsOnBattleSpot() {
+        
+        Location spotLocation = new Location(1, 1);
+        Spot battleSpot = (Spot) new BattleSpot(spotLocation);
+        testPegs[0].setSpot(battleSpot);
+        testPegs[1].setSpot(battleSpot);
+        testInstance.landsOnBattleSpot(testPegs[0], testPegs[1]);
+        assertTrue(testPegs[0].getOwner().getPoints() != 0
+            || testPegs[1].getOwner().getPoints() != 0);
+        
 
     }
+    
+    /**
+     * Tests landing on a battle spot.
+     */
+    @Test
+    public void testLandsOnJumpSpot() {
+        
+        Location spotLocation = new Location(1, 1);
+        Spot jumpSpot = (Spot) new JumpSpot(spotLocation);
+        testPegs[0].setSpot(jumpSpot);
+        testInstance.landsOnJumpSpot(testPegs[0]);
+        assertTrue(testPegs[0].getOwner().getPoints() != 0);
+        
+
+    }
+
 }
