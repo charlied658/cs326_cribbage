@@ -2,6 +2,7 @@ package edu.skidmore.cs326.spring2022.skribbage.frontend;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import edu.skidmore.cs326.spring2022.skribbage.common.Player;
 import edu.skidmore.cs326.spring2022.skribbage.frontend.events.game.PlayerClickDeckEvent;
@@ -267,7 +268,7 @@ public class GameRenderManager {
             System.out.println("Points before: " + cPoints);
             cPoints += cardChosen.getRank().getPointValue();
             System.out.println("Points after: " + cPoints);
-        } 
+        }
     }
 
     /**
@@ -316,6 +317,7 @@ public class GameRenderManager {
         cardsInPlay.clear();
         cardsInHand.clear();
         cardsInOpponentHand.clear();
+        cardsInCrib.clear();
 
         List<Card> gameCardsInDeck =
             gameManager.getGame().getDeck().getDeck();
@@ -325,6 +327,8 @@ public class GameRenderManager {
             .getPlayerList().get(0).getHand().getCardsInHand();
         Card[] gameCardsInOpponentHand = gameManager.getGame()
             .getPlayerList().get(1).getHand().getCardsInHand();
+        Card[] gameCardsInCrib =
+            gameManager.getGame().getCribCards().getCardsInHand();
 
         for (Card card : gameCardsInDeck) {
             CardImage cardImage = standardDeck.get(card.getCardID());
@@ -348,6 +352,12 @@ public class GameRenderManager {
             CardImage cardImage = standardDeck.get(card.getCardID());
             cardsInOpponentHand.add(cardImage);
             cardImage.setCardPosition(CardPosition.OPPONENT_HAND);
+        }
+
+        for (Card card : gameCardsInCrib) {
+            CardImage cardImage = standardDeck.get(card.getCardID());
+            cardsInCrib.add(cardImage);
+            cardImage.setCardPosition(CardPosition.IN_CRIB);
         }
 
     }
@@ -453,6 +463,78 @@ public class GameRenderManager {
 
         return AnimationManager.getInstance().getGameManager().getGame()
             .getCardsInPlay().getCardsInHand().length;
+    }
+
+    /**
+     * Calculate score and move pegs on the board.
+     */
+    public void movePegs() {
+        // Move each peg 5 spaces.
+
+        // TODO
+        // In the real game the pegs should more according
+        // to the number of points earned during the play
+        // phase.
+        AnimationManager.getInstance().movePegGlideAnimation(0, 5);
+        AnimationManager.getInstance().movePegGlideAnimation(1, 5);
+
+        // If either peg is at the final space, end the
+        // game.
+        if (AnimationManager.getInstance().getPegLocations()[0] == 120
+            || AnimationManager.getInstance().getPegLocations()[1] == 120) {
+            AnimationManager.getInstance().getStartGamePage().closeWindow();
+        }
+
+        // Deal the cards for the next round
+        dealCards();
+
+        // Add the button to send cards to the crib
+        AnimationManager.getInstance().getStartGamePage().add(AnimationManager
+            .getInstance().getStartGamePage().getSendCardsToCribButton());
+        AnimationManager.getInstance().setButtonClickable(AnimationManager
+            .getInstance().getStartGamePage().getSendCardsToCribButton(),
+            false);
+    }
+
+    /**
+     * Send the selected cards to the crib and have opponent select 2 random
+     * cards to send.
+     */
+    public void discardCards() {
+
+        for (CardImage cardImage : selectedCardsForDiscarding) {
+            int index = cardsInHand.indexOf(cardImage);
+            Card card =
+                AnimationManager.getInstance().getGameManager().getGame()
+                    .getPlayerList().get(0).getHand().getCardsInHand()[index];
+            AnimationManager.getInstance().getGameManager().getGame()
+                .getPlayerList().get(0).getHand().removeCard(card);
+            cardsInHand.remove(index);
+            AnimationManager.getInstance().getGameManager().getGame()
+                .getCribCards().addCard(card);
+        }
+        selectedCardsForDiscarding.clear();
+
+        AnimationManager.getInstance().moveCardsToStandardPositions(50);
+
+        for (int i = 0; i < 2; i++) {
+            int handSize =
+                AnimationManager.getInstance().getGameManager().getGame()
+                    .getPlayerList().get(1).getHand().getCardsInHand().length;
+            Random rand = new Random();
+            int index = rand.nextInt(handSize);
+            Card card =
+                AnimationManager.getInstance().getGameManager().getGame()
+                    .getPlayerList().get(1).getHand().getCardsInHand()[index];
+            AnimationManager.getInstance().getGameManager().getGame()
+                .getPlayerList().get(1).getHand().removeCard(card);
+            AnimationManager.getInstance().getGameManager().getGame()
+                .getCribCards().addCard(card);
+        }
+
+        AnimationManager.getInstance()
+            .moveCardsToStandardPositions(50);
+
     }
 
     /**
