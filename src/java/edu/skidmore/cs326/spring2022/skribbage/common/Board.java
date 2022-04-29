@@ -221,4 +221,35 @@ public class Board {
 
     }
 
+    /**
+     * Calls battle spot methods when a player lands on a battle spot.
+     * 
+     * @param pegOne
+     * @param pegTwo
+     */
+    public void landsOnBattleSpot(Peg pegOne, Peg pegTwo) {
+
+        ((BattleSpot) (pegOne.getSpot())).decideWinner(pegOne.getOwner(),
+            pegTwo.getOwner());
+
+    }
+    /**
+     * Calls jump spot methods when a player lands on a battle spot.
+     * 
+     * @param peg
+     */
+    public void landsOnJumpSpot(Peg peg) {
+        
+        ((JumpSpot) (peg.getSpot())).jump(peg.getOwner());
+
+    }
+    /**
+     * Calls prize spot methods when a player lands on a battle spot.
+     * 
+     * @param peg
+     */
+    public void landsOnPrizeSpot(Peg peg) {
+
+    }
+
 }
