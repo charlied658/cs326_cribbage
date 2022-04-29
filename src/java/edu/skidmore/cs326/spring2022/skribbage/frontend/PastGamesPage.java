@@ -30,7 +30,7 @@ import us.daveread.edu.utilities.Utility;
  */
 @SuppressWarnings("serial")
 public class PastGamesPage extends DrawingSurface
-    implements Page , ActionListener {
+    implements Page, ActionListener {
     /**
      * mainFrameWidth - int variable that holds mainframe width.
      */
@@ -95,6 +95,7 @@ public class PastGamesPage extends DrawingSurface
     /**
      * StartGamePage - gamepage window.
      */
+    @SuppressWarnings("unused")
     private StartGamePage gamePage;
 
     /**

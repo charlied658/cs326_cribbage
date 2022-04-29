@@ -36,10 +36,11 @@ public class InventoryPage extends DrawingSurface implements Page {
      * mf - Holds reference to the window.
      */
     private MainFrame mf;
-    
+
     /**
      * currentPlayer - Current player whose inventory this is.
      */
+    @SuppressWarnings("unused")
     private Player currentPlayer;
 
     /**
@@ -81,7 +82,7 @@ public class InventoryPage extends DrawingSurface implements Page {
      */
     public InventoryPage() {
         LOG.trace("Entered InventoryPage Constructor.");
-        //PLACEHOLDER - Add way to get player from database
+        // PLACEHOLDER - Add way to get player from database
         currentPlayer = new Player();
         mf = new MainFrame(this, "Inventory", mainframeWidth,
             mainframeHeight, false);
@@ -112,22 +113,26 @@ public class InventoryPage extends DrawingSurface implements Page {
         inventory.put("six", new Card(Rank.NINE, Suit.CLUBS));
         inventory.put("seven", new Card(Rank.QUEEN, Suit.SPADES));
 
-        Card[] allItems =
-            inventory.values().toArray(new Card[inventory.size()]);
+//        Card[] allItems =
+//            inventory.values().toArray(new Card[inventory.size()]);
 
         int initXPosition = 30;
         int initYPosition = 115;
 
-        for (Card item : allItems) {
-            add(new Text(item.getSuit().getName() + " - "
-                + item.getRank().getName(),
+        currentPlayer.getInventoryManager().updateInventory();
+
+        Object[] objectArray = currentPlayer.getInventoryManager()
+            .createInventory().entrySet().toArray();
+
+        for (int i = 0; i < objectArray.length; i++) {
+            add(new Text(objectArray[i] + "  ",
                 new Point(initXPosition,
                     initYPosition),
                 16, Color.BLACK));
             initYPosition += 25;
         }
 
-        //add(closeWindow);
+        // add(closeWindow);
         add(lobbyButton);
         add(logo);
     }
@@ -146,19 +151,20 @@ public class InventoryPage extends DrawingSurface implements Page {
         }
 
     }
+
     /**
      * Method from Page interface, to close the window.
      */
     public void closeWindow() {
         mf.dispose();
     }
-     /**
+    /**
      * @param args
      */
     /*
-    public static void main(String[] args) {
-        new InventoryPage();
-    }
-    */
+     * public static void main(String[] args) {
+     * new InventoryPage();
+     * }
+     */
 
 }

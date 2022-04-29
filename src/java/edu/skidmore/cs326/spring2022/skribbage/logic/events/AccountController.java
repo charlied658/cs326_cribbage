@@ -77,38 +77,12 @@ public class AccountController implements PropertyChangeListener {
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        /*
-         * Step 1: Perform actions that are shared among events that this
-         * controller
-         * manages
-         * For example, every single Account management action requires
-         * validation
-         * that the user exists (including CreateAccountEvent, can't make an
-         * account
-         * if it already exists!)
-         * So instead of writing 4 separate listeners for each Account event,
-         * we can write a single Controller and have it subscribe to a list of
-         * account-related events, handling each one accordingly after
-         * executing shared logic.
-         */
-
-        /*
-         * Requires downcasting from PropertyChangeEvent,this is where usingan
-         * AccountEvent abstract class is helpful --We can share functionality
-         * between all account events to do similar tasks like these ones.
-         * (hashing
-         * and validating)
-         */
         LOG.trace("AccountController Event: " + evt);
-
-        /*
-         * Step 2: Handle each type of account event accordingly. There is
-         * likely
-         */
+        // Step 2: Handle each type of account event accordingly. There is
+        // likely
         AccountEvent accountEvent = (AccountEvent) evt;
         User associatedUser = accountEvent.getUser();
         AccountResponse accountResponse = null;
-
         switch (accountEvent.getEventType()) {
             case USER_LOGIN:
                 LOG.debug("caught a login event");
@@ -130,8 +104,8 @@ public class AccountController implements PropertyChangeListener {
             case USER_CREATE_ACCOUNT:
                 UserCreateAccountEvent ucae = ((UserCreateAccountEvent) evt);
                 LOG.debug("caught a create account event");
-                // password from the user hashed.
-                // Then register user to database.
+                // password from the user hashed, Then register user to
+                // database.
                 if (PersistenceFacade.getInstance().userCreate(associatedUser,
                     ucae.getPassword())) {
                     accountResponse =
@@ -140,24 +114,21 @@ public class AccountController implements PropertyChangeListener {
                     accountResponse =
                         new AccountResponse("Account not created...", true);
                 }
-                // when succesful, then return response event as rejectionStatus
-                // being false.
+                // when succesful, then return response event as
+                // rejectionStatues
                 CreateAccountResponseEvent responseEventUCA =
                     (CreateAccountResponseEvent) eventFactory.createEvent(
                         EventType.USER_CREATE_ACCOUNT_RESPONSE, this,
                         associatedUser, accountResponse);
                 eventFactory.fireEvent(responseEventUCA);
-
                 break;
             case USER_DELETE_ACCOUNT:
                 LOG.debug("Caught a delete account event");
                 UserDeleteAccountEvent del = ((UserDeleteAccountEvent) evt);
-                // if correct password.
-                
+                // if correct password. 
                 if (isPasswordCorrect(associatedUser, del.getPassword())) {
                     Password toDelete = LoginAuthenticator.getInstance()
                         .hashNewPassword(del.getPassword());
-                    
                     if (PersistenceFacade.getInstance().userDelete(
                         associatedUser, toDelete)) {
                         accountResponse =
@@ -170,7 +141,6 @@ public class AccountController implements PropertyChangeListener {
                     accountResponse = new AccountResponse(
                         "Account not deleted. User not verified", true);
                 }
-
                 UserDeleteAccountResponseEvent res =
                     (UserDeleteAccountResponseEvent) eventFactory.createEvent(
                         EventType.USER_DELETE_ACCOUNT_RESPONSE, this,
@@ -197,7 +167,6 @@ public class AccountController implements PropertyChangeListener {
                         associatedUser, accountResponse);
                 eventFactory.fireEvent(response);
                 break;
-            // To do: rename to clarify event's purpose
             case VALIDATE_USERNAME:
                 LOG.debug("caught a user validation event " + evt);
                 // If the username is appropriate
@@ -217,26 +186,22 @@ public class AccountController implements PropertyChangeListener {
                         accountResponse =
                             new AccountResponse("Username is available", false);
                     }
-
                 } else {
                     LOG.debug("Username is inapproiate.");
                     accountResponse =
                         new AccountResponse("UserName is inapproiate:", true);
                 }
-
                 UserValidationResponseEvent responseEventVU =
                     (UserValidationResponseEvent) eventFactory.createEvent(
                         EventType.USER_VALIDATION_RESPONSE, this,
                         associatedUser, accountResponse);
                 eventFactory.fireEvent(responseEventVU);
-
                 break;
             case USER_CHANGE_PASSWORD_VALIDATION:
                 LOG.debug(
                     "Caught a user validated before change password method.");
                 ValidateForChangePassword call =
                     ((ValidateForChangePassword) evt);
-
                 if (isPasswordCorrect(associatedUser, call.getPassword())) {
                     LOG.debug("User Password validated");
                     accountResponse = new AccountResponse(
@@ -246,7 +211,6 @@ public class AccountController implements PropertyChangeListener {
                     accountResponse = new AccountResponse(
                         "User not validated for changing password", true);
                 }
-
                 ValidateChangeResponseEvent responseEventPV =
                     (ValidateChangeResponseEvent) eventFactory
                         .createEvent(
@@ -254,7 +218,6 @@ public class AccountController implements PropertyChangeListener {
                             this, associatedUser, accountResponse);
                 eventFactory.fireEvent(responseEventPV);
                 break;
-
             default:
                 LOG.warn("caught unhandled event");
                 break;

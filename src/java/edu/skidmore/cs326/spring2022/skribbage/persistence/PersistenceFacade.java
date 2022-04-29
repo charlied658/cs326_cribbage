@@ -71,10 +71,10 @@ public final class PersistenceFacade
      */
     @Override
     public boolean userCreate(User userToCreate, Password password) {
-        String usernamge = userToCreate.getUserName();
+        String username = userToCreate.getUserName();
         String passwordtemp = password.getBase64SaltAndPasswordHash();
 
-        DM.createUser(usernamge, passwordtemp);
+        DM.createUser(username, passwordtemp);
 
         return userNameExists(userToCreate);
     }
@@ -179,18 +179,22 @@ public final class PersistenceFacade
     }
 
     /**
-     * Obtain the password of a user
+     * Obtain the password of a user.
      * 
-     * @param User
+     * @param user
      *            the user whose password we want to retrieve
      * @return Password the password of the user we selected
      */
     @Override
     public Password getPassword(User user) {
 
-        Password accepted = DM.getPassword(user);
+        if (DM.getPassword(user) == null) {
+            return null;
+        } else {
+            Password accepted = DM.getPassword(user);
+            return accepted;
+        }
 
-        return accepted;
     }
 
     /**
