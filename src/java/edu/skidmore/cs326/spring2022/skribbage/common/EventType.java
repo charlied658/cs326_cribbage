@@ -131,7 +131,11 @@ public enum EventType {
      * Fired when the front end detects that the round is over (may not
      * be required).
      */
-    ROUND_END("", Game.class);
+    ROUND_END("", Game.class),
+    /**
+     * Event to check eventFactory returning null. 
+     */
+    TEST_EVENT_NOT_HANDLED("Test Event For EventFactory", User.class);
 
     /**
      * The name of the event.

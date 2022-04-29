@@ -10,6 +10,8 @@ import org.junit.Before;
 import org.junit.Test;
 import edu.skidmore.cs326.spring2022.skribbage.common.EventFactory;
 import edu.skidmore.cs326.spring2022.skribbage.common.EventType;
+import edu.skidmore.cs326.spring2022.skribbage.common.LoginAuthenticator;
+import edu.skidmore.cs326.spring2022.skribbage.common.Password;
 import edu.skidmore.cs326.spring2022.skribbage.common.User;
 import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserCreateAccountEvent;
 
@@ -27,15 +29,26 @@ public class EventFactoryTest {
      * Create Account instance.
      */
     private UserCreateAccountEvent createInstance;
+
     /**
      * User test instance to be passed.
      */
     private User userInstance;
 
     /**
+     * Password object instane for the user.
+     */
+    private Password password;
+
+    /**
      * Source object that fired the event change.
      */
     private Object source;
+
+    /**
+     * Instane of the login authenticator to hash a password.
+     */
+    private LoginAuthenticator testHash;
 
     /**
      * Logger instance for logging.
@@ -55,6 +68,8 @@ public class EventFactoryTest {
         userInstance = new User("sleinasa@skidmore.edu",
             "sleinasa", UserRole.UNAUTHORIZED);
         testInstance = EventFactory.getInstance();
+        testHash = LoginAuthenticator.getInstance();
+        password = testHash.hashNewPassword("password");
         LOG.info("SetUp method completed");
     }
 
@@ -76,17 +91,39 @@ public class EventFactoryTest {
      */
     @Test
     public void testCreateEvent() throws Exception {
-        LOG.trace("Beginning test for CreateEvent method");
+        LOG.info("Beginning test for CreateEvent method");
         assertNull(createInstance);
         createInstance = (UserCreateAccountEvent) testInstance
-            .createEvent(EventType.USER_CREATE_ACCOUNT, source, userInstance);
+            .createEvent(EventType.USER_CREATE_ACCOUNT, source, userInstance,
+                password);
         assertNotNull(createInstance);
         assertEquals(createInstance.getEventType(),
             EventType.USER_CREATE_ACCOUNT);
-        LOG.trace("Create event test finished");
+        LOG.info("Create event test finished");
+    }
+
+    /**
+     * Method to check if eventFactory returns null when event is not handled in
+     * any of the factories.
+     */
+    @Test
+    public void testCreateEventNull() {
+        LOG.info("Testing event  Factory returning null.");
+        createInstance = (UserCreateAccountEvent) testInstance.createEvent(
+            EventType.TEST_EVENT_NOT_HANDLED, source, userInstance);
+        LOG.info("Test finished");
+    }
+
+    /**
+     * Method to test eventFactory expection being thrown.
+     * Exception occurs when event creation parameters don't match the ones in
+     * enum.
+     */
+    @Test(expected = ArrayIndexOutOfBoundsException.class)
+    public void testCreateEventFailure() {
+        LOG.info("Testing exception when parameters don't match");
+        createInstance = (UserCreateAccountEvent) testInstance
+            .createEvent(EventType.USER_CREATE_ACCOUNT, source, userInstance);
     }
     
-   
-
-   
 }
