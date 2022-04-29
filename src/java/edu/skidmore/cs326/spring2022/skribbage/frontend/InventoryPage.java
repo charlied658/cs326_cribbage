@@ -30,7 +30,7 @@ import us.daveread.edu.utilities.Utility;
  *         Last Edited by Jonah Marcus
  */
 @SuppressWarnings("serial")
-public class InventoryPage extends DrawingSurface implements Page {
+public class InventoryPage extends SkribbageDrawingSurface implements Page {
 
     /**
      * mf - Holds reference to the window.
@@ -78,9 +78,10 @@ public class InventoryPage extends DrawingSurface implements Page {
         LOG.trace("Entered InventoryPage Constructor.");
         // PLACEHOLDER - Add way to get player from database
         currentUser = PageManager.getInstance().getLoggedInUser();
-        mf = new MainFrame(this, "Inventory", mainframeWidth,
+        new MainFrame(this, "Inventory", mainframeWidth,
             mainframeHeight, false);
         setup();
+        positionWindow();
     }
 
     /**
@@ -129,18 +130,14 @@ public class InventoryPage extends DrawingSurface implements Page {
             closeWindow.setBorderColor(Color.BLACK);
             closeWindow();
         } else if (e == lobbyButton) {
-            PageManager.getInstance().createPage(PageType.LOBBY_PAGE);
             closeWindow();
+            PageManager.getInstance().createPage(PageType.LOBBY_PAGE);
+            
         }
 
     }
 
-    /**
-     * Method from Page interface, to close the window.
-     */
-    public void closeWindow() {
-        mf.dispose();
-    }
+   
     /**
      * @param args
      */

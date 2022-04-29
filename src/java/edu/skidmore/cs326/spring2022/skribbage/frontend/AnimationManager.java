@@ -744,6 +744,42 @@ public class AnimationManager {
     }
 
     /**
+     * Reset card positions.
+     */
+    public void resetCards() {
+        if (!gameManager.deckIsReset()) {
+            gameManager.resetCards();
+            moveCardsToStandardPositions(50);
+        }
+    }
+
+    /**
+     * Shuffle the deck.
+     */
+    public void shuffleCards() {
+        resetCards();
+        gameManager.shuffleCards();
+        moveCardsToStandardPositions(50);
+    }
+
+    /**
+     * Deal the cards.
+     */
+    public void dealCards() {
+        shuffleCards();
+        for (int i = 0; i < 6; i++) {
+            if (gameRenderManager.getCardsInDeck().size() > 0) {
+                gameManager.dealPlayerCards(1);
+                moveCardsToStandardPositions(20);
+            }
+            if (gameRenderManager.getCardsInDeck().size() > 0) {
+                gameManager.dealOpponentCards(1);
+                moveCardsToStandardPositions(20);
+            }
+        }
+    }
+
+    /**
      * Set whether the cards are clickable to avoid conflicts.
      *
      * @param clickable

@@ -8,17 +8,13 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-
-
 
 import org.apache.log4j.Logger;
 
 import us.daveread.edu.graphics.shape.Drawable;
 import us.daveread.edu.graphics.shape.impl.Image;
-
 
 import us.daveread.edu.graphics.shape.impl.Text;
 import us.daveread.edu.graphics.surface.DrawingSurface;
@@ -33,7 +29,7 @@ import us.daveread.edu.utilities.Utility;
  *         Code Reviewed by Zoe Beals - 3/24/2022
  */
 @SuppressWarnings("serial")
-public class RulesPage extends DrawingSurface implements Page {
+public class RulesPage extends SkribbageDrawingSurface implements Page {
     /**
      * mainframeWidth - int var to hold width.
      */
@@ -59,7 +55,7 @@ public class RulesPage extends DrawingSurface implements Page {
      */
     @SuppressWarnings("unused")
     private NavigationPage navPage;
-    
+
     /**
      * PageManager instance for page management.
      */
@@ -69,7 +65,6 @@ public class RulesPage extends DrawingSurface implements Page {
      * LOG - logger.
      */
     private static final Logger LOG;
-
 
     static {
         LOG = Logger.getLogger(RulesPage.class);
@@ -87,6 +82,7 @@ public class RulesPage extends DrawingSurface implements Page {
         mf = new MainFrame(this, "Rules Page", mainframeWidth, mainframeHeight,
             false);
         setup();
+        positionWindow();
     }
 
     /**
@@ -152,7 +148,6 @@ public class RulesPage extends DrawingSurface implements Page {
         return read;
     }
 
-    
     @Override
     public void drawableMouseClick(Drawable e) {
         LOG.trace("DrawableMouseClick in PastGamesPage.java");
@@ -160,24 +155,12 @@ public class RulesPage extends DrawingSurface implements Page {
             returnToMainMenu.setBorderColor(Color.CYAN);
             Utility.pause(100);
             returnToMainMenu.setBorderColor(Color.BLACK);
+            closeWindow();
             navPage =
                 (NavigationPage) pageManager
                     .createPage(PageType.NAVIGATION_PAGE);
-            closeWindow();
 
-            // NavigationPageManager.getInstance().getNavPage();
         }
     }
 
- 
-    /**
-     * Method from page interface.
-     */
-    public void closeWindow() {
-        mf.dispose();
-    }
-
-
-   
-    
 }

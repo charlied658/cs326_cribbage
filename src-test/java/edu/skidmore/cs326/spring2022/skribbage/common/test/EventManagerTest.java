@@ -7,19 +7,19 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNotNull;
+
 import static org.junit.Assert.assertNull;
 
 import edu.skidmore.cs326.spring2022.skribbage.common.EventManager;
 import edu.skidmore.cs326.spring2022.skribbage.common.EventType;
 import edu.skidmore.cs326.spring2022.skribbage.common.LoginAuthenticator;
 import edu.skidmore.cs326.spring2022.skribbage.common.Password;
-import edu.skidmore.cs326.spring2022.skribbage.common.PasswordHasher;
 import edu.skidmore.cs326.spring2022.skribbage.common.User;
 import edu.skidmore.cs326.spring2022.skribbage.common.UserRole;
 import edu.skidmore.cs326.spring2022.skribbage.common.EventFactory;
 import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserCreateAccountEvent;
 import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserLoginEvent;
+import edu.skidmore.cs326.spring2022.skribbage.logic.events.AccountController;
 
 /**
  * Testing for Event manager API testing.
@@ -49,11 +49,6 @@ public class EventManagerTest {
     private EventManager testInstance;
 
     /**
-     * Mockup version of AccountController for testing.
-     */
-    private AccountControllerMOCK accountControllerMOCK;
-
-    /**
      * Mockup version of AccountResponseController for testing.
      */
     private AccountResponseControllerMOCK accountResponseControllerMOCK;
@@ -64,20 +59,20 @@ public class EventManagerTest {
     private User userInstance;
 
     /**
-     * Mock email for mock user.
+     * Mock user two to check removing works.
      */
-    private static final String TEST_EMAIL = "acarney@skidmore.edu";
-
-    /**
-     * Mock username for mock user.
-     */
-    private static final String TEST_USERNAME = "acarney";
-
+    private User userInstanceTwo;
 
     /**
      * Mock Password object for mock user.
      */
     private Password testPassword;
+
+    /**
+     * Login password type.
+     */
+    private String password;
+
     /**
      * Password hasher class instance.
      */
@@ -87,6 +82,11 @@ public class EventManagerTest {
      * Mock login event.
      */
     private UserLoginEvent testEventInstance;
+
+    /**
+     * Mock login event to check removal of listener.
+     */
+    private UserLoginEvent testEventInstanceTwo;
 
     /**
      * Mock create account event.
@@ -106,20 +106,25 @@ public class EventManagerTest {
         testEventFactory = EventFactory.getInstance();
         testInstance = EventManager.getInstance();
         hasher = LoginAuthenticator.getInstance();
-        accountControllerMOCK = new AccountControllerMOCK();
         accountResponseControllerMOCK = new AccountResponseControllerMOCK();
         testPassword = hasher.hashNewPassword("password");
-        userInstance = new User(TEST_EMAIL, TEST_USERNAME,
-            UserRole.UNAUTHORIZED);
-
+        password = "password";
+        userInstance =
+            new User("acarney@skidmore.edu", "acarney", UserRole.UNAUTHORIZED);
+        userInstanceTwo =
+            new User("sleinasa@skidmore.edu", "user", UserRole.UNAUTHORIZED);
+        testInstance.addPropertyChangeListener(new AccountControllerMOCK(),
+            EventType.USER_LOGIN);
         testEventInstance = (UserLoginEvent) testEventFactory
-            .createEvent(EventType.USER_LOGIN, this, userInstance,
-                testPassword);
-        
+            .createEvent(EventType.USER_LOGIN, this, userInstance, password);
+        testEventInstanceTwo =
+            (UserLoginEvent) testEventFactory.createEvent(EventType.USER_LOGIN,
+                this, userInstanceTwo, password);
+
         testFalseEventInstance = ((UserCreateAccountEvent) testEventFactory
             .createEvent(EventType.USER_CREATE_ACCOUNT, this, userInstance,
                 testPassword));
-        
+
     }
 
     /**
@@ -142,19 +147,17 @@ public class EventManagerTest {
     @Test
     public void testAddPropertyChangeListener() {
         LOG.info("Beginning to test addPropertyChangeListener");
-        testInstance.addPropertyChangeListener(
-            accountControllerMOCK, EventType.USER_LOGIN);
-        
-        
+
         LOG.trace("added account response controller mock to listeners");
         testInstance.addPropertyChangeListener(
             accountResponseControllerMOCK,
             EventType.USER_LOGIN_RESPONSE);
-        
-        
-        
-        testInstance.notify(testEventInstance);
-        
+
+        testEventFactory.fireEvent(testEventInstance);
+
+        assertEquals(userInstance,
+            accountResponseControllerMOCK.getReceivedUserFromLogin());
+
         LOG.info("AddPropertyChangeListener test finished.");
 
     }
@@ -170,35 +173,21 @@ public class EventManagerTest {
     public void testRemovePropertyChangeListener() throws Exception {
         LOG.info("Beginning to test removePropertyChangeListener");
         // add the listener to the list to listen to the loginEvent.
-        testInstance.addPropertyChangeListener(accountControllerMOCK,
-            EventType.USER_LOGIN);
-        testInstance.notify(testEventInstance);
-
-        // Actually fire the event
-        
-        assertNotNull(testEventInstance);
-        LOG.trace("created event " + testEventInstance);
+        testInstance.addPropertyChangeListener(accountResponseControllerMOCK,
+            EventType.USER_LOGIN_RESPONSE);
         testEventFactory.fireEvent(testEventInstance);
-        LOG.trace("fired said event");
-        
-        
-        // Fire an event that should be ignored
-        
-        assertNotNull(testFalseEventInstance);
-        LOG.trace("Created false event " + testEventInstance);
-        testEventFactory.fireEvent(testFalseEventInstance);
-        LOG.trace("fired said false event");
-        
-        testInstance.removePropertyChangeListener(accountControllerMOCK);
-        testInstance.notify(testEventInstance);
-        
-        // assert that some value change got to the listener. Maybe assert that
-        // assertEquals(listenerInstance, userInstance);
-        // The object sent to listenerInstance should be the same as
-        // userInstance
-        // assertTrue(listenerInstance.equals(userInstance));
+        assertEquals(accountResponseControllerMOCK.getReceivedUserFromLogin(),
+            userInstance);
+        // Now removing.
+        testInstance
+            .removePropertyChangeListener(accountResponseControllerMOCK);
 
-        // assertFalse(listenerInstance.equals(userInstance));
+        testEventFactory.fireEvent(testEventInstanceTwo);
+        assertNotEquals(
+            accountResponseControllerMOCK.getReceivedUserFromLogin(),
+            userInstanceTwo);
+
+        LOG.trace("fired said event");
 
     }
 
@@ -208,8 +197,11 @@ public class EventManagerTest {
     @Test
     public void testNotify() {
         LOG.info("Began testing notify method");
-        // test the same way as tested addPropertyListener. Exactly the same
-        // way.
+        testInstance.addPropertyChangeListener(accountResponseControllerMOCK,
+            EventType.USER_LOGIN_RESPONSE);
+        testEventFactory.fireEvent(testEventInstance);
+        assertEquals(accountResponseControllerMOCK.getReceivedUserFromLogin(),
+            userInstance);
     }
 
     /**
