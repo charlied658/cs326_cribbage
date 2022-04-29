@@ -16,15 +16,14 @@ import us.daveread.edu.graphics.shape.impl.Text;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Point;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 /**
  * Class to store all the card and peg animations.
  * Edit this file if you need to.
- * <<<<<<< HEAD
- * =======
- * >>>>>>> 92a128e0e4870f3bcf7bae306e1ca395cd72431b
  * 
  * @author cdavidso
  */
@@ -125,9 +124,19 @@ public class AnimationManager {
     private String[] fileNames;
 
     /**
-     * Number of cards displayed on the deck. This is only for visual purposes.
+     * Number of cards displayed in the deck.
      */
-    private final int numcards = 52;
+    private static final int NUM_CARDS = 52;
+
+    /**
+     * File path for the default card image.
+     */
+    private static final String CARD_IMAGE = "card.png";
+
+    /**
+     * File path containing the file names for the card images.
+     */
+    private static final String FILENAMES = "filenames.txt";
 
     /**
      * Toggles the screen being resized.
@@ -338,104 +347,38 @@ public class AnimationManager {
         LOG.trace("Initialize and render cards on board");
 
         fileNames = new String[52];
-        for (int i = 0; i < 4; i++) {
-            String suit;
-            if (i == 0) {
-                suit = "hearts";
-            } else if (i == 1) {
-                suit = "clubs";
-            } else if (i == 2) {
-                suit = "diamonds";
-            } else {
-                suit = "spades";
+        try {
+            Scanner scanner = new Scanner(new File(FILENAMES));
+
+            for (int i = 0; i < NUM_CARDS; i++) {
+                String fileName = scanner.nextLine();
+                fileNames[i] = fileName;
             }
 
-            fileNames[13 * i] = "ace_of_" + suit + ".png";
-            fileNames[13 * i + 1] = "2_of_" + suit + ".png";
-            fileNames[13 * i + 2] = "3_of_" + suit + ".png";
-            fileNames[13 * i + 3] = "4_of_" + suit + ".png";
-            fileNames[13 * i + 4] = "5_of_" + suit + ".png";
-            fileNames[13 * i + 5] = "6_of_" + suit + ".png";
-            fileNames[13 * i + 6] = "7_of_" + suit + ".png";
-            fileNames[13 * i + 7] = "8_of_" + suit + ".png";
-            fileNames[13 * i + 8] = "9_of_" + suit + ".png";
-            fileNames[13 * i + 9] = "10_of_" + suit + ".png";
-            fileNames[13 * i + 10] = "jack_of_" + suit + ".png";
-            fileNames[13 * i + 11] = "queen_of_" + suit + ".png";
-            fileNames[13 * i + 12] = "king_of_" + suit + ".png";
+            scanner.close();
+        }
+        catch (Exception e) {
+            LOG.trace("File not found " + e);
         }
 
         List<Card> cardDeck = gameManager.getGame().getDeck().getDeck();
 
-        gameRenderManager.setStandardDeck(new ArrayList<>());
-        gameRenderManager.setCardsInDeck(new ArrayList<>());
-        gameRenderManager.setCardsInPlay(new ArrayList<>());
-        gameRenderManager.setCardsInHand(new ArrayList<>());
-        gameRenderManager.setCardsInOpponentHand(new ArrayList<>());
-        gameRenderManager.setSelectedCardsForDiscarding(new ArrayList<>());
+        gameRenderManager.initializeCards();
 
-        for (int i = 0; i < numcards; i++) {
+        for (int i = 0; i < NUM_CARDS; i++) {
             fileNames[i] = "Playing Cards/" + fileNames[i];
             gameRenderManager.getStandardDeck()
-                .add(new CardImage("card.png",
-                    new Point(1150 + (i * 25) / numcards,
-                        315 + (i * 25) / numcards),
+                .add(new CardImage(CARD_IMAGE,
+                    new Point(1150 + (i * 25) / NUM_CARDS,
+                        315 + (i * 25) / NUM_CARDS),
                     0.6, null, i, cardDeck.get(i), CardPosition.DECK));
         }
 
-        updateCardPositions();
+        gameRenderManager.updateCardPositions();
 
         for (int i = gameRenderManager.getCardsInDeck().size() - 1; i >= 0;
             i--) {
             startGamePage.add(gameRenderManager.getCardsInDeck().get(i));
-        }
-
-    }
-
-    /**
-     * Update the card positions based on the data in the Game object.
-     */
-    public void updateCardPositions() {
-        gameRenderManager.getCardsInDeck().clear();
-        gameRenderManager.getCardsInPlay().clear();
-        gameRenderManager.getCardsInHand().clear();
-        gameRenderManager.getCardsInOpponentHand().clear();
-
-        List<Card> gameCardsInDeck =
-            gameManager.getGame().getDeck().getDeck();
-        Card[] gameCardsInPlay =
-            gameManager.getGame().getCardsInPlay().getCardsInHand();
-        Card[] gameCardsInHand = gameManager.getGame()
-            .getPlayerList().get(0).getHand().getCardsInHand();
-        Card[] gameCardsInOpponentHand = gameManager.getGame()
-            .getPlayerList().get(1).getHand().getCardsInHand();
-
-        for (Card card : gameCardsInDeck) {
-            CardImage cardImage =
-                gameRenderManager.getStandardDeck().get(card.getCardID());
-            gameRenderManager.getCardsInDeck().add(cardImage);
-            cardImage.setCardPosition(CardPosition.DECK);
-        }
-
-        for (Card card : gameCardsInPlay) {
-            CardImage cardImage =
-                gameRenderManager.getStandardDeck().get(card.getCardID());
-            gameRenderManager.getCardsInPlay().add(cardImage);
-            cardImage.setCardPosition(CardPosition.IN_PLAY);
-        }
-
-        for (Card card : gameCardsInHand) {
-            CardImage cardImage = gameRenderManager
-                .getStandardDeck().get(card.getCardID());
-            gameRenderManager.getCardsInHand().add(cardImage);
-            cardImage.setCardPosition(CardPosition.PLAYER_HAND);
-        }
-
-        for (Card card : gameCardsInOpponentHand) {
-            CardImage cardImage =
-                gameRenderManager.getStandardDeck().get(card.getCardID());
-            gameRenderManager.getCardsInOpponentHand().add(cardImage);
-            cardImage.setCardPosition(CardPosition.OPPONENT_HAND);
         }
 
     }
@@ -520,7 +463,7 @@ public class AnimationManager {
      */
     public void setStandardCardDestinations() {
 
-        updateCardPositions();
+        gameRenderManager.updateCardPositions();
 
         // These methods set the destination point of each card. The destination
         // point is the point that each card will glide to on the screen
@@ -533,7 +476,7 @@ public class AnimationManager {
         setDestinationOfCards(gameRenderManager.getCardsInOpponentHand(), 550,
             80, 350, 0);
 
-        // Set the deafult layering of each card
+        // Set the default layering of each card
         setLayeringOfCards(gameRenderManager.getCardsInDeck(), true);
         setLayeringOfCards(gameRenderManager.getCardsInPlay(), false);
         setLayeringOfCards(gameRenderManager.getCardsInHand(), false);
@@ -577,19 +520,19 @@ public class AnimationManager {
     public void cardGlideAnimation(int steps) {
 
         setCardsClickable(false);
-        
+
         // Declare variables
-        double[] x = new double[numcards];
-        double[] y = new double[numcards];
+        double[] x = new double[NUM_CARDS];
+        double[] y = new double[NUM_CARDS];
 
-        double[] destX = new double[numcards];
-        double[] destY = new double[numcards];
+        double[] destX = new double[NUM_CARDS];
+        double[] destY = new double[NUM_CARDS];
 
-        double[] xDist = new double[numcards];
-        double[] yDist = new double[numcards];
+        double[] xDist = new double[NUM_CARDS];
+        double[] yDist = new double[NUM_CARDS];
 
         // For every card, initialize the variables
-        for (int i = 0; i < numcards; i++) {
+        for (int i = 0; i < NUM_CARDS; i++) {
 
             // The initial point is the point that the card is currently at
             Point initialPoint =
@@ -625,7 +568,7 @@ public class AnimationManager {
             }
 
             // Update each card position by one step
-            for (int j = 0; j < numcards; j++) {
+            for (int j = 0; j < NUM_CARDS; j++) {
 
                 // Iterate the x and y position
                 x[j] += xDist[j] / steps;
@@ -644,7 +587,7 @@ public class AnimationManager {
                 Thread.currentThread().interrupt();
             }
         }
-        
+
         setCardsClickable(true);
     }
 
@@ -653,51 +596,67 @@ public class AnimationManager {
      */
     public void updateLayers() {
 
+        // Go through the stack in order
         while (layerStack.size() > 0) {
             CardImage cardImage = layerStack.remove(0);
+
+            // Remove and add the CardImage. This essentially brings the card to
+            // the top layer of the screen.
             startGamePage.remove(cardImage);
             startGamePage.add(cardImage);
         }
 
     }
-    
+
     /**
      * Set a button to be clickable or not.
+     * 
      * @param button
      * @param clickable
      */
     public void setButtonClickable(Text button, boolean clickable) {
+
+        // If the button is not clickable, set the opacity to 0.3
         button.setClickable(clickable);
         button.setOpacity(clickable ? 1 : 0.3f);
     }
 
     /**
-     * Move peg a certain number of spaces.
+     * Move a peg on the screen a certain number of spaces in a smooth
+     * animation.
      *
      * @param peg
      *            peg to move
      * @param spaces
      *            number of spaces to move
      */
-    public void movePeg(int peg, int spaces) {
+    public void movePegGlideAnimation(int peg, int spaces) {
 
+        // Input validation. Don't move if spaces = 0
         if (spaces == 0) {
             return;
         }
 
+        // If the peg would move before the first spot, instead move it to the
+        // first spot
         if (pegLocations[peg] + spaces < -1) {
-            movePeg(peg, -1 - pegLocations[peg]);
+            movePegGlideAnimation(peg, -1 - pegLocations[peg]);
             return;
         }
 
+        // If the peg would move beyond the final spot, instead move it to the
+        // final spot
         if (pegLocations[peg] + spaces > 120) {
-            movePeg(peg, 120 - pegLocations[peg]);
+            movePegGlideAnimation(peg, 120 - pegLocations[peg]);
             return;
         }
 
+        // Declare variables
         Point initialPoint = pegRenderer[peg].getLocation();
         Point destPoint;
 
+        // Set the destination location depending on if the spot it moves to is
+        // an initial spot, end spot, or regular spot
         if (pegLocations[peg] + spaces == -1) {
             destPoint = initialSpots[1][peg].getLocation();
         } else if (pegLocations[peg] + spaces == 120) {
@@ -707,22 +666,32 @@ public class AnimationManager {
                 pegSpotLocations[pegLocations[peg] + spaces][peg].getLocation();
         }
 
+        // x and y represent the current x and y position of the peg
         double x = initialPoint.getX();
         double y = initialPoint.getY();
 
+        // destX and destY represent the destination x and y positions that the
+        // peg will glide to
         double destX = destPoint.getX();
         double destY = destPoint.getY();
 
+        // xDist and yDist are the distance between the initial and destination
+        // x and y positions
         double xDist = destX - x;
         double yDist = destY - y;
 
+        // Iterate 50 times
         for (int i = 0; i < 50; i++) {
+
+            // Iterate the x and y variables
             x += xDist / 50;
             y += yDist / 50;
 
+            // Set the x and y position on the board
             pegRenderer[peg].setX((int) x);
             pegRenderer[peg].setY((int) y);
 
+            // Wait 10 milliseconds to ensure smooth animation
             try {
                 Thread.sleep(10);
             }
@@ -731,6 +700,7 @@ public class AnimationManager {
             }
         }
 
+        // Update the locations of the pegs
         pegLocations[peg] = pegLocations[peg] + spaces;
 
     }
@@ -765,47 +735,10 @@ public class AnimationManager {
                     cardImage.setScaleFactor(0.25);
                     cardImage.setShowing(true);
                 } else {
-                    cardImage.setImageFileName("card.png");
+                    cardImage.setImageFileName(CARD_IMAGE);
                     cardImage.setScaleFactor(0.6);
                     cardImage.setShowing(false);
                 }
-            }
-        }
-    }
-
-    /**
-     * Reset card positions.
-     */
-    public void resetCards() {
-        if (!gameManager.deckIsReset()) {
-            gameManager.resetCards();
-            moveCardsToStandardPositions(50);
-        }
-    }
-
-    /**
-     * Shuffle the deck.
-     */
-    public void shuffleCards() {
-        resetCards();
-        gameManager.shuffleCards();
-        moveCardsToStandardPositions(50);
-    }
-
-    /**
-     * Deal the cards.
-     */
-    public void dealCards() {
-        shuffleCards();
-
-        for (int i = 0; i < 6; i++) {
-            if (gameRenderManager.getCardsInDeck().size() > 0) {
-                gameManager.dealPlayerCards(1);
-                moveCardsToStandardPositions(20);
-            }
-            if (gameRenderManager.getCardsInDeck().size() > 0) {
-                gameManager.dealOpponentCards(1);
-                moveCardsToStandardPositions(20);
             }
         }
     }
