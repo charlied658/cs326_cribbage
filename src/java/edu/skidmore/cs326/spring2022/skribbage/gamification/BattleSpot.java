@@ -69,15 +69,14 @@ public class BattleSpot extends Spot {
      * @param p2
      */
     public void decideWinner(Player p1, Player p2) {
-
+        LOG.info("Decide winner method.");
         int diceRoll = die.rollDie(2, 0, true);
-        LOG.info("decideWinner: Dice roll is " + diceRoll);
 
         if (diceRoll == 1) {
-            LOG.info("decideWinner: " + p1.getName() + " is the winner");
+            LOG.trace("decideWinner: " + p1.getName() + " is the winner");
             rewardPenalty(p1, p2);
         } else {
-            LOG.info("decideWinner: " + p2.getName() + " is the winner");
+            LOG.trace("decideWinner: " + p2.getName() + " is the winner");
             rewardPenalty(p2, p1);
         }
 

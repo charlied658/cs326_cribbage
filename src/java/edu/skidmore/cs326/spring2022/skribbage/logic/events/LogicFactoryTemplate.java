@@ -38,15 +38,19 @@ public class LogicFactoryTemplate extends FactoryTemplate {
                 LOG.trace("Returning: " + event.getName());
                 return new UserValidationResponseEvent(source, args);
             case USER_CREATE_ACCOUNT_RESPONSE:
+                LOG.trace("Returning: " + event.getName());
                 return new CreateAccountResponseEvent(source, args);
             case USER_CHANGE_PASSWORD_RESPONSE:
+                LOG.trace("Returning: " + event.getName());
                 return new UserChangePasswordResponseEvent(source, args);
             case USER_CHANGE_PASSWORD_VALIDATION_RESPONSE:
+                LOG.trace("Returning: " + event.getName());
                 return new ValidateChangeResponseEvent(source, args);
             case USER_DELETE_ACCOUNT_RESPONSE:
+                LOG.trace("Returning: " + event.getName());
                 return new UserDeleteAccountResponseEvent(source, args);
             default:
-                LOG.warn("Event passed + " + event.toString()
+                LOG.warn("Event passed + " + event.getName()
                     + " was not one of logic events ");
                 return null;
         }
