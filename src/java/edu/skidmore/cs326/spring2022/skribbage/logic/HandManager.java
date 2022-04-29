@@ -1,6 +1,7 @@
 package edu.skidmore.cs326.spring2022.skribbage.logic;
 
 import edu.skidmore.cs326.spring2022.skribbage.common.Card;
+
 import edu.skidmore.cs326.spring2022.skribbage.common.Hand;
 
 /**
@@ -10,7 +11,7 @@ import edu.skidmore.cs326.spring2022.skribbage.common.Hand;
  * @author Dorjee W.
  */
 public class HandManager implements HandManagement {
-    
+
     /**
      * Adding a card to hand. Validity of card is already checked by card class.
      * 
@@ -20,7 +21,8 @@ public class HandManager implements HandManagement {
      *            card that will be added to the hand.
      */
     public void addCardToHand(Hand hand, Card card) {
-        hand.getCardsInHand().add(card);
+        hand.addCard(card);
+
     }
 
     /**
@@ -29,14 +31,13 @@ public class HandManager implements HandManagement {
      * 
      * @param hand
      *            the hand the card will be removed from.
-     * @param index
-     *            the index of the card to be removed.
+     * @param card
+     *            the card to be removed.
      * @return Card the card to be removed is returned.
      */
-    public Card removeCardFromHand(Hand hand, int index) {
-        Card toRemove = hand.getCardsInHand().get(index);
-        hand.getCardsInHand().remove(index);
-        return toRemove;
+    public Card removeCardFromHand(Hand hand, Card card) {
+        return hand.removeCard(card);
+
     }
 
 }
