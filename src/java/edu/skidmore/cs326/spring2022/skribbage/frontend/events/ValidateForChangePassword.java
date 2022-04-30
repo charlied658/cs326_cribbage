@@ -24,7 +24,7 @@ public class ValidateForChangePassword extends AccountEvent {
      * Password object sent with this method.
      */
     private String password;
-
+ 
     static {
         LOG = Logger.getLogger(ValidateForChangePassword.class);
     }

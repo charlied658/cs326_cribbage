@@ -168,7 +168,7 @@ public class NavigationPage extends SkribbageDrawingSurface implements Page {
         currentUser = PageManager.getInstance().getLoggedInUser();
         setup();
         positionWindow();
-    }
+    } 
 
     /**
      * setup method to instantiate the NavPage window.
@@ -321,7 +321,7 @@ public class NavigationPage extends SkribbageDrawingSurface implements Page {
                     "That is not your USENAME you entered! "
                         + "I am mad...Try again.",
                     DialogType.ERROR);
-                drawableMouseClick(e);
+                
             }
             
            
