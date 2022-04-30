@@ -125,7 +125,7 @@ public class AccountController implements PropertyChangeListener {
             case USER_DELETE_ACCOUNT:
                 LOG.debug("Caught a delete account event");
                 UserDeleteAccountEvent del = ((UserDeleteAccountEvent) evt);
-                // if correct password. 
+                // if correct password.
                 if (isPasswordCorrect(associatedUser, del.getPassword())) {
                     Password toDelete = LoginAuthenticator.getInstance()
                         .hashNewPassword(del.getPassword());
@@ -201,24 +201,9 @@ public class AccountController implements PropertyChangeListener {
                 LOG.debug(
                     "Caught a user validated before change password method.");
 
-                ule = ((UserLoginEvent) evt);
-                if (isPasswordCorrect(associatedUser, ule.getPassword())) {
-                    // Validation is same as logging in validation.
-                    ValidateForChangePassword call =
-                        ((ValidateForChangePassword) evt);
-                    if (isPasswordCorrect(associatedUser, call.getPassword())) {
-                        ValidateChangeResponseEvent responseEventPV =
-                            (ValidateChangeResponseEvent) eventFactory
-                                .createEvent(EventType.
-                                    USER_CHANGE_PASSWORD_VALIDATION_RESPONSE,
-                                    this);
-                        eventFactory.fireEvent(responseEventPV);
-                    }
-                    break;
-
-                }
                 ValidateForChangePassword call =
                     ((ValidateForChangePassword) evt);
+
                 if (isPasswordCorrect(associatedUser, call.getPassword())) {
                     LOG.debug("User Password validated");
                     accountResponse = new AccountResponse(
@@ -239,7 +224,6 @@ public class AccountController implements PropertyChangeListener {
             default:
                 LOG.warn("caught unhandled event");
                 break;
-
 
         }
     }

@@ -2,16 +2,14 @@ package edu.skidmore.cs326.spring2022.skribbage.frontend.events.test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 
 
 import org.apache.log4j.Logger;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
+import edu.skidmore.cs326.spring2022.skribbage.common.EventType;
 import edu.skidmore.cs326.spring2022.skribbage.common.User;
-import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserCreateAccountEvent;
+import edu.skidmore.cs326.spring2022.skribbage.common.UserRole;
 import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserDeleteAccountEvent;
 
 /**
@@ -25,19 +23,14 @@ public class UserDeleteAccountEventTest {
     private UserDeleteAccountEvent testInstance;
 
     /**
-     * Creata Account event instance to authorize a user.
-     */
-    private UserCreateAccountEvent createAccountInstance;
-
-    /**
      * User test instance to be passed.
      */
     private User userInstance;
 
     /**
-     * Source object that fired the event change.
+     * String password.
      */
-    private Object source;
+    private String password;
 
     /**
      * Logger instance for logging.
@@ -53,12 +46,12 @@ public class UserDeleteAccountEventTest {
     @Before
     public void setUp() {
         LOG.trace("Started the setup method");
-        source = new Object();
         // Email, username, password, isauthorized?
-        // userInstance =
-        // new User("sleinasa@skidmore.edu", "sleinasa", "passwd", true);
-        createAccountInstance =
-            new UserCreateAccountEvent(source, userInstance);
+        userInstance = new User("sleinasa@skidmore.edu", "sleinasa",
+            UserRole.UNAUTHORIZED);
+        password = "password";
+        testInstance =
+            new UserDeleteAccountEvent(this, userInstance, password);
 
         LOG.info("SetUp method completed");
     }
@@ -73,14 +66,7 @@ public class UserDeleteAccountEventTest {
     @Test
     public void testUserDeleteAccountEvent() {
         LOG.trace("Testing the constructor of UserDeleteAccountEvent");
-
-        assertNotNull(createAccountInstance);
-        // assertTrue(userInstance.isAuthorized());
-
-        testInstance = new UserDeleteAccountEvent(source, userInstance);
-        // now the user should not be authorized anymore
-        // assertFalse(userInstance.isAuthorized());
-
+        assertNotNull(testInstance);
         LOG.trace("Constructor test completed");
 
     }
@@ -90,10 +76,9 @@ public class UserDeleteAccountEventTest {
      * constructor.
      */
     @Test
-    public void testGetUser() {
+    public void testGetPassword() {
         LOG.trace("Testing getUser method.");
-        testInstance = new UserDeleteAccountEvent(source, userInstance);
-        assertEquals(testInstance.getUser(), userInstance);
+        assertEquals(testInstance.getPassword(), password);
         LOG.trace("Testing getUser finished.");
 
     }
@@ -103,29 +88,11 @@ public class UserDeleteAccountEventTest {
      * correctly.
      */
     @Test
-    public void testGetEventName() {
+    public void testGetEventType() {
         LOG.trace("Testing getEventName");
-        testInstance = new UserDeleteAccountEvent(source, userInstance);
-        assertEquals(testInstance.getEventType(), "User Delete Account Event");
+        assertEquals(testInstance.getEventType(),
+            EventType.USER_DELETE_ACCOUNT);
         LOG.trace("Completed testing the getEventName method");
     }
 
-    /**
-     * Sets all initialized variables to null.
-     */
-    @After
-    public void tearDown() {
-        LOG.trace("Starting the teardown");
-        testInstance = null;
-        source = null;
-        userInstance = null;
-
-        LOG.trace("Assert that teardown was succesful");
-        assertNull(testInstance);
-        assertNull(source);
-        assertNull(userInstance);
-
-        LOG.trace("Teardown completed");
-
-    }
 }

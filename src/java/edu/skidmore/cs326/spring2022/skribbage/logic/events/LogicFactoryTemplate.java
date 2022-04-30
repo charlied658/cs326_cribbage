@@ -40,7 +40,7 @@ public class LogicFactoryTemplate extends FactoryTemplate {
             case USER_CREATE_ACCOUNT_RESPONSE:
                 LOG.trace("Returning: " + event.getName());
                 return new CreateAccountResponseEvent(source, args);
-            case USER_CHANGE_PASSWORD_RESPONSE:
+            case USER_CHANGE_PASSWORD_RESPONSE: 
                 LOG.trace("Returning: " + event.getName());
                 return new UserChangePasswordResponseEvent(source, args);
             case USER_CHANGE_PASSWORD_VALIDATION_RESPONSE:

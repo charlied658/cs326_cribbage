@@ -7,6 +7,7 @@ import org.apache.log4j.Logger;
 import org.junit.Before;
 import org.junit.Test;
 
+import edu.skidmore.cs326.spring2022.skribbage.common.EventType;
 import edu.skidmore.cs326.spring2022.skribbage.common.LoginAuthenticator;
 import edu.skidmore.cs326.spring2022.skribbage.common.Password;
 import edu.skidmore.cs326.spring2022.skribbage.common.User;
@@ -94,10 +95,10 @@ public class UserCreateAccountEventTest {
      * correctly.
      */
     @Test
-    public void testGetEventName() {
+    public void testGetEventType() {
         LOG.trace("Testing getEventName");
-        assertEquals(testInstance.getEventType().getName(),
-            "User Create Account Event");
+        assertEquals(testInstance.getEventType(),
+            EventType.USER_CREATE_ACCOUNT);
         LOG.trace("Completed testing the getEventName method");
     }
 
