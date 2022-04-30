@@ -12,43 +12,39 @@ import edu.skidmore.cs326.spring2022.skribbage.common.Rank;
 import edu.skidmore.cs326.spring2022.skribbage.common.Game;
 import static org.junit.Assert.assertTrue;
 import java.util.ArrayList;
-// import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 import java.util.List;
-// import java.util.ArrayList;
 
 /**
-PeggingTest tests the methods in PeggingPlay.
-It is incomplete.
-@author Michael Shriner
+* PeggingTest tests the methods in PeggingPlay.
+*
+* @author Michael Shriner.
 */
 public class PeggingTest {
 
-    /** A pegging play object used for testing the PeggingPlay class. */
+    /** A PeggingPlay object used for testing the PeggingPlay class. */
     private PeggingPlay pPlay;
 
     /** Object used to represent the game state. */
     private Game game;
 
     /**
-    * Initializes the variables and sets up each player as dealer or pone.
-    * Note, this method runs before each test case.
+    * Initializes fields.
     */
     @Before
     public void setup() {
-        // initialize the game
+
         game = new Game(2);
 
-        // initialize the pegging play
         pPlay = new PeggingPlay(game);
-
     }
 
     /**
     * Test addCardToPeggingTotal method.
     * Case 1: card added successfully and added to
     * pegging cards played so far for the corresponding player.
+    * Passes.
     */
     @Test
     public void testAddCardToPeggingTotalCase1() {
@@ -85,6 +81,7 @@ public class PeggingTest {
     /**
     * Test addCardToPeggingTotal method.
     * Case 2: card added unsuccessfully.
+    * Passes.
     */
     @Test
     public void testAddCardToPeggingTotalCase2() {
@@ -123,6 +120,7 @@ public class PeggingTest {
     /**
     * Test the method check15.
     * Case 1: player had a valid claim and received points.
+    * Passes.
     */
     @Test
     public void testCheck15Case1() {
@@ -141,6 +139,7 @@ public class PeggingTest {
     /**
     * Test the method check15.
     * Case 1: player did not have a valid claim and did not get points.
+    * Passes.
     */
     @Test
     public void testCheck15Case2() {
@@ -159,6 +158,7 @@ public class PeggingTest {
     /**
     * Test checkClaim method.
     * Case 1: player claims fifteen successfully and checkClaim returns true.
+    * Passes.
     */
     @Test
     public void testCheckClaimCase1() {
@@ -176,6 +176,7 @@ public class PeggingTest {
     * Test checkClaim method.
     * Case 2: player claims fifteen unsuccessfully and checkClaim returns
     * false.
+    * Passes.
     */
     @Test
     public void testCheckClaimCase2() {
@@ -192,6 +193,7 @@ public class PeggingTest {
     /**
     * Test the method check31.
     * Case 1: player had a valid claim and received points.
+    * Passes.
     */
     @Test
     public void testCheck31Case1() {
@@ -210,6 +212,7 @@ public class PeggingTest {
     /**
     * Test the method check31.
     * Case 2: player did not have a valid claim and did not get points.
+    * Passes.
     */
     @Test
     public void testCheck31Case2() {
@@ -229,6 +232,7 @@ public class PeggingTest {
     * Test checkClaim method.
     * Case 3: player claims thirtyone successfully and checkClaim
     * returns true.
+    * Passes.
     */
     @Test
     public void testCheckClaimCase3() {
@@ -246,6 +250,7 @@ public class PeggingTest {
     * Test checkClaim method.
     * Case 4: player claims thirtyone unsuccesfully and checkClaim returns
     * false.
+    * Passes. 
     */
     @Test
     public void testCheckClaimCase4() {

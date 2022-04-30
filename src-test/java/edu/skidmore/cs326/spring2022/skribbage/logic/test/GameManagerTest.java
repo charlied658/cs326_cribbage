@@ -2,20 +2,16 @@ package edu.skidmore.cs326.spring2022.skribbage.logic.test;
 
 import edu.skidmore.cs326.spring2022.skribbage.logic.GameManager;
 import edu.skidmore.cs326.spring2022.skribbage.common.Game;
-// import edu.skidmore.cs326.spring2022.skribbage.common.Rank;
 import edu.skidmore.cs326.spring2022.skribbage.common.Player;
 import org.junit.Before;
 import org.junit.Test;
 import java.util.List;
-// // import edu.skidmore.cs326.spring2022.skribbage.common.Card;
-// import static org.junit.Assert.assertTrue;
-// import edu.skidmore.cs326.spring2022.skribbage.common.Suit;
 import static org.junit.Assert.assertEquals;
 
 /**
  * GameManagerTest tests the methods in GameManager.
  *
- * @author Michael Shriner
+ * @author Michael Shriner.
  */
 public class GameManagerTest {
 

@@ -1,8 +1,6 @@
 package edu.skidmore.cs326.spring2022.skribbage.common.test;
 
-// import edu.skidmore.cs326.spring2022.skribbage.common.Suit;
 import edu.skidmore.cs326.spring2022.skribbage.common.Game;
-// import edu.skidmore.cs326.spring2022.skribbage.common.Rank;
 import edu.skidmore.cs326.spring2022.skribbage.common.Card;
 import edu.skidmore.cs326.spring2022.skribbage.common.Hand;
 import edu.skidmore.cs326.spring2022.skribbage.common.Player;
@@ -15,49 +13,39 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
-// import edu.skidmore.cs326.spring2022.skribbage.logic.HandManager;
 
 /**
  * GameTest tests the methods in Game.
- * All tests pass except testGetDeck(), but I think that is because
- * I am not sure how to write the test for it correctly without writing more
- * code in Deck.java, which I am not the author of. I am working on a solution.
  *
- * @author Michael Shriner
+ * @author Michael Shriner.
  */
 public class GameTest {
 
     /** Object used to represent the game state. */
     private Game game;
 
-    /** Deck used to check the getDeck method in Game. */
-    // @SuppressWarnings("unused")
-    // private Deck testDeck;
-
     /**
      * ArrayList of cards in crib to check the getCrib
      * method in Game.
      */
     private Hand testCrib;
+
     /**
-     * test instance of pegging cards.
+     * Test instance of the list of pegging cards played during the
+     * pegging phase.
      */
     private List<Hand> testListOfPeggingCards;
+
     /**
-     * test instance of cards in play.
+     * Test instance of the cards in play.
      */
     private Hand testCardsInPlay;
-
-    // private HandManager handManager;
 
     /**
      * Initializes fields.
      */
     @Before
     public void setup() {
-
-        // testDeck = new Deck();
-        // handManager = new HandManager();
 
         int numPlayers = 2;
 
@@ -87,7 +75,6 @@ public class GameTest {
         Card[] testPegCards =
             testListOfPeggingCards.get(1).getCardsInHand();
 
-        //assertTrue(toComparePegCards.equals(testPegCards));
         assertTrue(Arrays.equals(toComparePegCards, testPegCards));
 
     }
@@ -104,7 +91,6 @@ public class GameTest {
         Card[] toComparePegCards = toComparePegList.get(0).getCardsInHand();
         Card[] testPegCards = testListOfPeggingCards.get(0).getCardsInHand();
 
-        // assertTrue(toComparePegCards.equals(testPegCards));
         assertTrue(Arrays.equals(toComparePegCards, testPegCards));
 
     }
@@ -217,22 +203,5 @@ public class GameTest {
 
     }
 
-
-
-    // /**
-    //  * Test the setPeggingTotal method.
-    //  */
-    // @Test
-    // public void testGetDeck() {
-    //
-    // Deck deckReturned = game.getDeck();
-    //
-    // ArrayList <Card> deckListReturned = deckReturned.getDeck();
-    //
-    // ArrayList <Card> testDeckList = testDeck.getDeck();
-    //
-    // assertTrue(deckListReturned.equals(testDeckList));
-    //
-    // }
 
 } // end of class
