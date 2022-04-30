@@ -1,9 +1,9 @@
 package edu.skidmore.cs326.spring2022.skribbage.common;
 
 /**
- * enums for claims.
- * 
- * @author Michael Shriner
+ * enums for claims made during the pegging phase of the game.
+ *
+ * @author Michael Shriner.
  */
 public enum Claim {
 

@@ -6,12 +6,12 @@ import java.util.ArrayList;
 /**
  * Interface for Game.
  *
- * @author Michael Shriner
+ * @author Michael Shriner.
  */
 interface GameInterface {
 
     /**
-     * theDeck.
+     * The Deck for the Game.
      */
     Deck THE_DECK = new Deck();
 
@@ -28,9 +28,10 @@ interface GameInterface {
     Hand CRIB_CARDS = new Hand();
 
     /**
-     * initPlayers method.
+     * Initializes the players for this Game. Creates Player objects
+     * using the empty Player constructor.
      *
-     * @param numPlayers
+     * @param numPlayers is the number of players for this Game.
      */
     void initPlayers(int numPlayers);
 
@@ -38,15 +39,14 @@ interface GameInterface {
      * Initializes the list of Hand objects where each Hand is a
      * list of cards played during the pegging play phase.
      *
-     * @param numPlayers
+     * @param numPlayers is the number of players for this Game.
      */
     void initPeggingCardsPlayed(int numPlayers);
 
     /**
      * Sets the pegging total to the parameter points.
      *
-     * @param pts
-     *            is the points to assign to the pegging total.
+     * @param pts is the points to assign to the pegging total.
      */
     void setPeggingTotal(int pts);
 

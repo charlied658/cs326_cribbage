@@ -7,7 +7,7 @@ import edu.skidmore.cs326.spring2022.skribbage.common.Player;
 /**
  * Interface for GameManager.
  *
- * @author Michael Shriner
+ * @author Michael Shriner.
  */
 interface GameManagerInterface {
 

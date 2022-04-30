@@ -10,15 +10,15 @@ import edu.skidmore.cs326.spring2022.skribbage.common.Deck;
 import edu.skidmore.cs326.spring2022.skribbage.common.Player;
 
 /**
- * GameManager contains methods to manipulate the data in Game.
+ * GameManager contains methods to manage the data in Game.
  *
  * @author Michael Shriner
- *         Last edited by Charlie Davidson
+ *         Last edited by Charlie Davidson.
  */
 public class GameManager implements GameManagerInterface {
 
     /**
-     * A Game to access the data this class is designed to manipulate.
+     * A Game to access the data this class is designed to manage.
      */
     private Game g;
 
@@ -35,8 +35,7 @@ public class GameManager implements GameManagerInterface {
     /**
      * GameManager constructor that initializes a Game.
      *
-     * @param game
-     *            is the Game to set the class Game to.
+     * @param game is the Game to set the class Game to.
      */
     public GameManager(Game game) {
         this.g = game;
@@ -54,8 +53,7 @@ public class GameManager implements GameManagerInterface {
     /**
      * Sets the Game used for this class.
      *
-     * @param game
-     *            is a Game object.
+     * @param game is a Game object.
      */
     public void setGame(Game game) {
         g = game;
@@ -68,9 +66,8 @@ public class GameManager implements GameManagerInterface {
      * If it exceeds 31, this method returns false.
      * Otherwise, it returns true.
      *
-     * @param amountToAdd
-     *            is the amount of points to add
-     *            to the pegging total.
+     * @param amountToAdd is the amount of points to add
+     * to the pegging total.
      * @return true iff amountToAdd + the pegging total <= 31.
      */
     public boolean addToPeggingTotal(int amountToAdd) {
@@ -97,10 +94,9 @@ public class GameManager implements GameManagerInterface {
      * Returns the index in playerList where the dealer is or
      * -1 if there is no dealer.
      *
-     * @param playerList
-     *            is the list of players.
+     * @param playerList is the list of players.
      * @return the index in playerList where the dealer is or
-     *         -1 if there is no dealer.
+     * -1 if there is no dealer.
      */
     public int getDealerIdx(List<Player> playerList) {
         for (int i = 0; i < playerList.size(); i++) {
@@ -113,7 +109,7 @@ public class GameManager implements GameManagerInterface {
 
     /**
      * Test whether the deck is reset.
-     * 
+     *
      * @return if the deck is reset or not
      */
     public boolean deckIsReset() {
@@ -214,7 +210,7 @@ public class GameManager implements GameManagerInterface {
 
     /**
      * Have the opponent pick a random card to play.
-     * 
+     *
      * @return card the opponent played.
      */
     public Card opponentPlayCard() {

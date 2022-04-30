@@ -4,14 +4,14 @@ import java.util.List;
 import java.util.ArrayList;
 
 /**
- * Game contains the state of the game. It has a deck, a list of players, a
- * pegging total, a list of cards in the crib, and lists of cards played during
- * pegging play by the pone and dealer. It contains getter and setter methods.
- * Currently, a key assumption for this class is that there are only two
- * players.
+ * Game contains the state of the game and has getters and setters for the
+ * variables. It also has a method to return the index where the Hand of cards
+ * played during the pegging phase for a particular player can be found and
+ * methods to initialize the list of Hands of pegging cards played during the
+ * pegging phase and to initialize the Player list.
  *
  * @author Michael Shriner
- *         Last edited by Charlie Davidson
+ *         Last edited by Charlie Davidson.
  */
 public class Game implements GameInterface {
 
@@ -48,20 +48,12 @@ public class Game implements GameInterface {
     private Hand cardsInPlay;
 
     /**
-     * Game constructor. It initializes the list of players,
-     * the pegging total the ArrayList of the pone's pegging cards,
-     * the ArrayList of the dealer's pegging cards, and the crib.
-     * It assumes that there are two players.
+     * Game constructor.
      *
-     * @param numPlayers
-     *            is the number of players for this
-     *            game.
+     * @param numPlayers is the number of players for this game.
      */
     public Game(int numPlayers) {
 
-        // ponePeggingCards = new ArrayList<Card>();
-        // ponePeggingCards = new Hand();
-        // dealerPeggingCards = new Hand();
         cribCards = new Hand();
         peggingTotal = 0;
         state = GameState.START_GAME;
@@ -71,7 +63,12 @@ public class Game implements GameInterface {
         initPeggingCardsPlayed(numPlayers);
     }
 
-
+    /**
+    * Game constructor.
+    *
+    * @param numPlayers is the number of players for this game.
+    * @param aPlayerList is the list of players for this game.
+    */
     public Game(int numPlayers, List <Player> aPlayerList) {
 
         cribCards = new Hand();
@@ -88,14 +85,15 @@ public class Game implements GameInterface {
      * the parameter player can be found.
      * Only works if Player objects have a user id.
      *
-     * @param p
-     *            is a Player.
-     * @return index.
+     * @param p is a Player.
+     * @return the index where the Hand of pegging cards for
+     * the parameter player can be found.
      */
     public int getIdxPlayerPegCards(Player p) {
-        int userId = p.getUser().getUserId();
-        // find userId in playerList
 
+        int userId = p.getUser().getUserId();
+
+        // find userId in playerList
         for (int i = 0; i < playerList.size(); i++) {
             Player p2 = playerList.get(i);
 
@@ -107,10 +105,11 @@ public class Game implements GameInterface {
         return -1;
     }
 
+
     /**
-     * Initialize pegging cards.
+     * Initialize peggingCardsPlayed.
      *
-     * @param numPlayers
+     * @param numPlayers is the number of players in this game.
      */
     public void initPeggingCardsPlayed(int numPlayers) {
         for (int i = 0; i < numPlayers; i++) {
@@ -121,12 +120,10 @@ public class Game implements GameInterface {
 
     /**
      * Initializes the ArrayList of Player objects given the
-     * number of players for this game. However, there is
-     * the assumption, for now, that the number of players
-     * is 2.
+     * number of players for this game. The Player objects added are
+     * created using the empty Player constructor.
      *
-     * @param numPlayers
-     *            is the number of players.
+     * @param numPlayers is the number of players.
      */
     public void initPlayers(int numPlayers) {
 
@@ -135,30 +132,30 @@ public class Game implements GameInterface {
         }
     }
 
-    /**
-     * Set the pegging total to the parameter amount of points.
-     *
-     * @param pts
-     *            is the points to set the pegging total to.
-     */
+   /**
+    * Set the pegging total to the parameter amount of points.
+    *
+    * @param pts is the points to set the pegging total to.
+    */
     public void setPeggingTotal(int pts) {
         peggingTotal = pts;
     }
 
     /**
-     * Get list of played pegging cards.
+     * Get the list of played pegging cards for each Player.
      *
-     * @return peggingCardsPlayed
+     * @return the list of played pegging cards for each Player.
      */
     public List<Hand> getListOfPeggingCardsPlayed() {
         return peggingCardsPlayed;
     }
 
     /**
-     * Get pegging cards.
+     * Get the cards played during the pegging phase at
+     * a particular index.
      *
-     * @param index
-     * @return pegging card at that index
+     * @param index is the index of the Hand to return.
+     * @return Hand of cards played during the pegging phase at that index.
      */
     public Hand getPeggingCards(int index) {
         return peggingCardsPlayed.get(index);
@@ -219,8 +216,9 @@ public class Game implements GameInterface {
     }
 
     /**
-     * Set tthe crib cards.
-     * @param cribCards
+     * Set the crib cards.
+     *
+     * @param cribCards is a Hand of crib cards.
      */
     public void setCribCards(Hand cribCards) {
         this.cribCards = cribCards;
@@ -229,7 +227,7 @@ public class Game implements GameInterface {
     /**
      * Get the state of the game.
      *
-     * @return state
+     * @return the state of the game.
      */
     public GameState getState() {
         return this.state;
