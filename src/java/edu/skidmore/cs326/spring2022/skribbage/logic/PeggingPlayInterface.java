@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Interface for PeggingPlay.
  *
- * @author Michael Shriner
+ * @author Michael Shriner.
  */
 interface PeggingPlayInterface {
 
@@ -19,11 +19,9 @@ interface PeggingPlayInterface {
      * the card to add. If the card is played during pegging play, the card is
      * temporarily removed from the player's hand who played it.
      *
-     * @param cardToAdd
-     *            is the card whose point value will be added to the
-     *            total if it meets the condition described above.
-     * @param p
-     *            is the player who is trying to play the card
+     * @param cardToAdd is the card whose point value will be added to the
+     * total if it meets the condition described above.
+     * @param p is the player who is trying to play the card.
      * @return true if the card was added; false, otherwise.
      */
     boolean addCardToPeggingTotal(Card cardToAdd, Player p);
@@ -38,11 +36,9 @@ interface PeggingPlayInterface {
      * "3 pair"
      * "4 pair".
      *
-     * @param claim
-     *            is the claim the player makes.
-     * @param p
-     *            is the player who made the claim.
-     * @return true iff the claim made was valid
+     * @param claim is the claim the player makes.
+     * @param p is the player who made the claim.
+     * @return true iff the claim made was valid.
      */
     boolean checkClaim(Claim claim, Player p);
 
@@ -52,10 +48,10 @@ interface PeggingPlayInterface {
      * the player is awarded 2 points. Otherwise, the player is
      * awarded no points.
      *
-     * @param p
-     *            is the player making the claim that he or she
-     *            placed a card that brought the pegging total to 15.
-     * @return true iff the player has 15
+     * @param p is the player making the claim that he or she
+     * placed a card that brought the pegging total to 15.
+     *
+     * @return true iff the player has 15.
      */
     boolean check15(Player p);
 
@@ -64,10 +60,9 @@ interface PeggingPlayInterface {
      * phase that brought the pegging total to 31, the player is
      * awarded 2 points. Otherwise, the player is awarded no points.
      *
-     * @param p
-     *            is the player making the claim that he or she placed a card
-     *            that brought the pegging total to 31.
-     * @return true iff the player has 31
+     * @param p is the player making the claim that he or she placed a card
+     * that brought the pegging total to 31.
+     * @return true iff the player has 31.
      */
     boolean check31(Player p);
 
@@ -75,10 +70,9 @@ interface PeggingPlayInterface {
      * Checks if the cards in the list have the same identifier and returns
      * true if they do. Otherwise, it returns false.
      *
-     * @param cards
-     *            is the list of cards to check.
+     * @param cards is the list of cards to check.
      * @return true if the cards in the list have the same identifier;
-     *         otherwise, return false.
+     * otherwise, return false.
      */
     boolean isPair(List<Card> cards);
 
@@ -87,10 +81,9 @@ interface PeggingPlayInterface {
      * followed a card with the same numerical value, the player is awarded
      * 2 points. Otherwise, the player is awarded no points.
      *
-     * @param p
-     *            is the player who made the claim of having a pair
-     *            during the pegging phase.
-     * @return true iff the player has a pair
+     * @param p is the player who made the claim of having a pair
+     * during the pegging phase.
+     * @return true iff the player has a pair.
      */
     boolean checkPair(Player p);
 
@@ -99,10 +92,9 @@ interface PeggingPlayInterface {
      * followed two cards with the same numerical values, the player is
      * awarded 6 points. Otherwise, the player is awarded no points.
      *
-     * @param p
-     *            is the player who made the claim of having a 3 pair
-     *            during the pegging phase.
-     * @return true iff the player has a 3 pair
+     * @param p is the player who made the claim of having a 3 pair
+     * during the pegging phase.
+     * @return true iff the player has a 3 pair.
      */
     boolean check3Pair(Player p);
 
@@ -111,10 +103,9 @@ interface PeggingPlayInterface {
      * followed 3 cards with the same numerical values, the player is
      * awarded 12 points. Otherwise, the player is awarded no points.
      *
-     * @param p
-     *            is the player who made the claim of having a 3 pair
-     *            during the pegging phase.
-     * @return true iff the player has a 4 pair
+     * @param p is the player who made the claim of having a 3 pair
+     * during the pegging phase.
+     * @return true iff the player has a 4 pair.
      */
     boolean check4Pair(Player p);
 

@@ -6,7 +6,6 @@ import edu.skidmore.cs326.spring2022.skribbage.common.Card;
 import edu.skidmore.cs326.spring2022.skribbage.common.Hand;
 import edu.skidmore.cs326.spring2022.skribbage.common.Claim;
 import edu.skidmore.cs326.spring2022.skribbage.common.Player;
-//import edu.skidmore.cs326.spring2022.skribbage.common.Rank;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,8 +14,7 @@ import java.util.List;
 * This class is incomplete. It contains methods to check some player claims
 * for points (e.g., a play may claim to have a pair of cards) and play a card
 * during the pegging phase.
-* It assumes there are only two players (for now).
-* @author Michael Shriner
+* @author Michael Shriner.
 */
 public class PeggingPlay implements PeggingPlayInterface {
 
@@ -33,17 +31,15 @@ public class PeggingPlay implements PeggingPlayInterface {
     private List <Card> cardsPlayedSoFar;
 
     /**
-    * Constructor that sets the class Game object to the parameter
-    * Game object.
+    * PeggingPlay constructor.
     * @param g is a Game object.
     */
     public PeggingPlay(Game g) {
 
         cardsPlayedSoFar = new ArrayList <Card>();
 
-        //initialize the game manager
         gameManager = new GameManager(g);
-        //initialize game
+
         game = g;
 
         handManager = new HandManager();
@@ -54,9 +50,8 @@ public class PeggingPlay implements PeggingPlayInterface {
     * value during pegging play unless 31 < peggingTotal + the value of
     * the card to add. If the card is played during pegging play, the card is
     * temporarily removed from the player's hand who played it.
-    *
-    * requires the players in the player list to have an assigned user id  
-    *
+    * Note that this method won't work unless the players in the player list
+    * have user ids.
     *
     * @param cardToAdd is the card whose point value will be added to the
     * total if it meets the condition described above.
@@ -103,7 +98,7 @@ public class PeggingPlay implements PeggingPlayInterface {
     *
     * @param c is the claim the player makes.
     * @param p is the player who made the claim.
-    * @return true iff the claim made was valid
+    * @return true iff the claim made was valid.
     */
     public boolean checkClaim(Claim c, Player p) {
 
@@ -254,12 +249,9 @@ public class PeggingPlay implements PeggingPlayInterface {
     *
     * @param p is the player who made the claim of having a 3 pair
     * during the pegging phase.
-    * @return true iff the player has a 3 pair
+    * @return true iff the player has a 3 pair.
     */
     public boolean check3Pair(Player p) {
-    // assumption: Card c from checkClaim() has been added to peggingCards
-    // already
-    // assumption: check15() is called before the next player plays a card
 
         if (cardsPlayedSoFar.size() < 3) {
           //we need at least 3 cards to have a 3 pair
@@ -292,12 +284,9 @@ public class PeggingPlay implements PeggingPlayInterface {
     *
     * @param p is the player who made the claim of having a 3 pair
     * during the pegging phase.
-    * @return true iff the player has a 4 pair
+    * @return true iff the player has a 4 pair.
     */
     public boolean check4Pair(Player p) {
-    //assumption: Card c from checkClaim() has been added to peggingCards
-    //already
-    //assumption: check15() is called before the dealer plays a card
 
         if (cardsPlayedSoFar.size() < 4) {
           //we need at least 3 cards to have a 3 pair
@@ -324,8 +313,5 @@ public class PeggingPlay implements PeggingPlayInterface {
 
     }
 
-//
-// see PeggingPlay.java in my local downloads folder for the methods I wrote
-// but have not added to this class yet
 
 }
