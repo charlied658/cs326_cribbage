@@ -75,6 +75,25 @@ public class InventoryPrototype {
     }
 
     /**
+     * When items are used we go to the HashMap and reduce the amount by 1.
+     * 
+     * @param key
+     *            name of the item
+     * @param quantity
+     *            number of tokens to remove
+     */
+    public void removeTokens(String key, int quantity) {
+        int val = map.get(key);
+        if (val <= 0) {
+            LOG.info("User does not have the specified item");
+            return;
+        }
+        map.replace(key, val - quantity);
+
+        LOG.info("Remove tokens - Decrementing tokens by quantity");
+    }
+
+    /**
      * When an item is added we access the HashMap and increase the number by 1.
      * implementation may change if we want to purchase multiple items
      * 
@@ -113,13 +132,14 @@ public class InventoryPrototype {
         map.put(SpecialCard.REBATTLECARD.getType(), 0);
         map.put(SpecialCard.THROWAWAYPICKUPCARD.getType(), 0);
         map.put(SpecialCard.MIRROR.getType(), 1);
-        //map.put(SpecialCard.SW, 0);
-        //map.put("Copy", 0);
+        // map.put(SpecialCard.SW, 0);
+        // map.put("Copy", 0);
         map.put(SpecialCard.DISARM.getType(), 0);
         map.put(SpecialCard.PICKPOCKET.getType(), 0);
         map.put(SpecialCard.AUTOPILOT.getType(), 0);
         map.put(SpecialCard.COPYCAT.getType(), 0);
         map.put(SpecialCard.SKIPPLAYERTURNCARD.getType(), 0);
+        map.put("Tokens", 1000);
         LOG.info("Players Inventory has been filled with current data");
         // e.printStackTrace();
     }
