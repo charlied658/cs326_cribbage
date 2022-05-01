@@ -77,6 +77,11 @@ public class InventoryPage extends SkribbageDrawingSurface implements Page {
     private String itemToAdd;
 
     /**
+     * Number of items to add.
+     */
+    private int itemQuantity;
+
+    /**
      * ArrayList to wipe Inventory.
      */
     private ArrayList<Text> inventoryRender;
@@ -179,25 +184,38 @@ public class InventoryPage extends SkribbageDrawingSurface implements Page {
                 itemToAdd =
                     JOptionPane.showInputDialog(frame,
                         "Enter the name of the item you want");
-                currentUser.getInventoryManager().addItem(itemToAdd, 1);
-                currentUser.getInventoryManager().removeTokens("Tokens", 100);
+                itemQuantity =
+                    Integer.parseInt(JOptionPane.showInputDialog(frame,
+                        "Enter the number of items you want to add"));
+                if (currentUser.getInventoryManager()
+                    .searchForItem("Tokens") < 100 * itemQuantity) {
+                    JOptionPane.showMessageDialog(null,
+                        "You Don't have enough Tokens for this purchase",
+                        "Important Message",
+                        JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    currentUser.getInventoryManager().addItem(itemToAdd,
+                        itemQuantity);
+                    currentUser.getInventoryManager().removeTokens("Tokens",
+                        100 * itemQuantity);
 
-                Object[] objectArray = currentUser.getInventoryManager()
-                    .createInventory().entrySet().toArray();
+                    Object[] objectArray = currentUser.getInventoryManager()
+                        .createInventory().entrySet().toArray();
 
-                for (Text t : inventoryRender) {
-                    remove(t);
-                }
-                inventoryRender.clear();
+                    for (Text t : inventoryRender) {
+                        remove(t);
+                    }
+                    inventoryRender.clear();
 
-                for (int i = 0; i < objectArray.length; i++) {
-                    Text t = new Text(objectArray[i] + "  ",
-                        new Point(initXPosition,
-                            initYPosition),
-                        16, Color.BLACK);
-                    inventoryRender.add(t);
-                    add(t);
-                    initYPosition += 25;
+                    for (int i = 0; i < objectArray.length; i++) {
+                        Text t = new Text(objectArray[i] + "  ",
+                            new Point(initXPosition,
+                                initYPosition),
+                            16, Color.BLACK);
+                        inventoryRender.add(t);
+                        add(t);
+                        initYPosition += 25;
+                    }
                 }
 
             }
@@ -205,7 +223,7 @@ public class InventoryPage extends SkribbageDrawingSurface implements Page {
         }
 
     }
-    
+
     @Override
     public void closeWindow() {
         // TODO Auto-generated method stub
