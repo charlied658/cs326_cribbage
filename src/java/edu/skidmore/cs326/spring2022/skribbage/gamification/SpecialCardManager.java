@@ -2,7 +2,9 @@ package edu.skidmore.cs326.spring2022.skribbage.gamification;
 
 import org.apache.log4j.Logger;
 
+//import edu.skidmore.cs326.spring2022.skribbage.common.Spot;
 import edu.skidmore.cs326.spring2022.skribbage.common.Player;
+//import edu.skidmore.cs326.spring2022.skribbage.gamification.BattleSpot;
 
 /**
  * Special Card logic manager. Implements SpecialCardManagement interface.
@@ -23,19 +25,31 @@ public class SpecialCardManager implements SpecialCardManagement {
         LOG = Logger.getLogger(SpecialCardManager.class);
     }
 
+    /**
+     * Method to signal use of special card.
+     * TODO Ask Loser of Battle spot first. Then call BattleSpot recursively.
+     * 
+     * @param specialCardType
+     *            type of special card signalled.
+     * @param playerOne
+     *            First player. In case of Battle spot, loser of first battle.
+     * @param playerTwo
+     *            Second player. Winner of Battle spot battle.
+     */
     @Override
     public void signalUse(SpecialCard specialCardType, Player playerOne,
         Player playerTwo) {
 
         switch (specialCardType) {
-
+            // BattleSpot instance = new BattleSpot();
             case REBATTLECARD:
                 if (playerOne.getInventoryManager()
                     .searchForItem(SpecialCard.REBATTLECARD.getType()) > 0
                     && playerTwo.getInventoryManager().searchForItem(
                         SpecialCard.REBATTLECARD.getType()) > 0) {
-                    // TODO check for 0, 0 | 1, 0 | 0, 1 | and 1, 1.
-                    LOG.trace("entered rebattle card");
+
+                    LOG.trace("entered" + SpecialCard.REBATTLECARD.getType());
+
                 } else if (playerOne.getInventoryManager()
                     .searchForItem(SpecialCard.REBATTLECARD.getType()) > 0
                     && playerTwo.getInventoryManager().searchForItem(
@@ -55,9 +69,21 @@ public class SpecialCardManager implements SpecialCardManagement {
                 break;
 
             case LASTPLAYERSHOWCARD:
+                if (playerOne.getInventoryManager().searchForItem(
+                    SpecialCard.LASTPLAYERSHOWCARD.getType()) > 0) {
+                    LOG.trace(
+                        "entered" + SpecialCard.LASTPLAYERSHOWCARD.getType());
+                    // TODO Choose opponent whose show will be moved.
+                }
                 break;
 
             case SKIPPLAYERTURNCARD:
+                if (playerOne.getInventoryManager().searchForItem(
+                    SpecialCard.SKIPPLAYERTURNCARD.getType()) > 0) {
+                    LOG.trace(
+                        "entered" + SpecialCard.SKIPPLAYERTURNCARD.getType());
+                    // TODO choose opponent whose turn will be skipped.
+                }
                 break;
 
             default:
@@ -70,7 +96,6 @@ public class SpecialCardManager implements SpecialCardManagement {
 
     @Override
     public void updateInventory(Player specialCardPlayer) {
-        // TODO Auto-generated method stub
 
     }
 

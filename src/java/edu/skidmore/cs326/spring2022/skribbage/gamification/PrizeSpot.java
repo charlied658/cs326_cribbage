@@ -59,36 +59,36 @@ public class PrizeSpot extends Spot {
         LOG.info("rewardPlayer: Dice roll is " + diceRoll);
         switch (diceRoll) {
             case 0:
-                player.getInventoryManager().addItem("Mirror", 1);
+                player.getInventoryManager().addItem(SpecialCard.MIRROR.getType(), 1);
                 break;
             case 1:
-                player.getInventoryManager().addItem("Re-Battle Card", 1);
+                player.getInventoryManager().addItem(SpecialCard.REBATTLECARD.getType(), 1);
                 break;
             case 2:
-                player.getInventoryManager().addItem("Last-Player-Show Card",
+                player.getInventoryManager().addItem(SpecialCard.LASTPLAYERSHOWCARD.getType(),
                     1);
                 break;
             case 3:
-                player.getInventoryManager().addItem("Throw-Away-Pickup Card",
+                player.getInventoryManager().addItem(SpecialCard.THROWAWAYPICKUPCARD.getType(),
                     1);
                 break;
             case 4:
-                player.getInventoryManager().addItem("Disarm", 1);
+                player.getInventoryManager().addItem(SpecialCard.DISARM.getType(), 1);
                 break;
             case 5:
-                player.getInventoryManager().addItem("Pick Pocket", 1);
+                player.getInventoryManager().addItem(SpecialCard.PICKPOCKET.getType(), 1);
                 break;
             case 6:
-                player.getInventoryManager().addItem("Auto Pilot", 1);
+                player.getInventoryManager().addItem(SpecialCard.AUTOPILOT.getType(), 1);
                 break;
             case 7:
-                player.getInventoryManager().addItem("Copycat", 1);
+                player.getInventoryManager().addItem(SpecialCard.COPYCAT.getType(), 1);
                 break;
             case 8:
-                player.getInventoryManager().addItem("Skip-Player-Turn Card",
+                player.getInventoryManager().addItem(SpecialCard.SKIPPLAYERTURNCARD.getType(),
                     1);
             default:
-                LOG.info("Error with prize spot");
+                LOG.error("Error with prize spot");
         }
 
     }
