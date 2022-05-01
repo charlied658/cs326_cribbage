@@ -17,7 +17,7 @@ import edu.skidmore.cs326.spring2022.skribbage.common.User;
  */
 
 public final class PersistenceFacade
-    implements UserManagement , GameManagement , InventoryManagement {
+    implements UserManagement, GameManagement, InventoryManagement {
 
     /**
      * Singleton instance of PersistenceFacade. Instance can be accessed through
@@ -155,8 +155,6 @@ public final class PersistenceFacade
     /**
      * This will saved the users current game that they are playing.
      * 
-     * @param userName
-     *            The name of the user that we are saving the game
      * @param currentGame
      *            The current game that we are saving
      * @return boolean True or false depending if the method worked

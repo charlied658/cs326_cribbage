@@ -21,7 +21,6 @@ public interface GameManagement {
 
     /**
      * save game method.
-     * @param userName
      * @param currentGame
      * @return the game.
      */

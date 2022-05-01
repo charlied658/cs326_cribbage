@@ -35,19 +35,21 @@ public class SpecialCardManager implements SpecialCardManagement {
                     && playerTwo.getInventoryManager().searchForItem(
                         SpecialCard.REBATTLECARD.getType()) > 0) {
                     // TODO check for 0, 0 | 1, 0 | 0, 1 | and 1, 1.
+                    LOG.trace("entered rebattle card");
                 } else if (playerOne.getInventoryManager()
                     .searchForItem(SpecialCard.REBATTLECARD.getType()) > 0
                     && playerTwo.getInventoryManager().searchForItem(
                         SpecialCard.REBATTLECARD.getType()) == 0) {
-                    
+                    LOG.trace("temporary");
                 } else if (playerOne.getInventoryManager()
                     .searchForItem(SpecialCard.REBATTLECARD.getType()) == 0
                     && playerTwo.getInventoryManager().searchForItem(
                         SpecialCard.REBATTLECARD.getType()) > 0) {
+                    LOG.trace("temporary");
 
                 } else {
-                    LOG.warn("Neither players are holding a " +
-                        SpecialCard.REBATTLECARD.getType());
+                    LOG.warn("Neither players are holding a "
+                        + SpecialCard.REBATTLECARD.getType());
                 }
 
                 break;

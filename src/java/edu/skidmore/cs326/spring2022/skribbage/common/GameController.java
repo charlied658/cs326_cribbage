@@ -5,8 +5,6 @@ import edu.skidmore.cs326.spring2022.skribbage.frontend.AnimationManager;
 import edu.skidmore.cs326.spring2022.skribbage.frontend.GameRenderManager;
 import edu.skidmore.cs326.spring2022.skribbage.frontend.events.game.PlayerClickDeckEvent;
 import edu.skidmore.cs326.spring2022.skribbage.frontend.events.game.PlayerPlayCardEvent;
-import us.daveread.edu.graphics.surface.DialogPosition;
-import us.daveread.edu.graphics.surface.DialogType;
 
 import org.apache.log4j.Logger;
 

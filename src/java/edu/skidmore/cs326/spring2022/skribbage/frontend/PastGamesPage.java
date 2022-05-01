@@ -15,7 +15,6 @@ import org.apache.log4j.Logger;
 import us.daveread.edu.graphics.shape.Drawable;
 import us.daveread.edu.graphics.shape.impl.Image;
 import us.daveread.edu.graphics.shape.impl.Text;
-import us.daveread.edu.graphics.surface.DrawingSurface;
 import us.daveread.edu.graphics.surface.MainFrame;
 import us.daveread.edu.utilities.Utility;
 
@@ -44,6 +43,7 @@ public class PastGamesPage extends SkribbageDrawingSurface
     /**
      * mf - MainFrame window.
      */
+    @SuppressWarnings("unused")
     private MainFrame mf;
 
     /**
@@ -306,7 +306,7 @@ public class PastGamesPage extends SkribbageDrawingSurface
         closeWindow();
         gamePage =
             (StartGamePage) pageManager.createPage(PageType.START_GAME_PAGE);
-        
+
     }
 
     // TODO NOT WORKING YET.

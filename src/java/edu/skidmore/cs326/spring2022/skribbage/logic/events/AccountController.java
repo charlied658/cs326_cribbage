@@ -79,7 +79,6 @@ public class AccountController implements PropertyChangeListener {
     public void propertyChange(PropertyChangeEvent evt) {
         LOG.trace("AccountController Event: " + evt);
         // Step 2: Handle each type of account event accordingly. There is
-        // likely
         AccountEvent accountEvent = (AccountEvent) evt;
         User associatedUser = accountEvent.getUser();
         AccountResponse accountResponse = null;
