@@ -40,6 +40,11 @@ public final class GameController implements PropertyChangeListener {
     private static final int MAX_DISCARD_TO_CRIB_SIZE = 2;
 
     /**
+     * At 31 the GO is executed.
+     */
+    private static final int MAX_POINTS_ALLOWED = 31;
+
+    /**
      * State of the game.
      */
     private GameState currentGameState;
@@ -75,10 +80,8 @@ public final class GameController implements PropertyChangeListener {
      * Should always be a CribbageEvent game, otherwise a ClassCastException
      * will be thrown
      *
-     * @param evt
-     *            The caught event.
-     * @throws ClassCastException
-     *             Caught event is not of type CribbageEvent
+     * @param evt The caught event.
+     * @throws ClassCastException Caught event is not of type CribbageEvent
      */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
@@ -116,7 +119,7 @@ public final class GameController implements PropertyChangeListener {
                         animationManager.getStartGamePage().add(animationManager
                             .getStartGamePage().getSendCardsToCribButton());
                         animationManager.setButtonClickable(animationManager
-                            .getStartGamePage().getSendCardsToCribButton(),
+                                .getStartGamePage().getSendCardsToCribButton(),
                             false);
                         break;
                     case STARTER_CARD:
@@ -168,12 +171,28 @@ public final class GameController implements PropertyChangeListener {
                         int numCardsInPlay =
                             gameRenderManager.playerPlayCard(clickedCardIndex);
 
+                        gameRenderManager.calculatePoints(true,
+                            playCardEvent.getCardImage().getCard());
+
+
+                        if (gameRenderManager.getPlayerPoints() + gameRenderManager
+                            .getComputerPoints() == GameRenderManager.POINTS_FOR_15_CLAIM) {
+                            //TODO: Move player pegs based on points
+                        }
+
+
+
+                        if (gameRenderManager
+                            .getPlayerPoints() + gameRenderManager
+                            .getComputerPoints() < MAX_POINTS_ALLOWED) {
+                            numCardsInPlay =
+                                gameRenderManager.opponentPlayCard();
+                        }
+
                         // Check if all cards have been played
                         if (numCardsInPlay == 8) {
-
                             // Calculate score and move pegs
                             gameRenderManager.movePegs();
-
                             // Move to discard to crib state again
                             currentGameState = GameState.DISCARD_TO_CRIB;
                         }
@@ -226,9 +245,8 @@ public final class GameController implements PropertyChangeListener {
 
     /**
      * Set the current game state.
-     * 
-     * @param gameState
-     *            state of the game
+     *
+     * @param gameState state of the game
      */
     public void setCurrentGameState(GameState gameState) {
         this.currentGameState = gameState;
