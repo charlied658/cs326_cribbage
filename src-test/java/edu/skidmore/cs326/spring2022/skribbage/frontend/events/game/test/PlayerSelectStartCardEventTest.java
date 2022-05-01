@@ -1,32 +1,31 @@
-package edu.skidmore.cs326.spring2022.skribbage.frontend.events.test;
+package edu.skidmore.cs326.spring2022.skribbage.frontend.events.game.test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+
 
 import org.apache.log4j.Logger;
 import org.junit.Before;
 
 import org.junit.Test;
 
+
 import edu.skidmore.cs326.spring2022.skribbage.common.EventType;
-import edu.skidmore.cs326.spring2022.skribbage.common.Lobby;
+import edu.skidmore.cs326.spring2022.skribbage.common.Player;
+
 import edu.skidmore.cs326.spring2022.skribbage.common.User;
 import edu.skidmore.cs326.spring2022.skribbage.common.UserRole;
-import edu.skidmore.cs326.spring2022.skribbage.frontend.events.LobbyCreateEvent;
+
+import edu.skidmore.cs326.spring2022.skribbage.frontend.events.game.PlayerSelectStartCardEvent;
 
 /**
  * @author Sten Leinasaar
  */
-public class LobbyCreateEventTest {
+public class PlayerSelectStartCardEventTest {
     /**
      * Test Instance for LobbyEvent testing.
      */
-    private LobbyCreateEvent testInstance;
-
-    /**
-     * Test Lobby.
-     */
-    private Lobby lob;
+    private PlayerSelectStartCardEvent testInstance;
 
     /**
      * User test instance.
@@ -34,16 +33,16 @@ public class LobbyCreateEventTest {
     private User userInstance;
 
     /**
-     * UserID number.
+     * Player instance to test with.
      */
-    private int identity;
+    private Player player;
 
     /**
      * Logger instance for logging.
      */
     private static final Logger LOG;
     static {
-        LOG = Logger.getLogger(LobbyCreateEventTest.class);
+        LOG = Logger.getLogger(PlayerSelectStartCardEventTest.class);
     }
 
     /**
@@ -54,9 +53,9 @@ public class LobbyCreateEventTest {
         LOG.trace("Started the setup method");
         userInstance = new User("sleinasa@skidmore.edu", "sleinasa",
             UserRole.UNAUTHORIZED);
-        identity = 5;
-        lob = new Lobby(userInstance, identity);
-        testInstance = new LobbyCreateEvent(this, lob);
+        player = new Player(userInstance);
+        testInstance =
+            new PlayerSelectStartCardEvent(this, player);
         LOG.info("SetUp method completed");
     }
 
@@ -65,10 +64,10 @@ public class LobbyCreateEventTest {
      * not null.
      */
     @Test
-    public void testLobbyCreateEvent() {
-        LOG.trace("Testing the constructor of LobbyEvent");
+    public void testPlayerClickDeckEvent() {
+        LOG.trace("Testing the constructor");
         assertNotNull(testInstance);
-        LOG.trace("LobbyEvent constructor test completed");
+        LOG.trace("constructor test completed");
 
     }
 
@@ -79,7 +78,8 @@ public class LobbyCreateEventTest {
     @Test
     public void testGetEventType() {
         LOG.trace("Testing getEventName");
-        assertEquals(testInstance.getEventType(), EventType.LOBBY_CREATE_LOBBY);
+        assertEquals(testInstance.getEventType(),
+            EventType.PLAYER_SELECT_START_CARD);
         LOG.trace("Completed testing the getEventName method");
     }
 
