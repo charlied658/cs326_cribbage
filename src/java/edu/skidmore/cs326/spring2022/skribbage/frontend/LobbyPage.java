@@ -150,30 +150,6 @@ public class LobbyPage extends SkribbageDrawingSurface implements Page {
         setup();
         positionWindow();
     }
-    
-    /**
-     * Tests functionality of adding and removing players from lobby. (Test 1)
-     */
-    @SuppressWarnings("unused")
-    private void unitTest1() {
-        LOG.trace("Entered LobbyPage unitTest1");
-        Utility.pause(1000);
-        addPlayer(new User(null, "Dummy User (Test)", UserRole.AUTHORIZED));
-        Utility.pause(1000);
-        removePlayer(players.get(0));
-        Utility.pause(1000);
-        removePlayer(players.get(0));
-        Utility.pause(1000);
-        removePlayer(players.get(0));
-        Utility.pause(1000);
-        addPlayer(host);
-        Utility.pause(1000);
-        addPlayer(playerCPU);
-        Utility.pause(1000);
-        addPlayer(new User(null, "I̴͂͜ ̵̨́L̴̡͋I̴̽͜V̴͔͐E̸͕̾ ̶͙͒I̴͕͝N̴̨̊ ̸̹͝"
-            + "Y̷̞̿O̴̧̚U̸̖̔R̶͎̋ ̶̩̎W̷̠̎A̷͈͆L̶͚̃L̷̗͆S̸̘̽", UserRole.AUTHORIZED));
-    }
-
 
     /**
      * Adds player to ArrayList of Users.
