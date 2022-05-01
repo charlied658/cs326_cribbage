@@ -23,7 +23,7 @@ import us.daveread.edu.graphics.surface.DialogType;
 /**
  * Class to manage the rendering of objects on the StartGamePage.
  * Edit this file if you need to.
- * 
+ *
  * @author cdavidso
  */
 public class GameRenderManager {
@@ -108,6 +108,11 @@ public class GameRenderManager {
      */
     private static final int MAX_DISCARD_TO_CRIB_SIZE = 2;
 
+    /**
+     * Points needed to claim getting 15 points.
+     */
+    public static final int POINTS_FOR_15_CLAIM = 15;
+
     /*
      * Initialize the static instance.
      */
@@ -134,7 +139,7 @@ public class GameRenderManager {
 
     /**
      * setCribClick.
-     * 
+     *
      * @param clicked
      */
     public void setCribClick(boolean clicked) {
@@ -143,7 +148,7 @@ public class GameRenderManager {
 
     /**
      * getCribClick.
-     * 
+     *
      * @return if crib button was clicked.
      */
     public boolean getCribClick() {
@@ -152,9 +157,8 @@ public class GameRenderManager {
 
     /**
      * Get the Card object associated with the CardImage that has been clicked.
-     * 
-     * @param e
-     *            drawable image
+     *
+     * @param e drawable image
      * @return card
      */
     public Card getClickedCard(Drawable e) {
@@ -170,7 +174,7 @@ public class GameRenderManager {
 
     /**
      * getPlayerPoints.
-     * 
+     *
      * @return the points.
      */
     public int getPlayerPoints() {
@@ -179,7 +183,7 @@ public class GameRenderManager {
 
     /**
      * setplayerpoints.
-     * 
+     *
      * @param points
      */
     public void setPlayerPoints(int points) {
@@ -188,7 +192,7 @@ public class GameRenderManager {
 
     /**
      * setcomputerpoints.
-     * 
+     *
      * @param points
      */
     public void setComputerPoints(int points) {
@@ -207,9 +211,8 @@ public class GameRenderManager {
     /**
      * When a card has been clicked, update the game state and animate the card
      * movement.
-     * 
-     * @param e
-     *            Drawable that has been passed in
+     *
+     * @param e Drawable that has been passed in
      */
     public void manageClickedCard(Drawable e) {
 
@@ -239,9 +242,9 @@ public class GameRenderManager {
 
             if (e == GameRenderManager.getInstance()
                 .getCardsInHand().get(i)) {
-                calculatePoints(true,
-                    GameRenderManager.getInstance().getCardsInHand().get(i)
-                        .getCard());
+                //                calculatePoints(true,
+                //                    GameRenderManager.getInstance().getCardsInHand().get(i)
+                //                        .getCard());
                 PlayerPlayCardEvent playerPlayCardEvent =
                     (PlayerPlayCardEvent) EventFactory.getInstance()
                         .createEvent(
@@ -257,11 +260,9 @@ public class GameRenderManager {
 
     /**
      * calculates the points.
-     * 
-     * @param player
-     *            - true if the player chose it, false, if computer
-     * @param cardChosen
-     *            - the chosen card
+     *
+     * @param player     - true if the player chose it, false, if computer
+     * @param cardChosen - the chosen card
      */
     public void calculatePoints(boolean player, Card cardChosen) {
         if (player && getCribClick()) {
@@ -282,11 +283,9 @@ public class GameRenderManager {
 
     /**
      * checks for total score to ensure that 31 has not been met.
-     * 
-     * @param player
-     *            - player score.
-     * @param cpu
-     *            - cpu score.
+     *
+     * @param player - player score.
+     * @param cpu    - cpu score.
      * @return true if a hand can continue, false if 31 has been reached.
      */
     public boolean checkForTotalScore(int player, int cpu) {
@@ -410,7 +409,7 @@ public class GameRenderManager {
 
     /**
      * Select a card to discard to the crib.
-     * 
+     *
      * @param card
      */
     public void selectCardToDiscardToCrib(CardImage card) {
@@ -419,7 +418,7 @@ public class GameRenderManager {
 
             // Set the button to not be clickable
             AnimationManager.getInstance().setButtonClickable(AnimationManager
-                .getInstance().getStartGamePage().getSendCardsToCribButton(),
+                    .getInstance().getStartGamePage().getSendCardsToCribButton(),
                 false);
 
             // Remove card from selected cards
@@ -452,7 +451,7 @@ public class GameRenderManager {
 
     /**
      * Play the card that the player clicked on.
-     * 
+     *
      * @param clickedCardIndex
      * @return number of cards in play
      */
@@ -468,6 +467,14 @@ public class GameRenderManager {
         AnimationManager.getInstance()
             .cardGlideAnimation(50);
 
+        return AnimationManager.getInstance().getGameManager().getGame()
+            .getCardsInPlay().getCardsInHand().length;
+    }
+
+    /**
+     * Render an opponent playing a random card.
+     */
+    public int opponentPlayCard() {
         // Opponent plays a random card, then play an animation
         //DO NOT EDIT TH
         Card temp =
@@ -477,6 +484,12 @@ public class GameRenderManager {
         cardsInDeck.get(0).setUpdateShowing(true);
         AnimationManager.getInstance()
             .cardGlideAnimation(50);
+
+        if (GameRenderManager.getInstance().getPlayerPoints() +
+            GameRenderManager.getInstance()
+                .getComputerPoints() == POINTS_FOR_15_CLAIM) {
+            //TODO: Move OPPONENT pegs forward
+        }
 
         return AnimationManager.getInstance().getGameManager().getGame()
             .getCardsInPlay().getCardsInHand().length;
@@ -509,7 +522,7 @@ public class GameRenderManager {
         AnimationManager.getInstance().getStartGamePage().add(AnimationManager
             .getInstance().getStartGamePage().getSendCardsToCribButton());
         AnimationManager.getInstance().setButtonClickable(AnimationManager
-            .getInstance().getStartGamePage().getSendCardsToCribButton(),
+                .getInstance().getStartGamePage().getSendCardsToCribButton(),
             false);
     }
 
@@ -556,7 +569,7 @@ public class GameRenderManager {
 
     /**
      * Determine the dealer based on who picked the lower card.
-     * 
+     *
      * @param clickedCardIndex
      */
     public void determineDealer(int clickedCardIndex) {
@@ -606,7 +619,7 @@ public class GameRenderManager {
 
     /**
      * Select the starter card based on what the player clicked.
-     * 
+     *
      * @param clickedCardIndex
      */
     public void selectStarterCard(int clickedCardIndex) {
@@ -622,9 +635,8 @@ public class GameRenderManager {
 
     /**
      * Set the game manager instance.
-     * 
-     * @param gameManager
-     *            game manager to set
+     *
+     * @param gameManager game manager to set
      */
     public void setGameManager(GameManager gameManager) {
         this.gameManager = gameManager;
@@ -632,7 +644,7 @@ public class GameRenderManager {
 
     /**
      * Get the standard deck.
-     * 
+     *
      * @return standardDeck
      */
     public ArrayList<CardImage> getStandardDeck() {
@@ -641,7 +653,7 @@ public class GameRenderManager {
 
     /**
      * Gets the array of selected cards for discarding.
-     * 
+     *
      * @return SelectedCardsForDiscarding
      */
     public ArrayList<CardImage> getSelectedCardsForDiscarding() {
@@ -650,7 +662,7 @@ public class GameRenderManager {
 
     /**
      * Get cards in the deck.
-     * 
+     *
      * @return cardsInDeck
      */
     public ArrayList<CardImage> getCardsInDeck() {
@@ -659,7 +671,7 @@ public class GameRenderManager {
 
     /**
      * Get cards in play.
-     * 
+     *
      * @return cardsInPlay
      */
     public ArrayList<CardImage> getCardsInPlay() {
@@ -668,7 +680,7 @@ public class GameRenderManager {
 
     /**
      * Get cards in player's hand.
-     * 
+     *
      * @return cardsInHand
      */
     public ArrayList<CardImage> getCardsInHand() {
@@ -677,7 +689,7 @@ public class GameRenderManager {
 
     /**
      * Get cards in the crib.
-     * 
+     *
      * @return cardsInCrib
      */
     public ArrayList<CardImage> getCardsInCrib() {
@@ -686,7 +698,7 @@ public class GameRenderManager {
 
     /**
      * Gets active player.
-     * 
+     *
      * @return Player object
      */
     public Player getActivePlayer() {
@@ -695,9 +707,8 @@ public class GameRenderManager {
 
     /**
      * Sets active player.
-     * 
-     * @param activePlayer
-     *            new player object to set
+     *
+     * @param activePlayer new player object to set
      */
     public void setActivePlayer(
         Player activePlayer) {
@@ -706,7 +717,7 @@ public class GameRenderManager {
 
     /**
      * Get cards in opponent's hand.
-     * 
+     *
      * @return cardsInOpponentHand
      */
     public ArrayList<CardImage> getCardsInOpponentHand() {
