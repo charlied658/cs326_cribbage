@@ -135,7 +135,7 @@ public class RulesPage extends SkribbageDrawingSurface implements Page {
      *         A string that will be set as a text.
      */
     public String readFromFile() {
-        String read = " ";
+        String read = "";
         try {
             Scanner fileRead = new Scanner(new File("rules.txt"));
             while (fileRead.hasNext()) {

@@ -45,6 +45,7 @@ public class LobbyPageTest {
      * Setup.
      */
     public void setup() {
+        LOG.trace("Entered LobbyPageTest setup");
         testInstance = new LobbyPage();
     }
     
