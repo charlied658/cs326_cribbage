@@ -92,7 +92,8 @@ public class UsernameProxy {
 
         }
         catch (IOException ex) {
-            ex.printStackTrace();
+            //ex.printStackTrace();
+            LOG.error(ex);
         }
 
         return usernameIsGood;
