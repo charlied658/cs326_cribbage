@@ -17,7 +17,6 @@ import edu.skidmore.cs326.spring2022.skribbage.common.User;
 import us.daveread.edu.graphics.shape.Drawable;
 import us.daveread.edu.graphics.shape.impl.Image;
 import us.daveread.edu.graphics.shape.impl.Text;
-import us.daveread.edu.graphics.surface.DrawingSurface;
 import us.daveread.edu.graphics.surface.MainFrame;
 import us.daveread.edu.utilities.Utility;
 
@@ -35,6 +34,7 @@ public class InventoryPage extends SkribbageDrawingSurface implements Page {
     /**
      * mf - Holds reference to the window.
      */
+    @SuppressWarnings("unused")
     private MainFrame mf;
 
     /**

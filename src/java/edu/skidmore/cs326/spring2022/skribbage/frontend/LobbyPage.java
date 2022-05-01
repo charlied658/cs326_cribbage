@@ -21,7 +21,6 @@ import edu.skidmore.cs326.spring2022.skribbage.common.User;
 import us.daveread.edu.graphics.shape.Drawable;
 import us.daveread.edu.graphics.shape.impl.Image;
 import us.daveread.edu.graphics.shape.impl.Text;
-import us.daveread.edu.graphics.surface.DrawingSurface;
 import us.daveread.edu.graphics.surface.MainFrame;
 import us.daveread.edu.utilities.Utility;
 //import us.daveread.edu.graphics.shape.impl.Rectangle;
@@ -91,6 +90,7 @@ public class LobbyPage extends SkribbageDrawingSurface implements Page {
     /**
      * mf - MainFrame variable to hold the window.
      */
+    @SuppressWarnings("unused")
     private MainFrame mf;
 
     /**

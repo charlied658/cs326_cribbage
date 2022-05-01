@@ -369,8 +369,6 @@ public class StartGamePage extends SkribbageDrawingSurface implements Page {
                 GameRenderManager.getInstance().getComputerPoints();
             if (GameRenderManager.getInstance().checkForTotalScore(playerPoints,
                 computerPoints)) {
-                System.out
-                    .println("points: " + playerPoints + ", " + computerPoints);
                 updatePoints(playerPoints, computerPoints);
             } else {
                 showMessage("New Round", "Total points exceeds 31",

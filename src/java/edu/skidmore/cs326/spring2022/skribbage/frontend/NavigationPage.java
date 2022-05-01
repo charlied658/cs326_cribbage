@@ -24,7 +24,6 @@ import us.daveread.edu.graphics.shape.impl.Image;
 import us.daveread.edu.graphics.shape.impl.Text;
 import us.daveread.edu.graphics.surface.DialogPosition;
 import us.daveread.edu.graphics.surface.DialogType;
-import us.daveread.edu.graphics.surface.DrawingSurface;
 import us.daveread.edu.graphics.surface.MainFrame;
 
 /**
@@ -67,6 +66,7 @@ public class NavigationPage extends SkribbageDrawingSurface implements Page {
     /**
      * navPage - MainFrame window.
      */
+    @SuppressWarnings("unused")
     private MainFrame navPage;
 
     /**

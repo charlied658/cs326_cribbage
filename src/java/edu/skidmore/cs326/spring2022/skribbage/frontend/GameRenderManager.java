@@ -462,14 +462,17 @@ public class GameRenderManager {
         // the board and play an animation
         AnimationManager.getInstance().getGameManager()
             .playCard(clickedCardIndex);
-        
+
         AnimationManager.getInstance().setStandardCardDestinations();
         cardsInDeck.get(0).setUpdateShowing(true);
         AnimationManager.getInstance()
             .cardGlideAnimation(50);
 
         // Opponent plays a random card, then play an animation
-        AnimationManager.getInstance().getGameManager().opponentPlayCard();
+        //DO NOT EDIT TH
+        Card temp =
+            AnimationManager.getInstance().getGameManager().opponentPlayCard();
+        calculatePoints(false, temp);
         AnimationManager.getInstance().setStandardCardDestinations();
         cardsInDeck.get(0).setUpdateShowing(true);
         AnimationManager.getInstance()
@@ -610,11 +613,11 @@ public class GameRenderManager {
         deckManager.moveToTop(
             AnimationManager.getInstance().getGameManager().getGame().getDeck(),
             clickedCardIndex);
-        
+
         AnimationManager.getInstance().setStandardCardDestinations();
         cardsInDeck.get(0).setUpdateShowing(true);
         AnimationManager.getInstance().cardGlideAnimation(50);
-        
+
     }
 
     /**

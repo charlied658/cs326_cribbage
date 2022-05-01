@@ -17,7 +17,6 @@ import us.daveread.edu.graphics.shape.Drawable;
 import us.daveread.edu.graphics.shape.impl.Image;
 
 import us.daveread.edu.graphics.shape.impl.Text;
-import us.daveread.edu.graphics.surface.DrawingSurface;
 import us.daveread.edu.graphics.surface.MainFrame;
 import us.daveread.edu.utilities.Utility;
 
@@ -43,6 +42,7 @@ public class RulesPage extends SkribbageDrawingSurface implements Page {
     /**
      * mf - MainFrame window.
      */
+    @SuppressWarnings("unused")
     private MainFrame mf;
 
     /**

@@ -13,7 +13,6 @@ import java.time.LocalDateTime;
 
 import org.apache.log4j.Logger;
 
-import edu.skidmore.cs326.spring2022.skribbage.common.Game;
 import edu.skidmore.cs326.spring2022.skribbage.common.Password;
 import edu.skidmore.cs326.spring2022.skribbage.common.User;
 import edu.skidmore.cs326.spring2022.skribbage.common.UserRole;
@@ -135,6 +134,12 @@ public class DatabaseManager {
         }
     }
 
+    /**
+     * changePassword method.
+     * 
+     * @param user
+     * @param newPassword
+     */
     public void changepass(String user, String newPassword) {
 
         Connection conn = null;
@@ -244,7 +249,10 @@ public class DatabaseManager {
     public HashMap<String, Item> inventoryQuery(int playerID) {
 
         String tokenQuery =
-            "SELECT * FROM inventory INNER JOIN player_account ON player_account.PersonID=inventory.PersonID INNER JOIN item_table ON inventory.ItemID=item_table.item_ID WHERE player_account.PersonID = 3";
+            "SELECT * FROM inventory INNER JOIN player_account ON "
+                + "player_account.PersonID=inventory.PersonID "
+                + "INNER JOIN item_table ON inventory.ItemID=item_table.item_ID"
+                + " WHERE player_account.PersonID = 3";
 
         PreparedStatement ps = null;
         Connection conn = null;
@@ -385,15 +393,16 @@ public class DatabaseManager {
             // set account to active when creating a user
             conn = getDbConnection();
 
-            String script = "INSERT INTO player_account (Username, Password, account_status) "
-                + "VALUES (?, ?, 1)";
+            String script =
+                "INSERT INTO player_account "
+                    + "(Username, Password, account_status) "
+                    + "VALUES (?, ?, 1)";
             ps = conn.prepareStatement(script);
 
             ps.setString(1, userName);
             ps.setString(2, password);
 
             ps.executeUpdate();
-
 
         }
         catch (SQLException sqle) {
@@ -424,7 +433,6 @@ public class DatabaseManager {
             dbDisconnect(conn);
         }
     }
-   
 
     /**
      * This is a method to delete an existent player from the player_account
@@ -447,14 +455,15 @@ public class DatabaseManager {
         PreparedStatement ps = null;
 
         ResultSet rs = null;
-        
+
         // set account to inactive when deleting a user
         try {
             // set flag to inactive
             conn = getDbConnection();
 
             String script =
-                "UPDATE player_account SET account_status = 0 WHERE Username = ?";
+                "UPDATE player_account "
+                    + "SET account_status = 0 WHERE Username = ?";
             ps = conn.prepareStatement(script);
 
             ps.setString(1, userName);
