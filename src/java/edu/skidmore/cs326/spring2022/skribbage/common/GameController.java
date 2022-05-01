@@ -107,7 +107,6 @@ public final class GameController implements PropertyChangeListener {
                         PlayerClickDeckEvent playerClickDeckEvent =
                             (PlayerClickDeckEvent) cribbageEvent;
 
-                        // TODO decide dealer based on who picked the lower card
                         gameRenderManager.determineDealer(
                             playerClickDeckEvent.getClickedCardIndex());
 
@@ -174,12 +173,30 @@ public final class GameController implements PropertyChangeListener {
                         gameRenderManager.calculatePoints(true,
                             playCardEvent.getCardImage().getCard());
 
-
-                        if (gameRenderManager.getPlayerPoints() + gameRenderManager
+                        if (gameRenderManager
+                            .getPlayerPoints() + gameRenderManager
                             .getComputerPoints() == GameRenderManager.POINTS_FOR_15_CLAIM) {
-                            //TODO: Move player pegs based on points
+                            AnimationManager.getInstance()
+                                .movePegGlideAnimation(0, 2);
                         }
 
+                        if (gameRenderManager
+                            .getPlayerPoints() + gameRenderManager
+                            .getComputerPoints() == GameRenderManager.POINTS_FOR_31_CLAIM) {
+                            AnimationManager.getInstance()
+                                .movePegGlideAnimation(0, 2);
+                        }
+
+                        if (gameRenderManager.getCardsInPlay().size() > 1) {
+                            if (gameRenderManager.getCardsInPlay()
+                                .get(gameRenderManager.getCardsInPlay().size() - 2)
+                                .getCard().getRank()
+                                 == playCardEvent.getCardImage()
+                                .getCard().getRank()) {
+                                AnimationManager.getInstance()
+                                    .movePegGlideAnimation(0, 2);
+                            }
+                        }
 
 
                         if (gameRenderManager
@@ -196,6 +213,15 @@ public final class GameController implements PropertyChangeListener {
                             // Move to discard to crib state again
                             currentGameState = GameState.DISCARD_TO_CRIB;
                         }
+
+                        if (gameRenderManager.getCardsInHand().size() == 0) {
+                            while (gameRenderManager.getCardsInOpponentHand()
+                                .size() > 0) {
+                                gameRenderManager.opponentPlayCard();
+                            }
+                            gameRenderManager.movePegs();
+                            currentGameState = GameState.DISCARD_TO_CRIB;
+                        }
                         break;
                     default:
                         break;
@@ -206,7 +232,6 @@ public final class GameController implements PropertyChangeListener {
             case PLAYER_SEND_CARD_TO_CRIB:
                 if (gameRenderManager.getSelectedCardsForDiscarding()
                     .size() == MAX_DISCARD_TO_CRIB_SIZE) {
-                    // TODO send selected cards to the crib
 
                     gameRenderManager.discardCards();
 
