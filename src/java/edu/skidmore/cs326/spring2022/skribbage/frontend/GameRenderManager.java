@@ -4,15 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import edu.skidmore.cs326.spring2022.skribbage.common.Player;
+import edu.skidmore.cs326.spring2022.skribbage.common.*;
 import edu.skidmore.cs326.spring2022.skribbage.frontend.events.game.PlayerClickDeckEvent;
 import edu.skidmore.cs326.spring2022.skribbage.frontend.events.game.PlayerPlayCardEvent;
 
 import org.apache.log4j.Logger;
 
-import edu.skidmore.cs326.spring2022.skribbage.common.Card;
-import edu.skidmore.cs326.spring2022.skribbage.common.EventFactory;
-import edu.skidmore.cs326.spring2022.skribbage.common.EventType;
 import edu.skidmore.cs326.spring2022.skribbage.logic.DeckManipulator;
 import edu.skidmore.cs326.spring2022.skribbage.logic.GameManager;
 import us.daveread.edu.graphics.shape.Drawable;
@@ -112,6 +109,11 @@ public class GameRenderManager {
      * Points needed to claim getting 15 points.
      */
     public static final int POINTS_FOR_15_CLAIM = 15;
+
+    /**
+     * Points needed to claim getting 31 points.
+     */
+    public static final int POINTS_FOR_31_CLAIM = 31;
 
     /*
      * Initialize the static instance.
@@ -393,6 +395,8 @@ public class GameRenderManager {
      * Deal the cards.
      */
     public void dealCards() {
+        GameRenderManager.getInstance().setPlayerPoints(0);
+        GameRenderManager.getInstance().setComputerPoints(0);
         shuffleCards();
 
         for (int i = 0; i < 6; i++) {
@@ -488,7 +492,24 @@ public class GameRenderManager {
         if (GameRenderManager.getInstance().getPlayerPoints() +
             GameRenderManager.getInstance()
                 .getComputerPoints() == POINTS_FOR_15_CLAIM) {
-            //TODO: Move OPPONENT pegs forward
+            AnimationManager.getInstance().movePegGlideAnimation(1, 2);
+        }
+
+        if (GameRenderManager.getInstance().getCardsInPlay().size() > 1) {
+            if (GameRenderManager.getInstance().getCardsInPlay()
+                .get(GameRenderManager.getInstance().getCardsInPlay().size() - 2)
+                .getCard().getRank()
+                 == temp.getRank()) {
+                AnimationManager.getInstance()
+                    .movePegGlideAnimation(1, 2);
+            }
+        }
+
+
+        if (GameRenderManager.getInstance()
+            .getComputerPoints() + GameRenderManager.getInstance()
+            .getPlayerPoints() == POINTS_FOR_31_CLAIM) {
+            AnimationManager.getInstance().movePegGlideAnimation(1, 2);
         }
 
         return AnimationManager.getInstance().getGameManager().getGame()
