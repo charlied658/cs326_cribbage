@@ -32,12 +32,12 @@ public class RulesPage extends SkribbageDrawingSurface implements Page {
     /**
      * mainframeWidth - int var to hold width.
      */
-    private int mainframeWidth = 800;
+    private int mainframeWidth = 1200;
 
     /**
      * mainframeHeight - int var to hold height.
      */
-    private int mainframeHeight = 800;
+    private int mainframeHeight = 900;
 
     /**
      * mf - MainFrame window.
@@ -113,7 +113,7 @@ public class RulesPage extends SkribbageDrawingSurface implements Page {
         JScrollPane scrollPane =
             new JScrollPane(rulesArea, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
                 JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-        scrollPane.setBounds(135, 350, 650, 500);
+        scrollPane.setBounds(135, 350, 1000, 700);
 
         scrollPane.getViewport().setBackground(Color.CYAN);
         add(scrollPane);
@@ -135,7 +135,7 @@ public class RulesPage extends SkribbageDrawingSurface implements Page {
      *         A string that will be set as a text.
      */
     public String readFromFile() {
-        String read = " ";
+        String read = "";
         try {
             Scanner fileRead = new Scanner(new File("rules.txt"));
             while (fileRead.hasNext()) {

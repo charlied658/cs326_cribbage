@@ -205,6 +205,12 @@ public class InventoryPage extends SkribbageDrawingSurface implements Page {
         }
 
     }
+    
+    @Override
+    public void closeWindow() {
+        // TODO Auto-generated method stub
+        mf.dispose();
+    }
 
     /**
      * @param args

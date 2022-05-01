@@ -2,36 +2,48 @@ package edu.skidmore.cs326.spring2022.skribbage.frontend.events.test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 
 import org.apache.log4j.Logger;
 import org.junit.Before;
-import org.junit.After;
+
 import org.junit.Test;
 
-import edu.skidmore.cs326.spring2022.skribbage.frontend.events.LobbyEvent;
+import edu.skidmore.cs326.spring2022.skribbage.common.EventType;
+import edu.skidmore.cs326.spring2022.skribbage.common.Lobby;
+import edu.skidmore.cs326.spring2022.skribbage.common.User;
+import edu.skidmore.cs326.spring2022.skribbage.common.UserRole;
+import edu.skidmore.cs326.spring2022.skribbage.frontend.events.LobbyCreateEvent;
 
 /**
  * @author Sten Leinasaar
- *         Last Edited: By Sten, March 23, 2022
  */
-public class LobbyEventTest {
+public class LobbyCreateEventTest {
     /**
      * Test Instance for LobbyEvent testing.
      */
-    private LobbyEvent testInstance;
+    private LobbyCreateEvent testInstance;
 
     /**
-     * Source object that fired the event change.
+     * Test Lobby.
      */
-    private Object source;
+    private Lobby lob;
+
+    /**
+     * User test instance.
+     */
+    private User userInstance;
+
+    /**
+     * UserID number.
+     */
+    private int identity;
 
     /**
      * Logger instance for logging.
      */
     private static final Logger LOG;
     static {
-        LOG = Logger.getLogger(LobbyEventTest.class);
+        LOG = Logger.getLogger(LobbyCreateEventTest.class);
     }
 
     /**
@@ -40,8 +52,11 @@ public class LobbyEventTest {
     @Before
     public void setUp() {
         LOG.trace("Started the setup method");
-        source = new Object();
-        // testInstance = new LobbyEvent(source);
+        userInstance = new User("sleinasa@skidmore.edu", "sleinasa",
+            UserRole.UNAUTHORIZED);
+        identity = 5;
+        lob = new Lobby(userInstance, identity);
+        testInstance = new LobbyCreateEvent(this, lob);
         LOG.info("SetUp method completed");
     }
 
@@ -50,10 +65,9 @@ public class LobbyEventTest {
      * not null.
      */
     @Test
-    public void testLobbyEvent() {
+    public void testLobbyCreateEvent() {
         LOG.trace("Testing the constructor of LobbyEvent");
         assertNotNull(testInstance);
-        assertEquals(testInstance.getSource(), source);
         LOG.trace("LobbyEvent constructor test completed");
 
     }
@@ -63,27 +77,10 @@ public class LobbyEventTest {
      * correctly.
      */
     @Test
-    public void testGetEventName() {
+    public void testGetEventType() {
         LOG.trace("Testing getEventName");
-        assertEquals(testInstance.getEventType(), "Lobby Event");
+        assertEquals(testInstance.getEventType(), EventType.LOBBY_CREATE_LOBBY);
         LOG.trace("Completed testing the getEventName method");
-    }
-
-    /**
-     * Sets all initialized variables to null.
-     */
-    @After
-    public void tearDown() {
-        LOG.trace("Starting the teardown");
-        testInstance = null;
-        source = null;
-
-        LOG.trace("Assert that teardown was succesful");
-        assertNull(testInstance);
-        assertNull(source);
-
-        LOG.trace("Teardown completed");
-
     }
 
 }
