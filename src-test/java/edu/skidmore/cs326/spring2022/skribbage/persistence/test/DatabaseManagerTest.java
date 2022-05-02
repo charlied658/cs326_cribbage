@@ -6,7 +6,7 @@ import static org.junit.Assert.assertNull;
 
 import edu.skidmore.cs326.spring2022.skribbage.common.UserRole;
 
-import java.util.HashMap;
+
 
 import org.junit.Before;
 import org.junit.Test;
@@ -14,8 +14,7 @@ import org.junit.Test;
 import edu.skidmore.cs326.spring2022.skribbage.common.Password;
 import edu.skidmore.cs326.spring2022.skribbage.common.User;
 import edu.skidmore.cs326.spring2022.skribbage.persistence.DatabaseManager;
-import edu.skidmore.cs326.spring2022.skribbage.persistence.Item;
-import edu.skidmore.cs326.spring2022.skribbage.persistence.ItemTypes;
+
 
 /**
  * @author Ricardo Rosario Last Edited: By Ricardo, March 31, 2022
@@ -31,8 +30,9 @@ public class DatabaseManagerTest {
     private DatabaseManager databaseinstance;
 
     /**
-     * wrongtestuser
+     * wrongtestuser.
      */
+    @SuppressWarnings("unused")
     private User wrongTestUser;
 
     /**
@@ -48,16 +48,19 @@ public class DatabaseManagerTest {
     /**
      * wrongtestpassword.
      */
+    @SuppressWarnings("unused")
     private Password wrongTestPassword;
 
     /**
      * correctTestuser.
      */
+    @SuppressWarnings("unused")
     private User correctTestUser;
 
     /**
      * correctestpassword.
      */
+    @SuppressWarnings("unused")
     private Password correctTestPassword;
 
     /**
@@ -78,32 +81,33 @@ public class DatabaseManagerTest {
         correctTestPassword = new Password("salt~ILoveSQL");
     }
 
-//    /**
-//     * Testing the inventory deposit method
-//     */
-//    @Test
-//    public void inventoryDeposit() {
-//
-//        System.out.println("entered test");
-//        ItemTypes testType = ItemTypes.BIRTHDAY_CAKE;
-//        int testQuantity = 55;
-//        databaseinstance.inventoryDeposit(testType, testQuantity,
-//            correctTestUser);
-//
-//        HashMap<String, Item> resultSet =
-//            databaseinstance.inventoryQuery(correctTestUser.getUserId());
-//        Item finalItem = resultSet.get(testType.toString());
-//
-//        System.out.println("assert identical: " + finalItem.getQuantityHeld() + testQuantity);
-//        assertEquals("Inventory deposit should work",
-//            finalItem.getQuantityHeld(), testQuantity);
-//        assertEquals("Inventory deposit should work", finalItem.getItemType(),
-//            testType);
-//
-//    }
+    // /**
+    // * Testing the inventory deposit method
+    // */
+    // @Test
+    // public void inventoryDeposit() {
+    //
+    // System.out.println("entered test");
+    // ItemTypes testType = ItemTypes.BIRTHDAY_CAKE;
+    // int testQuantity = 55;
+    // databaseinstance.inventoryDeposit(testType, testQuantity,
+    // correctTestUser);
+    //
+    // HashMap<String, Item> resultSet =
+    // databaseinstance.inventoryQuery(correctTestUser.getUserId());
+    // Item finalItem = resultSet.get(testType.toString());
+    //
+    // System.out.println("assert identical: " + finalItem.getQuantityHeld() +
+    // testQuantity);
+    // assertEquals("Inventory deposit should work",
+    // finalItem.getQuantityHeld(), testQuantity);
+    // assertEquals("Inventory deposit should work", finalItem.getItemType(),
+    // testType);
+    //
+    // }
 
     /**
-     * Testing when updating the username in the database
+     * Testing when updating the username in the database.
      */
     @Test
     public void updateUsername() {
@@ -112,9 +116,9 @@ public class DatabaseManagerTest {
         assertEquals("Testing when updating the username", isUpdated, true);
         databaseinstance.update("Username", "Rick", 5);
     }
-    
+
     /**
-     * Testing when the accountExists works with existent username
+     * Testing when the accountExists works with existent username.
      */
     @Test
     public void accountExistsSuccess() {
@@ -123,7 +127,7 @@ public class DatabaseManagerTest {
     }
 
     /**
-     * Testing when the accountExists works with non existent username
+     * Testing when the accountExists works with non existent username.
      */
     @Test
     public void accountExistsFail() {
@@ -132,9 +136,9 @@ public class DatabaseManagerTest {
         assertEquals("User should not exist", false, verification);
 
     }
-    
+
     /**
-     * Testing when creating a new user
+     * Testing when creating a new user.
      */
     @Test
     public void createNewAccount() {
@@ -160,46 +164,45 @@ public class DatabaseManagerTest {
         assertNotNull("Salt for existing account should be found",
             databaseinstance.getUserSaltBase64(existentUsername));
     }
-    
 
     /**
      * Testing when asking the inventoryQuery for coin count is successful.
      */
-//    @Test
-//    public void walletQuerysuccess() {
-//        String cointest = databaseinstance.walletQuery(9952);
-//        System.out.println("cointest: " + cointest);
-//        assertEquals("Coin count ashould be successful", cointest,
-//            "player coin value: 10000");
-//    }
+    // @Test
+    // public void walletQuerysuccess() {
+    // String cointest = databaseinstance.walletQuery(9952);
+    // System.out.println("cointest: " + cointest);
+    // assertEquals("Coin count ashould be successful", cointest,
+    // "player coin value: 10000");
+    // }
 
     /**
      * Another test. - not sure what the use is
      */
-//    @Test
-//    public void walle() {
-//        String cointest = databaseinstance.walletQuery(325);
-//        assertEquals("Coin count should be successful", cointest,
-//            "player coin value: 100000");
-//    }
-    
+    // @Test
+    // public void walle() {
+    // String cointest = databaseinstance.walletQuery(325);
+    // assertEquals("Coin count should be successful", cointest,
+    // "player coin value: 100000");
+    // }
+
     /**
      * Another inventory Test
      */
-//    @Test
-//    public void TestInventoryQuery() {
-//    	String invTest = databaseinstance.inventoryQuery(9943).toString();
-//    	System.out.println("hello " + invTest);
-//    	
-//    }
+    // @Test
+    // public void TestInventoryQuery() {
+    // String invTest = databaseinstance.inventoryQuery(9943).toString();
+    // System.out.println("hello " + invTest);
+    //
+    // }
 
     /**
      * Testing when asking the inventoryQuery for coin count fails.
      */
-//    @Test
-//    public void walletQueryfails() {
-//        String cointest = databaseinstance.walletQuery(420);
-//        assertEquals("Coin count should fail", cointest, "Account not found");
-//    }
+    // @Test
+    // public void walletQueryfails() {
+    // String cointest = databaseinstance.walletQuery(420);
+    // assertEquals("Coin count should fail", cointest, "Account not found");
+    // }
 
 }

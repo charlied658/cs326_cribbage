@@ -7,8 +7,6 @@ import edu.skidmore.cs326.spring2022.skribbage.common.UserRole;
 import org.apache.log4j.Logger;
 import org.junit.Before;
 import org.junit.Test;
-
-import edu.skidmore.cs326.spring2022.skribbage.common.Password;
 import edu.skidmore.cs326.spring2022.skribbage.common.User;
 
 /**

@@ -34,11 +34,6 @@ public class BoardTest {
     private Spot[][] testGrid;
 
     /**
-     * Test array of occupied spots.
-     */
-    private Spot[] occupiedSpots;
-
-    /**
      * Test array of pegs.
      */
     private Peg[] testPegs;
@@ -75,8 +70,6 @@ public class BoardTest {
         testPegs = new Peg[Board.NUMCOL * 2];
         testPegs[0] = new Peg(testGrid[1][0]);
         testPegs[1] = new Peg(testGrid[1][1]);
-        // TODO needs to be changed.
-        occupiedSpots = new Spot[10];
         testPlayerOne = new Player();
         testPlayerTwo = new Player();
         testPegs[0].setOwner(testPlayerOne);
@@ -153,6 +146,7 @@ public class BoardTest {
     @Test
     public void testAssignBattleSpot() {
         LOG.debug("Testing assignBattleSpot.");
+        @SuppressWarnings("unused")
         Spot[] battleSpots = testInstance.assignBattleSpot();
         int battleSpotCounter = 0;
         for (int i = 0; i < 120; i++) {

@@ -56,21 +56,22 @@ public class MarketPlaceManagerTest {
         LOG.info("Setup for test");
         testInstance = new MarketPlaceManager(SpecialCard.REBATTLECARD);
         testInventoryInstance = player.getInventoryManager();
-        MarketPlaceManager testLPSC =
-            new MarketPlaceManager(SpecialCard.LASTPLAYERSHOWCARD);
-        MarketPlaceManager testSPTC =
-            new MarketPlaceManager(SpecialCard.SKIPPLAYERTURNCARD);
-        MarketPlaceManager testTAPC =
-            new MarketPlaceManager(SpecialCard.THROWAWAYPICKUPCARD);
-        MarketPlaceManager testMirror =
-            new MarketPlaceManager(SpecialCard.MIRROR);
-        MarketPlaceManager testDisarm =
-            new MarketPlaceManager(SpecialCard.DISARM);
-        MarketPlaceManager testPP =
-            new MarketPlaceManager(SpecialCard.PICKPOCKET);
-        MarketPlaceManager testAP =
-            new MarketPlaceManager(SpecialCard.AUTOPILOT);
-        MarketPlaceManager testCC = new MarketPlaceManager(SpecialCard.COPYCAT);
+        // MarketPlaceManager testLPSC =
+        // new MarketPlaceManager(SpecialCard.LASTPLAYERSHOWCARD);
+        // MarketPlaceManager testSPTC =
+        // new MarketPlaceManager(SpecialCard.SKIPPLAYERTURNCARD);
+        // MarketPlaceManager testTAPC =
+        // new MarketPlaceManager(SpecialCard.THROWAWAYPICKUPCARD);
+        // MarketPlaceManager testMirror =
+        // new MarketPlaceManager(SpecialCard.MIRROR);
+        // MarketPlaceManager testDisarm =
+        // new MarketPlaceManager(SpecialCard.DISARM);
+        // MarketPlaceManager testPP =
+        // new MarketPlaceManager(SpecialCard.PICKPOCKET);
+        // MarketPlaceManager testAP =
+        // new MarketPlaceManager(SpecialCard.AUTOPILOT);
+        // MarketPlaceManager testCC = new
+        // MarketPlaceManager(SpecialCard.COPYCAT);
 
     }
 
@@ -169,7 +170,7 @@ public class MarketPlaceManagerTest {
      */
     @Test
     public void testAddSpecialCard() {
-        
+
         testInstance.addSpecialCard();
         testInventoryInstance.updateInventory();
         assertTrue("Item was not added",

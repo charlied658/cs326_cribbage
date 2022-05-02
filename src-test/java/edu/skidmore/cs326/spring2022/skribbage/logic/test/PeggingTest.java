@@ -67,6 +67,7 @@ public class PeggingTest {
 
         Player player = game.getPlayerList().get(0);
 
+        @SuppressWarnings("unused")
         boolean wasAdded = pPlay.addCardToPeggingTotal(cardToAdd, player);
 
         //check that the card was added to the player's corresponding
@@ -106,6 +107,7 @@ public class PeggingTest {
 
         game.setPeggingTotal(31);
 
+        @SuppressWarnings("unused")
         boolean wasAdded = pPlay.addCardToPeggingTotal(cardToAdd, player);
 
         //check that the card was not added to the player's corresponding

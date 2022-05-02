@@ -2,11 +2,9 @@ package edu.skidmore.cs326.spring2022.skribbage.frontend.events.test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 
 import org.apache.log4j.Logger;
 import org.junit.Before;
-import org.junit.After;
 import org.junit.Test;
 
 import edu.skidmore.cs326.spring2022.skribbage.common.LoginAuthenticator;
