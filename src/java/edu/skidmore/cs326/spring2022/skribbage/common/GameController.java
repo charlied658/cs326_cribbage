@@ -80,8 +80,10 @@ public final class GameController implements PropertyChangeListener {
      * Should always be a CribbageEvent game, otherwise a ClassCastException
      * will be thrown
      *
-     * @param evt The caught event.
-     * @throws ClassCastException Caught event is not of type CribbageEvent
+     * @param evt
+     *            The caught event.
+     * @throws ClassCastException
+     *             Caught event is not of type CribbageEvent
      */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
@@ -92,10 +94,7 @@ public final class GameController implements PropertyChangeListener {
                 LOG.debug("caught a player click start game event " + evt);
                 if (currentGameState == GameState.START_GAME) {
                     currentGameState = GameState.CUT_DECK;
-
-                    // When the game starts, cards are fanned out to click on
                     animationManager.fanCards();
-
                 }
                 break;
             case PLAYER_CLICK_DECK:
@@ -103,22 +102,17 @@ public final class GameController implements PropertyChangeListener {
                 switch (currentGameState) {
                     case CUT_DECK:
                         currentGameState = GameState.DISCARD_TO_CRIB;
-
                         PlayerClickDeckEvent playerClickDeckEvent =
                             (PlayerClickDeckEvent) cribbageEvent;
-
                         gameRenderManager.determineDealer(
                             playerClickDeckEvent.getClickedCardIndex());
-
-                        // Deal cards and wait for player to discard cards to
-                        // crib
                         gameRenderManager.getSelectedCardsForDiscarding()
                             .clear();
                         gameRenderManager.dealCards();
                         animationManager.getStartGamePage().add(animationManager
                             .getStartGamePage().getSendCardsToCribButton());
                         animationManager.setButtonClickable(animationManager
-                                .getStartGamePage().getSendCardsToCribButton(),
+                            .getStartGamePage().getSendCardsToCribButton(),
                             false);
                         break;
                     case STARTER_CARD:
@@ -127,22 +121,17 @@ public final class GameController implements PropertyChangeListener {
                                 .getStartGamePage()
                                 .getGameInformation());
                         currentGameState = GameState.PLAY_CARD;
-
                         playerClickDeckEvent =
                             (PlayerClickDeckEvent) cribbageEvent;
-
                         // Put the cards back on the deck, with the top card
                         // flipped
                         gameRenderManager.selectStarterCard(
                             playerClickDeckEvent.getClickedCardIndex());
-
                         break;
                     default:
                         break;
-
                 }
                 break;
-
             case PLAYER_PLAY_CARD:
                 LOG.debug("player played card to game " + evt);
                 // A nicer way to compare multiple things for equality, rather
@@ -152,60 +141,55 @@ public final class GameController implements PropertyChangeListener {
                         // downcast CribbageEvent to PlayerPlayCardEvent
                         PlayerPlayCardEvent playerPlayCardEvent =
                             (PlayerPlayCardEvent) cribbageEvent;
-
                         // Select card to discard to the crib
                         gameRenderManager.selectCardToDiscardToCrib(
                             playerPlayCardEvent.getCardImage());
-
                         break;
                     case PLAY_CARD:
                         PlayerPlayCardEvent playCardEvent =
                             (PlayerPlayCardEvent) cribbageEvent;
-
                         int clickedCardIndex =
                             playCardEvent.getClickedCardIndex();
-
-                        // Play card to center of board then have opponent play
-                        // a random card
+                        // Play card to center of board 
+                        //then have opponent play                   
                         int numCardsInPlay =
                             gameRenderManager.playerPlayCard(clickedCardIndex);
-
                         gameRenderManager.calculatePoints(true,
                             playCardEvent.getCardImage().getCard());
-
                         if (gameRenderManager
-                            .getPlayerPoints() + gameRenderManager
-                            .getComputerPoints() == GameRenderManager.POINTS_FOR_15_CLAIM) {
+                            .getPlayerPoints()
+                            + gameRenderManager
+                                .getComputerPoints() 
+                            == GameRenderManager.POINTS_FOR_15_CLAIM) {
                             AnimationManager.getInstance()
                                 .movePegGlideAnimation(0, 2);
                         }
-
                         if (gameRenderManager
-                            .getPlayerPoints() + gameRenderManager
-                            .getComputerPoints() == GameRenderManager.POINTS_FOR_31_CLAIM) {
+                            .getPlayerPoints()
+                            + gameRenderManager
+                                .getComputerPoints() 
+                            == GameRenderManager.POINTS_FOR_31_CLAIM) {
                             AnimationManager.getInstance()
                                 .movePegGlideAnimation(0, 2);
                         }
-
                         if (gameRenderManager.getCardsInPlay().size() > 1) {
                             if (gameRenderManager.getCardsInPlay()
-                                .get(gameRenderManager.getCardsInPlay().size() - 2)
-                                .getCard().getRank()
-                                 == playCardEvent.getCardImage()
-                                .getCard().getRank()) {
+                                .get(gameRenderManager.getCardsInPlay().size()
+                                    - 2)
+                                .getCard().getRank() == playCardEvent
+                                    .getCardImage()
+                                    .getCard().getRank()) {
                                 AnimationManager.getInstance()
                                     .movePegGlideAnimation(0, 2);
                             }
                         }
-
-
                         if (gameRenderManager
-                            .getPlayerPoints() + gameRenderManager
-                            .getComputerPoints() < MAX_POINTS_ALLOWED) {
+                            .getPlayerPoints()
+                            + gameRenderManager
+                                .getComputerPoints() < MAX_POINTS_ALLOWED) {
                             numCardsInPlay =
                                 gameRenderManager.opponentPlayCard();
                         }
-
                         // Check if all cards have been played
                         if (numCardsInPlay == 8) {
                             // Calculate score and move pegs
@@ -213,7 +197,6 @@ public final class GameController implements PropertyChangeListener {
                             // Move to discard to crib state again
                             currentGameState = GameState.DISCARD_TO_CRIB;
                         }
-
                         if (gameRenderManager.getCardsInHand().size() == 0) {
                             while (gameRenderManager.getCardsInOpponentHand()
                                 .size() > 0) {
@@ -225,16 +208,12 @@ public final class GameController implements PropertyChangeListener {
                         break;
                     default:
                         break;
-
                 }
                 break;
-
             case PLAYER_SEND_CARD_TO_CRIB:
                 if (gameRenderManager.getSelectedCardsForDiscarding()
                     .size() == MAX_DISCARD_TO_CRIB_SIZE) {
-
                     gameRenderManager.discardCards();
-
                     animationManager.getStartGamePage().remove(animationManager
                         .getStartGamePage().getSendCardsToCribButton());
                     currentGameState = GameState.STARTER_CARD;
@@ -247,9 +226,7 @@ public final class GameController implements PropertyChangeListener {
                     AnimationManager.getInstance().getStartGamePage()
                         .add(AnimationManager.getInstance().getStartGamePage()
                             .getGameInformation());
-
                 }
-
             default:
                 LOG.error(
                     "Caught an event that could not be handled."
@@ -271,7 +248,8 @@ public final class GameController implements PropertyChangeListener {
     /**
      * Set the current game state.
      *
-     * @param gameState state of the game
+     * @param gameState
+     *            state of the game
      */
     public void setCurrentGameState(GameState gameState) {
         this.currentGameState = gameState;

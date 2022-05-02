@@ -8,8 +8,6 @@ import edu.skidmore.cs326.spring2022.skribbage.common.events.AccountEvent;
 import edu.skidmore.cs326.spring2022.skribbage.logic.events.AccountResponseEvent;
 import edu.skidmore.cs326.spring2022.skribbage.logic.events.AccountResponse;
 import edu.skidmore.cs326.spring2022.skribbage.logic.events.UserLoginResponseEvent;
-import edu.skidmore.cs326.spring2022.skribbage.logic.events.UserValidationResponseEvent;
-import edu.skidmore.cs326.spring2022.skribbage.persistence.PersistenceFacade;
 import org.apache.log4j.Logger;
 
 import java.beans.PropertyChangeEvent;

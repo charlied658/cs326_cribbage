@@ -1,7 +1,6 @@
 package edu.skidmore.cs326.spring2022.skribbage.common.test;
 
 import org.apache.log4j.Logger;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -10,12 +9,9 @@ import static org.junit.Assert.assertNotEquals;
 
 import edu.skidmore.cs326.spring2022.skribbage.common.EventManager;
 import edu.skidmore.cs326.spring2022.skribbage.common.EventType;
-import edu.skidmore.cs326.spring2022.skribbage.common.LoginAuthenticator;
-import edu.skidmore.cs326.spring2022.skribbage.common.Password;
 import edu.skidmore.cs326.spring2022.skribbage.common.User;
 import edu.skidmore.cs326.spring2022.skribbage.common.UserRole;
 import edu.skidmore.cs326.spring2022.skribbage.common.EventFactory;
-import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserCreateAccountEvent;
 import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserLoginEvent;
 
 /**
@@ -66,19 +62,9 @@ public class EventManagerTest {
     private User userInstanceTwo;
 
     /**
-     * Mock Password object for mock user.
-     */
-    private Password testPassword;
-
-    /**
      * Login password type.
      */
     private String password;
-
-    /**
-     * Password hasher class instance.
-     */
-    private LoginAuthenticator hasher;
 
     /**
      * Mock login event.
@@ -89,11 +75,6 @@ public class EventManagerTest {
      * Mock login event to check removal of listener.
      */
     private UserLoginEvent testEventInstanceTwo;
-
-    /**
-     * Mock create account event.
-     */
-    private UserCreateAccountEvent testFalseEventInstance;
 
     /**
      * @throws Exception
@@ -107,10 +88,8 @@ public class EventManagerTest {
         LOG.info("Setup method reached.");
         testEventFactory = EventFactory.getInstance();
         testInstance = EventManager.getInstance();
-        hasher = LoginAuthenticator.getInstance();
         accountResponseControllerMOCK = new AccountResponseControllerMOCK();
         controller = new AccountControllerMOCK();
-        testPassword = hasher.hashNewPassword("password");
         password = "password";
         userInstance =
             new User("acarney@skidmore.edu", "acarney", UserRole.UNAUTHORIZED);
@@ -129,10 +108,6 @@ public class EventManagerTest {
         testEventInstanceTwo =
             (UserLoginEvent) testEventFactory.createEvent(EventType.USER_LOGIN,
                 this, userInstanceTwo, password);
-
-        testFalseEventInstance = ((UserCreateAccountEvent) testEventFactory
-            .createEvent(EventType.USER_CREATE_ACCOUNT, this, userInstance,
-                testPassword));
 
     }
 

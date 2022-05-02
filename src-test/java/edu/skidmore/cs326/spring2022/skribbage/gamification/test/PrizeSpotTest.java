@@ -8,7 +8,6 @@ import org.junit.Test;
 
 import edu.skidmore.cs326.spring2022.skribbage.common.Location;
 import edu.skidmore.cs326.spring2022.skribbage.common.Player;
-import edu.skidmore.cs326.spring2022.skribbage.gamification.JumpSpot;
 import edu.skidmore.cs326.spring2022.skribbage.gamification.PrizeSpot;
 
 /**
