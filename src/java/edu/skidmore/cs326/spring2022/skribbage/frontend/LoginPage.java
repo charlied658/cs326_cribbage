@@ -298,10 +298,8 @@ public class LoginPage extends SkribbageDrawingSurface implements Page {
                 .createPage(PageType.NAVIGATION_PAGE);
             closeWindow();
         } else {
-            showMessage(
-                "User does not exist. "
-                    + "Please create a new account or try again.",
-                "Unsuccessful Log In",
+            showMessage("Unsuccessful Log In",
+                "Please create a new account or try again.",
                 DialogType.ERROR);
         }
 
@@ -319,10 +317,8 @@ public class LoginPage extends SkribbageDrawingSurface implements Page {
                 "New account created.", DialogType.INFORMATION);
         } else {
             LOG.error("Failed to create an user.");
-            showMessage(
-                "Failed to create an account "
-                    + "Please try again",
-                "Unsucessful user creation",
+            showMessage("Please try again",
+                "Unsucessful user creation. Failed to create an account",
                 DialogType.ERROR);
 
         }
@@ -351,8 +347,8 @@ public class LoginPage extends SkribbageDrawingSurface implements Page {
             evtFactory.fireEvent(evt);
 
         } else {
-            showMessage("Passwords you entered, do not match",
-                "Please try again",
+            showMessage("Please try again",
+                "Passwords you entered, do not match",
                 DialogType.ERROR);
             createNewUser();
 
