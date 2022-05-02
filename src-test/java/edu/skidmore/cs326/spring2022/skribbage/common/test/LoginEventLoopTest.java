@@ -1,17 +1,24 @@
 package edu.skidmore.cs326.spring2022.skribbage.common.test;
 
-import edu.skidmore.cs326.spring2022.skribbage.common.*;
+
+import edu.skidmore.cs326.spring2022.skribbage.common.EventFactory;
+import edu.skidmore.cs326.spring2022.skribbage.common.EventManager;
+import edu.skidmore.cs326.spring2022.skribbage.common.EventType;
+import edu.skidmore.cs326.spring2022.skribbage.common.Lobby;
+import edu.skidmore.cs326.spring2022.skribbage.common.PasswordHasher;
+import edu.skidmore.cs326.spring2022.skribbage.common.User;
+import edu.skidmore.cs326.spring2022.skribbage.common.UserRole;
 import edu.skidmore.cs326.spring2022.skribbage.frontend.events.LobbyStartGameEvent;
-import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserCreateAccountEvent;
+
 import edu.skidmore.cs326.spring2022.skribbage.frontend.events.UserLoginEvent;
-import edu.skidmore.cs326.spring2022.skribbage.logic.events.UserValidationResponseEvent;
+
 import org.apache.log4j.Logger;
 import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+
 
 /**
  * Full test of event functionality. Mocks an interaction between
